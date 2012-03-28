@@ -2,7 +2,7 @@
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('uibase/box', function () {
+KISSY.add('uibase/box', function (S) {
 
     /**
      * Box Implementation
@@ -30,6 +30,7 @@ KISSY.add('uibase/box', function () {
          * @type Number|String
          */
         width:{
+            // 没有 _uiSetWidth，所以不需要设置 sync:false
             view:true
         },
         /**
@@ -119,8 +120,9 @@ KISSY.add('uibase/box', function () {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
-            if (this.decorateInternal) {
-                this.decorateInternal(srcNode);
+            var self = this;
+            if (self.decorateInternal) {
+                self.decorateInternal(S.one(srcNode));
             }
             return srcNode;
         }
@@ -143,8 +145,14 @@ KISSY.add('uibase/box', function () {
          */
         show:function () {
             var self = this;
-            self.render();
-            self.set("visible", true);
+            if (!self.get("rendered")) {
+                // 防止初始设置 false，导致触发 hide 事件
+                // show 里面的初始一定是 true，触发 show 事件
+                self.__set("visible", true);
+                self.render();
+            } else {
+                self.set("visible", true);
+            }
         },
 
         /**

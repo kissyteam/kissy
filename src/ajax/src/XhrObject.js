@@ -91,7 +91,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class IO Request Object. !Do Not New By Yourself!
+     * @class A class for constructing io request instances. !Do Not New By Yourself!
      * @extends KISSY.Promise
      * @memberOf IO
      */

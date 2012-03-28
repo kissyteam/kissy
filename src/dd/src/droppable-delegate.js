@@ -13,8 +13,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     }
 
     /**
+     * make multiple nodes droppable under a container using only one droppable instance
      * @memberOf DD
-     * @class delegate drop
+     * @class
      */
     function DroppableDelegate() {
         var self = this;
@@ -28,6 +29,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             /**
              * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
              * @param ev
+             * @private
+             * @override
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var pointer = {
@@ -98,7 +101,7 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             },
 
             _end:function () {
-                var self=this;
+                var self = this;
                 DroppableDelegate.superclass._end.apply(self, arguments);
                 self.__set("node", 0);
             }
@@ -121,14 +124,16 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 },
 
                 /**
-                 * 放目标节点选择器
+                 * a selector query to get the children of container to make droppable elements from.
+                 * usually as for tag.cls.
                  * @type String
                  */
                 selector:{
                 },
 
                 /**
-                 * 放目标所在区域
+                 * a selector query to get the container to listen for mousedown events on.
+                 * All "draggable selector" should be a child of this container
                  * @type {String|HTMLElement}
                  */
                 container:{

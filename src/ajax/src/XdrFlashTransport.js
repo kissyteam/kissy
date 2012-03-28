@@ -9,7 +9,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         ID = "io_swf",
         // flash transporter
         flash,
-        doc = document,
+        doc = S.Env.host.document,
         // whether create the flash transporter
         init = false;
 

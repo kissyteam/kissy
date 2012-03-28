@@ -4,6 +4,8 @@
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
+    var win=S.Env.host;
+
     function getMenu(self, init) {
         var m = self.get("menu");
         if (S.isFunction(m)) {
@@ -108,7 +110,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                         menu.on("click", self._handleMenuClick, self);
 
                         //窗口改变大小，重新调整
-                        $(window).on("resize", self._reposition, self);
+                        $(win).on("resize", self._reposition, self);
                         /*
                          bind 与 getMenu 都可能调用，时序不定
                          */
@@ -223,7 +225,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
 
                 removeItem:function (c, destroy) {
                     /**
-                     * @type ModelControl
+                     * @type Controller
                      */
                     var menu = getMenu(this);
                     if (menu) {
@@ -270,7 +272,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  */
                 destructor:function () {
                     var self = this, menu = getMenu(self);
-                    $(window).detach("resize", self._reposition, self);
+                    $(win).detach("resize", self._reposition, self);
                     menu && menu.destroy();
                 }
 

@@ -1,6 +1,6 @@
 /**
  * @fileOverview   dom-class
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/class', function (S, DOM, undefined) {
 
@@ -19,13 +19,14 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
          */
         {
             /**
-             * Determine whether any of the matched elements are assigned the given class.
-             * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-             * @param value 样式名，多个样式以空格区分
-             * @return {boolean} 当前元素集合是否有元素包含样式名
+             * Determine whether any of the matched elements are assigned the given classes.
+             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {String} className One or more class names to search for.
+             * multiple class names is separated by space
+             * @return {boolean}
              */
-            hasClass:function (selector, value) {
-                return batch(selector, value, function (elem, classNames, cl) {
+            hasClass:function (selector, className) {
+                return batch(selector, className, function (elem, classNames, cl) {
                     var elemClass = elem.className;
                     if (elemClass) {
                         var className = norm(elemClass),
@@ -46,20 +47,21 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Adds the specified class(es) to each of the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-             * @param value 样式名，多个样式以空格区分
+             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {String} className One or more class names to be added to the class attribute of each matched element.
+             * multiple class names is separated by space
              */
-            addClass:function (selector, value) {
-                batch(selector, value, function (elem, classNames, cl) {
+            addClass:function (selector, className) {
+                batch(selector, className, function (elem, classNames, cl) {
                     var elemClass = elem.className;
                     if (!elemClass) {
-                        elem.className = value;
+                        elem.className = className;
                     } else {
-                        var className = norm(elemClass),
+                        var normClassName = norm(elemClass),
                             setClass = elemClass,
                             j = 0;
                         for (; j < cl; j++) {
-                            if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            if (normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0) {
                                 setClass += SPACE + classNames[j];
                             }
                         }
@@ -70,11 +72,12 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-             * @param value 样式名，多个样式以空格区分
+             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {String} className One or more class names to be removed from the class attribute of each matched element.
+             * multiple class names is separated by space
              */
-            removeClass:function (selector, value) {
-                batch(selector, value, function (elem, classNames, cl) {
+            removeClass:function (selector, className) {
+                batch(selector, className, function (elem, classNames, cl) {
                     var elemClass = elem.className;
                     if (elemClass) {
                         if (!cl) {
@@ -99,9 +102,11 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
             /**
              * Replace a class with another class for matched elements.
              * If no oldClassName is present, the newClassName is simply added.
-             * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-             * @param oldClassName 原有样式名，多个样式以空格区分
-             * @param newClassName 新样式名，多个样式以空格区分
+             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
+             * multiple class names is separated by space
+             * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
+             * multiple class names is separated by space
              */
             replaceClass:function (selector, oldClassName, newClassName) {
                 DOM.removeClass(selector, oldClassName);
@@ -112,15 +117,16 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * Add or remove one or more classes from each element in the set of
              * matched elements, depending on either the class's presence or the
              * value of the switch argument.
-             * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-             * @param value 样式名，多个样式以空格区分
+             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {String} className One or more class names to be added to the class attribute of each matched element.
+             * multiple class names is separated by space
              * @param [state] {Boolean} optional boolean to indicate whether class
              *        should be added or removed regardless of current state.
              */
-            toggleClass:function (selector, value, state) {
+            toggleClass:function (selector, className, state) {
                 var isBool = S.isBoolean(state), has;
 
-                batch(selector, value, function (elem, classNames, cl) {
+                batch(selector, className, function (elem, classNames, cl) {
                     var j = 0, className;
                     for (; j < cl; j++) {
                         className = classNames[j];

@@ -164,6 +164,8 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
+                                    <p class="desc">KISSY's event system normalizes the event object according toW3C standards. The event object is guaranteed to be passed tothe event handler. Most properties from the original event arecopied over and normalized to the new event object.</p>
+                                    
 
                                     
                                     
@@ -196,7 +198,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                            <span class="desc">KISSY's event system normalizes the event object according toW3C standards.</span>                                            
+                                                                                        
                                         </li>
                                     </ul>
                                 </div>
@@ -206,9 +208,112 @@ a.go-top:active{text-decoration:none;}
                             
                             <!-- properties START -->
                             
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#isDefaultPrevented">isDefaultPrevented</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Flag for preventDefault that is modified during fire event.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#isImmediatePropagationStopped">isImmediatePropagationStopped</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Flag for stopImmediatePropagation that is modified during fire event.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#isPropagationStopped">isPropagationStopped</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Flag for stopPropagation that is modified during fire event.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
+                            
                             <!-- properties END -->
                             
                             <!-- methods START -->
+                            
+                                
+                                
+                                <div class="box methods-box">
+                                    <div class="box-hd">
+                                        <h3>Methods</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#halt">halt</a></b>
+                                                <span class="param">(immediate)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Stops the event propagation and prevents the defaultevent behavior.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#preventDefault">preventDefault</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Prevents the event's default behavior</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#stopImmediatePropagation">stopImmediatePropagation</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Stops the propagation to the next bubble target andprevents any additional listeners from being exectuedon the current target.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Event.Object.html#stopPropagation">stopPropagation</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Stops the propagation to the next bubble target</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                
                             
                             <!-- methods END -->
                             
@@ -231,7 +336,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc"></div>
+                                            <div class="desc">KISSY's event system normalizes the event object according toW3C standards. The event object is guaranteed to be passed tothe event handler. Most properties from the original event arecopied over and normalized to the new event object.</div>
                                             
                                             <dl>                                                
                                                 
@@ -259,9 +364,293 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="isDefaultPrevented"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">isDefaultPrevented</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="isImmediatePropagationStopped"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">isImmediatePropagationStopped</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="isPropagationStopped"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">isPropagationStopped</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Methods Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name="halt"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">halt</b>
+                                                <span class="param">(immediate)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_object.js.html#line174">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Stops the event propagation and prevents the defaultevent behavior.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">immediate</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{boolean}</span> 
+                                                            <span class="desc">if true additional listeners on the current target will not be executed</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="preventDefault"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">preventDefault</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_object.js.html#line122">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Prevents the event's default behavior
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="stopImmediatePropagation"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">stopImmediatePropagation</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_object.js.html#line161">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Stops the propagation to the next bubble target andprevents any additional listeners from being exectuedon the current target.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="stopPropagation"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">stopPropagation</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_object.js.html#line140">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Stops the propagation to the next bubble target
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
                             
                             <!-- methods detail END -->
 
@@ -289,6 +678,18 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Attribute.html">Attribute</a></li>
             
             
+            <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
+            
+            
             <li><a href="../symbols/Base.html">Base</a></li>
             
             
@@ -301,7 +702,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
             
             
-            <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
             
             
             <li><a href="../symbols/Cookie.html">Cookie</a></li>
@@ -356,6 +757,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

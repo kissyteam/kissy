@@ -8,9 +8,9 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     /**
      * @name Button
      * @constructor
-     * @extends Component.ModelControl
+     * @extends Component.Controller
      */
-    var Button = UIBase.create(Component.ModelControl, [UIBase.ContentBox],
+    var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 

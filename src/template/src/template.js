@@ -103,7 +103,7 @@ KISSY.add('template', function (S) {
         // expression
         Statements = {
             'if':{
-                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
+                start:'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
                 end:'}'
             },
 
@@ -181,7 +181,7 @@ KISSY.add('template', function (S) {
          */
         log:function (tpl) {
             if (tpl in templateCache) {
-                if ('js_beautify' in window) {
+                //     if ('js_beautify' in window) {
 //                        S.log(js_beautify(templateCache[tpl].parser, {
 //                            indent_size: 4,
 //                            indent_char: ' ',
@@ -190,9 +190,9 @@ KISSY.add('template', function (S) {
 //                            keep_array_indentation: false,
 //                            space_after_anon_function: true
 //                        }), 'info');
-                } else {
-                    S.log(templateCache[tpl].parser, 'info');
-                }
+                // } else {
+                S.log(templateCache[tpl].parser, 'info');
+                // }
             } else {
                 Template(tpl);
                 this.log(tpl);

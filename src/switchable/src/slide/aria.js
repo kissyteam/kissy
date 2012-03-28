@@ -32,7 +32,9 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
     Slide.Plugins.push({
             name:"aria",
             init:function(self) {
-                if (!self.config.aria) return;
+                if (!self.config.aria) {
+                    return;
+                }
                 var triggers = self.triggers;
                 var panels = self.panels;
                 var i = 0;

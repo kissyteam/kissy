@@ -11,7 +11,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         return DOM;
     }
 
-    var doc = document,
+    var doc = S.Env.host.document,
         docElem = doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',

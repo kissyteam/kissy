@@ -4,39 +4,23 @@
 <title>loader demo</title>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="demo/demo.css" type="text/css" media="all"/>
-<link href="../button/assets/common.css" rel="stylesheet"/>
-<link href="../button/assets/custombutton.css" rel="stylesheet"/>
-
-<script src="../../build/kissy.js"></script>
-<script src="./src/base.js"></script>
-<script src="./src/loader.js"></script>
-<script src="./src/waterfall.js"></script>
+<style>
+    a {
+        font-size: 20px;
+    }
+</style>
 </head>
 
 <body>
+<div style="text-align: center">
+    <h1>普通无特效 waterfall</h1>
+    <a href="demo/demo.html" target="_blank">演示</a>
 
-<div id="wrapper">
-    <div id="button_container"></div>
+    <h1>统一特效 waterfall</h1>
+    <a href="demo/fx1.html" target="_blank">演示</a>
 
-    <div id="article">
-        <div id="ColumnContainer"></div>
-        <a id="BackToTop" href="#">Scroll to Top</a>
-        <div id="loadingPins"><img src="http://d3io1k5o0zdpqr.cloudfront.net/images/BouncingLoader.gif" alt="Pin Loader Image"/><span>Fetching pins&hellip;</span></div>
-    </div>
+    <h1>删除/调整单独特效 waterfall</h1>
+    <a href="demo/fx2.html" target="_blank">演示</a>
 </div>
-<script type="tpl" id="tpl">
-    <div class="pin ks-waterfall" data-id="{{id}}">
-        <a href="#" class="image">
-            <img height="{{height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_m.jpg"/>
-        </a>
-        <p class="description">{{title}}</p>
-        <p>
-            <button class="del">删除</button>
-            <button class="grow">增高</button>
-        </p>
-    </div>
-</script>
-<script src="demo/demo2.js"></script>
-
 </body>
 </html>

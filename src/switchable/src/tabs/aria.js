@@ -2,13 +2,13 @@
  * @fileOverview Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs) {
+KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tabs) {
 
         var KEY_PAGEUP = 33;
         var KEY_PAGEDOWN = 34;
-        var KEY_END = 35;
-        var KEY_HOME = 36;
-
+        //var KEY_END = 35;
+        //var KEY_HOME = 36;
+        var EVENT_ADDED = 'added';
         var KEY_LEFT = 37;
         var KEY_UP = 38;
         var KEY_RIGHT = 39;
@@ -28,7 +28,7 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs
 
         Tabs.Plugins.push({
             name:"aria",
-            init:function(self) {
+            init:function (self) {
                 if (!self.config.aria) return;
                 var triggers = self.triggers,
                     activeIndex = self.activeIndex,
@@ -38,22 +38,44 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs
                     DOM.attr(self.nav, "role", "tablist");
                 }
                 var i = 0;
-                S.each(triggers, function(trigger) {
+
+                function initTrigger(trigger) {
                     trigger.setAttribute("role", "tab");
-                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    setTabIndex(trigger, "-1");
                     if (!trigger.id) {
                         trigger.id = S.guid("ks-switchable");
                     }
-                    i++;
-                });
-                i = 0;
-                S.each(panels, function(panel) {
-                    var t = triggers[i];
+                }
+
+
+                function initPanel(panel, trigger) {
                     panel.setAttribute("role", "tabpanel");
-                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
-                    panel.setAttribute("aria-labelledby", t.id);
+                    panel.setAttribute("aria-hidden", "true");
+                    panel.setAttribute("aria-labelledby", trigger.id);
+                }
+
+                S.each(triggers, initTrigger);
+
+
+                self.on(EVENT_ADDED, function (e) {
+                    var t;
+                    initTrigger(t = e.trigger);
+                    initPanel(e.panel, t);
+                });
+
+                i = 0;
+
+                S.each(panels, function (panel) {
+                    var t = triggers[i];
+                    initPanel(panel, t);
                     i++;
                 });
+
+                if (activeIndex > -1) {
+                    setTabIndex(triggers[activeIndex], "0");
+                    panels[activeIndex].setAttribute("aria-hidden", "false");
+                }
+
 
                 self.on("switch", _tabSwitch, self);
 
@@ -72,8 +94,8 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs
 
         function _currentTabFromEvent(t) {
             var triggers = this.triggers,
-                trigger;
-            S.each(triggers, function(ct) {
+                trigger = null;
+            S.each(triggers, function (ct) {
                 if (ct == t || DOM.contains(ct, t)) {
                     trigger = ct;
                 }
@@ -108,12 +130,10 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs
          * @param e
          */
         function _tabKeydown(e) {
-            var t = e.target,self = this;
-            var triggers = self.triggers;
-
+            var t = e.target, self = this;
             // Save information about a modifier key being pressed
             // May want to ignore keyboard events that include modifier keys
-            var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+            // var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
             var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
 
             switch (e.keyCode) {
@@ -214,7 +234,7 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs
 
     },
     {
-        requires:["dom","event","../base","../aria","./base"]
+        requires:["dom", "event", "../base", "../aria", "./base"]
     });
 
 /**

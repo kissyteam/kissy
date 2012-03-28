@@ -164,6 +164,8 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
+                                    <p class="desc">Manager for Drag and Drop.</p>
+                                    
 
                                     
                                     
@@ -223,7 +225,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">当前激活的拖动对象，在同一时间只有一个值，所以不是数组</span>                                                
+                                                <span class="desc">currently active draggable object</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -234,7 +236,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">当前激活的 drop 对象，在同一时间只有一个值</span>                                                
+                                                <span class="desc">currently active droppable object</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -245,7 +247,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">mousedown 后 buffer 触发时间  time threshold</span>                                                
+                                                <span class="desc">the number of milliseconds to start a drag operation after mousedown,default is 1000</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -256,7 +258,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">移动的像素值（用于启动拖放）</span>                                                
+                                                <span class="desc">the number of pixels to move to start a drag operation,default is 3.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -267,7 +269,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">shim 鼠标 icon (drag icon)</span>                                                
+                                                <span class="desc">cursor style when dragging,if shimmed the shim will get the cursor.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -278,7 +280,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">所有注册的可放置对象，统一管理</span>                                                
+                                                <span class="desc">a array of drop targets</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                DD.DDM.
+                                                <b class="name"><a href="../symbols/DD.DDM.html#.prefixCls">prefixCls</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">default prefix class name for dd related state (such as dragging,drag-over).</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -289,7 +302,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">对应当前 draggable 有效的 droppable 对象数组</span>                                                
+                                                <span class="desc">a array of the valid drop targets for this interaction</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -468,7 +481,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                             </div>
                                             
-                                            <div class="desc"></div>
+                                            <div class="desc">Manager for Drag and Drop.</div>
                                             
                                             <dl>                                                
                                                 
@@ -514,7 +527,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    当前激活的拖动对象，在同一时间只有一个值，所以不是数组
+                                                    currently active draggable object
                                                     
                                                     
                                                 </span>
@@ -544,7 +557,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    当前激活的 drop 对象，在同一时间只有一个值
+                                                    currently active droppable object
                                                     
                                                     
                                                 </span>
@@ -574,7 +587,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    mousedown 后 buffer 触发时间  time threshold
+                                                    the number of milliseconds to start a drag operation after mousedown,default is 1000
                                                     
                                                     
                                                 </span>
@@ -604,7 +617,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    移动的像素值（用于启动拖放）
+                                                    the number of pixels to move to start a drag operation,default is 3.
                                                     
                                                     
                                                 </span>
@@ -634,7 +647,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    shim 鼠标 icon (drag icon)
+                                                    cursor style when dragging,if shimmed the shim will get the cursor.
                                                     
                                                     
                                                 </span>
@@ -664,7 +677,37 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    所有注册的可放置对象，统一管理
+                                                    a array of drop targets
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".prefixCls"> </a>
+                                            <div class="title">                                                
+                                                <span>DD.DDM.</span>
+                                                <b class="name">prefixCls</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    default prefix class name for dd related state (such as dragging,drag-over).
                                                     
                                                     
                                                 </span>
@@ -694,7 +737,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    对应当前 draggable 有效的 droppable 对象数组
+                                                    a array of the valid drop targets for this interaction
                                                     
                                                     
                                                 </span>
@@ -1701,6 +1744,18 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Attribute.html">Attribute</a></li>
             
             
+            <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
+            
+            
             <li><a href="../symbols/Base.html">Base</a></li>
             
             
@@ -1713,7 +1768,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
             
             
-            <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
             
             
             <li><a href="../symbols/Cookie.html">Cookie</a></li>
@@ -1768,6 +1823,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

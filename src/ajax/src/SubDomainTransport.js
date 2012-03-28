@@ -6,7 +6,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         PROXY_PAGE = "/sub_domain_proxy.html",
-        doc = document,
+        doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
         };
@@ -50,7 +50,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
-                iframe = iframeDesc.iframe = document.createElement("iframe");
+                iframe = iframeDesc.iframe = doc.createElement("iframe");
                 DOM.css(iframe, {
                     position:'absolute',
                     left:'-9999px',

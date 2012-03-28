@@ -56,28 +56,28 @@ T = {
         var HOST = { },
             SEED1 = { },
             SEED2 = { mix: this.mix },
-            SEED3 = { __HOST: this.SCOPE },
-            SEED4 = { __HOST: HOST, mix: this.mix };
+            SEED3 = { Env.host: this.SCOPE },
+            SEED4 = { Env.host: HOST, mix: this.mix };
 
         // seed is blank kissy.
         this.SCOPE[S] = SEED1;
         this.run('../kissy.js');
-        if (!((SEED1.__HOST === this.SCOPE) && SEED1.mix && this.case_kissyAnno())) return false;
+        if (!((SEED1.Env.host === this.SCOPE) && SEED1.mix && this.case_kissyAnno())) return false;
 
         // seed is kissy with custom mix.
         this.SCOPE[S] = SEED2;
         this.run('../kissy.js');
-        if (!((SEED2.__HOST === this.SCOPE) && (SEED2.mix === this.mix) && this.case_kissyAnno())) return false;
+        if (!((SEED2.Env.host === this.SCOPE) && (SEED2.mix === this.mix) && this.case_kissyAnno())) return false;
 
         // seed with host, will keep.
         this.SCOPE[S] = SEED3;
         this.run('../kissy.js');
-        if (!((SEED3.__HOST === this.SCOPE) && SEED3.mix && this.case_kissyAnno())) return false;
+        if (!((SEED3.Env.host === this.SCOPE) && SEED3.mix && this.case_kissyAnno())) return false;
 
         // seed has custom host and mix.
         this.SCOPE[S] = SEED4;
         this.run('../kissy.js');
-        return (SEED4.__HOST === HOST) && (SEED2.mix === this.mix) && this.case_kissyAnno();
+        return (SEED4.Env.host === HOST) && (SEED2.mix === this.mix) && this.case_kissyAnno();
     },
 
     backuper: function(Scope, S) {

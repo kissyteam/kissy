@@ -6,10 +6,10 @@ KISSY.add('cookie', function (S) {
 
     /**
      * @name Cookie
-     * @namespace
+     * @namespace Provide Cookie utilities.
      */
 
-    var doc = document,
+    var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;

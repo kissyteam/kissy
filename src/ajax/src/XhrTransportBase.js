@@ -4,7 +4,7 @@
  */
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
-        win = window,
+        win = S.Env.host,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -32,7 +32,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         return undefined;
     }
 
-    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
+    XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
         if (crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
@@ -184,10 +184,10 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         }
 
                         xhrObj._xhrReady(status, statusText);
-
                     }
                 }
             } catch (firefoxAccessException) {
+                S.log(firefoxAccessException, "error");
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj._xhrReady(-1, firefoxAccessException);

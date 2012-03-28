@@ -5,7 +5,8 @@
  */
 KISSY.add("ajax/ScriptTransport", function (S, io) {
 
-    var doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
@@ -65,7 +66,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
             script.onerror =
                 script.onload =
                     script.onreadystatechange = function (e) {
-                        e = e || window.event;
+                        e = e || win.event;
                         // firefox onerror 没有 type ?!
                         self._callback((e.type || "error").toLowerCase());
                     };

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -111,7 +111,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
 				target = DOM.create('<div id='+ id +'/>');
-				DOM.prepend(target,document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+				DOM.prepend(target,S.Env.host.document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
 				//document.body.appendChild(target);
             }
 
@@ -409,7 +409,7 @@ KISSY.add("flash", function(S, F) {
  */
 KISSY.add('flash/ua', function(S, UA) {
 
-    var fpv, fpvF, firstRun = true;
+    var fpv, fpvF, firstRun = true,win=S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -423,7 +423,7 @@ KISSY.add('flash/ua', function(S, UA) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
         }
         // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
+        else if (win.ActiveXObject) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch(ex) {

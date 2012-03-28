@@ -4,7 +4,8 @@
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
-    var doc = document,
+    var win=S.Env.host,
+        doc = win.document,
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
@@ -14,7 +15,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
-    if ((!( 'on' + HASH_CHANGE in window)) || ie && ie < 8) {
+    if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
 
 
         function getIframeDoc(iframe) {
@@ -22,7 +23,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            win = window,
             IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
                 " - {hash}</title>{head}</head><body>{hash}</body></html>",
 

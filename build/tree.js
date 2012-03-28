@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -54,7 +54,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
      * 基类树节点
      * @constructor
      */
-    var BaseNode = UIBase.create(Component.ModelControl,
+    var BaseNode = UIBase.create(Component.Controller,
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */

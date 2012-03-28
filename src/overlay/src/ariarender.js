@@ -89,7 +89,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
                     lastActive;
                 self.on("afterVisibleChange", function(ev) {
                     if (ev.newVal) {
-                        lastActive = document.activeElement;
+                        lastActive = el[0].ownerDocument.activeElement;
                         el[0].focus();
                         el.attr("aria-hidden", "false");
                         el.on("keydown", _onKey, self);

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 幻灯片特效</title>
+<link rel="shortcut icon" href="../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
+
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/aria.js"></script>
+<script src="../src/accordion/base.js"></script>
+<script src="../src/accordion/aria.js"></script>
+<script src="../src/autoplay.js"></script>
+<script src="../src/autorender.js"></script>
+<script src="../src/carousel/base.js"></script>
+<script src="../src/carousel/aria.js"></script>
+<script src="../src/circular.js"></script>
+<script src="../src/countdown.js"></script>
+<script src="../src/effect.js"></script>
+<script src="../src/lazyload.js"></script>
+<script src="../src/slide/base.js"></script>
+<script src="../src/slide/aria.js"></script>
+<script src="../src/tabs/base.js"></script>
+<script src="../src/tabs/aria.js"></script>
+<script src="../src/switchable.js"></script>
+<style>
+    #title {
+        font-size: 35px;
+        margin: 10px auto;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<h1 id="title">circular picture gallery</h1>
+<div id="list" style="overflow: hidden;margin: 100px auto;">
+    <ul id="content" class="pic-list">
+        <li class="picture" style="display: block; float: left;">
+            <img border="0" src="http://i.mmcdn.cn/simba/img/T1UP50XmXhXXXXXXXX.jpg?noq=y" width="490" height="170">
+        </li>
+        <li class="picture" style="display: block; float: left;">
+            <img src="http://img01.taobaocdn.com/tps/i1/T1Gj90XbdgXXXXXXXX-490-170.png" width="490" height="170">
+        </li>
+        <li class="picture" style="display: block; float: left;">
+            <img border="0" src="http://i.mmcdn.cn/simba/img/T1dn50XgtbXXXXXXXX.jpg?noq=y" width="490" height="170">
+        </li>
+        <li class="picture" style="display: block; float: left;">
+            <img border="0" src="http://i.mmcdn.cn/simba/img/T1dim0XXtlXXXXXXXX.jpg?noq=y" width="490" height="170">
+        </li>
+
+    </ul>
+</div>
+<script>
+    KISSY.use("switchable", function (S, Switchable) {
+        var DOM = S.DOM;
+
+        var s = new Switchable.Slide('#list', {
+            contentCls:'pic-list',
+            hasTriggers:false,
+            effect:'scrollx',
+            interval:2,
+            easing:"easeOutStrong"
+        });
+
+        var count = 3, width = 490;
+
+        DOM.width('#list', count * width);
+        DOM.height("#list", 170);
+
+        var panels = s.panels,
+                offsetWidth = panels[0].offsetWidth,
+                totalWidth = offsetWidth * panels.length,
+                lastIndex = panels.length - count + 1;
+
+        s.on("beforeSwitch", function (e) {
+            var toIndex = e.toIndex;
+            if (toIndex >= lastIndex) {
+                var gap = toIndex - lastIndex;
+                DOM.css(panels[gap], {
+                    position:"relative",
+                    left:totalWidth
+                });
+            } else if (toIndex == 0) {
+                DOM.css(panels[lastIndex], {
+                    position:"relative",
+                    left:totalWidth
+                });
+            }
+        });
+
+        s.on("switch", function (e) {
+            if (e.currentIndex == 0) {
+                for (var i = 1; i < count; i++) {
+                    DOM.css(panels[i], {
+                        position:"",
+                        left:""
+                    });
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

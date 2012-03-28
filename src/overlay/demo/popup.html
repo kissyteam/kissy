@@ -187,19 +187,19 @@
             <button id="d1" class="button">destroy</button>
         </div>
         <script>
-            KISSY.use('node,overlay', function(S, Node, O) {
+            KISSY.use('node,overlay', function (S, Node, O) {
 
                 window.popup = new O.Popup(Node.one("#dpop"), {
-                    trigger: '#img-download',
-                    triggerType: 'mouse',
-                    align: {
-                        node: '#img-download',
-                        points: ['tc', 'bc'],
-                        offset: [0, 50]
+                    trigger:'#img-download',
+                    triggerType:'mouse',
+                    align:{
+                        node:'#img-download',
+                        points:['tc', 'bc'],
+                        offset:[0, 50]
                     }
                 });
 
-                S.one("#d1").on("click", function() {
+                S.one("#d1").on("click", function () {
                     window.popup.destroy();
                 });
 
@@ -227,18 +227,18 @@
         </style>
         <a id="link2" href="#"><img src="http://img02.taobaocdn.com/bao/uploaded/i2/T1HTSaXiFsXXaMnuYb_093636.jpg_160x160.jpg"/></a>
         <script>
-            KISSY.use('node,overlay', function(S, Node, O) {
+            KISSY.use('node,overlay', function (S, Node, O) {
 
                 var popup = new O.Popup({
-                    trigger: '#link2',
-                    triggerType: 'mouse',
-                    elCls: 'popup2',
-                    align: {
-                        node: '#link2',
-                        points: ['tl', 'tl']
+                    trigger:'#link2',
+                    triggerType:'mouse',
+                    elCls:'popup2',
+                    align:{
+                        node:'#link2',
+                        points:['tl', 'tl']
                     },
-                    width: Node.one('#link2').width(),
-                    height: Node.one('#link2').height()
+                    width:Node.one('#link2').width(),
+                    height:Node.one('#link2').height()
                 });
             });
         </script>
@@ -338,27 +338,30 @@
             </ul>
         </div>
         <script>
-            KISSY.use("node, overlay", function(S, Node, O) {
+            KISSY.use("node, overlay", function (S, Node, O) {
                 var popup = new O.Popup({
-                    trigger: Node.all('#multi img'),
-                    triggerType: 'mouse',
+                    trigger:Node.all('#multi img'),
+                    triggerType:'mouse',
                     elStyle:{
                         border:"2px solid gray",
-                        lineHeight: 0
+                        lineHeight:0
                     },
-                    width: 120,
-                    height: 120,
-                    effect: {
-                        effect:"slide",//"fade",
+                    width:120,
+                    height:120,
+                    effect:{
+                        effect:"slide", //"fade",
                         duration:0.5
                     }
                 });
-                popup.on('show', function() {
-                    var t = this.get('currentTrigger');
+                popup.on('afterCurrentTriggerChange', function (e) {
+                    var t = e.newVal;
+                    if (!t) {
+                        return;
+                    }
                     popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                     popup.set('align', {
-                        node: t,
-                        points: ["tr","tl"]
+                        node:t,
+                        points:["tr", "tl"]
                     });
                 });
             });
@@ -405,21 +408,21 @@
     </div>
     <div class="s-demo">
         <script>
-            KISSY.use("node, overlay", function(S, Node, O) {
-                Node.all('#multi2 img').each(function(t) {
+            KISSY.use("node, overlay", function (S, Node, O) {
+                Node.all('#multi2 img').each(function (t) {
                     var popup = new O.Popup({
-                        trigger: t,
-                        triggerType: 'mouse',
+                        trigger:t,
+                        triggerType:'mouse',
                         elStyle:{
                             border:"2px solid gray",
-                            lineHeight: 0
+                            lineHeight:0
                         },
-                        content: '<img src="' + t.attr('bigpicurl') + '"/>',
-                        width: 120,
-                        height: 120,
-                        align: {
-                            node: t,
-                            points: ["tr","tl"]
+                        content:'<img src="' + t.attr('bigpicurl') + '"/>',
+                        width:120,
+                        height:120,
+                        align:{
+                            node:t,
+                            points:["tr", "tl"]
                         }
                     });
                 });
@@ -443,34 +446,34 @@
                     + '<div class="mask"></div> '
                     + '<i class="icon" style="position: absolute;left:200px;top:100px;">加载中，请稍候…</i> '
                     + '</div>';
-            KISSY.use('ua,event,node,overlay', function(S, UA, Event, Node, O) {
+            KISSY.use('ua,event,node,overlay', function (S, UA, Event, Node, O) {
                 var popup = new O.Popup({
-                    content: node,
-                    width: 600,
-                    height: 200,
+                    content:node,
+                    width:600,
+                    height:200,
                     elStyle:{
                         position:UA.ie == 6 ? "absolute" : "fixed",
                         background:"transparent"
                     },
-                    align: {
-                        points: ['cc', 'cc']
+                    align:{
+                        points:['cc', 'cc']
                     },
-                    effect: {
+                    effect:{
                         effect:"fade",
                         duration:0.5
                     },
-                    trigger: '#btn3',
-                    triggerType: 'click',
-                    toggle: true
+                    trigger:'#btn3',
+                    triggerType:'click',
+                    toggle:true
                 });
-                Node.one('#btn1').on('click', function() {
+                Node.one('#btn1').on('click', function () {
                     popup.show();
                 });
-                Node.one('#btn2').on('click', function() {
+                Node.one('#btn2').on('click', function () {
                     popup.hide();
                 });
                 if (UA.ie == 6) {
-                    Event.on(window, "scroll", function() {
+                    Event.on(window, "scroll", function () {
                         if (popup.get("visible"))
                             popup.center();
                     });

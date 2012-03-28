@@ -63,7 +63,10 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 undefined,
                 self.get("contentTagName"),
                 self.get("contentElAttrs"),
-                c)).appendTo(el);
+                c));
+
+            contentEl.appendTo(el);
+
             self.__set("contentEl", contentEl);
             // on content,then read from box el
             if (!c) {

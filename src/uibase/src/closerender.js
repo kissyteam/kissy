@@ -11,7 +11,8 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.ATTRS = {
         closable:{             // 是否需要关闭按钮
-            value:true
+            value:true,
+            sync:false
         },
         closeBtn:{
         }
@@ -25,24 +26,18 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.prototype = {
         _uiSetClosable:function (v) {
-            var self = this,
-                closeBtn = self.get("closeBtn");
-            if (closeBtn) {
-                if (v) {
-                    closeBtn.css("display", "");
-                } else {
-                    closeBtn.css("display", "none");
-                }
-            }
+            this.get("closeBtn")[v ? "show" : "hide"]();
         },
-        __renderUI:function () {
+        __createDom:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
+                closable = self.get("closable"),
                 el = self.get("el");
 
-            if (!closeBtn && el) {
+            if (!closeBtn) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    (closable ? "" : "style='display:none'") +
                     "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
@@ -51,11 +46,12 @@ KISSY.add("uibase/closerender", function (S, Node) {
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
+            } else {
+                closeBtn[closable ? "show" : "hide"]();
             }
         },
 
         __destructor:function () {
-
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();

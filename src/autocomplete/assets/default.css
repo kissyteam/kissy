@@ -1,0 +1,32 @@
+.ks-autocomplete-menu {
+    background: #fff;
+    border-color: #999;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    margin: 0;
+    outline: none;
+    padding: 4px 0;
+    position: absolute;
+    z-index: 99999;
+}
+
+.ks-autocomplete-menuitem {
+    color: #404040;
+    list-style: none;
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 3px 6px;
+    white-space: nowrap;
+}
+
+.ks-autocomplete-menuitem-disabled .ks-autocomplete-menuitem-content {
+    color: #ccc !important;
+}
+
+.ks-autocomplete-menuitem-highlight,
+.ks-autocomplete-menuitem-hover {
+    background-color: #39F;
+    color: white;
+}

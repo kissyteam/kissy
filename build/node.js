@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -277,8 +277,8 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         isNodeList = DOM._isNodeList;
 
     /**
-     * The NodeList class provides a wrapper for manipulating DOM Node.
-     * @class
+     * @class The NodeList class provides a wrapper for manipulating DOM Node.
+     * use KISSY.all/one to retrieve NodeList instances
      * @name NodeList
      */
     function NodeList(html, props, ownerDocument) {
@@ -305,7 +305,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            push.apply(this, makeArray(html));
+            push.apply(self, makeArray(html));
             return undefined;
         }
 

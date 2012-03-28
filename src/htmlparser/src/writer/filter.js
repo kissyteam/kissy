@@ -8,15 +8,15 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         this.tagNames = [];
         this.attributeNames = [];
         this.tags = [];
-        this.comments = [];
-        this.texts = [];
-        this.cdatas = [];
+        this.comment = [];
+        this.text = [];
+        this.cdata = [];
         this.attributes = [];
         this.root = [];
     }
 
     function findIndexToInsert(arr, p) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             if (arr[i].priority > p) {
                 return i;
             }
@@ -25,7 +25,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function filterName(arr, v) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             var items = arr[i].value;
             S.each(items, function (item) {
                 v = v.replace(item[0], item[1]);
@@ -35,9 +35,20 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function filterFn(arr, args, _default) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             var item = arr[i].value;
             if (item.apply(null, args) === false) {
+                return false;
+            }
+        }
+        return _default;
+    }
+
+    function filterAttr(arr, attrNode, el, _default) {
+        for (var i = 0; arr && i < arr.length; i++) {
+            var item = arr[i].value,
+                name = attrNode.name;
+            if (item[name] && item[name].call(null, attrNode.value, el) === false) {
                 return false;
             }
         }
@@ -52,10 +63,15 @@ KISSY.add("htmlparser/writer/filter", function (S) {
          * {
          *   tagNames:[ [/^ke/,''] ],
          *   attributeNames:[[^on],''],
-         *   tags:{p:function(element){}}
-         *   comments:function(){},
-         *   attributes:function(){},
-         *   texts:function(){}
+         *   tags:{
+         *      p:function(element){},
+         *      ^:function(element){},
+         *      $:function(element){}
+         *   }
+         *   comment:function(){},
+         *   attributes:{style:function(){}},
+         *   text:function(){},
+         *   root:function(){}
          * }
          * @param {Number} [priority] 值越小，优先级越高 ,最低 1
          */
@@ -63,12 +79,14 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             priority = priority || 10;
             for (var r in rules) {
                 if (rules.hasOwnProperty(r)) {
-                    var holder = this[r],
-                        index = findIndexToInsert(holder, priority);
-                    holder.splice(index, 0, {
-                        value:rules[r],
-                        priority:priority
-                    });
+                    var holder = this[r];
+                    if (holder) {
+                        var index = findIndexToInsert(holder, priority);
+                        holder.splice(index, 0, {
+                            value:rules[r],
+                            priority:priority
+                        });
+                    }
                 }
             }
         },
@@ -86,19 +104,19 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText:function (el) {
-            return filterFn(this.texts, [el.toHtml(), el], el);
+            return filterFn(this.text, [el.toHtml(), el], el);
         },
 
         onCData:function (el) {
-            return filterFn(this.cdatas, [el.toHtml(), el], el);
+            return filterFn(this.cdata, [el.toHtml(), el], el);
         },
 
-        onAttribute:function (el, attrNode) {
-            return filterFn(this.attributes, [attrNode, el], attrNode);
+        onAttribute:function (attrNode, el) {
+            return filterAttr(this.attributes, attrNode, el, attrNode);
         },
 
         onComment:function (el) {
-            return filterFn(this.comments, [el.toHtml(), el], el);
+            return filterFn(this.comment, [el.toHtml(), el], el);
         },
 
         onNode:function (el) {
@@ -106,9 +124,9 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             if (t === 1) {
                 return this.onTag(el);
             } else if (t === 3) {
-                return this.onText(el.toHtml(), el);
+                return this.onText(el);
             } else if (t === 8) {
-                return this.onComment(el.toHtml(), el);
+                return this.onComment(el);
             }
         },
 
@@ -126,13 +144,16 @@ KISSY.add("htmlparser/writer/filter", function (S) {
                 for (var j = 0; j < tags.length; j++) {
                     var element = tags[j].value;
                     if (element[filter]) {
+                        // node is removed with its children
                         if ((ret = element[filter](el)) === false) {
                             return false;
                         }
-                        if (ret && ret != element) {
+                        // node is replaced with another node
+                        if (ret && ret != el) {
                             return this.onNode(ret);
                         }
-                        if (!el.name) {
+                        // node is removed (children preserved)
+                        if (!el.tagName) {
                             return el;
                         }
                     }

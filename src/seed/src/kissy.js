@@ -4,21 +4,50 @@
  */
 (function (S, undefined) {
     /**
-     * @namespace
+     * @namespace The KISSY global namespace object. you can use
+     * <code>
+     *     KISSY.each/mix
+     * </code>
+     * to do basic operation.
+     * or
+     * <code>
+     *      KISSY.use("overlay,node",function(S,Overlay,Node){
+     *          //
+     *      })
+     * </code>
+     * to do complex task with modules.
      * @name KISSY
      */
 
     var host = this,
+        hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
+        hasOwn = Object.prototype.hasOwnProperty,
+        emumProperties = [
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ],
         meta = {
             /**
              * Copies all the properties of s to r.
-             * @memberOf KISSY
+             * @name KISSY.mix
+             * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
              * @param {boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {boolean} whether recursive mix if encounter object
+             * @param deep {boolean} whether recursive mix if encounter object,
+             * if deep is set true,then ov should be set true too!
              * @return {Object} the augmented object
+             * @example
+             * <code>
+             * var t={};
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
+             * </code>
              */
             mix:function (r, s, ov, wl, deep) {
                 if (!s || !r) {
@@ -41,6 +70,17 @@
                         // no hasOwnProperty judge !
                         _mix(p, r, s, ov, deep);
                     }
+
+                    // fix #101
+                    if (hasEnumBug) {
+                        for (var j = 0; j < emumProperties.length; j++) {
+                            p = emumProperties[j];
+                            if (ov && hasOwn.call(s, p)) {
+                                r[p] = s[p];
+                            }
+                        }
+                    }
+
                 }
                 return r;
             }
@@ -76,13 +116,14 @@
 
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
-    host = seed.__HOST || (seed.__HOST = host || {});
+    seed.Env = seed.Env || {};
+    host = seed.Env.host || (seed.Env.host = host || {});
 
     // shortcut and meta for seed.
     // override previous kissy
     S = host[S] = meta.mix(seed, meta);
 
-    S.mix(S,
+    S.mix(KISSY,
         /**
          * @lends KISSY
          */
@@ -93,7 +134,7 @@
             configs:(S.configs || {}),
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
-            __APP_INIT_METHODS:['__init'],
+            __APP_INIT_METHODS:[init],
 
             /**
              * The version of the library.
@@ -105,7 +146,7 @@
              * The build time of the library
              * @type {String}
              */
-            buildTime:'@TIMESTAMP@',
+            __BUILD_TIME:'@TIMESTAMP@',
 
             /**
              * Returns a new object containing all of the properties of
@@ -215,21 +256,6 @@
 
              ****************************************************************************************/
 
-            /**
-             * Initializes KISSY
-             */
-            __init:function () {
-                var self = this,
-                    c;
-
-                c = self.Config = self.Config || {};
-                self.Env = self.Env || {};
-
-                // NOTICE: '@DEBUG@' will replace with '' when compressing.
-                // So, if loading source file, debug is on by default.
-                // If loading min version, debug is turned off automatically.
-                c.debug = '@DEBUG@';
-            },
 
             /**
              * Returns the namespace specified and creates it if it doesn't exist. Be careful
@@ -266,16 +292,18 @@
              * TB.namespace('app'); // returns TB.app
              * </code>
              * @return {Object}  A reference to the app global object
+             * @deprecated recommended using packages
              */
             app:function (name, sx) {
                 var isStr = S.isString(name),
                     O = isStr ? host[name] || {} : name,
                     i = 0,
-                    len = S.__APP_INIT_METHODS.length;
+                    __APP_INIT_METHODS = S.__APP_INIT_METHODS,
+                    len = __APP_INIT_METHODS.length;
 
                 S.mix(O, this, true, S.__APP_MEMBERS);
                 for (; i < len; i++) {
-                    S[S.__APP_INIT_METHODS[i]].call(O);
+                    __APP_INIT_METHODS[i].call(O);
                 }
 
                 S.mix(O, S.isFunction(sx) ? sx() : sx);
@@ -285,18 +313,51 @@
             },
 
             /**
-             * set KISSY config
-             * @param c
+             * set KISSY configuration
+             * @param c detail configs
              * @param {Object[]} c.packages
-             * @param {Array[]} c.map
+             * @param {String} c.packages.0.name package name
+             * @param {String} c.packages.0.path package path
+             * @param {String} c.packages.0.tag timestamp for this package's module file
+             * @param {Array[]} c.map file map configs
+             * @param {Array[]} c.map.0 a single map rule
+             * @param {RegExp} c.map.0.0 a regular expression to match url
+             * @param {String|Function} c.map.0.1 provide replacement for String.replace
+             * @param {boolean} c.combine whether to enable combo
+             * @param {String} c.base set base for kissy loader.use with caution!
+             * @param {boolean} c.debug whether to enable debug mod
+             * @example
+             * // use gallery from cdn
+             * <code>
+             * KISSY.config({
+             *      combine:true,
+             *      packages:[{
+             *          name:"gallery",
+             *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *      }]
+             * });
+             * </code>
+             * // use map to reduce connection count
+             * <code>
+             * S.config({
+             * map:[
+             * [
+             *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+             *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
+             * ]
+             * });
+             * </code>
              */
             config:function (c) {
                 var configs, cfg, r;
                 for (var p in c) {
                     if (c.hasOwnProperty(p)) {
-                        if ((configs = this['configs']) &&
-                            (cfg = configs[p])) {
+                        // some filter
+                        if ((configs = this['configs']) && (cfg = configs[p])) {
                             r = cfg(c[p]);
+                        } else {
+                            // or set directly
+                            S.Config[p] = c[p];
                         }
                     }
                 }
@@ -340,7 +401,21 @@
             }
         });
 
-    S.__init();
+    /**
+     * Initializes
+     */
+    function init() {
+        var self = this,
+            c;
+        self.Env = self.Env || {};
+        c = self.Config = self.Config || {};
+        // NOTICE: '@DEBUG@' will replace with '' when compressing.
+        // So, if loading source file, debug is on by default.
+        // If loading min version, debug is turned off automatically.
+        c.debug = '@DEBUG@';
+    }
+
+    init.call(S);
     return S;
 
 })('KISSY', undefined);

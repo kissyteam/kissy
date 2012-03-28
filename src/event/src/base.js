@@ -12,7 +12,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @namespace
+     * @namespace The event utility provides functions to add and remove event listeners.
      * @name Event
      */
     var Event =
@@ -153,6 +153,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         var cur = target,
             t,
+            win = DOM._getWin(cur.ownerDocument || cur),
             ontype = "on" + eventType;
 
         //bubble up dom tree
@@ -170,7 +171,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && window;
+                (cur === target.ownerDocument) && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {

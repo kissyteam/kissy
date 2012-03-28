@@ -2,11 +2,14 @@
  * @fileOverview script/css load across browser
  * @author  yiminghe@gmail.com
  */
-(function(S, utils) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
     var CSS_POLL_INTERVAL = 30,
+        win=S.Env.host,
+        utils = S.Loader.Utils,
+        jsCallbacks = {},
         /**
          * central poll for link node
          */
@@ -43,7 +46,7 @@
                         S.log('firefox  ' + cssRules + ' loaded : ' + url);
                         loaded = 1;
                     }
-                } catch(ex) {
+                } catch (ex) {
                     // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
                     // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
                     if (ex.code === 1000) {
@@ -68,43 +71,54 @@
         }
     }
 
+    function onreadystatechange() {
+        var self = this, rs = self.readyState;
+        if (/loaded|complete/i.test(rs)) {
+            self.onreadystatechange = null;
+            var src = self.src,
+                callbacks = jsCallbacks[src];
+            delete jsCallbacks[src];
+            S.each(callbacks, function (callback) {
+                callback.call(self);
+            });
+        }
+    }
+
     S.mix(utils, {
-        scriptOnload:document.addEventListener ?
-            function(node, callback) {
+        scriptOnload:S.Env.host.document.addEventListener ?
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
                 node.addEventListener('load', callback, false);
             } :
-            function(node, callback) {
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
+                var src = node.src,
+                    callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+                callbacks.push(callback);
+                if (callbacks.length == 1) {
+                    node.onreadystatechange = onreadystatechange;
+                }
             },
 
         /**
          * monitor css onload across browsers
          * 暂时不考虑如何判断失败，如 404 等
-         * @see
+         * @see <pre>
          *  - firefox 不可行（结论4错误）：
          *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
          *  - 全浏览器兼容
          *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
          *  - 其他
          *    - http://www.zachleat.com/web/load-css-dynamically/
+         *  </pre>
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:win.attachEvent ?
             // ie/opera
-            function(node, callback) {
+            function (node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
                     node.detachEvent('onload', t);
@@ -116,12 +130,12 @@
             } :
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
-            function(node, callback) {
-                var href = node.href,arr;
+            function (node, callback) {
+                var href = node.href, arr;
                 arr = monitors[href] = monitors[href] || [];
                 arr.node = node;
                 arr.push(callback);
                 startCssTimer();
             }
     });
-})(KISSY, KISSY.__loaderUtils);
+})(KISSY);

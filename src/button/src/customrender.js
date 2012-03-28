@@ -12,7 +12,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
     return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
 
             /**
-             *  modelcontrol 会在 create 后进行 unselectable，
+             *  Controller 会在 create 后进行 unselectable，
              *  需要所有的节点创建工作放在 createDom 中
              */
             createDom:function () {

@@ -4,7 +4,7 @@
  */
 KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30;

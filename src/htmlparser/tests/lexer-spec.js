@@ -24,6 +24,18 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             expect(nodes[2].toHtml()).toBe("<a>");
         });
 
+        it("works for isSelfClosed", function() {
+            var html = "<z/>x";
+            var lexer = new Lexer(html),node;
+            var nodes = [];
+            while (node = lexer.nextNode()) {
+                nodes.push(node);
+            }
+            expect(nodes.length).toBe(2);
+            expect(nodes[0].tagName).toBe("z");
+            expect(nodes[0].isSelfClosed).toBe(true);
+        });
+
         it("works for <br/>", function() {
             var html = "<br/>";
             var lexer = new Lexer(html),node;

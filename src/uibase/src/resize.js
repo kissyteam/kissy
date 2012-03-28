@@ -41,20 +41,19 @@ KISSY.add("uibase/resize", function (S) {
 
     Resize.prototype = {
         __destructor:function () {
-            this.resizer && this.resizer.destroy();
+            var r = this.resizer;
+            r && r.destroy();
         },
         _uiSetResize:function (v) {
-
             var Resizable = S.require("resizable"),
                 self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");
                 if (v.handlers) {
-                    self.resizer = new Resizable(v).render();
+                    self.resizer = new Resizable(v);
                 }
             }
-
         }
     };
 

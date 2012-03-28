@@ -2,14 +2,14 @@
  * @fileOverview mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component", function (KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
 
     /**
      * @name Component
      * @namespace
      */
     var Component = {
-        ModelControl:ModelControl,
+        Controller:Controller,
         Render:Render,
         Container:Container,
         UIStore:UIStore,
@@ -17,10 +17,10 @@ KISSY.add("component", function (KISSY, ModelControl, Render, Container, UIStore
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
-    Component.ModelControl = ModelControl;
+    Component.Controller = Controller;
     return Component;
 }, {
-    requires:['component/modelcontrol',
+    requires:['component/Controller',
         'component/render',
         'component/container',
         'component/uistore',

@@ -4,7 +4,6 @@
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
-
     /*
      inspired by closure library by Google
      see http://yiminghe.iteye.com/blog/1124720
@@ -67,7 +66,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
         for (var el = element; el = getOffsetParent(el);) {
 
-
             var clientWidth = el.clientWidth;
 
             if (
@@ -78,7 +76,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             // overflow 不为 visible 则可以限定其内元素
             // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
             // offsetParent 已经判断过了
-            //&& DOM.css(el, 'overflow') != 'visible'
+            // && DOM.css(el, 'overflow') != 'visible'
                 ) {
                 var clientLeft = el.clientLeft,
                     clientTop = el.clientTop,
@@ -275,7 +273,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          * @example
          * <code>
          *     {
-         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
          *     }
@@ -288,12 +286,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
                     v.node = Node.one(n);
                 }
             }
-            // 默认不是正中，可以实现自由动画 zoom
-//            value:{
-//                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-//                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-//                offset: [0, 0]      // 有效值为 [n, m]
-//            }
         }
     };
 
@@ -307,7 +299,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             H = align.charAt(1),
             offset, w, h, x, y;
 
-        if (node) {
+        if (node && !S.isWindow(node)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -341,20 +333,25 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            this.align(v.node, v.points, v.offset, v.overflow);
+            if (v) {
+                this.align(v.node, v.points, v.offset, v.overflow);
+            }
         },
 
-        /**
-         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @function
-         * @ignore
-         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {String[]} points 对齐方式
-         * @param {Number[]} [offset] 偏移
+        /*
+         对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         @function
+         @ignore
+         @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         @param {String[]} points 对齐方式
+         @param {Number[]} [offset] 偏移
          */
         align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
+            if (node) {
+                node = Node.one(node);
+            }
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
             offset = offset && [].concat(offset) || [0, 0];

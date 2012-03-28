@@ -10,7 +10,7 @@
 <body>
 <script>
     KISSY.use("uibase,component", function(S, UIBase, Component) {
-        var c = UIBase.create(Component.ModelControl, {
+        var c = UIBase.create(Component.Controller, {
             renderUI:function() {
                 this.get("el").attr("id",this.get("id"));
             }

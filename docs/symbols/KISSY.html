@@ -164,6 +164,8 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
+                                    <p class="desc">The KISSY global namespace object. you can use<code>    KISSY.each/mix</code>to do basic operation.or<code>     KISSY.use("overlay,node",function(S,Overlay,Node){         //     })</code>to do complex task with modules.</p>
+                                    
 
                                     
                                     
@@ -217,17 +219,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 KISSY.
-                                                <b class="name"><a href="../symbols/KISSY.html#.buildTime">buildTime</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">The build time of the library</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                KISSY.
                                                 <b class="name"><a href="../symbols/KISSY.html#.version">version</a></b>
                                                 <span class="type">{}</span>
                                                 
@@ -259,11 +250,11 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 KISSY.
                                                 <b class="name"><a href="../symbols/KISSY.html#.add">add</a></b>
-                                                <span class="param">(name, def, config)</span>
+                                                <span class="param">(name, def, cfg)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Registers a module.</span>                                                
+                                                <span class="desc">Registers a module with the KISSY global.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -333,7 +324,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">set KISSY config</span>                                                
+                                                <span class="desc">set KISSY configuration</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -434,6 +425,16 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 <span class="desc">frequently used in taobao cookie about nick</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                KISSY.
+                                                <b class="name"><a href="../symbols/KISSY.html#.getLoader">getLoader</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">get KISSY's loader instance</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -658,7 +659,7 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 KISSY.
-                                                <b class="name"><a href="../symbols/KISSY.html#.meta.mix">meta.mix</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.html#.mix">mix</a></b>
                                                 <span class="param">(r, s, ov, wl, deep)</span>
                                                 
                                                 
@@ -839,11 +840,11 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 KISSY.
                                                 <b class="name"><a href="../symbols/KISSY.html#.use">use</a></b>
-                                                <span class="param">(modNames, callback, cfg)</span>
+                                                <span class="param">(names, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Start load specific mods, and fire callback when these mods and requires are attached.</span>                                                
+                                                <span class="desc">Attached one or more modules to global KISSY instance.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -873,7 +874,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                             </div>
                                             
-                                            <div class="desc"></div>
+                                            <div class="desc">The KISSY global namespace object. you can use<code>    KISSY.each/mix</code>to do basic operation.or<code>     KISSY.use("overlay,node",function(S,Overlay,Node){         //     })</code>to do complex task with modules.</div>
                                             
                                             <dl>                                                
                                                 
@@ -907,36 +908,6 @@ a.go-top:active{text-decoration:none;}
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
-                                    
-                                        <li class="li">
-                                            <a name=".buildTime"> </a>
-                                            <div class="title">                                                
-                                                <span>KISSY.</span>
-                                                <b class="name">buildTime</b>
-                                                
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">
-                                                    The build time of the library
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
                                     
                                         <li class="li">
                                             <a name=".version"> </a>
@@ -988,17 +959,17 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>KISSY.</span>
                                                 <b class="name">add</b>
-                                                <span class="param">(name, def, config)</span>
+                                                <span class="param">(name, def, cfg)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_add.js.html#line38">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html#line40">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Registers a module.
+                                                Registers a module with the KISSY global.
                                                 
-                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_add.js.html">add.js</a>.
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html">init.js</a>.
                                                 
                                                 
                                             </div>
@@ -1016,34 +987,52 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                              ]
                                                             <span class="type">{String}</span> 
-                                                            <span class="desc">module name</span>
+                                                            <span class="desc">module name.it must be set if combine is true in <a href="../symbols/KISSY.html#.config">KISSY.config</a></span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            [ 
+                                                            &nbsp;
                                                             <b class="name">def</b>
                                                             
-                                                             ]
-                                                            <span class="type">{Function|Object}</span> 
-                                                            <span class="desc">entry point into the module that is used to bind module to KISSY</span>
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">module definition function that is used to returnthis module value</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">def.S</b>
+                                                            
+                                                            
+                                                            <span class="type">{<a href="../symbols/KISSY.html">KISSY</a>}</span> 
+                                                            <span class="desc">KISSY global instance</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">def.x...</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">this module's required modules' value</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             [ 
-                                                            <b class="name">config</b>
+                                                            <b class="name">cfg</b>
                                                             
                                                              ]
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">special config for this add</span>
+                                                            <span class="desc">module optional config data</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            [ 
-                                                            <b class="name">config.requires</b>
+                                                            &nbsp;
+                                                            <b class="name">cfg.requires</b>
                                                             
-                                                             ]
+                                                            
                                                             <span class="type">{String[]}</span> 
-                                                            <span class="desc">array of mod's name that current module requires</span>
+                                                            <span class="desc">this module's required module name list</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -1056,18 +1045,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Returns</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                        <li class="li">
-                                                            <span class="type">{<a href="../symbols/KISSY.html">KISSY</a>}</span> 
-                                                            <span></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -1080,7 +1057,7 @@ a.go-top:active{text-decoration:none;}
                                                     <ul>
                                                         
                                                         <li>
-                                                            <pre class="code"><code>KISSY.add('module-name', function(S){ }, {requires: ['mod1']});KISSY.add({    'mod-name': {        fullpath: 'url',        requires: ['mod1','mod2']    }});</code></pre>
+                                                            <pre class="code">// dom module's definition<code>KISSY.add("dom",function(S,UA){ return { css:function(el,name,val){} };},{ requires:["ua"]});</code></pre>
                                                         </li>
                                                         
                                                     </ul>
@@ -1099,7 +1076,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line270">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line297">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1138,6 +1115,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                <dt>Deprecated</dt>
+                                                <dd>
+                                                    recommended using packages
+                                                </dd>
+                                                
                                                 
                                                 
                                                 
@@ -1175,7 +1157,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line134">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line175">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1251,7 +1233,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_web.js.html#line120">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_web.js.html#line119">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1317,7 +1299,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line564">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line563">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1413,7 +1395,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line856">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line860">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1500,7 +1482,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line221">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line220">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1587,11 +1569,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line293">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line351">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                set KISSY config
+                                                set KISSY configuration
                                                 
                                                 
                                             </div>
@@ -1609,7 +1591,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             
-                                                            <span class="desc"></span>
+                                                            <span class="desc">detail configs</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -1623,11 +1605,92 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
+                                                            <b class="name">c.packages.0.name</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">package name</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.0.path</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">package path</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.0.tag</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">timestamp for this package's module file</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
                                                             <b class="name">c.map</b>
                                                             
                                                             
                                                             <span class="type">{Array[]}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">file map configs</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0</b>
+                                                            
+                                                            
+                                                            <span class="type">{Array[]}</span> 
+                                                            <span class="desc">a single map rule</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0.0</b>
+                                                            
+                                                            
+                                                            <span class="type">{RegExp}</span> 
+                                                            <span class="desc">a regular expression to match url</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0.1</b>
+                                                            
+                                                            
+                                                            <span class="type">{String|Function}</span> 
+                                                            <span class="desc">provide replacement for String.replace</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.combine</b>
+                                                            
+                                                            
+                                                            <span class="type">{boolean}</span> 
+                                                            <span class="desc">whether to enable combo</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.base</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">set base for kissy loader.use with caution!</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.debug</b>
+                                                            
+                                                            
+                                                            <span class="type">{boolean}</span> 
+                                                            <span class="desc">whether to enable debug mod</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -1647,6 +1710,17 @@ a.go-top:active{text-decoration:none;}
                                                                                                 
                                                 
                                                 
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul>
+                                                        
+                                                        <li>
+                                                            <pre class="code">// use gallery from cdn<code>KISSY.config({     combine:true,     packages:[{         name:"gallery",         path:"http://a.tbcdn.cn/s/kissy/gallery/"     }]});</code>// use map to reduce connection count<code>S.config({map:[[ /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/, "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]]});</code></pre>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </dd>
+                                                
                                                 
                                             </dl>                                            
                                         </li>
@@ -1660,7 +1734,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line285">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line284">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1735,7 +1809,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line816">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line820">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1813,7 +1887,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line186">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line185">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1909,7 +1983,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line327">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line388">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1964,7 +2038,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line602">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line601">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2030,7 +2104,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line612">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line611">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2087,7 +2161,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line518">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line517">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2174,7 +2248,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line168">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line209">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2268,7 +2342,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line406">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line405">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2355,7 +2429,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line591">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line590">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2392,6 +2466,59 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".getLoader"> </a>
+                                            <div class="title">
+                                                <span>KISSY.</span>
+                                                <b class="name">getLoader</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html#line61">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                get KISSY's loader instance
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html">init.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/KISSY.Loader.html">KISSY.Loader</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -2469,7 +2596,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line390">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line389">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2547,7 +2674,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line318">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line317">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2625,7 +2752,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line923">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line927">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2694,7 +2821,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line895">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line899">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2763,7 +2890,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line930">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line934">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2832,7 +2959,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line155">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line154">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2889,7 +3016,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line916">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line920">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2958,7 +3085,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line140">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line139">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3015,7 +3142,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line902">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line906">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3084,7 +3211,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line944">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line948">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3153,7 +3280,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line168">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line167">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3210,7 +3337,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line937">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line941">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3279,7 +3406,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line909">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line913">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3348,7 +3475,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line148">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line147">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3462,7 +3589,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line340">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line339">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3540,7 +3667,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line766">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line770">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3645,7 +3772,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line313">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line374">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3718,7 +3845,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line630">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line629">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3787,7 +3914,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line433">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line432">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3883,7 +4010,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line118">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line159">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3942,15 +4069,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".meta.mix"> </a>
+                                            <a name=".mix"> </a>
                                             <div class="title">
                                                 <span>KISSY.</span>
-                                                <b class="name">meta.mix</b>
+                                                <b class="name">mix</b>
                                                 <span class="param">(r, s, ov, wl, deep)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line23">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line51">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4008,7 +4135,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             
-                                                            <span class="desc">{boolean} whether recursive mix if encounter object</span>
+                                                            <span class="desc">{boolean} whether recursive mix if encounter object,if deep is set true,then ov should be set true too!</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -4040,6 +4167,17 @@ a.go-top:active{text-decoration:none;}
                                                                                                 
                                                 
                                                 
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul>
+                                                        
+                                                        <li>
+                                                            <pre class="code"><code>var t={};S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==tS.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}</code></pre>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </dd>
+                                                
                                                 
                                             </dl>                                            
                                         </li>
@@ -4053,7 +4191,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line244">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line270">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4104,7 +4242,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line124">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line123">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4145,7 +4283,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line585">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line584">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4195,7 +4333,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line664">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line668">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4428,7 +4566,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line464">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line463">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4524,7 +4662,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line540">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line539">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4611,7 +4749,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line102">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line101">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4698,7 +4836,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line806">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line810">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4776,7 +4914,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line264">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line263">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4813,10 +4951,10 @@ a.go-top:active{text-decoration:none;}
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">regexp</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{RegExp}</span> 
                                                             <span class="desc">to match a piece of template string</span>
                                                         </li>
@@ -4851,7 +4989,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line829">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line833">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4938,7 +5076,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line249">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line248">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4979,7 +5117,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line130">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line129">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -5036,7 +5174,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line620">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line619">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -5093,7 +5231,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line361">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line360">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -5171,7 +5309,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line714">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_lang.js.html#line718">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -5265,17 +5403,17 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>KISSY.</span>
                                                 <b class="name">use</b>
-                                                <span class="param">(modNames, callback, cfg)</span>
+                                                <span class="param">(names, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_use.js.html#line31">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html#line54">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Start load specific mods, and fire callback when these mods and requires are attached.
+                                                Attached one or more modules to global KISSY instance.
                                                 
-                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_use.js.html">use.js</a>.
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_init.js.html">init.js</a>.
                                                 
                                                 
                                             </div>
@@ -5289,11 +5427,11 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">modNames</b>
+                                                            <b class="name">names</b>
                                                             
                                                             
                                                             <span class="type">{String|String[]}</span> 
-                                                            <span class="desc">names of mods to be loaded,if string then separated by space</span>
+                                                            <span class="desc">moduleNames. 1-n modules to bind(use comma to separate)</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -5302,16 +5440,25 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">callback when modNames are all loaded,                  with KISSY as first argument and mod's value as the following argumwnts</span>
+                                                            <span class="desc">callback function executedwhen KISSY has the required functionality.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">cfg</b>
+                                                            <b class="name">callback.S</b>
                                                             
                                                             
-                                                            <span class="type">{Object}</span> 
-                                                            <span class="desc">special config for this use</span>
+                                                            <span class="type">{<a href="../symbols/KISSY.html">KISSY</a>}</span> 
+                                                            <span class="desc">KISSY instance</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">callback.x...</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">used module values</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -5336,7 +5483,7 @@ a.go-top:active{text-decoration:none;}
                                                     <ul>
                                                         
                                                         <li>
-                                                            <pre class="code"><code>S.use('mod-name', callback, config);S.use('mod1,mod2', callback, config);</code></pre>
+                                                            <pre class="code">// loads and attached overlay,dd and its dependenciesKISSY.use("overlay,dd",function(S,Overlay){});</pre>
                                                         </li>
                                                         
                                                     </ul>
@@ -5376,6 +5523,18 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Attribute.html">Attribute</a></li>
             
             
+            <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
+            
+            
             <li><a href="../symbols/Base.html">Base</a></li>
             
             
@@ -5388,7 +5547,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
             
             
-            <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
             
             
             <li><a href="../symbols/Cookie.html">Cookie</a></li>
@@ -5443,6 +5602,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

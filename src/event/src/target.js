@@ -47,9 +47,13 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     }
 
     /**
-     * 提供事件发布和订阅机制
-     * @name Target
+     * @class EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * and also allows other EventTargets to target the object with events sourced from the other object.
+     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
+     * or will not be created at all.
      * @namespace
+     * @name Target
      * @memberOf Event
      */
     var Target =
@@ -58,10 +62,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
      */
     {
         /**
-         * 触发事件
-         * @param {String} type 事件名
-         * @param {Object} [eventData] 事件附加信息对象
-         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         * Fire a custom event by name.
+         * The callback functions will be executed from the context specified when the event was created,
+         * and the {@link Event.Object} created will be mixed with eventData
+         * @param {String} type The type of the event
+         * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
+         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
         fire:function (type, eventData) {
             var self = this,
@@ -103,11 +109,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * defined event config
-         * @param type
-         * @param cfg
-         *        example { bubbles: true}
-         *        default bubbles: false
+         * Creates a new custom event of the specified type
+         * @param {String} type The type of the event
+         * @param {Object} cfg Config params
+         * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
         publish:function (type, cfg) {
             var self = this,
@@ -122,6 +127,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * bubble event to its targets
          * @param type
          * @param eventData
+         * @private
          */
         bubble:function (type, eventData) {
             var self = this,
@@ -137,8 +143,8 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * add target which bubblable event bubbles towards
-         * @param target another EventTarget instance
+         * Registers another EventTarget as a bubble target.
+         * @param {Event.Target} target Another EventTarget instance to add
          */
         addTarget:function (target) {
             var self = this,
@@ -146,6 +152,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
             targets[S.stamp(target)] = target;
         },
 
+        /**
+         * Removes a bubble target
+         * @param {Event.Target} target Another EventTarget instance to remove
+         */
         removeTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
@@ -153,31 +163,25 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * 监听事件
+         * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} fn The callback to execute in response to the event
+         * @param {Object} [scope] this object in callback
          */
         on:attach("add"),
         /**
-         * 取消监听事件
+         * Detach one or more listeners the from the specified event
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
+         * @param {Object} [scope] The custom object passed to subscribe.
          */
         detach:attach("remove")
     };
 
     return Target;
 }, {
-    /*
-     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-     否则会导致build打包文件 dom 和 dom-data 重复载入
-     */
     requires:["./base", './object', './utils', './handle']
 });
 /**

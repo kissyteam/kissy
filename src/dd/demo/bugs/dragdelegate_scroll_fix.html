@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dragdelegate scroll</title>
+<style>
+    .drag {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        border: 1px solid green;
+    }
+
+    .ks-dd-dragging {
+        visibility: hidden;
+    }
+
+    .ks-dd-proxy {
+        visibility: visible;;
+    }
+</style>
+</head>
+<body>
+<div id="container">
+    <div
+            id="col1"
+            class="col"
+            style="float: left;
+            margin: 20px;
+border: 1px solid red;
+width: 300px;height: 200px;left:50px;top:50px;overflow: auto;
+">
+        <div class='drag'>
+
+        </div>
+        <div style="height: 1000px;">
+
+        </div>
+    </div>
+
+
+    <div
+            id="col2"
+            class="col"
+            style="float: left;
+             margin: 20px;
+border: 1px solid red;
+width: 300px;height: 200px;left:450px;top:50px;overflow: auto;
+">
+
+        <div class='drag'>
+
+        </div>
+        <div style="height: 1000px;">
+
+        </div>
+    </div>
+</div>
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/ddm.js"></script>
+<script src="../../src/draggable-delegate.js"></script>
+<script src="../../src/draggable.js"></script>
+<script src="../../src/droppable-delegate.js"></script>
+<script src="../../src/droppable.js"></script>
+<script src="../../src/proxy.js"></script>
+<script src="../../src/scroll.js"></script>
+<script src="../../src/constrain.js"></script>
+<script src="../../src/dd.js"></script>
+<script>
+    KISSY.use("dd", function (S, DD) {
+        var d = new DD.DraggableDelegate({
+            container:"#container",
+            selector:'.drag',
+            move:1
+        });
+
+        new DD.Proxy().attach(d);
+
+        new DD.Scroll({
+            node:"#col1"
+        }).attachDrag(d);
+
+        new DD.Scroll({
+            node:"#col2"
+        }).attachDrag(d);
+
+    });
+</script>
+</body>
+</html>

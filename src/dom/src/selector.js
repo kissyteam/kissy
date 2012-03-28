@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -33,10 +33,13 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     }
 
     /**
-     * Retrieves an Array of HTMLElement based on the given CSS selector.
+     * Accepts a string containing a CSS selector which is then used to match a set of elements.
      * @param {String|HTMLElement[]} selector
-     * @param {String|HTMLElement[]} [context] find elements matching selector under context
-     * @return {HTMLElement[]} The array of found HTMLElement
+     * A string containing a selector expression.
+     * or
+     * array of HTMLElements.
+     * @param {String|HTMLElement[]|Document} [context] context under which to find elements matching selector.
+     * @return {HTMLElement[]} The array of found HTMLElements
      */
     function query(selector, context) {
         var ret,
@@ -247,9 +250,9 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             baseHasDuplicate = true;
 
         // Here we check if the JavaScript engine is using some sort of
-// optimization where it does not always call our comparision
-// function. If that is the case, discard the hasDuplicate value.
-//   Thus far that includes Google Chrome.
+        // optimization where it does not always call our comparision
+        // function. If that is the case, discard the hasDuplicate value.
+        // Thus far that includes Google Chrome.
         [0, 0].sort(function () {
             baseHasDuplicate = false;
             return 0;
@@ -435,38 +438,44 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         {
 
             /**
-             * Retrieves an Array of HTMLElement based on the given CSS selector.
+             * Accepts a string containing a CSS selector which is then used to match a set of elements.
              * @param {String|HTMLElement[]} selector
-             * @function
-             * @param {String|HTMLElement[]} [context] find elements matching selector under context
-             * @return {HTMLElement[]} The array of found HTMLElement
+             * A string containing a selector expression.
+             * or
+             * array of HTMLElements.
+             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @return {HTMLElement[]} The array of found HTMLElements
              */
             query:query,
 
             /**
-             * Retrieves an Array of HTMLElement based on the given CSS selector.
-             * @param {String|HTMLElement[]|HTMLElement} selector
-             * @param {String|HTMLElement[]|HTMLElement} [context] find elements matching selector under context
-             * @return {HTMLElement} the first element of array of found HTMLElement
+             * Accepts a string containing a CSS selector which is then used to match a set of elements.
+             * @param {String|HTMLElement[]} selector
+             * A string containing a selector expression.
+             * or
+             * array of HTMLElements.
+             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @return {HTMLElement} The first of found HTMLElements
              */
             get:function (selector, context) {
                 return query(selector, context)[0] || null;
             },
 
             /**
-             * 对一批元素集合去重
-             * @param {HTMLElement[]} elements
+             * Sorts an array of DOM elements, in place, with the duplicates removed.
+             * Note that this only works on arrays of DOM elements, not strings or numbers.
+             * @param {HTMLElement[]} The Array of DOM elements.
              * @function
-             * @return {HTMLElement[]} 去重后的元素集合
+             * @return {HTMLElement[]}
              */
             unique:unique,
 
             /**
-             * Filters an array of elements to only include matches of a filter.
-             * @param {String|HTMLElement[]} selector
-             * @param {String|Function} filter filter selector or filter function
-             * @param {String|HTMLElement[]} [context] find elements matching selector under context
-             * @return {HTMLElement[]} 过滤后的元素集合
+             * Reduce the set of matched elements to those that match the selector or pass the function's test.
+             * @param {String|HTMLElement[]} selector Matched elements
+             * @param {String|Function} filter Selector string or filter function
+             * @param {String|HTMLElement[]|Document} [context] Context under which to find matched elements
+             * @return {HTMLElement[]}
              */
             filter:function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -523,10 +532,10 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             },
 
             /**
-             * Returns true if the passed element(s) match the passed filter
-             * @param {String|HTMLElement[]} selector
-             * @param {String|Function} filter filter selector or filter function
-             * @param {String|HTMLElement[]} [context] find elements matching selector under context
+             * Returns true if the matched element(s) pass the filter test
+             * @param {String|HTMLElement[]} selector Matched elements
+             * @param {String|Function} filter Selector string or filter function
+             * @param {String|HTMLElement[]|Document} [context] Context under which to find matched elements
              * @returns {Boolean}
              */
             test:function (selector, filter, context) {

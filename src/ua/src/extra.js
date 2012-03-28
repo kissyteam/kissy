@@ -4,6 +4,7 @@
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
+        win=S.Env.host,
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -21,7 +22,7 @@ KISSY.add('ua/extra', function(S, UA) {
         o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
     }
     // Maxthon
-    else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
+    else if ((m = ua.match(/Maxthon/)) && (external = win.external)) {
         // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
         // but other maxthon versions all have exact version number
         shell = 'maxthon';

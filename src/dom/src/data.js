@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
@@ -160,13 +160,14 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             __EXPANDO:EXPANDO,
 
             /**
-             * whether any node has data
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String} [name] 数据键名
-             * @returns {boolean} 节点是否有关联数据键名的值
+             * Determine whether an element has any data or specified data name associated with it.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String} [name] A string naming the piece of data to set.
+             * @returns {boolean}
              */
             hasData:function (selector, name) {
-                var ret = false, elems = DOM.query(selector);
+                var ret = false,
+                    elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
                     var elem = elems[i];
                     if (elem.nodeType) {
@@ -182,13 +183,15 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             },
 
             /**
-             * Store arbitrary data associated with the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String} [name] 数据键名
-             * @param {String} [data] 数据键值
-             * @returns {*} 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
-             *              当不设置 data， name 那么返回： 节点的存储空间对象
-             *              当设置 data， name 那么进行设置操作，返回 undefined
+             * If name set and data unset Store arbitrary data associated with the specified element. Returns undefined.
+             * or
+             * If name set and data unset returns value at named data store for the element
+             * or
+             * If name unset and data unset returns the full data store for the element.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String} [name] A string naming the piece of data to set.
+             * @param {String} [data] The new data value.
+             * @returns {Object|undefined}
              */
             data:function (selector, name, data) {
 
@@ -227,9 +230,11 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             },
 
             /**
-             * Remove a previously-stored piece of data.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
+             * Remove a previously-stored piece of data from matched elements.
+             * or
+             * Remove all data from matched elements if name unset.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String} [name] A string naming the piece of data to delete.
              */
             removeData:function (selector, name) {
                 var els = DOM.query(selector), elem, i;

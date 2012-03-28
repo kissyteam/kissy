@@ -104,16 +104,19 @@ KISSY.use("mvc", function(S, MVC) {
             it("fire add/remove", function() {
 
                 var c = new Collection(),add = 0,remove = 0,newModel,removeModel;
+
                 c.on("add", function(e) {
                     add = 1;
                     newModel = (e.model);
                 });
+
                 var model = c.add({x:1,y:1});
 
                 c.on("remove", function(e) {
                     remove = 1;
                     removeModel = (e.model);
                 });
+
                 c.remove(model);
 
                 expect(add).toBe(1);

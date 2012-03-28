@@ -4,9 +4,9 @@
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EventTarget = Event.Target,
-        doc = document, bd, head = DOM.get('head'),
+        doc = win.document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),
         ie9 = (ie >= 9),
@@ -498,10 +498,13 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             Event.on(container, 'mousedown', function (ev) {
                 if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
-                    input.onbeforedeactivate = function () {
-                        win.event.returnValue = false;
-                        input.onbeforedeactivate = null;
-                    };
+                    if (UA.ie && UA.ie < 9) {
+                        // #114
+                        input.onbeforedeactivate = function () {
+                            win.event.returnValue = false;
+                            input.onbeforedeactivate = null;
+                        };
+                    }
                     // 2. for W3C
                     ev.preventDefault();
                 }

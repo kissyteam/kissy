@@ -2,11 +2,13 @@
  * @fileOverview getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
+        doc = S.Env.host.document,
+        utils = S.Loader.Utils,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -19,8 +21,7 @@
          * @private
          */
         getStyle:function (url, success, charset) {
-            var doc = document,
-                head = utils.docHead(),
+            var head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 
@@ -70,8 +71,7 @@
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
-            var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+            var head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,
@@ -114,10 +114,12 @@
                         }, false);
                     }
 
-                    timer = S.later(function () {
-                        timer = undefined;
-                        error();
-                    }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);
+                    if (timeout) {
+                        timer = S.later(function () {
+                            timer = undefined;
+                            error();
+                        }, timeout * MILLISECONDS_OF_SECOND);
+                    }
                 }
             }
             head.insertBefore(node, head.firstChild);
@@ -125,4 +127,10 @@
         }
     });
 
-})(KISSY, KISSY.__loaderUtils);
+})(KISSY);
+/**
+ * yiminghe@gmail.com 2012-03-13
+ *  - getScript
+ *      - 404 in ie<9 trigger success , others trigger error
+ *      - syntax error in all trigger success
+ **/

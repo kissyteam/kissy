@@ -20,72 +20,69 @@ KISSY.add("uibase/stdmod", function () {
      */
     {
         /**
-         * 头元素，只读
+         * Header element of dialog. Readonly
          * @type Node
          */
         header:{
             view:true
         },
         /**
-         * 体元素，只读
+         * Body element of dialog. Readonly
          * @type Node
          */
         body:{
             view:true
         },
         /**
-         * 尾元素，只读
+         * Footer element of dialog. Readonly
          * @type Node
          */
         footer:{
             view:true
         },
         /**
-         * 体元素样式键值对
+         * Key-value map of body element's style.
          * @type Object
          */
         bodyStyle:{
             view:true
         },
         /**
-         * 尾元素样式键值对
+         * Key-value map of footer element's style.
          * @type Object
          */
         footerStyle:{
             view:true
         },
         /**
-         * 头元素样式键值对
+         * Key-value map of header element's style.
          * @type Object
          */
         headerStyle:{
             view:true
         },
         /**
-         * 头元素内容值
+         * Html content of header element.
          * @type Node|String
          */
         headerContent:{
             view:true
         },
         /**
-         * 体元素内容值
+         * Html content of body element.
          * @type Node|String
          */
         bodyContent:{
             view:true
         },
         /**
-         * 尾元素内容值
+         * Html content of footer element.
          * @type Node|String
          */
         footerContent:{
             view:true
         }
     };
-
-
-    StdMod.prototype = {};
 
     return StdMod;
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 23 12:18
 */
 /**
  * @fileOverview form data  serialization util
@@ -63,7 +63,7 @@ KISSY.add("ajax/FormSerializer", function(S, DOM) {
  */
 KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30;
@@ -212,7 +212,8 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
  */
 KISSY.add("ajax/ScriptTransport", function (S, io) {
 
-    var doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
@@ -242,8 +243,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!xhrObj.config.crossDomain &&
-            !xhrObj.config['forceScript']) {
+        if (!xhrObj.config.crossDomain) {
             return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;
@@ -273,7 +273,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
             script.onerror =
                 script.onload =
                     script.onreadystatechange = function (e) {
-                        e = e || window.event;
+                        e = e || win.event;
                         // firefox onerror 没有 type ?!
                         self._callback((e.type || "error").toLowerCase());
                     };
@@ -341,7 +341,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         PROXY_PAGE = "/sub_domain_proxy.html",
-        doc = document,
+        doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
         };
@@ -385,7 +385,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
-                iframe = iframeDesc.iframe = document.createElement("iframe");
+                iframe = iframeDesc.iframe = doc.createElement("iframe");
                 DOM.css(iframe, {
                     position:'absolute',
                     left:'-9999px',
@@ -426,7 +426,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         ID = "io_swf",
         // flash transporter
         flash,
-        doc = document,
+        doc = S.Env.host.document,
         // whether create the flash transporter
         init = false;
 
@@ -644,9 +644,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class 请求对象类型
-     * @memberOf io
-     * @param c 请求发送配置选项
+     * @class A class for constructing io request instances. !Do Not New By Yourself!
+     * @extends KISSY.Promise
+     * @memberOf IO
      */
     function XhrObject(c) {
         Promise.call(this);
@@ -655,22 +655,59 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             responseData:null,
             config:c || {},
             timeoutTimer:null,
+
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description String typed data returned from server
+             */
             responseText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description xml typed data returned from server
+             */
             responseXML:null,
             responseHeadersString:"",
             responseHeaders:null,
             requestHeaders:{},
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br>
+             * readyState of current request<br>
+             * 0: initialized<br>
+             * 1: send <br>
+             * 4: completed<br>
+             */
             readyState:0,
-            //internal state
             state:0,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description HTTP statusText of current request
+             */
             statusText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br> HTTP Status Code of current request <br>
+             * eg:<br>
+             * 200 : ok<br>
+             * 404 : Not Found<br>
+             * 500 : Server Error<br>
+             */
             status:0,
             transport:null,
             _defer:new S.Defer(this)
         });
     }
 
-    S.extend(XhrObject, Promise, {
+    S.extend(XhrObject, Promise,
+        /**
+         * @lends IO.XhrObject.prototype
+         */
+        {
             // Caches the header
             setRequestHeader:function (name, value) {
                 var self = this;
@@ -678,14 +715,21 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Raw string
+            /**
+             * get all response headers as string after request is completed
+             * @returns {String}
+             */
             getAllResponseHeaders:function () {
                 var self = this;
                 return self.state === 2 ? self.responseHeadersString : null;
             },
 
-            // Builds headers hashtable if needed
-            getResponseHeader:function (key) {
+            /**
+             * get header value in response to specified header name
+             * @param {String} name header name
+             * @return {String} header value
+             */
+            getResponseHeader:function (name) {
                 var match, self = this;
                 if (self.state === 2) {
                     if (!self.responseHeaders) {
@@ -694,7 +738,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             self.responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = self.responseHeaders[ key];
+                    match = self.responseHeaders[ name ];
                 }
                 return match === undefined ? null : match;
             },
@@ -708,7 +752,10 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Cancel the request
+            /**
+             * cancel this request
+             * @param {String} [statusText=abort] error reason as current request object's statusText
+             */
             abort:function (statusText) {
                 var self = this;
                 statusText = statusText || "abort";
@@ -772,7 +819,8 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        _XDomainRequest = window['XDomainRequest'],
+        win=S.Env.host,
+        _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
@@ -804,6 +852,8 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
                 /**
                  * ie>7 强制使用 flash xdr
+                 * 使用 withCredentials 检测是否支持 CORS
+                 * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
                  */
                 if (!("withCredentials" in detectXhr) &&
                     (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
@@ -838,13 +888,14 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包
+ * CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
  **//**
  * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
-        win = window,
+        win = S.Env.host,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -872,7 +923,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         return undefined;
     }
 
-    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
+    XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
         if (crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
@@ -1024,10 +1075,10 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         }
 
                         xhrObj._xhrReady(status, statusText);
-
                     }
                 }
             } catch (firefoxAccessException) {
+                S.log(firefoxAccessException, "error");
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj._xhrReady(-1, firefoxAccessException);
@@ -1043,53 +1094,72 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
  * @fileOverview io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax", function (S, serializer, io, XhrObject) {
+KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
     var undef = undefined;
+
+    function get(url, data, callback, dataType, _t) {
+        // data 参数可省略
+        if (S.isFunction(data)) {
+            dataType = callback;
+            callback = data;
+            data = undef;
+        }
+
+        return IO({
+            type:_t || "get",
+            url:url,
+            data:data,
+            success:callback,
+            dataType:dataType
+        });
+    }
+
     // some shortcut
-    S.mix(io,
+    S.mix(IO,
 
         /**
-         * @lends io
+         * @lends IO
          */
         {
             XhrObject:XhrObject,
             /**
-             * form 序列化
-             * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+             * form serialization
+             * @function
+             * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
+             * @returns {String} serialized string represent form elements
              */
             serialize:serializer.serialize,
 
             /**
-             * get 请求
-             * @param url
-             * @param data
-             * @param callback
-             * @param [dataType]
-             * @param [_t]
+             * perform a get request
+             * @function
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback <br/>
+             * success callback when this request is done
+             * with parameter <br/>
+             * 1. data returned from this request with type specified by dataType <br/>
+             * 2. status of this request with type String <br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
-            get:function (url, data, callback, dataType, _t) {
-                // data 参数可省略
-                if (S.isFunction(data)) {
-                    dataType = callback;
-                    callback = data;
-                    data = undef;
-                }
-
-                return io({
-                    type:_t || "get",
-                    url:url,
-                    data:data,
-                    success:callback,
-                    dataType:dataType
-                });
-            },
+            get:get,
 
             /**
-             * post 请求
-             * @param url
-             * @param data
-             * @param callback
-             * @param [dataType]
+             * preform a post request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback <br/>
+             * success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
             post:function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1097,53 +1167,70 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, dataType, "post");
+                return get(url, data, callback, dataType, "post");
             },
 
             /**
-             * jsonp 请求
-             * @param url
-             * @param [data]
-             * @param callback
+             * preform a jsonp request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback
+             *  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @returns {IO.XhrObject}
              */
             jsonp:function (url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, "jsonp");
+                return get(url, data, callback, "jsonp");
             },
 
             // 和 S.getScript 保持一致
             // 更好的 getScript 可以用
             /*
-             io({
+             IO({
              dataType:'script'
              });
              */
             getScript:S.getScript,
 
             /**
-             * 获取 json 数据
-             * @param url
-             * @param data
-             * @param callback
+             * perform a get request to fetch json data from server
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type JSON<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @returns {IO.XhrObject}
              */
             getJSON:function (url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, "json");
+                return get(url, data, callback, "json");
             },
 
             /**
-             * 无刷新上传文件
-             * @param url
-             * @param form
-             * @param data
-             * @param callback
-             * @param [dataType]
+             * submit form without page refresh
+             * @param {String} url request destination
+             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
             upload:function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1151,7 +1238,7 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
                     callback = data;
                     data = undef;
                 }
-                return io({
+                return IO({
                     url:url,
                     type:'post',
                     dataType:dataType,
@@ -1163,14 +1250,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
         });
 
     S.mix(S, {
-        "Ajax":io,
-        "IO":io,
-        ajax:io,
-        io:io,
-        jsonp:io.jsonp
+        "Ajax":IO,
+        "IO":IO,
+        ajax:IO,
+        io:IO,
+        jsonp:IO.jsonp
     });
 
-    return io;
+    return IO;
 }, {
     requires:[
         "ajax/FormSerializer",
@@ -1187,294 +1274,429 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
  */
 KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
-        var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
-            rspace = /\s+/,
-            rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-            mirror = function (s) {
-                return s;
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+        rspace = /\s+/,
+        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        mirror = function (s) {
+            return s;
+        },
+        HTTP_PORT = 80,
+        HTTPS_PORT = 443,
+        rnoContent = /^(?:GET|HEAD)$/,
+        curLocation,
+        doc = S.Env.host.document,
+        curLocationParts;
+
+    try {
+        curLocation = location.href;
+    } catch (e) {
+        S.log("ajax/base get curLocation error : ");
+        S.log(e);
+        // Use the href attribute of an A element
+        // since IE will modify it given document.location
+        curLocation = doc.createElement("a");
+        curLocation.href = "";
+        curLocation = curLocation.href;
+    }
+
+    // fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"
+    curLocationParts = rurl.exec(curLocation) || ["", "", "", ""];
+
+    var isLocal = rlocalProtocol.test(curLocationParts[1]),
+        transports = {},
+        defaultConfig = {
+            type:"GET",
+            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            async:true,
+            serializeArray:true,
+            processData:true,
+            accepts:{
+                xml:"application/xml, text/xml",
+                html:"text/html",
+                text:"text/plain",
+                json:"application/json, text/javascript",
+                "*":"*/*"
             },
-            HTTP_PORT = 80,
-            HTTPS_PORT = 443,
-            rnoContent = /^(?:GET|HEAD)$/,
-            curLocation,
-            curLocationParts;
+            converters:{
+                text:{
+                    json:JSON.parse,
+                    html:mirror,
+                    text:mirror,
+                    xml:S.parseXML
+                }
+            },
+            contents:{
+                xml:/xml/,
+                html:/html/,
+                json:/json/
+            }
+        };
 
+    defaultConfig.converters.html = defaultConfig.converters.text;
 
-        try {
-            curLocation = location.href;
-        } catch (e) {
-            S.log("ajax/base get curLocation error : ");
-            S.log(e);
-            // Use the href attribute of an A element
-            // since IE will modify it given document.location
-            curLocation = document.createElement("a");
-            curLocation.href = "";
-            curLocation = curLocation.href;
+    function setUpConfig(c) {
+        // deep mix,exclude context!
+        var context = c.context;
+        delete c.context;
+        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+        c.context = context;
+
+        if (!("crossDomain" in c)) {
+            var parts = rurl.exec(c.url.toLowerCase());
+            c.crossDomain = !!( parts &&
+                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
+                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
+                        !=
+                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
+                );
         }
 
-        curLocationParts = rurl.exec(curLocation);
-
-        var isLocal = rlocalProtocol.test(curLocationParts[1]),
-            transports = {},
-            defaultConfig = {
-                // isLocal:isLocal,
-                type:"GET",
-                // only support utf-8 when post, encoding can not be changed actually
-                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-                async:true,
-                // whether add []
-                serializeArray:true,
-                // whether param data
-                processData:true,
-
-                /*
-                 url:"",
-                 context:null,
-                 // 单位秒!!
-                 timeout: 0,
-                 data: null,
-                 // 可取json | jsonp | script | xml | html | text | null | undefined
-                 dataType: null,
-                 username: null,
-                 password: null,
-                 cache: null,
-                 mimeType:null,
-                 xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 },
-                 src:''
-                 },
-                 headers: {},
-                 xhrFields:{},
-                 // jsonp script charset
-                 scriptCharset:null,
-                 crossdomain:false,
-                 forceScript:false,
-                 */
-
-                accepts:{
-                    xml:"application/xml, text/xml",
-                    html:"text/html",
-                    text:"text/plain",
-                    json:"application/json, text/javascript",
-                    "*":"*/*"
-                },
-                converters:{
-                    text:{
-                        json:JSON.parse,
-                        html:mirror,
-                        text:mirror,
-                        xml:S.parseXML
-                    }
-                },
-                contents:{
-                    xml:/xml/,
-                    html:/html/,
-                    json:/json/
-                }
-            };
-
-        defaultConfig.converters.html = defaultConfig.converters.text;
-
-        function setUpConfig(c) {
-            // deep mix,exclude context!
-            var context = c.context;
-            delete c.context;
-            c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
-            c.context = context;
-
-            if (!S.isBoolean(c.crossDomain)) {
-                var parts = rurl.exec(c.url.toLowerCase());
-                c.crossDomain = !!( parts &&
-                    ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
-                        ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
-                            !=
-                            ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
-                    );
-            }
-
-            if (c.processData && c.data && !S.isString(c.data)) {
-                // 必须 encodeURIComponent 编码 utf-8
-                c.data = S.param(c.data, undefined, undefined, c.serializeArray);
-            }
-
-            // fix #90 ie7 about "//x.htm"
-            c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
-            c.type = c.type.toUpperCase();
-            c.hasContent = !rnoContent.test(c.type);
-
-            if (!c.hasContent) {
-                if (c.data) {
-                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
-                    delete c.data;
-                }
-                if (c.cache === false) {
-                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
-                }
-            }
-
-            // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-            c.dataType = S.trim(c.dataType || "*").split(rspace);
-
-            c.context = c.context || c;
-            return c;
+        if (c.processData && c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
+            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
         }
 
-        function fire(eventType, xhrObject) {
-            /**
-             * @name io#complete
-             * @description 请求完成（成功或失败）后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        // fix #90 ie7 about "//x.htm"
+        c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
+        c.type = c.type.toUpperCase();
+        c.hasContent = !rnoContent.test(c.type);
 
-            /**
-             * @name io#success
-             * @description 请求成功后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
+        c.dataType = S.trim(c.dataType || "*").split(rspace);
 
-            /**
-             * @name io#error
-             * @description 请求失败后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
-            io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+        if (!("cache" in c) && S.inArray(c.dataType[0], ["script", "jsonp"])) {
+            c.cache = false;
         }
+
+        if (!c.hasContent) {
+            if (c.data) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
+                delete c.data;
+            }
+            if (c.cache === false) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+            }
+        }
+
+        c.context = c.context || c;
+        return c;
+    }
+
+    function fire(eventType, xhrObject) {
+        /**
+         * @name IO#complete
+         * @description fired after request completes (success or error)
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
 
         /**
-         * @name io
-         * @description kissy io framework
-         * @namespace io framework
-         * @function
-         * @param {Object} c 发送请求配置选项
-         * @param {String} c.url 请求地址
+         * @name IO#success
+         * @description  fired after request succeeds
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
          */
-        function io(c) {
-            if (!c.url) {
-                return undefined;
-            }
-            c = setUpConfig(c);
-            var xhrObject = new XhrObject(c);
+
+        /**
+         * @name IO#error
+         * @description fired after request occurs error
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
+        io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+    }
+
+    /**
+     * @name IO
+     * @namespace Provides utility that brokers HTTP requests through a simplified interface
+     * @function
+     *
+     * @param {Object} c <br/>name-value of object to config this io request.<br/>
+     *  all values are optional.<br/>
+     *  default value can be set through {@link io.setupConfig}<br/>
+     *
+     * @param {String} c.url <br/>request destination
+     *
+     * @param {String} c.type <br/>request type.
+     * eg: "get","post"<br/>
+     * Default: "get"<br/>
+     *
+     * @param {String} c.contentType <br/>
+     * Default: "application/x-www-form-urlencoded; charset=UTF-8"<br/>
+     * Data will always be transmitted to the server using UTF-8 charset<br/>
+     *
+     * @param {Object} c.accepts <br/>
+     * Default: depends on DataType.<br/>
+     * The content type sent in request header that tells the server<br/>
+     * what kind of response it will accept in return.<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}
+     *
+     * @param {Boolean} c.async <br/>
+     * Default: true<br/>
+     * whether request is sent asynchronously<br/>
+     *
+     * @param {Boolean} c.cache <br/>
+     * Default: true ,false for dataType "script" and "jsonp"<br/>
+     * if set false,will append _ksTs=Date.now() to url automatically<br/>
+     *
+     * @param {Object} c.contents <br/>
+     * a name-regexp map to determine request data's dataType<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}<br/>
+     *
+     * @param {Object} c.context <br/>
+     * specify the context of this request's callback (success,error,complete)
+     *
+     * @param {Object} c.converters <br/>
+     * Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}<br/>
+     * specified how to transform one dataType to another dataType<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}
+     *
+     * @param {Boolean} c.crossDomain <br/>
+     * Default: false for same-domain request,true for cross-domain request<br/>
+     * if server-side jsonp redirect to another domain ,you should set this to true
+     *
+     * @param {Object} c.data <br/>
+     * Data sent to server.if processData is true,data will be serialized to String type.<br/>
+     * if value if an Array, serialization will be based on serializeArray.
+     *
+     * @param {String} c.dataType <br/>
+     * return data as a specified type<br/>
+     * Default: Based on server contentType header<br/>
+     * "xml" : a XML document<br/>
+     * "text"/"html": raw server data <br/>
+     * "script": evaluate the return data as script<br/>
+     * "json": parse the return data as json and return the result as final data<br/>
+     * "jsonp": load json data via jsonp
+     *
+     * @param {Object} c.headers <br/>
+     * additional name-value header to send along with this request.
+     *
+     * @param {String} c.jsonp <br/>
+     * Default: "callback"<br/>
+     * Override the callback function name in a jsonp request. eg:<br/>
+     * set "callback2" , then jsonp url will append  "callback2=?".
+     *
+     * @param {String} c.jsonpCallback <br/>
+     * Specify the callback function name for a jsonp request.<br/>
+     * set this value will replace the auto generated function name.<br/>
+     * eg:<br/>
+     * set "customCall" , then jsonp url will append "callback=customCall"
+     *
+     * @param {String} c.mimeType <br/>
+     * override xhr's mime type
+     *
+     * @param {Boolean} c.processData <br/>
+     * Default: true<br/>
+     * whether data will be serialized as String
+     *
+     * @param {String} c.scriptCharset <br/>
+     * only for dataType "jsonp" and "script" and "get" type.<br/>
+     * force the script to certain charset.
+     *
+     * @param {Function} c.success <br/>
+     * success(data,textStatus,xhr)<br/>
+     * callback function called if the request succeeds.this function has 3 arguments<br/>
+     * 1. data returned from this request with type specified by dataType<br/>
+     * 2. status of this request with type String<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Function} c.error <br/>
+     * success(data,textStatus,xhr) <br/>
+     * callback function called if the request occurs error.this function has 3 arguments<br/>
+     * 1. null value<br/>
+     * 2. status of this request with type String,such as "timeout","Not Found","parsererror:..."<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Function} c.complete <br/>
+     * success(data,textStatus,xhr)<br/>
+     * callback function called if the request finished(success or error).this function has 3 arguments<br/>
+     * 1. null value if error occurs or data returned from server<br/>
+     * 2. status of this request with type String,such as success:"ok",
+     * error:"timeout","Not Found","parsererror:..."<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Number} c.timeout <br/>
+     * Set a timeout(in seconds) for this request.if will call error when timeout
+     *
+     * @param {Boolean} c.serializeArray <br/>
+     * whether add [] to data's name when data's value is array in serialization
+     *
+     * @param {Object} c.xhrFields <br/>
+     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+     *
+     * @param {String} c.username <br/>
+     * a username tobe used in response to HTTP access authentication request
+     *
+     * @param {String} c.password <br/>
+     * a password tobe used in response to HTTP access authentication request
+     *
+     * @param {Object} c.xdr <br/>
+     * cross domain request config object
+     *
+     * @param {String} c.xdr.src <br/>
+     * Default: kissy's flash url
+     * flash sender url
+     *
+     * @param {String} c.xdr.use <br/>
+     * if set to "use", it will always use flash for cross domain request even in chrome/firefox
+     *
+     * @param {Object} c.xdr.subDomain <br/>
+     * cross sub domain request config object
+     *
+     * @param {String} c.xdr.subDomain.proxy <br/>
+     * proxy page,eg:<br/>
+     * a.t.cn/a.htm send request to b.t.cn/b.htm: <br/>
+     * 1. a.htm set document.domain='t.cn'<br/>
+     * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
+     * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
+     *
+     * @returns {IO.XhrObject} current request object
+     */
+    function io(c) {
+        if (!c.url) {
+            return undefined;
+        }
+        c = setUpConfig(c);
+        var xhrObject = new XhrObject(c);
 
 
-            /**
-             * @name io#start
-             * @description 生成请求对象前触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        /**
+         * @name IO#start
+         * @description fired before generating request object
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
 
-            fire("start", xhrObject);
-            var transportContructor = transports[c.dataType[0]] || transports["*"],
-                transport = new transportContructor(xhrObject);
-            xhrObject.transport = transport;
+        fire("start", xhrObject);
+        var transportContructor = transports[c.dataType[0]] || transports["*"],
+            transport = new transportContructor(xhrObject);
+        xhrObject.transport = transport;
 
-            if (c.contentType) {
-                xhrObject.setRequestHeader("Content-Type", c.contentType);
-            }
-            var dataType = c.dataType[0],
-                accepts = c.accepts;
-            // Set the Accepts header for the server, depending on the dataType
-            xhrObject.setRequestHeader(
-                "Accept",
-                dataType && accepts[dataType] ?
-                    accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
-                    accepts[ "*" ]
-            );
+        if (c.contentType) {
+            xhrObject.setRequestHeader("Content-Type", c.contentType);
+        }
+        var dataType = c.dataType[0],
+            accepts = c.accepts;
+        // Set the Accepts header for the server, depending on the dataType
+        xhrObject.setRequestHeader(
+            "Accept",
+            dataType && accepts[dataType] ?
+                accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
+                accepts[ "*" ]
+        );
 
-            // Check for headers option
-            for (var i in c.headers) {
-                xhrObject.setRequestHeader(i, c.headers[ i ]);
-            }
-
-            function genHandler(handleStr) {
-                return function (v) {
-                    if (xhrObject.timeoutTimer) {
-                        clearTimeout(xhrObject.timeoutTimer);
-                        xhrObject.timeoutTimer = 0;
-                    }
-                    var h = c[handleStr];
-                    h && h.apply(c.context, v);
-                    fire(handleStr, xhrObject);
-                };
-            }
-
-            xhrObject.then(genHandler("success"), genHandler("error"));
-
-            xhrObject.fin(genHandler("complete"));
-
-            xhrObject.readyState = 1;
-
-            /**
-             * @name io#send
-             * @description 发送请求前触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} xhr 当前请求对象
-             */
-
-            fire("send", xhrObject);
-
-            // Timeout
-            if (c.async && c.timeout > 0) {
-                xhrObject.timeoutTimer = setTimeout(function () {
-                    xhrObject.abort("timeout");
-                }, c.timeout * 1000);
-            }
-
-            try {
-                // flag as sending
-                xhrObject.state = 1;
-                transport.send();
-            } catch (e) {
-                // Propagate exception as error if not done
-                if (xhrObject.status < 2) {
-                    xhrObject._xhrReady(-1, e);
-                    // Simply rethrow otherwise
-                } else {
-                    S.error(e);
-                }
-            }
-
-            return xhrObject;
+        // Check for headers option
+        for (var i in c.headers) {
+            xhrObject.setRequestHeader(i, c.headers[ i ]);
         }
 
-        S.mix(io, Event.Target);
+        function genHandler(handleStr) {
+            return function (v) {
+                if (xhrObject.timeoutTimer) {
+                    clearTimeout(xhrObject.timeoutTimer);
+                    xhrObject.timeoutTimer = 0;
+                }
+                var h = c[handleStr];
+                h && h.apply(c.context, v);
+                fire(handleStr, xhrObject);
+            };
+        }
 
-        S.mix(io, {
+        xhrObject.then(genHandler("success"), genHandler("error"));
+
+        xhrObject.fin(genHandler("complete"));
+
+        xhrObject.readyState = 1;
+
+        /**
+         * @name IO#send
+         * @description fired before sending request
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
+
+        fire("send", xhrObject);
+
+        // Timeout
+        if (c.async && c.timeout > 0) {
+            xhrObject.timeoutTimer = setTimeout(function () {
+                xhrObject.abort("timeout");
+            }, c.timeout * 1000);
+        }
+
+        try {
+            // flag as sending
+            xhrObject.state = 1;
+            transport.send();
+        } catch (e) {
+            // Propagate exception as error if not done
+            if (xhrObject.state < 2) {
+                xhrObject._xhrReady(-1, e);
+                // Simply rethrow otherwise
+            } else {
+                S.error(e);
+            }
+        }
+
+        return xhrObject;
+    }
+
+    S.mix(io, Event.Target);
+
+    S.mix(io,
+        /**
+         * @lends IO
+         */
+        {
+            /**
+             * whether current application is a local application
+             * (protocal is file://,widget://,about://)
+             * @type Boolean
+             * @field
+             */
             isLocal:isLocal,
+            /**
+             * name-value object that set default config value for io request
+             * @param {Object} setting for details see {@link io}
+             */
             setupConfig:function (setting) {
                 S.mix(defaultConfig, setting, undefined, undefined, true);
             },
+            /**
+             * @private
+             */
             setupTransport:function (name, fn) {
                 transports[name] = fn;
             },
+            /**
+             * @private
+             */
             getTransport:function (name) {
                 return transports[name];
             },
+            /**
+             * get default config value for io request
+             * @returns {Object}
+             */
             getConfig:function () {
                 return defaultConfig;
             }
         });
 
-        return io;
-    },
-    {
-        requires:["json", "event", "./XhrObject"]
-    });
+    return io;
+}, {
+    requires:["json", "event", "./XhrObject"]
+});
 
 /**
  * 2012-2-07 yiminghe@gmail.com:
@@ -1541,7 +1763,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function (S, io) {
-
+    var win = S.Env.host;
     io.setupConfig({
         jsonp:"callback",
         jsonpCallback:function () {
@@ -1559,12 +1781,12 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 jsonpCallback = S.isFunction(cJsonpCallback) ?
                     cJsonpCallback() :
                     cJsonpCallback,
-                previous = window[ jsonpCallback ];
+                previous = win[ jsonpCallback ];
 
             c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
 
             // build temporary JSONP function
-            window[jsonpCallback] = function (r) {
+            win[jsonpCallback] = function (r) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
                 // jsonp 返回了数组
                 if (arguments.length > 1) {
@@ -1575,10 +1797,10 @@ KISSY.add("ajax/jsonp", function (S, io) {
 
             // cleanup whether success or failure
             xhrObject.fin(function () {
-                window[ jsonpCallback ] = previous;
+                win[ jsonpCallback ] = previous;
                 if (previous === undefined) {
                     try {
-                        delete window[ jsonpCallback ];
+                        delete win[ jsonpCallback ];
                     } catch (e) {
                         //S.log("delete window variable error : ");
                         //S.log(e);

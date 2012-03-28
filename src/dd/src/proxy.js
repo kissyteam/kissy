@@ -9,8 +9,10 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
         PROXY_ATTR = "__proxy";
 
     /**
+     * provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
      * @memberOf DD
-     * @class proxy drag
+     * @class
      */
     function Proxy() {
         var self = this;
@@ -24,9 +26,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
      */
     {
         /**
-         * 如何生成替代节点
+         * how to get the proxy node. default:clone the node itself deeply.
          * @type {Function}
-         * @default 深度克隆自身
          */
         node:{
             value:function (drag) {
@@ -34,18 +35,16 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
             }
         },
         /**
-         * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+         * destroy the proxy node at the end of this drag. default:false
          * @type {boolean}
-         * @default false
          */
         destroyOnEnd:{
             value:false
         },
 
         /**
-         * 拖放结束是否移动本身到代理节点位置
+         * move the original node at the end of the drag. default:true
          * @type {boolean}
-         * @default true
          */
         moveOnEnd:{
             value:true
@@ -58,10 +57,10 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
          */
         {
             /**
-             * 关联到某个拖对象
-             * @param drag
+             * make this draggable object can be proxied.
+             * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
 
                 var self = this,
                     tag = stamp(drag, 1, MARKER);
@@ -120,10 +119,10 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 };
             },
             /**
-             * 取消关联
-             * @param drag
+             * make this draggable object unproxied
+             * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -134,7 +133,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
             },
 
             /**
-             * 销毁
+             * make all draggable object associated with this proxy object unproxied
              */
             destroy:function () {
                 var self = this,
@@ -148,6 +147,11 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 }
             }
         });
+
+    // for compatibility
+    var ProxyPrototype = Proxy.prototype;
+    ProxyPrototype.attach = ProxyPrototype.attachDrag;
+    ProxyPrototype.unAttach = ProxyPrototype.detachDrag;
 
     return Proxy;
 }, {

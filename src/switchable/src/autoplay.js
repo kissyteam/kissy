@@ -4,6 +4,7 @@
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
+        win = S.Env.host,
         checkElemInViewport = function (elem) {
             // 只计算上下位置是否在可视区域, 不计算左右
             var scrollTop = DOM.scrollTop(),
@@ -50,7 +51,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                     // 依次检查页面上所有 switchable 对象是否在可视区域内
                     host[checkElemInViewport(host.container) ? 'start' : 'stop']();
                 }, DURATION);
-                Event.on(window, "scroll", host.__scrollDetect);
+                Event.on(win, "scroll", host.__scrollDetect);
             }
 
             function startAutoplay() {
@@ -58,6 +59,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                 timer = S.later(function () {
                     if (host.paused) return;
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    // 用户 mouseenter 不提供 forward ，全景滚动
                     host.switchTo(host.activeIndex < host.length - 1 ?
                         host.activeIndex + 1 : 0,
                         'forward');
@@ -95,7 +97,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
 
         destroy:function (host) {
             if (host.__scrollDetect) {
-                Event.remove(window, "scroll", host.__scrollDetect);
+                Event.remove(win, "scroll", host.__scrollDetect);
             }
         }
     });

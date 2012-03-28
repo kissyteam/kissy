@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Seed Test Runner</title>
+<link rel="stylesheet" href="../../../../../tools/jasmine/jasmine.css">
+<script src="../../../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../../../build/kissy.js" charset="utf-8"></script>
+</head>
+<body>
+<script>
+    KISSY.config({
+        debug:true,
+        packages:[
+            {
+                name:'timestamp',
+                tag:'a',
+                // charset:'gbk',
+                path:'/kissy_git/kissy/src/seed/tests/loader/'
+            }
+        ]
+    });
+    KISSY.config({
+        combine:true,
+        map:[
+            [/\?t=.+/, ""]
+        ]
+    });
+    KISSY.add({
+        "timestamp/y":{
+            requires:["timestamp/x"]
+        }
+    });
+    KISSY.use("timestamp/y?t=b", function () {
+        alert(window.TIMESTAMP_X);
+    });
+</script>
+</body>
+</html>

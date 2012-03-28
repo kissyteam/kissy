@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 幻灯片特效</title>
+<link rel="shortcut icon" href="../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
+
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/aria.js"></script>
+<script src="../src/accordion/base.js"></script>
+<script src="../src/accordion/aria.js"></script>
+<script src="../src/autoplay.js"></script>
+<script src="../src/autorender.js"></script>
+<script src="../src/carousel/base.js"></script>
+<script src="../src/carousel/aria.js"></script>
+<script src="../src/circular.js"></script>
+<script src="../src/countdown.js"></script>
+<script src="../src/effect.js"></script>
+<script src="../src/lazyload.js"></script>
+<script src="../src/slide/base.js"></script>
+<script src="../src/slide/aria.js"></script>
+<script src="../src/tabs/base.js"></script>
+<script src="../src/tabs/aria.js"></script>
+<script src="../src/switchable.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <div class="sub-title">Switchable</div>
+    <ul class="navigation">
+        <li><a href="http://blog.kissyui.com/">博客</a></li>
+        <li><a href="http://github.com/kissyteam">源码</a></li>
+    </ul>
+
+</div>
+<div id="content" class="form">
+    <div class="s-crumbs">
+        <span>当前位置：</span>
+        <a href="http://kissyui.com/">KISSY</a>
+        <a href="http://docs.kissyui.com/docs/html/api/component/switchable/slide.html">slide</a>
+        <span>Demo</span>
+    </div>
+
+    <pre class="s-section">
+功能：Slide
+源码：<a href="../src/base.js">../slide/base.js</a></pre>
+
+    <h3 class="s-title">Slide - 淘宝首页卡盘</h3>
+    <p>
+        单击图片动态删除
+    </p>
+    <div class="s-section">
+        <style>
+            #demo2 {
+                position: relative;
+                width: 470px;
+                height: 150px;
+                border: 1px solid #B6D1E6;
+                overflow: hidden;
+            }
+
+            #demo2 .ks-switchable-nav {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                z-index: 99;
+            }
+
+            #demo2 .ks-switchable-nav li {
+                float: left;
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+                margin-left: 3px;
+                background-color: #FCF2CF;
+                border: 1px solid #F47500;
+                color: #D94B01;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            #demo2 .ks-switchable-nav li.ks-active {
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
+                margin-top: -1px;
+                color: #FFF;
+                background-color: #FFB442;
+                font-weight: bold;
+            }
+
+            #demo2 .ks-switchable-content li {
+                height: 150px;
+                width: 470px;
+                overflow: hidden;
+            }
+
+                /* for countdown plugin */
+            #demo2 .ks-switchable-nav li,
+            #demo2 .ks-switchable-trigger-content {
+                position: relative;
+            }
+
+            #demo2 .ks-switchable-trigger-mask {
+                position: absolute;
+                right: 0;
+                width: 18px;
+                height: 18px;
+                background-color: #FF9415;
+                visibility: hidden
+            }
+
+            #demo2 .ks-active .ks-switchable-trigger-mask {
+                visibility: visible
+            }
+
+        </style>
+        <div class="s-demo">
+            <div id="demo2" class="section loading">
+                <ol class="ks-switchable-content">
+                    <li><a target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+                    <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+                    <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+                    <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+                    <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+                </ol>
+            </div>
+            <button id="demo2-btn">stop autoplay</button>
+            <button id="demo2-add-btn">动态添加</button>
+            <script>
+                KISSY.use("event,switchable", function (S, Event, Switchable) {
+                    var Slide = Switchable.Slide;
+
+                    var DOM = S.DOM;
+
+                    S.ready(function (S) {
+                        var s = Slide('#demo2', {
+                            effect:'scrolly',
+                            // slide特效组件其实不需要
+                            aria:false,
+                            pauseOnScroll:true,
+                            easing:'easeOutStrong'
+                            //countdown: true,
+                            //countdownFromStyle: 'width:18px'
+                        });
+
+                        window.slide = s;
+
+                        s.on("switch", function () {
+                            //S.log("switch");
+                        });
+
+                        S.one("#demo2").delegate("click", "li", function (e) {
+                            s.remove(e.currentTarget);
+                        });
+                        var i = 7;
+                        Event.on("#demo2-add-btn", 'click', function () {
+                            s.add({
+                                trigger:DOM.create("<li>" + i + "</li>"),
+                                panel:DOM.create("<li>" + i + "</li>"),
+                                index:s.activeIndex,
+                                activated:1
+                            });
+                            i++;
+                        });
+
+                        Event.on('#demo2-btn', 'click', function () {
+                            s.stop();
+                        })
+                    });
+                });
+            </script>
+        </div>
+        <a class="s-view-code" href="#">显示源码</a>
+    </div>
+</div>
+</body>
+</html>

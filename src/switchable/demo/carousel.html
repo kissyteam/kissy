@@ -35,6 +35,9 @@
 源码：<a href="../carousel/base.js">../carousel/base.js</a></pre>
 
 <h3 class="s-title">Carousel - 旋转木马</h3>
+<p>
+    点击图片进行删除
+</p>
 <div class="s-section">
     <style>
         .scrollable {
@@ -132,32 +135,60 @@
                 <li>&bull;</li>
             </ul>
             <script>
-                KISSY.use("event,switchable,datalazyload", function(S, Event,Switchable) {
+                KISSY.use("event,switchable,datalazyload", function (S, Event, Switchable) {
                     var Carousel = Switchable.Carousel;
 
-                    S.ready(function(S) {
+                    S.ready(function (S) {
                         var carousel = new Carousel('#demo4', {
-                            effect: 'scrollx',
-                            easing: 'easeOutStrong',
-                            steps: 5,
-                            viewSize: [680],
-                            circular: false,
-                            prevBtnCls: 'prev',
-                            nextBtnCls: 'next',
+                            effect:'scrollx',
+                            easing:'easeOutStrong',
+                            steps:5,
+                            viewSize:[680],
+                            circular:false,
+                            prevBtnCls:'prev',
+                            nextBtnCls:'next',
                             //autoplay:true,
-                            disableBtnCls: 'disable',
-                            lazyDataType: 'img-src'
+                            disableBtnCls:'disable',
+                            lazyDataType:'img-src'
                         });
 
-                        carousel.on('itemSelected', function(ev) {
-                            alert('I am selected. src = ' + ev.item.src);
+                        carousel.on('itemSelected', function (ev) {
+                            //alert('I am selected. src = ' + ev.item.src);
+                            carousel.remove(ev.item);
                         });
+                        var btnAdd = S.one('#btnAdd'),
+                                btnDestroy = S.one("#btnDestroy"),
+                                txtAdd = S.one('#addIndex');
 
+                        btnAdd.on('click', function () {
+                            var index = txtAdd.val();
+                            carousel.add({
+                                index:parseInt(index),
+                                activated:true,
+                                trigger:S.DOM.create('<li>&bull;</li>'),
+                                panel:S.DOM.create(' <img alt="" ' +
+                                        'data-v="2" ' +
+                                        'src="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>')
+                            });
+                        });
+                        btnDestroy.on("click", function () {
+                            carousel.destroy();
+                        });
                         window.carousel = carousel;
                     });
                 });
             </script>
         </div>
+    </div>
+    <div style="margin:10px;">
+        <label>
+            位置（整数）：
+            <input type="text" id="addIndex"/>
+        </label>
+        <button id="btnAdd" type="button">添加</button>
+    </div>
+    <div style="margin:10px;">
+        <button id="btnDestroy" type="button">销毁</button>
     </div>
     <a class="s-view-code" href="#">显示源码</a>
 </div>
@@ -364,18 +395,18 @@
         <li class="ks-active">1</li>
     </ul>
     <script>
-        KISSY.use("switchable", function(S,Switchable) {
+        KISSY.use("switchable", function (S, Switchable) {
             //右侧促销区slide切换
             var tiny_slide = new Switchable.Carousel('#J_TinySlide', {
-                activeIndex: 0,
-                effect: 'scrollx',
-                easing: 'easeOutStrong',
-                viewSize: [274],
-                circular: true,
-                prevBtnCls: 'tiny-prev',
-                nextBtnCls: 'tiny-next',
-                interval: 6,
-                lazyDataType: 'img-src' //延迟加载图片？
+                activeIndex:0,
+                effect:'scrollx',
+                easing:'easeOutStrong',
+                viewSize:[274],
+                circular:true,
+                prevBtnCls:'tiny-prev',
+                nextBtnCls:'tiny-next',
+                interval:6,
+                lazyDataType:'img-src' //延迟加载图片？
             });
         });
     </script>

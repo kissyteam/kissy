@@ -1,15 +1,15 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 10 15:00
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',
@@ -205,7 +205,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function () {
+            Event.on(win, RESIZE, resizeHandler = function () {
                 self.threshold = self._getThreshold();
                 loader();
             });

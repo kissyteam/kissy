@@ -4,6 +4,8 @@
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 
+    var WINDOW=S.Env.host;
+
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
     }
@@ -30,7 +32,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     var DOM = {
 
         _isCustomDomain:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
             return domain != hostname &&
@@ -38,7 +40,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         },
 
         _genEmptyIframeSrc:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             if (UA['ie'] && DOM._isCustomDomain(win)) {
                 return  'javascript:void(function(){' + encodeURIComponent("" +
                     "document.open();" +
@@ -71,7 +73,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
                     elem.defaultView || elem.parentWindow :
                     (elem === undefined || elem === null) ?
-                        window : false;
+                        WINDOW : false;
         },
 
         _nodeTypeIs:nodeTypeIs,

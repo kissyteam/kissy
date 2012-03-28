@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Overlay&Popup</title>
+<link rel="shortcut icon" href="../../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../assets/cool.css"/>
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/overlayrender.js"></script>
+<script src="../../src/dialog.js"></script>
+<script src="../../src/dialogrender.js"></script>
+<script src="../../src/effect.js"></script>
+<script src="../../src/popup.js"></script>
+<script src="../../src/aria.js"></script>
+<script src="../../src/ariarender.js"></script>
+</head>
+<body>
+<button id="show">show</button>
+<button id="hide">hide</button>
+<script>
+    KISSY.use("overlay", function (S, Overlay) {
+        var o = new Overlay.Dialog({
+            headerContent:"哈哈",
+            bodyContent:"嘿嘿",
+            width:300,
+            height:300,
+            effect:{
+                effect:"slide"
+            }
+        });
+
+        S.one("#show").on("click",function(){
+            o.center();
+            o.show();
+        });
+
+        S.one("#hide").on("click",function(){
+            o.hide();
+        });
+
+
+    });
+</script>
+</body>
+</html>

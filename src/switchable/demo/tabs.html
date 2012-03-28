@@ -83,24 +83,24 @@
                     <span style="display:none" id="a_tip">标题 A，可左右键切换操作</span>
                     <a href="http://www.taobao.com">标题 A</a></li>
                 <li><a href="http://www.taobao.com">标题 B</a></li>
-                <li>标题 C</li>
+
                 <li>标题 D</li>
                 <li>标题 E</li>
             </ul>
             <div class="ks-switchable-content">
                 <div style="display: none">
+
 <pre>
   - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
   - 鼠标快速滑过非当前 trigger, 不触发
   - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
   - click 或 Tab 切换到 trigger, 立即触发
   - beforeSwitch/switch 事件的触发
-  - 延迟的内容能正确加载
-    <a href="#"> 内容 a</a>
+  - 延迟的内容能正确加载 <a href="#"> 内容 a</a>
 </pre>
                 </div>
                 <div style="display: none"><a href="#">内容 B</a></div>
-                <div style="display: none"><a href="#">内容 C</a></div>
+
                 <div style="display: none"><a href="#">内容 D</a></div>
                 <div style="display: none">
                     <textarea class="ks-datalazyload-custom">
@@ -109,24 +109,67 @@
                     </textarea>
                 </div>
             </div>
+            <div style="margin: 10px;">
+                <label>
+                    位置（整数）:
+                    <input type="text" id="addIndex"/></label>
+                <button id="btnAdd" type="button">添加</button>
+            </div>
+            <div style="margin: 10px;">
+                <label>
+                    位置（整数）:
+                    <input type="text" id="delIndex"/>
+                </label>
+                <button id="btnDel" type="button">删除</button>
+            </div>
+            <div style="margin: 10px;">
+                <button id="btnDestroy" type="button">销毁</button>
+            </div>
             <script>
-                KISSY.use("datalazyload,switchable", function(S,_,Switchable) {
+                KISSY.use("datalazyload,switchable", function (S, _, Switchable) {
 
-                    var Tabs = Switchable.Tabs;
+                    var Tabs = Switchable.Tabs,
+                            btnAdd = S.one('#btnAdd'),
+                            btnDel = S.one('#btnDel'),
+                            txtAdd = S.one('#addIndex'),
+                            btnDestroy = S.one("#btnDestroy"),
+                            txtDel = S.one('#delIndex');
 
-                    S.ready(function(S) {
+                    S.ready(function (S) {
 
                         window.tabs = new Tabs('#demo1', {
-                                    // aria:false 默认 true，支持 aria
-                                    switchTo:0
-                                });
+                            // aria:false 默认 true，支持 aria
+                            switchTo:0
+                        });
 
-                        tabs.on('beforeSwitch', function(ev) {
+                        tabs.on('beforeSwitch', function (ev) {
                             var index = ev.toIndex;
                             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
                                 //this.panels[index].innerHTML = 'index = ' + index;
                             }
                         });
+                        btnAdd.on('click', function () {
+                            var index = txtAdd.val(),
+                                    t = S.DOM.create('<li>自定义添加</li>'),
+                                    p = S.DOM.create('<div style="display: none"><a href="#">内容 添加</a></div>');
+                            debugger
+                            tabs.add({
+                                index:parseInt(index),
+                                activated:true,
+                                trigger:t,
+                                panel:p
+                            });
+                        });
+
+                        btnDestroy.on("click", function () {
+                            tabs.destroy();
+                        });
+
+                        btnDel.on('click', function () {
+                            var index = txtDel.val();
+                            tabs.remove(parseInt(index));
+                        });
+
                     });
                 });
             </script>
@@ -139,8 +182,8 @@
         <ul class="s-list">
             <li>左/上键:当焦点在标签时转到上一个标签
             <li>右/下键:当焦点在标签时转到下一个标签
-            <!--<li>Home: 当焦点在容器内时转到第一个标签-->
-            <!--<li>End: 当焦点在容器内时转到最后一个标签-->
+                <!--<li>Home: 当焦点在容器内时转到第一个标签-->
+                <!--<li>End: 当焦点在容器内时转到最后一个标签-->
             <li>Control + PgUp : 当然焦点在容器内时转到当前标签上一个标签
             <li>Control + PgDn : 当然焦点在容器内时转到当前标签下一个标签
         </ul>

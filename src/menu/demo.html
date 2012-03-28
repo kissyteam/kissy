@@ -54,14 +54,13 @@
     </li>
 </ol>
 <script src="../../build/kissy.js"></script>
+<script src="./demo/delmenuitemrender.js"></script>
+<script src="./demo/delmenuitem.js"></script>
 <script>
 
     KISSY.Config.tag = Math.random();
-    KISSY.use("node,menu",
-            function (S, Node, Menu) {
-
-
-
+    KISSY.use("node,menu,menu/delmenuitem",
+            function (S, Node, Menu,DelMenuItem) {
                 //view
                 //render to container : button_container
 
@@ -131,7 +130,7 @@
                         content:"alone"})]
                 });
 
-                menu.addChild(new Menu.DelMenuItem({
+                menu.addChild(new DelMenuItem({
                     prefixCls:"goog-",
                     content:"可删除"
                 }));

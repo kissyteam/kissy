@@ -7,13 +7,82 @@
 	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
 	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
 <span id='line2' class='line'>  2</span>  * @fileOverview setup data structure for kissy loader
-<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
+<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com,lifesinger@gmail.com
 <span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
-<span id='line5' class='line'>  5</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">require</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">require</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line9' class='line'>  9</span> </span><span class="WHIT">    </span><span class="NAME">S.__loader</span><span class="PUNC">=</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line10' class='line'> 10</span> </span><span class="WHIT">    </span><span class="NAME">S.__loaderUtils</span><span class="PUNC">=</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line11' class='line'> 11</span> </span><span class="WHIT">    </span><span class="NAME">S.__loaderData</span><span class="PUNC">=</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line12' class='line'> 12</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NAME">KISSY</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line9' class='line'>  9</span> 
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line11' class='line'> 11</span>      * @class KISSY Loader constructor
+<span id='line12' class='line'> 12</span>      * This class should not be instantiated manually.
+<span id='line13' class='line'> 13</span>      * @memberOf KISSY
+<span id='line14' class='line'> 14</span>      */</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Loader</span><span class="PUNC">(</span><span class="NAME">SS</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">        </span><span class="NAME">this.SS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SS</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line18' class='line'> 18</span>          * @name KISSY.Loader#afterModAttached
+<span id='line19' class='line'> 19</span>          * @description fired after a module is attached
+<span id='line20' class='line'> 20</span>          * @event
+<span id='line21' class='line'> 21</span>          * @param e
+<span id='line22' class='line'> 22</span>          * @param {KISSY.Loader.Module} e.mod current module object
+<span id='line23' class='line'> 23</span>          */</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> 
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">    </span><span class="NAME">KISSY.Loader</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Loader</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> 
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line29' class='line'> 29</span>      * @class KISSY Module constructor
+<span id='line30' class='line'> 30</span>      * This class should not be instantiated manually.
+<span id='line31' class='line'> 31</span>      * @memberOf KISSY.Loader
+<span id='line32' class='line'> 32</span>      */</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Module</span><span class="PUNC">(</span><span class="NAME">ps</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">        </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ps</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> 
+<span id='line37' class='line'> 37</span> </span><span class="WHIT">    </span><span class="NAME">S.augment</span><span class="PUNC">(</span><span class="NAME">Module</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line39' class='line'> 39</span>          * @lends KISSY.Loader.Module#
+<span id='line40' class='line'> 40</span>          */</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line43' class='line'> 43</span>              * set the value of current module
+<span id='line44' class='line'> 44</span>              * @param v value to be set
+<span id='line45' class='line'> 45</span>              */</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">            </span><span class="NAME">setValue</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> </span><span class="WHIT">                </span><span class="NAME">this.v</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line50' class='line'> 50</span>              * get the value of current module
+<span id='line51' class='line'> 51</span>              */</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> </span><span class="WHIT">            </span><span class="NAME">getValue</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.v</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line56' class='line'> 56</span>              * get the name of current module
+<span id='line57' class='line'> 57</span>              * @returns {String}
+<span id='line58' class='line'> 58</span>              */</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">            </span><span class="NAME">getName</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.name</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line63' class='line'> 63</span>              * @private
+<span id='line64' class='line'> 64</span>              */</span><span class="WHIT">
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">            </span><span class="NAME">getUrlTag</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tag</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">this.packageTag</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> 
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">    </span><span class="NAME">Loader.Module</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Module</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> 
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">    </span><span class="COMM">// 脚本(loadQueue)/模块(mod) 公用状态</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">    </span><span class="NAME">Loader.STATUS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">        </span><span class="NAME">INIT</span><span class="PUNC">:</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">        </span><span class="NAME">LOADING</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">        </span><span class="NAME">LOADED</span><span class="PUNC">:</span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">        </span><span class="NAME">ERROR</span><span class="PUNC">:</span><span class="NUMB">3</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">        </span><span class="COMM">// 模块特有</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">        </span><span class="NAME">ATTACHED</span><span class="PUNC">:</span><span class="NUMB">4</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line81' class='line'> 81</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NAME">KISSY</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

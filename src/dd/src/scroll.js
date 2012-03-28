@@ -2,9 +2,10 @@
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        win = S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -12,8 +13,9 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
         DESTRUCTORS = "__dd_scrolls";
 
     /**
+     * make parent node scroll while dragging
      * @memberOf DD
-     * @class monitor scroll
+     * @class
      */
     function Scroll() {
         var self = this;
@@ -27,27 +29,28 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
      */
     {
         /**
-         * 容器节点
+         * node to be scrolled while dragging
          * @type {window|String|HTMLElement}
          */
         node:{
             // value:window：不行，默认值一定是简单对象
             valueFn:function () {
-                return Node.one(window);
+                return Node.one(win);
             },
             setter:function (v) {
                 return Node.one(v);
             }
         },
         /**
-         * 调整速度，二维数组
-         * @type number[]
+         * adjust velocity. default:[10,10]. larger faster
+         * @type Number[]
          */
         rate:{
             value:RATE
         },
         /**
-         * 调整的临界值，二维数组
+         * the margin to make node scroll. default: [20,20].
+         * easier to scroll for node if larger.
          * @type number[]
          */
         diff:{
@@ -117,10 +120,10 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 取消关联
-             * @param drag
+             * make node not to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var tag,
                     destructors = this[DESTRUCTORS];
                 if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
@@ -133,7 +136,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 销毁
+             * make node not to scroll at all
              */
             destroy:function () {
                 var self = this,
@@ -144,11 +147,12 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 关联拖对象
-             * @param drag
+             * make node to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this,
+                    node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
                     destructors = self[DESTRUCTORS];
 
@@ -165,15 +169,37 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     dxy,
                     timer = null;
 
+                // fix https://github.com/kissyteam/kissy/issues/115
+                // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
+                // check container
+                function checkContainer() {
+                    if (isWin(node[0])) {
+                        return 0;
+                    }
+                    // 判断 proxyNode，不对 dragNode 做大的改变
+                    var mousePos = drag.mousePos,
+                        r = DDM.region(node);
+
+                    if (!DDM.inRegion(r, mousePos)) {
+                        clearTimeout(timer);
+                        timer = 0;
+                        return 1;
+                    }
+                    return 0;
+                }
+
                 function dragging(ev) {
                     // 给调用者的事件，框架不需要处理
                     // fake 也表示该事件不是因为 mouseover 产生的
                     if (ev.fake) {
                         return;
                     }
-                    // S.log("dragging");
+
+                    if (checkContainer()) {
+                        return;
+                    }
+
                     // 更新当前鼠标相对于拖节点的相对位置
-                    var node = self.get("node");
                     event = ev;
                     dxy = S.clone(drag.mousePos);
                     var offset = self.getOffset(node);
@@ -202,9 +228,11 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 };
 
                 function checkAndScroll() {
-                    //S.log("******* scroll");
-                    var node = self.get("node"),
-                        r = self.getRegion(node),
+                    if (checkContainer()) {
+                        return;
+                    }
+
+                    var r = self.getRegion(node),
                         nw = r.width,
                         nh = r.height,
                         scroll = self.getScroll(node),
@@ -218,21 +246,21 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
 
                     var diffY2 = dxy.top;
-                    //S.log(diffY2);
+
                     if (diffY2 <= diff[1]) {
                         scroll.top -= rate[1];
                         adjust = true;
                     }
 
                     var diffX = dxy.left - nw;
-                    //S.log(diffX);
+
                     if (diffX >= -diff[0]) {
                         scroll.left += rate[0];
                         adjust = true;
                     }
 
                     var diffX2 = dxy.left;
-                    //S.log(diffX2);
+
                     if (diffX2 <= diff[0]) {
                         scroll.left -= rate[0];
                         adjust = true;
@@ -266,7 +294,11 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             }
         });
 
+    // for compatibility
+    var ScrollPrototype = Scroll.prototype;
+    ScrollPrototype.attach = ScrollPrototype.attachDrag;
+    ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
     return Scroll;
 }, {
-    requires:['base', 'node', 'dom']
+    requires:['./ddm', 'base', 'node', 'dom']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -125,7 +125,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
                     lastActive;
                 self.on("afterVisibleChange", function(ev) {
                     if (ev.newVal) {
-                        lastActive = document.activeElement;
+                        lastActive = el[0].ownerDocument.activeElement;
                         el[0].focus();
                         el.attr("aria-hidden", "false");
                         el.on("keydown", _onKey, self);
@@ -147,15 +147,17 @@ KISSY.add("overlay/ariarender", function(S, Node) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
+
     function require(s) {
         return S.require("uibase/" + s);
     }
 
     /**
+     * KISSY Overlay Component
      * @class
      * @namespace
      * @name Overlay
-     * @extends Component.ModelControl
+     * @extends Component.Controller
      * @extends UIBase.ContentBox
      * @extends UIBase.Position
      * @extends UIBase.Loading
@@ -163,8 +165,9 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Close
      * @extends UIBase.Resize
      * @extends UIBase.Mask
+     * @param {Object} config config object to set properties of its parent class
      */
-    var Overlay = UIBase.create(Component.ModelControl, [
+    var Overlay = UIBase.create(Component.Controller, [
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -173,31 +176,63 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         require("resize"),
         require("mask"),
         Effect
-    ], {}, {
-        ATTRS:{
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            closable:{
-                // overlay 默认没 X
-                value:false
-            },
-            // 是否绑定鼠标事件
-            handleMouseEvents:{
-                value:false
-            },
-            allowTextSelection_:{
-                value:true
-            },
-            visibleMode:{
-                value:"visibility"
+    ],
+        /**
+         * @lends Overlay#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @function
+             * @name Overlay#show
+             */
+        }, {
+            ATTRS:/**
+             * @lends Overlay#
+             */
+            {
+                /**
+                 * whether this component can be focused. Default:false
+                 * @type Boolean
+                 */
+                focusable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be closed. Default:false
+                 * @type Boolean
+                 */
+                closable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be responsive to mouse. Default:false
+                 * @type Boolean
+                 */
+                handleMouseEvents:{
+                    value:false
+                },
+
+                /**
+                 * whether this component's text content can be selected. Default:true
+                 * @type Boolean
+                 */
+                allowTextSelection_:{
+                    value:true
+                },
+
+                /**
+                 * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
+                 */
+                visibleMode:{
+                    value:"visibility"
+                }
             }
-        }
-    });
+        });
 
     Overlay.DefaultRender = OverlayRender;
-
 
     Component.UIStore.setUIByClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -211,36 +246,70 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
  * @fileOverview KISSY.Dialog
  * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
     }
 
+    /**
+     * KISSY Dialog Component
+     * @class
+     * @name Dialog
+     * @memberOf Overlay
+     * @extends Overlay
+     * @extends UIBase.StdMod
+     * @extends UIBase.Drag
+     * @extends UIBase.Constrain
+     */
     var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
         require("drag"),
         require("constrain"),
         Aria
-    ], {
-    }, {
-        ATTRS:{
-            closable:{
-                value:true
-            },
-            handlers:{
-                valueFn:function() {
-                    var self = this;
-                    return [
-                        // 运行时取得拖放头
-                        function() {
-                            return self.get("view").get("header");
-                        }
-                    ];
+    ],
+        /**
+         * @lends Overlay.Dialog#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @name Overlay.Dialog#show
+             * @function
+             */
+        },
+
+        {
+            ATTRS:/**
+             * @lends Overlay.Dialog#
+             */
+            {
+
+                /**
+                 * whether this component can be closed. Default:true
+                 * @type Boolean
+                 */
+                closable:{
+                    value:true
+                },
+
+                /**
+                 * Default: Dialog's header element
+                 * see {@link DD.Draggable#handlers}
+                 */
+                handlers:{
+                    valueFn:function () {
+                        var self = this;
+                        return [
+                            // 运行时取得拖放头
+                            function () {
+                                return self.get("view").get("header");
+                            }
+                        ];
+                    }
                 }
             }
-        }
-    });
+        });
 
     Dialog.DefaultRender = DialogRender;
 
@@ -252,7 +321,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
     return Dialog;
 
 }, {
-    requires:[ "component","overlay/base","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component", "overlay/base", "uibase", 'overlay/dialogrender', './aria']
 });
 
 /**
@@ -280,23 +349,34 @@ KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender)
  * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/effect", function(S) {
+KISSY.add("overlay/effect", function (S) {
     var NONE = 'none',
         DURATION = 0.5,
-        effects = {fade:["Out","In"],slide:["Up","Down"]},
-        displays = ['block','none'];
+        effects = {fade:["Out", "In"], slide:["Up", "Down"]},
+        displays = ['block', 'none'];
 
     function Effect() {
     }
 
-    Effect.ATTRS = {
+    Effect.ATTRS =
+    /**
+     * @leads Overlay#
+     */
+    {
+        /**
+         * set v as overlay's show effect <br>
+         * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
+         * v.duration (Number): in seconds. Default:0.5. <br>
+         * v.easing (String): see {@link Anim.Easing} <br>
+         * @type Object
+         */
         effect:{
             value:{
                 effect:NONE,
                 duration:DURATION,
                 easing:'easeOut'
             },
-            setter:function(v) {
+            setter:function (v) {
                 var effect = v.effect;
                 if (S.isString(effect) && !effects[effect]) {
                     v.effect = NONE;
@@ -306,34 +386,44 @@ KISSY.add("overlay/effect", function(S) {
         }
     };
 
+    function processEffect(self, show) {
+        var el = self.get("el"),
+            effectCfg = self.get("effect"),
+            effect = effectCfg.effect,
+            duration = effectCfg.duration,
+            easing = effectCfg.easing;
+        if (effect == NONE) {
+            return;
+        }
+        var v = show,
+            index = v ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        var restore = {
+            "visibility":"visible",
+            "display":displays[index]
+        };
+        el.css(restore);
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            var r2 = {
+                "display":displays[0],
+                "visibility":v ? "visible" : "hidden"
+            };
+            el.css(r2);
+        }, easing);
+    }
+
     Effect.prototype = {
 
-        __bindUI:function() {
-            var self = this;
-            self.on("afterVisibleChange", function(ev) {
-                var effect = self.get("effect").effect;
-                if (effect == NONE) {
-                    return;
-                }
-                var v = ev.newVal,
-                    index = Number(v),
-                    el = self.get("el");
-
-                // 队列中的也要移去
-                el.stop(1, 1);
-                el.css({
-                    "visibility": "visible",
-                    "display":displays[index]
-                });
-
-                var m = effect + effects[effect][index];
-                el[m](self.get("effect").duration, function() {
-                    el.css({
-                        "display": displays[0],
-                        "visibility": v ? "visible" : "hidden"
-                    });
-                }, self.get("effect").easing, false);
-
+        __bindUI:function () {
+            var self = this
+            self.on("hide", function () {
+                processEffect(self, 0);
+            });
+            self.on("show", function () {
+                processEffect(self, 1);
             });
         }
     };
@@ -384,7 +474,16 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  * @fileOverview KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
+
+    /**
+     * KISSY Popup Component
+     * @class
+     * @memberOf Overlay
+     * @extends Overlay
+     * @param {NodeList} [container] existing dom node
+     * @param {Object} config see {@link Overlay}
+     */
     function Popup(container, config) {
         var self = this;
 
@@ -398,145 +497,179 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
         Popup.superclass.constructor.call(self, config);
     }
 
-    Popup.ATTRS = {
-        trigger: {                          // 触发器
-            setter:function(v) {
-                if (S.isString(v)) v = S.all(v);
+    Popup.ATTRS =
+    /**
+     * @lends Overlay.Popup#
+     */
+    {
+        /**
+         * trigger element to show popup
+         * @type NodeList
+         */
+        trigger:{                          // 触发器
+            setter:function (v) {
+                if (S.isString(v)) {
+                    v = S.all(v);
+                }
                 return v;
             }
         },
-        triggerType: {value:'click'},       // 触发类型
-        currentTrigger: {
+        /**
+         * how do activate trigger element. "click" or "mouse",Default:"click"
+         * @type String
+         */
+        triggerType:{value:'click'}, // 触发类型
+        currentTrigger:{},
+        /**
+         * when trigger type is mouse, the delayed time to show popup. Default:100,in milliseconds
+         * @type Number
+         */
+        mouseDelay:{
+            value:100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
         },
-        mouseDelay: {
-            value: 100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-        },
-		toggle :{
-			value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
-		}
+        /**
+         * when trigger type is click, whether support toggle. Default:false
+         * @type Boolean
+         */
+        toggle:{
+            value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
+        }
     };
 
-    S.extend(Popup, Overlay, {
-        initializer: function() {
-            var self = this;
-            // 获取相关联的 DOM 节点
-            var trigger = self.get("trigger");
-            if (trigger) {
-                if (self.get("triggerType") === 'mouse') {
-                    self._bindTriggerMouse();
+    S.extend(Popup, Overlay,
+        /**
+         * @lends Overlay.Popup#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @name Overlay.Popup#show
+             * @function
+             */
 
-                    self.on('bindUI', function() {
-                        self._bindContainerMouse();
-                    });
-                } else {
-                    self._bindTriggerClick();
+
+
+            initializer:function () {
+                var self = this;
+                // 获取相关联的 DOM 节点
+                var trigger = self.get("trigger");
+                if (trigger) {
+                    if (self.get("triggerType") === 'mouse') {
+                        self._bindTriggerMouse();
+
+                        self.on('bindUI', function () {
+                            self._bindContainerMouse();
+                        });
+                    } else {
+                        self._bindTriggerClick();
+                    }
                 }
-            }
-        },
+            },
 
-        _bindTriggerMouse: function() {
-            var self = this,
-                trigger = self.get("trigger"),
-                timer;
+            _bindTriggerMouse:function () {
+                var self = this,
+                    trigger = self.get("trigger"),
+                    timer;
 
-            self.__mouseEnterPopup = function(ev) {
-                self._clearHiddenTimer();
+                self.__mouseEnterPopup = function (ev) {
+                    self._clearHiddenTimer();
 
-                timer = S.later(function() {
-                    self._showing(ev);
-                    timer = undefined;
+                    timer = S.later(function () {
+                        self._showing(ev);
+                        timer = undefined;
+                    }, self.get('mouseDelay'));
+                };
+
+                S.each(trigger, function (el) {
+                    S.one(el).on('mouseenter', self.__mouseEnterPopup);
+                });
+
+                self._mouseLeavePopup = function () {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    self._setHiddenTimer();
+                };
+
+                S.each(trigger, function (el) {
+                    S.one(el).on('mouseleave', self._mouseLeavePopup);
+                });
+            },
+
+            _bindContainerMouse:function () {
+                var self = this;
+
+                self.get('el').on('mouseleave', self._setHiddenTimer, self)
+                    .on('mouseenter', self._clearHiddenTimer, self);
+            },
+
+            _setHiddenTimer:function () {
+                var self = this;
+                self._hiddenTimer = S.later(function () {
+                    self._hiding();
                 }, self.get('mouseDelay'));
-            };
+            },
 
-            S.each(trigger, function(el) {
-                S.one(el).on('mouseenter', self.__mouseEnterPopup);
-            });
-
-            self._mouseLeavePopup = function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+            _clearHiddenTimer:function () {
+                var self = this;
+                if (self._hiddenTimer) {
+                    self._hiddenTimer.cancel();
+                    self._hiddenTimer = undefined;
                 }
+            },
 
-                self._setHiddenTimer();
-            };
+            _bindTriggerClick:function () {
+                var self = this;
+                self.__clickPopup = function (ev) {
+                    ev.halt();
+                    if (self.get('toggle')) {
+                        self[self.get('visible') ? '_hiding' : '_showing'](ev);
+                    }
+                    else  self._showing(ev);
+                };
+                S.each(self.get("trigger"), function (el) {
+                    S.one(el).on('click', self.__clickPopup);
+                });
+            },
+            _showing:function (ev) {
+                var self = this;
+                self.set('currentTrigger', S.one(ev.target));
+                self.show();
+            },
+            _hiding:function () {
+                this.set('currentTrigger', undefined);
+                this.hide();
+            },
 
-            S.each(trigger, function(el) {
-                S.one(el).on('mouseleave', self._mouseLeavePopup);
-            });
-        },
+            destructor:function () {
+                var self = this;
+                var t = self.get("trigger");
+                if (t) {
+                    if (self.__clickPopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('click', self.__clickPopup);
+                        });
+                    }
+                    if (self.__mouseEnterPopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('mouseenter', self.__mouseEnterPopup);
+                        });
+                    }
 
-        _bindContainerMouse: function() {
-            var self = this;
-
-            self.get('el').on('mouseleave', self._setHiddenTimer, self)
-                .on('mouseenter', self._clearHiddenTimer, self);
-        },
-
-        _setHiddenTimer: function(ev) {
-            var self = this;
-            self._hiddenTimer = S.later(function() {
-                self._hiding(ev);
-            }, self.get('mouseDelay'));
-        },
-
-        _clearHiddenTimer: function() {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
-            }
-        },
-
-        _bindTriggerClick: function() {
-            var self = this;
-            self.__clickPopup = function(ev) {
-                ev.halt();
-				if(self.get('toggle')){
-                    self[self.get('visible')?'_hiding':'_showing'](ev);
-				}
-				else  self._showing(ev);
-            };
-            S.each(self.get("trigger"), function(el) {
-                S.one(el).on('click', self.__clickPopup);
-            });
-        },
-        _showing: function(ev) {
-            this.set('currentTrigger', S.one(ev.target));
-            this.show();
-        },
-        _hiding: function(ev) {
-            this.set('currentTrigger', undefined);
-            this.hide();
-        },
-
-        destructor:function() {
-            var self = this;
-            var t = self.get("trigger");
-            if (t) {
-                if (self.__clickPopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('click', self.__clickPopup);
-                    });
+                    if (self._mouseLeavePopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('mouseleave', self._mouseLeavePopup);
+                        });
+                    }
                 }
-                if (self.__mouseEnterPopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('mouseenter', self.__mouseEnterPopup);
-                    });
-                }
-
-                if (self._mouseLeavePopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('mouseleave', self._mouseLeavePopup);
-                    });
+                if (self.get('el')) {
+                    self.get('el').detach('mouseleave', self._setHiddenTimer, self)
+                        .detach('mouseenter', self._clearHiddenTimer, self);
                 }
             }
-            if (self.get('el')) {
-                self.get('el').detach('mouseleave', self._setHiddenTimer, self)
-                    .detach('mouseenter', self._clearHiddenTimer, self);
-            }
-        }
-    });
+        });
 
 
     Component.UIStore.setUIByClass("popup", {
@@ -546,7 +679,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:[ "component","./base"]
+    requires:[ "component", "./base"]
 });
 
 /**

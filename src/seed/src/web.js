@@ -5,7 +5,7 @@
  */
 (function (S, undefined) {
 
-    var win = S.__HOST,
+    var win = S.Env.host,
 
         doc = win['document'],
 
@@ -54,7 +54,7 @@
                 var xml;
                 try {
                     // Standard
-                    if (window.DOMParser) {
+                    if (win.DOMParser) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");
@@ -78,8 +78,8 @@
             globalEval:function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( window.execScript || function (data) {
-                        window[ "eval" ].call(window, data);
+                    ( win.execScript || function (data) {
+                        win[ "eval" ].call(win, data);
                     } )(data);
                 }
             },
@@ -100,10 +100,9 @@
                     } catch (e) {
                         // print stack info for firefox/chrome
                         S.log(e.stack, "error");
-                        setTimeout(function () {
-                            // lose stack info
+                        if (S.Config.debug) {
                             throw e;
-                        }, 0);
+                        }
                     }
                 }
 
@@ -223,5 +222,12 @@
      * worst case no callback at all
      */
     _bindReady();
+
+    if (navigator.userAgent.match(/MSIE/)) {
+        try {
+            doc.execCommand("BackgroundImageCache", false, true);
+        } catch (e) {
+        }
+    }
 
 })(KISSY, undefined);

@@ -164,8 +164,6 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">proxy drag</p>
-                                    
 
                                     
                                     
@@ -198,7 +196,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">provide abilities for draggable tp create a proxy drag node,instead of dragging the original node.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -225,7 +223,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">是否每次都生成新节点/拖放完毕是否销毁当前代理节点</span>                                                
+                                                <span class="desc">destroy the proxy node at the end of this drag.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -236,7 +234,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">拖放结束是否移动本身到代理节点位置</span>                                                
+                                                <span class="desc">move the original node at the end of the drag.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -247,7 +245,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">如何生成替代节点</span>                                                
+                                                <span class="desc">how to get the proxy node.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -271,12 +269,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#attach">attach</a></b>
+                                                <b class="name"><a href="../symbols/DD.Proxy.html#attachDrag">attachDrag</a></b>
                                                 <span class="param">(drag)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">关联到某个拖对象</span>                                                
+                                                <span class="desc">make this draggable object can be proxied.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -286,17 +284,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">销毁</span>                                                
+                                                <span class="desc">make all draggable object associated with this proxy object unproxied</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#unAttach">unAttach</a></b>
+                                                <b class="name"><a href="../symbols/DD.Proxy.html#detachDrag">detachDrag</a></b>
                                                 <span class="param">(drag)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">取消关联</span>                                                
+                                                <span class="desc">make this draggable object unproxied</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -326,7 +324,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">proxy drag</div>
+                                            <div class="desc"></div>
                                             
                                             <dl>                                                
                                                 
@@ -372,7 +370,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+                                                    destroy the proxy node at the end of this drag. default:false
                                                     
                                                     
                                                 </span>
@@ -387,11 +385,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    false
-                                                </dd>
                                                 
                                             </dl>
                                         </li>
@@ -407,7 +400,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    拖放结束是否移动本身到代理节点位置
+                                                    move the original node at the end of the drag. default:true
                                                     
                                                     
                                                 </span>
@@ -422,11 +415,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    true
-                                                </dd>
                                                 
                                             </dl>
                                         </li>
@@ -442,7 +430,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    如何生成替代节点
+                                                    how to get the proxy node. default:clone the node itself deeply.
                                                     
                                                     
                                                 </span>
@@ -457,11 +445,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    深度克隆自身
-                                                </dd>
                                                 
                                             </dl>
                                         </li>
@@ -482,19 +465,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="attach"> </a>
+                                            <a name="attachDrag"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">attach</b>
+                                                <b class="name">attachDrag</b>
                                                 <span class="param">(drag)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line64">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line63">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                关联到某个拖对象
+                                                make this draggable object can be proxied.
                                                 
                                                 
                                             </div>
@@ -511,7 +494,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">drag</b>
                                                             
                                                             
-                                                            
+                                                            <span class="type">{<a href="../symbols/DD.Draggable.html">DD.Draggable</a>}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -545,11 +528,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line139">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line138">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                销毁
+                                                make all draggable object associated with this proxy object unproxied
                                                 
                                                 
                                             </div>
@@ -576,19 +559,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="unAttach"> </a>
+                                            <a name="detachDrag"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">unAttach</b>
+                                                <b class="name">detachDrag</b>
                                                 <span class="param">(drag)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line126">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line125">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                取消关联
+                                                make this draggable object unproxied
                                                 
                                                 
                                             </div>
@@ -605,7 +588,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">drag</b>
                                                             
                                                             
-                                                            
+                                                            <span class="type">{<a href="../symbols/DD.Draggable.html">DD.Draggable</a>}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -660,6 +643,18 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Attribute.html">Attribute</a></li>
             
             
+            <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
+            
+            
             <li><a href="../symbols/Base.html">Base</a></li>
             
             
@@ -672,7 +667,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
             
             
-            <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
             
             
             <li><a href="../symbols/Cookie.html">Cookie</a></li>
@@ -727,6 +722,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

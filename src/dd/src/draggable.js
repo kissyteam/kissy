@@ -7,11 +7,11 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     var each = S.each,
         ie = UA['ie'],
         NULL = null,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
      * @extends Base
-     * @class make a node draggable
+     * @class Provide abilities to make specified node draggable
      * @memberOf DD
      */
     function Draggable() {
@@ -191,6 +191,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 bubbles:1
             });
         });
+        // dragNode is equal to node in single mode
+        self.__set("dragNode", self.get("node"));
+        self.on("afterDisabledChange", self._uiSetDisabledChange, self);
+        var disabled;
+        if (disabled = self.get("disabled")) {
+            self._uiSetDisabledChange(disabled);
+        }
         self._init();
     }
 
@@ -207,7 +214,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     {
 
         /**
-         * @description 拖放节点，可能指向 proxy node
+         * the dragged node. maybe a proxy node.
          * @type HTMLElement
          */
         node:{
@@ -217,7 +224,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 启动拖放的移动的临界元素数
+         * the number of pixels to move to start a drag operation,default is 3.
          * @type Number
          */
         clickPixelThresh:{
@@ -227,8 +234,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 启动拖放的移动的临界延迟
-         * @type Number 毫秒
+         * the number of milliseconds to start a drag operation after mousedown,default is 1000
+         * @type Number
          */
         bufferTime:{
             valueFn:function () {
@@ -237,13 +244,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 真实的节点
+         * the draggable element
          * @type HTMLElement
          */
         dragNode:{},
 
         /**
-         * 是否需要遮罩跨越 iframe 以及其他阻止 mousemove 事件的元素
+         * use protective shim to cross iframe.default:true
          * @type boolean
          */
         shim:{
@@ -251,7 +258,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * handler 数组，注意暂时必须在 node 里面
+         * valid handlers to initiate a drag operation
          * @type HTMLElement[]|Function[]|String[]
          */
         handlers:{
@@ -276,13 +283,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 激活 drag 的 handler
+         * the handler which fired the drag event.
          * @type NodeList
          */
         activeHandler:{},
 
         /**
-         * 当前拖对象是否开始运行，用于调用者监听 change 事件
+         * indicate whether this draggable object is being dragged
          * @type boolean
          */
         dragging:{
@@ -295,35 +302,28 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 拖放模式
-         * @type Number
+         * <pre>
+         * can be set 'point' or 'intersect' or 'strict'
+         * In point mode, a Drop is targeted by the cursor being over the Target
+         * In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
+         * In strict mode, a Drop is targeted by the "entire" drag node being over the Target
+         * </pre>
+         * @type String
          */
         mode:{
-            /**
-             * @enum point,intersect,strict
-             * @description
-             *  In point mode, a Drop is targeted by the cursor being over the Target
-             *  In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
-             *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
-             */
             value:'point'
         },
 
         /**
-         * 拖无效
+         * set to disable this draggable so that it can not be dragged. default:false
          * @type boolean
          */
         disabled:{
-            value:false,
-            setter:function (d) {
-                this.get("dragNode")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
-                return d;
-            }
+            value:false
         },
 
         /**
-         * whether the node moves with drag object
+         * whether the drag node moves with cursor.default:false,can be used to resize element.
          * @type boolean
          */
         move:{
@@ -331,7 +331,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * only left button of mouse trigger drag?
+         * whether a drag operation can only be trigged by primary(left) mouse button.
+         * Setting false will allow for all mousedown events to trigger drag.
          * @type boolean
          */
         primaryButtonOnly:{
@@ -339,9 +340,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether halt mousedown
+         * whether halt mousedown event. default:true
          * @type boolean
-         * @default true
          */
         halt:{
             value:true
@@ -350,6 +350,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * groups this draggable object belongs to
          * @type Object
+         * @example
+         * <code>
+         * {
+         *     "group1":1,
+         *     "group2":1
+         * }
+         * </code>
          */
         groups:{
             value:{}
@@ -419,6 +426,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              * 开始拖时鼠标所在位置，例如
              *  {x:100,y:200}
              * @type Object
+             * @private
              */
             startMousePos:NULL,
 
@@ -426,6 +434,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              * 开始拖时节点所在位置，例如
              *  {x:100,y:200}
              * @type Object
+             * @private
              */
             startNodePos:NULL,
 
@@ -439,10 +448,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              */
             _bufferTimer:NULL,
 
+            _uiSetDisabledChange:function (d) {
+                this.get("dragNode")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
@@ -648,7 +661,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             },
 
             /**
-             * 销毁
+             * make the drag node undraggable
              */
             destroy:function () {
                 var self = this,

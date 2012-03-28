@@ -1,11 +1,9 @@
 /**
  * KISSY Calendar
- * @creator  拔赤<lijing00333@163.com>
+ * @creator  拔赤<lijing00333@163.com>,keyapril@gmail.com
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {
-    var EventTarget = Event.Target,
-        $ = Node.all,
-        win = $(window);
+    var EventTarget = Event.Target, $ = Node.all, doc = S.Env.host.document;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -34,7 +32,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             } else {
                 self.trigger = trigger;
                 self.con = new Node('<div>');
-                $(document.body).append(self.con);
+                $(doc.body).append(self.con);
 
                 self.con.css({
                     'top':'0px',
@@ -53,19 +51,26 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
 
         /**
          * 日历构造渲染,增加对多日历不联动的处理
-         * @param { object }    [o]
+         * @param { object }    o
          */
         render:function (o) {
             var self = this,
-                i,
+                i = 0,
                 _prev, _next, _oym;
 
             o = o || {};
             self._parseParam(o);
 
             self.con.addClass('ks-cal-call ks-clearfix ks-cal-call-multi-' + self.pages);
+
+            self.ca = self.ca || [];
+            for (var i = 0; i < self.ca.length; i++) {
+                self.ca[i].detachEvent();
+            }
             self.con.html('');
 
+            //重置日历的个数
+            self.ca.length = self.pages;
             var _rangeStart = false;
             var _rangeEnd = false;
             if (self.range) {
@@ -105,7 +110,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 else {
                     _next = i == (self.pages - 1);
                 }
-                self.ca = self.ca || [];
+
                 var cal = self.ca[i];
                 if (!self.rangeLinkage && cal && (cal.year != _oym[0] || cal.month != _oym[1])) {
                     _oym = [cal.year, cal.month];
@@ -123,7 +128,20 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             return this;
 
         },
+        destroy:function () {
+            //在清空html前，移除绑定的事件
+            var self = this;
+            for (var i = 0; i < self.ca.length; i++) {
+                self.ca[i].detachEvent();
+            }
 
+            S.each(self.EV, function (tev) {
+                if (tev) {
+                    tev.target.detach(tev.type, tev.fn);
+                }
+            });
+            self.con.remove();
+        },
         /**
          * 用以给容器打上id的标记,容器有id则返回
          * @method _stamp
@@ -142,6 +160,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
         /**
          * 创建日历外框的事件
          * @method _buildEvent
+         * @private
          */
         _buildEvent:function () {
             var self = this, tev, i;
@@ -157,7 +176,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             });
             self.EV = self.EV || [];
             tev = self.EV[0] = {
-                target:$(document),
+                target:$(doc),
                 type:'click'
             };
             tev.fn = function (e) {
@@ -242,7 +261,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
 
         //处理对齐
         __getAlignOffset:function (node, align) {
-
+            var self = this;
             var V = align.charAt(0),
                 H = align.charAt(1),
                 offset, w, h, x, y;
@@ -253,9 +272,9 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 w = node.outerWidth();
                 h = node.outerHeight();
             } else {
-                offset = { left:win.scrollLeft(), top:win.scrollTop() };
-                w = win.width();
-                h = win.height();
+                offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
+                w = DOM.viewportWidth();
+                h = DOM.viewportHeight();
             }
 
             x = offset.left;
@@ -317,7 +336,12 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          */
         hide:function () {
             var self = this;
-            self.con.css('visibility', 'hidden');
+            self.con.css({
+                'visibility':'hidden',
+                // #112
+                left:-9999,
+                top:-9999
+            });
             self.fire("hide");
             return this;
         },
@@ -341,42 +365,31 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
 
             //这种处理方式不错
             S.each({
-                date:new Date(),
-                selected:null,
-                startDay:0,
-                pages:1,
-                closable:false,
-                rangeSelect:false,
-                minDate:false,
-                maxDate:false,
-                "multiSelect":false,
-                navigator:true,
-                popup:false,
-                showTime:false,
-                triggerType:['click'],
-                //新增加的配置参数
+                date:new Date(), //该日期所在月份, 默认为当天
+                selected:null, //当前选中的日期
+                startDay:0, //日历显示星期x为起始日期, 取值范围为0到6, 默认为0,从星期日开始,若取值为1, 则从星期一开始, 若取值为7, 则从周日开始
+                pages:1, //日历的页数, 默认为1, 包含一页日历
+                closable:false, //在弹出情况下, 点选日期后是否关闭日历, 默认为false
+                rangeSelect:false, //是否支持时间段选择，只有开启时候才会触发rangeSelect事件
+                minDate:false, //日历可选择的最小日期
+                maxDate:false, //日历可选择的最大日期
+                multiSelect:false, //是否支持多选
+                multi:null, //多选的日期数组
+                navigator:true, //是否可以通过点击导航输入日期,默认开启
+                popup:false, //日历是否为弹出,默认为false
+                showTime:false, //是否显示时间的选择,默认为false
+                triggerType:['click'], //弹出状态下, 触发弹出日历的事件, 例如：[‘click’,’focus’],也可以直接传入’focus’, 默认为[‘click’]
                 disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
                 range:null, //已选择的时间段{start:null,end:null}
-                rangeLinkage:true,
+                rangeLinkage:true, //多个日历是否联动
                 align:{
                     points:['bl', 'tl'],
                     offset:[0, 0]
-                }, //对其方式
+                }, //对齐方式
                 notLimited:false// 是否出现不限的按钮
             }, setParam);
 
 
-            // 支持用户传进来一个string
-            if (typeof o.triggerType === 'string') {
-                o.triggerType = [o.triggerType];
-            }
-
-            self.startDay = self.startDay % 7;
-            if (self.startDay < 0) {
-                self.startDay += 7;
-            }
-
-            self.EV = [];
             return this;
         },
 
@@ -393,7 +406,35 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             for (i in o) {
                 self[i] = o[i];
             }
+
+            // 支持用户传进来一个string
+            if (typeof self.triggerType === 'string') {
+                self.triggerType = [self.triggerType];
+            }
+
+            self.startDay = self.startDay % 7;
+            if (self.startDay < 0) {
+                self.startDay += 7;
+            }
+
+            self.EV = [];
             self._handleDate();
+
+
+            //对multiSelect的处理
+            if (self.multiSelect) {
+                self.rangeSelect = false;
+                self.range = null;
+                self.selected = null;
+                if (self.multi) {
+                    //将传入的日期数组格式化成字符串数组,便于内部操作
+                    for (var i = 0; i < self.multi.length; i++) {
+                        if (self.multi[i] instanceof Date) {
+                            self.multi[i] = self._handleDate2String(self.multi[i]);
+                        }
+                    }
+                }
+            }
             return this;
         },
 
@@ -436,6 +477,31 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             self.month = date.getMonth();//月份
             self.year = date.getFullYear();//年份
             return this;
+        },
+        /**
+         * 处理日期TO字符串
+         * @method _handleDate2String
+         * @private
+         */
+        _handleDate2String:function (d) {
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            var date = d.getDate();
+            return year + '-' + (month > 8 ? (month + 1) : '0' + (month + 1)) + '-' + (date > 9 ? date : '0' + date);
+        },
+        /**
+         * 处理字符串TO日期
+         * @method _handleString2Date
+         * @private
+         */
+        _handleString2Date:function (str) {
+            var arr = str.toString().split('-');
+            if (arr.length == 3) {
+                date = new Date(parseInt(arr[0], 10), (parseInt(arr[1], 10) - 1), parseInt(arr[2], 10));
+                if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+                    return date;
+                }
+            }
         },
 
         //get标题
@@ -503,7 +569,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 data = ['日', '一', '二', '三', '四', '五', '六'],
                 temp = '<span>{$day}</span>',
                 offset = self.startDay,
-                day_html,
+                day_html = '',
                 a = [];
             for (var i = 0; i < 7; i++) {
                 a[i] = {
@@ -540,6 +606,83 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 }
             }
             return this;
+        },
+        //开始多选
+        _handleMultiSelectStart:function (d) {
+            var self = this;
+            self.multiStart = d;
+
+        },
+        _handleMultiSelectEnd:function (d) {
+
+            var self = this;
+            if (!self.multiStart) {
+                return;
+            }
+            self.multi = self.multi || [];
+            if (d < self.multiStart) {
+                self.multiEnd = self.multiStart;
+                self.multiStart = d;
+            }
+            else {
+                self.multiEnd = d;
+            }
+
+            //对min和max的处理
+            if (self.minDate && self.multiStart < self.minDate) {
+                self.multiStart = new Date(self.minDate.getFullYear(), self.minDate.getMonth(), self.minDate.getDate());//这里需要重新创建对象
+            }
+            if (self.maxDate && self.multiEnd > self.maxDate) {
+                self.multiEnd = new Date(self.maxDate.getFullYear(), self.maxDate.getMonth(), self.maxDate.getDate());
+            }
+
+            while (self.multiStart <= self.multiEnd) {
+
+                var isDisabled = false;
+                //需要处理disabled
+                if (self.disabled && self.disabled.length > 0) {
+                    for (var i = 0; i < self.disabled.length; i++) {
+                        var disabled = self.disabled[i];
+                        if (disabled.getTime() == self.multiStart.getTime()) {
+                            isDisabled = true;
+                            break;
+                        }
+                    }
+                }
+                if (isDisabled) {
+                    continue;
+                }
+                var str = self._handleDate2String(self.multiStart);
+                if (!S.inArray(str, self.multi)) {
+                    self.multi.push(str);
+                }
+                else {
+                    self.multi.splice(S.indexOf(str, self.multi), 1);
+                }
+                self.multiStart.setDate(self.multiStart.getDate() + 1);
+            }
+            self.multiStart = null;
+            self.render();
+        },
+        _handleMultiSelect:function () {
+            var self = this;
+            //这里对multi进行排序和处理成日期格式
+            self.multi = self.multi || [];
+            self.multi.sort(function (a, b) {
+                if (a > b) {
+                    return 1;
+                }
+                return -1;
+            });
+            for (var i = 0; i < self.multi.length; i++) {
+                self.multi[i] = self._handleString2Date(self.multi[i])
+            }
+
+            self.fire('multiSelect', {multi:self.multi});
+            if (self.popup && self.closable) {
+                self.hide();
+            }
+
         }
     });
 

@@ -5,8 +5,7 @@
  */
 (function (S, undefined) {
 
-    var host = S.__HOST,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
@@ -259,7 +258,7 @@
              * Removes undefined keywords and ignores escaped keywords.
              * @param {String} str template string
              * @param {Object} o json data
-             * @param {RegExp} regexp to match a piece of template string
+             * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute:function (str, o, regexp) {
                 if (!S.isString(str)
@@ -290,7 +289,7 @@
                         length = object && object.length,
                         isObj = length === undefined || S.type(object) === 'function';
 
-                    context = context || host;
+                    context = context || null;
 
                     if (isObj) {
                         for (key in object) {
@@ -636,7 +635,12 @@
                 }
 
                 // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                if (typeof o.length !== 'number'
+                    // element
+                    || o.nodeName
+                    // window
+                    || o.alert
+                    || S.isString(o) || S.isFunction(o)) {
                     return [o];
                 }
                 var ret = [];

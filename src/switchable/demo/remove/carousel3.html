@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Carousel - 旋转木马 remove hack</title>
+<link rel="shortcut icon" href="../../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/kissy-docs.css"/>
+
+<link rel="stylesheet" href="../../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../../kissy-dpl/base/build/css/form.css"/>
+
+<script src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy.js"></script>
+<script src="../../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <div class="sub-title">Switchable</div>
+    <ul class="navigation">
+        <li><a href="http://blog.kissyui.com/">博客</a></li>
+        <li><a href="http://github.com/kissyteam">源码</a></li>
+    </ul>
+</div>
+<div id="content" class="form">
+    <div class="s-crumbs">
+        <span>当前位置：</span>
+        <a href="http://kissyui.com/">KISSY</a>
+        <a href="http://docs.kissyui.com/docs/html/api/component/switchable/carousel.html">Carousel</a>
+        <span>Demo</span>
+    </div>
+
+    <pre class="s-section">
+功能：旋转木马 remove hack
+源码：<a href="../carousel/base.js">../carousel/base.js</a></pre>
+
+    <h3 class="s-title">Carousel - 旋转木马</h3>
+    <p>
+        点击图片删除
+    </p>
+    <div class="s-section">
+        <style>
+            .scrollable {
+                position: relative;
+                width: 820px;
+            }
+
+            .scrollable .prev, .scrollable .next {
+                position: absolute;
+                top: 50px;
+                color: #666;
+                cursor: pointer;
+            }
+
+            .scrollable .prev {
+                left: 10px;
+            }
+
+            .scrollable .next {
+                right: 10px;
+            }
+
+            .scrollable .disable {
+                color: #ddd;
+                cursor: default;
+            }
+
+            .scrollable .ks-switchable-nav {
+                position: absolute;
+                right: 30px;
+                top: -10px;
+            }
+
+            .scrollable .ks-switchable-nav li {
+                float: left;
+                padding: 5px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .scrollable .ks-switchable-nav li.ks-active {
+                color: #C8282B;
+            }
+
+            .scroller {
+                position: relative;
+                width: 680px;
+                height: 120px;
+                border: 1px solid #ccc;
+                background-color: #F9F9F9;
+                margin: auto;
+                overflow: hidden;
+            }
+
+            .scroller .ks-switchable-content img {
+                float: left;
+                width: 100px;
+                height: 75px;
+                padding: 2px;
+                margin: 20px 15px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                display: inline !important; /* fix ie6 双边距 bug */
+            }
+        </style>
+
+        <div id="demo4" class="s-demo scrollable">
+            <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
+            <span id="scroller-next" class="next">下一页 &rsaquo;</span>
+            <div class="scroller">
+                <div class="ks-switchable-content">
+                    <!-- 1-5 -->
+                    <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1.XGaXalnXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1Hm1XXipvXXXXXXXX-110-135.png"/>
+                    <!-- 5-10 -->
+                    <img id='carousel_lazy1' alt=""
+                         data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+                  </div>
+                <ul class="ks-switchable-nav">
+                    <li class="ks-active">&bull;</li>
+                    <li>&bull;</li>
+                </ul>
+                <script>
+                    KISSY.use("event,switchable,datalazyload", function (S, Event, Switchable) {
+                        var Carousel = Switchable.Carousel;
+
+                        S.ready(function (S) {
+                            var carousel = new Carousel('#demo4', {
+                                effect:'scrollx',
+                                easing:'easeOutStrong',
+                                steps:5,
+                                viewSize:[680],
+                                circular:false,
+                                prevBtnCls:'prev',
+                                nextBtnCls:'next',
+                                //autoplay:true,
+                                disableBtnCls:'disable',
+                                lazyDataType:'img-src'
+                            });
+
+                            window.carousel = carousel;
+                            var $ = S.all;
+                            $(".ks-switchable-content").delegate("click", "img", function (ev) {
+                                var t = $(ev.currentTarget);
+                                t.remove();
+                                var panels = carousel.panels;
+                                var triggers = carousel.triggers;
+                                var i;
+                                for (i = 0; i < panels.length; i++) {
+                                    if (panels[i] == t[0]) {
+                                        panels.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                                carousel.length = Math.ceil((panels.length) / carousel.config.steps);
+                                var triggersLength = triggers.length;
+                                for (i = triggers.length - 1; i >= carousel.length; i--) {
+                                    $(triggers[i]).remove();
+                                }
+
+                                S.log(carousel.activeIndex + " : " + carousel.length);
+                                if (carousel.activeIndex >= carousel.length) {
+                                    //carousel.activeIndex = -1;
+                                    carousel.switchTo(carousel.length - 1);
+                                } else {
+                                    var n = carousel.activeIndex;
+                                    carousel.activeIndex = -1;
+                                    carousel.switchTo(n);
+                                }
+                            });
+
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        <a class="s-view-code" href="#">显示源码</a>
+    </div>
+
+    <a class="s-view-code" href="#">显示源码</a>
+</div>
+</div>
+</body>
+</html>

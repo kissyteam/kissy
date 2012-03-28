@@ -13,7 +13,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @class
      * @namespace
      * @name Overlay
-     * @extends Component.ModelControl
+     * @extends Component.Controller
      * @extends UIBase.ContentBox
      * @extends UIBase.Position
      * @extends UIBase.Loading
@@ -23,7 +23,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Mask
      * @param {Object} config config object to set properties of its parent class
      */
-    var Overlay = UIBase.create(Component.ModelControl, [
+    var Overlay = UIBase.create(Component.Controller, [
         require("contentbox"),
         require("position"),
         require("loading"),

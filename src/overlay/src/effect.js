@@ -39,34 +39,44 @@ KISSY.add("overlay/effect", function (S) {
         }
     };
 
+    function processEffect(self, show) {
+        var el = self.get("el"),
+            effectCfg = self.get("effect"),
+            effect = effectCfg.effect,
+            duration = effectCfg.duration,
+            easing = effectCfg.easing;
+        if (effect == NONE) {
+            return;
+        }
+        var v = show,
+            index = v ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        var restore = {
+            "visibility":"visible",
+            "display":displays[index]
+        };
+        el.css(restore);
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            var r2 = {
+                "display":displays[0],
+                "visibility":v ? "visible" : "hidden"
+            };
+            el.css(r2);
+        }, easing);
+    }
+
     Effect.prototype = {
 
         __bindUI:function () {
-            var self = this;
-            self.on("afterVisibleChange", function (ev) {
-                var effect = self.get("effect").effect;
-                if (effect == NONE) {
-                    return;
-                }
-                var v = ev.newVal,
-                    index = Number(v),
-                    el = self.get("el");
-
-                // 队列中的也要移去
-                el.stop(1, 1);
-                el.css({
-                    "visibility":"visible",
-                    "display":displays[index]
-                });
-
-                var m = effect + effects[effect][index];
-                el[m](self.get("effect").duration, function () {
-                    el.css({
-                        "display":displays[0],
-                        "visibility":v ? "visible" : "hidden"
-                    });
-                }, self.get("effect").easing, false);
-
+            var self = this
+            self.on("hide", function () {
+                processEffect(self, 0);
+            });
+            self.on("show", function () {
+                processEffect(self, 1);
             });
         }
     };

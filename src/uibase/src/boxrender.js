@@ -4,7 +4,7 @@
  */
 KISSY.add('uibase/boxrender', function (S, Node) {
 
-    var $ = S.all;
+    var $ = S.all, doc = S.Env.host.document;
 
 
     function BoxRender() {
@@ -38,7 +38,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         elAttrs:{
             sync:false
         },
+
         html:{
+            // !! srcNode 和 html 不能同时设置
             sync:false
         },
         elBefore:{
@@ -120,7 +122,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     el.appendTo(render);
                 }
                 else {
-                    el.appendTo(document.body);
+                    el.appendTo(doc.body);
                 }
             }
         },
@@ -131,17 +133,49 @@ KISSY.add('uibase/boxrender', function (S, Node) {
          */
         __createDom:function () {
             var self = this,
+                elCls = self.get("elCls"),
+                elStyle = self.get("elStyle"),
+                width = self.get("width"),
+                height = self.get("height"),
+                html = self.get("html"),
+                elAttrs = self.get("elAttrs"),
                 el = self.get("el");
             if (!el) {
                 self.__boxRenderNew = true;
-                el = new Node(constructEl(self.get("elCls"),
-                    self.get("elStyle"),
-                    self.get("width"),
-                    self.get("height"),
+                el = new Node(constructEl(elCls,
+                    elStyle,
+                    width,
+                    height,
                     self.get("elTagName"),
-                    self.get("elAttrs"),
-                    self.get("html")));
+                    elAttrs,
+                    html));
                 self.__set("el", el);
+            }
+            // 通过 srcNode 过来的
+            else {
+                if (elCls) {
+                    el.addClass(elCls);
+                }
+                if (elStyle) {
+                    el.css(elStyle);
+                }
+                if (width !== undefined) {
+                    el.width(width);
+                }
+                if (height !== undefined) {
+                    el.height(height);
+                }
+                /*
+                 srcNode 就是原来的内容，也可以不用设置 html
+                 if (html !== undefined &&
+                 // 防止冲掉 el 原来的子元素引用 !!
+                 html !== el.html()) {
+                 el.html(html);
+                 }
+                 */
+                if (elAttrs) {
+                    el.attr(elAttrs);
+                }
             }
         },
 
@@ -180,21 +214,10 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             }
         },
 
-        show:function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        hide:function () {
-            this.set("visible", false);
-        },
-
         __destructor:function () {
             //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
-                el.detach();
                 el.remove();
             }
         }

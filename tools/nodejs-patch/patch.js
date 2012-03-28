@@ -14,13 +14,14 @@
     window = document.createWindow();
     location = window.location;
     navigator = window.navigator;
-
+    window.document = document;
     /**
      * note : this === exports !== global
      */
     KISSY = exports.KISSY = window.KISSY = exports;
-    KISSY['__HOST'] = window;
-
+    KISSY.Env = {
+        host:window
+    };
 })();
 
 /**

@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             docElement = doc.documentElement,
             oldIE = !docElement.hasAttribute,
             TEXT = docElement.textContent === undefined ?
@@ -249,12 +249,17 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * @lends DOM
              */
             {
-
                 /**
-                 * 读取第一个元素/设置全部元素 property，自定义属性不推荐使用，使用 .data
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param {String} name 属性名
-                 * @param [value] 属性值
+                 * Get the value of a property for the first element in the set of matched elements.
+                 * or
+                 * Set one or more properties for the set of matched elements.
+                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {String|Object} name
+                 * The name of the property to set.
+                 * or
+                 * A map of property-value pairs to set.
+                 * @param [value] A value to set for the property.
+                 * @returns {String|undefined|boolean}
                  */
                 prop:function (selector, name, value) {
                     var elems = DOM.query(selector);
@@ -264,7 +269,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         for (var k in name) {
                             DOM.prop(elems, k, name[k]);
                         }
-                        return;
+                        return undefined;
                     }
 
                     // Try to normalize/fix the name
@@ -287,10 +292,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 是否其中一个元素包含指定 property
+                 * Whether one of the matched elements has specified property name
                  * @param {Array<HTMLElement>|String} selector 元素
-                 * @param {String} name 属性名
-                 * @return {boolean} 元素集合中是否有一个元素存在该属性
+                 * @param {String} name The name of property to test
+                 * @return {boolean}
                  */
                 hasProp:function (selector, name) {
                     var elems = DOM.query(selector);
@@ -304,10 +309,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 删除元素指定的 property
-                 * 不推荐使用，使用 .data .removeData
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param {String} name 属性名
+                 * Remove a property for the set of matched elements.
+                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {String} name The name of the property to remove.
                  */
                 removeProp:function (selector, name) {
                     name = propFix[ name ] || name;
@@ -325,10 +329,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 获取元素集合第一个元素的属性值或者设置全部元素对应属性名的属性值
-                 * @param {HTMLElement[]|HTMLElement|String|Element} selector 元素集合
-                 * @param {String|Object} name 属性名或属性键值对
-                 * @param [val] 属性值
+                 * Get the value of an attribute for the first element in the set of matched elements.
+                 * or
+                 * Set one or more attributes for the set of matched elements.
+                 * @param {HTMLElement[]|HTMLElement|String|Element} selector matched elements
+                 * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
+                 * @param [val] A value to set for the attribute.
+                 * @returns {String}
                  */
                 attr:function (selector, name, val, pass) {
                     /*
@@ -372,11 +379,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                                 DOM.attr(els, k, name[k], pass);
                             }
                         }
-                        return;
+                        return undefined;
                     }
 
                     if (!(name = S.trim(name))) {
-                        return;
+                        return undefined;
                     }
 
                     // attr functions
@@ -445,9 +452,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 删除元素的指定属性
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param {String} name 属性名
+                 * Remove an attribute from each element in the set of matched elements.
+                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {String} name An attribute to remove
                  */
                 removeAttr:function (selector, name) {
                     name = name.toLowerCase();
@@ -467,10 +474,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 是否其中一个元素包含指定属性
+                 * Whether one of the matched elements has specified attribute
                  * @function
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param {String} name 属性名
+                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {String} name The attribute to be tested
+                 * @returns {Boolean}
                  */
                 hasAttr:oldIE ?
                     function (selector, name) {
@@ -502,9 +510,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     },
 
                 /**
-                 * 获取元素集合第一个元素的值或者设置全部元素的值
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param [value] 设置值
+                 * Get the current value of the first element in the set of matched elements.
+                 * or
+                 * Set the value of each element in the set of matched elements.
+                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {String|Array<String>} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
+                 * @returns {undefined|String|Array<String>|Number}
                  */
                 val:function (selector, value) {
                     var hook, ret;
@@ -530,14 +541,14 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                                 ret == null ? "" : ret;
                         }
 
-                        return;
+                        return undefined;
                     }
 
                     var els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         elem = els[i];
                         if (elem.nodeType !== 1) {
-                            return;
+                            return undefined;
                         }
 
                         var val = value;
@@ -563,9 +574,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 获取元素集合第一个元素的文本值或者设置全部元素的文本值
-                 * @param {HTMLElement[]|HTMLElement|String} selector 元素集合
-                 * @param [val] 设置值
+                 * Get the combined text contents of each element in the set of matched elements, including their descendants.
+                 * or
+                 * Set the content of each element in the set of matched elements to the specified text.
+                 * @param {HTMLElement[]|HTMLElement|String} selector matched elements
+                 * @param {String} [val] A string of text to set as the content of each matched element.
+                 * @returns {String|undefined}
                  */
                 text:function (selector, val) {
                     // getter

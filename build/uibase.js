@@ -1,14 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
-
 
     /*
      inspired by closure library by Google
@@ -72,7 +71,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
         for (var el = element; el = getOffsetParent(el);) {
 
-
             var clientWidth = el.clientWidth;
 
             if (
@@ -83,7 +81,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             // overflow 不为 visible 则可以限定其内元素
             // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
             // offsetParent 已经判断过了
-            //&& DOM.css(el, 'overflow') != 'visible'
+            // && DOM.css(el, 'overflow') != 'visible'
                 ) {
                 var clientLeft = el.clientLeft,
                     clientTop = el.clientTop,
@@ -260,6 +258,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
+     * align component with specified element
      * @class
      * @memberOf UIBase
      */
@@ -279,7 +278,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          * @example
          * <code>
          *     {
-         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
          *     }
@@ -292,12 +291,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
                     v.node = Node.one(n);
                 }
             }
-            // 默认不是正中，可以实现自由动画 zoom
-//            value:{
-//                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-//                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-//                offset: [0, 0]      // 有效值为 [n, m]
-//            }
         }
     };
 
@@ -311,7 +304,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             H = align.charAt(1),
             offset, w, h, x, y;
 
-        if (node) {
+        if (node && !S.isWindow(node)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -345,20 +338,25 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            this.align(v.node, v.points, v.offset, v.overflow);
+            if (v) {
+                this.align(v.node, v.points, v.offset, v.overflow);
+            }
         },
 
-        /**
-         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @function
-         * @ignore
-         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {String[]} points 对齐方式
-         * @param {Number[]} [offset] 偏移
+        /*
+         对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         @function
+         @ignore
+         @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         @param {String[]} points 对齐方式
+         @param {Number[]} [offset] 偏移
          */
         align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
+            if (node) {
+                node = Node.one(node);
+            }
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
             offset = offset && [].concat(offset) || [0, 0];
@@ -741,9 +739,10 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * 销毁组件
              */
             destroy:function () {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+                var self = this;
+                destroyHierarchy(self);
+                self.fire('destroy');
+                self.detach();
             }
         },
         /**
@@ -844,9 +843,10 @@ KISSY.add('uibase/base', function (S, Base, Node) {
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('uibase/box', function () {
+KISSY.add('uibase/box', function (S) {
 
     /**
+     * Box Implementation
      * @class
      * @memberOf UIBase
      * @namespace
@@ -856,56 +856,96 @@ KISSY.add('uibase/box', function () {
 
     Box.ATTRS =
     /**
-     * @lends UIBase.Box#
+     * @lends UIBase.Box.prototype
      */
     {
+        /**
+         * component's html content
+         * @type String
+         */
         html:{
             view:true
         },
-        // 宽度
+        /**
+         * component's width
+         * @type Number|String
+         */
         width:{
+            // 没有 _uiSetWidth，所以不需要设置 sync:false
             view:true
         },
-        // 高度
+        /**
+         * component's height
+         * @type Number|String
+         */
         height:{
             view:true
         },
-        // 容器的 class
+        /**
+         * css class of component's root element
+         * @type String
+         */
         elCls:{
             view:true
         },
-        // 容器的行内样式
+        /**
+         * name-value pair css style of component's root element
+         * @type Object
+         */
         elStyle:{
             view:true
         },
-        // 其他属性
+        /**
+         * name-value pair attribute of component's root element
+         * @type Object
+         */
         elAttrs:{
-            //其他属性
             view:true
         },
-        // 插入到该元素前
+        /**
+         * archor element where component insert before
+         * @type NodeList
+         */
         elBefore:{
             view:true
         },
+        /**
+         * readonly. root element of current component
+         * @type NodeList
+         */
         el:{
             view:true
         },
 
-        // 渲染该组件的目的容器
+        /**
+         * archor element where component append to
+         * @type NodeList
+         */
         render:{
             view:true
         },
 
+        /**
+         * component's visibleMode,use css "display" or "visibility" to show this component
+         * @type String
+         */
         visibleMode:{
             value:"display",
             view:true
         },
-        // 默认显示，但不触发事件
+
+        /**
+         * whether this component is visible
+         * @type Boolean
+         */
         visible:{
             view:true
         },
 
-        // 从已存在节点开始渲染
+        /**
+         * the node to parse for configuration values,passed to component's HTML_PARSER definition
+         * @type NodeList
+         */
         srcNode:{
             view:true
         }
@@ -921,8 +961,9 @@ KISSY.add('uibase/box', function () {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
-            if (this.decorateInternal) {
-                this.decorateInternal(srcNode);
+            var self = this;
+            if (self.decorateInternal) {
+                self.decorateInternal(S.one(srcNode));
             }
             return srcNode;
         }
@@ -933,22 +974,30 @@ KISSY.add('uibase/box', function () {
      * @lends UIBase.Box#
      */
     {
-
+        /**
+         * @private
+         */
         _uiSetVisible:function (isVisible) {
             this.fire(isVisible ? "show" : "hide");
         },
 
         /**
-         * 显示 Overlay
+         * show component
          */
         show:function () {
             var self = this;
-            self.render();
-            self.set("visible", true);
+            if (!self.get("rendered")) {
+                // 防止初始设置 false，导致触发 hide 事件
+                // show 里面的初始一定是 true，触发 show 事件
+                self.__set("visible", true);
+                self.render();
+            } else {
+                self.set("visible", true);
+            }
         },
 
         /**
-         * 隐藏
+         * hide component
          */
         hide:function () {
             this.set("visible", false);
@@ -963,20 +1012,13 @@ KISSY.add('uibase/box', function () {
  */
 KISSY.add('uibase/boxrender', function (S, Node) {
 
-    var $ = S.all;
+    var $ = S.all, doc = S.Env.host.document;
 
-    /**
-     * @class
-     * @memberOf UIBase.Box
-     */
+
     function BoxRender() {
     }
 
-    BoxRender.ATTRS =
-    /**
-     * @lends UIBase.Box.Render#
-     */
-    {
+    BoxRender.ATTRS = {
         el:{
             //容器元素
             setter:function (v) {
@@ -1004,7 +1046,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         elAttrs:{
             sync:false
         },
+
         html:{
+            // !! srcNode 和 html 不能同时设置
             sync:false
         },
         elBefore:{
@@ -1086,7 +1130,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     el.appendTo(render);
                 }
                 else {
-                    el.appendTo(document.body);
+                    el.appendTo(doc.body);
                 }
             }
         },
@@ -1097,17 +1141,49 @@ KISSY.add('uibase/boxrender', function (S, Node) {
          */
         __createDom:function () {
             var self = this,
+                elCls = self.get("elCls"),
+                elStyle = self.get("elStyle"),
+                width = self.get("width"),
+                height = self.get("height"),
+                html = self.get("html"),
+                elAttrs = self.get("elAttrs"),
                 el = self.get("el");
             if (!el) {
                 self.__boxRenderNew = true;
-                el = new Node(constructEl(self.get("elCls"),
-                    self.get("elStyle"),
-                    self.get("width"),
-                    self.get("height"),
+                el = new Node(constructEl(elCls,
+                    elStyle,
+                    width,
+                    height,
                     self.get("elTagName"),
-                    self.get("elAttrs"),
-                    self.get("html")));
+                    elAttrs,
+                    html));
                 self.__set("el", el);
+            }
+            // 通过 srcNode 过来的
+            else {
+                if (elCls) {
+                    el.addClass(elCls);
+                }
+                if (elStyle) {
+                    el.css(elStyle);
+                }
+                if (width !== undefined) {
+                    el.width(width);
+                }
+                if (height !== undefined) {
+                    el.height(height);
+                }
+                /*
+                 srcNode 就是原来的内容，也可以不用设置 html
+                 if (html !== undefined &&
+                 // 防止冲掉 el 原来的子元素引用 !!
+                 html !== el.html()) {
+                 el.html(html);
+                 }
+                 */
+                if (elAttrs) {
+                    el.attr(elAttrs);
+                }
             }
         },
 
@@ -1146,21 +1222,10 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             }
         },
 
-        show:function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        hide:function () {
-            this.set("visible", false);
-        },
-
         __destructor:function () {
             //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
-                el.detach();
                 el.remove();
             }
         }
@@ -1177,6 +1242,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
 KISSY.add("uibase/close", function () {
 
     /**
+     * config detail of close action
      * @class
      * @memberOf UIBase
      */
@@ -1238,7 +1304,8 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.ATTRS = {
         closable:{             // 是否需要关闭按钮
-            value:true
+            value:true,
+            sync:false
         },
         closeBtn:{
         }
@@ -1252,24 +1319,18 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.prototype = {
         _uiSetClosable:function (v) {
-            var self = this,
-                closeBtn = self.get("closeBtn");
-            if (closeBtn) {
-                if (v) {
-                    closeBtn.css("display", "");
-                } else {
-                    closeBtn.css("display", "none");
-                }
-            }
+            this.get("closeBtn")[v ? "show" : "hide"]();
         },
-        __renderUI:function () {
+        __createDom:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
+                closable = self.get("closable"),
                 el = self.get("el");
 
-            if (!closeBtn && el) {
+            if (!closeBtn) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    (closable ? "" : "style='display:none'") +
                     "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
@@ -1278,11 +1339,12 @@ KISSY.add("uibase/closerender", function (S, Node) {
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
+            } else {
+                closeBtn[closable ? "show" : "hide"]();
             }
         },
 
         __destructor:function () {
-
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();
@@ -1297,9 +1359,10 @@ KISSY.add("uibase/closerender", function (S, Node) {
  * @fileOverview constrain extension for kissy
  * @author yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM, Node) {
+KISSY.add("uibase/constrain", function (S, DOM, Node) {
 
     /**
+     * constrain component to specified region
      * @class
      * @memberOf UIBase
      */
@@ -1313,7 +1376,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
      */
     {
         /**
-         * true:viewport限制，node:限制在该节点范围
+         * <br>true:viewport限制 <br> node:限制在该节点范围
          * @type HTMLElement|boolean
          */
         constrain:{
@@ -1338,8 +1401,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
-                maxLeft: ret.left + constrain.outerWidth() - el.outerWidth(),
-                maxTop: ret.top + constrain.outerHeight() - el.outerHeight()
+                maxLeft:ret.left + constrain.outerWidth() - el.outerWidth(),
+                maxTop:ret.top + constrain.outerHeight() - el.outerHeight()
             });
         }
         // 没有指定 constrain, 表示受限于可视区域
@@ -1350,11 +1413,11 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             //On getting, the clientWidth attribute returns the viewport width
             //excluding the size of a rendered scroll bar (if any)
             //  if the element is the root element 
-            var vWidth = document.documentElement.clientWidth;
-            ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+            var vWidth = S.Env.host.document.documentElement.clientWidth;
+            ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             S.mix(ret, {
-                maxLeft: ret.left + vWidth - el.outerWidth(),
-                maxTop: ret.top + DOM.viewportHeight() - el.outerHeight()
+                maxLeft:ret.left + vWidth - el.outerWidth(),
+                maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
 
@@ -1363,14 +1426,14 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
     Constrain.prototype = {
 
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 attrs = self.getAttrs(),
                 xAttr = attrs["x"],
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
-            xAttr.setter = function(v) {
+            xAttr.setter = function (v) {
                 var r = oriXSetter && oriXSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
@@ -1384,7 +1447,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                     _ConstrainExtRegion.left),
                     _ConstrainExtRegion.maxLeft);
             };
-            yAttr.setter = function(v) {
+            yAttr.setter = function (v) {
                 var r = oriYSetter && oriYSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
@@ -1407,7 +1470,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
     return Constrain;
 
 }, {
-    requires:["dom","node"]
+    requires:["dom", "node"]
 });/**
  * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
@@ -1415,34 +1478,55 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 KISSY.add("uibase/contentbox", function () {
 
     /**
+     * ContentBox Implementation
      * @class
      * @memberOf UIBase
      */
     function ContentBox() {
     }
 
-    ContentBox.ATTRS = {
-        //层内容
+    ContentBox.ATTRS =
+    /**
+     * @lends UIBase.ContentBox#
+     */
+    {
+        /**
+         * content of component's content box
+         * @type NodeList|String
+         */
         content:{
             view:true,
             sync:false
         },
+
+        /**
+         * readonly! content box's element of component
+         * @type NodeList
+         */
         contentEl:{
             view:true
         },
 
+        /**
+         * name-value pair attribute of component's content box element
+         * @type Object
+         */
         contentElAttrs:{
             view:true
         },
+
+        /**
+         * name-value pair css style of component's content box element
+         * @type Object
+         */
         contentElStyle:{
             view:true
         },
+
         contentTagName:{
             view:true
         }
     };
-
-    ContentBox.prototype = {    };
 
     return ContentBox;
 });/**
@@ -1451,23 +1535,11 @@ KISSY.add("uibase/contentbox", function () {
  */
 KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
-    /**
-     * @class 内层容器渲染混元类
-     * @name Render
-     * @memberOf UIBase.ContentBox
-     */
+
     function ContentBoxRender() {
     }
 
-    ContentBoxRender.ATTRS =
-    /**
-     * @lends UIBase.ContentBox.Render
-     */
-    {
-        /**
-         * 内容容器节点
-         * @type String|Node
-         */
+    ContentBoxRender.ATTRS = {
         contentEl:{},
         contentElAttrs:{},
         contentElCls:{},
@@ -1475,10 +1547,6 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         contentTagName:{
             value:"div"
         },
-        /**
-         * 内层内容
-         * @type String|Node
-         */
         content:{
             sync:false
         }
@@ -1526,7 +1594,10 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 undefined,
                 self.get("contentTagName"),
                 self.get("contentElAttrs"),
-                c)).appendTo(el);
+                c));
+
+            contentEl.appendTo(el);
+
             self.__set("contentEl", contentEl);
             // on content,then read from box el
             if (!c) {
@@ -1570,6 +1641,7 @@ KISSY.add("uibase/drag", function (S) {
 
 
     /**
+     * config drag options
      * @class
      * @memberOf UIBase
      */
@@ -1583,7 +1655,7 @@ KISSY.add("uibase/drag", function (S) {
      */
     {
         /**
-         * @see DD.Draggable#handlers
+         * see {@link DD.Draggable#handlers}
          */
         handlers:{
             value:[]
@@ -1651,6 +1723,7 @@ KISSY.add("uibase/drag", function (S) {
 KISSY.add("uibase/loading", function () {
 
     /**
+     * make component can mask loading
      * @class
      * @memberOf UIBase
      */
@@ -1662,10 +1735,16 @@ KISSY.add("uibase/loading", function () {
      * @lends UIBase.Loading.prototype
      */
     {
+        /**
+         * mask component as loading
+         */
         loading:function () {
             this.get("view").loading();
         },
 
+        /**
+         * unmask component as loading
+         */
         unloading:function () {
             this.get("view").unloading();
         }
@@ -1720,6 +1799,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
 KISSY.add("uibase/mask", function () {
 
     /**
+     * make component can show with mask
      * @class
      * @memberOf UIBase
      */
@@ -1732,7 +1812,7 @@ KISSY.add("uibase/mask", function () {
      */
     {
         /**
-         * 是否显示时出现遮罩层
+         * whether show mask layer when component shows
          * @type boolean
          */
         mask:{
@@ -1741,7 +1821,6 @@ KISSY.add("uibase/mask", function () {
     };
 
     Mask.prototype = {
-
         _uiSetMask:function (v) {
             var self = this;
             if (v) {
@@ -1760,7 +1839,7 @@ KISSY.add("uibase/mask", function () {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -1769,31 +1848,29 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        win = $(window),
-        doc = $(document),
+        WINDOW = S.Env.host,
+        doc = $(WINDOW.document),
         iframe,
         num = 0;
 
     function docWidth() {
-        return  ie6 ? (doc.width() + px) : "100%";
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
 
     function docHeight() {
-        return ie6 ? (doc.height() + px) : "100%";
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
     function initMask() {
         mask = $("<div " +
-            //"tabindex='-1' " +
+            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
             "class='" +
             this.get("prefixCls") + "ext-mask'/>")
-            .prependTo("body");
+            .prependTo(WINDOW.document.body);
         mask.css({
             "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
             left:0,
-            top:0,
-            width: docWidth(),
-            "height": docHeight()
+            top:0
         });
         if (ie6) {
             //ie6 下最好和 mask 平行
@@ -1813,7 +1890,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
+        mask.on("mousedown click", function (e) {
             e.halt();
         });
     }
@@ -1821,25 +1898,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
-        var v = {
-            width : docWidth(),
-            height : docHeight()
-        };
-        mask.css(v);
-        iframe && iframe.css(v);
-    }, 50);
-
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow:function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
+                "z-index":self.get("zIndex") - 1
             },
                 display = {
                     "display":""
@@ -1850,13 +1918,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             if (num == 1) {
                 mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.on("resize scroll", resizeMask);
-                }
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide:function () {
             num--;
             if (num <= 0) {
                 num = 0;
@@ -1867,13 +1932,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.detach("resize scroll", resizeMask);
-                }
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
             this._maskExtHide();
         }
 
@@ -1881,7 +1943,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires:["ua", "node"]
 });/**
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
@@ -1889,6 +1951,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 KISSY.add("uibase/position", function (S) {
 
     /**
+     * make component positionable
      * @class
      * @memberOf UIBase
      */
@@ -1958,6 +2021,29 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
+        //! #112 和 effect 冲突，不好控制，delay
+//        __bindUI:function () {
+//            // fix #112
+//            var self = this,
+//                el = self.get("el");
+//            // show hide event is earlier than afterVisibleChange
+//            self.on("hide", function () {
+//                self.set("hideLeft", el.css("left"));
+//                self.set("hideTop", el.css("top"));
+//                el.css({
+//                    left:HIDE_INDICATOR_PX,
+//                    top:HIDE_INDICATOR_PX
+//                });
+//            });
+//            self.on("show", function () {
+//                if (el.style("left") == HIDE_INDICATOR_PX) {
+//                    el.css("left", self.get("hideLeft"));
+//                }
+//                if (el.style("top") == HIDE_INDICATOR_PX) {
+//                    el.css("top", self.get("hideTop"));
+//                }
+//            });
+//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x
@@ -1978,7 +2064,7 @@ KISSY.add("uibase/position", function (S) {
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author  yiminghe@gmail.com
  */
-KISSY.add("uibase/positionrender", function() {
+KISSY.add("uibase/positionrender", function () {
 
     var ZINDEX = 9999;
 
@@ -1986,42 +2072,46 @@ KISSY.add("uibase/positionrender", function() {
     }
 
     Position.ATTRS = {
-        x: {
+        x:{
             // 水平方向绝对位置
-            valueFn:function() {
+            valueFn:function () {
+                var self=this;
                 // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
                 // el 不在 dom 树中 offset 报错的
                 // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
-                return this.get("el") && this.get("el").offset().left;
+                return self.get("el") && self.get("el").offset().left;
             }
         },
-        y: {
+        y:{
             // 垂直方向绝对位置
-            valueFn:function() {
-                return this.get("el") && this.get("el").offset().top;
+            valueFn:function () {
+                var self=this;
+                return self.get("el") && self.get("el").offset().top;
             }
         },
-        zIndex: {
-            value: ZINDEX
+        zIndex:{
+            value:ZINDEX
         }
     };
 
 
     Position.prototype = {
 
-        __renderUI:function() {
+        __createDom:function () {
             this.get("el").addClass(this.get("prefixCls") + "ext-position");
         },
 
-        _uiSetZIndex:function(x) {
+        _uiSetZIndex:function (x) {
             this.get("el").css("z-index", x);
         },
-        _uiSetX:function(x) {
+
+        _uiSetX:function (x) {
             this.get("el").offset({
                 left:x
             });
         },
-        _uiSetY:function(y) {
+
+        _uiSetY:function (y) {
             this.get("el").offset({
                 top:y
             });
@@ -2036,6 +2126,7 @@ KISSY.add("uibase/positionrender", function() {
 KISSY.add("uibase/resize", function (S) {
 
     /**
+     * make component resizable
      * @class
      * @memberOf UIBase
      */
@@ -2071,20 +2162,19 @@ KISSY.add("uibase/resize", function (S) {
 
     Resize.prototype = {
         __destructor:function () {
-            this.resizer && this.resizer.destroy();
+            var r = this.resizer;
+            r && r.destroy();
         },
         _uiSetResize:function (v) {
-
             var Resizable = S.require("resizable"),
                 self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");
                 if (v.handlers) {
-                    self.resizer = new Resizable(v).render();
+                    self.resizer = new Resizable(v);
                 }
             }
-
         }
     };
 
@@ -2097,15 +2187,14 @@ KISSY.add("uibase/resize", function (S) {
 KISSY.add("uibase/shimrender", function(S, Node) {
 
     function Shim() {
-        //S.log("shim init");
     }
-
 
     Shim.ATTRS = {
         shim:{
             value:true
         }
     };
+
     Shim.prototype = {
 
         _uiSetShim:function(v) {
@@ -2139,6 +2228,7 @@ KISSY.add("uibase/stdmod", function () {
 
 
     /**
+     * generate head,body,foot for component
      * @class
      * @memberOf UIBase
      */
@@ -2152,63 +2242,63 @@ KISSY.add("uibase/stdmod", function () {
      */
     {
         /**
-         * 头元素，只读
+         * Header element of dialog. Readonly
          * @type Node
          */
         header:{
             view:true
         },
         /**
-         * 体元素，只读
+         * Body element of dialog. Readonly
          * @type Node
          */
         body:{
             view:true
         },
         /**
-         * 尾元素，只读
+         * Footer element of dialog. Readonly
          * @type Node
          */
         footer:{
             view:true
         },
         /**
-         * 体元素样式键值对
+         * Key-value map of body element's style.
          * @type Object
          */
         bodyStyle:{
             view:true
         },
         /**
-         * 尾元素样式键值对
+         * Key-value map of footer element's style.
          * @type Object
          */
         footerStyle:{
             view:true
         },
         /**
-         * 头元素样式键值对
+         * Key-value map of header element's style.
          * @type Object
          */
         headerStyle:{
             view:true
         },
         /**
-         * 头元素内容值
+         * Html content of header element.
          * @type Node|String
          */
         headerContent:{
             view:true
         },
         /**
-         * 体元素内容值
+         * Html content of body element.
          * @type Node|String
          */
         bodyContent:{
             view:true
         },
         /**
-         * 尾元素内容值
+         * Html content of footer element.
          * @type Node|String
          */
         footerContent:{
@@ -2216,16 +2306,13 @@ KISSY.add("uibase/stdmod", function () {
         }
     };
 
-
-    StdMod.prototype = {};
-
     return StdMod;
 
 });/**
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/stdmodrender", function(S, Node) {
+KISSY.add("uibase/stdmodrender", function (S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";
@@ -2241,77 +2328,114 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         footer:{
         },
         bodyStyle:{
+            sync:false
         },
         footerStyle:{
-
+            sync:false
         },
         headerStyle:{
-
+            sync:false
         },
-        headerContent:{},
-        bodyContent:{},
-        footerContent:{}
+        headerContent:{
+            sync:false
+        },
+        bodyContent:{
+            sync:false
+        },
+        footerContent:{
+            sync:false
+        }
     };
 
+    function serialize(css) {
+        var str = "";
+        if (css) {
+            for (var i in css) {
+                if (css.hasOwnProperty(i)) {
+                    str += i + ":" + css[i] + ";"
+                }
+            }
+        }
+        return str;
+    }
+
     StdMod.HTML_PARSER = {
-        header:function(el) {
+        header:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
         },
-        body:function(el) {
+        body:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
         },
-        footer:function(el) {
+        footer:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
         }
     };
 
     function renderUI(self, part) {
         var el = self.get("contentEl"),
+            style = self.get(part + "Style"),
+            content = self.get(part + "Content"),
+            isString = S.isString(content),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
-                .appendTo(el);
+            style = serialize(style);
+            partEl = new Node("<div class='" + self.get("prefixCls") +
+                CLS_PREFIX + part + "'" +
+                " " +
+                (style ? ("style='" + style + "'") : "") +
+                " >" +
+                (isString ? content : "") +
+                "</div>");
+            if (!isString) {
+                partEl.append(content);
+            }
+            partEl.appendTo(el);
             self.__set(part, partEl);
+        } else if (style) {
+            partEl.css(style);
+        }
+    }
+
+
+    function _setStdModContent(self, part, v) {
+        part = self.get(part);
+        if (S.isString(v)) {
+            part.html(v);
+        } else {
+            part.html("")
+                .append(v);
         }
     }
 
     StdMod.prototype = {
 
-        _setStdModContent:function(part, v) {
-            if (S.isString(v)) {
-                this.get(part).html(v);
-            } else {
-                this.get(part).html("");
-                this.get(part).append(v);
-            }
-        },
-        _uiSetBodyStyle:function(v) {
-
-            this.get("body").css(v);
-
-        },
-        _uiSetHeaderStyle:function(v) {
-
-            this.get("header").css(v);
-
-        },
-        _uiSetFooterStyle:function(v) {
-
-            this.get("footer").css(v);
-        },
-        _uiSetBodyContent:function(v) {
-            this._setStdModContent("body", v);
-        },
-        _uiSetHeaderContent:function(v) {
-            this._setStdModContent("header", v);
-        },
-        _uiSetFooterContent:function(v) {
-            this._setStdModContent("footer", v);
-        },
-        __renderUI:function() {
+        __createDom:function () {
             renderUI(this, "header");
             renderUI(this, "body");
             renderUI(this, "footer");
+        },
+
+        _uiSetBodyStyle:function (v) {
+            this.get("body").css(v);
+        },
+
+        _uiSetHeaderStyle:function (v) {
+            this.get("header").css(v);
+        },
+        _uiSetFooterStyle:function (v) {
+            this.get("footer").css(v);
+        },
+
+        _uiSetBodyContent:function (v) {
+            _setStdModContent(this, "body", v);
+        },
+
+        _uiSetHeaderContent:function (v) {
+            _setStdModContent(this, "header", v);
+        },
+
+        _uiSetFooterContent:function (v) {
+            _setStdModContent(this, "footer", v);
         }
     };
 

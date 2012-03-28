@@ -21,430 +21,431 @@
 <span id='line14' class='line'> 14</span> </span><span class="WHIT">        </span><span class="NAME">HTTPS_PORT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">443</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line15' class='line'> 15</span> </span><span class="WHIT">        </span><span class="NAME">rnoContent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="REGX">/^(?:GET|HEAD)$/</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line16' class='line'> 16</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line17' class='line'> 17</span> </span><span class="WHIT">        </span><span class="NAME">curLocationParts</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line18' class='line'> 18</span> 
-<span id='line19' class='line'> 19</span> </span><span class="WHIT">    </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line20' class='line'> 20</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">location.href</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line21' class='line'> 21</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line22' class='line'> 22</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="STRN">"ajax/base get curLocation error : "</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line23' class='line'> 23</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line24' class='line'> 24</span> </span><span class="WHIT">        </span><span class="COMM">// Use the href attribute of an A element</span><span class="WHIT">
-<span id='line25' class='line'> 25</span> </span><span class="WHIT">        </span><span class="COMM">// since IE will modify it given document.location</span><span class="WHIT">
-<span id='line26' class='line'> 26</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">"a"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line27' class='line'> 27</span> </span><span class="WHIT">        </span><span class="NAME">curLocation.href</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line28' class='line'> 28</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">curLocation.href</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line29' class='line'> 29</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line30' class='line'> 30</span> 
-<span id='line31' class='line'> 31</span> </span><span class="WHIT">    </span><span class="NAME">curLocationParts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rurl.exec</span><span class="PUNC">(</span><span class="NAME">curLocation</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line32' class='line'> 32</span> 
-<span id='line33' class='line'> 33</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">isLocal</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rlocalProtocol.test</span><span class="PUNC">(</span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line34' class='line'> 34</span> </span><span class="WHIT">        </span><span class="NAME">transports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line35' class='line'> 35</span> </span><span class="WHIT">        </span><span class="NAME">defaultConfig</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line36' class='line'> 36</span> </span><span class="WHIT">            </span><span class="NAME">type</span><span class="PUNC">:</span><span class="STRN">"GET"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line37' class='line'> 37</span> </span><span class="WHIT">            </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="STRN">"application/x-www-form-urlencoded; charset=UTF-8"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line38' class='line'> 38</span> </span><span class="WHIT">            </span><span class="NAME">async</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">serializeArray</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">processData</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line41' class='line'> 41</span> </span><span class="WHIT">            </span><span class="NAME">accepts</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line42' class='line'> 42</span> </span><span class="WHIT">                </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="STRN">"application/xml, text/xml"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line43' class='line'> 43</span> </span><span class="WHIT">                </span><span class="NAME">html</span><span class="PUNC">:</span><span class="STRN">"text/html"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line44' class='line'> 44</span> </span><span class="WHIT">                </span><span class="NAME">text</span><span class="PUNC">:</span><span class="STRN">"text/plain"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line45' class='line'> 45</span> </span><span class="WHIT">                </span><span class="NAME">json</span><span class="PUNC">:</span><span class="STRN">"application/json, text/javascript"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line46' class='line'> 46</span> </span><span class="WHIT">                </span><span class="NAME">*</span><span class="PUNC">:</span><span class="STRN">"*/*"</span><span class="WHIT">
-<span id='line47' class='line'> 47</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line48' class='line'> 48</span> </span><span class="WHIT">            </span><span class="NAME">converters</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line49' class='line'> 49</span> </span><span class="WHIT">                </span><span class="NAME">text</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line50' class='line'> 50</span> </span><span class="WHIT">                    </span><span class="NAME">json</span><span class="PUNC">:</span><span class="NAME">JSON.parse</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line51' class='line'> 51</span> </span><span class="WHIT">                    </span><span class="NAME">html</span><span class="PUNC">:</span><span class="NAME">mirror</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line52' class='line'> 52</span> </span><span class="WHIT">                    </span><span class="NAME">text</span><span class="PUNC">:</span><span class="NAME">mirror</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line53' class='line'> 53</span> </span><span class="WHIT">                    </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="NAME">S.parseXML</span><span class="WHIT">
-<span id='line54' class='line'> 54</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line55' class='line'> 55</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line56' class='line'> 56</span> </span><span class="WHIT">            </span><span class="NAME">contents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line57' class='line'> 57</span> </span><span class="WHIT">                </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="REGX">/xml/</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line58' class='line'> 58</span> </span><span class="WHIT">                </span><span class="NAME">html</span><span class="PUNC">:</span><span class="REGX">/html/</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line59' class='line'> 59</span> </span><span class="WHIT">                </span><span class="NAME">json</span><span class="PUNC">:</span><span class="REGX">/json/</span><span class="WHIT">
-<span id='line60' class='line'> 60</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line61' class='line'> 61</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line62' class='line'> 62</span> 
-<span id='line63' class='line'> 63</span> </span><span class="WHIT">    </span><span class="NAME">defaultConfig.converters.html</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">defaultConfig.converters.text</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">        </span><span class="NAME">doc</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Env.host.document</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line18' class='line'> 18</span> </span><span class="WHIT">        </span><span class="NAME">curLocationParts</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line19' class='line'> 19</span> 
+<span id='line20' class='line'> 20</span> </span><span class="WHIT">    </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">location.href</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line22' class='line'> 22</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line23' class='line'> 23</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="STRN">"ajax/base get curLocation error : "</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">        </span><span class="COMM">// Use the href attribute of an A element</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">        </span><span class="COMM">// since IE will modify it given document.location</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">doc.createElement</span><span class="PUNC">(</span><span class="STRN">"a"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">        </span><span class="NAME">curLocation.href</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">        </span><span class="NAME">curLocation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">curLocation.href</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> 
+<span id='line32' class='line'> 32</span> </span><span class="WHIT">    </span><span class="COMM">// fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">    </span><span class="NAME">curLocationParts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rurl.exec</span><span class="PUNC">(</span><span class="NAME">curLocation</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="STRN">""</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> 
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">isLocal</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rlocalProtocol.test</span><span class="PUNC">(</span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">        </span><span class="NAME">transports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> </span><span class="WHIT">        </span><span class="NAME">defaultConfig</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">            </span><span class="NAME">type</span><span class="PUNC">:</span><span class="STRN">"GET"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="STRN">"application/x-www-form-urlencoded; charset=UTF-8"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">async</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">            </span><span class="NAME">serializeArray</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">            </span><span class="NAME">processData</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">            </span><span class="NAME">accepts</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> </span><span class="WHIT">                </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="STRN">"application/xml, text/xml"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">                </span><span class="NAME">html</span><span class="PUNC">:</span><span class="STRN">"text/html"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">                </span><span class="NAME">text</span><span class="PUNC">:</span><span class="STRN">"text/plain"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> </span><span class="WHIT">                </span><span class="NAME">json</span><span class="PUNC">:</span><span class="STRN">"application/json, text/javascript"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">                </span><span class="NAME">*</span><span class="PUNC">:</span><span class="STRN">"*/*"</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line50' class='line'> 50</span> </span><span class="WHIT">            </span><span class="NAME">converters</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line51' class='line'> 51</span> </span><span class="WHIT">                </span><span class="NAME">text</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> </span><span class="WHIT">                    </span><span class="NAME">json</span><span class="PUNC">:</span><span class="NAME">JSON.parse</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">                    </span><span class="NAME">html</span><span class="PUNC">:</span><span class="NAME">mirror</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">                    </span><span class="NAME">text</span><span class="PUNC">:</span><span class="NAME">mirror</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> </span><span class="WHIT">                    </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="NAME">S.parseXML</span><span class="WHIT">
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">            </span><span class="NAME">contents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">                </span><span class="NAME">xml</span><span class="PUNC">:</span><span class="REGX">/xml/</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">                </span><span class="NAME">html</span><span class="PUNC">:</span><span class="REGX">/html/</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">                </span><span class="NAME">json</span><span class="PUNC">:</span><span class="REGX">/json/</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line64' class='line'> 64</span> 
-<span id='line65' class='line'> 65</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">setUpConfig</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line66' class='line'> 66</span> </span><span class="WHIT">        </span><span class="COMM">// deep mix,exclude context!</span><span class="WHIT">
-<span id='line67' class='line'> 67</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line69' class='line'> 69</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">S.clone</span><span class="PUNC">(</span><span class="NAME">defaultConfig</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line70' class='line'> 70</span> </span><span class="WHIT">        </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line71' class='line'> 71</span> 
-<span id='line72' class='line'> 72</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="STRN">"crossDomain"</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line73' class='line'> 73</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rurl.exec</span><span class="PUNC">(</span><span class="NAME">c.url.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line74' class='line'> 74</span> </span><span class="WHIT">            </span><span class="NAME">c.crossDomain</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
-<span id='line75' class='line'> 75</span> </span><span class="WHIT">                </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
-<span id='line76' class='line'> 76</span> </span><span class="WHIT">                    </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"http:"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">HTTP_PORT</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">HTTPS_PORT</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
-<span id='line77' class='line'> 77</span> </span><span class="WHIT">                        </span><span class="PUNC">!=</span><span class="WHIT">
-<span id='line78' class='line'> 78</span> </span><span class="WHIT">                        </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"http:"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">HTTP_PORT</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">HTTPS_PORT</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
-<span id='line79' class='line'> 79</span> </span><span class="WHIT">                </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line80' class='line'> 80</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line81' class='line'> 81</span> 
-<span id='line82' class='line'> 82</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.processData</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">S.isString</span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line83' class='line'> 83</span> </span><span class="WHIT">            </span><span class="COMM">// 必须 encodeURIComponent 编码 utf-8</span><span class="WHIT">
-<span id='line84' class='line'> 84</span> </span><span class="WHIT">            </span><span class="NAME">c.data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.param</span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.serializeArray</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line85' class='line'> 85</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line86' class='line'> 86</span> 
-<span id='line87' class='line'> 87</span> </span><span class="WHIT">        </span><span class="COMM">// fix #90 ie7 about "//x.htm"</span><span class="WHIT">
-<span id='line88' class='line'> 88</span> </span><span class="WHIT">        </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.url.replace</span><span class="PUNC">(</span><span class="REGX">/^\/\//</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"//"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line89' class='line'> 89</span> </span><span class="WHIT">        </span><span class="NAME">c.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.type.toUpperCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line90' class='line'> 90</span> </span><span class="WHIT">        </span><span class="NAME">c.hasContent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">rnoContent.test</span><span class="PUNC">(</span><span class="NAME">c.type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line91' class='line'> 91</span> 
-<span id='line92' class='line'> 92</span> </span><span class="WHIT">        </span><span class="COMM">// 数据类型处理链，一步步将前面的数据类型转化成最后一个</span><span class="WHIT">
-<span id='line93' class='line'> 93</span> </span><span class="WHIT">        </span><span class="NAME">c.dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.trim</span><span class="PUNC">(</span><span class="NAME">c.dataType</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="NAME">rspace</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line94' class='line'> 94</span> 
-<span id='line95' class='line'> 95</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="STRN">"cache"</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">S.inArray</span><span class="PUNC">(</span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="STRN">"script"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"jsonp"</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line96' class='line'> 96</span> </span><span class="WHIT">            </span><span class="NAME">c.cache</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line97' class='line'> 97</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line98' class='line'> 98</span> 
-<span id='line99' class='line'> 99</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">c.hasContent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line100' class='line'>100</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line101' class='line'>101</span> </span><span class="WHIT">                </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="REGX">/\?/</span><span class="PUNC">.</span><span class="NAME">test</span><span class="PUNC">(</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">"&"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"?"</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line102' class='line'>102</span> </span><span class="WHIT">                </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line103' class='line'>103</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line104' class='line'>104</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.cache</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line105' class='line'>105</span> </span><span class="WHIT">                </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="REGX">/\?/</span><span class="PUNC">.</span><span class="NAME">test</span><span class="PUNC">(</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">"&"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"?"</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"_ksTS="</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.now</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"_"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">S.guid</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line106' class='line'>106</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line107' class='line'>107</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line108' class='line'>108</span> 
-<span id='line109' class='line'>109</span> </span><span class="WHIT">        </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line110' class='line'>110</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line111' class='line'>111</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line112' class='line'>112</span> 
-<span id='line113' class='line'>113</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line114' class='line'>114</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line115' class='line'>115</span>          * @name IO#complete
-<span id='line116' class='line'>116</span>          * @description fired after request completes (success or error)
-<span id='line117' class='line'>117</span>          * @event
-<span id='line118' class='line'>118</span>          * @param {Event.Object} e
-<span id='line119' class='line'>119</span>          * @param {Object} e.ajaxConfig current request 's config
-<span id='line120' class='line'>120</span>          * @param {IO.XhrObject} e.xhr current xhr object
-<span id='line121' class='line'>121</span>          */</span><span class="WHIT">
-<span id='line122' class='line'>122</span> 
-<span id='line123' class='line'>123</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line124' class='line'>124</span>          * @name IO#success
-<span id='line125' class='line'>125</span>          * @description  fired after request succeeds
-<span id='line126' class='line'>126</span>          * @event
-<span id='line127' class='line'>127</span>          * @param {Event.Object} e
-<span id='line128' class='line'>128</span>          * @param {Object} e.ajaxConfig current request 's config
-<span id='line129' class='line'>129</span>          * @param {IO.XhrObject} e.xhr current xhr object
-<span id='line130' class='line'>130</span>          */</span><span class="WHIT">
-<span id='line131' class='line'>131</span> 
-<span id='line132' class='line'>132</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line133' class='line'>133</span>          * @name IO#error
-<span id='line134' class='line'>134</span>          * @description fired after request occurs error
-<span id='line135' class='line'>135</span>          * @event
-<span id='line136' class='line'>136</span>          * @param {Event.Object} e
-<span id='line137' class='line'>137</span>          * @param {Object} e.ajaxConfig current request 's config
-<span id='line138' class='line'>138</span>          * @param {IO.XhrObject} e.xhr current xhr object
-<span id='line139' class='line'>139</span>          */</span><span class="WHIT">
-<span id='line140' class='line'>140</span> </span><span class="WHIT">        </span><span class="NAME">io.fire</span><span class="PUNC">(</span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">ajaxConfig</span><span class="PUNC">:</span><span class="NAME">xhrObject.config</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">:</span><span class="NAME">xhrObject</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line141' class='line'>141</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line142' class='line'>142</span> 
-<span id='line143' class='line'>143</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span id='line144' class='line'>144</span>      * @name IO
-<span id='line145' class='line'>145</span>      * @description io is a utility that brokers HTTP requests through a simplified interface
-<span id='line146' class='line'>146</span>      * @namespace
-<span id='line147' class='line'>147</span>      * @function
-<span id='line148' class='line'>148</span>      *
-<span id='line149' class='line'>149</span>      * @param {Object} c &lt;br/>name-value of object to config this io request.&lt;br/>
-<span id='line150' class='line'>150</span>      *  all values are optional.&lt;br/>
-<span id='line151' class='line'>151</span>      *  default value can be set through {@link io.setupConfig}&lt;br/>
-<span id='line152' class='line'>152</span>      *
-<span id='line153' class='line'>153</span>      * @param {String} c.url &lt;br/>request destination
-<span id='line154' class='line'>154</span>      *
-<span id='line155' class='line'>155</span>      * @param {String} c.type &lt;br/>request type.
-<span id='line156' class='line'>156</span>      * eg: "get","post"&lt;br/>
-<span id='line157' class='line'>157</span>      * Default: "get"&lt;br/>
-<span id='line158' class='line'>158</span>      *
-<span id='line159' class='line'>159</span>      * @param {String} c.contentType &lt;br/>
-<span id='line160' class='line'>160</span>      * Default: "application/x-www-form-urlencoded; charset=UTF-8"&lt;br/>
-<span id='line161' class='line'>161</span>      * Data will always be transmitted to the server using UTF-8 charset&lt;br/>
-<span id='line162' class='line'>162</span>      *
-<span id='line163' class='line'>163</span>      * @param {Object} c.accepts &lt;br/>
-<span id='line164' class='line'>164</span>      * Default: depends on DataType.&lt;br/>
-<span id='line165' class='line'>165</span>      * The content type sent in request header that tells the server&lt;br/>
-<span id='line166' class='line'>166</span>      * what kind of response it will accept in return.&lt;br/>
-<span id='line167' class='line'>167</span>      * It is recommended to do so once in the {@link io.setupConfig}
-<span id='line168' class='line'>168</span>      *
-<span id='line169' class='line'>169</span>      * @param {Boolean} c.async &lt;br/>
-<span id='line170' class='line'>170</span>      * Default: true&lt;br/>
-<span id='line171' class='line'>171</span>      * whether request is sent asynchronously&lt;br/>
-<span id='line172' class='line'>172</span>      *
-<span id='line173' class='line'>173</span>      * @param {Boolean} c.cache &lt;br/>
-<span id='line174' class='line'>174</span>      * Default: true ,false for dataType "script" and "jsonp"&lt;br/>
-<span id='line175' class='line'>175</span>      * if set false,will append _ksTs=Date.now() to url automatically&lt;br/>
-<span id='line176' class='line'>176</span>      *
-<span id='line177' class='line'>177</span>      * @param {Object} c.contents &lt;br/>
-<span id='line178' class='line'>178</span>      * a name-regexp map to determine request data's dataType&lt;br/>
-<span id='line179' class='line'>179</span>      * It is recommended to do so once in the {@link io.setupConfig}&lt;br/>
-<span id='line180' class='line'>180</span>      *
-<span id='line181' class='line'>181</span>      * @param {Object} c.context &lt;br/>
-<span id='line182' class='line'>182</span>      * specify the context of this request's callback (success,error,complete)
-<span id='line183' class='line'>183</span>      *
-<span id='line184' class='line'>184</span>      * @param {Object} c.converters &lt;br/>
-<span id='line185' class='line'>185</span>      * Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}&lt;br/>
-<span id='line186' class='line'>186</span>      * specified how to transform one dataType to another dataType&lt;br/>
-<span id='line187' class='line'>187</span>      * It is recommended to do so once in the {@link io.setupConfig}
-<span id='line188' class='line'>188</span>      *
-<span id='line189' class='line'>189</span>      * @param {Boolean} c.crossDomain &lt;br/>
-<span id='line190' class='line'>190</span>      * Default: false for same-domain request,true for cross-domain request&lt;br/>
-<span id='line191' class='line'>191</span>      * if server-side jsonp redirect to another domain ,you should set this to true
-<span id='line192' class='line'>192</span>      *
-<span id='line193' class='line'>193</span>      * @param {Object} c.data &lt;br/>
-<span id='line194' class='line'>194</span>      * Data sent to server.if processData is true,data will be serialized to String type.&lt;br/>
-<span id='line195' class='line'>195</span>      * if value if an Array, serialization will be based on serializeArray.
-<span id='line196' class='line'>196</span>      *
-<span id='line197' class='line'>197</span>      * @param {String} c.dataType &lt;br/>
-<span id='line198' class='line'>198</span>      * return data as a specified type&lt;br/>
-<span id='line199' class='line'>199</span>      * Default: Based on server contentType header&lt;br/>
-<span id='line200' class='line'>200</span>      * "xml" : a XML document&lt;br/>
-<span id='line201' class='line'>201</span>      * "text"/"html": raw server data &lt;br/>
-<span id='line202' class='line'>202</span>      * "script": evaluate the return data as script&lt;br/>
-<span id='line203' class='line'>203</span>      * "json": parse the return data as json and return the result as final data&lt;br/>
-<span id='line204' class='line'>204</span>      * "jsonp": load json data via jsonp
-<span id='line205' class='line'>205</span>      *
-<span id='line206' class='line'>206</span>      * @param {Object} c.headers &lt;br/>
-<span id='line207' class='line'>207</span>      * additional name-value header to send along with this request.
-<span id='line208' class='line'>208</span>      *
-<span id='line209' class='line'>209</span>      * @param {String} c.jsonp &lt;br/>
-<span id='line210' class='line'>210</span>      * Default: "callback"&lt;br/>
-<span id='line211' class='line'>211</span>      * Override the callback function name in a jsonp request. eg:&lt;br/>
-<span id='line212' class='line'>212</span>      * set "callback2" , then jsonp url will append  "callback2=?".
-<span id='line213' class='line'>213</span>      *
-<span id='line214' class='line'>214</span>      * @param {String} c.jsonpCallback &lt;br/>
-<span id='line215' class='line'>215</span>      * Specify the callback function name for a jsonp request.&lt;br/>
-<span id='line216' class='line'>216</span>      * set this value will replace the auto generated function name.&lt;br/>
-<span id='line217' class='line'>217</span>      * eg:&lt;br/>
-<span id='line218' class='line'>218</span>      * set "customCall" , then jsonp url will append "callback=customCall"
-<span id='line219' class='line'>219</span>      *
-<span id='line220' class='line'>220</span>      * @param {String} c.mimeType &lt;br/>
-<span id='line221' class='line'>221</span>      * override xhr's mime type
-<span id='line222' class='line'>222</span>      *
-<span id='line223' class='line'>223</span>      * @param {Boolean} c.processData &lt;br/>
-<span id='line224' class='line'>224</span>      * Default: true&lt;br/>
-<span id='line225' class='line'>225</span>      * whether data will be serialized as String
-<span id='line226' class='line'>226</span>      *
-<span id='line227' class='line'>227</span>      * @param {String} c.scriptCharset &lt;br/>
-<span id='line228' class='line'>228</span>      * only for dataType "jsonp" and "script" and "get" type.&lt;br/>
-<span id='line229' class='line'>229</span>      * force the script to certain charset.
-<span id='line230' class='line'>230</span>      *
-<span id='line231' class='line'>231</span>      * @param {Function} c.success &lt;br/>
-<span id='line232' class='line'>232</span>      * success(data,textStatus,xhr)&lt;br/>
-<span id='line233' class='line'>233</span>      * callback function called if the request succeeds.this function has 3 arguments&lt;br/>
-<span id='line234' class='line'>234</span>      * 1. data returned from this request with type specified by dataType&lt;br/>
-<span id='line235' class='line'>235</span>      * 2. status of this request with type String&lt;br/>
-<span id='line236' class='line'>236</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
-<span id='line237' class='line'>237</span>      *
-<span id='line238' class='line'>238</span>      * @param {Function} c.error &lt;br/>
-<span id='line239' class='line'>239</span>      * success(data,textStatus,xhr) &lt;br/>
-<span id='line240' class='line'>240</span>      * callback function called if the request occurs error.this function has 3 arguments&lt;br/>
-<span id='line241' class='line'>241</span>      * 1. null value&lt;br/>
-<span id='line242' class='line'>242</span>      * 2. status of this request with type String,such as "timeout","Not Found","parsererror:..."&lt;br/>
-<span id='line243' class='line'>243</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
-<span id='line244' class='line'>244</span>      *
-<span id='line245' class='line'>245</span>      * @param {Function} c.complete &lt;br/>
-<span id='line246' class='line'>246</span>      * success(data,textStatus,xhr)&lt;br/>
-<span id='line247' class='line'>247</span>      * callback function called if the request finished(success or error).this function has 3 arguments&lt;br/>
-<span id='line248' class='line'>248</span>      * 1. null value if error occurs or data returned from server&lt;br/>
-<span id='line249' class='line'>249</span>      * 2. status of this request with type String,such as success:"ok",
-<span id='line250' class='line'>250</span>      * error:"timeout","Not Found","parsererror:..."&lt;br/>
-<span id='line251' class='line'>251</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
-<span id='line252' class='line'>252</span>      *
-<span id='line253' class='line'>253</span>      * @param {Number} c.timeout &lt;br/>
-<span id='line254' class='line'>254</span>      * Set a timeout(in seconds) for this request.if will call error when timeout
-<span id='line255' class='line'>255</span>      *
-<span id='line256' class='line'>256</span>      * @param {Boolean} c.serializeArray &lt;br/>
-<span id='line257' class='line'>257</span>      * whether add [] to data's name when data's value is array in serialization
-<span id='line258' class='line'>258</span>      *
-<span id='line259' class='line'>259</span>      * @param {Object} c.xhrFields &lt;br/>
-<span id='line260' class='line'>260</span>      * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
-<span id='line261' class='line'>261</span>      *
-<span id='line262' class='line'>262</span>      * @param {String} c.username &lt;br/>
-<span id='line263' class='line'>263</span>      * a username tobe used in response to HTTP access authentication request
-<span id='line264' class='line'>264</span>      *
-<span id='line265' class='line'>265</span>      * @param {String} c.password &lt;br/>
-<span id='line266' class='line'>266</span>      * a password tobe used in response to HTTP access authentication request
-<span id='line267' class='line'>267</span>      *
-<span id='line268' class='line'>268</span>      * @param {Object} c.xdr &lt;br/>
-<span id='line269' class='line'>269</span>      * cross domain request config object
-<span id='line270' class='line'>270</span>      *
-<span id='line271' class='line'>271</span>      * @param {String} c.xdr.src &lt;br/>
-<span id='line272' class='line'>272</span>      * Default: kissy's flash url
-<span id='line273' class='line'>273</span>      * flash sender url
-<span id='line274' class='line'>274</span>      *
-<span id='line275' class='line'>275</span>      * @param {String} c.xdr.use &lt;br/>
-<span id='line276' class='line'>276</span>      * if set to "use", it will always use flash for cross domain request even in chrome/firefox
-<span id='line277' class='line'>277</span>      *
-<span id='line278' class='line'>278</span>      * @param {Object} c.xdr.subDomain &lt;br/>
-<span id='line279' class='line'>279</span>      * cross sub domain request config object
-<span id='line280' class='line'>280</span>      *
-<span id='line281' class='line'>281</span>      * @param {String} c.xdr.subDomain.proxy &lt;br/>
-<span id='line282' class='line'>282</span>      * proxy page,eg:&lt;br/>
-<span id='line283' class='line'>283</span>      * a.t.cn/a.htm send request to b.t.cn/b.htm: &lt;br/>
-<span id='line284' class='line'>284</span>      * 1. a.htm set document.domain='t.cn'&lt;br/>
-<span id='line285' class='line'>285</span>      * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script>&lt;br/>
-<span id='line286' class='line'>286</span>      * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
-<span id='line287' class='line'>287</span>      *
-<span id='line288' class='line'>288</span>      * @returns {IO.XhrObject} current request object
-<span id='line289' class='line'>289</span>      */</span><span class="WHIT">
-<span id='line290' class='line'>290</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">io</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line291' class='line'>291</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line292' class='line'>292</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line293' class='line'>293</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line294' class='line'>294</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setUpConfig</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line295' class='line'>295</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">XhrObject</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line296' class='line'>296</span> 
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">    </span><span class="NAME">defaultConfig.converters.html</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">defaultConfig.converters.text</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> 
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">setUpConfig</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="COMM">// deep mix,exclude context!</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">        </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">S.clone</span><span class="PUNC">(</span><span class="NAME">defaultConfig</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">        </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> 
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="STRN">"crossDomain"</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rurl.exec</span><span class="PUNC">(</span><span class="NAME">c.url.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">            </span><span class="NAME">c.crossDomain</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">                </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">                    </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"http:"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">HTTP_PORT</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">HTTPS_PORT</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">                        </span><span class="PUNC">!=</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> </span><span class="WHIT">                        </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"http:"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">HTTP_PORT</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">HTTPS_PORT</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span id='line81' class='line'> 81</span> </span><span class="WHIT">                </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line82' class='line'> 82</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line83' class='line'> 83</span> 
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.processData</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">S.isString</span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line85' class='line'> 85</span> </span><span class="WHIT">            </span><span class="COMM">// 必须 encodeURIComponent 编码 utf-8</span><span class="WHIT">
+<span id='line86' class='line'> 86</span> </span><span class="WHIT">            </span><span class="NAME">c.data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.param</span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.serializeArray</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line87' class='line'> 87</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line88' class='line'> 88</span> 
+<span id='line89' class='line'> 89</span> </span><span class="WHIT">        </span><span class="COMM">// fix #90 ie7 about "//x.htm"</span><span class="WHIT">
+<span id='line90' class='line'> 90</span> </span><span class="WHIT">        </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.url.replace</span><span class="PUNC">(</span><span class="REGX">/^\/\//</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">curLocationParts</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"//"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line91' class='line'> 91</span> </span><span class="WHIT">        </span><span class="NAME">c.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.type.toUpperCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">        </span><span class="NAME">c.hasContent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">rnoContent.test</span><span class="PUNC">(</span><span class="NAME">c.type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> 
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">        </span><span class="COMM">// 数据类型处理链，一步步将前面的数据类型转化成最后一个</span><span class="WHIT">
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">        </span><span class="NAME">c.dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.trim</span><span class="PUNC">(</span><span class="NAME">c.dataType</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="NAME">rspace</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> 
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="STRN">"cache"</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">S.inArray</span><span class="PUNC">(</span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="STRN">"script"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"jsonp"</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="WHIT">            </span><span class="NAME">c.cache</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line100' class='line'>100</span> 
+<span id='line101' class='line'>101</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">c.hasContent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line102' class='line'>102</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.data</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line103' class='line'>103</span> </span><span class="WHIT">                </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="REGX">/\?/</span><span class="PUNC">.</span><span class="NAME">test</span><span class="PUNC">(</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">"&"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"?"</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line104' class='line'>104</span> </span><span class="WHIT">                </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">c.data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line105' class='line'>105</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line106' class='line'>106</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.cache</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line107' class='line'>107</span> </span><span class="WHIT">                </span><span class="NAME">c.url</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="REGX">/\?/</span><span class="PUNC">.</span><span class="NAME">test</span><span class="PUNC">(</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">"&"</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"?"</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"_ksTS="</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.now</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"_"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">S.guid</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line108' class='line'>108</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line109' class='line'>109</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line110' class='line'>110</span> 
+<span id='line111' class='line'>111</span> </span><span class="WHIT">        </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.context</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line112' class='line'>112</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line113' class='line'>113</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line114' class='line'>114</span> 
+<span id='line115' class='line'>115</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line116' class='line'>116</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line117' class='line'>117</span>          * @name IO#complete
+<span id='line118' class='line'>118</span>          * @description fired after request completes (success or error)
+<span id='line119' class='line'>119</span>          * @event
+<span id='line120' class='line'>120</span>          * @param {Event.Object} e
+<span id='line121' class='line'>121</span>          * @param {Object} e.ajaxConfig current request 's config
+<span id='line122' class='line'>122</span>          * @param {IO.XhrObject} e.xhr current xhr object
+<span id='line123' class='line'>123</span>          */</span><span class="WHIT">
+<span id='line124' class='line'>124</span> 
+<span id='line125' class='line'>125</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line126' class='line'>126</span>          * @name IO#success
+<span id='line127' class='line'>127</span>          * @description  fired after request succeeds
+<span id='line128' class='line'>128</span>          * @event
+<span id='line129' class='line'>129</span>          * @param {Event.Object} e
+<span id='line130' class='line'>130</span>          * @param {Object} e.ajaxConfig current request 's config
+<span id='line131' class='line'>131</span>          * @param {IO.XhrObject} e.xhr current xhr object
+<span id='line132' class='line'>132</span>          */</span><span class="WHIT">
+<span id='line133' class='line'>133</span> 
+<span id='line134' class='line'>134</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line135' class='line'>135</span>          * @name IO#error
+<span id='line136' class='line'>136</span>          * @description fired after request occurs error
+<span id='line137' class='line'>137</span>          * @event
+<span id='line138' class='line'>138</span>          * @param {Event.Object} e
+<span id='line139' class='line'>139</span>          * @param {Object} e.ajaxConfig current request 's config
+<span id='line140' class='line'>140</span>          * @param {IO.XhrObject} e.xhr current xhr object
+<span id='line141' class='line'>141</span>          */</span><span class="WHIT">
+<span id='line142' class='line'>142</span> </span><span class="WHIT">        </span><span class="NAME">io.fire</span><span class="PUNC">(</span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">ajaxConfig</span><span class="PUNC">:</span><span class="NAME">xhrObject.config</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">:</span><span class="NAME">xhrObject</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line143' class='line'>143</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line144' class='line'>144</span> 
+<span id='line145' class='line'>145</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line146' class='line'>146</span>      * @name IO
+<span id='line147' class='line'>147</span>      * @namespace Provides utility that brokers HTTP requests through a simplified interface
+<span id='line148' class='line'>148</span>      * @function
+<span id='line149' class='line'>149</span>      *
+<span id='line150' class='line'>150</span>      * @param {Object} c &lt;br/>name-value of object to config this io request.&lt;br/>
+<span id='line151' class='line'>151</span>      *  all values are optional.&lt;br/>
+<span id='line152' class='line'>152</span>      *  default value can be set through {@link io.setupConfig}&lt;br/>
+<span id='line153' class='line'>153</span>      *
+<span id='line154' class='line'>154</span>      * @param {String} c.url &lt;br/>request destination
+<span id='line155' class='line'>155</span>      *
+<span id='line156' class='line'>156</span>      * @param {String} c.type &lt;br/>request type.
+<span id='line157' class='line'>157</span>      * eg: "get","post"&lt;br/>
+<span id='line158' class='line'>158</span>      * Default: "get"&lt;br/>
+<span id='line159' class='line'>159</span>      *
+<span id='line160' class='line'>160</span>      * @param {String} c.contentType &lt;br/>
+<span id='line161' class='line'>161</span>      * Default: "application/x-www-form-urlencoded; charset=UTF-8"&lt;br/>
+<span id='line162' class='line'>162</span>      * Data will always be transmitted to the server using UTF-8 charset&lt;br/>
+<span id='line163' class='line'>163</span>      *
+<span id='line164' class='line'>164</span>      * @param {Object} c.accepts &lt;br/>
+<span id='line165' class='line'>165</span>      * Default: depends on DataType.&lt;br/>
+<span id='line166' class='line'>166</span>      * The content type sent in request header that tells the server&lt;br/>
+<span id='line167' class='line'>167</span>      * what kind of response it will accept in return.&lt;br/>
+<span id='line168' class='line'>168</span>      * It is recommended to do so once in the {@link io.setupConfig}
+<span id='line169' class='line'>169</span>      *
+<span id='line170' class='line'>170</span>      * @param {Boolean} c.async &lt;br/>
+<span id='line171' class='line'>171</span>      * Default: true&lt;br/>
+<span id='line172' class='line'>172</span>      * whether request is sent asynchronously&lt;br/>
+<span id='line173' class='line'>173</span>      *
+<span id='line174' class='line'>174</span>      * @param {Boolean} c.cache &lt;br/>
+<span id='line175' class='line'>175</span>      * Default: true ,false for dataType "script" and "jsonp"&lt;br/>
+<span id='line176' class='line'>176</span>      * if set false,will append _ksTs=Date.now() to url automatically&lt;br/>
+<span id='line177' class='line'>177</span>      *
+<span id='line178' class='line'>178</span>      * @param {Object} c.contents &lt;br/>
+<span id='line179' class='line'>179</span>      * a name-regexp map to determine request data's dataType&lt;br/>
+<span id='line180' class='line'>180</span>      * It is recommended to do so once in the {@link io.setupConfig}&lt;br/>
+<span id='line181' class='line'>181</span>      *
+<span id='line182' class='line'>182</span>      * @param {Object} c.context &lt;br/>
+<span id='line183' class='line'>183</span>      * specify the context of this request's callback (success,error,complete)
+<span id='line184' class='line'>184</span>      *
+<span id='line185' class='line'>185</span>      * @param {Object} c.converters &lt;br/>
+<span id='line186' class='line'>186</span>      * Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}&lt;br/>
+<span id='line187' class='line'>187</span>      * specified how to transform one dataType to another dataType&lt;br/>
+<span id='line188' class='line'>188</span>      * It is recommended to do so once in the {@link io.setupConfig}
+<span id='line189' class='line'>189</span>      *
+<span id='line190' class='line'>190</span>      * @param {Boolean} c.crossDomain &lt;br/>
+<span id='line191' class='line'>191</span>      * Default: false for same-domain request,true for cross-domain request&lt;br/>
+<span id='line192' class='line'>192</span>      * if server-side jsonp redirect to another domain ,you should set this to true
+<span id='line193' class='line'>193</span>      *
+<span id='line194' class='line'>194</span>      * @param {Object} c.data &lt;br/>
+<span id='line195' class='line'>195</span>      * Data sent to server.if processData is true,data will be serialized to String type.&lt;br/>
+<span id='line196' class='line'>196</span>      * if value if an Array, serialization will be based on serializeArray.
+<span id='line197' class='line'>197</span>      *
+<span id='line198' class='line'>198</span>      * @param {String} c.dataType &lt;br/>
+<span id='line199' class='line'>199</span>      * return data as a specified type&lt;br/>
+<span id='line200' class='line'>200</span>      * Default: Based on server contentType header&lt;br/>
+<span id='line201' class='line'>201</span>      * "xml" : a XML document&lt;br/>
+<span id='line202' class='line'>202</span>      * "text"/"html": raw server data &lt;br/>
+<span id='line203' class='line'>203</span>      * "script": evaluate the return data as script&lt;br/>
+<span id='line204' class='line'>204</span>      * "json": parse the return data as json and return the result as final data&lt;br/>
+<span id='line205' class='line'>205</span>      * "jsonp": load json data via jsonp
+<span id='line206' class='line'>206</span>      *
+<span id='line207' class='line'>207</span>      * @param {Object} c.headers &lt;br/>
+<span id='line208' class='line'>208</span>      * additional name-value header to send along with this request.
+<span id='line209' class='line'>209</span>      *
+<span id='line210' class='line'>210</span>      * @param {String} c.jsonp &lt;br/>
+<span id='line211' class='line'>211</span>      * Default: "callback"&lt;br/>
+<span id='line212' class='line'>212</span>      * Override the callback function name in a jsonp request. eg:&lt;br/>
+<span id='line213' class='line'>213</span>      * set "callback2" , then jsonp url will append  "callback2=?".
+<span id='line214' class='line'>214</span>      *
+<span id='line215' class='line'>215</span>      * @param {String} c.jsonpCallback &lt;br/>
+<span id='line216' class='line'>216</span>      * Specify the callback function name for a jsonp request.&lt;br/>
+<span id='line217' class='line'>217</span>      * set this value will replace the auto generated function name.&lt;br/>
+<span id='line218' class='line'>218</span>      * eg:&lt;br/>
+<span id='line219' class='line'>219</span>      * set "customCall" , then jsonp url will append "callback=customCall"
+<span id='line220' class='line'>220</span>      *
+<span id='line221' class='line'>221</span>      * @param {String} c.mimeType &lt;br/>
+<span id='line222' class='line'>222</span>      * override xhr's mime type
+<span id='line223' class='line'>223</span>      *
+<span id='line224' class='line'>224</span>      * @param {Boolean} c.processData &lt;br/>
+<span id='line225' class='line'>225</span>      * Default: true&lt;br/>
+<span id='line226' class='line'>226</span>      * whether data will be serialized as String
+<span id='line227' class='line'>227</span>      *
+<span id='line228' class='line'>228</span>      * @param {String} c.scriptCharset &lt;br/>
+<span id='line229' class='line'>229</span>      * only for dataType "jsonp" and "script" and "get" type.&lt;br/>
+<span id='line230' class='line'>230</span>      * force the script to certain charset.
+<span id='line231' class='line'>231</span>      *
+<span id='line232' class='line'>232</span>      * @param {Function} c.success &lt;br/>
+<span id='line233' class='line'>233</span>      * success(data,textStatus,xhr)&lt;br/>
+<span id='line234' class='line'>234</span>      * callback function called if the request succeeds.this function has 3 arguments&lt;br/>
+<span id='line235' class='line'>235</span>      * 1. data returned from this request with type specified by dataType&lt;br/>
+<span id='line236' class='line'>236</span>      * 2. status of this request with type String&lt;br/>
+<span id='line237' class='line'>237</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line238' class='line'>238</span>      *
+<span id='line239' class='line'>239</span>      * @param {Function} c.error &lt;br/>
+<span id='line240' class='line'>240</span>      * success(data,textStatus,xhr) &lt;br/>
+<span id='line241' class='line'>241</span>      * callback function called if the request occurs error.this function has 3 arguments&lt;br/>
+<span id='line242' class='line'>242</span>      * 1. null value&lt;br/>
+<span id='line243' class='line'>243</span>      * 2. status of this request with type String,such as "timeout","Not Found","parsererror:..."&lt;br/>
+<span id='line244' class='line'>244</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line245' class='line'>245</span>      *
+<span id='line246' class='line'>246</span>      * @param {Function} c.complete &lt;br/>
+<span id='line247' class='line'>247</span>      * success(data,textStatus,xhr)&lt;br/>
+<span id='line248' class='line'>248</span>      * callback function called if the request finished(success or error).this function has 3 arguments&lt;br/>
+<span id='line249' class='line'>249</span>      * 1. null value if error occurs or data returned from server&lt;br/>
+<span id='line250' class='line'>250</span>      * 2. status of this request with type String,such as success:"ok",
+<span id='line251' class='line'>251</span>      * error:"timeout","Not Found","parsererror:..."&lt;br/>
+<span id='line252' class='line'>252</span>      * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line253' class='line'>253</span>      *
+<span id='line254' class='line'>254</span>      * @param {Number} c.timeout &lt;br/>
+<span id='line255' class='line'>255</span>      * Set a timeout(in seconds) for this request.if will call error when timeout
+<span id='line256' class='line'>256</span>      *
+<span id='line257' class='line'>257</span>      * @param {Boolean} c.serializeArray &lt;br/>
+<span id='line258' class='line'>258</span>      * whether add [] to data's name when data's value is array in serialization
+<span id='line259' class='line'>259</span>      *
+<span id='line260' class='line'>260</span>      * @param {Object} c.xhrFields &lt;br/>
+<span id='line261' class='line'>261</span>      * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+<span id='line262' class='line'>262</span>      *
+<span id='line263' class='line'>263</span>      * @param {String} c.username &lt;br/>
+<span id='line264' class='line'>264</span>      * a username tobe used in response to HTTP access authentication request
+<span id='line265' class='line'>265</span>      *
+<span id='line266' class='line'>266</span>      * @param {String} c.password &lt;br/>
+<span id='line267' class='line'>267</span>      * a password tobe used in response to HTTP access authentication request
+<span id='line268' class='line'>268</span>      *
+<span id='line269' class='line'>269</span>      * @param {Object} c.xdr &lt;br/>
+<span id='line270' class='line'>270</span>      * cross domain request config object
+<span id='line271' class='line'>271</span>      *
+<span id='line272' class='line'>272</span>      * @param {String} c.xdr.src &lt;br/>
+<span id='line273' class='line'>273</span>      * Default: kissy's flash url
+<span id='line274' class='line'>274</span>      * flash sender url
+<span id='line275' class='line'>275</span>      *
+<span id='line276' class='line'>276</span>      * @param {String} c.xdr.use &lt;br/>
+<span id='line277' class='line'>277</span>      * if set to "use", it will always use flash for cross domain request even in chrome/firefox
+<span id='line278' class='line'>278</span>      *
+<span id='line279' class='line'>279</span>      * @param {Object} c.xdr.subDomain &lt;br/>
+<span id='line280' class='line'>280</span>      * cross sub domain request config object
+<span id='line281' class='line'>281</span>      *
+<span id='line282' class='line'>282</span>      * @param {String} c.xdr.subDomain.proxy &lt;br/>
+<span id='line283' class='line'>283</span>      * proxy page,eg:&lt;br/>
+<span id='line284' class='line'>284</span>      * a.t.cn/a.htm send request to b.t.cn/b.htm: &lt;br/>
+<span id='line285' class='line'>285</span>      * 1. a.htm set document.domain='t.cn'&lt;br/>
+<span id='line286' class='line'>286</span>      * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script>&lt;br/>
+<span id='line287' class='line'>287</span>      * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
+<span id='line288' class='line'>288</span>      *
+<span id='line289' class='line'>289</span>      * @returns {IO.XhrObject} current request object
+<span id='line290' class='line'>290</span>      */</span><span class="WHIT">
+<span id='line291' class='line'>291</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">io</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line292' class='line'>292</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">c.url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line293' class='line'>293</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line294' class='line'>294</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line295' class='line'>295</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setUpConfig</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line296' class='line'>296</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">XhrObject</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line297' class='line'>297</span> 
-<span id='line298' class='line'>298</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line299' class='line'>299</span>          * @name IO#start
-<span id='line300' class='line'>300</span>          * @description fired before generating request object
-<span id='line301' class='line'>301</span>          * @event
-<span id='line302' class='line'>302</span>          * @param {Event.Object} e
-<span id='line303' class='line'>303</span>          * @param {Object} e.ajaxConfig current request 's config
-<span id='line304' class='line'>304</span>          * @param {IO.XhrObject} e.xhr current xhr object
-<span id='line305' class='line'>305</span>          */</span><span class="WHIT">
-<span id='line306' class='line'>306</span> 
-<span id='line307' class='line'>307</span> </span><span class="WHIT">        </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"start"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line308' class='line'>308</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">transportContructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="STRN">"*"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line309' class='line'>309</span> </span><span class="WHIT">            </span><span class="NAME">transport</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">transportContructor</span><span class="PUNC">(</span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line310' class='line'>310</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.transport</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">transport</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line311' class='line'>311</span> 
-<span id='line312' class='line'>312</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.contentType</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line313' class='line'>313</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="STRN">"Content-Type"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.contentType</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line314' class='line'>314</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line315' class='line'>315</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line316' class='line'>316</span> </span><span class="WHIT">            </span><span class="NAME">accepts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.accepts</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line317' class='line'>317</span> </span><span class="WHIT">        </span><span class="COMM">// Set the Accepts header for the server, depending on the dataType</span><span class="WHIT">
-<span id='line318' class='line'>318</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="WHIT">
-<span id='line319' class='line'>319</span> </span><span class="WHIT">            </span><span class="STRN">"Accept"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line320' class='line'>320</span> </span><span class="WHIT">            </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="NAME">dataType</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
-<span id='line321' class='line'>321</span> </span><span class="WHIT">                </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">""</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">", */*; q=0.01"</span><span class="WHIT">  </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
-<span id='line322' class='line'>322</span> </span><span class="WHIT">                </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT">
-<span id='line323' class='line'>323</span> </span><span class="WHIT">        </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line324' class='line'>324</span> 
-<span id='line325' class='line'>325</span> </span><span class="WHIT">        </span><span class="COMM">// Check for headers option</span><span class="WHIT">
-<span id='line326' class='line'>326</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c.headers</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line327' class='line'>327</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.headers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line328' class='line'>328</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line329' class='line'>329</span> 
-<span id='line330' class='line'>330</span> </span><span class="WHIT">        </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="NAME">handleStr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line331' class='line'>331</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line332' class='line'>332</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhrObject.timeoutTimer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line333' class='line'>333</span> </span><span class="WHIT">                    </span><span class="NAME">clearTimeout</span><span class="PUNC">(</span><span class="NAME">xhrObject.timeoutTimer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line334' class='line'>334</span> </span><span class="WHIT">                    </span><span class="NAME">xhrObject.timeoutTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line335' class='line'>335</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line336' class='line'>336</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">[</span><span class="NAME">handleStr</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line337' class='line'>337</span> </span><span class="WHIT">                </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">h.apply</span><span class="PUNC">(</span><span class="NAME">c.context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line338' class='line'>338</span> </span><span class="WHIT">                </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="NAME">handleStr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line339' class='line'>339</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line340' class='line'>340</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line341' class='line'>341</span> 
-<span id='line342' class='line'>342</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.then</span><span class="PUNC">(</span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"success"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"error"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line343' class='line'>343</span> 
-<span id='line344' class='line'>344</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.fin</span><span class="PUNC">(</span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"complete"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line345' class='line'>345</span> 
-<span id='line346' class='line'>346</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.readyState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line347' class='line'>347</span> 
-<span id='line348' class='line'>348</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line349' class='line'>349</span>          * @name IO#send
-<span id='line350' class='line'>350</span>          * @description fired before sending request
-<span id='line351' class='line'>351</span>          * @event
-<span id='line352' class='line'>352</span>          * @param {Event.Object} e
-<span id='line353' class='line'>353</span>          * @param {Object} e.ajaxConfig current request 's config
-<span id='line354' class='line'>354</span>          * @param {IO.XhrObject} e.xhr current xhr object
-<span id='line355' class='line'>355</span>          */</span><span class="WHIT">
-<span id='line356' class='line'>356</span> 
-<span id='line357' class='line'>357</span> </span><span class="WHIT">        </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"send"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line358' class='line'>358</span> 
-<span id='line359' class='line'>359</span> </span><span class="WHIT">        </span><span class="COMM">// Timeout</span><span class="WHIT">
-<span id='line360' class='line'>360</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.async</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">c.timeout</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line361' class='line'>361</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.timeoutTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setTimeout</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line362' class='line'>362</span> </span><span class="WHIT">                </span><span class="NAME">xhrObject.abort</span><span class="PUNC">(</span><span class="STRN">"timeout"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line363' class='line'>363</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.timeout</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line364' class='line'>364</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line365' class='line'>365</span> 
-<span id='line366' class='line'>366</span> </span><span class="WHIT">        </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line367' class='line'>367</span> </span><span class="WHIT">            </span><span class="COMM">// flag as sending</span><span class="WHIT">
-<span id='line368' class='line'>368</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line369' class='line'>369</span> </span><span class="WHIT">            </span><span class="NAME">transport.send</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line370' class='line'>370</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line371' class='line'>371</span> </span><span class="WHIT">            </span><span class="COMM">// Propagate exception as error if not done</span><span class="WHIT">
-<span id='line372' class='line'>372</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhrObject.state</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line373' class='line'>373</span> </span><span class="WHIT">                </span><span class="NAME">xhrObject._xhrReady</span><span class="PUNC">(</span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line374' class='line'>374</span> </span><span class="WHIT">                </span><span class="COMM">// Simply rethrow otherwise</span><span class="WHIT">
-<span id='line375' class='line'>375</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line376' class='line'>376</span> </span><span class="WHIT">                </span><span class="NAME">S.error</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line377' class='line'>377</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line378' class='line'>378</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line379' class='line'>379</span> 
-<span id='line380' class='line'>380</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line381' class='line'>381</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line382' class='line'>382</span> 
-<span id='line383' class='line'>383</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">io</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Event.Target</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line384' class='line'>384</span> 
-<span id='line385' class='line'>385</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">io</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line386' class='line'>386</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line387' class='line'>387</span>          * @lends IO
-<span id='line388' class='line'>388</span>          */</span><span class="WHIT">
-<span id='line389' class='line'>389</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line390' class='line'>390</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line391' class='line'>391</span>              * whether current application is a local application
-<span id='line392' class='line'>392</span>              * (protocal is file://,widget://,about://)
-<span id='line393' class='line'>393</span>              * @type Boolean
-<span id='line394' class='line'>394</span>              * @field
-<span id='line395' class='line'>395</span>              */</span><span class="WHIT">
-<span id='line396' class='line'>396</span> </span><span class="WHIT">            </span><span class="NAME">isLocal</span><span class="PUNC">:</span><span class="NAME">isLocal</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line397' class='line'>397</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line398' class='line'>398</span>              * name-value object that set default config value for io request
-<span id='line399' class='line'>399</span>              * @param {Object} setting for details see {@link io}
-<span id='line400' class='line'>400</span>              */</span><span class="WHIT">
-<span id='line401' class='line'>401</span> </span><span class="WHIT">            </span><span class="NAME">setupConfig</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">setting</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line402' class='line'>402</span> </span><span class="WHIT">                </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">defaultConfig</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">setting</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line403' class='line'>403</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line404' class='line'>404</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line405' class='line'>405</span>              * @private
-<span id='line406' class='line'>406</span>              */</span><span class="WHIT">
-<span id='line407' class='line'>407</span> </span><span class="WHIT">            </span><span class="NAME">setupTransport</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line408' class='line'>408</span> </span><span class="WHIT">                </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line409' class='line'>409</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line410' class='line'>410</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line411' class='line'>411</span>              * @private
-<span id='line412' class='line'>412</span>              */</span><span class="WHIT">
-<span id='line413' class='line'>413</span> </span><span class="WHIT">            </span><span class="NAME">getTransport</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line414' class='line'>414</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line415' class='line'>415</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line416' class='line'>416</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line417' class='line'>417</span>              * get default config value for io request
-<span id='line418' class='line'>418</span>              * @returns {Object}
-<span id='line419' class='line'>419</span>              */</span><span class="WHIT">
-<span id='line420' class='line'>420</span> </span><span class="WHIT">            </span><span class="NAME">getConfig</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line421' class='line'>421</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">defaultConfig</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line422' class='line'>422</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line423' class='line'>423</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line424' class='line'>424</span> 
-<span id='line425' class='line'>425</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">io</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line426' class='line'>426</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line427' class='line'>427</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"json"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"event"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"./XhrObject"</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line428' class='line'>428</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line429' class='line'>429</span> 
-<span id='line430' class='line'>430</span> </span><span class="COMM">/**
-<span id='line431' class='line'>431</span>  * 2012-2-07 yiminghe@gmail.com:
-<span id='line432' class='line'>432</span>  *
-<span id='line433' class='line'>433</span>  *  返回 Promise 类型对象，可以链式操作啦！
-<span id='line434' class='line'>434</span>  *
-<span id='line435' class='line'>435</span>  * 借鉴 jquery，优化减少闭包使用
-<span id='line436' class='line'>436</span>  *
-<span id='line437' class='line'>437</span>  * TODO:
-<span id='line438' class='line'>438</span>  *  ifModified mode 是否需要？
-<span id='line439' class='line'>439</span>  *  优点：
-<span id='line440' class='line'>440</span>  *      不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
-<span id='line441' class='line'>441</span>  *  缺点：
-<span id='line442' class='line'>442</span>  *      内存占用
-<span id='line443' class='line'>443</span>  **/</span></pre></body></html>
+<span id='line298' class='line'>298</span> 
+<span id='line299' class='line'>299</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line300' class='line'>300</span>          * @name IO#start
+<span id='line301' class='line'>301</span>          * @description fired before generating request object
+<span id='line302' class='line'>302</span>          * @event
+<span id='line303' class='line'>303</span>          * @param {Event.Object} e
+<span id='line304' class='line'>304</span>          * @param {Object} e.ajaxConfig current request 's config
+<span id='line305' class='line'>305</span>          * @param {IO.XhrObject} e.xhr current xhr object
+<span id='line306' class='line'>306</span>          */</span><span class="WHIT">
+<span id='line307' class='line'>307</span> 
+<span id='line308' class='line'>308</span> </span><span class="WHIT">        </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"start"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line309' class='line'>309</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">transportContructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="STRN">"*"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line310' class='line'>310</span> </span><span class="WHIT">            </span><span class="NAME">transport</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">transportContructor</span><span class="PUNC">(</span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line311' class='line'>311</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.transport</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">transport</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line312' class='line'>312</span> 
+<span id='line313' class='line'>313</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.contentType</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line314' class='line'>314</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="STRN">"Content-Type"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.contentType</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line315' class='line'>315</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line316' class='line'>316</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.dataType</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line317' class='line'>317</span> </span><span class="WHIT">            </span><span class="NAME">accepts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c.accepts</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line318' class='line'>318</span> </span><span class="WHIT">        </span><span class="COMM">// Set the Accepts header for the server, depending on the dataType</span><span class="WHIT">
+<span id='line319' class='line'>319</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="WHIT">
+<span id='line320' class='line'>320</span> </span><span class="WHIT">            </span><span class="STRN">"Accept"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line321' class='line'>321</span> </span><span class="WHIT">            </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="NAME">dataType</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
+<span id='line322' class='line'>322</span> </span><span class="WHIT">                </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">""</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">", */*; q=0.01"</span><span class="WHIT">  </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
+<span id='line323' class='line'>323</span> </span><span class="WHIT">                </span><span class="NAME">accepts</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="STRN">"*"</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT">
+<span id='line324' class='line'>324</span> </span><span class="WHIT">        </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line325' class='line'>325</span> 
+<span id='line326' class='line'>326</span> </span><span class="WHIT">        </span><span class="COMM">// Check for headers option</span><span class="WHIT">
+<span id='line327' class='line'>327</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c.headers</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line328' class='line'>328</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.setRequestHeader</span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.headers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line329' class='line'>329</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line330' class='line'>330</span> 
+<span id='line331' class='line'>331</span> </span><span class="WHIT">        </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="NAME">handleStr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line332' class='line'>332</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line333' class='line'>333</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhrObject.timeoutTimer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line334' class='line'>334</span> </span><span class="WHIT">                    </span><span class="NAME">clearTimeout</span><span class="PUNC">(</span><span class="NAME">xhrObject.timeoutTimer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line335' class='line'>335</span> </span><span class="WHIT">                    </span><span class="NAME">xhrObject.timeoutTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line336' class='line'>336</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line337' class='line'>337</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">[</span><span class="NAME">handleStr</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line338' class='line'>338</span> </span><span class="WHIT">                </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">h.apply</span><span class="PUNC">(</span><span class="NAME">c.context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line339' class='line'>339</span> </span><span class="WHIT">                </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="NAME">handleStr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line340' class='line'>340</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line341' class='line'>341</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line342' class='line'>342</span> 
+<span id='line343' class='line'>343</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.then</span><span class="PUNC">(</span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"success"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"error"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line344' class='line'>344</span> 
+<span id='line345' class='line'>345</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.fin</span><span class="PUNC">(</span><span class="NAME">genHandler</span><span class="PUNC">(</span><span class="STRN">"complete"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line346' class='line'>346</span> 
+<span id='line347' class='line'>347</span> </span><span class="WHIT">        </span><span class="NAME">xhrObject.readyState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line348' class='line'>348</span> 
+<span id='line349' class='line'>349</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line350' class='line'>350</span>          * @name IO#send
+<span id='line351' class='line'>351</span>          * @description fired before sending request
+<span id='line352' class='line'>352</span>          * @event
+<span id='line353' class='line'>353</span>          * @param {Event.Object} e
+<span id='line354' class='line'>354</span>          * @param {Object} e.ajaxConfig current request 's config
+<span id='line355' class='line'>355</span>          * @param {IO.XhrObject} e.xhr current xhr object
+<span id='line356' class='line'>356</span>          */</span><span class="WHIT">
+<span id='line357' class='line'>357</span> 
+<span id='line358' class='line'>358</span> </span><span class="WHIT">        </span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"send"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line359' class='line'>359</span> 
+<span id='line360' class='line'>360</span> </span><span class="WHIT">        </span><span class="COMM">// Timeout</span><span class="WHIT">
+<span id='line361' class='line'>361</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c.async</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">c.timeout</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line362' class='line'>362</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.timeoutTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setTimeout</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line363' class='line'>363</span> </span><span class="WHIT">                </span><span class="NAME">xhrObject.abort</span><span class="PUNC">(</span><span class="STRN">"timeout"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line364' class='line'>364</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c.timeout</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line365' class='line'>365</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line366' class='line'>366</span> 
+<span id='line367' class='line'>367</span> </span><span class="WHIT">        </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line368' class='line'>368</span> </span><span class="WHIT">            </span><span class="COMM">// flag as sending</span><span class="WHIT">
+<span id='line369' class='line'>369</span> </span><span class="WHIT">            </span><span class="NAME">xhrObject.state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line370' class='line'>370</span> </span><span class="WHIT">            </span><span class="NAME">transport.send</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line371' class='line'>371</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line372' class='line'>372</span> </span><span class="WHIT">            </span><span class="COMM">// Propagate exception as error if not done</span><span class="WHIT">
+<span id='line373' class='line'>373</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhrObject.state</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line374' class='line'>374</span> </span><span class="WHIT">                </span><span class="NAME">xhrObject._xhrReady</span><span class="PUNC">(</span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line375' class='line'>375</span> </span><span class="WHIT">                </span><span class="COMM">// Simply rethrow otherwise</span><span class="WHIT">
+<span id='line376' class='line'>376</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line377' class='line'>377</span> </span><span class="WHIT">                </span><span class="NAME">S.error</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line378' class='line'>378</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line379' class='line'>379</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line380' class='line'>380</span> 
+<span id='line381' class='line'>381</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">xhrObject</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line382' class='line'>382</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line383' class='line'>383</span> 
+<span id='line384' class='line'>384</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">io</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Event.Target</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line385' class='line'>385</span> 
+<span id='line386' class='line'>386</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">io</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line387' class='line'>387</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line388' class='line'>388</span>          * @lends IO
+<span id='line389' class='line'>389</span>          */</span><span class="WHIT">
+<span id='line390' class='line'>390</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line391' class='line'>391</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line392' class='line'>392</span>              * whether current application is a local application
+<span id='line393' class='line'>393</span>              * (protocal is file://,widget://,about://)
+<span id='line394' class='line'>394</span>              * @type Boolean
+<span id='line395' class='line'>395</span>              * @field
+<span id='line396' class='line'>396</span>              */</span><span class="WHIT">
+<span id='line397' class='line'>397</span> </span><span class="WHIT">            </span><span class="NAME">isLocal</span><span class="PUNC">:</span><span class="NAME">isLocal</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line398' class='line'>398</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line399' class='line'>399</span>              * name-value object that set default config value for io request
+<span id='line400' class='line'>400</span>              * @param {Object} setting for details see {@link io}
+<span id='line401' class='line'>401</span>              */</span><span class="WHIT">
+<span id='line402' class='line'>402</span> </span><span class="WHIT">            </span><span class="NAME">setupConfig</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">setting</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line403' class='line'>403</span> </span><span class="WHIT">                </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">defaultConfig</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">setting</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line404' class='line'>404</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line405' class='line'>405</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line406' class='line'>406</span>              * @private
+<span id='line407' class='line'>407</span>              */</span><span class="WHIT">
+<span id='line408' class='line'>408</span> </span><span class="WHIT">            </span><span class="NAME">setupTransport</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line409' class='line'>409</span> </span><span class="WHIT">                </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line410' class='line'>410</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line411' class='line'>411</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line412' class='line'>412</span>              * @private
+<span id='line413' class='line'>413</span>              */</span><span class="WHIT">
+<span id='line414' class='line'>414</span> </span><span class="WHIT">            </span><span class="NAME">getTransport</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line415' class='line'>415</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">transports</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line416' class='line'>416</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line417' class='line'>417</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line418' class='line'>418</span>              * get default config value for io request
+<span id='line419' class='line'>419</span>              * @returns {Object}
+<span id='line420' class='line'>420</span>              */</span><span class="WHIT">
+<span id='line421' class='line'>421</span> </span><span class="WHIT">            </span><span class="NAME">getConfig</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line422' class='line'>422</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">defaultConfig</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line423' class='line'>423</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line424' class='line'>424</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line425' class='line'>425</span> 
+<span id='line426' class='line'>426</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">io</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line427' class='line'>427</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line428' class='line'>428</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"json"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"event"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"./XhrObject"</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line429' class='line'>429</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line430' class='line'>430</span> 
+<span id='line431' class='line'>431</span> </span><span class="COMM">/**
+<span id='line432' class='line'>432</span>  * 2012-2-07 yiminghe@gmail.com:
+<span id='line433' class='line'>433</span>  *
+<span id='line434' class='line'>434</span>  *  返回 Promise 类型对象，可以链式操作啦！
+<span id='line435' class='line'>435</span>  *
+<span id='line436' class='line'>436</span>  * 借鉴 jquery，优化减少闭包使用
+<span id='line437' class='line'>437</span>  *
+<span id='line438' class='line'>438</span>  * TODO:
+<span id='line439' class='line'>439</span>  *  ifModified mode 是否需要？
+<span id='line440' class='line'>440</span>  *  优点：
+<span id='line441' class='line'>441</span>  *      不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
+<span id='line442' class='line'>442</span>  *  缺点：
+<span id='line443' class='line'>443</span>  *      内存占用
+<span id='line444' class='line'>444</span>  **/</span></pre></body></html>

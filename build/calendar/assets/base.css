@@ -1,7 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 23 12:19
+*/
+/*
+Copyright 2011, KISSY UI Library v1.30dev
+MIT Licensed
+build time: Dec 28 13:33
+*/
+/*
+Copyright 2011, KISSY UI Library v1.20dev
+MIT Licensed
+build time: ${build.time}
 */
 /* 清除浮动 */
 .ks-clearfix:after {
@@ -18,7 +28,7 @@ build time: Feb 9 18:01
 .ks-cal-call-multi-1 {width:190px !important;}
 .ks-cal-call-multi-2 {width:380px !important;}
 .ks-cal-call-multi-3 {width:570px!important;}
-
+.ks-cal-call button{padding:0 5px;}
 .ks-cal-call {
     -moz-box-shadow: 1px 1px 0px #ccc;
     -webkit-box-shadow: 1px 1px 0px #ccc;
@@ -155,6 +165,8 @@ build time: Feb 9 18:01
 .ks-cal-notLimited-selected{background-color:#4187e7;color:#fff;border-color:#3375cf}
 .ks-cal-notLimited-showTime{margin-bottom:4px;}
 
+/*-- 多选择--*/
+.ks-multi-select{text-align:center;}
 
 
 /*--时间列表--*/
