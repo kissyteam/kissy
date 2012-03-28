@@ -2,7 +2,7 @@
     <description>Chart Build File</description>
 
     <property name="component.name" value="chart"/>
-    <property name="src.dir" location="./chart/"/>
+    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 

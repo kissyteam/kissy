@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 10:14
+build time: Mar 28 12:22
 */
 KISSY.add("chart/anim",function(S){
     var P = S.namespace("Chart"),
@@ -2480,7 +2480,7 @@ KISSY.add("chart/simpletooltip",function(S){
             this.n_c
                 .html(msg)
                 .css("display","block")
-                .offset(this._offset)
+                //.offset(this._offset)
 
         },
         /**
