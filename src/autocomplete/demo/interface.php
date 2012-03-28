@@ -12,7 +12,7 @@ $start=intval($_GET['start']);
 $data = array();
 
 for($i=$start;$i<$start+10;$i++){
- $data[]=$i;
+ $data[]=$i."";
 }
 
 $dataStr = json_encode($data);

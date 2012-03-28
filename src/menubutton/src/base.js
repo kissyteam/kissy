@@ -4,7 +4,7 @@
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
-    var win=S.Env.host;
+    var win = S.Env.host;
 
     function getMenu(self, init) {
         var m = self.get("menu");

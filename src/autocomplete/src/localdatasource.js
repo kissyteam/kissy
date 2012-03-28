@@ -9,11 +9,9 @@ KISSY.add("autocomplete/localDataSource", function (S) {
      * @memberOf AutoComplete
      * @class
      * @param {Array} data array of static data for autoComplete
-     * @param {Number} maxItemCount max count of data to be shown
      */
-    function LocalDataSource(data, maxItemCount) {
+    function LocalDataSource(data) {
         this.data = data;
-        this.maxItemCount = maxItemCount || 10;
     }
 
     /**
@@ -25,7 +23,9 @@ KISSY.add("autocomplete/localDataSource", function (S) {
      * @param {Object} context callback's execution context
      */
     LocalDataSource.prototype.fetchData = function (inputVal, callback, context) {
-        var data = [], count = 0, maxItemCount = this.maxItemCount;
+        var data = [],
+            count = 0,
+            maxItemCount = context.get("maxItemCount");
         if (inputVal) {
             S.each(this.data, function (d) {
                 if (d.indexOf(inputVal) != -1) {

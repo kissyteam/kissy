@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 28 19:53
 */
 /**
  * @fileOverview UIBase.Align
@@ -713,16 +713,18 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              */
             _syncUI:function () {
                 var self = this,
+                    v,
+                    f,
                     attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
                         var m = UI_SET + capitalFirst(a);
                         //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if (self[m]
+                        if ((f = self[m])
                             // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
                             && attrs[a].sync !== false
-                            && self.get(a) !== undefined) {
-                            self[m](self.get(a));
+                            && (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
                         }
                     }
                 }
@@ -989,7 +991,10 @@ KISSY.add('uibase/box', function (S) {
             if (!self.get("rendered")) {
                 // 防止初始设置 false，导致触发 hide 事件
                 // show 里面的初始一定是 true，触发 show 事件
-                self.__set("visible", true);
+                // 2012-03-28 : 用 set 而不是 __set :
+                // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
+                // - 也要设置 view
+                self.set("visible", true);
                 self.render();
             } else {
                 self.set("visible", true);

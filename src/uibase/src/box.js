@@ -148,7 +148,10 @@ KISSY.add('uibase/box', function (S) {
             if (!self.get("rendered")) {
                 // 防止初始设置 false，导致触发 hide 事件
                 // show 里面的初始一定是 true，触发 show 事件
-                self.__set("visible", true);
+                // 2012-03-28 : 用 set 而不是 __set :
+                // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
+                // - 也要设置 view
+                self.set("visible", true);
                 self.render();
             } else {
                 self.set("visible", true);

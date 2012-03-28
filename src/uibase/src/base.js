@@ -281,16 +281,18 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              */
             _syncUI:function () {
                 var self = this,
+                    v,
+                    f,
                     attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
                         var m = UI_SET + capitalFirst(a);
                         //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if (self[m]
+                        if ((f = self[m])
                             // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
                             && attrs[a].sync !== false
-                            && self.get(a) !== undefined) {
-                            self[m](self.get(a));
+                            && (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
                         }
                     }
                 }

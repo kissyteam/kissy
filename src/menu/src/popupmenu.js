@@ -32,11 +32,12 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     }
 
     /**
-     * @name PopMenu
+     * Popup Menu
+     * @name PopupMenu
      * @memberOf Menu
      * @constructor
      */
-    var PopMenu = UIBase.create(Menu, [
+    var PopupMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
@@ -113,7 +114,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
          */
         _handleBlur:function () {
             var self = this;
-            PopMenu.superclass._handleBlur.apply(self, arguments);
+            PopupMenu.superclass._handleBlur.apply(self, arguments);
             self.hide();
         }
     }, {
@@ -135,10 +136,10 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
 
     Component.UIStore.setUIByClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:PopMenu
+        ui:PopupMenu
     });
 
-    return PopMenu;
+    return PopupMenu;
 
 }, {
     requires:['uibase', 'component', './base', './popupmenurender']

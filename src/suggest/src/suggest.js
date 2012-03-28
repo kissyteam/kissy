@@ -465,6 +465,8 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                 footer = self.footer,
                 mouseDownItem, mouseLeaveFooter;
 
+            // note by yiminghe@gmail.com :
+            // bug:不应该用 mousemove，chrome 键盘选择时，鼠标所在处也会触发 mousemove
             Event.on(content, 'mousemove', function (ev) {
                 if (self._keyTimer) return;
 

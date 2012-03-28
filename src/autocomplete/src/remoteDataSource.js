@@ -12,6 +12,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
      * @param {Object} dataSourceCfg dataSource configs
      * @param {String} dataSourceCfg.paramName
      * Used as parameter name to send autoS=Complete input's value to server
+     * @param {String} dataSourceCfg.cache Whether server response data is cached
      * @param {Function} dataSourceCfg.parse Serve as a parse function to parse server
      * response to return a valid array of data for autoComplete.
      */
@@ -21,6 +22,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
         self.xhrCfg = xhrCfg;
         self.dataSourceCfg = dataSourceCfg || {};
         self.io = null;
+        self.caches = {};
     }
 
 
@@ -34,6 +36,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
      */
     RemoteDataSource.prototype.fetchData = function (inputVal, callback, context) {
         var self = this,
+            v,
             dataSourceCfg = self.dataSourceCfg;
         if (self.io) {
             // abort previous request
@@ -43,16 +46,21 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
         if (!inputVal) {
             return callback.call(context, []);
         }
+        if (dataSourceCfg.cache) {
+            if (v = self.caches[inputVal]) {
+                return callback.call(context, v);
+            }
+        }
         var xhrCfg = S.clone(self.xhrCfg);
         xhrCfg.data[dataSourceCfg['paramName']] = inputVal;
         xhrCfg.success = function (data) {
             if (dataSourceCfg.parse) {
                 data = dataSourceCfg.parse(data);
             }
-            setTimeout(function () {
-                callback.call(context, data);
-            }, 0);
-
+            if (dataSourceCfg.cache) {
+                self.caches[inputVal] = data;
+            }
+            callback.call(context, data);
         };
         self.io = IO(xhrCfg);
     };

@@ -169,7 +169,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>parents：
-                                        <a href="../symbols/UIBase.html">UIBase</a>
+                                        <a href="../symbols/Component.Controller.html">Component.Controller</a>
                                     </p>                                                
                                     
 
@@ -177,7 +177,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_base.js.html">base.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_input.js.html">input.js</a></p>
                                     
                                     
                                     
@@ -200,7 +200,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                            <span class="desc">AutoComplete provides autocomplete logicfor many text input fields or textareas and one menu</span>                                            
+                                            <span class="desc">Input/Textarea Wrapper for autoComplete</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -220,65 +220,109 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.ariaExpanded">ariaExpanded</a></b>
+                                                <span class="type">{String}</span>
                                                 
-                                                <b class="name"><a href="../symbols/AutoComplete.html#dataSource">dataSource</a></b>
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">aria-expanded.ReadOnly.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.ariaOwns">ariaOwns</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">aria-owns.ReadOnly.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.dataSource">dataSource</a></b>
                                                 <span class="type">{AutoComplete.LocalDataSource|AutoComplete.RemoteDataSource}</span>
                                                 
                                                 
-                                                
+                                                <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">dataSource for autoComplete.For Configuration when new.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#menuCfg">menuCfg</a></b>
-                                                <span class="type">{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">Config autoComplete menu list.For Configuration when new.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#open">open</a></b>
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.destroyMenu">destroyMenu</a></b>
                                                 <span class="type">{Boolean}</span>
                                                 
                                                 
+                                                <span class="attr">&lt;static&gt;</span>
                                                 
-                                                
-                                                <span class="desc">Indicate whether autoComplete list is shown.</span>                                                
+                                                <span class="desc">Whether destroy menu when this destroys.Default false</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#prefixCls">prefixCls</a></b>
-                                                <span class="type">{String}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">AutoComplete Component's prefix class.For Configuration when new.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#rowRender">rowRender</a></b>
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.formatHtml">formatHtml</a></b>
                                                 <span class="type">{}</span>
                                                 
                                                 
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Format function to return  array of html from array of data.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.formatText">formatText</a></b>
+                                                <span class="type">{}</span>
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Format function to return  array of textfrom array of data for autocomplete input.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.maxItemCount">maxItemCount</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">maxItemCount max count of data to be shown</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.menu">menu</a></b>
+                                                <span class="type">{AutoComplete.Menu}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">AutoComplete dropDown menuList</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.menuCfg">menuCfg</a></b>
+                                                <span class="type">{Object}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Config autoComplete menu list.For Configuration when new.</span>                                                
                                             </li>
                                             
                                         </ul>
                                         
                                         <hr/>
                                         <ul class="list summary-list">
-                                        
+                                        <li class="li">Fields borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#el">el</a>, <a href="../symbols/UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/UIBase.Box.html#height">height</a>, <a href="../symbols/UIBase.Box.html#html">html</a>, <a href="../symbols/UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/UIBase.Box.html#visible">visible</a>, <a href="../symbols/UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/UIBase.Box.html#width">width</a></li>
                                         </ul>
                                         
                                     </div>
@@ -299,32 +343,12 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#attachInput">attachInput</a></b>
-                                                <span class="param">(input)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">attach one input or textarea to this autoComplete logic</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#detachInput">detachInput</a></b>
-                                                <span class="param">(input)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">detach existing input or textarea from this autoComplete logic</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/AutoComplete.html#sendRequest">sendRequest</a></b>
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.sendRequest">sendRequest</a></b>
                                                 <span class="param">(value)</span>
                                                 
                                                 
-                                                
+                                                <span class="attr">&lt;static&gt;</span>
                                                 <span class="desc">fetch autoComplete list by value and show autoComplete list</span>                                                
                                             </li>
                                             
@@ -332,7 +356,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#bindUI">bindUI</a>, <a href="../symbols/UIBase.html#create">create</a>, <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#renderUI">renderUI</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getContentElement">getContentElement</a>, <a href="../symbols/Component.Controller.html#getKeyEventTarget">getKeyEventTarget</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#bindUI">bindUI</a>, <a href="../symbols/UIBase.html#create">create</a>, <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#hide">hide</a>, <a href="../symbols/UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -426,14 +450,74 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name="dataSource"> </a>
+                                            <a name=".ariaExpanded"> </a>
                                             <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">ariaExpanded</b>
+                                                <span>{String}</span>
                                                 
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    aria-expanded.ReadOnly.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".ariaOwns"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">ariaOwns</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    aria-owns.ReadOnly.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".dataSource"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
                                                 <b class="name">dataSource</b>
                                                 <span>{<a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a>|<a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a>}</span>
                                                 
                                                 
-                                                
+                                                <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
                                                     dataSource for autoComplete.For Configuration when new.
@@ -456,107 +540,167 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="menuCfg"> </a>
+                                            <a name=".destroyMenu"> </a>
                                             <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">destroyMenu</b>
+                                                <span>{Boolean}</span>
                                                 
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Whether destroy menu when this destroys.Default false
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".formatHtml"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">formatHtml</b>
+                                                
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Format function to return  array of html from array of data.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".formatText"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">formatText</b>
+                                                
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Format function to return  array of textfrom array of data for autocomplete input.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".maxItemCount"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">maxItemCount</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    maxItemCount max count of data to be shown
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".menu"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">menu</b>
+                                                <span>{<a href="../symbols/AutoComplete.Menu.html">AutoComplete.Menu</a>}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    AutoComplete dropDown menuList
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".menuCfg"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
                                                 <b class="name">menuCfg</b>
                                                 <span>{Object}</span>
                                                 
                                                 
-                                                
-                                                
-                                                <span class="desc">
-                                                    Config autoComplete menu list.For Configuration when new.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="open"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">open</b>
-                                                <span>{Boolean}</span>
-                                                
-                                                
-                                                
+                                                <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    Indicate whether autoComplete list is shown.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="prefixCls"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">prefixCls</b>
-                                                <span>{String}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    AutoComplete Component's prefix class.For Configuration when new.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="rowRender"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">rowRender</b>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    
+                                                    Config autoComplete menu list.For Configuration when new.{Number} menuCfg.width :Config autoComplete menu list's alignment.Default to current active input's width.<br/>{Object} menuCfg.align :Config autoComplete menu list's alignment.Same with <a href="../symbols/UIBase.Align.html#align">UIBase.Align#align</a> .Default : align current input's bottom left edgewith autoComplete list's top left edge.
                                                     
                                                     
                                                 </span>
@@ -591,125 +735,15 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="attachInput"> </a>
+                                            <a name=".sendRequest"> </a>
                                             <div class="title">
-                                                
-                                                <b class="name">attachInput</b>
-                                                <span class="param">(input)</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_base.js.html#line45">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                attach one input or textarea to this autoComplete logic
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">input</b>
-                                                            
-                                                            
-                                                            <span class="type">{<a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a>}</span> 
-                                                            <span class="desc">input or textarea wrapper instance</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="detachInput"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">detachInput</b>
-                                                <span class="param">(input)</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_base.js.html#line55">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                detach existing input or textarea from this autoComplete logic
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">input</b>
-                                                            
-                                                            
-                                                            <span class="type">{<a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a>}</span> 
-                                                            <span class="desc">previous attached input or textarea instance</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="sendRequest"> </a>
-                                            <div class="title">
-                                                
+                                                <span>AutoComplete.</span>
                                                 <b class="name">sendRequest</b>
                                                 <span class="param">(value)</span>
                                                 
                                                 
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_base.js.html#line68">view source</a>
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_input.js.html#line36">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -781,11 +815,13 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_base.js.html#line140">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_menu.js.html#line108">view source</a>
                                         </div>
                                         
                                         <div class="desc">
                                             fired when user select from suggestion list
+                                            
+                                                <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_menu.js.html">menu.js</a>.
                                             
                                             
                                         </div>
@@ -811,7 +847,16 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         
-                                                        <span class="desc">selected value</span>
+                                                        <span class="desc">value of selected menuItem</span>
+                                                    </li>
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e.content</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc">content of selected menuItem</span>
                                                     </li>
                                                 
                                                     <li class="li">
@@ -873,10 +918,13 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
             
             
-            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            <li><a href="../symbols/AutoComplete.Basic.html">AutoComplete.Basic</a></li>
             
             
             <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Menu.html">AutoComplete.Menu</a></li>
             
             
             <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
@@ -963,7 +1011,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Menu.html">Menu</a></li>
             
             
-            <li><a href="../symbols/Menu.PopMenu.html">Menu.PopMenu</a></li>
+            <li><a href="../symbols/Menu.PopupMenu.html">Menu.PopupMenu</a></li>
             
             
             <li><a href="../symbols/MenuButton.html">MenuButton</a></li>
