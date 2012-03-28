@@ -1,0 +1,19 @@
+.ks-chart-tooltip{
+    box-shadow:1px 1px 2px #555;
+    padding:3px 5px;
+    position:absolute;
+    z-index:9999;
+    background:#333;
+    background:rgba(20,20,20,.9);
+    color:#fff;
+    max-length:120px;
+    border-radius:4px;
+}
+.ks-chart-tooltip li{
+    list-style:none;
+}
+.ks-chart-error {
+    color:#900;
+    border:1px solid #eee;
+    padding:2px;
+}

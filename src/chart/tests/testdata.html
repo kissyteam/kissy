@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>testData</title>
+  <!-- include source files here... -->
+  <script src="../../../../kissy-dpl/base/assets/kissy.js"></script>
+  <script src="../chart/data.js"></script>
+
+  <!-- include spec files here... -->
+</head>
+<body>
+<script>
+var P = KISSY.namespace("Gallery.Chart");
+var data, json1;
+json1 = {
+    type : "Line",
+    element : {
+      data : [1,2,3,4],
+      label : ["n","b","n","c"],
+      name : ["a1","a2","a3","a4"]
+    }
+};
+data = new P.Data(json1);
+console.log(data.type, "line");
+</script>
+</body>
+</html>
