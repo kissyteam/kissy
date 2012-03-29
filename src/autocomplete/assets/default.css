@@ -54,22 +54,26 @@
 }
 
 .ks-autocomplete-input {
+    font-size: 12px;
+}
+
+.ks-combobox .ks-autocomplete-input {
+    /*do not occupy inline space*/
+    float: left;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
     background-color: #fff;
     border: 0;
     border-right: 1px solid #b5b6b5;
     color: #000;
     margin: 0;
     padding: 0 0 0 2px;
-    vertical-align: middle;
-    /*do not occupy inline space*/
-    float: left;
-    zoom: 1;
-    *display: inline;
 }
 
-.ks-ie7 .ks-autocomplete-input,
-.ks-ie8 .ks-autocomplete-input,
-.ks-ie6 .ks-autocomplete-input {
+.ks-ie7 .ks-combobox .ks-autocomplete-input,
+.ks-ie8 .ks-combobox .ks-autocomplete-input,
+.ks-ie6 .ks-combobox .ks-autocomplete-input {
     padding-top: 1px;
     padding-bottom: 3px;
 }
