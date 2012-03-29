@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Feb 25 23:15
+build time: Mar 29 13:31
 */
 /**
  * 数据延迟加载组件
@@ -317,7 +317,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
-            container.insertBefore(content, area);
+            area.parentNode.insertBefore(content, area);
             DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
