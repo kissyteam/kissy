@@ -24,6 +24,8 @@ History:
 
  - [*] KISSY.ready try catch 达到互不影响的效果
 
+ - [+] html 标签键入 ua 标志，例如 "ks-ie ke-ie6"
+
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [+] Event.on 支持 data 绑定
@@ -62,6 +64,8 @@ History:
  - [+] switchable 增加 add/remove/destroy
 
  - [+] waterfall 增加方法 adjustItem/removeItem 以及配置 adjustEffect。支持调整时的动画。
+
+ - [+] 增加 autocomplete/combobox 组件
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 27 12:53
+build time: Mar 29 20:12
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 27 12:53
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120327125354',
+            __BUILD_TIME:'20120329201250',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4186,7 +4186,7 @@ build time: Mar 27 12:53
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 29 20:12
 */
 /**
  * @fileOverview ua
@@ -4370,6 +4370,43 @@ KISSY.add('ua/base', function (S, undefined) {
  *
  */
 /**
+ * attach ua to class of html
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ua/css", function (S, UA) {
+    var o = [
+        // browser core type
+        "webkit",
+        "trident",
+        "gecko",
+        "presto",
+        // browser type
+        "chrome",
+        "safari",
+        "firefox",
+        "ie",
+        "opera"
+    ],
+        documentElement = S.Env.host.document.documentElement,
+        className = "",
+        v;
+    S.each(o, function (key) {
+        if (v = UA[key]) {
+            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+        }
+    });
+    if (UA.ie) {
+        className += " ks-ie";
+    }
+    documentElement.className = S.trim(documentElement.className + className);
+}, {
+    requires:['./base']
+});
+
+/**
+ * refer :
+ *  - http://yiminghe.iteye.com/blog/444889
+ *//**
  * @fileOverview ua-extra
  * @author gonghao<gonghao@ghsky.com>
  */
@@ -4431,7 +4468,7 @@ KISSY.add("ua", function (S, UA) {
     S.UA = UA;
     return UA;
 }, {
-    requires:["ua/extra"]
+    requires:["ua/extra", "ua/css"]
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev
@@ -21100,7 +21137,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 28 19:53
 */
 /**
  * @fileOverview UIBase.Align
@@ -21812,16 +21849,18 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              */
             _syncUI:function () {
                 var self = this,
+                    v,
+                    f,
                     attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
                         var m = UI_SET + capitalFirst(a);
                         //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if (self[m]
+                        if ((f = self[m])
                             // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
                             && attrs[a].sync !== false
-                            && self.get(a) !== undefined) {
-                            self[m](self.get(a));
+                            && (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
                         }
                     }
                 }
@@ -22088,7 +22127,10 @@ KISSY.add('uibase/box', function (S) {
             if (!self.get("rendered")) {
                 // 防止初始设置 false，导致触发 hide 事件
                 // show 里面的初始一定是 true，触发 show 事件
-                self.__set("visible", true);
+                // 2012-03-28 : 用 set 而不是 __set :
+                // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
+                // - 也要设置 view
+                self.set("visible", true);
                 self.render();
             } else {
                 self.set("visible", true);
@@ -23596,7 +23638,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 27 20:02
 */
 /**
  * @fileOverview model and control base class for kissy
@@ -23717,6 +23759,8 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
     var Controller = UIBase.create([UIBase.Box],
         /** @lends Component.Controller.prototype */
         {
+
+            __CLASS:"Component.Controller",
 
             getCls:UIStore.getCls,
 
@@ -24369,7 +24413,7 @@ KISSY.add("component/delegatechildren", function (S) {
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function(S, UIBase, UIStore) {
+KISSY.add("component/render", function (S, UIBase, UIStore) {
 
     function tagFunc(self, classes, tag) {
         return self.getCls(classes.split(/\s+/).join(tag + " ") + tag);
@@ -24377,32 +24421,34 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 
     return UIBase.create([UIBase.Box.Render], {
 
-        _completeClasses:function(classes, tag) {
+        __CLASS:"Component.Render",
+
+        _completeClasses:function (classes, tag) {
             return tagFunc(this, classes, tag);
         },
 
         /**
          * @protected
          */
-        _renderCls:function(componentCls) {
+        _renderCls:function (componentCls) {
             var self = this;
             self.get("el").addClass(self.getCls(componentCls));
         },
 
         getCls:UIStore.getCls,
 
-        getKeyEventTarget:function() {
+        getKeyEventTarget:function () {
             return this.get("el");
         },
 
-        getContentElement:function() {
+        getContentElement:function () {
             return this.get("contentEl") || this.get("el");
         },
 
         /**
          * @protected
          */
-        _uiSetFocusable:function(v) {
+        _uiSetFocusable:function (v) {
             var el = this.getKeyEventTarget(),
                 tabindex = el.attr("tabindex");
             if (tabindex >= 0 && !v) {
@@ -24415,29 +24461,29 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setHighlighted:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setHighlighted:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-hover"));
         },
 
         /**
          * @protected
          */
-        _setDisabled:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setDisabled:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-disabled"))
                 //不能被 tab focus 到
                 //support aria
                 .attr({
-                    "tabindex": v ? -1 : 0,
-                    "aria-disabled": v
+                    "tabindex":v ? -1 : 0,
+                    "aria-disabled":v
                 });
 
         },
         /**
          * @protected
          */
-        _setActive:function(v, componentCls) {
+        _setActive:function (v, componentCls) {
             var self = this;
             self.get("el")[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-active"))
                 .attr("aria-pressed", !!v);
@@ -24445,8 +24491,8 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setFocused:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setFocused:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-focused"));
         }
 
@@ -24460,7 +24506,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         }
     });
 }, {
-    requires:['uibase','./uistore']
+    requires:['uibase', './uistore']
 });/**
  * @fileOverview storage for component's css
  * @author yiminghe@gmail.com

@@ -57,6 +57,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
             },
 
             _handleBlur:function () {
+                AutoComplete.superclass._handleBlur.apply(this, arguments);
                 var autoCompleteMenu = this.get("menu");
                 if (autoCompleteMenu) {
                     // 通知 menu
@@ -118,9 +119,10 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 } else {
                     self._stopNotify = 0;
                 }
-
+                var activeItem;
                 if (autoCompleteMenu.get("visible")) {
                     var handledByMenu = autoCompleteMenu._handleKeydown(e);
+
                     if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                         // update menu's active value to input just for show
                         el.val(autoCompleteMenu.get("activeItem").get("textContent"))
@@ -131,6 +133,14 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                         // restore original user's input text
                         el.val(self._savedInputValue);
                         return true;
+                    }
+                    // tab
+                    // if menu is open and an menuitem is highlighted, see as click/enter
+                    if (e.keyCode == KeyCodes.TAB) {
+                        if (activeItem = autoCompleteMenu.get("activeItem")) {
+                            activeItem._performInternal();
+                            return true;
+                        }
                     }
                     return handledByMenu;
                 } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {

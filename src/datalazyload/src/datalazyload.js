@@ -271,7 +271,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             var self = this;
 
             if (self.checkElemInViewport(area)) {
-                self._loadAreaData(area.parentNode, area, self.config.execScript);
+                self._loadAreaData(area, self.config.execScript);
             } else {
                 return true;
             }
@@ -281,7 +281,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData:function (container, area, execScript) {
+        _loadAreaData:function (area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
@@ -432,7 +432,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     default:
                         DOM.query('textarea', container).each(function (area) {
                             if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                                self._loadAreaData(container, area);
+                                self._loadAreaData(area);
                             }
                         });
                 }

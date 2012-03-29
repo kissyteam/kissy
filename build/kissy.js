@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 27 12:53
+build time: Mar 29 20:12
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 27 12:53
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120327125354',
+            __BUILD_TIME:'20120329201250',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4186,7 +4186,7 @@ build time: Mar 27 12:53
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 29 20:12
 */
 /**
  * @fileOverview ua
@@ -4370,6 +4370,43 @@ KISSY.add('ua/base', function (S, undefined) {
  *
  */
 /**
+ * attach ua to class of html
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ua/css", function (S, UA) {
+    var o = [
+        // browser core type
+        "webkit",
+        "trident",
+        "gecko",
+        "presto",
+        // browser type
+        "chrome",
+        "safari",
+        "firefox",
+        "ie",
+        "opera"
+    ],
+        documentElement = S.Env.host.document.documentElement,
+        className = "",
+        v;
+    S.each(o, function (key) {
+        if (v = UA[key]) {
+            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+        }
+    });
+    if (UA.ie) {
+        className += " ks-ie";
+    }
+    documentElement.className = S.trim(documentElement.className + className);
+}, {
+    requires:['./base']
+});
+
+/**
+ * refer :
+ *  - http://yiminghe.iteye.com/blog/444889
+ *//**
  * @fileOverview ua-extra
  * @author gonghao<gonghao@ghsky.com>
  */
@@ -4431,7 +4468,7 @@ KISSY.add("ua", function (S, UA) {
     S.UA = UA;
     return UA;
 }, {
-    requires:["ua/extra"]
+    requires:["ua/extra", "ua/css"]
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev

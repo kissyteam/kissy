@@ -93,6 +93,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                     // stop valuechange event
                     input._stopNotify = 1;
                     input.get("el").val(textContent);
+                    input._savedInputValue = textContent;
                     self.hide();
                     setTimeout(function () {
                             input._stopNotify = 0;
@@ -121,7 +122,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
             },
 
             _onInputFocus:function (input) {
-                S.log("_onInputFocus");
                 this._input = input;
             },
 
@@ -137,6 +137,15 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                     node:_input.get("el")
                 }, ALIGN, menuCfg.align));
                 self.show();
+                // make menu item (which textContent is same as input) active
+                var children = self.get("children"),
+                    val = _input.get("el").val();
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i].get("textContent") == val) {
+                        self.set("highlightedItem", children[i]);
+                        return;
+                    }
+                }
             },
 
             _hideForAutoComplete:function () {

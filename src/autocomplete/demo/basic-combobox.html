@@ -2,16 +2,29 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>高级共享模式</title>
+<title>comboxbox - 静态简单</title>
 <link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../css/src/reset.css" rel="stylesheet"/>
 <link href="../assets/default.css" rel="stylesheet"/>
+<style>
+    h1 {
+        font-size: 2em;
+    }
 
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h1,h2{
+        margin: 1em;
+    }
+</style>
 </head>
 <body>
 <h1>从已有节点渲染</h1>
 <div style="margin:10px auto; width:80%;text-align: center">
     <h2>
-        dynamic
+        static : input a or b or c or d or 3
     </h2>
     <input id="inp"/>
 </div>
@@ -19,9 +32,10 @@
 <h1>全新产生新节点</h1>
 <div style="margin:10px auto; width:800px;text-align: center" id="newNew">
     <h2>
-        dynamic
+        static : input a or b or c or d or 3
     </h2>
 </div>
+
 <script src="../../../build/kissy.js"></script>
 <script src="../src/inputRender.js"></script>
 <script src="../src/input.js"></script>
@@ -29,53 +43,35 @@
 <script src="../src/menu.js"></script>
 <script src="../src/localDataSource.js"></script>
 <script src="../src/remoteDataSource.js"></script>
-<script src="../src/basic.js"></script>
 <script src="../src/BasicComboBox.js"></script>
 <script src="../src/BasicComboBoxRender.js"></script>
+<script src="../src/basic.js"></script>
 <script>
     KISSY.use("autocomplete", function (S, AutoComplete) {
 
-        var autCompleteMenu = new AutoComplete.Menu();
-
         /*
-         remote dataSource
+         local dataSource
          */
         (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
 
-            var dataSource = new AutoComplete.RemoteDataSource({
-                url:'./interface.php',
-                dataType:'json'
-            }, {
-                paramName:"start"
-            });
-
-            window.autoComplete = new AutoComplete({
+            var basicAutoComplete = new AutoComplete.BasicComboBox({
                 srcNode:S.one("#inp"),
-                dataSource:dataSource,
-                menu:autCompleteMenu
+                // width:S.one("#inp").css("width"),
+                data:data
             });
-
-            autoComplete.XX = 1;
-
-            autoComplete.render();
+            basicAutoComplete.render();
         })();
 
 
         (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
 
-            var dataSource = new AutoComplete.RemoteDataSource({
-                url:'./interface.php',
-                dataType:'json'
-            }, {
-                paramName:"start",
-                cache:true
-            });
-
-            window.autoComplete2 = new AutoComplete({
-                menu:autCompleteMenu,
+            var basicAutoComplete = new AutoComplete.BasicComboBox({
                 render:"#newNew",
-                dataSource:dataSource,
-                maxItemCount:5,
+                // width:S.one("#inp").css("width"),
+                data:data,
+                maxItemCount:2,
                 formatHtml:function (query, data) {
                     var ret = [];
                     for (var i = 0; i < data.length; i++) {
@@ -92,18 +88,12 @@
                     return ret;
                 }
             });
+            basicAutoComplete.render();
 
-
-            autoComplete2.XX = 2;
-
-            autoComplete2.render();
-
-            autoComplete2.on("select", function (e) {
+            basicAutoComplete.on("select", function (e) {
                 alert(e.value + "\n" + e.content + "\n" + e.textContent);
             });
         })();
-
-        S.log(window.autoComplete == window.autoComplete2);
     });
 </script>
 </body>
