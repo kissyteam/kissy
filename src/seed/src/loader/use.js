@@ -3,7 +3,6 @@
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
-
     if (typeof require !== 'undefined') {
         return;
     }
@@ -51,7 +50,7 @@
             // 有尚未 attached 的模块
             S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
-                self.__attachModByName(modName, function () {
+                attachModByName(self, modName, function () {
                     currentIndex++;
                     if (currentIndex == count) {
                         var mods = utils.getModules(SS, modNames);
@@ -61,266 +60,255 @@
             });
 
             return self;
-        },
-        __buildPath:function (mod, base) {
-            var self = this,
-                SS = self.SS,
-                Config = SS.Config;
+        }
+    });
 
-            base = base || Config.base;
 
-            build("fullpath", "path");
+    function buildModPath(self, mod, base) {
+        var SS = self.SS,
+            Config = SS.Config;
 
-            if (mod["cssfullpath"] !== data.LOADED) {
-                build("cssfullpath", "csspath");
-            }
+        base = base || Config.base;
 
-            function build(fullpath, path) {
-                var flag = "__" + fullpath + "Ready",
-                    t,
-                    p = mod[fullpath],
-                    sp = mod[path];
-                if (mod[flag]) {
-                    return;
-                }
-                if (!p && sp) {
-                    //如果是 ./ 或 ../ 则相对当前模块路径
-                    sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
-                    p = base + sp;
-                }
-                // debug 模式下，加载非 min 版
-                if (p) {
-                    mod[fullpath] = utils.getMappedPath(SS, p +
-                        ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
-                    mod[flag] = 1;
-                }
-            }
-        },
+        build("fullpath", "path");
 
-        // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName:function (modName, callback) {
-            var self = this,
-                SS = self.SS,
-                mod = SS.Env.mods[modName];
-            if (mod.status === ATTACHED) {
-                callback();
+        if (mod["cssfullpath"] !== data.LOADED) {
+            build("cssfullpath", "csspath");
+        }
+
+        function build(fullpath, path) {
+            var flag = "__" + fullpath + "Ready",
+                t,
+                p = mod[fullpath],
+                sp = mod[path];
+            if (mod[flag]) {
                 return;
             }
-            self.__attach(mod, callback);
-        },
+            if (!p && sp) {
+                //如果是 ./ 或 ../ 则相对当前模块路径
+                sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
+                p = base + sp;
+            }
+            // debug 模式下，加载非 min 版
+            if (p) {
+                mod[fullpath] = utils.getMappedPath(SS, p +
+                    ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
+                mod[flag] = 1;
+            }
+        }
+    }
+
+    // 加载指定模块名模块，如果不存在定义默认定义为内部模块
+    function attachModByName(self, modName, callback) {
+        var SS = self.SS,
+            mod = SS.Env.mods[modName];
+        if (mod.status === ATTACHED) {
+            callback();
+            return;
+        }
+        attachModRecursive(self, mod, callback);
+    }
+
+
+    /**
+     * Attach a module and all required modules.
+     */
+    function attachModRecursive(self, mod, callback) {
+        var SS = self.SS,
+            r,
+            rMod,
+            i,
+            callbackBeCalled = 0,
+            // 最终有效的 require ，add 处声明为准
+            newRequires,
+            mods = SS.Env.mods;
+
+        // 复制一份当前的依赖项出来，防止 add 后修改！
+        // 事先配置的 require ，同 newRequires 有区别
+        var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
         /**
-         * Attach a module and all required modules.
+         * check cyclic dependency between mods
+         * @private
          */
-        __attach:function (mod, callback) {
-            var self = this,
-                SS = self.SS,
-                r,
-                rMod,
-                i,
-                callbackBeCalled = 0,
-                // 最终有效的 require ，add 处声明为准
-                newRequires,
-                mods = SS.Env.mods;
+        function cyclicCheck() {
+            // one mod's all requires mods to run its callback
+            var __allRequires = mod.__allRequires = mod.__allRequires || {},
+                myName = mod.name,
+                rmod,
+                r__allRequires;
 
-            // 复制一份当前的依赖项出来，防止 add 后修改！
-            // 事先配置的 require ，同 newRequires 有区别
-            var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-            /**
-             * check cyclic dependency between mods
-             * @private
-             */
-            function cyclicCheck() {
-                // one mod's all requires mods to run its callback
-                var __allRequires = mod.__allRequires = mod.__allRequires || {},
-                    myName = mod.name,
-                    rmod,
-                    r__allRequires;
-
-                S.each(requires, function (r) {
-                    rmod = mods[r];
-                    __allRequires[r] = 1;
-                    if (rmod && (r__allRequires = rmod.__allRequires)) {
-                        S.mix(__allRequires, r__allRequires);
-                    }
-                });
-
-                if (__allRequires[myName]) {
-                    S.log(__allRequires, "error");
-                    var JSON = window.JSON,
-                        error = "";
-                    if (JSON) {
-                        error = JSON.stringify(__allRequires);
-                    }
-                    S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
-
-                }
-            }
-
-            if (S.Config.debug) {
-                cyclicCheck();
-            }
-
-            // attach all required modules
-            for (i = 0; i < requires.length; i++) {
-                r = requires[i];
-                rMod = mods[r];
-                if (rMod && rMod.status === ATTACHED) {
-                    //no need
-                } else {
-                    self.__attachModByName(r, fn);
-                }
-            }
-
-            // load and attach this module
-            self.__buildPath(mod, utils.getPackagePath(SS, mod));
-
-            self.__load(mod, function () {
-
-                // KISSY.add 可能改了 config，这里重新取下
-                newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-                var needToLoad = [];
-
-                //本模块下载成功后串行下载 require
-                for (i = 0; i < newRequires.length; i++) {
-                    var r = newRequires[i],
-                        rMod = mods[r],
-                        inA = S.inArray(r, requires);
-                    //已经处理过了或将要处理
-                    if (rMod &&
-                        rMod.status === ATTACHED ||
-                        //已经正在处理了
-                        inA) {
-                        //no need
-                    } else {
-                        //新增的依赖项
-                        needToLoad.push(r);
-                    }
-                }
-
-                if (needToLoad.length) {
-                    for (i = 0; i < needToLoad.length; i++) {
-                        self.__attachModByName(needToLoad[i], fn);
-                    }
-                } else {
-                    fn();
+            S.each(requires, function (r) {
+                rmod = mods[r];
+                __allRequires[r] = 1;
+                if (rmod && (r__allRequires = rmod.__allRequires)) {
+                    S.mix(__allRequires, r__allRequires);
                 }
             });
 
-            function fn() {
-                if (
-                // 前提条件，本模块 script onload 已经调用
-                // ie 下 add 与 script onload 并不连续！！
-                // attach 以 newRequires 为准
-                    newRequires &&
-                        !callbackBeCalled &&
-                        // 2012-03-16 by yiminghe@gmail.com
-                        // add 与 onload ie 下不连续
-                        // c 依赖 a
-                        // a 模块 add 时进行 attach
-                        // a add 后 c 模块 onload 触发
-                        // 检测到 a 已经 attach 则调用该函数
-                        // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
-                        utils.isAttached(SS, newRequires)) {
-                    if (mod.status == LOADED) {
-                        utils.attachMod(SS, mod);
-                    }
-                    if (mod.status == ATTACHED) {
-                        callbackBeCalled = 1;
-                        callback();
-                    }
+            if (__allRequires[myName]) {
+                S.log(__allRequires, "error");
+                var JSON = window.JSON,
+                    error = "";
+                if (JSON) {
+                    error = JSON.stringify(__allRequires);
+                }
+                S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
+
+            }
+        }
+
+        if (S.Config.debug) {
+            cyclicCheck();
+        }
+
+        // attach all required modules
+        for (i = 0; i < requires.length; i++) {
+            r = requires[i];
+            rMod = mods[r];
+            if (rMod && rMod.status === ATTACHED) {
+                //no need
+            } else {
+                attachModByName(self, r, fn);
+            }
+        }
+
+        // load and attach this module
+        buildModPath(self, mod, utils.getPackagePath(SS, mod));
+
+        loadModByScript(self, mod, function () {
+
+            // KISSY.add 可能改了 config，这里重新取下
+            newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
+
+            var needToLoad = [];
+
+            //本模块下载成功后串行下载 require
+            for (i = 0; i < newRequires.length; i++) {
+                var r = newRequires[i],
+                    rMod = mods[r],
+                    inA = S.inArray(r, requires);
+                //已经处理过了或将要处理
+                if (rMod &&
+                    rMod.status === ATTACHED ||
+                    //已经正在处理了
+                    inA) {
+                    //no need
+                } else {
+                    //新增的依赖项
+                    needToLoad.push(r);
                 }
             }
-        },
 
-        /**
-         * Load a single module.
-         */
-        __load:function (mod, callback) {
-
-            var self = this,
-                SS = self.SS,
-                cssfullpath,
-                url = mod['fullpath'],
-                isCss = utils.isCss(url),
-                node = mod.domNode;
-
-            mod.status = mod.status || INIT;
-
-            // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
-            // 仅发出请求，不做任何其它处理
-            if (cssfullpath = mod["cssfullpath"]) {
-                S.getScript(cssfullpath);
-                mod["cssfullpath"] = mod.csspath = LOADED;
-            }
-
-            if (mod.status < LOADING && url) {
-                mod.status = LOADING;
-                if (IE && !isCss) {
-                    self.__startLoadModuleName = mod.name;
-                    self.__startLoadTime = Number(+new Date());
+            if (needToLoad.length) {
+                for (i = 0; i < needToLoad.length; i++) {
+                    attachModByName(self, needToLoad[i], fn);
                 }
-                node = S.getScript(url, {
-                    // syntaxError in all browser will trigger this
-                    // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                    success:function () {
-                        if (isCss) {
-                        } else {
-                            //载入 css 不需要这步了
-                            //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                            if (self.__currentModule) {
-                                S.log("standard browser get modname after load : " + mod.name);
-                                utils.registerModule(SS,
-                                    mod.name, self.__currentModule.def,
-                                    self.__currentModule.config);
-                                self.__currentModule = null;
-                            }
-                            if (mod.fn) {
-                            } else {
-                                _modError();
-                            }
-                        }
-                        _scriptOnComplete();
-                    },
-                    error:function () {
-                        _modError();
-                        _scriptOnComplete();
-                    },
-                    charset:mod.charset
-                });
-                mod.domNode = node;
+            } else {
+                fn();
             }
-            // 已经在加载中，需要添加回调到 script onload 中
-            // 注意：没有考虑 error 情形
-            else if (mod.status === LOADING) {
-                utils.scriptOnload(node, function () {
-                    // 模块载入后，如果需要也要混入对应 global 上模块定义
-                    _scriptOnComplete();
-                });
-            }
-            // 是内嵌代码，或者已经 loaded
-            else {
-                callback();
-            }
+        });
 
-            function _modError() {
-                S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
-                mod.status = ERROR;
-            }
-
-            function _scriptOnComplete() {
-                if (mod.status !== ERROR) {
-                    // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
-                    // 因此要加上下面的 !== 判断，否则会出现重复 attach,
-                    // 比如编辑器里动态加载时，被依赖的模块会重复
-                    if (mod.status != ATTACHED) {
-                        mod.status = LOADED;
-                    }
+        function fn() {
+            if (
+            // 前提条件，本模块 script onload 已经调用
+            // ie 下 add 与 script onload 并不连续！！
+            // attach 以 newRequires 为准
+                newRequires &&
+                    !callbackBeCalled &&
+                    // 2012-03-16 by yiminghe@gmail.com
+                    // add 与 onload ie 下不连续
+                    // c 依赖 a
+                    // a 模块 add 时进行 attach
+                    // a add 后 c 模块 onload 触发
+                    // 检测到 a 已经 attach 则调用该函数
+                    // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
+                    utils.isAttached(SS, newRequires)) {
+                if (mod.status == LOADED) {
+                    utils.attachMod(SS, mod);
+                }
+                if (mod.status == ATTACHED) {
+                    callbackBeCalled = 1;
                     callback();
                 }
             }
         }
-    });
+    }
+
+
+    /**
+     * Load a single module.
+     */
+    function loadModByScript(self, mod, callback) {
+        var SS = self.SS,
+            cssfullpath,
+            url = mod['fullpath'],
+            isCss = utils.isCss(url)
+
+        mod.status = mod.status || INIT;
+
+        // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
+        // 仅发出请求，不做任何其它处理
+        if (cssfullpath = mod["cssfullpath"]) {
+            S.getScript(cssfullpath);
+            mod["cssfullpath"] = mod.csspath = LOADED;
+        }
+
+        if (mod.status < LOADING) {
+            mod.status = LOADING;
+            if (IE && !isCss) {
+                self.__startLoadModuleName = mod.name;
+                self.__startLoadTime = Number(+new Date());
+            }
+            S.getScript(url, {
+                // syntaxError in all browser will trigger this
+                // same as #111 : https://github.com/kissyteam/kissy/issues/111
+                success:function () {
+                    if (!isCss) {
+                        // 载入 css 不需要这步了
+                        // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
+                        if (self.__currentModule) {
+                            S.log("standard browser get modname after load : " + mod.name);
+                            utils.registerModule(SS,
+                                mod.name, self.__currentModule.def,
+                                self.__currentModule.config);
+                            self.__currentModule = null;
+                        }
+                    }
+                    checkAndHandle();
+                },
+                error:checkAndHandle,
+                // source:mod.name + "-init",
+                charset:mod.charset
+            });
+        }
+        // 已经在加载中，需要添加回调到 script onload 中
+        // 注意：没有考虑 error 情形，只在第一次处理即可
+        // 交给 getScript 排队
+        else if (mod.status == LOADING) {
+            S.getScript(url, {
+                success:checkAndHandle,
+                // source:mod.name + "-loading",
+                charset:mod.charset
+            });
+        }
+        // loaded/attached/error
+        else {
+            checkAndHandle();
+        }
+
+        function checkAndHandle() {
+            if (isCss || mod.fn) {
+                callback();
+            } else {
+                // ie will call success even when getScript error(404)
+                _modError();
+            }
+        }
+
+        function _modError() {
+            S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
+            mod.status = ERROR;
+        }
+    }
 })(KISSY);

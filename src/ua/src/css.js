@@ -22,11 +22,9 @@ KISSY.add("ua/css", function (S, UA) {
     S.each(o, function (key) {
         if (v = UA[key]) {
             className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+            className += " ks-" + key;
         }
     });
-    if (UA.ie) {
-        className += " ks-ie";
-    }
     documentElement.className = S.trim(documentElement.className + className);
 }, {
     requires:['./base']

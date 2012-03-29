@@ -73,7 +73,8 @@
 
 .ks-ie7 .ks-combobox .ks-autocomplete-input,
 .ks-ie8 .ks-combobox .ks-autocomplete-input,
-.ks-ie6 .ks-combobox .ks-autocomplete-input {
+.ks-ie6 .ks-combobox .ks-autocomplete-input,
+.ks-gecko .ks-combobox .ks-autocomplete-input{
     padding-top: 1px;
     padding-bottom: 3px;
 }

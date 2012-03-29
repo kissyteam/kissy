@@ -6,10 +6,10 @@
     if (typeof require !== 'undefined') {
         return;
     }
+
     var CSS_POLL_INTERVAL = 30,
-        win=S.Env.host,
+        win = S.Env.host,
         utils = S.Loader.Utils,
-        jsCallbacks = {},
         /**
          * central poll for link node
          */
@@ -17,13 +17,13 @@
 
         monitors = {
             /**
-             * node.id:[callback]
+             * node.id:{callback:callback,node:node}
              */
         };
 
     function startCssTimer() {
         if (!timer) {
-            S.log("start css polling");
+            // S.log("start css polling");
             cssPoll();
         }
     }
@@ -31,8 +31,8 @@
     // single thread is ok
     function cssPoll() {
         for (var url in monitors) {
-            var callbacks = monitors[url],
-                node = callbacks.node,
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
                 loaded = 0;
             if (utils.isWebKit) {
                 if (node['sheet']) {
@@ -57,51 +57,33 @@
             }
 
             if (loaded) {
-                for (var i = 0; i < callbacks.length; i++) {
-                    callbacks[i].call(node);
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
                 }
                 delete monitors[url];
             }
         }
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            S.log("end css polling");
+            // S.log("end css polling");
         } else {
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
 
-    function onreadystatechange() {
-        var self = this, rs = self.readyState;
-        if (/loaded|complete/i.test(rs)) {
-            self.onreadystatechange = null;
-            var src = self.src,
-                callbacks = jsCallbacks[src];
-            delete jsCallbacks[src];
-            S.each(callbacks, function (callback) {
-                callback.call(self);
-            });
-        }
-    }
-
     S.mix(utils, {
-        scriptOnload:S.Env.host.document.addEventListener ?
+        scriptOnLoad:win.addEventListener ?
             function (node, callback) {
-                if (utils.isLinkNode(node)) {
-                    return utils.styleOnload(node, callback);
-                }
                 node.addEventListener('load', callback, false);
             } :
             function (node, callback) {
-                if (utils.isLinkNode(node)) {
-                    return utils.styleOnload(node, callback);
-                }
-                var src = node.src,
-                    callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
-                callbacks.push(callback);
-                if (callbacks.length == 1) {
-                    node.onreadystatechange = onreadystatechange;
-                }
+                node.onreadystatechange = function () {
+                    var self = this, rs = self.readyState;
+                    if (/loaded|complete/i.test(rs)) {
+                        self.onreadystatechange = null;
+                        callback.call(self);
+                    }
+                };
             },
 
         /**
@@ -116,7 +98,7 @@
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnload:win.attachEvent ?
+        styleOnLoad:win.attachEvent ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?
@@ -131,10 +113,11 @@
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
             function (node, callback) {
-                var href = node.href, arr;
-                arr = monitors[href] = monitors[href] || [];
+                var href = node.href,
+                    arr;
+                arr = monitors[href] = {};
                 arr.node = node;
-                arr.push(callback);
+                arr.callback = callback;
                 startCssTimer();
             }
     });

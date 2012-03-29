@@ -1,0 +1,13 @@
+<script src="../../../../../build/kissy.js"></script>
+<script type="text/javascript">
+    KISSY.config({
+        map:[
+            [
+                /(.+)(overlay|uibase|component)\.js(\?.+)/,
+                '$1??overlay.js,uibase.js,component.js'
+            ]
+        ]
+    });
+
+    KISSY.use("overlay");
+</script>

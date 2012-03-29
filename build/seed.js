@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 29 20:12
+build time: Mar 30 00:01
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 29 20:12
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120329201250',
+            __BUILD_TIME:'20120330000104',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2465,10 +2465,10 @@ build time: Mar 29 20:12
     if (typeof require !== 'undefined') {
         return;
     }
+
     var CSS_POLL_INTERVAL = 30,
-        win=S.Env.host,
+        win = S.Env.host,
         utils = S.Loader.Utils,
-        jsCallbacks = {},
         /**
          * central poll for link node
          */
@@ -2476,13 +2476,13 @@ build time: Mar 29 20:12
 
         monitors = {
             /**
-             * node.id:[callback]
+             * node.id:{callback:callback,node:node}
              */
         };
 
     function startCssTimer() {
         if (!timer) {
-            S.log("start css polling");
+            // S.log("start css polling");
             cssPoll();
         }
     }
@@ -2490,8 +2490,8 @@ build time: Mar 29 20:12
     // single thread is ok
     function cssPoll() {
         for (var url in monitors) {
-            var callbacks = monitors[url],
-                node = callbacks.node,
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
                 loaded = 0;
             if (utils.isWebKit) {
                 if (node['sheet']) {
@@ -2516,51 +2516,33 @@ build time: Mar 29 20:12
             }
 
             if (loaded) {
-                for (var i = 0; i < callbacks.length; i++) {
-                    callbacks[i].call(node);
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
                 }
                 delete monitors[url];
             }
         }
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            S.log("end css polling");
+            // S.log("end css polling");
         } else {
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
 
-    function onreadystatechange() {
-        var self = this, rs = self.readyState;
-        if (/loaded|complete/i.test(rs)) {
-            self.onreadystatechange = null;
-            var src = self.src,
-                callbacks = jsCallbacks[src];
-            delete jsCallbacks[src];
-            S.each(callbacks, function (callback) {
-                callback.call(self);
-            });
-        }
-    }
-
     S.mix(utils, {
-        scriptOnload:S.Env.host.document.addEventListener ?
+        scriptOnLoad:win.addEventListener ?
             function (node, callback) {
-                if (utils.isLinkNode(node)) {
-                    return utils.styleOnload(node, callback);
-                }
                 node.addEventListener('load', callback, false);
             } :
             function (node, callback) {
-                if (utils.isLinkNode(node)) {
-                    return utils.styleOnload(node, callback);
-                }
-                var src = node.src,
-                    callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
-                callbacks.push(callback);
-                if (callbacks.length == 1) {
-                    node.onreadystatechange = onreadystatechange;
-                }
+                node.onreadystatechange = function () {
+                    var self = this, rs = self.readyState;
+                    if (/loaded|complete/i.test(rs)) {
+                        self.onreadystatechange = null;
+                        callback.call(self);
+                    }
+                };
             },
 
         /**
@@ -2575,7 +2557,7 @@ build time: Mar 29 20:12
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnload:win.attachEvent ?
+        styleOnLoad:win.attachEvent ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?
@@ -2590,16 +2572,17 @@ build time: Mar 29 20:12
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
             function (node, callback) {
-                var href = node.href, arr;
-                arr = monitors[href] = monitors[href] || [];
+                var href = node.href,
+                    arr;
+                arr = monitors[href] = {};
                 arr.node = node;
-                arr.push(callback);
+                arr.callback = callback;
                 startCssTimer();
             }
     });
 })(KISSY);/**
  * @fileOverview getScript support for css and js callback after load
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -2608,26 +2591,42 @@ build time: Mar 29 20:12
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
-        scriptOnload = utils.scriptOnload;
+        jsCallbacks = {},
+        cssCallbacks = {};
 
     S.mix(S, {
 
         /**
-         * load  a css file from server using http get ,after css file load ,execute success callback
+         * load  a css file from server using http get,
+         * after css file load ,execute success callback.
+         * note: no support for timeout and error
          * @param url css file url
          * @param success callback
          * @param charset
          * @private
          */
         getStyle:function (url, success, charset) {
-            var head = utils.docHead(),
-                node = doc.createElement('link'),
-                config = success;
+
+            var config = success;
 
             if (S.isPlainObject(config)) {
                 success = config.success;
                 charset = config.charset;
             }
+            var src = utils.absoluteFilePath(url),
+                callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
+
+            callbacks.push(success);
+
+            if (callbacks.length > 1) {
+                // S.log(" queue css : " + callbacks.length);
+                return callbacks.node;
+            }
+
+            var head = utils.docHead(),
+                node = doc.createElement('link');
+
+            callbacks.node = node;
 
             node.href = url;
             node.rel = 'stylesheet';
@@ -2635,16 +2634,23 @@ build time: Mar 29 20:12
             if (charset) {
                 node.charset = charset;
             }
-
-            if (success) {
-                utils.scriptOnload(node, success);
-            }
+            utils.styleOnLoad(node, function () {
+                var callbacks = cssCallbacks[src];
+                S.each(callbacks, function (callback) {
+                    if (callback) {
+                        callback.call(node);
+                    }
+                });
+                delete cssCallbacks[src];
+            });
+            // css order matters!
             head.appendChild(node);
             return node;
 
         },
         /**
-         * Load a JavaScript/Css file from the server using a GET HTTP request, then execute it.
+         * Load a JavaScript/Css file from the server using a GET HTTP request,
+         * then execute it.
          * @example
          * <code>
          *  getScript(url, success, charset);
@@ -2670,9 +2676,8 @@ build time: Mar 29 20:12
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
-            var head = doc.head || doc.getElementsByTagName("head")[0],
-                node = doc.createElement('script'),
-                config = success,
+
+            var config = success,
                 error,
                 timeout,
                 timer;
@@ -2684,42 +2689,63 @@ build time: Mar 29 20:12
                 charset = config.charset;
             }
 
-            function clearTimer() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
-                }
+            var src = utils.absoluteFilePath(url),
+                callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+
+            callbacks.push([success, error]);
+
+            if (callbacks.length > 1) {
+                // S.log(" queue js : " + callbacks.length + " : for :" + url + " by " + (config.source || ""));
+                return callbacks.node;
+            } else {
+                // S.log("init getScript : by " + config.source);
             }
 
+            var head = utils.docHead(),
+                node = doc.createElement('script'),
+                clearTimer = function () {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+                };
 
             node.src = url;
             node.async = true;
+
+            callbacks.node = node;
+
             if (charset) {
                 node.charset = charset;
             }
-            if (success || error) {
-                scriptOnload(node, function () {
-                    clearTimer();
-                    S.isFunction(success) && success.call(node);
+
+            var end = function (error) {
+                var index = error ? 1 : 0;
+                clearTimer();
+                var callbacks = jsCallbacks[src];
+                S.each(callbacks, function (callback) {
+                    if (callback[index]) {
+                        callback[index].call(node);
+                    }
                 });
+                delete jsCallbacks[src];
+            }
 
-                if (S.isFunction(error)) {
+            utils.scriptOnLoad(node, function () {
+                end(0);
+            });
 
-                    //标准浏览器
-                    if (doc.addEventListener) {
-                        node.addEventListener("error", function () {
-                            clearTimer();
-                            error.call(node);
-                        }, false);
-                    }
+            //标准浏览器
+            if (node.addEventListener) {
+                node.addEventListener("error", function () {
+                    end(1);
+                }, false);
+            }
 
-                    if (timeout) {
-                        timer = S.later(function () {
-                            timer = undefined;
-                            error();
-                        }, timeout * MILLISECONDS_OF_SECOND);
-                    }
-                }
+            if (timeout) {
+                timer = S.later(function () {
+                    end(1);
+                }, timeout * MILLISECONDS_OF_SECOND);
             }
             head.insertBefore(node, head.firstChild);
             return node;
@@ -2728,6 +2754,9 @@ build time: Mar 29 20:12
 
 })(KISSY);
 /**
+ * yiminghe@gmail.com refactor@2012-03-29
+ *  - 考虑连续重复请求单个 script 的情况，内部排队
+ *
  * yiminghe@gmail.com 2012-03-13
  *  - getScript
  *      - 404 in ie<9 trigger success , others trigger error
@@ -2877,7 +2906,7 @@ build time: Mar 29 20:12
                          */
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
-                        name = self.__findModuleNameByInteractive();
+                        name = findModuleNameByInteractive(self);
                         S.log("old_ie get modname by interactive : " + name);
                         utils.registerModule(SS, name, def, config);
                         self.__startLoadModuleName = null;
@@ -2892,62 +2921,64 @@ build time: Mar 29 20:12
                     return;
                 }
                 S.log("invalid format for KISSY.add !", "error");
-            },
-
-
-            //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-            // 如果找不到，返回发送前那个脚本
-            __findModuleNameByInteractive:function () {
-                var self = this,
-                    SS = self.SS,
-                    base,
-                    scripts = S.Env.host.document.getElementsByTagName("script"),
-                    re,
-                    script;
-
-                for (var i = 0; i < scripts.length; i++) {
-                    script = scripts[i];
-                    if (script.readyState == "interactive") {
-                        re = script;
-                        break;
-                    }
-                }
-                if (!re) {
-                    // sometimes when read module file from cache , interactive status is not triggered
-                    // module code is executed right after inserting into dom
-                    // i has to preserve module name before insert module script into dom , then get it back here
-                    S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-                    S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
-                    return self.__startLoadModuleName;
-                    //S.error("找不到 interactive 状态的 script");
-                }
-
-                // src 必定是绝对路径
-                // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
-                // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-                var src = utils.absoluteFilePath(re.src);
-                // 注意：模块名不包含后缀名以及参数，所以去除
-                // 系统模块去除系统路径
-                // 需要 base norm , 防止 base 被指定为相对路径
-                // configs 统一处理
-                // SS.Config.base = SS.normalBasePath(self.Config.base);
-                if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
-                    return utils.removePostfix(src.substring(base.length));
-                }
-                var packages = SS.Config.packages;
-                //外部模块去除包路径，得到模块名
-                for (var p in packages) {
-                    if (packages.hasOwnProperty(p)) {
-                        var p_path = packages[p].path;
-                        if (packages.hasOwnProperty(p) &&
-                            src.lastIndexOf(p_path, 0) === 0) {
-                            return utils.removePostfix(src.substring(p_path.length));
-                        }
-                    }
-                }
-                S.log("interactive script does not have package config ：" + src, "error");
             }
         });
+
+
+
+
+    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive(self) {
+        var self = this,
+            SS = self.SS,
+            base,
+            scripts = S.Env.host.document.getElementsByTagName("script"),
+            re,
+            script;
+
+        for (var i = 0; i < scripts.length; i++) {
+            script = scripts[i];
+            if (script.readyState == "interactive") {
+                re = script;
+                break;
+            }
+        }
+        if (!re) {
+            // sometimes when read module file from cache , interactive status is not triggered
+            // module code is executed right after inserting into dom
+            // i has to preserve module name before insert module script into dom , then get it back here
+            S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
+            S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
+            return self.__startLoadModuleName;
+            //S.error("找不到 interactive 状态的 script");
+        }
+
+        // src 必定是绝对路径
+        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
+        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+        var src = utils.absoluteFilePath(re.src);
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
+        // SS.Config.base = SS.normalBasePath(self.Config.base);
+        if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
+            return utils.removePostfix(src.substring(base.length));
+        }
+        var packages = SS.Config.packages;
+        //外部模块去除包路径，得到模块名
+        for (var p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                var p_path = packages[p].path;
+                if (packages.hasOwnProperty(p) &&
+                    src.lastIndexOf(p_path, 0) === 0) {
+                    return utils.removePostfix(src.substring(p_path.length));
+                }
+            }
+        }
+        S.log("interactive script does not have package config ：" + src, "error");
+    }
 
 })(KISSY);
 
@@ -2996,7 +3027,6 @@ build time: Mar 29 20:12
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
-
     if (typeof require !== 'undefined') {
         return;
     }
@@ -3044,7 +3074,7 @@ build time: Mar 29 20:12
             // 有尚未 attached 的模块
             S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
-                self.__attachModByName(modName, function () {
+                attachModByName(self, modName, function () {
                     currentIndex++;
                     if (currentIndex == count) {
                         var mods = utils.getModules(SS, modNames);
@@ -3054,268 +3084,257 @@ build time: Mar 29 20:12
             });
 
             return self;
-        },
-        __buildPath:function (mod, base) {
-            var self = this,
-                SS = self.SS,
-                Config = SS.Config;
+        }
+    });
 
-            base = base || Config.base;
 
-            build("fullpath", "path");
+    function buildModPath(self, mod, base) {
+        var SS = self.SS,
+            Config = SS.Config;
 
-            if (mod["cssfullpath"] !== data.LOADED) {
-                build("cssfullpath", "csspath");
-            }
+        base = base || Config.base;
 
-            function build(fullpath, path) {
-                var flag = "__" + fullpath + "Ready",
-                    t,
-                    p = mod[fullpath],
-                    sp = mod[path];
-                if (mod[flag]) {
-                    return;
-                }
-                if (!p && sp) {
-                    //如果是 ./ 或 ../ 则相对当前模块路径
-                    sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
-                    p = base + sp;
-                }
-                // debug 模式下，加载非 min 版
-                if (p) {
-                    mod[fullpath] = utils.getMappedPath(SS, p +
-                        ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
-                    mod[flag] = 1;
-                }
-            }
-        },
+        build("fullpath", "path");
 
-        // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName:function (modName, callback) {
-            var self = this,
-                SS = self.SS,
-                mod = SS.Env.mods[modName];
-            if (mod.status === ATTACHED) {
-                callback();
+        if (mod["cssfullpath"] !== data.LOADED) {
+            build("cssfullpath", "csspath");
+        }
+
+        function build(fullpath, path) {
+            var flag = "__" + fullpath + "Ready",
+                t,
+                p = mod[fullpath],
+                sp = mod[path];
+            if (mod[flag]) {
                 return;
             }
-            self.__attach(mod, callback);
-        },
+            if (!p && sp) {
+                //如果是 ./ 或 ../ 则相对当前模块路径
+                sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
+                p = base + sp;
+            }
+            // debug 模式下，加载非 min 版
+            if (p) {
+                mod[fullpath] = utils.getMappedPath(SS, p +
+                    ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
+                mod[flag] = 1;
+            }
+        }
+    }
+
+    // 加载指定模块名模块，如果不存在定义默认定义为内部模块
+    function attachModByName(self, modName, callback) {
+        var SS = self.SS,
+            mod = SS.Env.mods[modName];
+        if (mod.status === ATTACHED) {
+            callback();
+            return;
+        }
+        attachModRecursive(self, mod, callback);
+    }
+
+
+    /**
+     * Attach a module and all required modules.
+     */
+    function attachModRecursive(self, mod, callback) {
+        var SS = self.SS,
+            r,
+            rMod,
+            i,
+            callbackBeCalled = 0,
+            // 最终有效的 require ，add 处声明为准
+            newRequires,
+            mods = SS.Env.mods;
+
+        // 复制一份当前的依赖项出来，防止 add 后修改！
+        // 事先配置的 require ，同 newRequires 有区别
+        var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
         /**
-         * Attach a module and all required modules.
+         * check cyclic dependency between mods
+         * @private
          */
-        __attach:function (mod, callback) {
-            var self = this,
-                SS = self.SS,
-                r,
-                rMod,
-                i,
-                callbackBeCalled = 0,
-                // 最终有效的 require ，add 处声明为准
-                newRequires,
-                mods = SS.Env.mods;
+        function cyclicCheck() {
+            // one mod's all requires mods to run its callback
+            var __allRequires = mod.__allRequires = mod.__allRequires || {},
+                myName = mod.name,
+                rmod,
+                r__allRequires;
 
-            // 复制一份当前的依赖项出来，防止 add 后修改！
-            // 事先配置的 require ，同 newRequires 有区别
-            var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-            /**
-             * check cyclic dependency between mods
-             * @private
-             */
-            function cyclicCheck() {
-                // one mod's all requires mods to run its callback
-                var __allRequires = mod.__allRequires = mod.__allRequires || {},
-                    myName = mod.name,
-                    rmod,
-                    r__allRequires;
-
-                S.each(requires, function (r) {
-                    rmod = mods[r];
-                    __allRequires[r] = 1;
-                    if (rmod && (r__allRequires = rmod.__allRequires)) {
-                        S.mix(__allRequires, r__allRequires);
-                    }
-                });
-
-                if (__allRequires[myName]) {
-                    S.log(__allRequires, "error");
-                    var JSON = window.JSON,
-                        error = "";
-                    if (JSON) {
-                        error = JSON.stringify(__allRequires);
-                    }
-                    S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
-
-                }
-            }
-
-            if (S.Config.debug) {
-                cyclicCheck();
-            }
-
-            // attach all required modules
-            for (i = 0; i < requires.length; i++) {
-                r = requires[i];
-                rMod = mods[r];
-                if (rMod && rMod.status === ATTACHED) {
-                    //no need
-                } else {
-                    self.__attachModByName(r, fn);
-                }
-            }
-
-            // load and attach this module
-            self.__buildPath(mod, utils.getPackagePath(SS, mod));
-
-            self.__load(mod, function () {
-
-                // KISSY.add 可能改了 config，这里重新取下
-                newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-                var needToLoad = [];
-
-                //本模块下载成功后串行下载 require
-                for (i = 0; i < newRequires.length; i++) {
-                    var r = newRequires[i],
-                        rMod = mods[r],
-                        inA = S.inArray(r, requires);
-                    //已经处理过了或将要处理
-                    if (rMod &&
-                        rMod.status === ATTACHED ||
-                        //已经正在处理了
-                        inA) {
-                        //no need
-                    } else {
-                        //新增的依赖项
-                        needToLoad.push(r);
-                    }
-                }
-
-                if (needToLoad.length) {
-                    for (i = 0; i < needToLoad.length; i++) {
-                        self.__attachModByName(needToLoad[i], fn);
-                    }
-                } else {
-                    fn();
+            S.each(requires, function (r) {
+                rmod = mods[r];
+                __allRequires[r] = 1;
+                if (rmod && (r__allRequires = rmod.__allRequires)) {
+                    S.mix(__allRequires, r__allRequires);
                 }
             });
 
-            function fn() {
-                if (
-                // 前提条件，本模块 script onload 已经调用
-                // ie 下 add 与 script onload 并不连续！！
-                // attach 以 newRequires 为准
-                    newRequires &&
-                        !callbackBeCalled &&
-                        // 2012-03-16 by yiminghe@gmail.com
-                        // add 与 onload ie 下不连续
-                        // c 依赖 a
-                        // a 模块 add 时进行 attach
-                        // a add 后 c 模块 onload 触发
-                        // 检测到 a 已经 attach 则调用该函数
-                        // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
-                        utils.isAttached(SS, newRequires)) {
-                    if (mod.status == LOADED) {
-                        utils.attachMod(SS, mod);
-                    }
-                    if (mod.status == ATTACHED) {
-                        callbackBeCalled = 1;
-                        callback();
-                    }
+            if (__allRequires[myName]) {
+                S.log(__allRequires, "error");
+                var JSON = window.JSON,
+                    error = "";
+                if (JSON) {
+                    error = JSON.stringify(__allRequires);
+                }
+                S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
+
+            }
+        }
+
+        if (S.Config.debug) {
+            cyclicCheck();
+        }
+
+        // attach all required modules
+        for (i = 0; i < requires.length; i++) {
+            r = requires[i];
+            rMod = mods[r];
+            if (rMod && rMod.status === ATTACHED) {
+                //no need
+            } else {
+                attachModByName(self, r, fn);
+            }
+        }
+
+        // load and attach this module
+        buildModPath(self, mod, utils.getPackagePath(SS, mod));
+
+        loadModByScript(self, mod, function () {
+
+            // KISSY.add 可能改了 config，这里重新取下
+            newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
+
+            var needToLoad = [];
+
+            //本模块下载成功后串行下载 require
+            for (i = 0; i < newRequires.length; i++) {
+                var r = newRequires[i],
+                    rMod = mods[r],
+                    inA = S.inArray(r, requires);
+                //已经处理过了或将要处理
+                if (rMod &&
+                    rMod.status === ATTACHED ||
+                    //已经正在处理了
+                    inA) {
+                    //no need
+                } else {
+                    //新增的依赖项
+                    needToLoad.push(r);
                 }
             }
-        },
 
-        /**
-         * Load a single module.
-         */
-        __load:function (mod, callback) {
-
-            var self = this,
-                SS = self.SS,
-                cssfullpath,
-                url = mod['fullpath'],
-                isCss = utils.isCss(url),
-                node = mod.domNode;
-
-            mod.status = mod.status || INIT;
-
-            // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
-            // 仅发出请求，不做任何其它处理
-            if (cssfullpath = mod["cssfullpath"]) {
-                S.getScript(cssfullpath);
-                mod["cssfullpath"] = mod.csspath = LOADED;
-            }
-
-            if (mod.status < LOADING && url) {
-                mod.status = LOADING;
-                if (IE && !isCss) {
-                    self.__startLoadModuleName = mod.name;
-                    self.__startLoadTime = Number(+new Date());
+            if (needToLoad.length) {
+                for (i = 0; i < needToLoad.length; i++) {
+                    attachModByName(self, needToLoad[i], fn);
                 }
-                node = S.getScript(url, {
-                    // syntaxError in all browser will trigger this
-                    // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                    success:function () {
-                        if (isCss) {
-                        } else {
-                            //载入 css 不需要这步了
-                            //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                            if (self.__currentModule) {
-                                S.log("standard browser get modname after load : " + mod.name);
-                                utils.registerModule(SS,
-                                    mod.name, self.__currentModule.def,
-                                    self.__currentModule.config);
-                                self.__currentModule = null;
-                            }
-                            if (mod.fn) {
-                            } else {
-                                _modError();
-                            }
-                        }
-                        _scriptOnComplete();
-                    },
-                    error:function () {
-                        _modError();
-                        _scriptOnComplete();
-                    },
-                    charset:mod.charset
-                });
-                mod.domNode = node;
+            } else {
+                fn();
             }
-            // 已经在加载中，需要添加回调到 script onload 中
-            // 注意：没有考虑 error 情形
-            else if (mod.status === LOADING) {
-                utils.scriptOnload(node, function () {
-                    // 模块载入后，如果需要也要混入对应 global 上模块定义
-                    _scriptOnComplete();
-                });
-            }
-            // 是内嵌代码，或者已经 loaded
-            else {
-                callback();
-            }
+        });
 
-            function _modError() {
-                S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
-                mod.status = ERROR;
-            }
-
-            function _scriptOnComplete() {
-                if (mod.status !== ERROR) {
-                    // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
-                    // 因此要加上下面的 !== 判断，否则会出现重复 attach,
-                    // 比如编辑器里动态加载时，被依赖的模块会重复
-                    if (mod.status != ATTACHED) {
-                        mod.status = LOADED;
-                    }
+        function fn() {
+            if (
+            // 前提条件，本模块 script onload 已经调用
+            // ie 下 add 与 script onload 并不连续！！
+            // attach 以 newRequires 为准
+                newRequires &&
+                    !callbackBeCalled &&
+                    // 2012-03-16 by yiminghe@gmail.com
+                    // add 与 onload ie 下不连续
+                    // c 依赖 a
+                    // a 模块 add 时进行 attach
+                    // a add 后 c 模块 onload 触发
+                    // 检测到 a 已经 attach 则调用该函数
+                    // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
+                    utils.isAttached(SS, newRequires)) {
+                if (mod.status == LOADED) {
+                    utils.attachMod(SS, mod);
+                }
+                if (mod.status == ATTACHED) {
+                    callbackBeCalled = 1;
                     callback();
                 }
             }
         }
-    });
+    }
+
+
+    /**
+     * Load a single module.
+     */
+    function loadModByScript(self, mod, callback) {
+        var SS = self.SS,
+            cssfullpath,
+            url = mod['fullpath'],
+            isCss = utils.isCss(url)
+
+        mod.status = mod.status || INIT;
+
+        // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
+        // 仅发出请求，不做任何其它处理
+        if (cssfullpath = mod["cssfullpath"]) {
+            S.getScript(cssfullpath);
+            mod["cssfullpath"] = mod.csspath = LOADED;
+        }
+
+        if (mod.status < LOADING) {
+            mod.status = LOADING;
+            if (IE && !isCss) {
+                self.__startLoadModuleName = mod.name;
+                self.__startLoadTime = Number(+new Date());
+            }
+            S.getScript(url, {
+                // syntaxError in all browser will trigger this
+                // same as #111 : https://github.com/kissyteam/kissy/issues/111
+                success:function () {
+                    if (!isCss) {
+                        // 载入 css 不需要这步了
+                        // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
+                        if (self.__currentModule) {
+                            S.log("standard browser get modname after load : " + mod.name);
+                            utils.registerModule(SS,
+                                mod.name, self.__currentModule.def,
+                                self.__currentModule.config);
+                            self.__currentModule = null;
+                        }
+                    }
+                    checkAndHandle();
+                },
+                error:checkAndHandle,
+                // source:mod.name + "-init",
+                charset:mod.charset
+            });
+        }
+        // 已经在加载中，需要添加回调到 script onload 中
+        // 注意：没有考虑 error 情形，只在第一次处理即可
+        // 交给 getScript 排队
+        else if (mod.status == LOADING) {
+            S.getScript(url, {
+                success:checkAndHandle,
+                // source:mod.name + "-loading",
+                charset:mod.charset
+            });
+        }
+        // loaded/attached/error
+        else {
+            checkAndHandle();
+        }
+
+        function checkAndHandle() {
+            if (isCss || mod.fn) {
+                callback();
+            } else {
+                // ie will call success even when getScript error(404)
+                _modError();
+            }
+        }
+
+        function _modError() {
+            S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
+            mod.status = ERROR;
+        }
+    }
 })(KISSY);/**
  * using combo to load module files
  * @author yiminghe@gmail.com

@@ -101,7 +101,7 @@
                          */
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
-                        name = self.__findModuleNameByInteractive();
+                        name = findModuleNameByInteractive(self);
                         S.log("old_ie get modname by interactive : " + name);
                         utils.registerModule(SS, name, def, config);
                         self.__startLoadModuleName = null;
@@ -116,62 +116,64 @@
                     return;
                 }
                 S.log("invalid format for KISSY.add !", "error");
-            },
-
-
-            //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-            // 如果找不到，返回发送前那个脚本
-            __findModuleNameByInteractive:function () {
-                var self = this,
-                    SS = self.SS,
-                    base,
-                    scripts = S.Env.host.document.getElementsByTagName("script"),
-                    re,
-                    script;
-
-                for (var i = 0; i < scripts.length; i++) {
-                    script = scripts[i];
-                    if (script.readyState == "interactive") {
-                        re = script;
-                        break;
-                    }
-                }
-                if (!re) {
-                    // sometimes when read module file from cache , interactive status is not triggered
-                    // module code is executed right after inserting into dom
-                    // i has to preserve module name before insert module script into dom , then get it back here
-                    S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-                    S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
-                    return self.__startLoadModuleName;
-                    //S.error("找不到 interactive 状态的 script");
-                }
-
-                // src 必定是绝对路径
-                // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
-                // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-                var src = utils.absoluteFilePath(re.src);
-                // 注意：模块名不包含后缀名以及参数，所以去除
-                // 系统模块去除系统路径
-                // 需要 base norm , 防止 base 被指定为相对路径
-                // configs 统一处理
-                // SS.Config.base = SS.normalBasePath(self.Config.base);
-                if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
-                    return utils.removePostfix(src.substring(base.length));
-                }
-                var packages = SS.Config.packages;
-                //外部模块去除包路径，得到模块名
-                for (var p in packages) {
-                    if (packages.hasOwnProperty(p)) {
-                        var p_path = packages[p].path;
-                        if (packages.hasOwnProperty(p) &&
-                            src.lastIndexOf(p_path, 0) === 0) {
-                            return utils.removePostfix(src.substring(p_path.length));
-                        }
-                    }
-                }
-                S.log("interactive script does not have package config ：" + src, "error");
             }
         });
+
+
+
+
+    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive(self) {
+        var self = this,
+            SS = self.SS,
+            base,
+            scripts = S.Env.host.document.getElementsByTagName("script"),
+            re,
+            script;
+
+        for (var i = 0; i < scripts.length; i++) {
+            script = scripts[i];
+            if (script.readyState == "interactive") {
+                re = script;
+                break;
+            }
+        }
+        if (!re) {
+            // sometimes when read module file from cache , interactive status is not triggered
+            // module code is executed right after inserting into dom
+            // i has to preserve module name before insert module script into dom , then get it back here
+            S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
+            S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
+            return self.__startLoadModuleName;
+            //S.error("找不到 interactive 状态的 script");
+        }
+
+        // src 必定是绝对路径
+        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
+        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+        var src = utils.absoluteFilePath(re.src);
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
+        // SS.Config.base = SS.normalBasePath(self.Config.base);
+        if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
+            return utils.removePostfix(src.substring(base.length));
+        }
+        var packages = SS.Config.packages;
+        //外部模块去除包路径，得到模块名
+        for (var p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                var p_path = packages[p].path;
+                if (packages.hasOwnProperty(p) &&
+                    src.lastIndexOf(p_path, 0) === 0) {
+                    return utils.removePostfix(src.substring(p_path.length));
+                }
+            }
+        }
+        S.log("interactive script does not have package config ：" + src, "error");
+    }
 
 })(KISSY);
 
