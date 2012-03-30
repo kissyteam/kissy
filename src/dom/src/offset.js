@@ -430,12 +430,16 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 });
 
 /**
+ * 2012-03-30
+ *  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+ *  - http://help.dottoro.com/ljkfqbqj.php
+ *  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+ *
  * 2011-05-24
  *  - 承玉：
  *  - 调整 docWidth , docHeight ,
  *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
- *
  *
  *
  * TODO:
