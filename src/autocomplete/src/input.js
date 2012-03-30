@@ -153,6 +153,29 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
             },
 
+            _uiSetSelectedItem:function (item) {
+                var self = this;
+                if (item) {
+                    var textContent = item.get("textContent");
+                    self.get("el").val(textContent);
+                    self._savedInputValue = textContent;
+                    /**
+                     * @name AutoComplete#select
+                     * @description fired when user select from suggestion list
+                     * @event
+                     * @param e
+                     * @param e.value value of selected menuItem
+                     * @param e.content content of selected menuItem
+                     * @param e.input current active input
+                     */
+                    self.fire("select", {
+                        value:item.get("value"),
+                        content:item.get("content"),
+                        textContent:textContent
+                    });
+                }
+            },
+
             destructor:function () {
                 var self = this,
                     autoCompleteMenu = self.get("menu");
@@ -247,7 +270,13 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  * from array of data for autocomplete input.
                  * @type {Function}
                  */
-                formatText:{}
+                formatText:{},
+
+                /**
+                 * Readonly.User selected menu item by click or enter on highlighted suggested menu item
+                 * @type Menu.Item
+                 */
+                selectedItem:{}
             },
 
             DefaultRender:AutoCompleteRender

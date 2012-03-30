@@ -88,32 +88,13 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                 });
                 self.on("click", function (e) {
                     var item = e.target;
-                    var textContent = item.get("textContent");
                     var input = self._input;
                     // stop valuechange event
                     input._stopNotify = 1;
-                    input.get("el").val(textContent);
-                    input._savedInputValue = textContent;
+                    input.set("selectedItem", item);
                     self.hide();
                     setTimeout(function () {
                             input._stopNotify = 0;
-
-                            /**
-                             * @name AutoComplete#select
-                             * @description fired when user select from suggestion list
-                             * @event
-                             * @param e
-                             * @param e.value value of selected menuItem
-                             * @param e.content content of selected menuItem
-                             * @param e.input current active input
-                             */
-
-                            input.fire("select", {
-                                value:item.get("value"),
-                                content:item.get("content"),
-                                textContent:textContent,
-                                input:input
-                            })
                         },
                         // valuechange interval
                         50);

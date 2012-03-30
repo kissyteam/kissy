@@ -21,7 +21,7 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
                 data;
             if (!self.get("dataSource")) {
                 if (data = self.get("data")) {
-                    dataSource = new LocalDataSource(data);
+                    dataSource = new LocalDataSource(data, self.get("dataSourceCfg"));
                 } else {
                     dataSource = new RemoteDataSource(self.get("xhrCfg"),
                         self.get("dataSourceCfg"));
@@ -70,7 +70,10 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
              * response to return a valid array of data for autoComplete.
              * Used for xhrCfg.<br/>
              * {String} dataSourceCfg.paramName :
-             * Used as parameter name to send autoS=Complete input's value to server
+             * Used as parameter name to send autoS=Complete input's value to server<br/>
+             * {Boolean} dataSourceCfg.allowEmpty <br/>
+             * static data:whether return all data when input is empty.default:true<br/>
+             * whether send empty to server when input val is empty.default:false
              * @type Object
              */
             dataSourceCfg:{}

@@ -13,6 +13,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
      * @param {String} dataSourceCfg.paramName
      * Used as parameter name to send autoS=Complete input's value to server
      * @param {String} dataSourceCfg.cache Whether server response data is cached
+     * @param {Boolean} dataSourceCfg.allowEmpty whether send empty to server when input val is empty.default:false
      * @param {Function} dataSourceCfg.parse Serve as a parse function to parse server
      * response to return a valid array of data for autoComplete.
      */
@@ -43,7 +44,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
             self.io.abort();
             self.io = null;
         }
-        if (!inputVal) {
+        if (!inputVal && dataSourceCfg.allowEmpty!==true) {
             return callback.call(context, []);
         }
         if (dataSourceCfg.cache) {
@@ -55,7 +56,7 @@ KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
         xhrCfg.data[dataSourceCfg['paramName']] = inputVal;
         xhrCfg.success = function (data) {
             if (dataSourceCfg.parse) {
-                data = dataSourceCfg.parse(data);
+                data = dataSourceCfg.parse(inputVal, data);
             }
             if (dataSourceCfg.cache) {
                 self.caches[inputVal] = data;

@@ -56,7 +56,6 @@
 
 
         (function () {
-            var data = ["a123456", "b12345", "c3464356", "d23434"];
 
             var basicAutoComplete = new AutoComplete.Basic({
                 render:"#newNew",
@@ -67,7 +66,7 @@
                 },
                 dataSourceCfg:{
                     paramName:"start",
-                    parse:function (d) {
+                    parse:function (inputVal, d) {
                         return d.result;
                     }
                 },
