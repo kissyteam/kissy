@@ -72,27 +72,23 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 if (data && data.length) {
                     data = data.slice(0, self.get("maxItemCount"));
                     var menuCfg = self.get("menuCfg") || {};
+                    var v;
                     // 同步当前 width
                     autoCompleteMenu.set("width", menuCfg.width || self.get("el").css("width"));
-                    var contents = data;
-                    var texts = data;
-                    if (self.get("formatHtml")) {
-                        contents = self.get("formatHtml").call(self,
-                            self.get("el").val(),
-                            data);
-                    }
-                    if (self.get("formatText")) {
-                        texts = self.get("formatText").call(self,
+                    var contents = [];
+                    if (self.get("format")) {
+                        contents = self.get("format").call(self,
                             self.get("el").val(),
                             data);
                     }
                     for (var i = 0; i < data.length; i++) {
-                        autoCompleteMenu.addChild(new Menu.Item({
+                        v = data[i];
+                        autoCompleteMenu.addChild(new Menu.Item(S.mix({
                             prefixCls:self.get("prefixCls") + "autocomplete-",
-                            content:contents[i],
-                            textContent:texts[i],
-                            value:data[i]
-                        }))
+                            content:v,
+                            textContent:v,
+                            value:v
+                        }, contents[i])))
                     }
                     autoCompleteMenu._showForAutoComplete();
                 } else {
@@ -261,16 +257,11 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     }
                 },
                 /**
-                 * Format function to return  array of html from array of data.
+                 * Format function to return array of
+                 * html/text/menu item attributes from array of data.
                  * @type {Function}
                  */
-                formatHtml:{},
-                /**
-                 * Format function to return  array of text
-                 * from array of data for autocomplete input.
-                 * @type {Function}
-                 */
-                formatText:{},
+                format:{},
 
                 /**
                  * Readonly.User selected menu item by click or enter on highlighted suggested menu item

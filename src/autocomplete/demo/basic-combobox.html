@@ -71,19 +71,16 @@
                 render:"#newNew",
                 // width:S.one("#inp").css("width"),
                 data:data,
-                maxItemCount:2,
-                formatHtml:function (query, data) {
+                maxItemCount:5,
+                format:function (query, data) {
                     var ret = [];
                     for (var i = 0; i < data.length; i++) {
-                        ret[i] = (data[i] + "").replace(new RegExp(S.escapeRegExp(query), "g"),
-                                "<b>$&</b>")
-                    }
-                    return ret;
-                },
-                formatText:function (query, data) {
-                    var ret = [];
-                    for (var i = 0; i < data.length; i++) {
-                        ret[i] = data[i];
+                        ret[i] = {
+                            content:(data[i] + "")
+                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    "<b>$&</b>"),
+                            disabled:(i%2?true:false)
+                        };
                     }
                     return ret;
                 }
