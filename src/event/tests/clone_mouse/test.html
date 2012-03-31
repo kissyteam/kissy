@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>delegate example</title>
+
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../build/sizzle.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/object.js"></script>
+<script src="../../src/target.js"></script>
+<script src="../../src/focusin.js"></script>
+<script src="../../src/mouseenter.js"></script>
+<script src="../../src/add.js"></script>
+<script src="../../src/remove.js"></script>
+<script src="../../src/handle.js"></script>
+<script src="../../src/data.js"></script>
+<script src="../../src/valuechange.js"></script>
+<script src="../../src/hashchange.js"></script>
+<script src="../../src/keycodes.js"></script>
+<script src="../../src/submit.js"></script>
+<script src="../../src/change.js"></script>
+<script src="../../src/mousewheel.js"></script>
+<script src="../../src/utils.js"></script>
+<script src="../../src/special.js"></script>
+<script src="../../src/event.js"></script>
+
+<!--<script src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy.js"></script>-->
+<style type="text/css">
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="t" id="t" style="width: 200px;height: 200px;border: 1px solid red;margin: 50px;">
+    <div class="t2" style="width: 100px;height: 100px;border: 1px solid green;margin: 50px;">
+
+    </div>
+</div>
+<script>
+    KISSY.use("dom,event", function (S, DOM, Event) {
+        S.ready(function () {
+            Event.on(".t", "mouseenter", function (e) {
+                S.log("**********************");
+                S.log("mousenter : " + e.target.className + " - " + e.relatedTarget.className);
+            });
+            var n;
+            DOM.append(n = DOM.clone(".t", 1, 1, 1), document.body);
+            n.id = "";
+            Event.remove(DOM.get("#t"))
+        });
+    });
+</script>
+</body>
+</html>

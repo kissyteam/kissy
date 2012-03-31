@@ -22,6 +22,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
     {
 
         _clone:function (src, dest) {
+
             if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !_data._hasData(src)) {
                 return;
@@ -32,10 +33,12 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 S.each(handlers, function (handler) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, {
-                        fn:handler.fn,
-                        scope:handler.scope,
                         data:handler.data,
+                        fn:handler.fn,
+                        groups:handler.groups,
+                        last:handler.last,
                         originalType:handler.originalType,
+                        scope:handler.scope,
                         selector:handler.selector
                     });
                 });

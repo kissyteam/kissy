@@ -49,15 +49,17 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                     scope = fn.scope;
                     data = fn.data;
                     selector = fn.selector;
+                    // in case provided by clone
+                    originalType = fn.originalType;
                     fn = fn.fn;
-                    if (selector) {
+                    if (selector && !originalType) {
                         if (s && s['delegateFix']) {
                             originalType = type;
                             type = s['delegateFix'];
                         }
                     }
                 }
-                if (!selector) {
+                if (!selector && !originalType) {
                     // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
                     // TODO need evaluate!
                     if (s && s['onFix']) {
@@ -169,8 +171,8 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
                     return targets;
                 }
-                targets=DOM.query(targets);
-                for(var i=targets.length-1;i>=0;i--){
+                targets = DOM.query(targets);
+                for (var i = targets.length - 1; i >= 0; i--) {
                     Event.__add(true, targets[i], type, fn, scope);
                 }
                 return targets;
