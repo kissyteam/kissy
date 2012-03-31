@@ -15,6 +15,9 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @extends Component.Container
      */
     var Menu = UIBase.create(Component.Container,
+        // ! note : 2012-03-31
+        // sync with menu render,extends contentBox too!
+        [UIBase.ContentBox],
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {

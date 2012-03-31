@@ -17,7 +17,7 @@
     margin: 0;
     font-size: 12px;
     line-height: 18px;
-    padding: 3px 6px;
+    padding: 1px 0 2px;
     white-space: nowrap;
 }
 
@@ -74,7 +74,7 @@
 .ks-ie7 .ks-combobox .ks-autocomplete-input,
 .ks-ie8 .ks-combobox .ks-autocomplete-input,
 .ks-ie6 .ks-combobox .ks-autocomplete-input,
-.ks-gecko .ks-combobox .ks-autocomplete-input{
+.ks-gecko .ks-combobox .ks-autocomplete-input {
     padding-top: 1px;
     padding-bottom: 3px;
 }

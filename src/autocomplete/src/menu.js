@@ -1,8 +1,8 @@
 /**
- * autoComplete logic . control many inputs and only use one menu for performance
+ * autoComplete menu.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
+KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
     var ALIGN = {
         points:["bl", "tl"],
         overflow:{
@@ -40,7 +40,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
         {
             __CLASS:"AutoComplete.Menu",
 
-            // current input
+            // current input which causes this menu to show
             _input:null,
 
             // 所以注册过的 input，为 0 时可能会删除整个 menu
@@ -75,17 +75,21 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
             },
 
             bindUI:function () {
+
                 var self = this;
+
                 self.on("show", function () {
                     var input = self._input;
                     input.set("ariaOwns", self.get("el").attr("id"));
                     input.set("ariaExpanded", true);
                 });
+
                 self.on("hide", function () {
                     var input = self._input;
                     input.set("ariaOwns", self.get("el").attr("id"));
                     input.set("ariaExpanded", false);
                 });
+
                 self.on("click", function (e) {
                     var item = e.target;
                     var input = self._input;
@@ -99,20 +103,45 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                         // valuechange interval
                         50);
                 });
+
                 Event.on(window, "resize", reAlign, self);
+
+                var el = self.get("el");
+                var contentEl = self.get("contentEl");
+
+                el.on("focusin", function () {
+                    self._clearDismissTimer();
+                });
+
+                el.on("focusout", function () {
+                    self._hideForAutoComplete();
+                });
+
+                contentEl.on("mouseover", function () {
+                    var input = self._input;
+                    // trigger el focusous
+                    input.get("el")[0].focus();
+                    // prevent menu from hiding
+                    self._clearDismissTimer();
+                });
             },
 
-            _onInputFocus:function (input) {
-                this._input = input;
+            _clearDismissTimer:function () {
+                var self = this;
+                if (self._dismissTimer) {
+                    clearTimeout(self._dismissTimer);
+                    self._dismissTimer = null;
+                }
             },
 
             _onInputBlur:function () {
                 this._hideForAutoComplete();
             },
 
-            _showForAutoComplete:function () {
-                var self = this,
-                    _input = self._input;
+            _showForAutoComplete:function (_input) {
+                var self = this;
+                self._input = _input;
+                self._clearDismissTimer();
                 var menuCfg = _input.get("menuCfg") || {};
                 self.set("align", S.merge({
                     node:_input.get("el")
@@ -133,7 +162,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                 var self = this;
                 self._dismissTimer = setTimeout(function () {
                     self._immediateHideForAutoComplete();
-                }, 100);
+                }, 30);
             },
 
             _immediateHideForAutoComplete:function () {
@@ -150,6 +179,16 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
                 });
                 self._inputs = null;
             }
+        }, {
+            DefaultRender:AutoCompleteMenuRender,
+            ATTRS:{
+                head:{
+                    view:true
+                },
+                foot:{
+                    view:true
+                }
+            }
         });
 
     Component.UIStore.setUIByClass("autocomplete-menu", {
@@ -159,7 +198,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu) {
 
     return AutoCompleteMenu;
 }, {
-    requires:['event', 'uibase', 'component', 'menu']
+    requires:['event', 'uibase', 'component', 'menu', './menuRender']
 });
 /**
  * 2012-03-26 yiminghe@gmail.com

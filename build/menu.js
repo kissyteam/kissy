@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 25 22:39
+build time: Mar 31 21:28
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -20,6 +20,9 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @extends Component.Container
      */
     var Menu = UIBase.create(Component.Container,
+        // ! note : 2012-03-31
+        // sync with menu render,extends contentBox too!
+        [UIBase.ContentBox],
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -492,14 +495,15 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
-    Menu.Item.Render = ItemRender;
+    Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
+    PopupMenu.Render = PopupMenuRender;
     Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
@@ -513,6 +517,7 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/separator',
         'menu/separatorrender',
         'menu/popupmenu',
+        'menu/popupmenurender',
         'menu/filtermenu'
     ]
 });/**
@@ -803,11 +808,12 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     }
 
     /**
-     * @name PopMenu
+     * Popup Menu
+     * @name PopupMenu
      * @memberOf Menu
      * @constructor
      */
-    var PopMenu = UIBase.create(Menu, [
+    var PopupMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
@@ -884,7 +890,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
          */
         _handleBlur:function () {
             var self = this;
-            PopMenu.superclass._handleBlur.apply(self, arguments);
+            PopupMenu.superclass._handleBlur.apply(self, arguments);
             self.hide();
         }
     }, {
@@ -906,10 +912,10 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
 
     Component.UIStore.setUIByClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:PopMenu
+        ui:PopupMenu
     });
 
-    return PopMenu;
+    return PopupMenu;
 
 }, {
     requires:['uibase', 'component', './base', './popupmenurender']

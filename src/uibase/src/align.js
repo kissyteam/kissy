@@ -423,6 +423,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
     requires:["ua", "dom", "node"]
 });
 /**
- *  2011-07-13 承玉 note:
+ *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **/

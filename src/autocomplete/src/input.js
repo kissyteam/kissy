@@ -47,18 +47,10 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 self.sendRequest(self._savedInputValue);
             },
 
-            _handleFocus:function () {
-                AutoComplete.superclass._handleFocus.apply(this, arguments);
-                var autoCompleteMenu = this.get("menu");
-                if (autoCompleteMenu) {
-                    // 通知 menu
-                    autoCompleteMenu._onInputFocus(this);
-                }
-            },
-
             _handleBlur:function () {
                 AutoComplete.superclass._handleBlur.apply(this, arguments);
                 var autoCompleteMenu = this.get("menu");
+                // S.log("input blur!!!!!!!");
                 if (autoCompleteMenu) {
                     // 通知 menu
                     autoCompleteMenu._onInputBlur();
@@ -90,7 +82,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                             value:v
                         }, contents[i])))
                     }
-                    autoCompleteMenu._showForAutoComplete();
+                    autoCompleteMenu._showForAutoComplete(self);
                 } else {
                     autoCompleteMenu.hide();
                 }
@@ -141,7 +133,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     return handledByMenu;
                 } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
                     if (autoCompleteMenu.get("children").length) {
-                        autoCompleteMenu._showForAutoComplete();
+                        autoCompleteMenu._showForAutoComplete(self);
                         return true;
                     } else {
                         self.sendRequest(el.val());

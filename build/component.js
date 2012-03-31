@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 27 20:02
+build time: Mar 31 21:37
 */
 /**
  * @fileOverview model and control base class for kissy
@@ -348,8 +348,13 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                 // Cancel the default action unless the control
                 // allows text selection.
                 if (ev.which == 1 && !self.get("allowTextSelection_")) {
-                    // firefox 不会引起焦点转移
-                    ev.preventDefault();
+                    // firefox/chrome 不会引起焦点转移
+                    var n = ev.target.nodeName;
+                    n = n && n.toLowerCase();
+                    // do not prevent focus when click on editable element
+                    if (n != "input" && n != "textarea") {
+                        ev.preventDefault();
+                    }
                 }
             },
 

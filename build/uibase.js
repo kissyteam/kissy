@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 28 19:53
+build time: Mar 31 21:08
 */
 /**
  * @fileOverview UIBase.Align
@@ -428,7 +428,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
     requires:["ua", "dom", "node"]
 });
 /**
- *  2011-07-13 承玉 note:
+ *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @fileOverview   UIBase

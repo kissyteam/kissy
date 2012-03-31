@@ -21,10 +21,15 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
                 data;
             if (!self.get("dataSource")) {
                 if (data = self.get("data")) {
-                    dataSource = new LocalDataSource(data, self.get("dataSourceCfg"));
+                    dataSource = new LocalDataSource({
+                        data:data,
+                        dataSourceCfg:self.get("dataSourceCfg")
+                    });
                 } else {
-                    dataSource = new RemoteDataSource(self.get("xhrCfg"),
-                        self.get("dataSourceCfg"));
+                    dataSource = new RemoteDataSource({
+                        xhrCfg:self.get("xhrCfg"),
+                        dataSourceCfg:self.get("dataSourceCfg")
+                    });
                 }
                 self.__set('dataSource', dataSource);
             }
