@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Feb 25 23:15
+build time: Apr 1 13:26
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: Feb 25 23:15
          */
         version:'1.20',
 
-        buildTime:'20120225231543',
+        buildTime:'20120401132626',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1273,7 +1273,7 @@ build time: Feb 25 23:15
 
             function f() {
                 f.stop();
-                bufferTimer = S.later(fn, ms, FALSE, context || this);
+                bufferTimer = S.later(fn, ms, FALSE, context || this,arguments);
             }
 
             f.stop = function () {

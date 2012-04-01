@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Feb 25 23:15
+build time: Apr 1 13:26
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Feb 25 23:15
          */
         version:'1.20',
 
-        buildTime:'20120225231543',
+        buildTime:'20120401132626',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1087,7 +1087,7 @@ build time: Feb 25 23:15
 
             function f() {
                 f.stop();
-                bufferTimer = S.later(fn, ms, FALSE, context || this);
+                bufferTimer = S.later(fn, ms, FALSE, context || this,arguments);
             }
 
             f.stop = function () {
@@ -14881,7 +14881,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Feb 25 23:15
+build time: Mar 29 13:31
 */
 /**
  * 数据延迟加载组件
@@ -15197,7 +15197,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
-            container.insertBefore(content, area);
+            area.parentNode.insertBefore(content, area);
             DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
@@ -16154,9 +16154,9 @@ KISSY.add("flash", function(S, F) {
     requires:["flash/base","flash/embed"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Mar 28 11:38
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -17095,124 +17095,158 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
     return Droppable;
 
 }, { requires:["node","base","./ddm"] });/**
- * generate proxy drag object,
+ * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function(S, Node) {
+KISSY.add("dd/proxy", function (S, Node, Base) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
         MARKER = S.guid("__dd_proxy"),
         PROXY_ATTR = "__proxy";
 
+    /**
+     * provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
+     * @memberOf DD
+     * @class
+     */
     function Proxy() {
         var self = this;
         Proxy.superclass.constructor.apply(self, arguments);
         self[DESTRUCTOR_ID] = {};
     }
 
-    Proxy.ATTRS = {
+    Proxy.ATTRS =
+    /**
+     * @lends DD.Proxy#
+     */
+    {
+        /**
+         * how to get the proxy node. default:clone the node itself deeply.
+         * @type {Function}
+         */
         node:{
-            /*
-             如何生成替代节点
-             @return {KISSY.Node} 替代节点
-             */
-            value:function(drag) {
+            value:function (drag) {
                 return new Node(drag.get("node").clone(true));
             }
         },
+        /**
+         * destroy the proxy node at the end of this drag. default:false
+         * @type {boolean}
+         */
         destroyOnEnd:{
-            /**
-             * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
-             */
             value:false
+        },
+
+        /**
+         * move the original node at the end of the drag. default:true
+         * @type {boolean}
+         */
+        moveOnEnd:{
+            value:true
         }
     };
 
-    S.extend(Proxy, S.Base, {
-        attach:function(drag) {
+    S.extend(Proxy, Base,
+        /**
+         * @lends DD.Proxy#
+         */
+        {
+            /**
+             * make this draggable object can be proxied.
+             * @param {DD.Draggable} drag
+             */
+            attach:function (drag) {
 
-            var self = this,
-                tag;
+                var self = this,
+                    tag = stamp(drag, 1, MARKER);
 
-            if (tag = stamp(drag, 1, MARKER) &&
-                self[DESTRUCTOR_ID][tag]
-                ) {
-                return;
-            }
+                if (tag && self[DESTRUCTOR_ID][tag]) {
+                    return;
+                }
 
-            function start() {
-                var node = self.get("node"),
-                    dragNode = drag.get("node");
-
-                // cache proxy node
-                if (!self[PROXY_ATTR]) {
-                    if (S.isFunction(node)) {
-                        node = node(drag);
-                        node.addClass("ks-dd-proxy");
-                        node.css("position", "absolute");
-                        self[PROXY_ATTR] = node;
+                function start() {
+                    var node = self.get("node"),
+                        dragNode = drag.get("node");
+                    // cache proxy node
+                    if (!self[PROXY_ATTR]) {
+                        if (S.isFunction(node)) {
+                            node = node(drag);
+                            node.addClass("ks-dd-proxy");
+                            node.css("position", "absolute");
+                            self[PROXY_ATTR] = node;
+                        }
+                    } else {
+                        node = self[PROXY_ATTR];
                     }
-                } else {
-                    node = self[PROXY_ATTR];
+                    dragNode.parent()
+                        .append(node);
+                    node.show();
+                    node.offset(dragNode.offset());
+                    drag.__set("dragNode", dragNode);
+                    drag.__set("node", node);
                 }
-                dragNode.parent()
-                    .append(node);
-                node.show();
-                node.offset(dragNode.offset());
-                drag.set("dragNode", dragNode);
-                drag.set("node", node);
-            }
 
-            function end() {
-                var node = self[PROXY_ATTR];
-                drag.get("dragNode").offset(node.offset());
-                node.hide();
-                if (self.get("destroyOnEnd")) {
+                function end() {
+                    var node = self[PROXY_ATTR];
+                    if (self.get("moveOnEnd")) {
+                        drag.get("dragNode").offset(node.offset());
+                    }
+                    if (self.get("destroyOnEnd")) {
+                        node.remove();
+                        self[PROXY_ATTR] = 0;
+                    } else {
+                        node.hide();
+                    }
+                    drag.__set("node", drag.get("dragNode"));
+                }
+
+                drag.on("dragstart", start);
+                drag.on("dragend", end);
+
+                tag = stamp(drag, 0, MARKER);
+
+                self[DESTRUCTOR_ID][tag] = {
+                    drag:drag,
+                    fn:function () {
+                        drag.detach("dragstart", start);
+                        drag.detach("dragend", end);
+                    }
+                };
+            },
+            /**
+             * make this draggable object unproxied
+             * @param {DD.Draggable} drag
+             */
+            unAttach:function (drag) {
+                var self = this,
+                    tag = stamp(drag, 1, MARKER),
+                    destructors = self[DESTRUCTOR_ID];
+                if (tag && destructors[tag]) {
+                    destructors[tag].fn();
+                    delete destructors[tag];
+                }
+            },
+
+            /**
+             * make all draggable object associated with this proxy object unproxied
+             */
+            destroy:function () {
+                var self = this,
+                    node = self.get("node"),
+                    destructors = self[DESTRUCTOR_ID];
+                if (node && !S.isFunction(node)) {
                     node.remove();
-                    self[PROXY_ATTR] = 0;
                 }
-                drag.set("node", drag.get("dragNode"));
-            }
-
-            drag.on("dragstart", start);
-            drag.on("dragend", end);
-
-            tag = stamp(drag, 0, MARKER);
-
-            self[DESTRUCTOR_ID][tag] = {
-                drag:drag,
-                fn:function() {
-                    drag.detach("dragstart", start);
-                    drag.detach("dragend", end);
+                for (var d in destructors) {
+                    this.unAttach(destructors[d].drag);
                 }
-            };
-        },
-        unAttach:function(drag) {
-            var self = this,
-                tag = stamp(drag, 1, MARKER),
-                destructors = self[DESTRUCTOR_ID];
-            if (tag && destructors[tag]) {
-                destructors[tag].fn();
-                delete destructors[tag];
             }
-        },
-
-        destroy:function() {
-            var self = this,
-                node = self.get("node"),
-                destructors = self[DESTRUCTOR_ID];
-            if (node && !S.isFunction(node)) {
-                node.remove();
-            }
-            for (var d in destructors) {
-                this.unAttach(destructors[d].drag);
-            }
-        }
-    });
+        });
 
     return Proxy;
 }, {
-    requires:['node']
+    requires:['node', 'base']
 });/**
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
@@ -17249,15 +17283,20 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.set("activeHandler", handler);
             node = self._getNode(handler);
-        } else {
+        }
+
+        // can not find handler or can not find matched node from handler
+        // just return !
+        if (!node) {
             return;
         }
 
+        self.__set("activeHandler", handler);
+
         // 找到 handler 确定 委托的 node ，就算成功了
-        self.set("node", node);
-        self.set("dragNode", node);
+        self.__set("node", node);
+        self.__set("dragNode", node);
         self._prepare(ev);
     }
 
@@ -17336,6 +17375,17 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                     value:[],
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
+                },
+
+                /**
+                 * 拖无效
+                 */
+                disabled:{
+                    setter:function(d) {
+                        this.get("container")[d ? 'addClass' :
+                            'removeClass'](DDM.get("prefixCls") + '-disabled');
+                        return d;
+                    }
                 }
 
             }
@@ -17470,37 +17520,60 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 }, {
     requires:['./ddm','./droppable','dom','node']
 });/**
- * auto scroll for drag object's container
+ * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        win = S.Env.host,
         stamp = S.stamp,
-        RATE = [10,10],
+        RATE = [10, 10],
         ADJUST_DELAY = 100,
-        DIFF = [20,20],
+        DIFF = [20, 20],
         DESTRUCTORS = "__dd_scrolls";
 
+    /**
+     * make parent node scroll while dragging
+     * @memberOf DD
+     * @class
+     */
     function Scroll() {
         var self = this;
         Scroll.superclass.constructor.apply(self, arguments);
         self[DESTRUCTORS] = {};
     }
 
-    Scroll.ATTRS = {
+    Scroll.ATTRS =
+    /**
+     * @lends DD.Scroll#
+     */
+    {
+        /**
+         * node to be scrolled while dragging
+         * @type {window|String|HTMLElement}
+         */
         node:{
             // value:window：不行，默认值一定是简单对象
-            valueFn : function() {
-                return Node.one(window);
+            valueFn:function () {
+                return Node.one(win);
             },
-            setter : function(v) {
+            setter:function (v) {
                 return Node.one(v);
             }
         },
+        /**
+         * adjust velocity. default:[10,10]. larger faster
+         * @type Number[]
+         */
         rate:{
             value:RATE
         },
+        /**
+         * the margin to make node scroll. default: [20,20].
+         * easier to scroll for node if larger.
+         * @type number[]
+         */
         diff:{
             value:DIFF
         }
@@ -17509,185 +17582,242 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
     var isWin = S.isWindow;
 
-    S.extend(Scroll, Base, {
+    S.extend(Scroll, Base,
+        /**
+         * @lends DD.Scroll#
+         */
+        {
+            /**
+             * @private
+             * @param node
+             */
+            getRegion:function (node) {
+                if (isWin(node[0])) {
+                    return {
+                        width:DOM.viewportWidth(),
+                        height:DOM.viewportHeight()
+                    };
+                } else {
+                    return {
+                        width:node.outerWidth(),
+                        height:node.outerHeight()
+                    };
+                }
+            },
 
-        getRegion:function(node) {
-            if (isWin(node[0])) {
+            /**
+             * @private
+             * @param node
+             */
+            getOffset:function (node) {
+                if (isWin(node[0])) {
+                    return {
+                        left:DOM.scrollLeft(),
+                        top:DOM.scrollTop()
+                    };
+                } else {
+                    return node.offset();
+                }
+            },
+
+            /**
+             * @private
+             * @param node
+             */
+            getScroll:function (node) {
                 return {
-                    width:DOM.viewportWidth(),
-                    height:DOM.viewportHeight()
+                    left:node.scrollLeft(),
+                    top:node.scrollTop()
                 };
-            } else {
-                return {
-                    width:node.outerWidth(),
-                    height:node.outerHeight()
-                };
-            }
-        },
+            },
 
-        getOffset:function(node) {
-            if (isWin(node[0])) {
-                return {
-                    left:DOM.scrollLeft(),
-                    top:DOM.scrollTop()
-                };
-            } else {
-                return node.offset();
-            }
-        },
+            /**
+             * @private
+             * @param node
+             */
+            setScroll:function (node, r) {
+                node.scrollLeft(r.left);
+                node.scrollTop(r.top);
+            },
 
-        getScroll:function(node) {
-            return {
-                left:node.scrollLeft(),
-                top:node.scrollTop()
-            };
-        },
-
-        setScroll:function(node, r) {
-            node.scrollLeft(r.left);
-            node.scrollTop(r.top);
-        },
-
-        unAttach:function(drag) {
-            var tag,
-                destructors = this[DESTRUCTORS];
-            if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
-                !destructors[tag]
-                ) {
-                return;
-            }
-            destructors[tag].fn();
-            delete destructors[tag];
-        },
-
-        destroy:function() {
-            var self = this,
-                destructors = self[DESTRUCTORS];
-            for (var d in destructors) {
-                self.unAttach(destructors[d].drag);
-            }
-        },
-
-        attach:function(drag) {
-            var self = this,
-                tag = stamp(drag, 0, TAG_DRAG),
-                destructors = self[DESTRUCTORS];
-            if (destructors[tag]) {
-                return;
-            }
-
-            var rate = self.get("rate"),
-                diff = self.get('diff'),
-                event,
-                /*
-                 目前相对 container 的偏移，container 为 window 时，相对于 viewport
-                 */
-                dxy,
-                timer = null;
-
-            function dragging(ev) {
-                // 给调用者的事件，框架不需要处理
-                // fake 也表示该事件不是因为 mouseover 产生的
-                if (ev.fake) {
+            /**
+             * make node not to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
+             */
+            unAttach:function (drag) {
+                var tag,
+                    destructors = this[DESTRUCTORS];
+                if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
+                    !destructors[tag]
+                    ) {
                     return;
                 }
-                // S.log("dragging");
-                // 更新当前鼠标相对于拖节点的相对位置
-                var node = self.get("node");
-                event = ev;
-                dxy = S.clone(drag.mousePos);
-                var offset = self.getOffset(node);
-                dxy.left -= offset.left;
-                dxy.top -= offset.top;
-                if (!timer) {
-                    checkAndScroll();
+                destructors[tag].fn();
+                delete destructors[tag];
+            },
+
+            /**
+             * make node not to scroll at all
+             */
+            destroy:function () {
+                var self = this,
+                    destructors = self[DESTRUCTORS];
+                for (var d in destructors) {
+                    self.unAttach(destructors[d].drag);
                 }
-            }
+            },
 
-            function dragEnd() {
-                clearTimeout(timer);
-                timer = null;
-            }
+            /**
+             * make node to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
+             */
+            attach:function (drag) {
+                var self = this,
+                    node = self.get("node"),
+                    tag = stamp(drag, 0, TAG_DRAG),
+                    destructors = self[DESTRUCTORS];
 
-            drag.on("drag", dragging);
-
-            drag.on("dragend", dragEnd);
-
-            destructors[tag] = {
-                drag:drag,
-                fn:function() {
-                    drag.detach("drag", dragging);
-                    drag.detach("dragend", dragEnd);
-                }
-            };
-
-
-            function checkAndScroll() {
-                //S.log("******* scroll");
-                var node = self.get("node"),
-                    r = self.getRegion(node),
-                    nw = r.width,
-                    nh = r.height,
-                    scroll = self.getScroll(node),
-                    origin = S.clone(scroll),
-                    diffY = dxy.top - nh,
-                    adjust = false;
-
-                if (diffY >= -diff[1]) {
-                    scroll.top += rate[1];
-                    adjust = true;
+                if (destructors[tag]) {
+                    return;
                 }
 
-                var diffY2 = dxy.top;
-                //S.log(diffY2);
-                if (diffY2 <= diff[1]) {
-                    scroll.top -= rate[1];
-                    adjust = true;
-                }
+                var rate = self.get("rate"),
+                    diff = self.get('diff'),
+                    event,
+                    /*
+                     目前相对 container 的偏移，container 为 window 时，相对于 viewport
+                     */
+                    dxy,
+                    timer = null;
 
-
-                var diffX = dxy.left - nw;
-                //S.log(diffX);
-                if (diffX >= -diff[0]) {
-                    scroll.left += rate[0];
-                    adjust = true;
-                }
-
-                var diffX2 = dxy.left;
-                //S.log(diffX2);
-                if (diffX2 <= diff[0]) {
-                    scroll.left -= rate[0];
-                    adjust = true;
-                }
-
-                if (adjust) {
-                    self.setScroll(node, scroll);
-                    timer = setTimeout(checkAndScroll, ADJUST_DELAY);
-                    // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
-                    // 不会因为程序 scroll 而改变相对值
-
-                    // 调整事件，不需要 scroll 监控，达到预期结果：元素随容器的持续不断滚动而自动调整位置.
-                    event.fake = true;
+                // fix https://github.com/kissyteam/kissy/issues/115
+                // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
+                // check container
+                function checkContainer() {
                     if (isWin(node[0])) {
-                        // 当使 window 自动滚动时，也要使得拖放物体相对文档位置随 scroll 改变
-                        // 而相对 node 容器时，只需 node 容器滚动，拖动物体相对文档位置不需要改变
-                        scroll = self.getScroll(node);
-                        event.left += scroll.left - origin.left;
-                        event.top += scroll.top - origin.top;
+                        return 0;
                     }
-                    // 容器滚动了，元素也要重新设置 left,top
-                    drag.fire("drag", event);
-                } else {
+                    // 判断 proxyNode，不对 dragNode 做大的改变
+                    var mousePos = drag.mousePos,
+                        r = DDM.region(node);
+
+                    if (!DDM.inRegion(r, mousePos)) {
+                        clearTimeout(timer);
+                        timer = 0;
+                        return 1;
+                    }
+                    return 0;
+                }
+
+                function dragging(ev) {
+                    // 给调用者的事件，框架不需要处理
+                    // fake 也表示该事件不是因为 mouseover 产生的
+                    if (ev.fake) {
+                        return;
+                    }
+
+                    if (checkContainer()) {
+                        return;
+                    }
+
+                    // 更新当前鼠标相对于拖节点的相对位置
+                    event = ev;
+                    dxy = S.clone(drag.mousePos);
+                    var offset = self.getOffset(node);
+                    dxy.left -= offset.left;
+                    dxy.top -= offset.top;
+                    if (!timer) {
+                        checkAndScroll();
+                    }
+                }
+
+                function dragEnd() {
+                    clearTimeout(timer);
                     timer = null;
                 }
-            }
 
-        }
-    });
+                drag.on("drag", dragging);
+
+                drag.on("dragend", dragEnd);
+
+                destructors[tag] = {
+                    drag:drag,
+                    fn:function () {
+                        drag.detach("drag", dragging);
+                        drag.detach("dragend", dragEnd);
+                    }
+                };
+
+                function checkAndScroll() {
+                    if (checkContainer()) {
+                        return;
+                    }
+
+                    var r = self.getRegion(node),
+                        nw = r.width,
+                        nh = r.height,
+                        scroll = self.getScroll(node),
+                        origin = S.clone(scroll),
+                        diffY = dxy.top - nh,
+                        adjust = false;
+
+                    if (diffY >= -diff[1]) {
+                        scroll.top += rate[1];
+                        adjust = true;
+                    }
+
+                    var diffY2 = dxy.top;
+
+                    if (diffY2 <= diff[1]) {
+                        scroll.top -= rate[1];
+                        adjust = true;
+                    }
+
+                    var diffX = dxy.left - nw;
+
+                    if (diffX >= -diff[0]) {
+                        scroll.left += rate[0];
+                        adjust = true;
+                    }
+
+                    var diffX2 = dxy.left;
+
+                    if (diffX2 <= diff[0]) {
+                        scroll.left -= rate[0];
+                        adjust = true;
+                    }
+
+                    if (adjust) {
+                        self.setScroll(node, scroll);
+                        timer = setTimeout(checkAndScroll, ADJUST_DELAY);
+                        // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
+                        // 不会因为程序 scroll 而改变相对值
+
+                        // 调整事件，不需要 scroll 监控，达到预期结果：元素随容器的持续不断滚动而自动调整位置.
+                        event.fake = true;
+                        if (isWin(node[0])) {
+                            // 当使 window 自动滚动时，也要使得拖放物体相对文档位置随 scroll 改变
+                            // 而相对 node 容器时，只需 node 容器滚动，拖动物体相对文档位置不需要改变
+                            scroll = self.getScroll(node);
+                            event.left += scroll.left - origin.left;
+                            event.top += scroll.top - origin.top;
+                        }
+                        // 容器滚动了，元素也要重新设置 left,top
+                        if (drag.get("move")) {
+                            drag.get("node").offset(event);
+                        }
+                        drag.fire("drag", event);
+                    } else {
+                        timer = null;
+                    }
+                }
+
+            }
+        });
 
     return Scroll;
 }, {
-    requires:['base','node','dom']
+    requires:['./ddm', 'base', 'node', 'dom']
 });/**
  * dd support for kissy
  * @author  承玉<yiminghe@gmail.com>
