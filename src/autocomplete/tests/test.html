@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>KISSY AutoComplete Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/menu.js"></script>
+<script src="../src/inputRender.js"></script>
+<script src="../src/input.js"></script>
+<script src="../src/autocomplete.js"></script>
+<script src="../src/menu.js"></script>
+<script src="../src/menuRender.js"></script>
+<script src="../src/localDataSource.js"></script>
+<script src="../src/remoteDataSource.js"></script>
+<script src="../src/basic.js"></script>
+<script src="../src/BasicComboBox.js"></script>
+<script src="../src/BasicComboBoxRender.js"></script>
+<link rel="stylesheet" href="../assets/default.css">
+</head>
+<body>
+<h1>KISSY AutoComplete TC</h1>
+
+<div>
+
+    <input id="t"/>
+
+</div>
+<script src="simple-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function () {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
+</script>
+</body>
+</html>

@@ -64,7 +64,9 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
              * xhrCfg IO configuration.same as {@link} IO. data and xhrCfg are mutually exclusive.
              * @type Object
              */
-            xhrCfg:{},
+            xhrCfg:{
+                value:{}
+            },
 
             /**
              * Extra config for remote dataSource.<br/>
@@ -81,7 +83,9 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
              * whether send empty to server when input val is empty.default:false
              * @type Object
              */
-            dataSourceCfg:{}
+            dataSourceCfg:{
+                value:{}
+            }
         }
     });
 

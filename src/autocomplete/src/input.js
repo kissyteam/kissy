@@ -278,3 +278,14 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
         'menu',
         './inputRender']
 });
+
+/**
+ * 2012-04-01 可能 issue :
+ *  - 用户键盘上下键高亮一些选项，
+ *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
+ *    到底要不要设置 selectedItem 为当前高亮项？
+ *    additional note:
+ *    1. tab 时肯定会把当前高亮项设置为 selectedItem
+ *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
+ *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
+ **/
