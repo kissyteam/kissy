@@ -184,6 +184,24 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             })();
         });
 
+        it("wrapAll works", function () {
+            var time = S.now();
+            var wrappedCls = "f" + time;
+            var wrapperCls = "x" + time;
+            var body = document.body;
+            var foo = body.appendChild(DOM.create("<div class='" + wrappedCls + "'></div>"));
+            var foo2 = body.appendChild(DOM.create("<div class='" + wrappedCls + "'></div>"));
+            $("." + wrappedCls).wrapAll("<div class='" + wrapperCls + "'>" +
+                "<div class='x" + wrapperCls + "'></div>" +
+                "</div>");
+            expect(foo.nextSibling).toBe(foo2);
+            expect(foo.parentNode.childNodes.length).toBe(2);
+            expect(foo.parentNode.className).toBe("x" + wrapperCls);
+            expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
+            DOM.remove([foo, foo2]);
+            $("." + wrapperCls).remove();
+        });
+
 
         it("one/all should select nodes ", function () {
             var body = S.one(document.body);

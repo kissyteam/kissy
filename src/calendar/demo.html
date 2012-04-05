@@ -134,8 +134,8 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
 <script>
 
     var S=KISSY;
-    S.log(S.Calendar);
-    S.log(S.Date);
+//    S.log(S.Calendar);
+//    S.log(S.Date);
 
     var c = {};
     var showdate = function(n, d) {//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
@@ -155,7 +155,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             popup:false
         });
 		S.one('#J_CalendarRemove').on('click',function(){cr.destroy();});
-        S.log(++i);
+        // S.log(++i);
         //静态双月日历,默认选中某日
         c = new Calendar('#J_MultiPage_1', {
             pages:2,
@@ -163,13 +163,13 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             popup:false
         });
 		
-        S.log(++i);
+        // S.log(++i);
         //静态三月日历
         new Calendar('#J_MultiPage_2', {
             pages:3,
             popup:false
         });
-        S.log(++i);
+        // S.log(++i);
         //选择范围,并绑定范围回调
         new Calendar('#J_Range', {
             pages:2,
@@ -178,7 +178,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('rangeSelect', function(e) {
             alert(e.start + ' ' + e.end);
         });
-        S.log(++i);
+        // S.log(++i);
         //选择范围,指定默认范围
         new Calendar('#J_DefaultRange', {
             pages:2,
@@ -189,14 +189,14 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
                 end:showdate(5, new Date())
             }
         });
-        S.log(++i);
+        // S.log(++i);
         //月份切换事件
         new Calendar('#J_AllEvents', {
             popup:false
         }).on('monthChange', function(e) {
             alert('切换事件,月份切换到' + (e.date.getMonth() + 1));
         });
-        S.log(++i);
+        // S.log(++i);
         //Popup日历,默认点击触发
         new Calendar('#J_Popup', {
             popup:true,
@@ -205,7 +205,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('select', function(e) {
             Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
         });
-        S.log(++i);
+        // S.log(++i);
         //Popup日历,默认点击触发,选择范围
         var k = new Calendar('#J_Popup2', {
             popup:true,
@@ -218,7 +218,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             k.hide();
             //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
         });
-        S.log(++i);
+        // S.log(++i);
 		
 		//Popup日历,默认点击触发,选择范围,日历不联动
         var k2 = new Calendar('#J_Popup22', {
@@ -233,7 +233,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             k2.hide();
             //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
         });
-        S.log(++i);
+        // S.log(++i);
 		//Popup日历,默认点击触发,选择范围
         var k = new Calendar('#J_Popup23', {
             popup:true,
@@ -247,7 +247,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             k.hide();
             //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
         });
-        S.log(++i);
+        // S.log(++i);
 		
         //Popup日历,单选关闭
         new Calendar('#J_PopupClosable', {
@@ -257,7 +257,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('select', function(e) {
             alert(e.date);
         });
-        S.log(++i);
+        // S.log(++i);
 		//Popup日历,默认点击触发
         new Calendar('#J_PopupAlign', {
 			align:{
@@ -270,20 +270,20 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('select', function(e) {
             Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
         });
-        S.log(++i);
+        // S.log(++i);
         //日历可操作范围
         c = new Calendar('#J_MinDateMaxDate', {
             minDate:new Date(),
             maxDate:showdate(10, new Date()),
             popup:false
         });
-        S.log(++i);
+        // S.log(++i);
 		//某些天禁止操作
         c = new Calendar('#J_DisabledDate', {
             disabled:[showdate(1, new Date()),showdate(-1, new Date()),showdate(3, new Date()),showdate(5, new Date())],
             popup:false
         });
-        S.log(++i);
+        // S.log(++i);
         //日历可选择time
         c = new Calendar('#J_WithTime', {
             showTime:true,
@@ -291,7 +291,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('timeSelect', function(e) {
             alert(e.date);
         });
-        S.log(++i);
+        // S.log(++i);
 		//日历可选择不限
         c = new Calendar('#J_NotLimited', {
             notLimited:true,
@@ -299,19 +299,19 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         }).on('select', function(e) {
             alert(e.date);
         });
-        S.log(++i);
+        // S.log(++i);
         //可以自定义起始日期
         c = new Calendar('#J_CustomDay', {
             startDay:1,
             popup:false
         });
-        S.log(++i);
+        // S.log(++i);
 
         //更多定制
         c = new Calendar('#J_SelectResult', {
             popup:true
         });
-        S.log(++i);
+        // S.log(++i);
         //格式化时间类型
         c = new Calendar('#J_DateFormat', {
             showTime:true,
@@ -323,7 +323,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             }
             alert(S_Date.format(e.date, type));
         });
-        S.log(++i);
+        // S.log(++i);
     });
 	});
 </script>

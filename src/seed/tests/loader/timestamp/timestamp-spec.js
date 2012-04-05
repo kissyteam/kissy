@@ -15,6 +15,7 @@ describe("loader", function () {
                 ]
             });
             var ok1;
+
             KISSY.use("timestamp/x.js?t=b", function () {
                 ok1 = 1;
             });

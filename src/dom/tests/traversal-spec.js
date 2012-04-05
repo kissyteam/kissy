@@ -97,7 +97,7 @@ KISSY.use("dom", function(S, DOM) {
         it("siblings works", function() {
             var t = DOM.get('#test-prev');
 
-            expect(DOM.siblings(t).length).toBe(3);
+            expect(DOM.siblings(t).length).toBe(4);
 
             expect(DOM.siblings(t, '.test-none').length).toBe(0);
 

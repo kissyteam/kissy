@@ -265,24 +265,13 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 AutoComplete.
-                                                <b class="name"><a href="../symbols/AutoComplete.html#.formatHtml">formatHtml</a></b>
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.format">format</a></b>
                                                 <span class="type">{}</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">Format function to return  array of html from array of data.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                AutoComplete.
-                                                <b class="name"><a href="../symbols/AutoComplete.html#.formatText">formatText</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">Format function to return  array of textfrom array of data for autocomplete input.</span>                                                
+                                                <span class="desc">Format function to return array ofhtml/text/menu item attributes from array of data.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -316,6 +305,17 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">Config autoComplete menu list.For Configuration when new.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                AutoComplete.
+                                                <b class="name"><a href="../symbols/AutoComplete.html#.selectedItem">selectedItem</a></b>
+                                                <span class="type">{Menu.Item}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Readonly.User selected menu item by click or enter on highlighted suggested menu item</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -570,47 +570,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name=".formatHtml"> </a>
+                                            <a name=".format"> </a>
                                             <div class="title">                                                
                                                 <span>AutoComplete.</span>
-                                                <b class="name">formatHtml</b>
+                                                <b class="name">format</b>
                                                 
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    Format function to return  array of html from array of data.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name=".formatText"> </a>
-                                            <div class="title">                                                
-                                                <span>AutoComplete.</span>
-                                                <b class="name">formatText</b>
-                                                
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">
-                                                    Format function to return  array of textfrom array of data for autocomplete input.
+                                                    Format function to return array ofhtml/text/menu item attributes from array of data.
                                                     
                                                     
                                                 </span>
@@ -701,6 +671,36 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="desc">
                                                     Config autoComplete menu list.For Configuration when new.{Number} menuCfg.width :Config autoComplete menu list's alignment.Default to current active input's width.<br/>{Object} menuCfg.align :Config autoComplete menu list's alignment.Same with <a href="../symbols/UIBase.Align.html#align">UIBase.Align#align</a> .Default : align current input's bottom left edgewith autoComplete list's top left edge.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".selectedItem"> </a>
+                                            <div class="title">                                                
+                                                <span>AutoComplete.</span>
+                                                <b class="name">selectedItem</b>
+                                                <span>{Menu.Item}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Readonly.User selected menu item by click or enter on highlighted suggested menu item
                                                     
                                                     
                                                 </span>
@@ -815,13 +815,11 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_menu.js.html#line108">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_input.js.html#line158">view source</a>
                                         </div>
                                         
                                         <div class="desc">
                                             fired when user select from suggestion list
-                                            
-                                                <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_autocomplete_src_menu.js.html">menu.js</a>.
                                             
                                             
                                         </div>

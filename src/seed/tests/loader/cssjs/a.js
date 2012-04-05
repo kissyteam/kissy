@@ -1,0 +1,3 @@
+KISSY.add("a",function(){
+
+});

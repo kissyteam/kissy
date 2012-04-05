@@ -46,7 +46,13 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "empty",
             "removeData",
             "hasData",
-            "unselectable"
+            "unselectable",
+
+            "wrap",
+            "wrapAll",
+            "replaceWith",
+            "wrapInner",
+            "unwrap"
         ],
         // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
@@ -59,6 +65,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "prev",
             "clone",
             "siblings",
+            "contents",
             "children"
         ],
         // if set return this else if get return true value ,no nodelist transform

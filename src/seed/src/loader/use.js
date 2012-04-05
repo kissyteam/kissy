@@ -34,7 +34,7 @@
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS,modNames);
 
             var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
@@ -299,6 +299,10 @@
 
         function checkAndHandle() {
             if (isCss || mod.fn) {
+                // css 不会设置 LOADED! 必须外部设置
+                if (isCss && mod.status != ATTACHED) {
+                    mod.status = LOADED;
+                }
                 callback();
             } else {
                 // ie will call success even when getScript error(404)

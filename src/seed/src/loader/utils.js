@@ -253,7 +253,7 @@
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(self,mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -313,7 +313,7 @@
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (modNames, refModName) {
+        normalizeModNamesWithAlias:function (self,modNames, refModName) {
             var ret = [];
             S.each(modNames, function (name) {
                 // 1. index map
@@ -326,7 +326,7 @@
             }
             // 3. create module info with tag
             S.each(ret, function (name, i) {
-                ret[i] = removeSuffixAndTagFromModName(name).modName;
+                ret[i] = utils.createModuleInfo(self, name).name;
             });
             return ret;
         },

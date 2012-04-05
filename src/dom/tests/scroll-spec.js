@@ -60,7 +60,7 @@ KISSY.use("dom", function(S, DOM) {
 
             DOM.scrollIntoView(inner, iframe.contentWindow);
             var nt = Math.round(DOM.offset(inner).top);
-            expect(nt).toBe(DOM.scrollTop(iframe.contentWindow));
+            expect(nt).toBeEqual(DOM.scrollTop(iframe.contentWindow));
 
             DOM.hide(iframe);
         });
@@ -83,7 +83,7 @@ KISSY.use("dom", function(S, DOM) {
                 //  | |  | |
                 //  | ---- |
                 //  --------
-                expect(nt).toBe(ct +
+                expect(nt).toBeEqual(ct +
                     container_border_width +
                     container_height -
                     node_height);

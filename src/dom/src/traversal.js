@@ -140,6 +140,17 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
+             * Get the childrNodes of the first element in the set of matched elements (includes text and comment nodes),
+             * optionally filtered by a filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
+             * @returns {Node[]}
+             */
+            contents:function (selector, filter) {
+                return getSiblings(selector, filter, undefined, 1);
+            },
+
+            /**
              * Check to see if a DOM node is within another DOM node.
              * @param {HTMLElement|String|Element} container The DOM element that may contain the other element.
              * @param {HTMLElement|String|Element} contained The DOM element that may be contained by the other element.
@@ -244,25 +255,24 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     }
 
     // 获取元素 elem 的 siblings, 不包括自身
-    function getSiblings(selector, filter, parent) {
+    function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
             elem = DOM.get(selector),
-            j,
-            parentNode = elem,
-            next;
+            parentNode = elem;
+
         if (elem && parent) {
             parentNode = elem.parentNode;
         }
 
         if (parentNode) {
-            for (j = 0, next = parentNode.firstChild;
-                 next;
-                 next = next.nextSibling) {
-                if (isElementNode(next)
-                    && next !== elem
-                    && (!filter || DOM.test(next, filter))) {
-                    ret[j++] = next;
-                }
+            ret = S.makeArray(parentNode.childNodes);
+            if (!allowText) {
+                ret = DOM.filter(ret, function (el) {
+                    return el.nodeType == 1;
+                });
+            }
+            if (filter) {
+                ret = DOM.filter(ret, filter);
             }
         }
 
@@ -275,7 +285,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 });
 
 /**
- * 2011-08
+ * 2012-04-05 yiminghe@gmail.com
+ * - 增加 contents 方法
+ *
+ *
+ * 2011-08 yiminghe@gmail.com
  * - 添加 closest , first ,last 完全摆脱原生属性
  *
  * NOTES:

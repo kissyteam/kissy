@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 30 00:01
+build time: Apr 5 18:14
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 30 00:01
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120330000104',
+            __BUILD_TIME:'20120405181403',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2291,7 +2291,7 @@ build time: Mar 30 00:01
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(self,mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -2351,7 +2351,7 @@ build time: Mar 30 00:01
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (modNames, refModName) {
+        normalizeModNamesWithAlias:function (self,modNames, refModName) {
             var ret = [];
             S.each(modNames, function (name) {
                 // 1. index map
@@ -2364,7 +2364,7 @@ build time: Mar 30 00:01
             }
             // 3. create module info with tag
             S.each(ret, function (name, i) {
-                ret[i] = removeSuffixAndTagFromModName(name).modName;
+                ret[i] = utils.createModuleInfo(self, name).name;
             });
             return ret;
         },
@@ -3058,7 +3058,7 @@ build time: Mar 30 00:01
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS,modNames);
 
             var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
@@ -3323,6 +3323,10 @@ build time: Mar 30 00:01
 
         function checkAndHandle() {
             if (isCss || mod.fn) {
+                // css 不会设置 LOADED! 必须外部设置
+                if (isCss && mod.status != ATTACHED) {
+                    mod.status = LOADED;
+                }
                 callback();
             } else {
                 // ie will call success even when getScript error(404)
@@ -3408,7 +3412,7 @@ build time: Mar 30 00:01
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                modNames= utils.normalizeModNamesWithAlias(modNames);
+                modNames= utils.normalizeModNamesWithAlias(SS,modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 30 00:01
+build time: Apr 5 18:14
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 30 00:01
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120330000104',
+            __BUILD_TIME:'20120405181403',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2291,7 +2291,7 @@ build time: Mar 30 00:01
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(self,mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -2351,7 +2351,7 @@ build time: Mar 30 00:01
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (modNames, refModName) {
+        normalizeModNamesWithAlias:function (self,modNames, refModName) {
             var ret = [];
             S.each(modNames, function (name) {
                 // 1. index map
@@ -2364,7 +2364,7 @@ build time: Mar 30 00:01
             }
             // 3. create module info with tag
             S.each(ret, function (name, i) {
-                ret[i] = removeSuffixAndTagFromModName(name).modName;
+                ret[i] = utils.createModuleInfo(self, name).name;
             });
             return ret;
         },
@@ -3058,7 +3058,7 @@ build time: Mar 30 00:01
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS,modNames);
 
             var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
@@ -3323,6 +3323,10 @@ build time: Mar 30 00:01
 
         function checkAndHandle() {
             if (isCss || mod.fn) {
+                // css 不会设置 LOADED! 必须外部设置
+                if (isCss && mod.status != ATTACHED) {
+                    mod.status = LOADED;
+                }
                 callback();
             } else {
                 // ie will call success even when getScript error(404)
@@ -3408,7 +3412,7 @@ build time: Mar 30 00:01
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                modNames= utils.normalizeModNamesWithAlias(modNames);
+                modNames= utils.normalizeModNamesWithAlias(SS,modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
@@ -21154,7 +21158,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 28 19:53
+build time: Mar 31 21:08
 */
 /**
  * @fileOverview UIBase.Align
@@ -21581,7 +21585,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
     requires:["ua", "dom", "node"]
 });
 /**
- *  2011-07-13 承玉 note:
+ *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @fileOverview   UIBase
@@ -23655,7 +23659,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 27 20:02
+build time: Mar 31 21:37
 */
 /**
  * @fileOverview model and control base class for kissy
@@ -24002,8 +24006,13 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                 // Cancel the default action unless the control
                 // allows text selection.
                 if (ev.which == 1 && !self.get("allowTextSelection_")) {
-                    // firefox 不会引起焦点转移
-                    ev.preventDefault();
+                    // firefox/chrome 不会引起焦点转移
+                    var n = ev.target.nodeName;
+                    n = n && n.toLowerCase();
+                    // do not prevent focus when click on editable element
+                    if (n != "input" && n != "textarea") {
+                        ev.preventDefault();
+                    }
                 }
             },
 
@@ -31914,7 +31923,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 25 22:39
+build time: Mar 31 21:28
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -31933,6 +31942,9 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @extends Component.Container
      */
     var Menu = UIBase.create(Component.Container,
+        // ! note : 2012-03-31
+        // sync with menu render,extends contentBox too!
+        [UIBase.ContentBox],
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -32405,14 +32417,15 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
-    Menu.Item.Render = ItemRender;
+    Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
+    PopupMenu.Render = PopupMenuRender;
     Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
@@ -32426,6 +32439,7 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/separator',
         'menu/separatorrender',
         'menu/popupmenu',
+        'menu/popupmenurender',
         'menu/filtermenu'
     ]
 });/**
@@ -32716,11 +32730,12 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     }
 
     /**
-     * @name PopMenu
+     * Popup Menu
+     * @name PopupMenu
      * @memberOf Menu
      * @constructor
      */
-    var PopMenu = UIBase.create(Menu, [
+    var PopupMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
@@ -32797,7 +32812,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
          */
         _handleBlur:function () {
             var self = this;
-            PopMenu.superclass._handleBlur.apply(self, arguments);
+            PopupMenu.superclass._handleBlur.apply(self, arguments);
             self.hide();
         }
     }, {
@@ -32819,10 +32834,10 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
 
     Component.UIStore.setUIByClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:PopMenu
+        ui:PopupMenu
     });
 
-    return PopMenu;
+    return PopupMenu;
 
 }, {
     requires:['uibase', 'component', './base', './popupmenurender']

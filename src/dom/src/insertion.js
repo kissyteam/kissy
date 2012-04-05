@@ -199,6 +199,82 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 }, loadScripts);
+            },
+
+            /**
+             * Wrap a node around all elements in the set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
+            wrapAll:function (wrappedNodes, wrapperNode) {
+                // deep clone
+                wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
+                wrappedNodes = DOM.query(wrappedNodes);
+                if (wrappedNodes[0].parentNode) {
+                    DOM.insertBefore(wrapperNode, wrappedNodes[0]);
+                }
+                var c;
+                while ((c = wrapperNode.firstChild) && c.nodeType == 1) {
+                    wrapperNode = c;
+                }
+                DOM.appendTo(wrappedNodes, wrapperNode);
+            },
+
+            /**
+             * Wrap a node around each element in the set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
+            wrap:function (wrappedNodes, wrapperNode) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                wrapperNode = DOM.get(wrapperNode);
+                S.each(wrappedNodes, function (w) {
+                    DOM.wrapAll(w, wrapperNode);
+                });
+            },
+
+            /**
+             * Wrap a node around the childNodes of each element in the set of matched elements.
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
+            wrapInner:function (wrappedNodes, wrapperNode) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                wrapperNode = DOM.get(wrapperNode);
+                S.each(wrappedNodes, function (w) {
+                    var contents = w.childNodes;
+                    if (contents.length) {
+                        DOM.wrapAll(contents, wrapperNode);
+                    } else {
+                        w.appendChild(wrapperNode);
+                    }
+                });
+            },
+
+            /**
+             * Remove the parents of the set of matched elements from the DOM,
+             * leaving the matched elements in their place.
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             */
+            unwrap:function (wrappedNodes) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                S.each(wrappedNodes, function (w) {
+                    var p = w.parentNode;
+                    DOM.replaceWith(p, p.childNodes);
+                });
+            },
+
+            /**
+             * Replace each element in the set of matched elements with the provided newNodes.
+             * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
+             */
+            replaceWith:function (selector, newNodes) {
+                var nodes = DOM.query(selector);
+                newNodes = DOM.query(newNodes);
+                DOM.remove(newNodes, true);
+                DOM.insertBefore(newNodes, nodes);
+                DOM.remove(nodes);
             }
         });
     var alias = {
@@ -216,6 +292,9 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 });
 
 /**
+ * 2012-04-05 yiminghe@gmail.com
+ *  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
+ *
  * 2011-05-25
  *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
  *      DOM.append(".multi1",".multi2");

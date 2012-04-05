@@ -60,7 +60,7 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
                 expect(DOM.style(elem, 'backgroundPosition')).toBe('0% 0%');
             }
 
-            expect(DOM.css(elem, 'fontSize')).toBe('16px');
+            expect(DOM.css(elem, 'fontSize')).toBeEqual('16px');
 
             expect(DOM.css(elem, 'border-right-width')).toBe('5px');
 
@@ -83,7 +83,7 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
             DOM.css(elem, 'font-size', '100%');
 
-            expect(DOM.css(elem, 'font-size')).toBe('16px');
+            expect(DOM.css(elem, 'font-size')).toBeEqual('16px');
 
             DOM.css(elem, 'opacity', '0.2');
 

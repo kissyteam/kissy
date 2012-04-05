@@ -71,7 +71,7 @@
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                modNames= utils.normalizeModNamesWithAlias(modNames);
+                modNames= utils.normalizeModNamesWithAlias(SS,modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
