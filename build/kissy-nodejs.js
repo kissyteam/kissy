@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 18:14
+build time: Apr 5 19:52
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -350,7 +350,7 @@ build time: Apr 5 18:14
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120405181403',
+            __BUILD_TIME:'20120405195242',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4693,7 +4693,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 14:13
+build time: Apr 5 19:32
 */
 /**
  * @fileOverview   dom-attr
@@ -6610,6 +6610,58 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 }, loadScripts);
+            },
+
+
+            wrapAll:function (wrappedNodes, wrapperNode) {
+                // deep clone
+                wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
+                wrappedNodes = DOM.query(wrappedNodes);
+                if (wrappedNodes[0].parentNode) {
+                    DOM.insertBefore(wrapperNode, wrappedNodes[0]);
+                }
+                var c;
+                while ((c = wrapperNode.firstChild) && c.nodeType == 1) {
+                    wrapperNode = c;
+                }
+                DOM.appendTo(wrappedNodes, wrapperNode);
+            },
+
+            wrap:function (wrappedNodes, wrapperNode) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                wrapperNode = DOM.get(wrapperNode);
+                S.each(wrappedNodes, function (w) {
+                    DOM.wrapAll(w, wrapperNode);
+                });
+            },
+
+            wrapInner:function (wrappedNodes, wrapperNode) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                wrapperNode = DOM.get(wrapperNode);
+                S.each(wrappedNodes, function (w) {
+                    var contents = w.childNodes;
+                    if (contents.length) {
+                        DOM.wrapAll(contents, wrapperNode);
+                    } else {
+                        w.appendChild(wrapperNode);
+                    }
+                });
+            },
+
+            unwrap:function (wrappedNodes) {
+                wrappedNodes = DOM.query(wrappedNodes);
+                S.each(wrappedNodes, function (w) {
+                    var p = w.parentNode;
+                    DOM.replaceWith(p, p.childNodes);
+                });
+            },
+
+            replaceWith:function (selector, newNodes) {
+                var nodes = DOM.query(selector);
+                newNodes = DOM.query(newNodes);
+                DOM.remove(newNodes, true);
+                DOM.insertBefore(newNodes, nodes);
+                DOM.remove(nodes);
             }
         });
     var alias = {
@@ -6627,6 +6679,9 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 });
 
 /**
+ * 2012-04-05 yiminghe@gmail.com
+ *  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
+ *
  * 2011-05-25
  *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
  *      DOM.append(".multi1",".multi2");
@@ -7064,12 +7119,16 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 });
 
 /**
+ * 2012-03-30
+ *  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+ *  - http://help.dottoro.com/ljkfqbqj.php
+ *  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+ *
  * 2011-05-24
  *  - 承玉：
  *  - 调整 docWidth , docHeight ,
  *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
- *
  *
  *
  * TODO:
@@ -7550,7 +7609,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
             /**
              * Reduce the set of matched elements to those that match the selector or pass the function's test.
-             * @param {String|HTMLElement[]} selector Matched elements
+             * @param {String|HTMLElement[]|NodeList} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|Document} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
@@ -8751,6 +8810,17 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
+             * Get the childrNodes of the first element in the set of matched elements (includes text and comment nodes),
+             * optionally filtered by a filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
+             * @returns {HTMLElement[]}
+             */
+            contents:function (selector, filter) {
+                return getSiblings(selector, filter, undefined, 1);
+            },
+
+            /**
              * Check to see if a DOM node is within another DOM node.
              * @param {HTMLElement|String|Element} container The DOM element that may contain the other element.
              * @param {HTMLElement|String|Element} contained The DOM element that may be contained by the other element.
@@ -8855,25 +8925,24 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     }
 
     // 获取元素 elem 的 siblings, 不包括自身
-    function getSiblings(selector, filter, parent) {
+    function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
             elem = DOM.get(selector),
-            j,
-            parentNode = elem,
-            next;
+            parentNode = elem;
+
         if (elem && parent) {
             parentNode = elem.parentNode;
         }
 
         if (parentNode) {
-            for (j = 0, next = parentNode.firstChild;
-                 next;
-                 next = next.nextSibling) {
-                if (isElementNode(next)
-                    && next !== elem
-                    && (!filter || DOM.test(next, filter))) {
-                    ret[j++] = next;
-                }
+            ret = S.makeArray(parentNode.childNodes);
+            if (!allowText) {
+                ret = DOM.filter(ret, function (el) {
+                    return el.nodeType == 1;
+                });
+            }
+            if (filter) {
+                ret = DOM.filter(ret, filter);
             }
         }
 
@@ -8886,7 +8955,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 });
 
 /**
- * 2011-08
+ * 2012-04-05 yiminghe@gmail.com
+ * - 增加 contents 方法
+ *
+ *
+ * 2011-08 yiminghe@gmail.com
  * - 添加 closest , first ,last 完全摆脱原生属性
  *
  * NOTES:
@@ -15646,7 +15719,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 5 19:33
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -15792,7 +15865,13 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "empty",
             "removeData",
             "hasData",
-            "unselectable"
+            "unselectable",
+
+            "wrap",
+            "wrapAll",
+            "replaceWith",
+            "wrapInner",
+            "unwrap"
         ],
         // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
@@ -15805,6 +15884,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "prev",
             "clone",
             "siblings",
+            "contents",
             "children"
         ],
         // if set return this else if get return true value ,no nodelist transform
@@ -16148,18 +16228,18 @@ KISSY.add("node", function (S, Event, Node) {
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add("node/override", function(S, DOM, Event, NodeList) {
+KISSY.add("node/override", function (S, DOM, Event, NodeList) {
+
+    var NLP = NodeList.prototype;
 
     /**
      * append(node ,parent) : 参数顺序反过来了
      * appendTo(parent,node) : 才是正常
      *
      */
-    S.each(['append', 'prepend','before','after'], function(insertType) {
-
-        NodeList.prototype[insertType] = function(html) {
-
-            var newNode = html,self = this;
+    S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
+        NLP[insertType] = function (html) {
+            var newNode = html, self = this;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
@@ -16168,15 +16248,28 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
                 DOM[insertType](newNode, self);
             }
             return self;
-
         };
     });
 
+    S.each(["wrap", "wrapAll", "replaceWith", "wrapInner"], function (fixType) {
+        var orig = NLP[fixType];
+        NLP[fixType] = function (others) {
+            var self = this;
+            if (S.isString(others)) {
+                others = NodeList.all(others, self[0].ownerDocument);
+            }
+            return orig.call(self, others);
+        };
+    })
+
 }, {
-    requires:["dom","event","./base","./attach"]
+    requires:["dom", "event", "./base", "./attach"]
 });
 
 /**
+ * 2011-04-05 yiminghe@gmail.com
+ * - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
+ *
  * 2011-05-24
  * - 承玉：
  * - 重写 NodeList 的某些方法
