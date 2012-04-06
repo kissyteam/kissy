@@ -24,6 +24,9 @@
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
         STAMP_MARKER = '__~ks_stamped',
+        // IE doesn't include non-breaking-space (0xa0) in their \s character
+        // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+        // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
