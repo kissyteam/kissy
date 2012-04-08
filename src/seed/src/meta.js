@@ -46,6 +46,15 @@
         /****************************
          *  UI Component
          ****************************/
+
+        "input-selection":{
+            // TODO: implement conditional loader
+            condition:function () {
+                return typeof S.Env.host.document.createElement("input").selectionEnd != "number";
+            },
+            requires:['dom']
+        },
+
         "button":{
             requires:["component", "node"]
         },

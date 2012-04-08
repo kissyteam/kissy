@@ -63,12 +63,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 "for":"htmlFor",
                 "class":"className",
                 maxlength:"maxLength",
-                cellspacing:"cellSpacing",
+                "cellspacing":"cellSpacing",
                 "cellpadding":"cellPadding",
                 rowspan:"rowSpan",
                 colspan:"colSpan",
                 usemap:"useMap",
-                frameborder:"frameBorder",
+                "frameborder":"frameBorder",
                 "contenteditable":"contentEditable"
             },
             // Hook for boolean attributes
@@ -289,6 +289,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             return getProp(elems[0], name);
                         }
                     }
+                    return undefined;
                 },
 
                 /**
@@ -449,6 +450,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             }
                         }
                     }
+                    return undefined;
                 },
 
                 /**
@@ -571,7 +573,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             elem.value = val;
                         }
                     }
+                    return undefined;
                 },
+
+                _propHooks:propHooks,
 
                 /**
                  * Get the combined text contents of each element in the set of matched elements, including their descendants.
@@ -609,8 +614,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             }
                         }
                     }
+                    return undefined;
                 }
             });
+        if (1 > 2) {
+            DOM.removeProp("j", "1");
+        }
         return DOM;
     }, {
         requires:["./base", "ua"]

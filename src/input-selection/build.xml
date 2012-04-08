@@ -1,0 +1,20 @@
+<project name="input-selection.build" default="build" basedir=".">
+    <description>input-selection Build File</description>
+
+    <property name="component.name" value="input-selection"/>
+    <property name="src.dir" location="./src/"/>
+
+    <import file="../../tools/common.xml"/>
+
+    <target name="concat">
+        <concat destfile="${component.src.dir.tmp}/input-selection-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="concat,common.build">
+    </target>
+</project>

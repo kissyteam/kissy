@@ -46,6 +46,8 @@ History:
  - [*] KISSY.Base : values should not be set if any validator occurs error
  - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
 
+ - [+] 增加模块 input-selection，兼容 ie 下的 input selection api 为 w3c 标准
+
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
  - [*] proxy/scroll.attach changed to proxy/scroll.attachDrag,proxy/scroll.unAttach changed to proxy/scroll.detachDrag

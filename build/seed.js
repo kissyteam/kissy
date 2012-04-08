@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 19:52
+build time: Apr 8 20:00
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Apr 5 19:52
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120405195242',
+            __BUILD_TIME:'20120408200022',
 
             /**
              * Returns a new object containing all of the properties of
@@ -450,6 +450,9 @@ build time: Apr 5 19:52
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
         STAMP_MARKER = '__~ks_stamped',
+        // IE doesn't include non-breaking-space (0xa0) in their \s character
+        // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+        // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,

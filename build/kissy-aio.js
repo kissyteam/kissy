@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 19:52
+build time: Apr 8 20:00
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Apr 5 19:52
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120405195242',
+            __BUILD_TIME:'20120408200022',
 
             /**
              * Returns a new object containing all of the properties of
@@ -450,6 +450,9 @@ build time: Apr 5 19:52
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
         STAMP_MARKER = '__~ks_stamped',
+        // IE doesn't include non-breaking-space (0xa0) in their \s character
+        // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+        // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -4494,7 +4497,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 19:32
+build time: Apr 8 20:00
 */
 /**
  * @fileOverview   dom-attr
@@ -4561,12 +4564,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 "for":"htmlFor",
                 "class":"className",
                 maxlength:"maxLength",
-                cellspacing:"cellSpacing",
+                "cellspacing":"cellSpacing",
                 "cellpadding":"cellPadding",
                 rowspan:"rowSpan",
                 colspan:"colSpan",
                 usemap:"useMap",
-                frameborder:"frameBorder",
+                "frameborder":"frameBorder",
                 "contenteditable":"contentEditable"
             },
             // Hook for boolean attributes
@@ -4787,6 +4790,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             return getProp(elems[0], name);
                         }
                     }
+                    return undefined;
                 },
 
                 /**
@@ -4947,6 +4951,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             }
                         }
                     }
+                    return undefined;
                 },
 
                 /**
@@ -5069,7 +5074,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             elem.value = val;
                         }
                     }
+                    return undefined;
                 },
+
+                _propHooks:propHooks,
 
                 /**
                  * Get the combined text contents of each element in the set of matched elements, including their descendants.
@@ -5107,8 +5115,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             }
                         }
                     }
+                    return undefined;
                 }
             });
+        if (1 > 2) {
+            DOM.removeProp("j", "1");
+        }
         return DOM;
     }, {
         requires:["./base", "ua"]
@@ -6413,7 +6425,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 }, loadScripts);
             },
 
-
+            /**
+             * Wrap a node around all elements in the set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
             wrapAll:function (wrappedNodes, wrapperNode) {
                 // deep clone
                 wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
@@ -6428,6 +6444,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 DOM.appendTo(wrappedNodes, wrapperNode);
             },
 
+            /**
+             * Wrap a node around each element in the set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
             wrap:function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
@@ -6436,6 +6457,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 });
             },
 
+            /**
+             * Wrap a node around the childNodes of each element in the set of matched elements.
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
+             */
             wrapInner:function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
@@ -6449,6 +6475,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 });
             },
 
+            /**
+             * Remove the parents of the set of matched elements from the DOM,
+             * leaving the matched elements in their place.
+             * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
+             */
             unwrap:function (wrappedNodes) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 S.each(wrappedNodes, function (w) {
@@ -6457,6 +6488,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 });
             },
 
+            /**
+             * Replace each element in the set of matched elements with the provided newNodes.
+             * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
+             * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
+             */
             replaceWith:function (selector, newNodes) {
                 var nodes = DOM.query(selector);
                 newNodes = DOM.query(newNodes);
@@ -8615,7 +8651,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement[]}
+             * @returns {Node[]}
              */
             contents:function (selector, filter) {
                 return getSiblings(selector, filter, undefined, 1);

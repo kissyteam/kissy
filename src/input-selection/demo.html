@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>input-selection demo</title>
+</head>
+<body>
+<textarea id='t' style='width:200px;height:200px;'></textarea>
+<button id='b'>选区位置</button>
+<button id='s'>选区前进</button>
+<button id='e'>选区后退</button>
+<script src='../../build/kissy.js'></script>
+<script src='./src/input-selection.js'></script>
+<script>
+    KISSY.use('dom,input-selection', function (S, DOM) {
+        var t = DOM.get("#t");
+        var b = DOM.get("#b");
+        var s = DOM.get("#s");
+        var e = DOM.get("#e");
+        setTimeout(function () {
+            t.value = "1\n2\n3\n4\n5\n6\n7";
+            t.focus();
+            DOM.prop(t, "selectionStart", 1);
+            DOM.prop(t, "selectionEnd", t.value.length - 1);
+        }, 0);
+        b.onclick = function () {
+            t.focus();
+            S.log(DOM.prop(t, "selectionStart") + " - " + DOM.prop(t, "selectionEnd"));
+        };
+        s.onclick = function () {
+            t.focus();
+            var next = DOM.prop(t, "selectionStart") + 1;
+            if (typeof t.selectionStart != "number" && t.value.charAt(next) == "\n") {
+                next++;
+            }
+            DOM.prop(t, "selectionStart", next);
+        };
+
+        e.onclick = function () {
+            t.focus();
+            var next = DOM.prop(t, "selectionEnd") - 1;
+            if (typeof t.selectionEnd != "number" && t.value.charAt(next) == "\n") {
+                next--;
+            }
+            DOM.prop(t, "selectionEnd", next);
+        };
+    });
+</script>
+</body>
+</html>
