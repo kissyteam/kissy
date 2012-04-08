@@ -1,5 +1,5 @@
 /**
- * test cases for traversal sub module of dom module
+ * test cases for input-selection
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,input-selection", function (S, DOM) {
