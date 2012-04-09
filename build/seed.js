@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 8 20:00
+build time: Apr 9 12:04
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Apr 8 20:00
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120408200022',
+            __BUILD_TIME:'20120409120412',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4155,6 +4155,15 @@ build time: Apr 8 20:00
         /****************************
          *  UI Component
          ****************************/
+
+        "input-selection":{
+            // TODO: implement conditional loader
+            condition:function () {
+                return typeof S.Env.host.document.createElement("input").selectionEnd != "number";
+            },
+            requires:['dom']
+        },
+
         "button":{
             requires:["component", "node"]
         },

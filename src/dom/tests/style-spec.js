@@ -328,5 +328,17 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
             div.removeAttribute("style");
         });
 
+        // #119 : https://github.com/kissyteam/kissy/issues/119
+        it("outerWidth should works for display:none", function () {
+            var div = DOM.create("<div style='display:none;'>" +
+                "<div style='width:100px;'></div>" +
+                "</div>");
+            DOM.append(div, document.body);
+            expect(DOM.innerWidth(div)).toBe(100);
+            expect(DOM.outerWidth(div)).toBe(100);
+            expect(DOM.width(div)).toBe(100);
+            DOM.remove(div);
+        });
+
     });
 });

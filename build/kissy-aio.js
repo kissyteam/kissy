@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 8 20:00
+build time: Apr 9 12:04
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Apr 8 20:00
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120408200022',
+            __BUILD_TIME:'20120409120412',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4155,6 +4155,15 @@ build time: Apr 8 20:00
         /****************************
          *  UI Component
          ****************************/
+
+        "input-selection":{
+            // TODO: implement conditional loader
+            condition:function () {
+                return typeof S.Env.host.document.createElement("input").selectionEnd != "number";
+            },
+            requires:['dom']
+        },
+
         "button":{
             requires:["component", "node"]
         },
@@ -4497,7 +4506,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 8 20:00
+build time: Apr 9 12:04
 */
 /**
  * @fileOverview   dom-attr
@@ -8240,21 +8249,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
-
     S.each([WIDTH, HEIGHT], function (name) {
         DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            return el && getWH(el, name, "padding");
+            return el && getWHIgnoreDisplay(el, name, "padding");
         };
-
 
         DOM["outer" + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
-            if (el) {
-                return getWH(el, name, includeMargin ? "margin" : "border");
-            } else {
-                return null;
-            }
+            return el && getWHIgnoreDisplay(el, name, includeMargin ? "margin" : "border");
         };
 
         DOM[name] = function (selector, val) {
@@ -8265,7 +8268,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             return ret;
         };
     });
-
 
     var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
@@ -8281,16 +8283,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @ignore
              */
             get:function (elem, computed) {
-                var val;
                 if (computed) {
-                    if (elem.offsetWidth !== 0) {
-                        val = getWH(elem, name);
-                    } else {
-                        swap(elem, cssShow, function () {
-                            val = getWH(elem, name);
-                        });
-                    }
-                    return val + "px";
+                    return getWHIgnoreDisplay(elem, name) + "px";
                 }
             },
             set:function (elem, value) {
@@ -8346,7 +8340,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-
     function swap(elem, options, callback) {
         var old = {};
 
@@ -8363,7 +8356,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             elem[STYLE][ name ] = old[ name ];
         }
     }
-
 
     function style(elem, name, val) {
         var style;
@@ -8398,7 +8390,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style.removeAttribute(name);
                 }
             }
-
             if (!style.cssText) {
                 elem.removeAttribute('style');
             }
@@ -8415,7 +8406,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
             return ret === undefined ? "" : ret;
         }
+    }
 
+    // fix #119 : https://github.com/kissyteam/kissy/issues/119
+    function getWHIgnoreDisplay(elem) {
+        var val, args = arguments;
+        // incase elem is window
+        // elem.offsetWidth === undefined
+        if (elem.offsetWidth !== 0) {
+            val = getWH.apply(undefined, args);
+        } else {
+            swap(elem, cssShow, function () {
+                val = getWH.apply(undefined, args);
+            });
+        }
+        return val;
     }
 
 
@@ -8450,7 +8455,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 });
             }
 
-            return val
+            return val;
         }
 
         // Fall back to computed then uncomputed css if necessary
@@ -11616,7 +11621,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:18
+build time: Apr 9 11:47
 */
 /**
  * @fileOverview form data  serialization util
@@ -12381,6 +12386,17 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
+            /**
+             * get native XMLHttpRequest
+             * @since 1.3
+             */
+            getNativeXhr:function () {
+                var transport;
+                if (transport = this.transport) {
+                    return transport.nativeXhr;
+                }
+            },
+
             _xhrReady:function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
@@ -12421,7 +12437,6 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
                 var defer = self._defer;
                 defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
-                self.transport = undefined;
             }
         }
     );
@@ -12434,7 +12449,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        win=S.Env.host,
+        win = S.Env.host,
         _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
@@ -12477,18 +12492,14 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
             }
 
             this.xhrObj = xhrObj;
-
+            this.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
             return undefined;
         }
 
         S.augment(XhrTransport, XhrTransportBase.proto, {
 
             send:function () {
-                var self = this,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
-                self.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
-                self.sendInternal();
+                this.sendInternal();
             }
 
         });
@@ -13114,6 +13125,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * only for dataType "jsonp" and "script" and "get" type.<br/>
      * force the script to certain charset.
      *
+     * @param {Function} c.beforeSend <br/>
+     * beforeSend(xhrObject,config)<br/>
+     * callback function called before the request is sent.this function has 2 arguments<br/>
+     * 1. current KISSY xhrObject<br/>
+     * 2. current io config<br/>
+     * note: can be used for add progress event listener for native xhr's upload attribute
+     * see <a href="http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress">XMLHttpRequest2</a>
+     *
      * @param {Function} c.success <br/>
      * success(data,textStatus,xhr)<br/>
      * callback function called if the request succeeds.this function has 3 arguments<br/>
@@ -13174,12 +13193,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * @returns {IO.XhrObject} current request object
      */
     function io(c) {
+
         if (!c.url) {
             return undefined;
         }
-        c = setUpConfig(c);
-        var xhrObject = new XhrObject(c);
 
+        c = setUpConfig(c);
+
+        var xhrObject = new XhrObject(c);
 
         /**
          * @name IO#start
@@ -13191,6 +13212,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
          */
 
         fire("start", xhrObject);
+
         var transportContructor = transports[c.dataType[0]] || transports["*"],
             transport = new transportContructor(xhrObject);
         xhrObject.transport = transport;
@@ -13211,6 +13233,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // Check for headers option
         for (var i in c.headers) {
             xhrObject.setRequestHeader(i, c.headers[ i ]);
+        }
+
+
+        // allow setup native listener
+        // such as xhr.upload.addEventListener('progress', function (ev) {})
+        if (c.beforeSend && ( c.beforeSend.call(c.context || c, xhrObject, c) === false)) {
+            return undefined;
         }
 
         function genHandler(handleStr) {

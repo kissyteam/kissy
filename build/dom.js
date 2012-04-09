@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 8 20:00
+build time: Apr 9 12:04
 */
 /**
  * @fileOverview   dom-attr
@@ -3744,21 +3744,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
-
     S.each([WIDTH, HEIGHT], function (name) {
         DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            return el && getWH(el, name, "padding");
+            return el && getWHIgnoreDisplay(el, name, "padding");
         };
-
 
         DOM["outer" + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
-            if (el) {
-                return getWH(el, name, includeMargin ? "margin" : "border");
-            } else {
-                return null;
-            }
+            return el && getWHIgnoreDisplay(el, name, includeMargin ? "margin" : "border");
         };
 
         DOM[name] = function (selector, val) {
@@ -3769,7 +3763,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             return ret;
         };
     });
-
 
     var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
@@ -3785,16 +3778,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @ignore
              */
             get:function (elem, computed) {
-                var val;
                 if (computed) {
-                    if (elem.offsetWidth !== 0) {
-                        val = getWH(elem, name);
-                    } else {
-                        swap(elem, cssShow, function () {
-                            val = getWH(elem, name);
-                        });
-                    }
-                    return val + "px";
+                    return getWHIgnoreDisplay(elem, name) + "px";
                 }
             },
             set:function (elem, value) {
@@ -3850,7 +3835,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-
     function swap(elem, options, callback) {
         var old = {};
 
@@ -3867,7 +3851,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             elem[STYLE][ name ] = old[ name ];
         }
     }
-
 
     function style(elem, name, val) {
         var style;
@@ -3902,7 +3885,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style.removeAttribute(name);
                 }
             }
-
             if (!style.cssText) {
                 elem.removeAttribute('style');
             }
@@ -3919,7 +3901,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
             return ret === undefined ? "" : ret;
         }
+    }
 
+    // fix #119 : https://github.com/kissyteam/kissy/issues/119
+    function getWHIgnoreDisplay(elem) {
+        var val, args = arguments;
+        // incase elem is window
+        // elem.offsetWidth === undefined
+        if (elem.offsetWidth !== 0) {
+            val = getWH.apply(undefined, args);
+        } else {
+            swap(elem, cssShow, function () {
+                val = getWH.apply(undefined, args);
+            });
+        }
+        return val;
     }
 
 
@@ -3954,7 +3950,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 });
             }
 
-            return val
+            return val;
         }
 
         // Fall back to computed then uncomputed css if necessary
