@@ -5,7 +5,7 @@
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        win=S.Env.host,
+        win = S.Env.host,
         _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
@@ -48,18 +48,14 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
             }
 
             this.xhrObj = xhrObj;
-
+            this.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
             return undefined;
         }
 
         S.augment(XhrTransport, XhrTransportBase.proto, {
 
             send:function () {
-                var self = this,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
-                self.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
-                self.sendInternal();
+                this.sendInternal();
             }
 
         });

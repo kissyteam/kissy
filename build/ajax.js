@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:18
+build time: Apr 9 11:47
 */
 /**
  * @fileOverview form data  serialization util
@@ -766,6 +766,17 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
+            /**
+             * get native XMLHttpRequest
+             * @since 1.3
+             */
+            getNativeXhr:function () {
+                var transport;
+                if (transport = this.transport) {
+                    return transport.nativeXhr;
+                }
+            },
+
             _xhrReady:function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
@@ -806,7 +817,6 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
                 var defer = self._defer;
                 defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
-                self.transport = undefined;
             }
         }
     );
@@ -819,7 +829,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        win=S.Env.host,
+        win = S.Env.host,
         _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
@@ -862,18 +872,14 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
             }
 
             this.xhrObj = xhrObj;
-
+            this.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
             return undefined;
         }
 
         S.augment(XhrTransport, XhrTransportBase.proto, {
 
             send:function () {
-                var self = this,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
-                self.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
-                self.sendInternal();
+                this.sendInternal();
             }
 
         });
@@ -1499,6 +1505,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * only for dataType "jsonp" and "script" and "get" type.<br/>
      * force the script to certain charset.
      *
+     * @param {Function} c.beforeSend <br/>
+     * beforeSend(xhrObject,config)<br/>
+     * callback function called before the request is sent.this function has 2 arguments<br/>
+     * 1. current KISSY xhrObject<br/>
+     * 2. current io config<br/>
+     * note: can be used for add progress event listener for native xhr's upload attribute
+     * see <a href="http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress">XMLHttpRequest2</a>
+     *
      * @param {Function} c.success <br/>
      * success(data,textStatus,xhr)<br/>
      * callback function called if the request succeeds.this function has 3 arguments<br/>
@@ -1559,12 +1573,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * @returns {IO.XhrObject} current request object
      */
     function io(c) {
+
         if (!c.url) {
             return undefined;
         }
-        c = setUpConfig(c);
-        var xhrObject = new XhrObject(c);
 
+        c = setUpConfig(c);
+
+        var xhrObject = new XhrObject(c);
 
         /**
          * @name IO#start
@@ -1576,6 +1592,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
          */
 
         fire("start", xhrObject);
+
         var transportContructor = transports[c.dataType[0]] || transports["*"],
             transport = new transportContructor(xhrObject);
         xhrObject.transport = transport;
@@ -1596,6 +1613,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // Check for headers option
         for (var i in c.headers) {
             xhrObject.setRequestHeader(i, c.headers[ i ]);
+        }
+
+
+        // allow setup native listener
+        // such as xhr.upload.addEventListener('progress', function (ev) {})
+        if (c.beforeSend && ( c.beforeSend.call(c.context || c, xhrObject, c) === false)) {
+            return undefined;
         }
 
         function genHandler(handleStr) {

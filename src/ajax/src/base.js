@@ -229,6 +229,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * only for dataType "jsonp" and "script" and "get" type.<br/>
      * force the script to certain charset.
      *
+     * @param {Function} c.beforeSend <br/>
+     * beforeSend(xhrObject,config)<br/>
+     * callback function called before the request is sent.this function has 2 arguments<br/>
+     * 1. current KISSY xhrObject<br/>
+     * 2. current io config<br/>
+     * note: can be used for add progress event listener for native xhr's upload attribute
+     * see <a href="http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress">XMLHttpRequest2</a>
+     *
      * @param {Function} c.success <br/>
      * success(data,textStatus,xhr)<br/>
      * callback function called if the request succeeds.this function has 3 arguments<br/>
@@ -289,12 +297,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * @returns {IO.XhrObject} current request object
      */
     function io(c) {
+
         if (!c.url) {
             return undefined;
         }
-        c = setUpConfig(c);
-        var xhrObject = new XhrObject(c);
 
+        c = setUpConfig(c);
+
+        var xhrObject = new XhrObject(c);
 
         /**
          * @name IO#start
@@ -306,6 +316,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
          */
 
         fire("start", xhrObject);
+
         var transportContructor = transports[c.dataType[0]] || transports["*"],
             transport = new transportContructor(xhrObject);
         xhrObject.transport = transport;
@@ -326,6 +337,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // Check for headers option
         for (var i in c.headers) {
             xhrObject.setRequestHeader(i, c.headers[ i ]);
+        }
+
+
+        // allow setup native listener
+        // such as xhr.upload.addEventListener('progress', function (ev) {})
+        if (c.beforeSend && ( c.beforeSend.call(c.context || c, xhrObject, c) === false)) {
+            return undefined;
         }
 
         function genHandler(handleStr) {

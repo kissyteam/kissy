@@ -213,6 +213,17 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
+            /**
+             * get native XMLHttpRequest
+             * @since 1.3
+             */
+            getNativeXhr:function () {
+                var transport;
+                if (transport = this.transport) {
+                    return transport.nativeXhr;
+                }
+            },
+
             _xhrReady:function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
@@ -253,7 +264,6 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
                 var defer = self._defer;
                 defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
-                self.transport = undefined;
             }
         }
     );

@@ -33,6 +33,9 @@ History:
  - [*] valuechange 透明支持 webkitspeechchange 事件
 
  - [+] io 调用返回 Promise 类型，可以进行链式操作
+ - [+] io 增加 formdata 上传示例
+ - [+] io 调用返回的 XhrObject 增加 getNativeXhr 方法，用于取得原生 xhr 对象，对其上的 upload 上传进度进行监听
+ - [+] io 增加配置 beforeSend ，可用于发送前监听 nativeXhr 事件，例如 upload progress
 
  - [*] anim 支持 backgroundPosition
 

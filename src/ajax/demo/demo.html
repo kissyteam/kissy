@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>S.Ajax Demo</title>
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/anim.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/json.js"></script>
+<script type="text/javascript" src="../src/base.js"></script>
+<script type="text/javascript" src="../src/XhrObject.js"></script>
+<script type="text/javascript" src="../src/IframeTransport.js"></script>
+<script type="text/javascript" src="../src/FormSerializer.js"></script>
+<script type="text/javascript" src="../src/form.js"></script>
+<script type="text/javascript" src="../src/jsonp.js"></script>
+<script type="text/javascript" src="../src/ScriptTransport.js"></script>
+<script type="text/javascript" src="../src/XhrTransport.js"></script>
+<script type="text/javascript" src="../src/XdrFlashTransport.js"></script>
+<script type="text/javascript" src="../src/XhrTransportBase.js"></script>
+<script type="text/javascript" src="../src/SubDomainTransport.js"></script>
+<script type="text/javascript" src="../src/ajax.js"></script>
+
+</head>
+<body style="padding: 20px">
+
+<button id="get">GET</button>
+<button id="post">POST</button>
+<button id="json">JSON</button>
+<button id="jsonp">JSONP</button>
+<button id="sync">同步获取数据</button>
+
+<div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+
+
+<script>
+    KISSY.use("node,ajax,json", function(S, Node, IO, JSON) {
+        var $ = Node.all;
+
+        var _log = S.log,
+                c = $('#console');
+        var log = function() {
+            c.html(arguments[0]);
+            _log.apply(S, arguments);
+        };
+
+
+        // 全局事件
+        IO.on('start', function() {
+            $('#console').html('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
+        });
+
+        IO.on('complete', function() {
+            var p = $('#console p');
+            if (p) {
+                p.remove();
+            }
+        });
+
+        //普通 get 请求
+        $('#get').on('click', function() {
+            var s = "http://yiminghe.taobao.com/kissy_git/kissy/src/ajax/";
+            IO.get('' + '../tests/interface.php?t=get', function(data) {
+                log('GET ' + data);
+            });
+        });
+
+        //普通 post 请求
+        $('#post').on('click', function() {
+            IO.post('../tests/interface.php?t=post', {
+                type:'post',
+                name:'jayli',
+                company:'cn.yahoo.com',
+                countru:'china'
+            }, function(o) {
+                log('POST ' + o);
+            });
+        });
+
+        // JSON
+        $('#json').on('click', function() {
+            IO.get('../tests/interface.php?t=get', function(data) {
+                log('json ' + JSON.stringify(data));
+            }, 'json');
+
+        });
+
+        // JSONP
+        $('#jsonp').on('click', function() {
+
+            IO.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+                    function(data) {
+                        log(JSON.stringify(data));
+                    }
+            );
+        });
+
+        // 同步
+        $('#sync').on('click', function() {
+            var str = IO({
+                type:'get',
+                url:'../tests/interface.php?t=get',
+                async:false,
+                complete: function(data) {
+                    log(data);
+                }
+            }).responseText;
+            log('ASYN block the thread :' + str);
+        });
+    });
+</script>
+</body>
+</html>
