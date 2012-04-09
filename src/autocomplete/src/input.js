@@ -2,7 +2,7 @@
  * input wrapper for autoComplete component
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender) {
+KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender, _, undefined) {
     var AutoComplete,
         KeyCodes = Event.KeyCodes;
 
@@ -43,8 +43,13 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 if (self._stopNotify) {
                     return;
                 }
-                self._savedInputValue = self.get('el').val();
-                self.sendRequest(self._savedInputValue);
+                var value = self._getValue();
+                if (value === undefined) {
+                    return;
+                }
+                self._savedInputValue = value;
+                S.log("value change: " + value);
+                self.sendRequest(value);
             },
 
             _handleBlur:function () {
@@ -67,11 +72,13 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     var v;
                     // 同步当前 width
                     autoCompleteMenu.set("width", menuCfg.width || self.get("el").css("width"));
-                    var contents = [];
+                    var contents;
                     if (self.get("format")) {
                         contents = self.get("format").call(self,
-                            self.get("el").val(),
+                            self._getValue(),
                             data);
+                    } else {
+                        contents = [];
                     }
                     for (var i = 0; i < data.length; i++) {
                         v = data[i];
@@ -95,49 +102,59 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 if (!autoCompleteMenu) {
                     return;
                 }
+                var updateInputOnDownUp = self.get("updateInputOnDownUp");
 
-                // autocomplete will change input value
-                // but it does not need to reload data
-                if (S.inArray(e.keyCode, [
-                    KeyCodes.UP,
-                    KeyCodes.DOWN,
-                    KeyCodes.ESC
-                ])) {
-                    self._stopNotify = 1;
-                } else {
-                    self._stopNotify = 0;
+                if (updateInputOnDownUp) {
+                    // autocomplete will change input value
+                    // but it does not need to reload data
+                    if (S.inArray(e.keyCode, [
+                        KeyCodes.UP,
+                        KeyCodes.DOWN,
+                        KeyCodes.ESC
+                    ])) {
+                        self._stopNotify = 1;
+                    } else {
+                        self._stopNotify = 0;
+                    }
                 }
                 var activeItem;
                 if (autoCompleteMenu.get("visible")) {
                     var handledByMenu = autoCompleteMenu._handleKeydown(e);
 
-                    if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
-                        // update menu's active value to input just for show
-                        el.val(autoCompleteMenu.get("activeItem").get("textContent"))
+                    if (updateInputOnDownUp) {
+                        if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                            // update menu's active value to input just for show
+                            self._setValue(autoCompleteMenu.get("activeItem").get("textContent"));
+                        }
                     }
                     // esc
                     if (e.keyCode == KeyCodes.ESC) {
                         autoCompleteMenu.hide();
-                        // restore original user's input text
-                        el.val(self._savedInputValue);
+                        if (updateInputOnDownUp) {
+                            // restore original user's input text
+                            self._setValue(self._savedInputValue);
+                        }
                         return true;
                     }
+
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (e.keyCode == KeyCodes.TAB) {
                         if (activeItem = autoCompleteMenu.get("activeItem")) {
                             activeItem._performInternal();
-                            return true;
+                            // only prevent focus change in multiple mode
+                            if (self.get("multiple")) {
+                                return true;
+                            }
                         }
                     }
                     return handledByMenu;
-                } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
-                    if (autoCompleteMenu.get("children").length) {
-                        autoCompleteMenu._showForAutoComplete(self);
-                        return true;
-                    } else {
-                        self.sendRequest(el.val());
-                    }
+                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) &&
+                    self.get("reFetchOnDownUp")) {
+                    // re-fetch , consider multiple input
+                    S.log("refetch : " + self._getValue());
+                    self.sendRequest(self._getValue());
+                    return true;
                 }
             },
 
@@ -145,7 +162,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 var self = this;
                 if (item) {
                     var textContent = item.get("textContent");
-                    self.get("el").val(textContent);
+                    self._setValue(textContent);
                     self._savedInputValue = textContent;
                     /**
                      * @name AutoComplete#select
@@ -164,13 +181,132 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
             },
 
+            /**
+             * Consider multiple mode , get token at current cursor position
+             */
+            _getValue:function () {
+                var self = this,
+                    el = self.get("el"),
+                    inputVal = el.val();
+                if (self.get("multiple")) {
+
+                    var inputDesc = self._getInputDesc();
+                    var tokens = inputDesc.tokens, tokenIndex = inputDesc.tokenIndex;
+                    var separator = self.get("separator");
+                    var token = tokens[tokenIndex] || "";
+                    // only if token starts with separator , then token has meaning!
+                    if (separator.indexOf(token.charAt(0)) != -1) {
+                        // remove separator
+                        return token.substring(1);
+                    }
+                    if (self.get("autoCompleteOnInitial") && tokenIndex == 0) {
+                        return token;
+                    }
+                    return undefined;
+                } else {
+                    return inputVal;
+                }
+            },
+
+            _setValue:function (value) {
+                var self = this;
+                var el = self.get("el");
+                if (self.get("multiple")) {
+                    var inputDesc = self._getInputDesc();
+                    var tokens = inputDesc.tokens, tokenIndex = inputDesc.tokenIndex;
+                    var separator = self.get("separator");
+                    var cursorPosition;
+                    var appendSeparatorOnComplete = self.get("appendSeparatorOnComplete");
+
+                    var token = tokens[tokenIndex];
+
+                    if (separator.indexOf(token.charAt(0)) != -1) {
+                        tokens[tokenIndex] = token.charAt(0);
+                    } else {
+                        tokens[tokenIndex] = "";
+                    }
+
+                    tokens[tokenIndex] += value;
+
+                    var nextToken = tokens[tokenIndex + 1];
+
+                    // appendSeparatorOnComplete if next token does not start with separator
+                    if (appendSeparatorOnComplete &&
+                        (!nextToken || separator.indexOf(nextToken.charAt(0)) == -1 )) {
+                        tokens[tokenIndex] += separator.charAt(0);
+                    }
+
+                    cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
+
+                    el.val(tokens.join(""));
+
+                    el.prop("selectionStart", cursorPosition);
+                    el.prop("selectionEnd", cursorPosition);
+                } else {
+                    el.val(value);
+                }
+            },
+
+            _getInputDesc:function () {
+                var self = this,
+                    el = self.get("el"),
+                    inputVal = el.val(),
+                    tokens = [],
+                    cache = [],
+                    literal = self.get("literal"),
+                    separator = self.get("separator"),
+                    inLiteral = false,
+                    //whitespace = self.get("whitespace"),
+                    cursorPosition = el.prop('selectionStart'),
+                    tokenIndex = -1;
+
+                for (var i = 0; i < inputVal.length; i++) {
+                    var c = inputVal.charAt(i);
+                    if (i == cursorPosition) {
+                        // current token index
+                        tokenIndex = tokens.length;
+                    }
+                    if (!inLiteral) {
+                        // whitespace is not part of token value
+                        // then separate
+//                        if (!whitespace && /\s|\xa0/.test(c)) {
+//                            tokens.push(cache.join(""));
+//                            cache = [];
+//                        }
+
+                        if (separator.indexOf(c) != -1) {
+                            tokens.push(cache.join(""));
+                            cache = [];
+                        }
+                    }
+                    if (literal) {
+                        if (c == literal) {
+                            inLiteral = !inLiteral;
+                        }
+                    }
+                    cache.push(c);
+                }
+
+                if (cache.length) {
+                    tokens.push(cache.join(""));
+                }
+                if (tokenIndex == -1) {
+                    tokenIndex = tokens.length - 1;
+                }
+                return {
+                    tokens:tokens,
+                    tokenIndex:tokenIndex
+                };
+            },
+
             destructor:function () {
                 var self = this,
                     autoCompleteMenu = self.get("menu");
                 autoCompleteMenu.detachInput(self, self.get("destroyMenu"));
                 self.__set("menu", null);
             }
-        }, {
+        },
+        {
             ATTRS:/**
              * @lends AutoComplete
              */
@@ -178,9 +314,11 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 focusable:{
                     value:true
                 },
+
                 handleMouseEvents:{
                     value:false
                 },
+
                 allowTextSelection_:{
                     value:true
                 },
@@ -204,6 +342,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                         }
                     }
                 },
+
                 /**
                  * aria-owns.ReadOnly.
                  * @type String
@@ -211,6 +350,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 ariaOwns:{
                     view:true
                 },
+
                 /**
                  * aria-expanded.ReadOnly.
                  * @type String
@@ -218,6 +358,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 ariaExpanded:{
                     view:true
                 },
+
                 /**
                  * dataSource for autoComplete.For Configuration when new.
                  * @type AutoComplete.LocalDataSource|AutoComplete.RemoteDataSource
@@ -225,11 +366,15 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 dataSource:{
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
                 },
+
                 /**
                  * maxItemCount max count of data to be shown
                  * @type Number
                  */
-                maxItemCount:{value:99999},
+                maxItemCount:{
+                    value:99999
+                },
+
                 /**
                  * Config autoComplete menu list.For Configuration when new.
                  * {Number} menuCfg.width :
@@ -253,17 +398,91 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  * html/text/menu item attributes from array of data.
                  * @type {Function}
                  */
-                format:{},
+                format:{
+                },
 
                 /**
                  * Readonly.User selected menu item by click or enter on highlighted suggested menu item
                  * @type Menu.Item
                  */
-                selectedItem:{}
-            },
+                selectedItem:{
+                },
 
+                /**
+                 * Whether allow multiple input,separated by separator
+                 * Default : false
+                 * @type Boolean
+                 */
+                multiple:{
+                },
+
+                /**
+                 * separator chars used to separator multiple inputs.
+                 * Default: ;,
+                 * @type String
+                 */
+                separator:{
+                    value:",;"
+                },
+
+                /**
+                 * Whether whitespace is part of toke value.
+                 * Default false
+                 * @type Boolean
+                 */
+//                whitespace:{
+//                    value:false
+//                },
+
+                /**
+                 * Whether append separator after auto-completed value.
+                 * Default true
+                 * @type Boolean
+                 */
+                appendSeparatorOnComplete:{
+                    value:true
+                },
+
+                /**
+                 * Whether update input's value at keydown or up when autocomplete menu shows.
+                 * Default true
+                 * @type Boolean
+                 */
+                updateInputOnDownUp:{
+                    value:true
+                },
+
+                /**
+                 * Whether stop keydown and up to re-fetch autoComplete menu
+                 * based on current value.
+                 * Default : true
+                 * @type Boolean
+                 */
+                reFetchOnDownUp:{
+                    value:true
+                },
+
+                /**
+                 * If separator wrapped by literal chars,separator become narmal chars.
+                 * Default : "
+                 * @type String
+                 */
+                literal:{
+                    value:"\""
+                },
+
+                /**
+                 * Whether autoComplete on initial even there is no separator.
+                 * Default : true
+                 * @type Boolean
+                 */
+                autoCompleteOnInitial:{
+                    value:true
+                }
+            },
             DefaultRender:AutoCompleteRender
-        });
+        }
+    );
 
     Component.UIStore.setUIByClass("autocomplete-input", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -276,10 +495,16 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
         'event',
         'uibase', 'component',
         'menu',
-        './inputRender']
+        './inputRender',
+        'input-selection'
+    ]
 });
 
 /**
+ * TODO auto-complete menu 对齐当前输入位置
+ *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
+ *  - https://github.com/kir/js_cursor_position
+ *
  * 2012-04-01 可能 issue :
  *  - 用户键盘上下键高亮一些选项，
  *    input 值为高亮项的 textContent,那么点击 body 失去焦点，

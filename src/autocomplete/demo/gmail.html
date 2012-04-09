@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>gmail 多选模式</title>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../assets/default.css" rel="stylesheet"/>
+
+</head>
+<body>
+<h1 style="text-align: center">gmail 多选模式</h1>
+<div style="margin:10px auto; width:80%;text-align: center">
+    <h2>
+        static : input a or b or c or d or 3
+    </h2>
+    <textarea id="inp" style="width: 500px;height: 18px;resize: none;overflow-y: hidden"></textarea>
+</div>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/inputRender.js"></script>
+<script src="../src/input.js"></script>
+<script src="../src/autocomplete.js"></script>
+<script src="../src/menu.js"></script>
+<script src="../src/menuRender.js"></script>
+<script src="../src/localDataSource.js"></script>
+<script src="../src/remoteDataSource.js"></script>
+<script src="../src/basic.js"></script>
+<script src="../src/BasicComboBox.js"></script>
+<script src="../src/BasicComboBoxRender.js"></script>
+<script>
+    KISSY.use("autocomplete", function (S, AutoComplete) {
+
+
+        var data = [
+            '"a123456" <a123456@gmail.com>',
+            '"b12345" <b12345@gmail.com>',
+            'c3464356@gmail.com',
+            '"d23434" <d23434@gmail.com>'
+        ];
+
+        var basicAutoComplete = new AutoComplete.Basic({
+            srcNode:'#inp',
+            data:data,
+            multiple:true,
+            reFetchOnDownUp:false,
+            updateInputOnDownUp:false,
+            format:function (query, data) {
+                var ret = [];
+                for (var i = 0; i < data.length; i++) {
+                    var v = data[i] + "";
+                    if (query) {
+                        ret[i] = {
+                            content:S.escapeHTML(v)
+                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    "<b>$&</b>")
+                        };
+                    } else {
+                        ret[i] = {
+                            content:S.escapeHTML(v)
+                        };
+                    }
+                }
+                return ret;
+            },
+            dataSourceCfg:{
+                parse:function (query, data) {
+                    var ret = [];
+                    S.each(data, function (d) {
+                        if (d.replace(/@gmail\.com/, "").indexOf(query) != -1) {
+                            ret.push(d);
+                        }
+                    });
+                    return ret;
+                }
+            }
+
+        });
+
+        basicAutoComplete.render();
+
+        var basicAutoCompleteEl = basicAutoComplete.get("el");
+
+        basicAutoCompleteEl.on("keyup", function () {
+            // scrollHeight will always grow in chrome
+            basicAutoCompleteEl.css("height", 0);
+            basicAutoCompleteEl.css("height", basicAutoCompleteEl[0].scrollHeight);
+        });
+
+        basicAutoComplete.on("select", function (e) {
+            //S.log(e.value + "\n" + e.content + "\n" + e.textContent);
+        });
+
+    });
+</script>
+</body>
+</html>
