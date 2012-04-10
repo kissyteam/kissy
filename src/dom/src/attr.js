@@ -253,7 +253,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * Get the value of a property for the first element in the set of matched elements.
                  * or
                  * Set one or more properties for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String|Object} name
                  * The name of the property to set.
                  * or
@@ -294,7 +294,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Whether one of the matched elements has specified property name
-                 * @param {Array<HTMLElement>|String} selector 元素
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
                  * @param {String} name The name of property to test
                  * @return {boolean}
                  */
@@ -311,7 +311,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove a property for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String} name The name of the property to remove.
                  */
                 removeProp:function (selector, name) {

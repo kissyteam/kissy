@@ -3,9 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("input-selection", function (S, DOM) {
+    var propHooks = DOM._propHooks;
+
     if (typeof S.Env.host.document.createElement("input").selectionEnd != "number") {
-        S.log("fix selectionEnd/Start !");
-        var propHooks = DOM._propHooks;
+        // S.log("fix selectionEnd/Start !");
         // note :
         // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
         // else kissy will move start to one step backward and move end to one step forword
@@ -127,6 +128,96 @@ KISSY.add("input-selection", function (S, DOM) {
             }
         }
     }
+
+    var FAKE = "<div style='" +
+        "z-index:-9999;" +
+        "overflow:hidden;" +
+        "word-wrap: break-word;" +
+        "position: absolute;" +
+        "left:-9999px;" +
+        "top:-9999px;" +
+        "'></div>",
+        MARKER = "<span>" +
+            // must has content
+            // or else <br/><span></span> can not get right coordinates
+            "x" +
+            "</span>",
+        STYLES = [
+            'paddingLeft',
+            'paddingTop', 'paddingBottom',
+            'paddingRight',
+            'marginLeft',
+            'marginTop',
+            'marginBottom',
+            'marginRight',
+            'borderLeftStyle',
+            'borderTopStyle',
+            'borderBottomStyle',
+            'borderRightStyle',
+            'borderLeftWidth',
+            'borderTopWidth',
+            'borderBottomWidth',
+            'borderRightWidth',
+            'line-height',
+            'outline',
+            'width',
+            'height',
+            'fontFamily',
+            'fontSize',
+            'fontWeight',
+            'fontVariant',
+            'fontStyle'
+        ],
+        // textarea 连续空格，firefox 自动换行，chrome 不自动换行
+        // "&nbsp;" firefox 下问题：一二三四五， 六
+        // &nbsp; chrome 自动换行
+        // pre : firefox 不自动换行，chrome 自动换行
+        // pre-wrap bug example：i think it issss to hard to understa nd to what yo
+        EMPTY = '<span style="white-space:pre-wrap;"> </span>';
+
+    propHooks.KsCursorOffset = {
+        get:function (elem) {
+            var doc = elem.ownerDocument, offset,
+                elemScrollTop = elem.scrollTop,
+                elemScrollLeft = elem.scrollLeft;
+            if (doc.selection) {
+                var range = doc.selection.createRange();
+                return {
+                    left:range.boundingLeft + elemScrollLeft,
+                    top:range.boundingTop + elemScrollTop
+                };
+            }
+            var fake = DOM.create(FAKE);
+            S.each(STYLES, function (s) {
+                DOM.css(fake, s, DOM.css(elem, s));
+            });
+            var selectionStart = elem.selectionStart;
+
+            fake.innerHTML = elem.value.substring(0, selectionStart)
+                .replace(/\n/g, "<br/>")
+                .replace(/\s/g, EMPTY) +
+                // marker
+                MARKER;
+
+//            S.log(selectionStart);
+//            S.log(fake.innerHTML);
+//            S.log(elemScrollTop);
+            DOM.prepend(fake, doc.body);
+            // can not set fake to scrollTop，marker is always at bottom of marker
+            // when cursor at the middle of textarea , error occurs
+            // fake.scrollTop = elemScrollTop;
+            // fake.scrollLeft = elemScrollLeft;
+            DOM.offset(fake, DOM.offset(elem));
+            var marker = fake.lastChild;
+            offset = DOM.offset(marker);
+            offset.top += DOM.height(marker);
+            // so minus scrollTop/Left
+            offset.top -= elemScrollTop;
+            offset.left -= elemScrollLeft;
+            DOM.remove(fake);
+            return offset;
+        }
+    };
 }, {
     requires:['dom']
 });
