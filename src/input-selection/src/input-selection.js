@@ -183,6 +183,8 @@ KISSY.add("input-selection", function (S, DOM) {
             if (doc.selection) {
                 var range = doc.selection.createRange();
                 return {
+                    // http://msdn.microsoft.com/en-us/library/ie/ms533540(v=vs.85).aspx
+                    // or simple range.offsetLeft for textarea
                     left:range.boundingLeft + elemScrollLeft,
                     top:range.boundingTop + elemScrollTop
                 };
