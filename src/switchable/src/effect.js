@@ -146,13 +146,17 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 panels = host.panels,
                 content = host.content,
                 steps = cfg.steps,
+                panels0 = panels[0],
                 activeIndex = host.activeIndex;
 
             // 1. 获取高宽
             host.viewSize = [
-                cfg.viewSize[0] || panels[0].offsetWidth * steps,
-                cfg.viewSize[1] || panels[0].offsetHeight * steps
+                cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
+                cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
             ];
+            if (!host.viewSize[0]) {
+                S.log('switchable must specify viewSize if there is not panels', 'error')
+            }
             // 注：所有 panel 的尺寸应该相同
             // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 

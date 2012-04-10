@@ -246,11 +246,17 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
             // get length
             n = panels.length;
+
             // fix self.length 不为整数的情况, 会导致之后的判断 非0, by qiaohua 20111101
             self.length = Math.ceil(n / cfg.steps);
 
-            // 自动生成 triggers
-            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
+            self.nav = nav || cfg.hasTriggers && triggers[0] && triggers[0].parentNode;
+
+            // 自动生成 triggers and nav
+            if (cfg.hasTriggers && (
+                // 指定了 navCls ，但是可能没有手动填充 trigger
+                !self.nav || triggers.length == 0
+                )) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
@@ -260,7 +266,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
             // get content
             self.content = content || panels[0].parentNode;
-            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
+
         },
 
         /**
@@ -269,7 +275,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         _generateTriggersMarkup:function (len) {
             var self = this,
                 cfg = self.config,
-                ul = DOM.create('<ul>'),
+                ul = self.nav || DOM.create('<ul>'),
                 li,
                 i;
 
@@ -284,6 +290,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             }
 
             self.container.appendChild(ul);
+            self.nav = ul;
             return DOM.children(ul);
         },
 

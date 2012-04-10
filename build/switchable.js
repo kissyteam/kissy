@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 10 12:19
 */
 /**
  * @fileOverview accordion aria support
@@ -541,7 +541,9 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
             function startAutoplay() {
                 // 设置自动播放
                 timer = S.later(function () {
-                    if (host.paused) return;
+                    if (host.paused) {
+                        return;
+                    }
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     // 用户 mouseenter 不提供 forward ，全景滚动
                     host.switchTo(host.activeIndex < host.length - 1 ?
@@ -872,11 +874,17 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
             // get length
             n = panels.length;
+
             // fix self.length 不为整数的情况, 会导致之后的判断 非0, by qiaohua 20111101
             self.length = Math.ceil(n / cfg.steps);
 
-            // 自动生成 triggers
-            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
+            self.nav = nav || cfg.hasTriggers && triggers[0] && triggers[0].parentNode;
+
+            // 自动生成 triggers and nav
+            if (cfg.hasTriggers && (
+                // 指定了 navCls ，但是可能没有手动填充 trigger
+                !self.nav || triggers.length == 0
+                )) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
@@ -886,7 +894,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
             // get content
             self.content = content || panels[0].parentNode;
-            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
+
         },
 
         /**
@@ -895,7 +903,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         _generateTriggersMarkup:function (len) {
             var self = this,
                 cfg = self.config,
-                ul = DOM.create('<ul>'),
+                ul = self.nav || DOM.create('<ul>'),
                 li,
                 i;
 
@@ -910,6 +918,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             }
 
             self.container.appendChild(ul);
+            self.nav = ul;
             return DOM.children(ul);
         },
 
@@ -2339,13 +2348,17 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 panels = host.panels,
                 content = host.content,
                 steps = cfg.steps,
+                panels0 = panels[0],
                 activeIndex = host.activeIndex;
 
             // 1. 获取高宽
             host.viewSize = [
-                cfg.viewSize[0] || panels[0].offsetWidth * steps,
-                cfg.viewSize[1] || panels[0].offsetHeight * steps
+                cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
+                cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
             ];
+            if (!host.viewSize[0]) {
+                S.log('switchable must specify viewSize if there is not panels', 'error')
+            }
             // 注：所有 panel 的尺寸应该相同
             // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 

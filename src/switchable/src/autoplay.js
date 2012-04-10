@@ -57,7 +57,9 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
             function startAutoplay() {
                 // 设置自动播放
                 timer = S.later(function () {
-                    if (host.paused) return;
+                    if (host.paused) {
+                        return;
+                    }
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     // 用户 mouseenter 不提供 forward ，全景滚动
                     host.switchTo(host.activeIndex < host.length - 1 ?
