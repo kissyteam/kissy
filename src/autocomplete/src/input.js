@@ -6,6 +6,24 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
     var AutoComplete,
         KeyCodes = Event.KeyCodes;
 
+    var ALIGN = {
+        points:["bl", "tl"],
+        overflow:{
+            failX:1,
+            failY:1,
+            adjustX:1,
+            adjustY:1
+        }
+    };
+
+    function alignMenuImmediately(self) {
+        var menu = self.get("menu"),
+            menuCfg = self.get("menuCfg") || {};
+        menu.set("align", S.merge({
+            node:self.get("el")
+        }, ALIGN, menuCfg.align));
+    }
+
     /**
      * Input/Textarea Wrapper for autoComplete
      * @name AutoComplete
@@ -89,10 +107,32 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                             value:v
                         }, contents[i])))
                     }
-                    autoCompleteMenu._showForAutoComplete(self);
+                    self._showMenu();
                 } else {
                     autoCompleteMenu.hide();
                 }
+            },
+
+            _showMenu:function () {
+                var self = this;
+                var menu = self.get("menu");
+                menu._input = self;
+                menu._clearDismissTimer();
+                alignMenuImmediately(self);
+                menu.show();
+                // make menu item (which textContent is same as input) active
+                var children = menu.get("children"),
+                    val = self._getValue();
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i].get("textContent") == val) {
+                        menu.set("highlightedItem", children[i]);
+                        return;
+                    }
+                }
+            },
+
+            _onWindowResize:function () {
+                alignMenuImmediately(this);
             },
 
             _handleKeyEventInternal:function (e) {
@@ -493,7 +533,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
 }, {
     requires:[
         'event',
-        'uibase', 'component',
+        'uibase',
+        'component',
         'menu',
         './inputRender',
         'input-selection'

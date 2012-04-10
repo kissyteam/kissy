@@ -3,28 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
-    var ALIGN = {
-        points:["bl", "tl"],
-        overflow:{
-            failX:1,
-            failY:1,
-            adjustX:1,
-            adjustY:1
-        }
-    };
 
-    function reAlign2() {
-        var self = this,
-            _input = self._input;
-        if (_input && self.get("visible")) {
-            var menuCfg = _input.get("menuCfg") || {};
-            self.set("align", S.merge({
-                node:_input.get("el")
-            }, ALIGN, menuCfg.align));
-        }
-    }
 
-    var reAlign = S.buffer(reAlign2, 50), AutoCompleteMenu;
+    var AutoCompleteMenu;
 
     /**
      * DropDown menu for autoComplete input.
@@ -75,7 +56,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
             },
 
             bindUI:function () {
-
                 var self = this;
 
                 self.on("show", function () {
@@ -105,6 +85,16 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
                         50
                     );
                 });
+
+                var reAlign = S.buffer(function () {
+                    var self = this,
+                        _input = self._input;
+                    if (_input && self.get("visible")) {
+                        _input._onWindowResize();
+                    }
+                }, 50);
+
+                self.__reAlign = reAlign;
 
                 Event.on(window, "resize", reAlign, self);
 
@@ -140,26 +130,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
                 this._hideForAutoComplete();
             },
 
-            _showForAutoComplete:function (_input) {
-                var self = this;
-                self._input = _input;
-                self._clearDismissTimer();
-                var menuCfg = _input.get("menuCfg") || {};
-                self.set("align", S.merge({
-                    node:_input.get("el")
-                }, ALIGN, menuCfg.align));
-                self.show();
-                // make menu item (which textContent is same as input) active
-                var children = self.get("children"),
-                    val = _input._getValue();
-                for (var i = 0; i < children.length; i++) {
-                    if (children[i].get("textContent") == val) {
-                        self.set("highlightedItem", children[i]);
-                        return;
-                    }
-                }
-            },
-
             _hideForAutoComplete:function () {
                 var self = this;
                 self._dismissTimer = setTimeout(function () {
@@ -175,7 +145,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
 
             destructor:function () {
                 var self = this;
-                Event.remove(window, "resize", reAlign, self);
+                Event.remove(window, "resize", self.__reAlign, self);
                 S.each(self._inputs, function (inp) {
                     inp.__set("menu", null);
                 });
