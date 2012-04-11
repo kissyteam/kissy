@@ -201,7 +201,7 @@ KISSY.add("input-selection", function (S, DOM) {
 
             var selectionStart = elem.selectionStart;
 
-            fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart)) +
+            fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
                 // marker
                 MARKER;
 
@@ -222,6 +222,10 @@ KISSY.add("input-selection", function (S, DOM) {
             var marker = fake.lastChild;
             offset = DOM.offset(marker);
             offset.top += DOM.height(marker);
+            // at the start of textarea , just fetch marker's left
+            if (selectionStart > 0) {
+                offset.left += DOM.width(marker);
+            }
             // so minus scrollTop/Left
             offset.top -= elemScrollTop;
             offset.left -= elemScrollLeft;
