@@ -24,6 +24,36 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
         }, ALIGN, menuCfg.align));
     }
 
+    function alignWithTokenImmediately(self) {
+        var inputDesc = self._getInputDesc(),
+            tokens = inputDesc.tokens,
+            menu = self.get("menu"),
+            cursorPosition = inputDesc.cursorPosition,
+            tokenIndex = inputDesc.tokenIndex,
+            tokenCursorPosition,
+            el = self.get("el");
+        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
+        if (tokenCursorPosition > 0) {
+            // behind separator
+            ++tokenCursorPosition;
+        }
+        el.prop("selectionStart", tokenCursorPosition);
+        el.prop("selectionEnd", tokenCursorPosition);
+        var cursorOffset = el.prop("KsCursorOffset");
+        el.prop("selectionStart", cursorPosition);
+        el.prop("selectionEnd", cursorPosition);
+        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
+    }
+
+    function alignImmediately(self) {
+        if (self.get("multiple") &&
+            self.get("alignWithCursor")) {
+            alignWithTokenImmediately(self);
+        } else {
+            alignMenuImmediately(self);
+        }
+    }
+
     /**
      * Input/Textarea Wrapper for autoComplete
      * @name AutoComplete
@@ -89,7 +119,10 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     var menuCfg = self.get("menuCfg") || {};
                     var v;
                     // 同步当前 width
-                    autoCompleteMenu.set("width", menuCfg.width || self.get("el").css("width"));
+                    autoCompleteMenu.set("width",
+                        menuCfg.width === undefined ?
+                            self.get("el").css("width") :
+                            menuCfg.width);
                     var contents;
                     if (self.get("format")) {
                         contents = self.get("format").call(self,
@@ -118,7 +151,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 var menu = self.get("menu");
                 menu._input = self;
                 menu._clearDismissTimer();
-                alignMenuImmediately(self);
+                alignImmediately(self);
                 menu.show();
                 // make menu item (which textContent is same as input) active
                 var children = menu.get("children"),
@@ -132,7 +165,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
             },
 
             _onWindowResize:function () {
-                alignMenuImmediately(this);
+                alignImmediately(this);
             },
 
             _handleKeyEventInternal:function (e) {
@@ -296,7 +329,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     literal = self.get("literal"),
                     separator = self.get("separator"),
                     inLiteral = false,
-                    //whitespace = self.get("whitespace"),
+                    whitespace = self.get("whitespace"),
                     cursorPosition = el.prop('selectionStart'),
                     tokenIndex = -1;
 
@@ -309,10 +342,10 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     if (!inLiteral) {
                         // whitespace is not part of token value
                         // then separate
-//                        if (!whitespace && /\s|\xa0/.test(c)) {
-//                            tokens.push(cache.join(""));
-//                            cache = [];
-//                        }
+                        if (!whitespace && /\s|\xa0/.test(c)) {
+                            tokens.push(cache.join(""));
+                            cache = [];
+                        }
 
                         if (separator.indexOf(c) != -1) {
                             tokens.push(cache.join(""));
@@ -335,6 +368,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
                 return {
                     tokens:tokens,
+                    cursorPosition:cursorPosition,
                     tokenIndex:tokenIndex
                 };
             },
@@ -467,12 +501,12 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
 
                 /**
                  * Whether whitespace is part of toke value.
-                 * Default false
+                 * Default true
                  * @type Boolean
                  */
-//                whitespace:{
-//                    value:false
-//                },
+                whitespace:{
+                    value:true
+                },
 
                 /**
                  * Whether append separator after auto-completed value.
@@ -503,7 +537,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 },
 
                 /**
-                 * If separator wrapped by literal chars,separator become narmal chars.
+                 * If separator wrapped by literal chars,separator become normal chars.
                  * Default : "
                  * @type String
                  */
@@ -518,6 +552,14 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  */
                 autoCompleteOnInitial:{
                     value:true
+                },
+
+                /**
+                 * whether align menu with individual token after separated by separator.
+                 * Default : false
+                 * @type Boolean
+                 */
+                alignWithCursor:{
                 }
             },
             DefaultRender:AutoCompleteRender
