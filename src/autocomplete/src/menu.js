@@ -126,10 +126,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
                 }
             },
 
-            _onInputBlur:function () {
-                this._hideForAutoComplete();
-            },
-
             _hideForAutoComplete:function () {
                 var self = this;
                 self._dismissTimer = setTimeout(function () {

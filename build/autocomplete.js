@@ -1,4 +1,220 @@
+﻿/*
+Copyright 2012, KISSY UI Library v1.30dev
+MIT Licensed
+build time: Apr 11 20:59
+*/
 /**
+ * Combobox derived from autocomplete
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, BasicComboBoxRender) {
+
+    // toggle menu show and hide
+    function onBtn(e) {
+        S.log("mousedown");
+        var self = this,
+            menu = self.get("menu"),
+            domEl = self.get("el")[0];
+        if (menu.get("visible")) {
+            menu.hide();
+        } else {
+            domEl.focus();
+            self.sendRequest('');
+        }
+        e && e.halt();
+    }
+
+    return  UIBase.create(BasicAutoComplete, {
+        bindUI:function () {
+            var self = this,
+                el = self.get("el"),
+                container = self.get("container"),
+                button = self.get("button");
+            container.on('click', onBtn, self);
+            var menuCfg = this.get("menuCfg");
+            if (!menuCfg.width) {
+                // drop down menu width should add button width!
+                menuCfg.width = container.width();
+            }
+        }
+    }, {
+        ATTRS:{
+            container:{
+                view:true
+            },
+            button:{
+                view:true
+            }
+        },
+        DefaultRender:BasicComboBoxRender
+    });
+}, {
+    requires:['uibase', './basic', './BasicComboBoxRender']
+});/**
+ * Combobox derived from autocomplete
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteRender, Node) {
+
+    var $ = Node.all, Render;
+
+    return Render = UIBase.create(AutoCompleteRender, {
+        createDom:function () {
+            var self = this,
+                container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
+                button = $("<a " +
+                    // do need keyboard
+                    "tabindex='-1' " +
+                    "href='javascript:void(\"open\")'  " +
+                    // non-ie do not lose focus
+                    "onmousedown='return false;' " +
+                    "class='" + self.get("prefixCls") +
+                    "combobox-button'>&#x25BC;</a>")
+                    // ie do not lose focus
+                    .unselectable();
+            self.__set("container", container);
+            self.__set("button", button);
+        },
+        renderUI:function () {
+            var self = this,
+                container = self.get('container'),
+                button = self.get("button"),
+                parent = self.get("el").parent();
+            container
+                .appendTo(parent)
+                .append(self.get("el"))
+                .append(button);
+        },
+        _setFocused:function (v) {
+            var self = this;
+            Render.superclass._setFocused.apply(self, arguments);
+            self.get("container")[v ? "addClass" : "removeClass"](self.get("prefixCls")
+                + "combobox-focused");
+        },
+
+        destructor:function () {
+            this.get("container").remove();
+        }
+    }, {
+        ATTRS:{
+            container:{},
+            button:{}
+        }
+    });
+}, {
+    requires:['uibase', './inputRender', 'node']
+});/**
+ * export autocomplete
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, RemoteDataSource, Basic, BasicComboBox) {
+    AutoComplete.Menu = Menu;
+    AutoComplete.LocalDataSource = LocalDataSource;
+    AutoComplete.RemoteDataSource = RemoteDataSource;
+    AutoComplete.Basic = Basic;
+    AutoComplete.BasicComboBox = BasicComboBox;
+    return AutoComplete;
+}, {
+    requires:['autocomplete/menu',
+        'autocomplete/input',
+        'autocomplete/localDataSource',
+        'autocomplete/remoteDataSource',
+        'autocomplete/basic',
+        'autocomplete/BasicComboBox']
+})/**
+ * Provide basic api for AutoComplete
+ */
+KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
+
+    /**
+     * Provide basic api for AutoComplete Component
+     * @class
+     * @name Basic
+     * @memberOf AutoComplete
+     * @extends AutoComplete
+     */
+    return UIBase.create(AutoComplete, [], {
+
+        __CLASS:"AutoComplete.Basic",
+
+        initializer:function () {
+            var self = this,
+                dataSource,
+                autoCompleteMenu,
+                data;
+            if (!self.get("dataSource")) {
+                if (data = self.get("data")) {
+                    dataSource = new LocalDataSource({
+                        data:data,
+                        dataSourceCfg:self.get("dataSourceCfg")
+                    });
+                } else {
+                    dataSource = new RemoteDataSource({
+                        xhrCfg:self.get("xhrCfg"),
+                        dataSourceCfg:self.get("dataSourceCfg")
+                    });
+                }
+                self.__set('dataSource', dataSource);
+            }
+
+            if (!self.get("menu")) {
+                autoCompleteMenu = new AutoCompleteMenu({
+                    prefixCls:self.get("prefixCls")
+                });
+                self.__set("menu", autoCompleteMenu);
+            }
+        }
+    }, {
+        ATTRS:/**
+         * @lends AutoComplete.Basic
+         */
+        {
+
+            /**
+             * Whether destroy menu when this destroys.Default true
+             * @type Boolean
+             */
+            destroyMenu:{
+                value:true
+            },
+
+            /**
+             * Array of static data. data and xhrCfg are mutually exclusive.
+             * @type Array
+             */
+            data:{},
+            /**
+             * xhrCfg IO configuration.same as {@link} IO. data and xhrCfg are mutually exclusive.
+             * @type Object
+             */
+            xhrCfg:{
+                value:{}
+            },
+
+            /**
+             * Extra config for remote dataSource.<br/>
+             * {String} dataSourceCfg.cache :
+             * Whether server response data is cached<br/>
+             * {Function} dataSource.parse :
+             * Serve as a parse function to parse server
+             * response to return a valid array of data for autoComplete.
+             * Used for xhrCfg.<br/>
+             * {String} dataSourceCfg.paramName :
+             * Used as parameter name to send autoS=Complete input's value to server<br/>
+             * {Boolean} dataSourceCfg.allowEmpty <br/>
+             * static data:whether return all data when input is empty.default:true<br/>
+             * whether send empty to server when input val is empty.default:false
+             * @type Object
+             */
+            dataSourceCfg:{
+                value:{}
+            }
+        }
+    });
+
+}, {
+    requires:['uibase', './input', './menu', './localDataSource', './remoteDataSource']
+});/**
  * input wrapper for autoComplete component
  * @author yiminghe@gmail.com
  */
@@ -618,4 +834,391 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
  *    1. tab 时肯定会把当前高亮项设置为 selectedItem
  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
- **/
+ **//**
+ * render aria properties to input element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
+    return UIBase.create(Component.Render, [], {
+        renderUI:function () {
+            var el = this.get("el");
+            el.attr({
+                "aria-haspopup":true,
+                "aria-autocomplete":"list",
+                "autocomplete":"off",
+                role:"combobox"
+            });
+        },
+
+        _uiSetAriaOwns:function (v) {
+            this.get("el").attr("aria-owns", v);
+        },
+
+        _uiSetAriaExpanded:function (v) {
+            this.get("el").attr("aria-expanded", v);
+        }
+    }, {
+        ATTRS:{
+            ariaOwns:{
+            },
+            ariaExpanded:{
+            },
+            elTagName:{
+                value:'input'
+            }
+        }
+    });
+}, {
+    requires:['uibase', 'component']
+});/**
+ * local dataSource
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/localDataSource", function (S) {
+
+    /**
+     * Local dataSource for autoComplete
+     * @memberOf AutoComplete
+     * @class
+     * @param {Object} cfg config
+     * @param {Array} cfg.data array of static data for autoComplete
+     * @param {Object} cfg.dataSourceCfg dataSource config
+     * @param {Function} cfg.dataSourceCfg.parse parse data
+     */
+    function LocalDataSource(cfg) {
+        LocalDataSource.superclass.constructor.apply(this, arguments);
+    }
+
+    function parser(inputVal, data) {
+        var ret = [],
+            count = 0;
+        if (!inputVal) {
+            return data;
+        }
+        S.each(data, function (d) {
+            if (d.indexOf(inputVal) != -1) {
+                ret.push(d);
+            }
+            count++;
+        });
+
+        return ret;
+    }
+
+    LocalDataSource.ATTRS = {
+        data:{
+            value:[]
+        },
+        dataSourceCfg:{
+            value:{}
+        }
+    };
+
+    S.extend(LocalDataSource, S.Base, {
+        /**
+         * Datasource interface. How to get data for autoComplete
+         * @function
+         * @name AutoComplete.LocalDataSource#fetchData
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify autoComplete when data is ready
+         * @param {Object} context callback's execution context
+         */
+        fetchData:function (inputVal, callback, context) {
+            var dataSourceCfg = this.get("dataSourceCfg"),
+                parse = dataSourceCfg.parse || parser,
+                data = this.get("data");
+            data = parse(inputVal, data);
+            callback.call(context, data);
+        }
+    });
+
+    return LocalDataSource;
+});/**
+ * autoComplete menu.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
+
+
+    var AutoCompleteMenu;
+
+    /**
+     * DropDown menu for autoComplete input.
+     * @name Menu
+     * @memberOf AutoComplete
+     * @extends Menu.PopupMenu
+     * @class
+     */
+    AutoCompleteMenu = UIBase.create(Menu.PopupMenu,
+        /**
+         * @lends AutoComplete.Menu#
+         */
+        {
+            __CLASS:"AutoComplete.Menu",
+
+            // current input which causes this menu to show
+            _input:null,
+
+            // 所以注册过的 input，为 0 时可能会删除整个 menu
+            _inputs:null,
+
+            /**
+             * attach one input or textarea to this autoComplete logic
+             * @param {AutoComplete} input input or textarea wrapper instance
+             */
+            attachInput:function (input) {
+                var self = this;
+                self._inputs = self._inputs || [];
+                if (!S.inArray(input, self._inputs)) {
+                    self._inputs.push(input);
+                }
+            },
+
+            /**
+             * detach existing input or textarea from this autoComplete logic
+             * @param {AutoComplete} input previous attached input or textarea instance
+             */
+            detachInput:function (input, destroy) {
+                var self = this,
+                    _inputs = self._inputs,
+                    index = S.indexOf(input, _inputs || []);
+                if (index != -1) {
+                    _inputs.splice(index, 1);
+                }
+                if (destroy && (!_inputs || _inputs.length == 0)) {
+                    self.destroy();
+                }
+            },
+
+            bindUI:function () {
+                var self = this;
+
+                self.on("show", function () {
+                    var input = self._input;
+                    input.set("ariaOwns", self.get("el").attr("id"));
+                    input.set("ariaExpanded", true);
+                });
+
+                self.on("hide", function () {
+                    var input = self._input;
+                    input.set("ariaOwns", self.get("el").attr("id"));
+                    input.set("ariaExpanded", false);
+                });
+
+                self.on("click", function (e) {
+                    var item = e.target;
+                    var input = self._input;
+                    // stop valuechange event
+                    input._stopNotify = 1;
+                    input.set("selectedItem", item);
+                    self.hide();
+                    setTimeout(
+                        function () {
+                            input._stopNotify = 0;
+                        },
+                        // valuechange interval
+                        50
+                    );
+                });
+
+                var reAlign = S.buffer(function () {
+                    var self = this,
+                        _input = self._input;
+                    if (_input && self.get("visible")) {
+                        _input._onWindowResize();
+                    }
+                }, 50);
+
+                self.__reAlign = reAlign;
+
+                Event.on(window, "resize", reAlign, self);
+
+                var el = self.get("el");
+                var contentEl = self.get("contentEl");
+
+                el.on("focusin", function () {
+                    self._clearDismissTimer();
+                });
+
+                el.on("focusout", function () {
+                    self._hideForAutoComplete();
+                });
+
+                contentEl.on("mouseover", function () {
+                    var input = self._input;
+                    // trigger el focusous
+                    input.get("el")[0].focus();
+                    // prevent menu from hiding
+                    self._clearDismissTimer();
+                });
+            },
+
+            _clearDismissTimer:function () {
+                var self = this;
+                if (self._dismissTimer) {
+                    clearTimeout(self._dismissTimer);
+                    self._dismissTimer = null;
+                }
+            },
+
+            _hideForAutoComplete:function () {
+                var self = this;
+                self._dismissTimer = setTimeout(function () {
+                    self._immediateHideForAutoComplete();
+                }, 30);
+            },
+
+            _immediateHideForAutoComplete:function () {
+                var self = this;
+                self.removeChildren(true);
+                self.hide();
+            },
+
+            destructor:function () {
+                var self = this;
+                Event.remove(window, "resize", self.__reAlign, self);
+                S.each(self._inputs, function (inp) {
+                    inp.__set("menu", null);
+                });
+                self._inputs = null;
+            }
+        }, {
+            DefaultRender:AutoCompleteMenuRender,
+            ATTRS:{
+                head:{
+                    view:true
+                },
+                foot:{
+                    view:true
+                }
+            }
+        });
+
+    Component.UIStore.setUIByClass("autocomplete-menu", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:AutoCompleteMenu
+    });
+
+    return AutoCompleteMenu;
+}, {
+    requires:['event', 'uibase', 'component', 'menu', './menuRender']
+});
+/**
+ * 2012-03-26 yiminghe@gmail.com
+ *  - refer http://www.w3.org/TR/wai-aria-practices/#autocomplete
+ **//**
+ * autoComplete menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/menuRender", function (S, UIBase, Menu) {
+    var $ = S.all;
+    return UIBase.create(Menu.PopupMenu.Render, [], {
+        createDom:function () {
+            var self = this,
+                el = self.get("el"),
+                head = $("<div class='" +
+                    self.get("prefixCls") + "autocomplete-menu-header"
+                    + "'></div>"),
+                foot = $("<div class='" +
+                    self.get("prefixCls") + "autocomplete-menu-footer"
+                    + "'></div>");
+            el.prepend(head);
+            el.append(foot);
+            self.__set("head", head);
+            self.__set("foot", foot);
+        }
+    }, {
+        ATTRS:{
+            head:{
+                view:true
+            },
+            foot:{
+                view:true
+            }
+        }
+    });
+}, {
+    requires:['uibase', 'menu']
+});/**
+ * remote datasource
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
+
+    /**
+     * dataSource which wrap {@link IO} utility.
+     * @class
+     * @memberOf AutoComplete
+     * @param {Object} cfg configs
+     * @param {Object} cfg.xhrCfg IO configuration.same as {@link} IO
+     * @param {Object} cfg.dataSourceCfg dataSource configs
+     * @param {String} cfg.dataSourceCfg.paramName
+     * Used as parameter name to send autoS=Complete input's value to server
+     * @param {String} cfg.dataSourceCfg.cache Whether server response data is cached
+     * @param {Boolean} cfg.dataSourceCfg.allowEmpty whether send empty to server when input val is empty.default:false
+     * @param {Function} cfg.dataSourceCfg.parse Serve as a parse function to parse server
+     * response to return a valid array of data for autoComplete.
+     */
+    function RemoteDataSource(cfg) {
+        var self = this;
+        RemoteDataSource.superclass.constructor.apply(self, arguments);
+        self.io = null;
+        self.caches = {};
+    }
+
+    RemoteDataSource.ATTRS = {
+        dataSourceCfg:{
+            value:{}
+        },
+        xhrCfg:{
+            value:{}
+        }
+    };
+
+    S.extend(RemoteDataSource, S.Base, {
+        /**
+         * Datasource interface. How to get data for autoComplete
+         * @function
+         * @name AutoComplete.RemoteDataSource#fetchData
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify autoComplete when data is ready
+         * @param {Object} context callback's execution context
+         */
+        fetchData:function (inputVal, callback, context) {
+            var self = this,
+                v,
+                dataSourceCfg = self.get("dataSourceCfg");
+            if (self.io) {
+                // abort previous request
+                self.io.abort();
+                self.io = null;
+            }
+            if (!inputVal && dataSourceCfg.allowEmpty !== true) {
+                return callback.call(context, []);
+            }
+            if (dataSourceCfg.cache) {
+                if (v = self.caches[inputVal]) {
+                    return callback.call(context, v);
+                }
+            }
+            var xhrCfg = self.get("xhrCfg");
+            xhrCfg.data = xhrCfg.data || {};
+            xhrCfg.data[dataSourceCfg['paramName']] = inputVal;
+            xhrCfg.success = function (data) {
+                if (dataSourceCfg.parse) {
+                    data = dataSourceCfg.parse(inputVal, data);
+                }
+                self.__set("data", data);
+                if (dataSourceCfg.cache) {
+                    self.caches[inputVal] = data;
+                }
+                callback.call(context, data);
+            };
+            self.io = IO(xhrCfg);
+        }
+    });
+
+    return RemoteDataSource;
+}, {
+    requires:['ajax']
+});

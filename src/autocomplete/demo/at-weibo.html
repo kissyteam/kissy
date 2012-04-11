@@ -47,6 +47,7 @@
                 // 和内容一样宽度
                 width:""
             },
+            autoHighlight:true,
             whitespace:false,
             autoCompleteOnInitial:false,
             appendSeparatorOnComplete:false,
@@ -75,6 +76,12 @@
             dataSourceCfg:{
                 parse:function (query, data) {
                     var ret = [];
+                    // 空查询，返回空
+                    // 也可以返回全部数据
+                    if (!query) {
+                        return ret;
+                        // return data
+                    }
                     S.each(data, function (d) {
                         if (d.replace(/@gmail\.com/, "").indexOf(query) != -1) {
                             ret.push(d);
