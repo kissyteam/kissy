@@ -129,10 +129,10 @@ KISSY.add("input-selection", function (S, DOM) {
         }
     }
 
-    var FAKE = "<div style='" +
+    var FAKE_DIV_HTML = "<div style='" +
         "z-index:-9999;" +
         "overflow:hidden;" +
-        "position: absolute;" +
+        "position: fixed;" +
         "left:-9999px;" +
         "top:-9999px;" +
         "opacity:0;" +
@@ -164,7 +164,6 @@ KISSY.add("input-selection", function (S, DOM) {
             'borderRightWidth',
             'line-height',
             'outline',
-            'width',
             'height',
             'fontFamily',
             'fontSize',
@@ -172,6 +171,46 @@ KISSY.add("input-selection", function (S, DOM) {
             'fontVariant',
             'fontStyle'
         ];
+
+    function getFakeDiv(elem) {
+        var fake = FAKE_DIV;
+        if (!fake) {
+            fake = DOM.create(FAKE_DIV_HTML);
+        }
+        if (elem.type == 'textarea') {
+            DOM.css(fake, "width", DOM.css(elem, "width"));
+        } else {
+            // input does not wrap at all
+            DOM.css(fake, "width", 9999);
+        }
+        S.each(STYLES, function (s) {
+            DOM.css(fake, s, DOM.css(elem, s));
+        });
+        if (!FAKE_DIV) {
+            var body = elem.ownerDocument.body;
+            body.insertBefore(fake, body.firstChild);
+        }
+        FAKE_DIV = fake;
+        return fake;
+    }
+
+    var supportInputScrollLeft = true;
+
+    S.ready(function () {
+        var doc = document,
+            input = DOM.create("<input>");
+        DOM.css(input, {
+            width:1,
+            position:"absolute",
+            left:-9999,
+            top:-9999
+        });
+        input.value = "123456789";
+        doc.body.appendChild(input);
+        input.focus();
+        supportInputScrollLeft = !!(input.scrollLeft > 0);
+        DOM.remove(input);
+    });
 
     propHooks.KsCursorOffset = {
         get:function (elem) {
@@ -183,21 +222,20 @@ KISSY.add("input-selection", function (S, DOM) {
                 return {
                     // http://msdn.microsoft.com/en-us/library/ie/ms533540(v=vs.85).aspx
                     // or simple range.offsetLeft for textarea
-                    left:range.boundingLeft + elemScrollLeft,
-                    top:range.boundingTop + elemScrollTop
+                    left:range.boundingLeft + elemScrollLeft + DOM.scrollLeft(),
+                    top:range.boundingTop + elemScrollTop + range.boundingHeight + DOM.scrollTop()
                 };
             }
+            var elemOffset = DOM.offset(elem);
 
-            var fake;
-
-            if (!FAKE_DIV) {
-                fake = DOM.create(FAKE);
-                S.each(STYLES, function (s) {
-                    DOM.css(fake, s, DOM.css(elem, s));
-                });
-            } else {
-                fake = FAKE_DIV;
+            // input does not has scrollLeft
+            // so just get the postition of the beginning of input
+            if (!supportInputScrollLeft && elem.type != 'textarea') {
+                elemOffset.top += elem.offsetHeight;
+                return elemOffset;
             }
+
+            var fake = getFakeDiv(elem);
 
             var selectionStart = elem.selectionStart;
 
@@ -205,18 +243,12 @@ KISSY.add("input-selection", function (S, DOM) {
                 // marker
                 MARKER;
 
-//            S.log(selectionStart);
-//            S.log(fake.innerHTML);
-//            S.log(elemScrollTop);
-            if (!FAKE_DIV) {
-                DOM.prepend(fake, doc.body);
-                FAKE_DIV = fake;
-            }
             // can not set fake to scrollTop，marker is always at bottom of marker
             // when cursor at the middle of textarea , error occurs
             // fake.scrollTop = elemScrollTop;
             // fake.scrollLeft = elemScrollLeft;
-            offset = DOM.offset(elem);
+            offset = elemOffset;
+
             // offset.left += 500;
             DOM.offset(fake, offset);
             var marker = fake.lastChild;
@@ -226,9 +258,11 @@ KISSY.add("input-selection", function (S, DOM) {
             if (selectionStart > 0) {
                 offset.left += DOM.width(marker);
             }
+
             // so minus scrollTop/Left
             offset.top -= elemScrollTop;
             offset.left -= elemScrollLeft;
+
             // offset.left -= 500;
             return offset;
         }

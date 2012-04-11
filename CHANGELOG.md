@@ -157,6 +157,7 @@ History:
  - [*] Overlay 增加 aria 配置, trap focus and keydown
  - [+] overlay 增加 resize 配置
  - [+] overlay 增加单元测试
+ - [!] Overlay srcNode 和 content 不能同时配置，同时配置时 content 不生效
 
 
  - [*] KISSY.param/unparam 增加数组处理选项
