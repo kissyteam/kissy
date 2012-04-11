@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>input text</h1>
-<textarea id='t' style='width:100px;height:100px;word-wrap:break-word;margin: 0;padding: 0;'>
+<textarea id='t' style='width:500px;height:300px;word-wrap:break-word;margin: 0;padding: 0;'>
 </textarea>
 <br/>
 <!--
@@ -14,9 +14,10 @@
     word-break:break-all;
     -->
 <div id='t2' style='overflow-x:hidden;overflow-y:auto;
-    word-wrap:break-word;'>
+    word-wrap:break-word;white-space: pre-wrap;'>
 </div>
 <script src='../../../build/kissy.js'></script>
+<script src='../src/input-selection.js'></script>
 <script>
     var S = KISSY, DOM = S.DOM, UA = S.UA;
     if (!UA.ie) {
@@ -45,8 +46,9 @@
             // pre-wrap 问题：i think it issss to hard to understa nd to what yo
             var empty = '<span style="white-space:pre-wrap;"> </span>'; // 空格不换行
 
-            t.onkeyup = function () {
-                t2.innerHTML = t.value.replace(/\n/g, "<br/>").replace(/\s/g, empty);
+            t.onkeyup =t.onmouseup= function () {
+                var selectionStart=DOM.prop(t,"selectionStart");
+                t2.innerHTML = t.value.substring(0,selectionStart);//.replace(/\n/g, "<br/>").replace(/\s/g, empty);
             };
         })();
     } else {

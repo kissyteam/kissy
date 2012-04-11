@@ -132,11 +132,15 @@ KISSY.add("input-selection", function (S, DOM) {
     var FAKE = "<div style='" +
         "z-index:-9999;" +
         "overflow:hidden;" +
-        "word-wrap: break-word;" +
         "position: absolute;" +
         "left:-9999px;" +
         "top:-9999px;" +
+        "opacity:0;" +
+        // firefox default normal,need to force to use pre-wrap
+        "white-space:pre-wrap;" +
+        "word-wrap:break-word;" +
         "'></div>",
+        FAKE_DIV,
         MARKER = "<span>" +
             // must has content
             // or else <br/><span></span> can not get right coordinates
@@ -167,13 +171,7 @@ KISSY.add("input-selection", function (S, DOM) {
             'fontWeight',
             'fontVariant',
             'fontStyle'
-        ],
-        // textarea 连续空格，firefox 自动换行，chrome 不自动换行
-        // "&nbsp;" firefox 下问题：一二三四五， 六
-        // &nbsp; chrome 自动换行
-        // pre : firefox 不自动换行，chrome 自动换行
-        // pre-wrap bug example：i think it issss to hard to understa nd to what yo
-        EMPTY = '<span style="white-space:pre-wrap;"> </span>';
+        ];
 
     propHooks.KsCursorOffset = {
         get:function (elem) {
@@ -189,34 +187,45 @@ KISSY.add("input-selection", function (S, DOM) {
                     top:range.boundingTop + elemScrollTop
                 };
             }
-            var fake = DOM.create(FAKE);
-            S.each(STYLES, function (s) {
-                DOM.css(fake, s, DOM.css(elem, s));
-            });
+
+            var fake;
+
+            if (!FAKE_DIV) {
+                fake = DOM.create(FAKE);
+                S.each(STYLES, function (s) {
+                    DOM.css(fake, s, DOM.css(elem, s));
+                });
+            } else {
+                fake = FAKE_DIV;
+            }
+
             var selectionStart = elem.selectionStart;
 
-            fake.innerHTML = elem.value.substring(0, selectionStart)
-                .replace(/\n/g, "<br/>")
-                .replace(/\s/g, EMPTY) +
+            fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart)) +
                 // marker
                 MARKER;
 
 //            S.log(selectionStart);
 //            S.log(fake.innerHTML);
 //            S.log(elemScrollTop);
-            DOM.prepend(fake, doc.body);
+            if (!FAKE_DIV) {
+                DOM.prepend(fake, doc.body);
+                FAKE_DIV = fake;
+            }
             // can not set fake to scrollTop，marker is always at bottom of marker
             // when cursor at the middle of textarea , error occurs
             // fake.scrollTop = elemScrollTop;
             // fake.scrollLeft = elemScrollLeft;
-            DOM.offset(fake, DOM.offset(elem));
+            offset = DOM.offset(elem);
+            // offset.left += 500;
+            DOM.offset(fake, offset);
             var marker = fake.lastChild;
             offset = DOM.offset(marker);
             offset.top += DOM.height(marker);
             // so minus scrollTop/Left
             offset.top -= elemScrollTop;
             offset.left -= elemScrollLeft;
-            DOM.remove(fake);
+            // offset.left -= 500;
             return offset;
         }
     };
