@@ -111,17 +111,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             /**
              * 获得当前的激活drop
              */
-            notifyDropsMove(self, ev);
+            notifyDropsMove(self, ev, activeDrag);
         } else if (__activeToDrag) {
             __activeToDrag._move(ev);
         }
     }
 
 
-    function notifyDropsMove(self, ev) {
-
-        var activeDrag = self.get("activeDrag"),
-            mode = activeDrag.get("mode"),
+    function notifyDropsMove(self, ev, activeDrag) {
+        var mode = activeDrag.get("mode"),
             drops = self.get("validDrops"),
             activeDrop = 0,
             oldDrop,

@@ -147,10 +147,12 @@ History:
  - [x] Suggest fix: IE9 下无法更新数据
  - [x] Suggest fix: chrome 下光标鼠标移动问题
 
- - [*] switchable 中针对 datalazyload 的配置项 lazyDataType 值变更, 支持1) img 或 img-src, 2) textarea 或 area-data, 这对应于 Datalazyload.loadCustomLazyData 的 type 参数保持一致
+ - [*] Switchable 中针对 datalazyload 的配置项 lazyDataType 值变更, 支持1) img 或 img-src, 2) textarea 或 area-data, 这对应于 Datalazyload.loadCustomLazyData 的 type 参数保持一致
  - [*] Accordion 增加 aria 配置
  - [*] Carousel 增加 aria 配置
  - [*] Tabs 增加 aria 配置
+ - [+] Switchable 增加参数 pauseOnScroll，当轮播不在 viewport 时是否自动停止播放
+ - [+] Switchable 支持触屏设备,增加配置项 mouseAsTouch ，是否用鼠标模拟 touch
 
 
  - [*] Overlay 增加 closeAction 配置, destroy or hide

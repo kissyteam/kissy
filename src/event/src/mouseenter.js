@@ -23,7 +23,13 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                         !DOM.contains(currentTarget, relatedTarget))) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
-                    event.stopPropagation();
+                    // 2012-04-12 把 mouseover 阻止冒泡有问题！
+                    // <div id='0'><div id='1'><div id='2'><div id='3'></div></div></div></div>
+                    // 2 mouseover 停止冒泡
+                    // 然后快速 2,1 飞过，可能 1 的 mouseover 是 2 冒泡过来的
+                    // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
+                    // target 都是 3,而 relatedTarget 都是 0
+                    // event.stopPropagation();
                     return [handler.fn.call(handler.scope || currentTarget, event, data)];
                 }
                 return [];

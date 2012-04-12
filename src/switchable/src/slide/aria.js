@@ -61,7 +61,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
                         domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
-                        last = self.completedIndex;
+                        last = ev.fromIndex;
 
                     if (last > -1) {
                         setTabIndex(panels[last], -1);

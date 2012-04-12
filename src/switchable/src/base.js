@@ -92,16 +92,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         //self.content
 
         /**
-         * 上一个完成动画/切换的位置
+         * 当前正在动画/切换的位置
          * @type Number
          */
-        //self.completedIndex
-
-        /**
-         * 当前正在动画/切换的位置,没有动画则和 completedIndex 一致
-         * @type Number
-         */
-        self.activeIndex = self.completedIndex = config.activeIndex;
+        self.activeIndex = config.activeIndex;
 
         // 设置了 activeIndex
         // 要配合设置 markup
@@ -113,7 +107,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         // 否则，默认都为 0
         // 要配合设置位置 0 的 markup
         else {
-            self.completedIndex = self.activeIndex = 0;
+            self.activeIndex = 0;
         }
 
 
@@ -427,11 +421,6 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 if (self.activeIndex >= page) {
                     self.activeIndex += 1;
                 }
-
-                // 注意 completedIndex 也得复制
-                if (self.completedIndex >= page) {
-                    self.completedIndex += 1;
-                }
             } else {
                 // step >1 时 ，activeIndex 不排后
             }
@@ -440,7 +429,6 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             var n = self.activeIndex;
             // 设为 -1，立即回复到原来视图
             self.activeIndex = -1;
-            self.completedIndex = -1;
             self.switchTo(n);
 
             // 需要的话，从当前视图滚动到新的视图
@@ -592,7 +580,6 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                     // 不滚屏，其他元素顶上来即可
                     deletePanel();
                     self.activeIndex = -1;
-                    self.completedIndex = -1;
                     // notify datalazyload
                     self.switchTo(activeIndex);
                 }
@@ -628,10 +615,13 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             if (!self._triggerIsValid(index)) {
                 return self;
             }
-            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex:index}) === false) {
+
+            if (self.fire(EVENT_BEFORE_SWITCH, {
+                fromIndex:ingIndex,
+                toIndex:index
+            }) === false) {
                 return self;
             }
-
 
             // switch active trigger
             if (cfg.hasTriggers) {
@@ -645,21 +635,20 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 direction = index > ingIndex ? FORWARD : BACKWARD;
             }
 
-            // panel 位置和 trigger 位置不同步
-            // trigger 没有动画哦
-            // panel 位置用 completedIndex 表示
+
+            // 当前正在处理转移到 index
             self.activeIndex = index;
 
             // switch view
             self._switchView(
                 ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
                 panels.slice(toIndex, toIndex + steps),
+                ingIndex,
                 index,
                 direction,
                 ev,
                 function () {
                     callback && callback.call(self, index);
-                    self.completedIndex = self.activeIndex = index;
                 }
             );
 
@@ -682,7 +671,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         /**
          * 切换视图
          */
-        _switchView:function (fromPanels, toPanels, index, direction, ev, callback) {
+        _switchView:function (fromPanels, toPanels, fromIndex, index, direction, ev, callback) {
+            var self = this;
             // 最简单的切换效果：直接隐藏/显示
             if (fromPanels) {
                 DOM.css(fromPanels, DISPLAY, NONE);
@@ -690,15 +680,21 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch events
-            this._fireOnSwitch(index, ev);
+            // 同动画时保持一致，强制异步
+            setTimeout(function () {
+                self._fireOnSwitch(fromIndex, index, ev);
+            }, 0);
+
             callback && callback.call(this);
         },
 
         /**
          * 触发 switch 相关事件
          */
-        _fireOnSwitch:function (index, ev) {
-            this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex:index }));
+        _fireOnSwitch:function (fromIndex, index, ev) {
+            this.fire(EVENT_SWITCH, S.mix(ev || {}, {
+                fromIndex:fromIndex,
+                currentIndex:index }));
         },
 
         /**
@@ -758,6 +754,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
 /**
  * NOTES:
+ *
+ * yiminghe@gmail.com : 2012.04.12
+ *  - 增加 switch/beforeSwitch 事件对象增加 fromIndex
+ *  - 删除状态 completedIndex
  *
  * 董晓庆/yiminghe@gmail.com ：2012.03
  *   - 增加 添加、删除一项的功能 => 工程浩大

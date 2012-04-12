@@ -11,6 +11,24 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
 <script src="../../../build/kissy.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/aria.js"></script>
+<script src="../src/accordion/base.js"></script>
+<script src="../src/accordion/aria.js"></script>
+<script src="../src/autoplay.js"></script>
+<script src="../src/autorender.js"></script>
+<script src="../src/carousel/base.js"></script>
+<script src="../src/carousel/aria.js"></script>
+<script src="../src/circular.js"></script>
+<script src="../src/countdown.js"></script>
+<script src="../src/effect.js"></script>
+<script src="../src/lazyload.js"></script>
+<script src="../src/slide/base.js"></script>
+<script src="../src/slide/aria.js"></script>
+<script src="../src/tabs/base.js"></script>
+<script src="../src/tabs/aria.js"></script>
+<script src="../src/switchable.js"></script>
+<script src="../src/touch.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -35,9 +53,7 @@
 源码：<a href="../carousel/base.js">../carousel/base.js</a></pre>
 
 <h3 class="s-title">Carousel - 旋转木马</h3>
-<p>
-    点击图片进行删除
-</p>
+
 <div class="s-section">
     <style>
         .scrollable {
@@ -147,6 +163,7 @@
                             circular:false,
                             prevBtnCls:'prev',
                             nextBtnCls:'next',
+                            mouseAsTouch:true,
                             //autoplay:true,
                             disableBtnCls:'disable',
                             lazyDataType:'img-src'
@@ -154,7 +171,7 @@
 
                         carousel.on('itemSelected', function (ev) {
                             //alert('I am selected. src = ' + ev.item.src);
-                            carousel.remove(ev.item);
+                            //carousel.remove(ev.item);
                         });
                         var btnAdd = S.one('#btnAdd'),
                                 btnDestroy = S.one("#btnDestroy"),

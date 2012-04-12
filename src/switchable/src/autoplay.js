@@ -62,9 +62,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                     }
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     // 用户 mouseenter 不提供 forward ，全景滚动
-                    host.switchTo(host.activeIndex < host.length - 1 ?
-                        host.activeIndex + 1 : 0,
-                        'forward');
+                    host.next();
                 }, interval, true);
             }
 
@@ -73,6 +71,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
 
             // 添加 stop 方法，使得外部可以停止自动播放
             host.stop = function () {
+
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
@@ -82,6 +81,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
             };
 
             host.start = function () {
+
                 if (timer) {
                     timer.cancel();
                     timer = undefined;

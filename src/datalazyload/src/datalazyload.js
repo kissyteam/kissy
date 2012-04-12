@@ -11,7 +11,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         CUSTOM = '-custom',
         MANUAL = 'manual',
         DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize', DURATION = 100,
+        SCROLL = 'scroll',
+        TOUCH_MOVE = "touchmove",
+        RESIZE = 'resize', DURATION = 100,
 
         defaultConfig = {
 
@@ -192,6 +194,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     self._loadItems();
                     if (self._getItemsLength() === 0) {
                         Event.remove(win, SCROLL, loader);
+                        Event.remove(win, TOUCH_MOVE, loader);
                         Event.remove(win, RESIZE, resizeHandler);
                     }
                 },
@@ -200,6 +203,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
+            Event.on(win, TOUCH_MOVE, loader);
             Event.on(win, RESIZE, resizeHandler = function () {
                 self.threshold = self._getThreshold();
                 loader();
@@ -521,6 +525,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-12 monitor touchmove in iphone
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
  *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调

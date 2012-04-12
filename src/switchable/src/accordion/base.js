@@ -44,14 +44,14 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
             /**
              * 切换视图
              */
-            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+            _switchView: function(fromPanels, toPanels, fromIndex,index, direction, ev, callback) {
                 var self = this,
                     cfg = self.config,
                     panel = toPanels[0];
 
                 if (cfg.multiple) {
                     DOM.toggle(panel);
-                    this._fireOnSwitch(index, ev);
+                    this._fireOnSwitch(fromIndex,index, ev);
                     callback && callback.call(this);
                 } else {
                     Accordion.superclass._switchView.apply(self, arguments);

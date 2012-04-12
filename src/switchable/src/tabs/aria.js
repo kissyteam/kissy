@@ -205,7 +205,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 
             var self = this;
             // 上一个激活 tab
-            var lastActiveIndex = self.completedIndex;
+            var lastActiveIndex = ev.fromIndex;
 
             // 当前激活 tab
             var activeIndex = ev.currentIndex;

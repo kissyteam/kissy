@@ -29,6 +29,7 @@
 <script src="../src/tabs/base.js"></script>
 <script src="../src/tabs/aria.js"></script>
 <script src="../src/switchable.js"></script>
+<script src="../src/touch.js"></script>
 </head>
 <body>
 <div id="header">
@@ -54,7 +55,7 @@
 
 <h3 class="s-title">Slide - 淘宝首页卡盘</h3>
 <p>
-    单击图片动态删除
+    支持 ios
 </p>
 <div class="s-section">
     <style>
@@ -122,14 +123,22 @@
         }
 
     </style>
+    <!--
+    href="http://www.g.cn"
+    -->
     <div class="s-demo">
         <div id="demo2" class="section loading">
             <ol class="ks-switchable-content">
-                <li><a target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
-                <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
-                <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
-                <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
-                <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+                <li><a target="_blank">
+                    <img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+                <li class="hidden"><a target="_blank">
+                    <img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+                <li class="hidden"><a target="_blank">
+                    <img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+                <li class="hidden"><a target="_blank">
+                    <img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+                <li class="hidden"><a target="_blank">
+                    <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1g25rXaV6XXXXXXXX-490-170.png"/></a></li>
             </ol>
         </div>
         <button id="demo2-btn">stop autoplay</button>
@@ -146,6 +155,8 @@
                         // slide特效组件其实不需要
                         aria:false,
                         pauseOnScroll:true,
+                        // 支持鼠标拖放
+                        mouseAsTouch:true,
                         easing:'easeOutStrong'
                         // if no panels must specify viewSize
                         // , viewSize:[470, 150]
@@ -159,9 +170,9 @@
                         //S.log("switch");
                     });
 
-                    S.one("#demo2").delegate("click", "li", function (e) {
-                        s.remove(e.currentTarget);
-                    });
+//                    S.one("#demo2").delegate("click", "li", function (e) {
+//                        s.remove(e.currentTarget);
+//                    });
                     var i = 7;
                     Event.on("#demo2-add-btn", 'click', function () {
                         s.add({

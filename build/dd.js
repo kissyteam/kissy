@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 25 23:01
+build time: Apr 12 21:10
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -258,17 +258,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             /**
              * 获得当前的激活drop
              */
-            notifyDropsMove(self, ev);
+            notifyDropsMove(self, ev, activeDrag);
         } else if (__activeToDrag) {
             __activeToDrag._move(ev);
         }
     }
 
 
-    function notifyDropsMove(self, ev) {
-
-        var activeDrag = self.get("activeDrag"),
-            mode = activeDrag.get("mode"),
+    function notifyDropsMove(self, ev, activeDrag) {
+        var mode = activeDrag.get("mode"),
             drops = self.get("validDrops"),
             activeDrop = 0,
             oldDrop,
@@ -1330,6 +1328,15 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 if (def && self.get("move")) {
                     // 取 'node' , 改 node 可能是代理哦
                     self.get('node').offset(ret);
+                }
+            },
+
+            /**
+             * force to stop this drag operation
+             */
+            stopDrag:function () {
+                if (this.get("dragging")) {
+                    DDM._end();
                 }
             },
 

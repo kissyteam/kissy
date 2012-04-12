@@ -99,7 +99,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 水平/垂直滚动效果
-        scroll:function (fromEls, toEls, callback, index) {
+        scroll:function (fromEls, toEls, callback,fromIndex, index) {
             var self = this,
                 cfg = self.config,
                 isX = cfg.effect === SCROLLX,
@@ -236,7 +236,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      */
     S.augment(Switchable, {
 
-        _switchView:function (fromEls, toEls, index, direction, ev, callback) {
+        _switchView:function (fromEls, toEls, fromIndex, index, direction, ev, callback) {
 
             var self = this,
                 cfg = self.config,
@@ -244,16 +244,16 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function () {
-                self._fireOnSwitch(index, ev);
+                self._fireOnSwitch(fromIndex, index, ev);
                 callback && callback.call(self);
-            }, index, direction);
+            }, fromIndex, index, direction);
         }
 
     });
 
     return Switchable;
 
-}, { requires:["dom", "event", "anim", "switchable/base"]});
+}, { requires:["dom", "event", "anim", "./base"]});
 /**
  * 承玉：2011.06.02 review switchable
  */

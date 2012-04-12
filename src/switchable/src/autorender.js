@@ -28,4 +28,4 @@ KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {
         });
     }
 
-}, { requires:["dom", "json", "switchable/base"]});
+}, { requires:["dom", "json", "./base"]});

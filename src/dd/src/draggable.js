@@ -593,6 +593,15 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 }
             },
 
+            /**
+             * force to stop this drag operation
+             */
+            stopDrag:function () {
+                if (this.get("dragging")) {
+                    DDM._end();
+                }
+            },
+
             _end:function () {
                 var self = this,
                     activeDrop;
