@@ -58,7 +58,7 @@ echo "?t=".time()
 </h1>
 
 <div id="header">
-    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
     <div class="sub-title">Switchable</div>
     <ul class="navigation">
         <li><a href="https://groups.google.com/group/kissy-ui">讨论组</a></li>
@@ -69,7 +69,7 @@ echo "?t=".time()
 <div id="content" class="form">
 <div class="s-crumbs">
     <span>当前位置：</span>
-    <a href="http://kissyui.com/">KISSY</a>
+    <a href="http://docs.kissyui.com/">KISSY</a>
     <a href="http://docs.kissyui.com/docs/html/api/component/switchable/slide.html">slide</a>
     <span>Demo</span>
 </div>
