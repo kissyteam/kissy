@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 11 20:59
+build time: Apr 13 14:50
 */
 /**
  * Combobox derived from autocomplete
@@ -135,8 +135,6 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
      */
     return UIBase.create(AutoComplete, [], {
 
-        __CLASS:"AutoComplete.Basic",
-
         initializer:function () {
             var self = this,
                 dataSource,
@@ -210,7 +208,7 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
                 value:{}
             }
         }
-    });
+    }, "AutoComplete_Basic");
 
 }, {
     requires:['uibase', './input', './menu', './localDataSource', './remoteDataSource']
@@ -281,7 +279,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
          * @lends AutoComplete
          */
         {
-            __CLASS:"AutoComplete",
 
             // user's input text
             _savedInputValue:null,
@@ -801,7 +798,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
             },
             DefaultRender:AutoCompleteRender
-        }
+        },
+        "AutoComplete"
     );
 
     Component.UIStore.setUIByClass("autocomplete-input", {
@@ -954,7 +952,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
          * @lends AutoComplete.Menu#
          */
         {
-            __CLASS:"AutoComplete.Menu",
 
             // current input which causes this menu to show
             _input:null,
@@ -1092,7 +1089,9 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
                     view:true
                 }
             }
-        });
+        },
+        "AutoComplete_Menu"
+    );
 
     Component.UIStore.setUIByClass("autocomplete-menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

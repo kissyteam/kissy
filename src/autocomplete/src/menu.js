@@ -19,7 +19,6 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
          * @lends AutoComplete.Menu#
          */
         {
-            __CLASS:"AutoComplete.Menu",
 
             // current input which causes this menu to show
             _input:null,
@@ -157,7 +156,9 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
                     view:true
                 }
             }
-        });
+        },
+        "AutoComplete_Menu"
+    );
 
     Component.UIStore.setUIByClass("autocomplete-menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

@@ -118,8 +118,6 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
         /** @lends Component.Controller.prototype */
         {
 
-            __CLASS:"Component.Controller",
-
             getCls:UIStore.getCls,
 
             initializer:function () {
@@ -551,7 +549,9 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             DefaultRender:Render
-        });
+        },
+        "Component_Controller"
+    );
 
     if (0) {
         Controller._uiSetHandleMouseEvents()._uiSetActive();

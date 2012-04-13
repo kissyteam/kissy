@@ -65,7 +65,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
          * @lends AutoComplete
          */
         {
-            __CLASS:"AutoComplete",
 
             // user's input text
             _savedInputValue:null,
@@ -585,7 +584,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
             },
             DefaultRender:AutoCompleteRender
-        }
+        },
+        "AutoComplete"
     );
 
     Component.UIStore.setUIByClass("autocomplete-input", {

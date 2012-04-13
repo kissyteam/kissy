@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 31 21:08
+build time: Apr 13 15:08
 */
 /**
  * @fileOverview UIBase.Align
@@ -435,7 +435,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add('uibase/base', function (S, Base, Node) {
+KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
@@ -760,6 +760,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * @returns {UIBase} 组合 后 的 新类
              */
             create:function (base, exts, px, sx) {
+                var args = S.makeArray(arguments), t;
                 if (S.isArray(base)) {
                     sx = px;
                     px = exts;
@@ -773,9 +774,19 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                     exts = [];
                 }
 
+                var name = "UIBaseDerived";
+
+                if (S.isString(t = args[args.length - 1])) {
+                    name = t;
+                }
+
                 function C() {
                     UIBase.apply(this, arguments);
                 }
+
+                // debug mode , give the right name for constructor
+                // refer : http://limu.iteye.com/blog/1136712
+                S.log("UIBase.Create : " + name, eval("C=function " + name + "(){ UIBase.apply(this, arguments);}"));
 
                 S.extend(C, base, px, sx);
 
@@ -2452,7 +2463,12 @@ KISSY.add("uibase/stdmodrender", function (S, Node) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender,
+                             Close, CloseRender, Constrain,
+                             ContentBox, ContentBoxRender, Drag,
+                             Loading, LoadingRender, Mask,
+                             MaskRender, Position, PositionRender,
+                             ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;

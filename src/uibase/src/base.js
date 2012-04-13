@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add('uibase/base', function (S, Base, Node) {
+KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
@@ -328,6 +328,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * @returns {UIBase} 组合 后 的 新类
              */
             create:function (base, exts, px, sx) {
+                var args = S.makeArray(arguments), t;
                 if (S.isArray(base)) {
                     sx = px;
                     px = exts;
@@ -341,9 +342,19 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                     exts = [];
                 }
 
+                var name = "UIBaseDerived";
+
+                if (S.isString(t = args[args.length - 1])) {
+                    name = t;
+                }
+
                 function C() {
                     UIBase.apply(this, arguments);
                 }
+
+                // debug mode , give the right name for constructor
+                // refer : http://limu.iteye.com/blog/1136712
+                S.log("UIBase.Create : " + name, eval("C=function " + name + "(){ UIBase.apply(this, arguments);}"));
 
                 S.extend(C, base, px, sx);
 

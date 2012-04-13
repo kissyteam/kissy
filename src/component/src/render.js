@@ -11,8 +11,6 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
     return UIBase.create([UIBase.Box.Render], {
 
-        __CLASS:"Component.Render",
-
         _completeClasses:function (classes, tag) {
             return tagFunc(this, classes, tag);
         },
@@ -94,7 +92,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
             prefixCls:{},
             focusable:{}
         }
-    });
+    }, "Component_Render");
 }, {
     requires:['uibase', './uistore']
 });

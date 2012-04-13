@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 31 21:37
+build time: Apr 13 14:49
 */
 /**
  * @fileOverview model and control base class for kissy
@@ -122,8 +122,6 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
     var Controller = UIBase.create([UIBase.Box],
         /** @lends Component.Controller.prototype */
         {
-
-            __CLASS:"Component.Controller",
 
             getCls:UIStore.getCls,
 
@@ -556,7 +554,9 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             DefaultRender:Render
-        });
+        },
+        "Component_Controller"
+    );
 
     if (0) {
         Controller._uiSetHandleMouseEvents()._uiSetActive();
@@ -789,8 +789,6 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
     return UIBase.create([UIBase.Box.Render], {
 
-        __CLASS:"Component.Render",
-
         _completeClasses:function (classes, tag) {
             return tagFunc(this, classes, tag);
         },
@@ -872,7 +870,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
             prefixCls:{},
             focusable:{}
         }
-    });
+    }, "Component_Render");
 }, {
     requires:['uibase', './uistore']
 });/**

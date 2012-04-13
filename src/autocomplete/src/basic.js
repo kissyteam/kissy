@@ -12,8 +12,6 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
      */
     return UIBase.create(AutoComplete, [], {
 
-        __CLASS:"AutoComplete.Basic",
-
         initializer:function () {
             var self = this,
                 dataSource,
@@ -87,7 +85,7 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
                 value:{}
             }
         }
-    });
+    }, "AutoComplete_Basic");
 
 }, {
     requires:['uibase', './input', './menu', './localDataSource', './remoteDataSource']
