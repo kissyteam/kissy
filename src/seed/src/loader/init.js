@@ -59,11 +59,11 @@
              * @returns {KISSY.Loader}
              */
             getLoader:function () {
-                var self = this;
+                var self = this, env = self.Env;
                 if (self.Config.combine) {
-                    return self.Env._comboLoader;
+                    return env._comboLoader;
                 } else {
-                    return self.Env._loader;
+                    return env._loader;
                 }
             },
             /**
@@ -79,14 +79,8 @@
             }
         });
 
-
-    // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
-
     /**
-     * get base from src
-     * @param script script node
+     * get base from seed/kissy.js
      * @return base for kissy
      * @private
      * @example
@@ -95,25 +89,32 @@
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
      *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
-     *  note about custom combo rules, such as yui3:
+     *   note about custom combo rules, such as yui3:
      *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      * <pre>
      */
-    function getBaseUrl(script) {
-        var src = utils.absoluteFilePath(script.src),
-            prefix = S.Config.comboPrefix = script.getAttribute('data-combo-prefix') || '??',
-            sep = S.Config.comboSep = script.getAttribute('data-combo-sep') || ',',
-            parts = src.split(sep),
+    function getBaseInfo() {
+        // get base from current script file path
+        // notice: timestamp
+        var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
+            baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
+            scripts = S.Env.host.document.getElementsByTagName('script'),
+            script = scripts[scripts.length - 1],
+            src = utils.absoluteFilePath(script.src),
+            comboPrefix = script.getAttribute('data-combo-prefix') || '??',
+            comboSep = script.getAttribute('data-combo-sep') || ',',
+            parts = src.split(comboSep),
             base,
             part0 = parts[0],
-            index = part0.indexOf(prefix);
+            part01,
+            index = part0.indexOf(comboPrefix);
 
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
         } else {
             base = part0.substring(0, index);
-            var part01 = part0.substring(index + 2, part0.length);
+            part01 = part0.substring(index + 2, part0.length);
             // combo first
             // notice use match better than test
             if (part01.match(baseTestReg)) {
@@ -129,36 +130,28 @@
                 });
             }
         }
-        return base;
+        return {
+            base:base,
+            comboPrefix:comboPrefix,
+            comboSep:comboSep
+        };
     }
+
+
+    S.config(S.mix({
+        // the default timeout for getScript
+        timeout:10,
+        tag:'@TIMESTAMP@'
+    }, getBaseInfo()));
 
     /**
      * Initializes loader.
      */
-    function initLoader() {
-        var self = this, env = self.Env;
+    (function () {
+        var env = S.Env;
         env.mods = env.mods || {}; // all added mods
-        env._loader = new Loader(self);
-        env._comboLoader = new ComboLoader(self);
-    }
-
-    // get base from current script file path
-    var scripts = S.Env.host.document.getElementsByTagName('script');
-
-    S.config({
-        base:getBaseUrl(scripts[scripts.length - 1])
-    });
-
-    // the default timeout for getScript
-    S.Config.timeout = 10;
-
-    S.Config.tag = S.__BUILD_TIME;
-
-    initLoader.call(S);
-
-    // for S.app working properly
-    S.__APP_MEMBERS.push("add", "use", "require");
-
-    S.__APP_INIT_METHODS.push(initLoader);
+        env._loader = new Loader(S);
+        env._comboLoader = new ComboLoader(S);
+    })();
 
 })(KISSY);

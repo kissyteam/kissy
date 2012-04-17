@@ -132,21 +132,12 @@
              * @private
              */
             configs:(S.configs || {}),
-            // S.app() with these members.
-            __APP_MEMBERS:['namespace'],
-            __APP_INIT_METHODS:[init],
 
             /**
              * The version of the library.
              * @type {String}
              */
             version:'@VERSION@',
-
-            /**
-             * The build time of the library
-             * @type {String}
-             */
-            __BUILD_TIME:'@TIMESTAMP@',
 
             /**
              * Returns a new object containing all of the properties of
@@ -284,37 +275,8 @@
             },
 
             /**
-             * create app based on KISSY.
-             * @param name {String} the app name
-             * @param sx {Object} static properties to add/override
-             * <code>
-             * S.app('TB');
-             * TB.namespace('app'); // returns TB.app
-             * </code>
-             * @return {Object}  A reference to the app global object
-             * @deprecated recommended using packages
-             */
-            app:function (name, sx) {
-                var isStr = S.isString(name),
-                    O = isStr ? host[name] || {} : name,
-                    i = 0,
-                    __APP_INIT_METHODS = S.__APP_INIT_METHODS,
-                    len = __APP_INIT_METHODS.length;
-
-                S.mix(O, this, true, S.__APP_MEMBERS);
-                for (; i < len; i++) {
-                    __APP_INIT_METHODS[i].call(O);
-                }
-
-                S.mix(O, S.isFunction(sx) ? sx() : sx);
-                isStr && (host[name] = O);
-
-                return O;
-            },
-
-            /**
              * set KISSY configuration
-             * @param c detail configs
+             * @param {Object|String} c config object or config key.
              * @param {Object[]} c.packages
              * @param {String} c.packages.0.name package name
              * @param {String} c.packages.0.path package path
@@ -326,6 +288,7 @@
              * @param {boolean} c.combine whether to enable combo
              * @param {String} c.base set base for kissy loader.use with caution!
              * @param {boolean} c.debug whether to enable debug mod
+             * @param [v] config value
              * @example
              * // use gallery from cdn
              * <code>
@@ -348,16 +311,30 @@
              * });
              * </code>
              */
-            config:function (c) {
-                var configs, cfg, r;
-                for (var p in c) {
-                    if (c.hasOwnProperty(p)) {
-                        // some filter
-                        if ((configs = this['configs']) && (cfg = configs[p])) {
-                            r = cfg(c[p]);
+            config:function (c, v) {
+                var cfg,
+                    r,
+                    Config = S.Config,
+                    configs = S.configs;
+                if (S.isObject(c)) {
+                    for (var p in c) {
+                        if (c.hasOwnProperty(p)) {
+                            S.config(p, c[p]);
+                        }
+                    }
+                } else {
+                    cfg = configs[c];
+                    if (v === undefined) {
+                        if (cfg) {
+                            r = cfg();
                         } else {
-                            // or set directly
-                            S.Config[p] = c[p];
+                            r = Config[c];
+                        }
+                    } else {
+                        if (cfg) {
+                            r = cfg(v);
+                        } else {
+                            Config[c] = v;
                         }
                     }
                 }
@@ -404,18 +381,21 @@
     /**
      * Initializes
      */
-    function init() {
-        var self = this,
-            c;
-        self.Env = self.Env || {};
-        c = self.Config = self.Config || {};
+    (function () {
+        var c;
+        S.Env = S.Env || {};
+        c = S.Config = S.Config || {};
         // NOTICE: '@DEBUG@' will replace with '' when compressing.
         // So, if loading source file, debug is on by default.
         // If loading min version, debug is turned off automatically.
         c.debug = '@DEBUG@';
-    }
+        /**
+         * The build time of the library
+         * @type {String}
+         */
+        S.__BUILD_TIME = '@TIMESTAMP@';
+    })();
 
-    init.call(S);
     return S;
 
 })('KISSY', undefined);

@@ -72,7 +72,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay === "none" || oldDisplay === "") {
+            if (oldDisplay == "none" || oldDisplay == "") {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
                     defaultDisplayDetectIframe = doc.createElement("iframe");

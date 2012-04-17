@@ -18,7 +18,7 @@
      * </code>
      */
     S.configs.map = function (rules) {
-        S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
+        return S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules || []);
     };
     /**
      * 包声明
@@ -35,9 +35,13 @@
             cfg.path = cfg.path && utils.normalBasePath(cfg.path);
             cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
         });
+        return ps;
     };
 
     S.configs.base = function (base) {
+        if (!base) {
+            return S.Config.base;
+        }
         S.Config.base = utils.normalBasePath(base);
     };
 })(KISSY);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 17 17:57
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -137,21 +137,12 @@ build time: Apr 12 21:10
              * @private
              */
             configs:(S.configs || {}),
-            // S.app() with these members.
-            __APP_MEMBERS:['namespace'],
-            __APP_INIT_METHODS:[init],
 
             /**
              * The version of the library.
              * @type {String}
              */
             version:'1.30dev',
-
-            /**
-             * The build time of the library
-             * @type {String}
-             */
-            __BUILD_TIME:'20120412211052',
 
             /**
              * Returns a new object containing all of the properties of
@@ -289,37 +280,8 @@ build time: Apr 12 21:10
             },
 
             /**
-             * create app based on KISSY.
-             * @param name {String} the app name
-             * @param sx {Object} static properties to add/override
-             * <code>
-             * S.app('TB');
-             * TB.namespace('app'); // returns TB.app
-             * </code>
-             * @return {Object}  A reference to the app global object
-             * @deprecated recommended using packages
-             */
-            app:function (name, sx) {
-                var isStr = S.isString(name),
-                    O = isStr ? host[name] || {} : name,
-                    i = 0,
-                    __APP_INIT_METHODS = S.__APP_INIT_METHODS,
-                    len = __APP_INIT_METHODS.length;
-
-                S.mix(O, this, true, S.__APP_MEMBERS);
-                for (; i < len; i++) {
-                    __APP_INIT_METHODS[i].call(O);
-                }
-
-                S.mix(O, S.isFunction(sx) ? sx() : sx);
-                isStr && (host[name] = O);
-
-                return O;
-            },
-
-            /**
              * set KISSY configuration
-             * @param c detail configs
+             * @param {Object|String} c config object or config key.
              * @param {Object[]} c.packages
              * @param {String} c.packages.0.name package name
              * @param {String} c.packages.0.path package path
@@ -331,6 +293,7 @@ build time: Apr 12 21:10
              * @param {boolean} c.combine whether to enable combo
              * @param {String} c.base set base for kissy loader.use with caution!
              * @param {boolean} c.debug whether to enable debug mod
+             * @param [v] config value
              * @example
              * // use gallery from cdn
              * <code>
@@ -353,16 +316,30 @@ build time: Apr 12 21:10
              * });
              * </code>
              */
-            config:function (c) {
-                var configs, cfg, r;
-                for (var p in c) {
-                    if (c.hasOwnProperty(p)) {
-                        // some filter
-                        if ((configs = this['configs']) && (cfg = configs[p])) {
-                            r = cfg(c[p]);
+            config:function (c, v) {
+                var cfg,
+                    r,
+                    Config = S.Config,
+                    configs = S.configs;
+                if (S.isObject(c)) {
+                    for (var p in c) {
+                        if (c.hasOwnProperty(p)) {
+                            S.config(p, c[p]);
+                        }
+                    }
+                } else {
+                    cfg = configs[c];
+                    if (v === undefined) {
+                        if (cfg) {
+                            r = cfg();
                         } else {
-                            // or set directly
-                            S.Config[p] = c[p];
+                            r = Config[c];
+                        }
+                    } else {
+                        if (cfg) {
+                            r = cfg(v);
+                        } else {
+                            Config[c] = v;
                         }
                     }
                 }
@@ -409,18 +386,21 @@ build time: Apr 12 21:10
     /**
      * Initializes
      */
-    function init() {
-        var self = this,
-            c;
-        self.Env = self.Env || {};
-        c = self.Config = self.Config || {};
+    (function () {
+        var c;
+        S.Env = S.Env || {};
+        c = S.Config = S.Config || {};
         // NOTICE: '@DEBUG@' will replace with '' when compressing.
         // So, if loading source file, debug is on by default.
         // If loading min version, debug is turned off automatically.
         c.debug = '@DEBUG@';
-    }
+        /**
+         * The build time of the library
+         * @type {String}
+         */
+        S.__BUILD_TIME = '20120417175658';
+    })();
 
-    init.call(S);
     return S;
 
 })('KISSY', undefined);
@@ -2784,7 +2764,7 @@ build time: Apr 12 21:10
      * </code>
      */
     S.configs.map = function (rules) {
-        S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
+        return S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules || []);
     };
     /**
      * 包声明
@@ -2801,9 +2781,13 @@ build time: Apr 12 21:10
             cfg.path = cfg.path && utils.normalBasePath(cfg.path);
             cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
         });
+        return ps;
     };
 
     S.configs.base = function (base) {
+        if (!base) {
+            return S.Config.base;
+        }
         S.Config.base = utils.normalBasePath(base);
     };
 })(KISSY);/**
@@ -3772,11 +3756,11 @@ build time: Apr 12 21:10
              * @returns {KISSY.Loader}
              */
             getLoader:function () {
-                var self = this;
+                var self = this, env = self.Env;
                 if (self.Config.combine) {
-                    return self.Env._comboLoader;
+                    return env._comboLoader;
                 } else {
-                    return self.Env._loader;
+                    return env._loader;
                 }
             },
             /**
@@ -3792,14 +3776,8 @@ build time: Apr 12 21:10
             }
         });
 
-
-    // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
-
     /**
-     * get base from src
-     * @param script script node
+     * get base from seed/kissy.js
      * @return base for kissy
      * @private
      * @example
@@ -3808,25 +3786,32 @@ build time: Apr 12 21:10
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
      *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
-     *  note about custom combo rules, such as yui3:
+     *   note about custom combo rules, such as yui3:
      *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      * <pre>
      */
-    function getBaseUrl(script) {
-        var src = utils.absoluteFilePath(script.src),
-            prefix = S.Config.comboPrefix = script.getAttribute('data-combo-prefix') || '??',
-            sep = S.Config.comboSep = script.getAttribute('data-combo-sep') || ',',
-            parts = src.split(sep),
+    function getBaseInfo() {
+        // get base from current script file path
+        // notice: timestamp
+        var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
+            baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
+            scripts = S.Env.host.document.getElementsByTagName('script'),
+            script = scripts[scripts.length - 1],
+            src = utils.absoluteFilePath(script.src),
+            comboPrefix = script.getAttribute('data-combo-prefix') || '??',
+            comboSep = script.getAttribute('data-combo-sep') || ',',
+            parts = src.split(comboSep),
             base,
             part0 = parts[0],
-            index = part0.indexOf(prefix);
+            part01,
+            index = part0.indexOf(comboPrefix);
 
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
         } else {
             base = part0.substring(0, index);
-            var part01 = part0.substring(index + 2, part0.length);
+            part01 = part0.substring(index + 2, part0.length);
             // combo first
             // notice use match better than test
             if (part01.match(baseTestReg)) {
@@ -3842,37 +3827,29 @@ build time: Apr 12 21:10
                 });
             }
         }
-        return base;
+        return {
+            base:base,
+            comboPrefix:comboPrefix,
+            comboSep:comboSep
+        };
     }
+
+
+    S.config(S.mix({
+        // the default timeout for getScript
+        timeout:10,
+        tag:'20120417175658'
+    }, getBaseInfo()));
 
     /**
      * Initializes loader.
      */
-    function initLoader() {
-        var self = this, env = self.Env;
+    (function () {
+        var env = S.Env;
         env.mods = env.mods || {}; // all added mods
-        env._loader = new Loader(self);
-        env._comboLoader = new ComboLoader(self);
-    }
-
-    // get base from current script file path
-    var scripts = S.Env.host.document.getElementsByTagName('script');
-
-    S.config({
-        base:getBaseUrl(scripts[scripts.length - 1])
-    });
-
-    // the default timeout for getScript
-    S.Config.timeout = 10;
-
-    S.Config.tag = S.__BUILD_TIME;
-
-    initLoader.call(S);
-
-    // for S.app working properly
-    S.__APP_MEMBERS.push("add", "use", "require");
-
-    S.__APP_INIT_METHODS.push(initLoader);
+        env._loader = new Loader(S);
+        env._comboLoader = new ComboLoader(S);
+    })();
 
 })(KISSY);/**
  * @fileOverview   web.js
