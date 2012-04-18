@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/htmlparser.js"></script>
+<script src="../../../build/dd.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../../build/overlay.js"></script>
+<!--
+core
+-->
+
+<script src="../src/editor/core/base.js"></script>
+<script src="../src/editor/core/dom.js"></script>
+<script src="../src/editor/core/domIterator.js"></script>
+<script src="../src/editor/core/meta.js"></script>
+<script src="../src/editor/core/elementPath.js"></script>
+<script src="../src/editor/core/focusManager.js"></script>
+<script src="../src/editor/core/range.js"></script>
+<script src="../src/editor/core/selection.js"></script>
+<script src="../src/editor/core/styles.js"></script>
+<script src="../src/editor/core/utils.js"></script>
+<script src="../src/editor/core/walker.js"></script>
+<script src="../src/editor/core/zIndexManager.js"></script>
+<script src="../src/editor.js"></script>
+<!--
+core plugins
+-->
+<script src="../src/editor/core/clipboard/index.js"></script>
+<script src="../src/editor/core/enterKey/index.js"></script>
+<script src="../src/editor/core/htmlDataProcessor/index.js"></script>
+<script src="../src/editor/core/selection/index.js"></script>
+<!--
+other plugins
+-->
+</head>
+<body>
+<button id="t">test</button>
+<div class='t' id="d1">
+
+    <div id="d1_1" class='t'>
+        <div id="d1_1_1" class='t'>
+            <div id="d1_1_1_1" class='t'>
+
+            </div>
+            <div id="d1_1_1_2" class='t'>
+                <div id="d1_1_1_2_1" class='t'>
+
+                </div>
+                <div id="d1_1_1_2_2" class='t'>
+
+                </div>
+                <div id="d1_1_1_2_3" class='t'>
+
+                </div>
+            </div>
+            <div id="d1_1_1_3" class='t'>
+
+            </div>
+        </div>
+        <div id="d1_1_2" class='t'>
+            <div id="d1_1_2_1" class='t'>
+
+            </div>
+        </div>
+        <div id="d1_1_3" class='t'>
+            <div id="d1_1_3_1" class='t'>
+                <div id="d1_1_3_1_1" class='t'>
+
+                </div>
+                <div id="d1_1_3_1_2" class='t'>
+
+                    <div id="d1_1_3_1_2_1" class='t'>
+
+                    </div>
+
+                    <div id="d1_1_3_1_2_2" class='t'>
+
+                    </div>
+
+                    <div id="d1_1_3_1_2_3" class='t'>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="d1_2" class='t'>
+
+    </div>
+</div>
+</body>
+<script>
+    function assert(c, t) {
+        if (!c) KISSY.log(t);
+    }
+
+    var ids = ["d1",
+        "d1_1",
+        "d1_1_1",
+        "d1_1_1_1",
+        "d1_1_1_2",
+        "d1_1_1_2_1",
+        "d1_1_3",
+        "d1_1_3_1",
+        "d1_1_3_1_2",
+        "d1_2"];
+
+    KISSY.ready(function(S) {
+
+        S.one("#t").on("click", function() {
+            var KE = S.Editor;
+            var range = new KE.Range(document);
+            range.setStartBefore(S.one("#d1_1_1_2_2"));
+
+            range.setEndAfter(S.one("#d1_1_3_1_2_3"));
+            var docFrag = document.createDocumentFragment();
+            //startContainer 到 根 都不会删除 ，只删除 startContainer 的子节点
+            //startContainer - endContainer 但中间的节点都会删除
+            range.execContentsAction(0, docFrag);
+
+            var divs = S.all("div.t");
+            assert(divs.length == ids.length,
+                    "数目不对 : " + divs.length + " : " + ids.length);
+            var dids = [];
+            for (var i = 0; i < divs.length; i++) {
+                var id = divs[i].id;
+                dids.push(id);
+                assert(S.inArray(id, ids), id + " error");
+            }
+            S.log("verify 2");
+
+            for (var i = 0; i < ids.length; i++) {
+                var id = ids[i];
+                assert(S.inArray(id, dids), id + " error");
+            }
+
+        });
+
+    });
+
+
+</script>
+
+</html>
