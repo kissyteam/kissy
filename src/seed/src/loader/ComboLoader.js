@@ -24,8 +24,7 @@
         }
     }
 
-    var MAX_URL_LENGTH = 1024,
-        Loader = S.Loader,
+    var Loader = S.Loader,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -71,7 +70,7 @@
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                modNames= utils.normalizeModNamesWithAlias(SS,modNames);
+                modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
@@ -168,18 +167,18 @@
                 }
             },
 
-            add:function (name, def, config) {
+            add:function (name, fn, config) {
                 var self = this,
                     requires,
                     SS = self.SS;
 
-                if (utils.normAdd(SS, name, def, config)) {
+                if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
                 if (config && (requires = config.requires)) {
                     utils.normalDepModuleName(name, requires);
                 }
-                utils.registerModule(SS, name, def, config);
+                utils.registerModule(SS, name, fn, config);
             },
 
 
@@ -242,21 +241,9 @@
                     var type = utils.isCss(mod.path) ? "css" : "js";
                     combos[packagePath] = combos[packagePath] || {};
                     combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
-                    combos[packagePath][type].packageTag = mod.packageTag;
-                    combos[packagePath][type].charset = mod.charset;
+                    combos[packagePath][type].tag = mod.getTag();
+                    combos[packagePath][type].charset = mod.getCharset();
                     combos[packagePath][type].push(mod);
-                });
-
-                S.each(combos, function (v) {
-                    var js, css;
-                    if (js = v["js"]) {
-                        // module level tag is superior to package level tag
-                        js.tag = js.tag || js.packageTag;
-                    }
-                    if (css = v["css"]) {
-                        css.tag = css.tag || css.packageTag;
-                    }
                 });
 
                 var res = {
@@ -266,7 +253,7 @@
 
                 var comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
-                    maxUrlLength = S.Config['comboMaxUrlLength'] || MAX_URL_LENGTH;
+                    maxUrlLength = S.Config.comboMaxUrlLength;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
@@ -366,5 +353,5 @@
  *  - three status
  *      0 : initialized
  *      LOADED : load into page
- *      ATTACHED : def executed
+ *      ATTACHED : fn executed
  **/

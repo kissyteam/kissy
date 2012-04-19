@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 17 17:57
+build time: Apr 19 17:44
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 17 17:57
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120417175658';
+        S.__BUILD_TIME = '20120419174447';
     })();
 
     return S;
@@ -1910,13 +1910,13 @@ build time: Apr 17 17:57
              * @param v value to be set
              */
             setValue:function (v) {
-                this.v = v;
+                this.value = v;
             },
             /**
              * get the value of current module
              */
             getValue:function () {
-                return this.v;
+                return this.value;
             },
             /**
              * get the name of current module
@@ -1928,8 +1928,12 @@ build time: Apr 17 17:57
             /**
              * @private
              */
-            getUrlTag:function () {
-                return this.tag || this.packageTag;
+            getTag:function () {
+                return this.tag || this.packageInfo.tag;
+            },
+
+            getCharset:function () {
+                return this.charset || this.packageInfo.charset;
             }
         });
 
@@ -2024,30 +2028,40 @@ build time: Apr 17 17:57
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+
     if (typeof require !== 'undefined') {
         return;
     }
+
     var Loader = S.Loader,
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
-        doc = S.Env.host.document,
+        host = S.Env.host,
+        doc = host.document,
+        loc = host.location,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
+        __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
+        if (S.isArray(s)) {
+            var ret = [];
+            S.each(s, function (si) {
+                ret.push(indexMap(si));
+            });
+            return ret;
+        }
         if (/(.+\/)(\?t=.+)?$/.test(s)) {
             return RegExp.$1 + "index" + RegExp.$2;
         }
         return s;
     }
-
 
     function removeSuffixAndTagFromModName(modName) {
         var tag = undefined,
@@ -2061,10 +2075,49 @@ build time: Apr 17 17:57
 
         // js do not need suffix
         modName = modName.replace(/\.js$/i, "");
+
         return {
             modName:modName,
             tag:tag
         };
+    }
+
+
+    function getPackageInfo(self, mod) {
+        if (mod.packageInfo) {
+            return mod.packageInfo;
+        }
+
+        var modName = mod.name,
+            Config = self.Config,
+            packages = Config.packages || {},
+            pName = "",
+            packageDesc;
+
+        for (var p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                if (S.startsWith(modName, p) &&
+                    p.length > pName) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] || {
+            // 无包，kissy 自身模块
+            "__kissy":1
+        };
+
+        S.mix(packageDesc, {
+            tag:encodeURIComponent(Config.tag),
+            path:Config.base,
+            debug:Config.debug,
+            charset:"utf-8"
+        }, false);
+
+        mod.packageInfo = packageDesc;
+
+        return packageDesc;
     }
 
     S.mix(utils, {
@@ -2079,10 +2132,6 @@ build time: Apr 17 17:57
 
         isCss:function (url) {
             return /\.css(?:\?|$)/i.test(url);
-        },
-
-        isLinkNode:function (n) {
-            return n.nodeName.toLowerCase() == 'link';
         },
 
         /**
@@ -2156,7 +2205,8 @@ build time: Apr 17 17:57
             path = S.trim(path);
 
             // path 为空时，不能变成 "/"
-            if (path && path.charAt(path.length - 1) != '/') {
+            if (path &&
+                path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
 
@@ -2164,10 +2214,11 @@ build time: Apr 17 17:57
              * 一定要正则化，防止出现 ../ 等相对路径
              * 考虑本地路径
              */
-            if (!path.match(/^(http(s)?)|(file):/i)
-                && !startsWith(path, "/")) {
+            if (!path.match(/^(http(s)?)|(file):/i) &&
+                !startsWith(path, "/")) {
                 path = __pagePath + path;
             }
+
             return normalizePath(path);
         },
 
@@ -2181,67 +2232,38 @@ build time: Apr 17 17:57
         },
 
         getPackagePath:function (self, mod) {
-            //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagePath) {
-                return mod.packagePath;
-            }
-
-            var //一个模块合并到了另一个模块文件中去
-                modName = mod.name,
-                packages = self.Config.packages || {},
-                pName = "",
-                p_def;
-
-            for (var p in packages) {
-                if (packages.hasOwnProperty(p)) {
-                    if (S.startsWith(modName, p) &&
-                        p.length > pName) {
-                        pName = p;
-                    }
-                }
-            }
-
-            p_def = packages[pName];
-
-            mod.charset = p_def && p_def.charset || mod.charset;
-
-            if (p_def) {
-                mod.packageTag = p_def.tag;
-            } else {
-                // kissy 自身组件的事件戳后缀
-                mod.packageTag = encodeURIComponent(self.Config.tag);
-            }
-
-            return mod.packagePath = (p_def && p_def.path) || self.Config.base;
+            return getPackageInfo(self, mod).path;
         },
 
-
         createModuleInfo:function (self, modName) {
-
-            var info = removeSuffixAndTagFromModName(modName),
-                tag = info.tag;
+            var info = removeSuffixAndTagFromModName(modName);
 
             modName = info.modName;
 
             var mods = self.Env.mods,
                 mod = mods[modName];
 
-            if (mod && mod.path && mod.charset) {
-                mod.tag = mod.tag || tag;
+            if (mod) {
                 return mod;
             }
 
             if (!mod) {
                 mods[modName] = mod = new Loader.Module();
+                mod.name = modName;
             }
+
+            if (info.tag) {
+                mod.tag = info.tag;
+            }
+
+            var packageInfo = getPackageInfo(self, mod),
+                path = defaultComponentJsName(modName, packageInfo);
 
             // 用户配置的 path优先
             S.mix(mod, {
-                name:modName,
-                path:defaultComponentJsName(modName),
-                charset:'utf-8',
-                tag:tag
+                path:path
             }, false);
+
             return mod;
         },
 
@@ -2274,7 +2296,7 @@ build time: Apr 17 17:57
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(self,mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -2305,11 +2327,11 @@ build time: Apr 17 17:57
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
-         * 4. create module info with tag : core.js?t=xx => core , .tag=xx         *
+         * 4. create module info with tag : core.js?t=xx => core , tag=xx
          * @param {KISSY} self Global KISSY instance
          * @param {String|String[]} modNames Array of module names or module names string separated by comma
          */
-        normalizeModNames:function (self, modNames, refModName) {
+        normalizeModNames:function (self, modNames, refModName, keepAlias) {
             var ret = [],
                 mods = self.Env.mods;
             S.each(modNames, function (name) {
@@ -2317,7 +2339,7 @@ build time: Apr 17 17:57
                 // 1. index map
                 name = indexMap(name);
                 // 2. un alias
-                if ((m = mods[name]) && (alias = m.alias)) {
+                if (!keepAlias && (m = mods[name]) && (alias = m.alias)) {
                     ret.push.apply(ret, indexMap(alias));
                 } else {
                     ret.push(name);
@@ -2334,26 +2356,12 @@ build time: Apr 17 17:57
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (self,modNames, refModName) {
-            var ret = [];
-            S.each(modNames, function (name) {
-                // 1. index map
-                name = indexMap(name);
-                ret.push(name);
-            });
-            // 2. relative to absolute (optional)
-            if (refModName) {
-                ret = utils.normalDepModuleName(refModName, ret);
-            }
-            // 3. create module info with tag
-            S.each(ret, function (name, i) {
-                ret[i] = utils.createModuleInfo(self, name).name;
-            });
-            return ret;
+        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+            return utils.normalizeModNames(self, modNames, refModName, 1);
         },
 
-        //注册模块，将模块和定义 factory 关联起来
-        registerModule:function (self, name, def, config) {
+        // 注册模块，将模块和定义 factory 关联起来
+        registerModule:function (self, name, fn, config) {
             config = config || {};
 
             utils.createModuleInfo(self, name);
@@ -2370,23 +2378,49 @@ build time: Apr 17 17:57
                 return;
             }
 
-            mod.fn = def;
+            mod.fn = fn;
 
             S.mix((mods[name] = mod), config);
 
             S.log(name + " is loaded");
         },
 
-        normAdd:function (self, name, def, config) {
+        /**
+         * 只用来指定模块依赖信息. 注意：需要在 package 声明后 add ！
+         * @param self
+         * @param name
+         * @param fn
+         * @param config
+         * @example
+         * <code>
+         *
+         * KISSY.config({
+         *  packages:[
+         *      {
+         *          name:"biz1",
+         *          path:"haha"
+         *      }
+         *  ]
+         * });
+         *
+         * KISSY.add({
+         *   "biz1/main" : {
+         *      requires:[ "biz1/part1" , "biz1/part2" ]
+         *   }
+         * });
+         *
+         * </code>
+         */
+        normAdd:function (self, name, fn, config) {
             var mods = self.Env.mods,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name)
                 && !config
-                && S.isPlainObject(def)) {
+                && S.isPlainObject(fn)) {
                 o = {};
-                o[name] = def;
+                o[name] = fn;
                 name = o;
             }
 
@@ -2413,13 +2447,18 @@ build time: Apr 17 17:57
 
     });
 
-    function defaultComponentJsName(m) {
-        var suffix = ".js", match;
+    function defaultComponentJsName(m, packageInfo) {
+        var suffix = ".js",
+            match;
         if (match = m.match(/(.+)(\.css)$/i)) {
             suffix = match[2];
             m = match[1];
         }
-        return m + (S.Config.debug ? '' : '-min') + suffix;
+        var min = "-min";
+        if (packageInfo.debug) {
+            min = "";
+        }
+        return m + min + suffix;
     }
 
     function isStatus(self, modNames, status) {
@@ -2514,20 +2553,6 @@ build time: Apr 17 17:57
     }
 
     S.mix(utils, {
-        scriptOnLoad:win.addEventListener ?
-            function (node, callback) {
-                node.addEventListener('load', callback, false);
-            } :
-            function (node, callback) {
-                node.onreadystatechange = function () {
-                    var self = this, rs = self.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        self.onreadystatechange = null;
-                        callback.call(self);
-                    }
-                };
-            },
-
         /**
          * monitor css onload across browsers
          * 暂时不考虑如何判断失败，如 404 等
@@ -2714,15 +2739,23 @@ build time: Apr 17 17:57
                 delete jsCallbacks[src];
             }
 
-            utils.scriptOnLoad(node, function () {
-                end(0);
-            });
-
             //标准浏览器
             if (node.addEventListener) {
+                node.addEventListener('load', function () {
+                    end(0);
+                }, false);
                 node.addEventListener("error", function () {
                     end(1);
                 }, false);
+            } else {
+                node.onreadystatechange = function () {
+                    var self = this,
+                        rs = self.readyState;
+                    if (/loaded|complete/i.test(rs)) {
+                        self.onreadystatechange = null;
+                        end(0);
+                    }
+                };
             }
 
             if (timeout) {
@@ -2820,7 +2853,7 @@ build time: Apr 17 17:57
             /**
              * Registers a module.
              * @param {String|Object} [name] module name
-             * @param {Function|Object} [def] entry point into the module that is used to bind module to KISSY
+             * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
              * @param {Object} [config] special config for this add
              * @param {String[]} [config.requires] array of mod's name that current module requires
              * @example
@@ -2835,7 +2868,7 @@ build time: Apr 17 17:57
              * });
              * </code>
              */
-            add:function (name, def, config) {
+            add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
@@ -2843,14 +2876,14 @@ build time: Apr 17 17:57
                     mods = SS.Env.mods,
                     o;
 
-                if (utils.normAdd(SS, name, def, config)) {
+                if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
 
-                    utils.registerModule(SS, name, def, config);
+                    utils.registerModule(SS, name, fn, config);
 
                     mod = mods[name];
 
@@ -2868,8 +2901,8 @@ build time: Apr 17 17:57
                 }
                 // S.add(fn,config);
                 else if (S.isFunction(name)) {
-                    config = def;
-                    def = name;
+                    config = fn;
+                    fn = name;
                     if (utils.IE) {
                         /*
                          Kris Zyp
@@ -2895,13 +2928,13 @@ build time: Apr 17 17:57
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
                         S.log("old_ie get modname by interactive : " + name);
-                        utils.registerModule(SS, name, def, config);
+                        utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
                         // 其他浏览器 onload 时，关联模块名与模块定义
                         self.__currentModule = {
-                            def:def,
+                            fn:fn,
                             config:config
                         };
                     }
@@ -2910,8 +2943,6 @@ build time: Apr 17 17:57
                 S.log("invalid format for KISSY.add !", "error");
             }
         });
-
-
 
 
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
@@ -3023,9 +3054,12 @@ build time: Apr 17 17:57
         utils = Loader.Utils,
         INIT = data.INIT,
         IE = utils.IE,
+        win = S.Env.host,
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
+        ALL_REQUIRES = "__allRequires",
+        CURRENT_MODULE = "__currentModule",
         ATTACHED = data.ATTACHED;
 
     S.augment(Loader, {
@@ -3045,7 +3079,7 @@ build time: Apr 17 17:57
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(SS,modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
             var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
@@ -3083,10 +3117,6 @@ build time: Apr 17 17:57
 
         build("fullpath", "path");
 
-        if (mod["cssfullpath"] !== data.LOADED) {
-            build("cssfullpath", "csspath");
-        }
-
         function build(fullpath, path) {
             var flag = "__" + fullpath + "Ready",
                 t,
@@ -3103,7 +3133,7 @@ build time: Apr 17 17:57
             // debug 模式下，加载非 min 版
             if (p) {
                 mod[fullpath] = utils.getMappedPath(SS, p +
-                    ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
+                    ((t = mod.getTag()) ? ("?t=" + t) : ""));
                 mod[flag] = 1;
             }
         }
@@ -3144,7 +3174,7 @@ build time: Apr 17 17:57
          */
         function cyclicCheck() {
             // one mod's all requires mods to run its callback
-            var __allRequires = mod.__allRequires = mod.__allRequires || {},
+            var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
                 myName = mod.name,
                 rmod,
                 r__allRequires;
@@ -3152,14 +3182,14 @@ build time: Apr 17 17:57
             S.each(requires, function (r) {
                 rmod = mods[r];
                 __allRequires[r] = 1;
-                if (rmod && (r__allRequires = rmod.__allRequires)) {
+                if (rmod && (r__allRequires = rmod[ALL_REQUIRES])) {
                     S.mix(__allRequires, r__allRequires);
                 }
             });
 
             if (__allRequires[myName]) {
                 S.log(__allRequires, "error");
-                var JSON = window.JSON,
+                var JSON = win.JSON,
                     error = "";
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
@@ -3252,18 +3282,11 @@ build time: Apr 17 17:57
      */
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
-            cssfullpath,
+            charset = mod.getCharset(),
             url = mod['fullpath'],
             isCss = utils.isCss(url)
 
         mod.status = mod.status || INIT;
-
-        // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
-        // 仅发出请求，不做任何其它处理
-        if (cssfullpath = mod["cssfullpath"]) {
-            S.getScript(cssfullpath);
-            mod["cssfullpath"] = mod.csspath = LOADED;
-        }
 
         if (mod.status < LOADING) {
             mod.status = LOADING;
@@ -3278,19 +3301,19 @@ build time: Apr 17 17:57
                     if (!isCss) {
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                        if (self.__currentModule) {
+                        if (self[CURRENT_MODULE]) {
                             S.log("standard browser get modname after load : " + mod.name);
                             utils.registerModule(SS,
-                                mod.name, self.__currentModule.def,
-                                self.__currentModule.config);
-                            self.__currentModule = null;
+                                mod.name, self[CURRENT_MODULE].fn,
+                                self[CURRENT_MODULE].config);
+                            self[CURRENT_MODULE] = null;
                         }
                     }
                     checkAndHandle();
                 },
                 error:checkAndHandle,
                 // source:mod.name + "-init",
-                charset:mod.charset
+                charset:charset
             });
         }
         // 已经在加载中，需要添加回调到 script onload 中
@@ -3300,7 +3323,7 @@ build time: Apr 17 17:57
             S.getScript(url, {
                 success:checkAndHandle,
                 // source:mod.name + "-loading",
-                charset:mod.charset
+                charset:charset
             });
         }
         // loaded/attached/error
@@ -3352,8 +3375,7 @@ build time: Apr 17 17:57
         }
     }
 
-    var MAX_URL_LENGTH = 1024,
-        Loader = S.Loader,
+    var Loader = S.Loader,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -3399,7 +3421,7 @@ build time: Apr 17 17:57
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                modNames= utils.normalizeModNamesWithAlias(SS,modNames);
+                modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
@@ -3496,18 +3518,18 @@ build time: Apr 17 17:57
                 }
             },
 
-            add:function (name, def, config) {
+            add:function (name, fn, config) {
                 var self = this,
                     requires,
                     SS = self.SS;
 
-                if (utils.normAdd(SS, name, def, config)) {
+                if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
                 if (config && (requires = config.requires)) {
                     utils.normalDepModuleName(name, requires);
                 }
-                utils.registerModule(SS, name, def, config);
+                utils.registerModule(SS, name, fn, config);
             },
 
 
@@ -3570,21 +3592,9 @@ build time: Apr 17 17:57
                     var type = utils.isCss(mod.path) ? "css" : "js";
                     combos[packagePath] = combos[packagePath] || {};
                     combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
-                    combos[packagePath][type].packageTag = mod.packageTag;
-                    combos[packagePath][type].charset = mod.charset;
+                    combos[packagePath][type].tag = mod.getTag();
+                    combos[packagePath][type].charset = mod.getCharset();
                     combos[packagePath][type].push(mod);
-                });
-
-                S.each(combos, function (v) {
-                    var js, css;
-                    if (js = v["js"]) {
-                        // module level tag is superior to package level tag
-                        js.tag = js.tag || js.packageTag;
-                    }
-                    if (css = v["css"]) {
-                        css.tag = css.tag || css.packageTag;
-                    }
                 });
 
                 var res = {
@@ -3594,7 +3604,7 @@ build time: Apr 17 17:57
 
                 var comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
-                    maxUrlLength = S.Config['comboMaxUrlLength'] || MAX_URL_LENGTH;
+                    maxUrlLength = S.Config.comboMaxUrlLength;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
@@ -3694,7 +3704,7 @@ build time: Apr 17 17:57
  *  - three status
  *      0 : initialized
  *      LOADED : load into page
- *      ATTACHED : def executed
+ *      ATTACHED : fn executed
  **//**
  *  @fileOverview mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
@@ -3718,10 +3728,10 @@ build time: Apr 17 17:57
              * Registers a module with the KISSY global.
              * @param {String} [name] module name.
              * it must be set if combine is true in {@link KISSY.config}
-             * @param {Function} def module definition function that is used to return
+             * @param {Function} fn module definition function that is used to return
              * this module value
-             * @param {KISSY} def.S KISSY global instance
-             * @param def.x... this module's required modules' value
+             * @param {KISSY} fn.S KISSY global instance
+             * @param fn.x... this module's required modules' value
              * @param {Object} [cfg] module optional config data
              * @param {String[]} cfg.requires this module's required module name list
              * @example
@@ -3734,8 +3744,8 @@ build time: Apr 17 17:57
              * });
              * </code>
              */
-            add:function (name, def, cfg) {
-                this.getLoader().add(name, def, cfg);
+            add:function (name, fn, cfg) {
+                this.getLoader().add(name, fn, cfg);
             },
             /**
              * Attached one or more modules to global KISSY instance.
@@ -3838,7 +3848,8 @@ build time: Apr 17 17:57
     S.config(S.mix({
         // the default timeout for getScript
         timeout:10,
-        tag:'20120417175658'
+        comboMaxUrlLength:1024,
+        tag:'20120419174447'
     }, getBaseInfo()));
 
     /**
@@ -30539,20 +30550,20 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 19 16:51
 */
 /**
  * KISSY Calendar
- * @creator  拔赤<lijing00333@163.com>,keyapril@gmail.com
+ * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/base', function (S, Node, Event, undefined) {
-    var EventTarget = Event.Target, $ = Node.all, doc = S.Env.host.document;
+KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
+    var EventTarget = Event.Target,$ = Node.all;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
     }
 
-    S.augment(Calendar, EventTarget, {
+    S.augment(Calendar, EventTarget,{
 
         /**
          * 日历构造函数
@@ -30561,104 +30572,108 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @param { string }    config
          * @private
          */
-        _init:function (selector, config) {
+        _init: function(selector, config) {
             /*
              self.con  日历的容器
              self.id   传进来的id
              self.C_Id 永远代表日历容器的ID
              */
-            var self = this, trigger = $(selector);
-            self.id = self._stamp(trigger);
-            self._buildParam(config);
+			var self = this,trigger = $(selector);
+            self.id =  self._stamp(trigger);
+			self._buildParam(config);
             if (!self.popup) {
                 self.con = trigger;
             } else {
                 self.trigger = trigger;
                 self.con = new Node('<div>');
-                $(doc.body).append(self.con);
-
+                $(document.body).append(self.con);
+                
                 self.con.css({
                     'top':'0px',
                     'position':'absolute',
                     'background':'white',
                     'visibility':'hidden',
-                    'z-index':99999999
+					'z-index':99999999
                 });
             }
-            self.C_Id = self._stamp(self.con);
-
+			self.C_Id = self._stamp(self.con);
+			
             self.render();
             self._buildEvent();
             return this;
         },
-
-        /**
+		
+		/**
          * 日历构造渲染,增加对多日历不联动的处理
          * @param { object }    o
          */
-        render:function (o) {
+        render: function(o) {
             var self = this,
                 i = 0,
-                _prev, _next, _oym;
+                _prev,_next,_oym;
 
             o = o || {};
             self._parseParam(o);
 
             self.con.addClass('ks-cal-call ks-clearfix ks-cal-call-multi-' + self.pages);
-
-            self.ca = self.ca || [];
-            for (var i = 0; i < self.ca.length; i++) {
-                self.ca[i].detachEvent();
-            }
-            self.con.html('');
-
-            //重置日历的个数
-            self.ca.length = self.pages;
-            var _rangeStart = false;
-            var _rangeEnd = false;
-            if (self.range) {
-                if (self.range.start) {
-                    _rangeStart = true;
-                }
-                if (self.range.end) {
-                    _rangeEnd = true;
-                }
-            }
-            if (_rangeStart && !self.rangeLinkage) {
-                _oym = [self.range.start.getFullYear(), self.range.start.getMonth()];
-            }
-            else {
-                _oym = [self.year, self.month];
-            }
-
+			
+			self.ca = self.ca ||[];
+			for(var i=0;i<self.ca.length;i++){
+				self.ca[i].detachEvent();
+			}
+            if(self.__shimEl){
+				self.__shimEl.remove();
+                delete self.__shimEl;
+			}
+            self.con.empty();
+			
+			//重置日历的个数
+			self.ca.length = self.pages;
+			var _rangeStart = false;
+			var _rangeEnd = false;
+			if(self.range){
+				if(self.range.start){
+					_rangeStart = true;
+				}
+				if(self.range.end){
+					_rangeEnd = true;
+				}
+			}
+			if(_rangeStart&&!self.rangeLinkage){
+				_oym = [self.range.start.getFullYear(),self.range.start.getMonth()];
+			}
+			else{
+				_oym = [self.year,self.month];
+			}
+			
             for (i = 0; i < self.pages; i++) {
                 if (i === 0) {
                     _prev = true;
-                } else if (!self.rangeLinkage) {
-                    _prev = true;
-                    if (_rangeEnd && (i + 1) == self.pages) {
-                        _oym = [self.range.end.getFullYear(), self.range.end.getMonth()];
-                    }
-                    else {
-                        _oym = self._computeNextMonth(_oym);
-                    }
-                }
-                else {
-                    _prev = false;
-                    _oym = self._computeNextMonth(_oym);
-                }
-                if (!self.rangeLinkage) {
-                    _next = true;
-                }
-                else {
-                    _next = i == (self.pages - 1);
-                }
-
-                var cal = self.ca[i];
-                if (!self.rangeLinkage && cal && (cal.year != _oym[0] || cal.month != _oym[1])) {
-                    _oym = [cal.year, cal.month];
-                }
-
+                } else if(!self.rangeLinkage){
+					_prev = true;
+					if(_rangeEnd&&(i+1)==self.pages){
+						_oym = [self.range.end.getFullYear(),self.range.end.getMonth()];
+					}
+					else{
+						_oym = self._computeNextMonth(_oym);
+					}
+				}
+				else{
+					_prev = false;
+					_oym = self._computeNextMonth(_oym);
+				}
+				if(!self.rangeLinkage){
+					_next = true;
+				}
+				else{
+					_next = i == (self.pages - 1);
+				}
+                
+				var cal = self.ca[i];
+				if(!self.rangeLinkage&&cal&&(cal.year!=_oym[0]||cal.month!=_oym[1])){
+					_oym = [cal.year,cal.month];
+				}
+				
                 self.ca[i] = new self.Page({
                     year:_oym[0],
                     month:_oym[1],
@@ -30668,23 +30683,33 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 }, self);
                 self.ca[i].render();
             }
+			if(self.popup&&UA['ie'] === 6){
+				self.__shimEl = new Node("<" + "iframe frameBorder='0' style='position: absolute;" +
+                    "border: none;" +
+                    "width: expression(this.parentNode.offsetWidth-3);" +
+                    "top: 0;" +
+                    //"filter: alpha(opacity=0);" +
+                    "left: 0;" +
+                    "z-index: 0;" +
+                    "height: expression(this.parentNode.offsetHeight-3);" + "'></iframe>");
+                self.con.prepend(self.__shimEl);
+			}
             return this;
 
         },
-        destroy:function () {
-            //在清空html前，移除绑定的事件
-            var self = this;
-            for (var i = 0; i < self.ca.length; i++) {
-                self.ca[i].detachEvent();
-            }
-
-            S.each(self.EV, function (tev) {
+		destroy:function(){
+			//在清空html前，移除绑定的事件
+			var self = this;
+			for(var i=0;i<self.ca.length;i++){
+				self.ca[i].detachEvent();
+			}
+			
+			S.each(self.EV, function(tev) {
                 if (tev) {
                     tev.target.detach(tev.type, tev.fn);
-                }
-            });
+            }});
             self.con.remove();
-        },
+		},
         /**
          * 用以给容器打上id的标记,容器有id则返回
          * @method _stamp
@@ -30692,7 +30717,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @return {string}
          * @private
          */
-        _stamp:function (el) {
+        _stamp: function(el) {
             if (!el.attr('id')) {
                 el.attr('id', S.guid('K_Calendar'));
             }
@@ -30705,24 +30730,24 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @method _buildEvent
          * @private
          */
-        _buildEvent:function () {
-            var self = this, tev, i;
+        _buildEvent: function() {
+            var self = this,tev,i;
             if (!self.popup) {
                 return this;
             }
             //点击空白
             //flush event
-            S.each(self.EV, function (tev) {
+            S.each(self.EV, function(tev) {
                 if (tev) {
                     tev.target.detach(tev.type, tev.fn);
                 }
             });
             self.EV = self.EV || [];
             tev = self.EV[0] = {
-                target:$(doc),
+                target:$(document),
                 type:'click'
             };
-            tev.fn = function (e) {
+            tev.fn = function(e) {
                 var target = $(e.target);
                 //点击到日历上
                 if (target.attr('id') === self.C_Id) {
@@ -30740,7 +30765,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 if (self.con.css('visibility') == 'hidden') {
                     return;
                 }
-
+                
                 // bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
                 if (self.con.contains(target) &&
                     (target[0].nodeName.toLowerCase() === 'option' ||
@@ -30748,13 +30773,13 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                     return;
                 }
 
-                var inRegion = function (dot, r) {
+				var inRegion = function(dot, r) {
                     return dot[0] > r[0].x
                         && dot[0] < r[1].x
                         && dot[1] > r[0].y
                         && dot[1] < r[1].y;
                 };
-                if (!inRegion([e.pageX, e.pageY], [
+                if (!inRegion([e.pageX,e.pageY], [
                     {
                         x:self.con.offset().left,
                         y:self.con.offset().top
@@ -30771,9 +30796,9 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             //点击触点
             for (i = 0; i < self.triggerType.length; i++) {
                 tev = self.EV[i + 1] = {
-                    target:$('#' + self.id),
-                    type:self.triggerType[i],
-                    fn:function (e) {
+                    target: $('#' + self.id),
+                    type: self.triggerType[i],
+                    fn: function(e) {
                         e.target = $(e.target);
                         e.preventDefault();
                         //如果focus和click同时存在的hack
@@ -30788,7 +30813,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                                 self.toggle();
                             }
                         } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
-                            setTimeout(function () {//为了跳过document.onclick事件
+                            setTimeout(function() {//为了跳过document.onclick事件
                                 self.toggle();
                             }, 170);
                         } else {
@@ -30801,48 +30826,48 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             }
             return this;
         },
+		
+		//处理对齐
+		__getAlignOffset:function(node,align){
+			var self = this;
+			var V = align.charAt(0),
+            H = align.charAt(1),
+            offset, w, h, x, y;
 
-        //处理对齐
-        __getAlignOffset:function (node, align) {
-            var self = this;
-            var V = align.charAt(0),
-                H = align.charAt(1),
-                offset, w, h, x, y;
+			if (node) {
+				node = Node.one(node);
+				offset = node.offset();
+				w = node.outerWidth();
+				h = node.outerHeight();
+			} else {
+				offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+				w = DOM.viewportWidth();
+				h = DOM.viewportHeight();
+			}
 
-            if (node) {
-                node = Node.one(node);
-                offset = node.offset();
-                w = node.outerWidth();
-                h = node.outerHeight();
-            } else {
-                offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
-                w = DOM.viewportWidth();
-                h = DOM.viewportHeight();
-            }
+			x = offset.left;
+			y = offset.top;
 
-            x = offset.left;
-            y = offset.top;
+			if (V === 'c') {
+				y += h / 2;
+			} else if (V === 'b') {
+				y += h;
+			}
 
-            if (V === 'c') {
-                y += h / 2;
-            } else if (V === 'b') {
-                y += h;
-            }
+			if (H === 'c') {
+				x += w / 2;
+			} else if (H === 'r') {
+				x += w;
+			}
 
-            if (H === 'c') {
-                x += w / 2;
-            } else if (H === 'r') {
-                x += w;
-            }
-
-            return { left:x, top:y };
-
-        },
+			return { left: x, top: y };
+			
+		},
         /**
          * 改变日历是否显示的状态
          * @mathod toggle
          */
-        toggle:function () {
+        toggle: function() {
             var self = this;
             if (self.con.css('visibility') == 'hidden') {
                 self.show();
@@ -30855,21 +30880,21 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * 显示日历
          * @method show
          */
-        show:function () {
+        show: function() {
             var self = this;
-            self.con.css('visibility', '');
-            var points = self.align.points,
-                offset = self.align.offset || [0, 0],
-                xy = self.con.offset(),
-                p1 = self.__getAlignOffset(self.trigger, points[0]),
-                p2 = self.__getAlignOffset(self.con, points[1]),
-                diff = [p2.left - p1.left, p2.top - p1.top],
-                _x = xy.left - diff[0] + offset[0],
-                _y = xy.top - diff[1] + offset[1];
-
-            self.con.css('left', _x.toString() + 'px');
-            self.con.css('top', _y.toString() + 'px');
-            self.fire("show");
+            self.con.css('visibility', '');  
+			var points = self.align.points,
+				offset = self.align.offset || [0,0],
+				xy = self.con.offset(),
+				p1 = self.__getAlignOffset(self.trigger, points[0]),
+				p2 = self.__getAlignOffset(self.con, points[1]),
+				diff = [p2.left - p1.left, p2.top - p1.top],
+				_x = xy.left - diff[0] + offset[0],
+				_y = xy.top - diff[1] + offset[1];
+				
+			self.con.css('left', _x.toString() + 'px');
+			self.con.css('top', _y.toString() + 'px');
+			self.fire("show");
             return this;
         },
 
@@ -30877,14 +30902,9 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * 隐藏日历
          * @method hide
          */
-        hide:function () {
+        hide: function() {
             var self = this;
-            self.con.css({
-                'visibility':'hidden',
-                // #112
-                left:-9999,
-                top:-9999
-            });
+            self.con.css('visibility', 'hidden');
             self.fire("hide");
             return this;
         },
@@ -30894,7 +30914,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @method _buildParam
          * @private
          */
-        _buildParam:function (o) {
+        _buildParam: function(o) {
             var self = this;
             if (o === undefined || o === null) {
                 o = { };
@@ -30908,31 +30928,33 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
 
             //这种处理方式不错
             S.each({
-                date:new Date(), //该日期所在月份, 默认为当天
-                selected:null, //当前选中的日期
-                startDay:0, //日历显示星期x为起始日期, 取值范围为0到6, 默认为0,从星期日开始,若取值为1, 则从星期一开始, 若取值为7, 则从周日开始
-                pages:1, //日历的页数, 默认为1, 包含一页日历
-                closable:false, //在弹出情况下, 点选日期后是否关闭日历, 默认为false
-                rangeSelect:false, //是否支持时间段选择，只有开启时候才会触发rangeSelect事件
-                minDate:false, //日历可选择的最小日期
-                maxDate:false, //日历可选择的最大日期
-                multiSelect:false, //是否支持多选
-                multi:null, //多选的日期数组
-                navigator:true, //是否可以通过点击导航输入日期,默认开启
-                popup:false, //日历是否为弹出,默认为false
-                showTime:false, //是否显示时间的选择,默认为false
-                triggerType:['click'], //弹出状态下, 触发弹出日历的事件, 例如：[‘click’,’focus’],也可以直接传入’focus’, 默认为[‘click’]
-                disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
-                range:null, //已选择的时间段{start:null,end:null}
-                rangeLinkage:true, //多个日历是否联动
-                align:{
-                    points:['bl', 'tl'],
-                    offset:[0, 0]
-                }, //对齐方式
-                notLimited:false// 是否出现不限的按钮
+                date:        new Date(),//该日期所在月份, 默认为当天
+				selected:	 null,//当前选中的日期
+                startDay:    0,   //日历显示星期x为起始日期, 取值范围为0到6, 默认为0,从星期日开始,若取值为1, 则从星期一开始, 若取值为7, 则从周日开始
+                pages:       1,//日历的页数, 默认为1, 包含一页日历
+                closable:    false,//在弹出情况下, 点选日期后是否关闭日历, 默认为false
+                rangeSelect: false,//是否支持时间段选择，只有开启时候才会触发rangeSelect事件
+                minDate:     false,//日历可选择的最小日期
+                maxDate:     false,//日历可选择的最大日期
+                multiSelect: false,//是否支持多选
+				multi:		 null,//多选的日期数组
+                navigator:   true,//是否可以通过点击导航输入日期,默认开启
+                popup:       false,//日历是否为弹出,默认为false
+                showTime:    false,//是否显示时间的选择,默认为false
+                triggerType: ['click'],//弹出状态下, 触发弹出日历的事件, 例如：[‘click’,’focus’],也可以直接传入’focus’, 默认为[‘click’]
+				disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
+				range:		 null,//已选择的时间段{start:null,end:null}
+				rangeLinkage:true,//多个日历是否联动
+				align:{
+					points:['bl','tl'],
+					offset:[0,0]
+				},//对齐方式
+				notLimited:	false// 是否出现不限的按钮
             }, setParam);
+			
+			
 
-
+            
             return this;
         },
 
@@ -30941,43 +30963,43 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @method _parseParam
          * @private
          */
-        _parseParam:function (o) {
-            var self = this, i;
+        _parseParam: function(o) {
+            var self = this,i;
             if (o === undefined || o === null) {
                 o = {};
             }
             for (i in o) {
                 self[i] = o[i];
             }
-
-            // 支持用户传进来一个string
+			
+			// 支持用户传进来一个string
             if (typeof self.triggerType === 'string') {
                 self.triggerType = [self.triggerType];
             }
-
-            self.startDay = self.startDay % 7;
-            if (self.startDay < 0) {
-                self.startDay += 7;
-            }
-
+			
+			self.startDay = self.startDay%7;
+			if(self.startDay<0){
+				self.startDay+=7;
+			}
+			
             self.EV = [];
             self._handleDate();
-
-
-            //对multiSelect的处理
-            if (self.multiSelect) {
-                self.rangeSelect = false;
-                self.range = null;
-                self.selected = null;
-                if (self.multi) {
-                    //将传入的日期数组格式化成字符串数组,便于内部操作
-                    for (var i = 0; i < self.multi.length; i++) {
-                        if (self.multi[i] instanceof Date) {
-                            self.multi[i] = self._handleDate2String(self.multi[i]);
-                        }
-                    }
-                }
-            }
+			
+			
+			//对multiSelect的处理
+			if(self.multiSelect){
+				self.rangeSelect = false;
+				self.range = null;
+				self.selected = null;
+				if(self.multi){
+					//将传入的日期数组格式化成字符串数组,便于内部操作
+					for(var i=0;i<self.multi.length;i++){
+						if(self.multi[i] instanceof Date){
+							self.multi[i] = self._handleDate2String(self.multi[i]);
+						}
+					}
+				}
+			}
             return this;
         },
 
@@ -30986,8 +31008,8 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @method _templetShow
          * @private
          */
-        _templetShow:function (templet, data) {
-            var str_in, value_s, i, m, value, par;
+        _templetShow: function(templet, data) {
+            var str_in,value_s,i,m,value,par;
             if (data instanceof Array) {
                 str_in = '';
                 for (i = 0; i < data.length; i++) {
@@ -30997,7 +31019,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             } else {
                 value_s = templet.match(/{\$(.*?)}/g);
                 if (data !== undefined && value_s !== null) {
-                    for (i = 0, m = value_s.length; i < m; i++) {
+                    for (i = 0,m = value_s.length; i < m; i++) {
                         par = value_s[i].replace(/({\$)|}/g, '');
                         value = (data[par] !== undefined) ? data[par] : '';
                         templet = templet.replace(value_s[i], value);
@@ -31012,7 +31034,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
          * @method _handleDate
          * @private
          */
-        _handleDate:function () {
+        _handleDate: function() {
             var self = this,
                 date = self.date;
             self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
@@ -31021,39 +31043,39 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             self.year = date.getFullYear();//年份
             return this;
         },
-        /**
+		/**
          * 处理日期TO字符串
          * @method _handleDate2String
          * @private
          */
-        _handleDate2String:function (d) {
+        _handleDate2String: function(d) {
             var year = d.getFullYear();
-            var month = d.getMonth();
-            var date = d.getDate();
-            return year + '-' + (month > 8 ? (month + 1) : '0' + (month + 1)) + '-' + (date > 9 ? date : '0' + date);
+			var month = d.getMonth();
+			var date = d.getDate();
+            return year+'-'+(month>8?(month+1):'0'+(month+1))+'-'+(date>9?date:'0'+date);
         },
-        /**
+		/**
          * 处理字符串TO日期
          * @method _handleString2Date
          * @private
          */
-        _handleString2Date:function (str) {
+        _handleString2Date: function(str) {
             var arr = str.toString().split('-');
-            if (arr.length == 3) {
-                date = new Date(parseInt(arr[0], 10), (parseInt(arr[1], 10) - 1), parseInt(arr[2], 10));
-                if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
-                    return date;
-                }
-            }
+			if(arr.length==3){
+				date = new Date(parseInt(arr[0],10), (parseInt(arr[1], 10) - 1), parseInt(arr[2],10));
+				if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+					return date;
+				}
+			}
         },
 
         //get标题
-        _getHeadStr:function (year, month) {
+        _getHeadStr: function(year, month) {
             return year.toString() + '年' + (Number(month) + 1).toString() + '月';
         },
 
         //月加
-        _monthAdd:function () {
+        _monthAdd: function() {
             var self = this;
             if (self.month == 11) {
                 self.year++;
@@ -31066,7 +31088,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
         },
 
         //月减
-        _monthMinus:function () {
+        _monthMinus: function() {
             var self = this;
             if (self.month === 0) {
                 self.year--;
@@ -31077,8 +31099,8 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
             return this;
         },
-        //年加
-        _yearAdd:function () {
+		//年加
+        _yearAdd: function() {
             var self = this;
             self.year++;
             self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
@@ -31086,7 +31108,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
         },
 
         //年减
-        _yearMinus:function () {
+        _yearMinus: function() {
             var self = this;
             self.year--;
             self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
@@ -31094,7 +31116,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
         },
 
         //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
-        _computeNextMonth:function (a) {
+        _computeNextMonth: function(a) {
             var _year = a[0],
                 _month = a[1];
             if (_month == 11) {
@@ -31103,13 +31125,13 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             } else {
                 _month++;
             }
-            return [_year, _month];
+            return [_year,_month];
         },
 
         //处理日期的偏移量
-        _handleOffset:function () {
+        _handleOffset: function() {
             var self = this,
-                data = ['日', '一', '二', '三', '四', '五', '六'],
+                data = ['日','一','二','三','四','五','六'],
                 temp = '<span>{$day}</span>',
                 offset = self.startDay,
                 day_html = '',
@@ -31127,9 +31149,9 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
         },
 
         //处理起始日期,d:Date类型
-        _handleRange:function (d) {
-            var self = this, t;
-            self.range = self.range || {start:null, end:null};
+        _handleRange: function(d) {
+            var self = this,t;
+			self.range=self.range||{start:null,end:null};
             if ((self.range.start === null && self.range.end === null ) || (self.range.start !== null && self.range.end !== null)) {
                 self.range.start = d;
                 self.range.end = null;
@@ -31142,116 +31164,111 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                     self.range.end = t;
                 }
                 self.fire('rangeSelect', self.range);
-
+				
                 self.render();
-                if (self.popup && self.closable) {
-                    self.hide();
-                }
+				if(self.popup && self.closable){
+					self.hide();
+				}
             }
             return this;
         },
-        //开始多选
-        _handleMultiSelectStart:function (d) {
-            var self = this;
-            self.multiStart = d;
-
-        },
-        _handleMultiSelectEnd:function (d) {
-
-            var self = this;
-            if (!self.multiStart) {
-                return;
-            }
-            self.multi = self.multi || [];
-            if (d < self.multiStart) {
-                self.multiEnd = self.multiStart;
-                self.multiStart = d;
-            }
-            else {
-                self.multiEnd = d;
-            }
-
-            //对min和max的处理
-            if (self.minDate && self.multiStart < self.minDate) {
-                self.multiStart = new Date(self.minDate.getFullYear(), self.minDate.getMonth(), self.minDate.getDate());//这里需要重新创建对象
-            }
-            if (self.maxDate && self.multiEnd > self.maxDate) {
-                self.multiEnd = new Date(self.maxDate.getFullYear(), self.maxDate.getMonth(), self.maxDate.getDate());
-            }
-
-            while (self.multiStart <= self.multiEnd) {
-
-                var isDisabled = false;
-                //需要处理disabled
-                if (self.disabled && self.disabled.length > 0) {
-                    for (var i = 0; i < self.disabled.length; i++) {
-                        var disabled = self.disabled[i];
-                        if (disabled.getTime() == self.multiStart.getTime()) {
-                            isDisabled = true;
-                            break;
-                        }
-                    }
-                }
-                if (isDisabled) {
-                    continue;
-                }
-                var str = self._handleDate2String(self.multiStart);
-                if (!S.inArray(str, self.multi)) {
-                    self.multi.push(str);
-                }
-                else {
-                    self.multi.splice(S.indexOf(str, self.multi), 1);
-                }
-                self.multiStart.setDate(self.multiStart.getDate() + 1);
-            }
-            self.multiStart = null;
-            self.render();
-        },
-        _handleMultiSelect:function () {
-            var self = this;
-            //这里对multi进行排序和处理成日期格式
-            self.multi = self.multi || [];
-            self.multi.sort(function (a, b) {
-                if (a > b) {
-                    return 1;
-                }
-                return -1;
-            });
-            for (var i = 0; i < self.multi.length; i++) {
-                self.multi[i] = self._handleString2Date(self.multi[i])
-            }
-
-            self.fire('multiSelect', {multi:self.multi});
-            if (self.popup && self.closable) {
-                self.hide();
-            }
-
-        }
+		//开始多选
+		_handleMultiSelectStart:function(d){
+			var self = this;
+			self.multiStart = d;
+			
+		},
+		_handleMultiSelectEnd:function(d){
+			
+			var self = this;
+			if(!self.multiStart){
+				return;
+			}
+			self.multi = self.multi ||[];
+			if(d<self.multiStart){
+				self.multiEnd = self.multiStart;
+				self.multiStart= d;
+			}
+			else{
+				self.multiEnd = d;
+			}
+			
+			//对min和max的处理
+			if(self.minDate&&self.multiStart<self.minDate){
+				self.multiStart = new Date(self.minDate.getFullYear(),self.minDate.getMonth(),self.minDate.getDate());//这里需要重新创建对象
+			}
+			if(self.maxDate&&self.multiEnd>self.maxDate){
+				self.multiEnd =new Date( self.maxDate.getFullYear(),self.maxDate.getMonth(),self.maxDate.getDate()); 
+			}
+			
+			while(self.multiStart<=self.multiEnd){
+				
+				var isDisabled = false;
+				//需要处理disabled
+				if(self.disabled&&self.disabled.length>0){
+					for(var i=0;i<self.disabled.length;i++){
+						var disabled = self.disabled[i];
+						if(disabled.getTime()==self.multiStart.getTime()){
+							isDisabled = true;
+							break;
+						}
+					}
+				}
+				if(isDisabled){
+					continue;
+				}
+				var str = self._handleDate2String(self.multiStart);
+				if(!S.inArray(str,self.multi)){
+					self.multi.push(str);
+				}
+				else{
+					self.multi.splice(S.indexOf(str,self.multi),1);
+				}
+				self.multiStart.setDate(self.multiStart.getDate()+1);
+			}
+			self.multiStart = null;
+			self.render();
+		},
+		_handleMultiSelect:function(){
+			var self = this;
+			//这里对multi进行排序和处理成日期格式
+			self.multi = self.multi || [];
+			self.multi.sort(function(a,b){if(a>b){return 1;}return -1;});
+			for(var i=0;i<self.multi.length;i++){
+				self.multi[i] = self._handleString2Date(self.multi[i])
+			}
+			
+			self.fire('multiSelect', {multi:self.multi});
+			if(self.popup && self.closable){
+				self.hide();
+			}
+			
+		}
     });
 
     return Calendar;
-}, { requires:['node', "event"] });
+}, { requires: ['node',"event", "ua"] });
 
 /**
- *
+ * 
  * 2011-12-27 by keyapril@gmail.com
- 1.新增配置参数：
- disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
- range:    null,//已选择的时间段{start:null,end:null}
- align:{
- points:['bl','tl'],
- offset:[0,0]
- },//对其方式
- notLimited:    false,// 是否出现不限的按钮
- rangLinkage //多个日历是否联动
- 2.新增加功能
- -加入了"年"的前进后退
- -加入了不限按钮，在点击之后触发“select”事件，参数为null,
- -Date.parse方法新增对"2011-12-27"字符串的处理
- 3.bug修复
- -修复最小最大日期限制后31号始终可点击的BUG
- 4.样式的调整
- -美化了。。。
+	1.新增配置参数：
+ 		disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
+		range:	null,//已选择的时间段{start:null,end:null}
+		align:{
+			points:['bl','tl'],
+			offset:[0,0]
+		},//对其方式
+		notLimited:	false,// 是否出现不限的按钮
+		rangLinkage //多个日历是否联动
+	2.新增加功能
+		-加入了"年"的前进后退
+		-加入了不限按钮，在点击之后触发“select”事件，参数为null,
+		-Date.parse方法新增对"2011-12-27"字符串的处理
+	3.bug修复
+		-修复最小最大日期限制后31号始终可点击的BUG
+	4.样式的调整
+		-美化了。。。
  *
  * 2011-12-06 by yiminghe@gmail.com
  *  - 全局绑定放 document
@@ -31312,12 +31329,12 @@ KISSY.add("calendar", function (S, C, Page, Time, Date) {
  * - 增加中文的支持
  * - 简单的本地化，对w（星期x）的支持
  */
-KISSY.add('calendar/date', function(S) {
+KISSY.add('calendar/date', function (S) {
 
-    function dateParse(data,s) {
+    function dateParse(data, s) {
 
         var date = null;
-		s = s || '-';
+        s = s || '-';
         //Convert to date
         if (!(date instanceof Date)) {
             date = new Date(data);
@@ -31331,15 +31348,15 @@ KISSY.add('calendar/date', function(S) {
             return date;
         }
         else {
-			var arr = data.toString().split(s);
-			if(arr.length==3){
-				date = new Date(arr[0], (parseInt(arr[1], 10) - 1), arr[2]);
-				if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
-					return date;
-				}
-			}
+            var arr = data.toString().split(s);
+            if (arr.length == 3) {
+                date = new Date(arr[0], (parseInt(arr[1], 10) - 1), arr[2]);
+                if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+                    return date;
+                }
+            }
         }
-		return null;
+        return null;
 
     }
 
@@ -31358,37 +31375,37 @@ KISSY.add('calendar/date', function(S) {
             },
             // Some common format strings
             masks = {
-                "default":      "ddd mmm dd yyyy HH:MM:ss",
-                shortDate:      "m/d/yy",
+                "default":"ddd mmm dd yyyy HH:MM:ss",
+                shortDate:"m/d/yy",
                 //mediumDate:     "mmm d, yyyy",
-                longDate:       "mmmm d, yyyy",
-                fullDate:       "dddd, mmmm d, yyyy",
-                shortTime:      "h:MM TT",
+                longDate:"mmmm d, yyyy",
+                fullDate:"dddd, mmmm d, yyyy",
+                shortTime:"h:MM TT",
                 //mediumTime:     "h:MM:ss TT",
-                longTime:       "h:MM:ss TT Z",
-                isoDate:        "yyyy-mm-dd",
-                isoTime:        "HH:MM:ss",
-                isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-                isoUTCDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+                longTime:"h:MM:ss TT Z",
+                isoDate:"yyyy-mm-dd",
+                isoTime:"HH:MM:ss",
+                isoDateTime:"yyyy-mm-dd'T'HH:MM:ss",
+                isoUTCDateTime:"UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
 
                 //added by jayli
-                localShortDate:    "yy年mm月dd日",
+                localShortDate:"yy年mm月dd日",
                 localShortDateTime:"yy年mm月dd日 hh:MM:ss TT",
-                localLongDate:    "yyyy年mm月dd日",
+                localLongDate:"yyyy年mm月dd日",
                 localLongDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
-                localFullDate:    "yyyy年mm月dd日 w",
+                localFullDate:"yyyy年mm月dd日 w",
                 localFullDateTime:"yyyy年mm月dd日 w hh:MM:ss TT"
 
             },
 
             // Internationalization strings
             i18n = {
-                dayNames: [
+                dayNames:[
                     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
                     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                    "星期日","星期一","星期二","星期三","星期四","星期五","星期六"
+                    "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
                 ],
-                monthNames: [
+                monthNames:[
                     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
                     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
                 ]
@@ -31428,34 +31445,34 @@ KISSY.add('calendar/date', function(S) {
                 L = date[_ + "Milliseconds"](),
                 o = utc ? 0 : date.getTimezoneOffset(),
                 flags = {
-                    d:    d,
-                    dd:   pad(d, undefined),
-                    ddd:  i18n.dayNames[D],
-                    dddd: i18n.dayNames[D + 7],
-                    w:     i18n.dayNames[D + 14],
-                    m:    m + 1,
-                    mm:   pad(m + 1, undefined),
-                    mmm:  i18n.monthNames[m],
-                    mmmm: i18n.monthNames[m + 12],
-                    yy:   String(y).slice(2),
-                    yyyy: y,
-                    h:    H % 12 || 12,
-                    hh:   pad(H % 12 || 12, undefined),
-                    H:    H,
-                    HH:   pad(H, undefined),
-                    M:    M,
-                    MM:   pad(M, undefined),
-                    s:    s,
-                    ss:   pad(s, undefined),
-                    l:    pad(L, 3),
-                    L:    pad(L > 99 ? Math.round(L / 10) : L, undefined),
-                    t:    H < 12 ? "a" : "p",
-                    tt:   H < 12 ? "am" : "pm",
-                    T:    H < 12 ? "A" : "P",
-                    TT:   H < 12 ? "AM" : "PM",
-                    Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-                    o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-                    S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+                    d:d,
+                    dd:pad(d, undefined),
+                    ddd:i18n.dayNames[D],
+                    dddd:i18n.dayNames[D + 7],
+                    w:i18n.dayNames[D + 14],
+                    m:m + 1,
+                    mm:pad(m + 1, undefined),
+                    mmm:i18n.monthNames[m],
+                    mmmm:i18n.monthNames[m + 12],
+                    yy:String(y).slice(2),
+                    yyyy:y,
+                    h:H % 12 || 12,
+                    hh:pad(H % 12 || 12, undefined),
+                    H:H,
+                    HH:pad(H, undefined),
+                    M:M,
+                    MM:pad(M, undefined),
+                    s:s,
+                    ss:pad(s, undefined),
+                    l:pad(L, 3),
+                    L:pad(L > 99 ? Math.round(L / 10) : L, undefined),
+                    t:H < 12 ? "a" : "p",
+                    tt:H < 12 ? "am" : "pm",
+                    T:H < 12 ? "A" : "P",
+                    TT:H < 12 ? "AM" : "PM",
+                    Z:utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                    o:(o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                    S:["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
                 };
 
             return mask.replace(token, function ($0) {
@@ -31465,11 +31482,11 @@ KISSY.add('calendar/date', function(S) {
     }();
 
     return {
-        format: function(date, mask, utc) {
+        format:function (date, mask, utc) {
             return dateFormat(date, mask, utc);
         },
-        parse: function(date,s) {
-            return dateParse(date,s);
+        parse:function (date, s) {
+            return dateParse(date, s);
         }
     };
 });/**

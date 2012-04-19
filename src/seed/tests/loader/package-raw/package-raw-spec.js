@@ -1,24 +1,21 @@
 describe("loader", function () {
-    describe("timestamp for individual module works", function () {
-
+    describe("raw config for package works", function () {
 
         it("works and avoid repeated loading", function () {
             var mods = KISSY.Env.mods;
-
             KISSY.config({
-                debug:true,
+                debug:false,
                 packages:[
                     {
-                        name:'timestamp',
-                        tag:'a',
-                        path:'/kissy_git/kissy/src/seed/tests/loader/'
+                        debug:true,
+                        name:'t',
+                        path:'/kissy_git/kissy/src/seed/tests/loader/package-raw/'
                     }
                 ]
             });
-
             var ok1;
 
-            KISSY.use("timestamp/x.js?t=b", function () {
+            KISSY.use("t/t", function () {
                 ok1 = 1;
             });
 
@@ -27,12 +24,14 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(mods["timestamp/x"].getTag()).toBe("b");
-                expect(window.TIMESTAMP_X).toBe(1);
+                expect(mods["t/t"].getValue()).toBe(1);
             });
 
             runs(function () {
-                KISSY.use("timestamp/y", function () {
+                KISSY.config({
+                    combine:true
+                });
+                KISSY.use("t/t2", function () {
                     ok1 = 2;
                 });
             });
@@ -42,9 +41,14 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(mods["timestamp/x"].getTag()).toBe("b");
-                expect(mods["timestamp/y"].getTag()).toBe("a");
-                expect(window.TIMESTAMP_X).toBe(1);
+                expect(mods["t/t2"].getValue()).toBe(2);
+            });
+
+            runs(function () {
+                KISSY.config({
+                    debug:true,
+                    combine:false
+                });
             });
         });
     });

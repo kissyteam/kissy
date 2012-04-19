@@ -15,12 +15,12 @@
  * - 增加中文的支持
  * - 简单的本地化，对w（星期x）的支持
  */
-KISSY.add('calendar/date', function(S) {
+KISSY.add('calendar/date', function (S) {
 
-    function dateParse(data,s) {
+    function dateParse(data, s) {
 
         var date = null;
-		s = s || '-';
+        s = s || '-';
         //Convert to date
         if (!(date instanceof Date)) {
             date = new Date(data);
@@ -34,15 +34,15 @@ KISSY.add('calendar/date', function(S) {
             return date;
         }
         else {
-			var arr = data.toString().split(s);
-			if(arr.length==3){
-				date = new Date(arr[0], (parseInt(arr[1], 10) - 1), arr[2]);
-				if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
-					return date;
-				}
-			}
+            var arr = data.toString().split(s);
+            if (arr.length == 3) {
+                date = new Date(arr[0], (parseInt(arr[1], 10) - 1), arr[2]);
+                if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+                    return date;
+                }
+            }
         }
-		return null;
+        return null;
 
     }
 
@@ -61,37 +61,37 @@ KISSY.add('calendar/date', function(S) {
             },
             // Some common format strings
             masks = {
-                "default":      "ddd mmm dd yyyy HH:MM:ss",
-                shortDate:      "m/d/yy",
+                "default":"ddd mmm dd yyyy HH:MM:ss",
+                shortDate:"m/d/yy",
                 //mediumDate:     "mmm d, yyyy",
-                longDate:       "mmmm d, yyyy",
-                fullDate:       "dddd, mmmm d, yyyy",
-                shortTime:      "h:MM TT",
+                longDate:"mmmm d, yyyy",
+                fullDate:"dddd, mmmm d, yyyy",
+                shortTime:"h:MM TT",
                 //mediumTime:     "h:MM:ss TT",
-                longTime:       "h:MM:ss TT Z",
-                isoDate:        "yyyy-mm-dd",
-                isoTime:        "HH:MM:ss",
-                isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-                isoUTCDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+                longTime:"h:MM:ss TT Z",
+                isoDate:"yyyy-mm-dd",
+                isoTime:"HH:MM:ss",
+                isoDateTime:"yyyy-mm-dd'T'HH:MM:ss",
+                isoUTCDateTime:"UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
 
                 //added by jayli
-                localShortDate:    "yy年mm月dd日",
+                localShortDate:"yy年mm月dd日",
                 localShortDateTime:"yy年mm月dd日 hh:MM:ss TT",
-                localLongDate:    "yyyy年mm月dd日",
+                localLongDate:"yyyy年mm月dd日",
                 localLongDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
-                localFullDate:    "yyyy年mm月dd日 w",
+                localFullDate:"yyyy年mm月dd日 w",
                 localFullDateTime:"yyyy年mm月dd日 w hh:MM:ss TT"
 
             },
 
             // Internationalization strings
             i18n = {
-                dayNames: [
+                dayNames:[
                     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
                     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                    "星期日","星期一","星期二","星期三","星期四","星期五","星期六"
+                    "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
                 ],
-                monthNames: [
+                monthNames:[
                     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
                     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
                 ]
@@ -131,34 +131,34 @@ KISSY.add('calendar/date', function(S) {
                 L = date[_ + "Milliseconds"](),
                 o = utc ? 0 : date.getTimezoneOffset(),
                 flags = {
-                    d:    d,
-                    dd:   pad(d, undefined),
-                    ddd:  i18n.dayNames[D],
-                    dddd: i18n.dayNames[D + 7],
-                    w:     i18n.dayNames[D + 14],
-                    m:    m + 1,
-                    mm:   pad(m + 1, undefined),
-                    mmm:  i18n.monthNames[m],
-                    mmmm: i18n.monthNames[m + 12],
-                    yy:   String(y).slice(2),
-                    yyyy: y,
-                    h:    H % 12 || 12,
-                    hh:   pad(H % 12 || 12, undefined),
-                    H:    H,
-                    HH:   pad(H, undefined),
-                    M:    M,
-                    MM:   pad(M, undefined),
-                    s:    s,
-                    ss:   pad(s, undefined),
-                    l:    pad(L, 3),
-                    L:    pad(L > 99 ? Math.round(L / 10) : L, undefined),
-                    t:    H < 12 ? "a" : "p",
-                    tt:   H < 12 ? "am" : "pm",
-                    T:    H < 12 ? "A" : "P",
-                    TT:   H < 12 ? "AM" : "PM",
-                    Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-                    o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-                    S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+                    d:d,
+                    dd:pad(d, undefined),
+                    ddd:i18n.dayNames[D],
+                    dddd:i18n.dayNames[D + 7],
+                    w:i18n.dayNames[D + 14],
+                    m:m + 1,
+                    mm:pad(m + 1, undefined),
+                    mmm:i18n.monthNames[m],
+                    mmmm:i18n.monthNames[m + 12],
+                    yy:String(y).slice(2),
+                    yyyy:y,
+                    h:H % 12 || 12,
+                    hh:pad(H % 12 || 12, undefined),
+                    H:H,
+                    HH:pad(H, undefined),
+                    M:M,
+                    MM:pad(M, undefined),
+                    s:s,
+                    ss:pad(s, undefined),
+                    l:pad(L, 3),
+                    L:pad(L > 99 ? Math.round(L / 10) : L, undefined),
+                    t:H < 12 ? "a" : "p",
+                    tt:H < 12 ? "am" : "pm",
+                    T:H < 12 ? "A" : "P",
+                    TT:H < 12 ? "AM" : "PM",
+                    Z:utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                    o:(o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                    S:["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
                 };
 
             return mask.replace(token, function ($0) {
@@ -168,11 +168,11 @@ KISSY.add('calendar/date', function(S) {
     }();
 
     return {
-        format: function(date, mask, utc) {
+        format:function (date, mask, utc) {
             return dateFormat(date, mask, utc);
         },
-        parse: function(date,s) {
-            return dateParse(date,s);
+        parse:function (date, s) {
+            return dateParse(date, s);
         }
     };
 });

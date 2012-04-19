@@ -28,7 +28,7 @@
             /**
              * Registers a module.
              * @param {String|Object} [name] module name
-             * @param {Function|Object} [def] entry point into the module that is used to bind module to KISSY
+             * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
              * @param {Object} [config] special config for this add
              * @param {String[]} [config.requires] array of mod's name that current module requires
              * @example
@@ -43,7 +43,7 @@
              * });
              * </code>
              */
-            add:function (name, def, config) {
+            add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
@@ -51,14 +51,14 @@
                     mods = SS.Env.mods,
                     o;
 
-                if (utils.normAdd(SS, name, def, config)) {
+                if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
 
-                    utils.registerModule(SS, name, def, config);
+                    utils.registerModule(SS, name, fn, config);
 
                     mod = mods[name];
 
@@ -76,8 +76,8 @@
                 }
                 // S.add(fn,config);
                 else if (S.isFunction(name)) {
-                    config = def;
-                    def = name;
+                    config = fn;
+                    fn = name;
                     if (utils.IE) {
                         /*
                          Kris Zyp
@@ -103,13 +103,13 @@
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
                         S.log("old_ie get modname by interactive : " + name);
-                        utils.registerModule(SS, name, def, config);
+                        utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
                         // 其他浏览器 onload 时，关联模块名与模块定义
                         self.__currentModule = {
-                            def:def,
+                            fn:fn,
                             config:config
                         };
                     }
@@ -118,8 +118,6 @@
                 S.log("invalid format for KISSY.add !", "error");
             }
         });
-
-
 
 
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名

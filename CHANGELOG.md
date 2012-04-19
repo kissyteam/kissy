@@ -22,6 +22,8 @@ History:
  - [x] KISSY.add(fn) fn 中 this 为模块对象
  - [*] Support tag for individual module : #110
  - [!] 删除 KISSY.app 方法
+ - [+] package 增加 debug 配置，可以对包级别设置 debug
+ - [!] 删除 csspath/cssfullpath 配置
 
  - [*] KISSY.ready try catch 达到互不影响的效果
 

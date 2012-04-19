@@ -12,9 +12,12 @@
         utils = Loader.Utils,
         INIT = data.INIT,
         IE = utils.IE,
+        win = S.Env.host,
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
+        ALL_REQUIRES = "__allRequires",
+        CURRENT_MODULE = "__currentModule",
         ATTACHED = data.ATTACHED;
 
     S.augment(Loader, {
@@ -34,7 +37,7 @@
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(SS,modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
             var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
@@ -72,10 +75,6 @@
 
         build("fullpath", "path");
 
-        if (mod["cssfullpath"] !== data.LOADED) {
-            build("cssfullpath", "csspath");
-        }
-
         function build(fullpath, path) {
             var flag = "__" + fullpath + "Ready",
                 t,
@@ -92,7 +91,7 @@
             // debug 模式下，加载非 min 版
             if (p) {
                 mod[fullpath] = utils.getMappedPath(SS, p +
-                    ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
+                    ((t = mod.getTag()) ? ("?t=" + t) : ""));
                 mod[flag] = 1;
             }
         }
@@ -133,7 +132,7 @@
          */
         function cyclicCheck() {
             // one mod's all requires mods to run its callback
-            var __allRequires = mod.__allRequires = mod.__allRequires || {},
+            var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
                 myName = mod.name,
                 rmod,
                 r__allRequires;
@@ -141,14 +140,14 @@
             S.each(requires, function (r) {
                 rmod = mods[r];
                 __allRequires[r] = 1;
-                if (rmod && (r__allRequires = rmod.__allRequires)) {
+                if (rmod && (r__allRequires = rmod[ALL_REQUIRES])) {
                     S.mix(__allRequires, r__allRequires);
                 }
             });
 
             if (__allRequires[myName]) {
                 S.log(__allRequires, "error");
-                var JSON = window.JSON,
+                var JSON = win.JSON,
                     error = "";
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
@@ -241,18 +240,11 @@
      */
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
-            cssfullpath,
+            charset = mod.getCharset(),
             url = mod['fullpath'],
             isCss = utils.isCss(url)
 
         mod.status = mod.status || INIT;
-
-        // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
-        // 仅发出请求，不做任何其它处理
-        if (cssfullpath = mod["cssfullpath"]) {
-            S.getScript(cssfullpath);
-            mod["cssfullpath"] = mod.csspath = LOADED;
-        }
 
         if (mod.status < LOADING) {
             mod.status = LOADING;
@@ -267,19 +259,19 @@
                     if (!isCss) {
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                        if (self.__currentModule) {
+                        if (self[CURRENT_MODULE]) {
                             S.log("standard browser get modname after load : " + mod.name);
                             utils.registerModule(SS,
-                                mod.name, self.__currentModule.def,
-                                self.__currentModule.config);
-                            self.__currentModule = null;
+                                mod.name, self[CURRENT_MODULE].fn,
+                                self[CURRENT_MODULE].config);
+                            self[CURRENT_MODULE] = null;
                         }
                     }
                     checkAndHandle();
                 },
                 error:checkAndHandle,
                 // source:mod.name + "-init",
-                charset:mod.charset
+                charset:charset
             });
         }
         // 已经在加载中，需要添加回调到 script onload 中
@@ -289,7 +281,7 @@
             S.getScript(url, {
                 success:checkAndHandle,
                 // source:mod.name + "-loading",
-                charset:mod.charset
+                charset:charset
             });
         }
         // loaded/attached/error

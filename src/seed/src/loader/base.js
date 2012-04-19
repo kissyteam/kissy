@@ -44,13 +44,13 @@
              * @param v value to be set
              */
             setValue:function (v) {
-                this.v = v;
+                this.value = v;
             },
             /**
              * get the value of current module
              */
             getValue:function () {
-                return this.v;
+                return this.value;
             },
             /**
              * get the name of current module
@@ -62,8 +62,12 @@
             /**
              * @private
              */
-            getUrlTag:function () {
-                return this.tag || this.packageTag;
+            getTag:function () {
+                return this.tag || this.packageInfo.tag;
+            },
+
+            getCharset:function () {
+                return this.charset || this.packageInfo.charset;
             }
         });
 

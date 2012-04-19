@@ -21,10 +21,10 @@
              * Registers a module with the KISSY global.
              * @param {String} [name] module name.
              * it must be set if combine is true in {@link KISSY.config}
-             * @param {Function} def module definition function that is used to return
+             * @param {Function} fn module definition function that is used to return
              * this module value
-             * @param {KISSY} def.S KISSY global instance
-             * @param def.x... this module's required modules' value
+             * @param {KISSY} fn.S KISSY global instance
+             * @param fn.x... this module's required modules' value
              * @param {Object} [cfg] module optional config data
              * @param {String[]} cfg.requires this module's required module name list
              * @example
@@ -37,8 +37,8 @@
              * });
              * </code>
              */
-            add:function (name, def, cfg) {
-                this.getLoader().add(name, def, cfg);
+            add:function (name, fn, cfg) {
+                this.getLoader().add(name, fn, cfg);
             },
             /**
              * Attached one or more modules to global KISSY instance.
@@ -141,6 +141,7 @@
     S.config(S.mix({
         // the default timeout for getScript
         timeout:10,
+        comboMaxUrlLength:1024,
         tag:'@TIMESTAMP@'
     }, getBaseInfo()));
 

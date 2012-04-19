@@ -72,20 +72,6 @@
     }
 
     S.mix(utils, {
-        scriptOnLoad:win.addEventListener ?
-            function (node, callback) {
-                node.addEventListener('load', callback, false);
-            } :
-            function (node, callback) {
-                node.onreadystatechange = function () {
-                    var self = this, rs = self.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        self.onreadystatechange = null;
-                        callback.call(self);
-                    }
-                };
-            },
-
         /**
          * monitor css onload across browsers
          * 暂时不考虑如何判断失败，如 404 等

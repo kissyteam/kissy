@@ -143,7 +143,7 @@
                 }
 
                 expect(mod12.async).toBe(true);
-                expect(mod12.charset).toBe("utf-8");
+                expect(mod12.getCharset()).toBe("utf-8");
                 S.use("node", function (S, N) {
                     expect(N.one("#k12").css("width")).toBe('111px');
                 });

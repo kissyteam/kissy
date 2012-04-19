@@ -170,12 +170,6 @@ describe('kissy.js', function () {
         ns.name = 'foo2';
         expect(S['app2'].Test2.name).toBe('foo2');
 
-        // via cloned global object
-        S.app('TB');
-        ns = TB.namespace('app3.Test3');
-        ns.name = 'foo3';
-        expect(TB['app3'].Test3.name).toBe('foo3');
-
         // empty arguments
         expect(S.namespace()).toBe(null);
 
@@ -191,24 +185,6 @@ describe('kissy.js', function () {
         } catch (e) {
             host['TB'] = undefined;
             host['Global'] = undefined;
-        }
-    });
-
-    it('S.app', function () {
-        S.app('TB');
-
-        // check Env
-        expect(typeof TB.Config.debug).toBe('string');
-
-        // check independence
-        TB.test = 2;
-        expect(S.test).toBe(undefined);
-
-        // clear
-        try {
-            delete host['TB'];
-        } catch (e) {
-            host['TB'] = undefined;
         }
     });
 

@@ -149,15 +149,23 @@
                 delete jsCallbacks[src];
             }
 
-            utils.scriptOnLoad(node, function () {
-                end(0);
-            });
-
             //标准浏览器
             if (node.addEventListener) {
+                node.addEventListener('load', function () {
+                    end(0);
+                }, false);
                 node.addEventListener("error", function () {
                     end(1);
                 }, false);
+            } else {
+                node.onreadystatechange = function () {
+                    var self = this,
+                        rs = self.readyState;
+                    if (/loaded|complete/i.test(rs)) {
+                        self.onreadystatechange = null;
+                        end(0);
+                    }
+                };
             }
 
             if (timeout) {

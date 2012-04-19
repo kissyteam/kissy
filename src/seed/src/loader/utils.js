@@ -3,30 +3,40 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+
     if (typeof require !== 'undefined') {
         return;
     }
+
     var Loader = S.Loader,
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
-        doc = S.Env.host.document,
+        host = S.Env.host,
+        doc = host.document,
+        loc = host.location,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
+        __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
+        if (S.isArray(s)) {
+            var ret = [];
+            S.each(s, function (si) {
+                ret.push(indexMap(si));
+            });
+            return ret;
+        }
         if (/(.+\/)(\?t=.+)?$/.test(s)) {
             return RegExp.$1 + "index" + RegExp.$2;
         }
         return s;
     }
-
 
     function removeSuffixAndTagFromModName(modName) {
         var tag = undefined,
@@ -40,10 +50,49 @@
 
         // js do not need suffix
         modName = modName.replace(/\.js$/i, "");
+
         return {
             modName:modName,
             tag:tag
         };
+    }
+
+
+    function getPackageInfo(self, mod) {
+        if (mod.packageInfo) {
+            return mod.packageInfo;
+        }
+
+        var modName = mod.name,
+            Config = self.Config,
+            packages = Config.packages || {},
+            pName = "",
+            packageDesc;
+
+        for (var p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                if (S.startsWith(modName, p) &&
+                    p.length > pName) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] || {
+            // 无包，kissy 自身模块
+            "__kissy":1
+        };
+
+        S.mix(packageDesc, {
+            tag:encodeURIComponent(Config.tag),
+            path:Config.base,
+            debug:Config.debug,
+            charset:"utf-8"
+        }, false);
+
+        mod.packageInfo = packageDesc;
+
+        return packageDesc;
     }
 
     S.mix(utils, {
@@ -58,10 +107,6 @@
 
         isCss:function (url) {
             return /\.css(?:\?|$)/i.test(url);
-        },
-
-        isLinkNode:function (n) {
-            return n.nodeName.toLowerCase() == 'link';
         },
 
         /**
@@ -135,7 +180,8 @@
             path = S.trim(path);
 
             // path 为空时，不能变成 "/"
-            if (path && path.charAt(path.length - 1) != '/') {
+            if (path &&
+                path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
 
@@ -143,10 +189,11 @@
              * 一定要正则化，防止出现 ../ 等相对路径
              * 考虑本地路径
              */
-            if (!path.match(/^(http(s)?)|(file):/i)
-                && !startsWith(path, "/")) {
+            if (!path.match(/^(http(s)?)|(file):/i) &&
+                !startsWith(path, "/")) {
                 path = __pagePath + path;
             }
+
             return normalizePath(path);
         },
 
@@ -160,67 +207,38 @@
         },
 
         getPackagePath:function (self, mod) {
-            //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagePath) {
-                return mod.packagePath;
-            }
-
-            var //一个模块合并到了另一个模块文件中去
-                modName = mod.name,
-                packages = self.Config.packages || {},
-                pName = "",
-                p_def;
-
-            for (var p in packages) {
-                if (packages.hasOwnProperty(p)) {
-                    if (S.startsWith(modName, p) &&
-                        p.length > pName) {
-                        pName = p;
-                    }
-                }
-            }
-
-            p_def = packages[pName];
-
-            mod.charset = p_def && p_def.charset || mod.charset;
-
-            if (p_def) {
-                mod.packageTag = p_def.tag;
-            } else {
-                // kissy 自身组件的事件戳后缀
-                mod.packageTag = encodeURIComponent(self.Config.tag);
-            }
-
-            return mod.packagePath = (p_def && p_def.path) || self.Config.base;
+            return getPackageInfo(self, mod).path;
         },
 
-
         createModuleInfo:function (self, modName) {
-
-            var info = removeSuffixAndTagFromModName(modName),
-                tag = info.tag;
+            var info = removeSuffixAndTagFromModName(modName);
 
             modName = info.modName;
 
             var mods = self.Env.mods,
                 mod = mods[modName];
 
-            if (mod && mod.path && mod.charset) {
-                mod.tag = mod.tag || tag;
+            if (mod) {
                 return mod;
             }
 
             if (!mod) {
                 mods[modName] = mod = new Loader.Module();
+                mod.name = modName;
             }
+
+            if (info.tag) {
+                mod.tag = info.tag;
+            }
+
+            var packageInfo = getPackageInfo(self, mod),
+                path = defaultComponentJsName(modName, packageInfo);
 
             // 用户配置的 path优先
             S.mix(mod, {
-                name:modName,
-                path:defaultComponentJsName(modName),
-                charset:'utf-8',
-                tag:tag
+                path:path
             }, false);
+
             return mod;
         },
 
@@ -253,7 +271,7 @@
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(self,mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -284,11 +302,11 @@
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
-         * 4. create module info with tag : core.js?t=xx => core , .tag=xx         *
+         * 4. create module info with tag : core.js?t=xx => core , tag=xx
          * @param {KISSY} self Global KISSY instance
          * @param {String|String[]} modNames Array of module names or module names string separated by comma
          */
-        normalizeModNames:function (self, modNames, refModName) {
+        normalizeModNames:function (self, modNames, refModName, keepAlias) {
             var ret = [],
                 mods = self.Env.mods;
             S.each(modNames, function (name) {
@@ -296,7 +314,7 @@
                 // 1. index map
                 name = indexMap(name);
                 // 2. un alias
-                if ((m = mods[name]) && (alias = m.alias)) {
+                if (!keepAlias && (m = mods[name]) && (alias = m.alias)) {
                     ret.push.apply(ret, indexMap(alias));
                 } else {
                     ret.push(name);
@@ -313,26 +331,12 @@
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (self,modNames, refModName) {
-            var ret = [];
-            S.each(modNames, function (name) {
-                // 1. index map
-                name = indexMap(name);
-                ret.push(name);
-            });
-            // 2. relative to absolute (optional)
-            if (refModName) {
-                ret = utils.normalDepModuleName(refModName, ret);
-            }
-            // 3. create module info with tag
-            S.each(ret, function (name, i) {
-                ret[i] = utils.createModuleInfo(self, name).name;
-            });
-            return ret;
+        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+            return utils.normalizeModNames(self, modNames, refModName, 1);
         },
 
-        //注册模块，将模块和定义 factory 关联起来
-        registerModule:function (self, name, def, config) {
+        // 注册模块，将模块和定义 factory 关联起来
+        registerModule:function (self, name, fn, config) {
             config = config || {};
 
             utils.createModuleInfo(self, name);
@@ -349,23 +353,49 @@
                 return;
             }
 
-            mod.fn = def;
+            mod.fn = fn;
 
             S.mix((mods[name] = mod), config);
 
             S.log(name + " is loaded");
         },
 
-        normAdd:function (self, name, def, config) {
+        /**
+         * 只用来指定模块依赖信息. 注意：需要在 package 声明后 add ！
+         * @param self
+         * @param name
+         * @param fn
+         * @param config
+         * @example
+         * <code>
+         *
+         * KISSY.config({
+         *  packages:[
+         *      {
+         *          name:"biz1",
+         *          path:"haha"
+         *      }
+         *  ]
+         * });
+         *
+         * KISSY.add({
+         *   "biz1/main" : {
+         *      requires:[ "biz1/part1" , "biz1/part2" ]
+         *   }
+         * });
+         *
+         * </code>
+         */
+        normAdd:function (self, name, fn, config) {
             var mods = self.Env.mods,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name)
                 && !config
-                && S.isPlainObject(def)) {
+                && S.isPlainObject(fn)) {
                 o = {};
-                o[name] = def;
+                o[name] = fn;
                 name = o;
             }
 
@@ -392,13 +422,18 @@
 
     });
 
-    function defaultComponentJsName(m) {
-        var suffix = ".js", match;
+    function defaultComponentJsName(m, packageInfo) {
+        var suffix = ".js",
+            match;
         if (match = m.match(/(.+)(\.css)$/i)) {
             suffix = match[2];
             m = match[1];
         }
-        return m + (S.Config.debug ? '' : '-min') + suffix;
+        var min = "-min";
+        if (packageInfo.debug) {
+            min = "";
+        }
+        return m + min + suffix;
     }
 
     function isStatus(self, modNames, status) {
