@@ -323,8 +323,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
-                // _removeData 不需要？刚克隆出来本来就没
+                // remove event data (but without dom attached listener) which is copied from above DOM.data
                 Event._removeData(dest);
+                // attach src's event data and dom attached listener to dest
                 Event._clone(src, dest);
             }
         }
