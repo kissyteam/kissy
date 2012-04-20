@@ -104,8 +104,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 self.sendRequest(value);
             },
 
-            _handleBlur:function () {
-                AutoComplete.superclass._handleBlur.apply(this, arguments);
+            handleBlur:function () {
+                AutoComplete.superclass.handleBlur.apply(this, arguments);
                 var autoCompleteMenu = this.get("menu");
                 // S.log("input blur!!!!!!!");
                 if (autoCompleteMenu) {
@@ -176,7 +176,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 alignImmediately(this);
             },
 
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
                 var self = this,
                     el = self.get("el"),
                     autoCompleteMenu = self.get("menu");
@@ -200,7 +200,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
                 var activeItem;
                 if (autoCompleteMenu.get("visible")) {
-                    var handledByMenu = autoCompleteMenu._handleKeydown(e);
+                    var handledByMenu = autoCompleteMenu.handleKeydown(e);
 
                     if (updateInputOnDownUp) {
                         if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
@@ -222,7 +222,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (e.keyCode == KeyCodes.TAB) {
                         if (activeItem = autoCompleteMenu.get("activeItem")) {
-                            activeItem._performInternal();
+                            activeItem.performActionInternal();
                             // only prevent focus change in multiple mode
                             if (self.get("multiple")) {
                                 return true;
@@ -398,16 +398,9 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
              * @lends AutoComplete
              */
             {
-                focusable:{
-                    value:true
-                },
 
                 handleMouseEvents:{
                     value:false
-                },
-
-                allowTextSelection_:{
-                    value:true
                 },
 
                 /**
@@ -588,7 +581,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
         "AutoComplete"
     );
 
-    Component.UIStore.setUIByClass("autocomplete-input", {
+    Component.UIStore.setUIConstructorByCssClass("autocomplete-input", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:AutoComplete
     });

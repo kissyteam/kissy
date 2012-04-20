@@ -181,7 +181,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
         return select;
     };
 
-    Component.UIStore.setUIByClass("select", {
+    Component.UIStore.setUIConstructorByCssClass("select", {
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Select
     });

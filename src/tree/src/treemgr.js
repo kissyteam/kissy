@@ -52,16 +52,16 @@ KISSY.add("tree/treemgr", function(S, Event) {
             delete this.__getAllNodes()[c.get("id")];
         },
 
-        _handleKeyEventInternal:function(e) {
+        handleKeyEventInternal:function(e) {
             var current = this.get("selectedItem");
             if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
-                return current._performInternal(e);
+                return current.performActionInternal(e);
             }
             return current._keyNav(e);
         },
 
-        // 重写 delegatechildren ，缓存加快从节点获取对象速度
+        // 重写 delegateChildren ，缓存加快从节点获取对象速度
         getOwnerControl:function(node) {
             var self = this,
                 n,

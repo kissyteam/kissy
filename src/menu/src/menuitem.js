@@ -8,23 +8,23 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var MenuItem = UIBase.create(Component.Controller, [UIBase.ContentBox], {
 
-        _handleMouseEnter:function (e) {
+        handleMouseEnter:function (e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseEnter.call(this, e)) {
+            if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
                 return true;
             }
             this.get("parent").set("highlightedItem", this);
         },
 
-        _handleMouseLeave:function (e) {
+        handleMouseLeave:function (e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseLeave.call(this, e)) {
+            if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
                 return true;
             }
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _performInternal:function () {
+        performActionInternal:function () {
             var self = this;
             // 可选
             if (self.get("selectable")) {
@@ -39,14 +39,6 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 target:self
             });
             return true;
-        },
-
-        _uiSetChecked:function (v) {
-            this._forwardSetAttrToView("checked", v);
-        },
-
-        _uiSetSelected:function (v) {
-            this._forwardSetAttrToView("selected", v);
         },
 
         _uiSetHighlighted:function (v) {
@@ -108,8 +100,12 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
 
-            checked:{},
-            selected:{}
+            checked:{
+                view:true
+            },
+            selected:{
+                view:true
+            }
         },
 
         HTML_PARSER:{
@@ -122,7 +118,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     MenuItem.DefaultRender = MenuItemRender;
 
-    Component.UIStore.setUIByClass("menuitem", {
+    Component.UIStore.setUIConstructorByCssClass("menuitem", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:MenuItem
     });

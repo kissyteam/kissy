@@ -18,7 +18,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
     });
 
 
-    Component.UIStore.setUIByClass(TREE_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(TREE_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Tree
     });

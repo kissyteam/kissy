@@ -160,7 +160,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
         "AutoComplete_Menu"
     );
 
-    Component.UIStore.setUIByClass("autocomplete-menu", {
+    Component.UIStore.setUIConstructorByCssClass("autocomplete-menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:AutoCompleteMenu
     });

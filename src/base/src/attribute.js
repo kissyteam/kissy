@@ -28,7 +28,7 @@ KISSY.add('base/attribute', function (S, undef) {
      */
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
-        return self.fire(when + capitalFirst(name) + 'Change', {
+        return self.fire(when + S.ucfirst(name) + 'Change', {
             attrName:attrName,
             subAttrName:subAttrName,
             prevVal:prevVal,
@@ -503,10 +503,6 @@ KISSY.add('base/attribute', function (S, undef) {
                 return self;
             }
         });
-
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 
     function validate(self, name, value, all) {
         var attrConfig = ensureNonEmpty(getAttrs(self), name, true),

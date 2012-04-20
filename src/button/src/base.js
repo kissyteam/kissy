@@ -15,15 +15,15 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
         {
 
             bindUI:function () {
-                this.get("el").on("keyup", this._handleKeyEventInternal, this);
+                this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
 
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
                 if (e.keyCode == KeyCodes.ENTER &&
                     e.type == "keydown" ||
                     e.keyCode == KeyCodes.SPACE &&
                         e.type == "keyup") {
-                    return this._performInternal(e);
+                    return this.performActionInternal(e);
                 }
                 // Return true for space keypress (even though the event is handled on keyup)
                 // as preventDefault needs to be called up keypress to take effect in IE and
@@ -32,7 +32,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
             },
 
             /* button 的默认行为就是触发 click*/
-            _performInternal:function () {
+            performActionInternal:function () {
                 var self = this;
                 self.fire("click");
             }
@@ -58,7 +58,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     Button.DefaultRender = CustomRender;
 
 
-    Component.UIStore.setUIByClass("button", {
+    Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Button
     });

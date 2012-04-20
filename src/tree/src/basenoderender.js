@@ -2,7 +2,7 @@
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
@@ -30,8 +30,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
     return UIBase.create(Component.Render, {
 
-        _computeClass:function(children, parent
-                               //, cause
+        _computeClass:function (children, parent
+                                //, cause
             ) {
             // S.log("hi " + cause + ": " + this.get("content"));
             var self = this,
@@ -40,10 +40,10 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 iconEl = self.get("iconEl"),
                 expandIconEl = self.get("expandIconEl"),
                 childrenEl = self.get("childrenEl"),
-                expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
-                icon_cls = self.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
+                expand_cls = [INLINE_BLOCK, ICON_CLS, EXPAND_ICON_CLS, ""].join(" "),
+                icon_cls = self.getCls([INLINE_BLOCK, ICON_CLS, FILE_CLS, ""].join(" ")),
                 folder_cls = self.getCls(
-                    [INLINE_BLOCK,ICON_CLS,expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED,""].join(" ")),
+                    [INLINE_BLOCK, ICON_CLS, expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED, ""].join(" ")),
                 last = !parent ||
                     parent.get("children")[parent.get("children").length - 1].get("view") == self;
             // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
@@ -70,7 +70,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         },
 
-        createDom:function() {
+        createDom:function () {
             var self = this,
                 el = self.get("el"),
                 id,
@@ -103,7 +103,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         },
 
-        _uiSetExpanded:function(v) {
+        _uiSetExpanded:function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
             if (childrenEl) {
@@ -116,32 +116,33 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             self.get("el").attr("aria-expanded", v);
         },
 
-        _setSelected:function(v, classes) {
+        _uiSetSelected:function (v) {
             var self = this,
+                classes = self.getComponentCssClass("-selected"),
                 // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
                 // .selected .label {background:xx;}
                 rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self._completeClasses(classes, "-selected"));
+            rowEl[v ? "addClass" : "removeClass"](classes);
             self.get("el").attr("aria-selected", v);
         },
 
-        _uiSetContent:function(c) {
+        _uiSetContent:function (c) {
             this.get("labelEl").html(c);
         },
 
-        _uiSetDepth:function(v) {
+        _uiSetDepth:function (v) {
             this.get("el").attr("aria-level", v);
         },
 
-        _uiSetAriaSize:function(v) {
+        _uiSetAriaSize:function (v) {
             this.get("el").attr("aria-setsize", v);
         },
 
-        _uiSetAriaPosInSet:function(v) {
+        _uiSetAriaPosInSet:function (v) {
             this.get("el").attr("aria-posinset", v);
         },
 
-        _uiSetTooltip:function(v) {
+        _uiSetTooltip:function (v) {
             this.get("el").attr("title", v);
         },
 
@@ -151,7 +152,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @override
          */
-        getContentElement:function() {
+        getContentElement:function () {
             var self = this;
             if (self.get("childrenEl")) {
                 return self.get("childrenEl");
@@ -175,20 +176,21 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             depth:{},
             labelEl:{},
             content:{},
-            isLeaf:{}
+            isLeaf:{},
+            selected:{}
         },
 
         HTML_PARSER:{
-            childrenEl:function(el) {
+            childrenEl:function (el) {
                 return el.children("." + this.getCls(CHILDREN_CLS));
             },
-            labelEl:function(el) {
+            labelEl:function (el) {
                 return el.children("." + this.getCls(LABEL_CLS));
             },
-            content:function(el) {
+            content:function (el) {
                 return el.children("." + this.getCls(LABEL_CLS)).html();
             },
-            isLeaf:function(el) {
+            isLeaf:function (el) {
                 var self = this;
                 if (el.hasClass(self.getCls(LEAF_CLS))) {
                     return true;
@@ -204,5 +206,5 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
     });
 
 }, {
-    requires:['node','uibase','component']
+    requires:['node', 'uibase', 'component']
 });

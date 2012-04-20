@@ -138,7 +138,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleKeyEventInternal:function (e) {
+                handleKeyEventInternal:function (e) {
                     var self = this,
                         menu = getMenu(self);
 
@@ -154,7 +154,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     }
                     //转发给 menu 处理
                     if (menu && menu.get("visible")) {
-                        var handledByMenu = menu._handleKeydown(e);
+                        var handledByMenu = menu.handleKeydown(e);
                         // esc
                         if (e.keyCode == KeyCodes.ESC) {
                             self.set("collapsed", true);
@@ -176,7 +176,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * handle click or enter key
                  */
-                _performInternal:function () {
+                performActionInternal:function () {
                     var self = this;
                     self.set("collapsed", !self.get("collapsed"));
 
@@ -185,9 +185,9 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleBlur:function (e) {
+                handleBlur:function (e) {
                     var self = this;
-                    MenuButton.superclass._handleBlur.call(self, e);
+                    MenuButton.superclass.handleBlur.call(self, e);
                     // such as : click the document
                     self.set("collapsed", true);
                 },
@@ -299,7 +299,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 DefaultRender:MenuButtonRender
             });
 
-    Component.UIStore.setUIByClass("menu-button", {
+    Component.UIStore.setUIConstructorByCssClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });

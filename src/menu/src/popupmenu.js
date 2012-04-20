@@ -60,7 +60,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
                 }
             }
         },
-        _handleMouseLeave:function () {
+        handleMouseLeave:function () {
             var self = this,
                 parent;
             if (!self.get(autoHideOnMouseLeave)) {
@@ -91,18 +91,18 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }, self.get("autoHideDelay"));
             parent = getAutoHideParentMenu(self);
             if (parent) {
-                parent._handleMouseLeave();
+                parent.handleMouseLeave();
             }
         },
 
-        _handleMouseEnter:function () {
+        handleMouseEnter:function () {
             var self = this;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
             var parent = getAutoHideParentMenu(self);
             if (parent) {
-                parent._handleMouseEnter();
+                parent.handleMouseEnter();
             }
             self._clearLeaveHideTimers();
         },
@@ -112,9 +112,9 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
          *  suppose it has focus (as a context menu),
          *  then it must hide when click document
          */
-        _handleBlur:function () {
+        handleBlur:function () {
             var self = this;
-            PopupMenu.superclass._handleBlur.apply(self, arguments);
+            PopupMenu.superclass.handleBlur.apply(self, arguments);
             self.hide();
         }
     }, {
@@ -134,7 +134,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
         DefaultRender:PopupMenuRender
     });
 
-    Component.UIStore.setUIByClass("popupmenu", {
+    Component.UIStore.setUIConstructorByCssClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:PopupMenu
     });

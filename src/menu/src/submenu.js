@@ -98,9 +98,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * @inheritDoc
              * Sets a timer to show the submenu
              **/
-            _handleMouseEnter:function (e) {
+            handleMouseEnter:function (e) {
                 var self = this;
-                if (SubMenu.superclass._handleMouseEnter.call(self, e)) {
+                if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
                     return true;
                 }
                 self.clearTimers();
@@ -162,7 +162,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var self = this;
                 if (e.newVal) {
                     self.clearTimers();
-                    // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                    // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
                     // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
                     self.get("parent").set("highlightedItem", self);
                 }
@@ -176,12 +176,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             // click ，立即显示
-            _performInternal:function () {
+            performActionInternal:function () {
                 var self = this;
                 self.clearTimers();
                 self.showMenu();
                 //  trigger click event from menuitem
-                SubMenu.superclass._performInternal.apply(self, arguments);
+                SubMenu.superclass.performActionInternal.apply(self, arguments);
             },
 
             /**
@@ -192,7 +192,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * @param e A key event.
              * @return {boolean} Whether the event was handled.
              */
-            _handleKeydown:function (e) {
+            handleKeydown:function (e) {
                 var self = this,
                     menu = getMenu(self),
                     hasKeyboardControl_ = menu && menu.get("visible"),
@@ -212,12 +212,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     }
                     // enter as click
                     else if (e.keyCode == Event.KeyCodes.ENTER) {
-                        return this._performInternal(e);
+                        return this.performActionInternal(e);
                     }
                     else {
                         return undefined;
                     }
-                } else if (menu._handleKeydown(e)) {
+                } else if (menu.handleKeydown(e)) {
                 }
                 // The menu has control and the key hasn't yet been handled, on left arrow
                 // we turn off key control.
@@ -319,7 +319,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     );
 
 
-    Component.UIStore.setUIByClass("submenu", {
+    Component.UIStore.setUIConstructorByCssClass("submenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:SubMenu
     });

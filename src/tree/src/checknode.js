@@ -10,7 +10,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         EMPTY = 0;
 
     var CheckNode = UIBase.create(BaseNode, {
-        _performInternal:function(e) {
+        performActionInternal:function(e) {
             var self=this;
             // 需要通知 tree 获得焦点
             self.get("tree").get("el")[0].focus();
@@ -106,7 +106,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         EMPTY:EMPTY
     });
 
-    Component.UIStore.setUIByClass(CHECK_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(CHECK_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:CheckNode
     });

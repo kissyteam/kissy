@@ -21,9 +21,9 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            _handleMouseEnter:function () {
+            handleMouseEnter:function () {
                 var self = this;
-                FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
+                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
                 // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
                 self.getKeyEventTarget()[0].select();
@@ -190,7 +190,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
         }
     );
 
-    Component.UIStore.setUIByClass("filtermenu", {
+    Component.UIStore.setUIConstructorByCssClass("filtermenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:FilterMenu
     });

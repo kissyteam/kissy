@@ -18,7 +18,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             handler,
             node;
@@ -66,7 +66,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
             _init:function () {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -106,7 +106,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
-                    _handleMouseDown,
+                    handleMouseDown,
                     self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();

@@ -29,8 +29,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 this.set("activeItem", v);
             },
 
-            _handleBlur:function (e) {
-                Menu.superclass._handleBlur.call(this, e);
+            handleBlur:function (e) {
+                Menu.superclass.handleBlur.call(this, e);
                 this.set("highlightedItem", undefined);
             },
 
@@ -51,8 +51,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 return undefined;
             },
 
-            _handleKeydown:function (e) {
-                if (this._handleKeyEventInternal(e)) {
+            handleKeydown:function (e) {
+                if (this.handleKeyEventInternal(e)) {
                     e.halt();
                     return true;
                 }
@@ -69,13 +69,13 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
              */
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
 
                 // Give the highlighted control the chance to handle the key event.
                 var highlightedItem = this.get("highlightedItem");
 
                 // 先看当前活跃 menuitem 是否要处理
-                if (highlightedItem && highlightedItem._handleKeydown(e)) {
+                if (highlightedItem && highlightedItem.handleKeydown(e)) {
                     return true;
                 }
 
@@ -178,9 +178,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
             ATTRS:{
                 // 普通菜单可聚焦
                 // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-                focusable:{
-                    value:true
-                },
+
                 visibleMode:{
                     value:"display"
                 },
@@ -198,7 +196,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
             DefaultRender:MenuRender
         });
 
-    Component.UIStore.setUIByClass("menu", {
+    Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });

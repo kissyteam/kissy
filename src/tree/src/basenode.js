@@ -156,7 +156,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 self.get("tree").set("selectedItem", self);
             },
 
-            _performInternal:function(e) {
+            performActionInternal:function(e) {
                 var self = this,
                     target = $(e.target),
                     tree = self.get("tree"),
@@ -244,11 +244,6 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 }
             },
 
-            _uiSetSelected:function(v) {
-                this._forwardSetAttrToView("selected", v);
-            },
-
-
             expandAll:function() {
                 var self = this;
                 self.set("expanded", true);
@@ -305,7 +300,9 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                  * 是否选中
                  * @type Boolean
                  */
-                selected:{},
+                selected:{
+                    view:true
+                },
 
                 expanded:{
                     value:false,
@@ -344,7 +341,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
             }
         });
 
-    Component.UIStore.setUIByClass(ITEM_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(ITEM_CLS, {
         priority:10,
         ui:BaseNode
     });

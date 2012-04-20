@@ -23,16 +23,16 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
     }
 
     var DelMenuItem = UIBase.create(MenuItem, {
-        _performInternal:function (e) {
+        performActionInternal:function (e) {
             var target = $(e.target);
             // 点击了删除
             if (target.hasClass(this.getCls(DEL_CLS))) {
                 del(this);
                 return true;
             }
-            return MenuItem.prototype._performInternal.call(this, e);
+            return MenuItem.prototype.performActionInternal.call(this, e);
         },
-        _handleKeydown:function (e) {
+        handleKeydown:function (e) {
             // d 键
             if (e.keyCode === Node.KeyCodes.D) {
                 del(this);
@@ -49,7 +49,7 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
     });
 
 
-    Component.UIStore.setUIByClass(CLS, {
+    Component.UIStore.setUIConstructorByCssClass(CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:DelMenuItem
     });

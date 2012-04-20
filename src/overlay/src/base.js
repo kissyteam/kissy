@@ -72,14 +72,6 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * whether this component's text content can be selected. Default:true
-                 * @type Boolean
-                 */
-                allowTextSelection_:{
-                    value:true
-                },
-
-                /**
                  * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
@@ -90,7 +82,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
 
     Overlay.DefaultRender = OverlayRender;
 
-    Component.UIStore.setUIByClass("overlay", {
+    Component.UIStore.setUIConstructorByCssClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Overlay
     });

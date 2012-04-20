@@ -402,7 +402,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
      * 通知全局管理器开始作用
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             t = ev.target;
 
@@ -456,7 +456,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -675,7 +675,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             destroy:function () {
                 var self = this,
                     node = self.get('dragNode');
-                node.detach('mousedown', _handleMouseDown, self)
+                node.detach('mousedown', handleMouseDown, self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
             }

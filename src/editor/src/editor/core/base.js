@@ -171,9 +171,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                         return this._setData(v);
                     }
                 },
-                allowTextSelection_:{
-                    value:true
-                },
                 prefixCls:{
                     value:"ke-"
                 }

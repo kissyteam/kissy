@@ -69,7 +69,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
 
     Dialog.DefaultRender = DialogRender;
 
-    Component.UIStore.setUIByClass("dialog", {
+    Component.UIStore.setUIConstructorByCssClass("dialog", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Dialog
     });

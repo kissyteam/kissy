@@ -200,7 +200,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
         });
 
 
-    Component.UIStore.setUIByClass("popup", {
+    Component.UIStore.setUIConstructorByCssClass("popup", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Popup
     });

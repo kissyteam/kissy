@@ -595,6 +595,13 @@
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
+
+
+            ucfirst:function (s) {
+                s += "";
+                return s.charAt(0).toUpperCase() + s.substring(1);
+            },
+
             /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929

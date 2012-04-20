@@ -33,9 +33,9 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteR
                 .append(self.get("el"))
                 .append(button);
         },
-        _setFocused:function (v) {
+        _uiSetFocused:function (v) {
             var self = this;
-            Render.superclass._setFocused.apply(self, arguments);
+            Render.superclass._uiSetFocused.apply(self, arguments);
             self.get("container")[v ? "addClass" : "removeClass"](self.get("prefixCls")
                 + "combobox-focused");
         },

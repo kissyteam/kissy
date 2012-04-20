@@ -11,7 +11,7 @@ KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
             }
         }
     });
-    Component.UIStore.setUIByClass("option", {
+    Component.UIStore.setUIConstructorByCssClass("option", {
         priority:10,
         ui:Option
     });

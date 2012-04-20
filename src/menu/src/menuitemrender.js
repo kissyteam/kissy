@@ -21,19 +21,17 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
     return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
 
-        _setSelected:function (v, componentCls) {
+        _uiSetChecked:function (v) {
             var self = this,
-                tag = "-selected",
                 el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
+                cls = self.getComponentCssClass("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _setChecked:function (v, componentCls) {
+        _uiSetSelected:function (v) {
             var self = this,
-                tag = "-checked",
                 el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
+                cls = self.getComponentCssClass("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
