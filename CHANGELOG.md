@@ -64,6 +64,7 @@ History:
 
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件
+ - [!] autoHideDelay 单位变更为秒
 
  - [+] datalazyload 增加 removeElements 与 destroy 接口
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素

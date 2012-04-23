@@ -21,20 +21,23 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
 
             /**
              * Generate child component from root element.
-             * @name decorateInternal
              * @protected
              * @function
              * @param {Node} element Root element of current component.
              */
+            decorateInternal:function (element) {
 
+            },
 
             /**
-             * Get child component which contains current event target node.
-             * @name getOwnerControl
+             * Get child component which contains current event target node.             *
              * @protected
              * @function
              * @param {HTMLElement} target Current event target node.
              */
+            getOwnerControl:function (target) {
+
+            }
         });
 
 }, {

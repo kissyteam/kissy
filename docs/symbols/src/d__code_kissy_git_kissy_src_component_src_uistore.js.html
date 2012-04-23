@@ -58,44 +58,50 @@
 <span id='line51' class='line'> 51</span> 
 <span id='line52' class='line'> 52</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line53' class='line'> 53</span>      * @name UIStore
-<span id='line54' class='line'> 54</span>      * @memberOf Component
-<span id='line55' class='line'> 55</span>      */</span><span class="WHIT">
-<span id='line56' class='line'> 56</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line57' class='line'> 57</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line58' class='line'> 58</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line59' class='line'> 59</span>          * Get css class name for this component constructor.
-<span id='line60' class='line'> 60</span>          * @param {Function} constructor Component's constructor.
-<span id='line61' class='line'> 61</span>          * @type {Function}
-<span id='line62' class='line'> 62</span>          * @return {String}
-<span id='line63' class='line'> 63</span>          */</span><span class="WHIT">
-<span id='line64' class='line'> 64</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassByUIConstructor</span><span class="PUNC">:</span><span class="NAME">getCssClassByUIConstructor</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line65' class='line'> 65</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line66' class='line'> 66</span>          * Get component constructor by css class name.
-<span id='line67' class='line'> 67</span>          * @param {String} classNames Class names separated by space.
-<span id='line68' class='line'> 68</span>          * @type {Function}
-<span id='line69' class='line'> 69</span>          * @return {Function}
-<span id='line70' class='line'> 70</span>          */</span><span class="WHIT">
-<span id='line71' class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">getUIConstructorByCssClass</span><span class="PUNC">:</span><span class="NAME">getUIConstructorByCssClass</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line72' class='line'> 72</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line73' class='line'> 73</span>          * Associate css class with component constructor.
-<span id='line74' class='line'> 74</span>          * @type {Function}
-<span id='line75' class='line'> 75</span>          * @param {String} className Component's class name.
-<span id='line76' class='line'> 76</span>          * @param {Function} componentConstructor Component's constructor.
-<span id='line77' class='line'> 77</span>          */</span><span class="WHIT">
-<span id='line78' class='line'> 78</span> </span><span class="WHIT">        </span><span class="NAME">setUIConstructorByCssClass</span><span class="PUNC">:</span><span class="NAME">setUIConstructorByCssClass</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line79' class='line'> 79</span> 
-<span id='line80' class='line'> 80</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line81' class='line'> 81</span>          * Component's constructor's priority enum.
-<span id='line82' class='line'> 82</span>          * Used for getCssClassByUIConstructor, when multiple component constructors are found.
-<span id='line83' class='line'> 83</span>          * @type Object
-<span id='line84' class='line'> 84</span>          */</span><span class="WHIT">
-<span id='line85' class='line'> 85</span> </span><span class="WHIT">        </span><span class="NAME">PRIORITY</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line86' class='line'> 86</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL1</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line87' class='line'> 87</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL2</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line88' class='line'> 88</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL3</span><span class="PUNC">:</span><span class="NUMB">30</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line89' class='line'> 89</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL4</span><span class="PUNC">:</span><span class="NUMB">40</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line90' class='line'> 90</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL5</span><span class="PUNC">:</span><span class="NUMB">50</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line91' class='line'> 91</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL6</span><span class="PUNC">:</span><span class="NUMB">60</span><span class="WHIT">
-<span id='line92' class='line'> 92</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line93' class='line'> 93</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line94' class='line'> 94</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line54' class='line'> 54</span>      * @namespace
+<span id='line55' class='line'> 55</span>      * @memberOf Component
+<span id='line56' class='line'> 56</span>      */</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">UIStore</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lends Component.UIStore */</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line60' class='line'> 60</span>          * Get css class name for this component constructor.
+<span id='line61' class='line'> 61</span>          * @param {Function} constructor Component's constructor.
+<span id='line62' class='line'> 62</span>          * @type {Function}
+<span id='line63' class='line'> 63</span>          * @return {String}
+<span id='line64' class='line'> 64</span>          * @function
+<span id='line65' class='line'> 65</span>          */</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassByUIConstructor</span><span class="PUNC">:</span><span class="NAME">getCssClassByUIConstructor</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line68' class='line'> 68</span>          * Get component constructor by css class name.
+<span id='line69' class='line'> 69</span>          * @param {String} classNames Class names separated by space.
+<span id='line70' class='line'> 70</span>          * @type {Function}
+<span id='line71' class='line'> 71</span>          * @return {Function}
+<span id='line72' class='line'> 72</span>          * @function
+<span id='line73' class='line'> 73</span>          */</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">        </span><span class="NAME">getUIConstructorByCssClass</span><span class="PUNC">:</span><span class="NAME">getUIConstructorByCssClass</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line76' class='line'> 76</span>          * Associate css class with component constructor.
+<span id='line77' class='line'> 77</span>          * @type {Function}
+<span id='line78' class='line'> 78</span>          * @param {String} className Component's class name.
+<span id='line79' class='line'> 79</span>          * @param {Function} componentConstructor Component's constructor.
+<span id='line80' class='line'> 80</span>          * @function
+<span id='line81' class='line'> 81</span>          */</span><span class="WHIT">
+<span id='line82' class='line'> 82</span> </span><span class="WHIT">        </span><span class="NAME">setUIConstructorByCssClass</span><span class="PUNC">:</span><span class="NAME">setUIConstructorByCssClass</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line83' class='line'> 83</span> 
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line85' class='line'> 85</span>          * Component's constructor's priority enum.
+<span id='line86' class='line'> 86</span>          * Used for getCssClassByUIConstructor, when multiple component constructors are found.
+<span id='line87' class='line'> 87</span>          * @type Object
+<span id='line88' class='line'> 88</span>          */</span><span class="WHIT">
+<span id='line89' class='line'> 89</span> </span><span class="WHIT">        </span><span class="NAME">PRIORITY</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line90' class='line'> 90</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL1</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line91' class='line'> 91</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL2</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL3</span><span class="PUNC">:</span><span class="NUMB">30</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL4</span><span class="PUNC">:</span><span class="NUMB">40</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL5</span><span class="PUNC">:</span><span class="NUMB">50</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">            </span><span class="NAME">LEVEL6</span><span class="PUNC">:</span><span class="NUMB">60</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> 
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">UIStore</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line100' class='line'>100</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

@@ -6,8 +6,10 @@ KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
     /**
      * Option for Select component.
-     * @memberOf MenuButton
+     * @name Option
      * @class
+     * @memberOf MenuButton
+     * @extends Menu.Item
      */
     var Option = UIBase.create(MenuItem,
         /**

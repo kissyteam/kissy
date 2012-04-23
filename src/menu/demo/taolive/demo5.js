@@ -7,7 +7,7 @@ KISSY.use("menu", function (S, Menu) {
         // boolean，是否鼠标脱离菜单后自动隐藏
         autoHideOnMouseLeave:true,
         // ms，鼠标脱离菜单多长时间后自动隐藏
-        autoHideDelay:300,
+        autoHideDelay:0.3,
         prefixCls:prefixCls
     });
 

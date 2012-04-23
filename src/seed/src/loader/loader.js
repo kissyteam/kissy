@@ -123,8 +123,7 @@
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var self = this,
-            SS = self.SS,
+        var SS = self.SS,
             base,
             scripts = S.Env.host.document.getElementsByTagName("script"),
             re,
@@ -171,6 +170,7 @@
             }
         }
         S.log("interactive script does not have package config ：" + src, "error");
+        return undefined;
     }
 
 })(KISSY);

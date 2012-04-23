@@ -14,9 +14,15 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
      * Select component which supports single selection from a drop down menu
      * with semantics similar to native HTML select.
      * @class
+     * @name Select
      * @memberOf MenuButton
+     * @extends MenuButton
      */
-    var Select = UIBase.create(MenuButton, {
+    var Select = UIBase.create(MenuButton,
+        /**
+         * @lends MenuButton.Select.prototype
+         */
+        {
 
             /**
              * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
@@ -95,7 +101,10 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             }
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends MenuButton.Select.prototype
+             */
+            {
 
                 // 也是 selectedItem 的一个视图
                 value:{
@@ -120,7 +129,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 
                 /**
                  * Selected option of current select component.
-                 * @type Menu.Option
+                 * @type MenuButton.Option
                  */
                 selectedItem:{
                 },
@@ -154,75 +163,76 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
                 defaultCaption:{
                     value:""
                 }
+            },
+
+            /**
+             * Generate a select component from native select element.
+             * @param {HTMLElement} element Native html select element.
+             * @param {Object} cfg Extra configuration for current select component.
+             * @memberOf MenuButton.Select
+             */
+            decorate:function (element, cfg) {
+                element = S.one(element);
+                cfg = cfg || {};
+                cfg.elBefore = element;
+
+                var name,
+                    allItems = [],
+                    selectedItem = null,
+                    curValue = element.val(),
+                    options = element.all("option");
+
+                options.each(function (option) {
+                    var item = {
+                        content:option.text(),
+                        prefixCls:cfg.prefixCls,
+                        elCls:option.attr("class"),
+                        value:option.val()
+                    };
+                    if (curValue == option.val()) {
+                        selectedItem = {
+                            content:item.content,
+                            value:item.value
+                        };
+                    }
+                    allItems.push(item);
+                });
+
+                S.mix(cfg, {
+                    menu:function () {
+                        var m = new Menu.PopupMenu(S.mix({
+                            prefixCls:this.get("prefixCls")
+                        }, this.get("menuCfg")));
+                        for (var i = 0; i < allItems.length; i++) {
+                            m.addChild(new Option(allItems[i]));
+                        }
+                        return m;
+                    }
+                });
+
+                var select = new Select(S.mix(cfg, selectedItem));
+
+                select.render();
+
+                if (name = element.attr("name")) {
+                    var input = new Node("<input" +
+                        " type='hidden'" +
+                        " name='" + name
+                        + "' value='" + curValue + "'>").insertBefore(element, undefined);
+
+                    select.on("afterSelectedItemChange", function (e) {
+                        if (e.newVal) {
+                            input.val(e.newVal.get("value"));
+                        } else {
+                            input.val("");
+                        }
+                    });
+                }
+                element.remove();
+                return select;
             }
+
         }, "Menu_Select");
-
-
-    /**
-     * Generate a select component from native select element.
-     * @param {HTMLElement} element Native html select element.
-     * @param {Object} cfg Extra configuration for current select component.
-     */
-    Select.decorate = function (element, cfg) {
-        element = S.one(element);
-        cfg = cfg || {};
-        cfg.elBefore = element;
-
-        var name,
-            allItems = [],
-            selectedItem = null,
-            curValue = element.val(),
-            options = element.all("option");
-
-        options.each(function (option) {
-            var item = {
-                content:option.text(),
-                prefixCls:cfg.prefixCls,
-                elCls:option.attr("class"),
-                value:option.val()
-            };
-            if (curValue == option.val()) {
-                selectedItem = {
-                    content:item.content,
-                    value:item.value
-                };
-            }
-            allItems.push(item);
-        });
-
-        S.mix(cfg, {
-            menu:function () {
-                var m = new Menu.PopupMenu(S.mix({
-                    prefixCls:this.get("prefixCls")
-                }, this.get("menuCfg")));
-                for (var i = 0; i < allItems.length; i++) {
-                    m.addChild(new Option(allItems[i]));
-                }
-                return m;
-            }
-        });
-
-        var select = new Select(S.mix(cfg, selectedItem));
-
-        select.render();
-
-        if (name = element.attr("name")) {
-            var input = new Node("<input" +
-                " type='hidden'" +
-                " name='" + name
-                + "' value='" + curValue + "'>").insertBefore(element, undefined);
-
-            select.on("afterSelectedItemChange", function (e) {
-                if (e.newVal) {
-                    input.val(e.newVal.get("value"));
-                } else {
-                    input.val("");
-                }
-            });
-        }
-        element.remove();
-        return select;
-    };
 
     Component.UIStore.setUIConstructorByCssClass("select", {
         priority:Component.UIStore.PRIORITY.LEVEL3,

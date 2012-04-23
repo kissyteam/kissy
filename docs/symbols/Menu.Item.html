@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>DD.Droppable</title>
+        <title>Menu.Item</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                DD.Droppable
+                                Menu.Item
                             </h2>
                             <!-- class title END-->
                             
@@ -168,12 +168,16 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     
+                                    <p>parents：
+                                        <a href="../symbols/Component.Controller.html">Component.Controller</a>
+                                    </p>                                                
+                                    
 
                                     
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html">droppable.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_menuitem.js.html">menuitem.js</a></p>
                                     
                                     
                                     
@@ -192,11 +196,11 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/DD.Droppable.html#constructor">DD.Droppable</a></b>
+                                            <b class="name"><a href="../symbols/Menu.Item.html#constructor">Menu.Item</a></b>
                                             <span class="param">()</span>                                
                                             
                                             
-                                            <span class="desc">make a node droppable</span>                                            
+                                            <span class="desc">A menu item component which menu is consisted of.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -217,26 +221,64 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#groups">groups</a></b>
-                                                <span class="type">{Object|boolean true to match any group}</span>
+                                                <b class="name"><a href="../symbols/Menu.Item.html#checkable">checkable</a></b>
+                                                <span class="type">{Boolean}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">groups this droppable object belongs to.</span>                                                
+                                                <span class="desc">Whether the menu item is checkable or not.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#node">node</a></b>
-                                                <span class="type">{String|HTMLElement}</span>
+                                                <b class="name"><a href="../symbols/Menu.Item.html#checked">checked</a></b>
+                                                <span class="type">{Boolean}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">droppable element</span>                                                
+                                                <span class="desc">Whether the menu item is checked.</span>                                                
                                             </li>
                                             
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#selectable">selectable</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether the menu item is selectable or not.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#selected">selected</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether the menu item is selected.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#value">value</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">The value associated with the menu item.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        <li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a></li><li class="li">Fields borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#el">el</a>, <a href="../symbols/UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/UIBase.Box.html#height">height</a>, <a href="../symbols/UIBase.Box.html#html">html</a>, <a href="../symbols/UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/UIBase.Box.html#visible">visible</a>, <a href="../symbols/UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/UIBase.Box.html#width">width</a></li>
                                         </ul>
                                         
                                     </div>
@@ -258,14 +300,49 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#destroy">destroy</a></b>
+                                                <b class="name"><a href="../symbols/Menu.Item.html#containsElement">containsElement</a></b>
+                                                <span class="param">(element)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Check whether this menu item contains specified element.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#handleMouseEnter">handleMouseEnter</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Handle mouseenter event.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#handleMouseLeave">handleMouseLeave</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Handle mouseleave event.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.Item.html#performActionInternal">performActionInternal</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">make this droppable' element undroppable</span>                                                
+                                                <span class="desc">Perform default action when click on enter on this menuitem.</span>                                                
                                             </li>
                                             
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getContentElement">getContentElement</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#getKeyEventTarget">getKeyEventTarget</a>, <a href="../symbols/Component.Controller.html#handleBlur">handleBlur</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleKeyEventInternal">handleKeyEventInternal</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#bindUI">bindUI</a>, <a href="../symbols/UIBase.html#create">create</a>, <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#hide">hide</a>, <a href="../symbols/UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -277,58 +354,6 @@ a.go-top:active{text-decoration:none;}
                             <!-- events START -->
                             
                                 
-                                
-                                <div class="box events-box">
-                                    <div class="box-hd">
-                                        <h3>Events</h3>
-                                    </div>
-                                    <div class="box-bd">
-                                        <ul class="list summary-list">
-                                            
-                                            <li class="li">
-                                                
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#event:dropenter">dropenter</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">fired after a draggable object mouseenter a droppable object</span>
-                                            </li>
-                                            
-                                            <li class="li">
-                                                
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#event:dropexit">dropexit</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">fired after a draggable leaves a droppable</span>
-                                            </li>
-                                            
-                                            <li class="li">
-                                                
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#event:drophit">drophit</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">fired after drop a draggable onto a droppable object</span>
-                                            </li>
-                                            
-                                            <li class="li">
-                                                
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#event:dropover">dropover</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">fired after a draggable object mouseover a droppable object</span>
-                                            </li>
-                                            
-                                        </ul>
-                                        
-                                    </div>
-                                </div>
                                 
                             
                             <!-- events END -->
@@ -344,7 +369,7 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">DD.Droppable</b>
+                                                <b class="name">Menu.Item</b>
                                                 <span class="param">()</span>
                                             </div>
                                             
@@ -384,17 +409,17 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name="groups"> </a>
+                                            <a name="checkable"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">groups</b>
-                                                <span>{Object|boolean true to match any group}</span>
+                                                <b class="name">checkable</b>
+                                                <span>{Boolean}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    groups this droppable object belongs to. Default:true
+                                                    Whether the menu item is checkable or not.Set to true for checkbox option.
                                                     
                                                     
                                                 </span>
@@ -414,17 +439,107 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="node"> </a>
+                                            <a name="checked"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">node</b>
-                                                <span>{String|HTMLElement}</span>
+                                                <b class="name">checked</b>
+                                                <span>{Boolean}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    droppable element
+                                                    Whether the menu item is checked.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="selectable"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">selectable</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether the menu item is selectable or not.Set to true for option.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="selected"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">selected</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether the menu item is selected.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="value"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">value</b>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    The value associated with the menu item.
                                                     
                                                     
                                                 </span>
@@ -459,19 +574,184 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="destroy"> </a>
+                                            <a name="containsElement"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">destroy</b>
+                                                <b class="name">containsElement</b>
+                                                <span class="param">(element)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_menuitem.js.html#line96">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Check whether this menu item contains specified element.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">element</b>
+                                                            
+                                                            
+                                                            <span class="type">{Node}</span> 
+                                                            <span class="desc">Element to be tested.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="handleMouseEnter"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">handleMouseEnter</b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_menuitem.js.html#line29">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Handle mouseenter event. Make parent menu to highlight itself.Protected, should only be overridden by subclasses.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">e</b>
+                                                            
+                                                            
+                                                            <span class="type">{<a href="../symbols/Event.Object.html">Event.Object</a>}</span> 
+                                                            <span class="desc">Mouseenter event object.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="handleMouseLeave"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">handleMouseLeave</b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_menuitem.js.html#line44">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Handle mouseleave event. Make parent menu to unhighlight itself.Protected, should only be overridden by subclasses.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">e</b>
+                                                            
+                                                            
+                                                            <span class="type">{<a href="../symbols/Event.Object.html">Event.Object</a>}</span> 
+                                                            <span class="desc">Mouseleave event object.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="performActionInternal"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">performActionInternal</b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line232">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_menuitem.js.html#line60">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                make this droppable' element undroppable
+                                                Perform default action when click on enter on this menuitem.If selectable, then make it selected.If checkable, then toggle it.Finally fire click on its parent menu.
                                                 
                                                 
                                             </div>
@@ -504,313 +784,6 @@ a.go-top:active{text-decoration:none;}
                             <!-- methods detail END -->
 
                             <!-- events detail START -->
-                            
-                            <div class="box">
-                                <div class="box-hd">
-                                    <h3>Events Detail</h3>
-                                </div>
-                                <div class="box-bd">
-                                <ul class="detail-list">
-                                    
-                                    <li>
-                                        <a name="event:dropenter"> </a>
-                                        <div class="title">
-                                            
-                                            
-                                            <b class="name">dropenter</b>
-                                            <span class="param">(e)</span>
-                                            
-                                            
-                                            
-                                            
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line52">view source</a>
-                                        </div>
-                                        
-                                        <div class="desc">
-                                            fired after a draggable object mouseenter a droppable object
-                                            
-                                            
-                                        </div>
-                                        
-                                        <dl>
-                                            
-                                            <dt>Parameters</dt>
-                                            <dd>
-                                                <ul class="list param-list">
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc"></span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drag</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current draggable object</span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drop</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current droppable object</span>
-                                                    </li>
-                                                
-                                                </ul>
-                                            </dd>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <dt>
-
-                                            
-                                            
-                                        </dl>
-                                    </li>
-                                    
-                                    <li>
-                                        <a name="event:dropexit"> </a>
-                                        <div class="title">
-                                            
-                                            
-                                            <b class="name">dropexit</b>
-                                            <span class="param">(e)</span>
-                                            
-                                            
-                                            
-                                            
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line33">view source</a>
-                                        </div>
-                                        
-                                        <div class="desc">
-                                            fired after a draggable leaves a droppable
-                                            
-                                            
-                                        </div>
-                                        
-                                        <dl>
-                                            
-                                            <dt>Parameters</dt>
-                                            <dd>
-                                                <ul class="list param-list">
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc"></span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drag</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current draggable object</span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drop</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current droppable object</span>
-                                                    </li>
-                                                
-                                                </ul>
-                                            </dd>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <dt>
-
-                                            
-                                            
-                                        </dl>
-                                    </li>
-                                    
-                                    <li>
-                                        <a name="event:drophit"> </a>
-                                        <div class="title">
-                                            
-                                            
-                                            <b class="name">drophit</b>
-                                            <span class="param">(e)</span>
-                                            
-                                            
-                                            
-                                            
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line91">view source</a>
-                                        </div>
-                                        
-                                        <div class="desc">
-                                            fired after drop a draggable onto a droppable object
-                                            
-                                            
-                                        </div>
-                                        
-                                        <dl>
-                                            
-                                            <dt>Parameters</dt>
-                                            <dd>
-                                                <ul class="list param-list">
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc"></span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drag</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current draggable object</span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drop</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current droppable object</span>
-                                                    </li>
-                                                
-                                                </ul>
-                                            </dd>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <dt>
-
-                                            
-                                            
-                                        </dl>
-                                    </li>
-                                    
-                                    <li>
-                                        <a name="event:dropover"> </a>
-                                        <div class="title">
-                                            
-                                            
-                                            <b class="name">dropover</b>
-                                            <span class="param">(e)</span>
-                                            
-                                            
-                                            
-                                            
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line72">view source</a>
-                                        </div>
-                                        
-                                        <div class="desc">
-                                            fired after a draggable object mouseover a droppable object
-                                            
-                                            
-                                        </div>
-                                        
-                                        <dl>
-                                            
-                                            <dt>Parameters</dt>
-                                            <dd>
-                                                <ul class="list param-list">
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc"></span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drag</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current draggable object</span>
-                                                    </li>
-                                                
-                                                    <li class="li">
-                                                        &nbsp;
-                                                        <b class="name">e.drop</b>
-                                                        
-                                                        
-                                                        
-                                                        <span class="desc">current droppable object</span>
-                                                    </li>
-                                                
-                                                </ul>
-                                            </dd>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <dt>
-
-                                            
-                                            
-                                        </dl>
-                                    </li>
-                                    
-                                </ul>
-                                </div>
-                            </div>
                             
                             <!-- events detail START -->
 

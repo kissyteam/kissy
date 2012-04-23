@@ -68,9 +68,12 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * If the container is enabled, and a child is highlighted,
              * calls the child controller's {@code handleKeydown} method to give the control
              * a chance to handle the event first.
+             * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Key event to handle.
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
+             * @protected
+             * @override
              */
             handleKeyEventInternal:function (e) {
 

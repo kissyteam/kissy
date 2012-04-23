@@ -51,15 +51,17 @@ KISSY.add("component/uistore", function (S) {
 
     /**
      * @name UIStore
+     * @namespace
      * @memberOf Component
      */
-    return {
+    var UIStore = /** @lends Component.UIStore */{
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
          * @type {Function}
          * @return {String}
+         * @function
          */
         getCssClassByUIConstructor:getCssClassByUIConstructor,
         /**
@@ -67,6 +69,7 @@ KISSY.add("component/uistore", function (S) {
          * @param {String} classNames Class names separated by space.
          * @type {Function}
          * @return {Function}
+         * @function
          */
         getUIConstructorByCssClass:getUIConstructorByCssClass,
         /**
@@ -74,6 +77,7 @@ KISSY.add("component/uistore", function (S) {
          * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
+         * @function
          */
         setUIConstructorByCssClass:setUIConstructorByCssClass,
 
@@ -91,4 +95,6 @@ KISSY.add("component/uistore", function (S) {
             "LEVEL6":60
         }
     };
+
+    return UIStore;
 });

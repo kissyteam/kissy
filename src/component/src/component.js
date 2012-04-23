@@ -8,15 +8,14 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
      * @namespace
      */
     var Component = {
-        Controller:Controller,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
+        "Controller":Controller,
+        "Render":Render,
+        "Container":Container,
+        "UIStore":UIStore,
+        "DelegateChildren":DelegateChildren,
+        "DecorateChild":DecorateChild,
         "DecorateChildren":DecorateChildren
     };
-    Component.Controller = Controller;
     return Component;
 }, {
     requires:['component/controller',
