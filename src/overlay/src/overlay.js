@@ -8,7 +8,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     O.Dialog = D;
     S.Dialog = D;
     O.Popup = P;
-    S.Overlay = Overlay;
+    S.Overlay = O;
     return O;
 }, {
     requires:[

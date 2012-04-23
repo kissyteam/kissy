@@ -1,5 +1,5 @@
 KISSY.add("editor/core/meta", function () {
-
+/*
     KISSY.add({
         "editor/plugin/button/index":{
             requires:['uibase']
@@ -11,5 +11,5 @@ KISSY.add("editor/core/meta", function () {
             requires:['../button/', '../select/']
         }
     });
-
+*/
 });

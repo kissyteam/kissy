@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 23 19:47
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -433,7 +433,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     O.Dialog = D;
     S.Dialog = D;
     O.Popup = P;
-    S.Overlay = Overlay;
+    S.Overlay = O;
     return O;
 }, {
     requires:[

@@ -1,6 +1,6 @@
 /**
 for kissy editor iframe
-@author 玉伯(lifesinger@gmail.com),yiminghe@gmail.com
+@author yiminghe@gmail.com, lifesinger@gmail.com
 @from:resource://gre/res/html.css
 **/
 html {
@@ -10,7 +10,7 @@ html {
 }
 
 body {
-/* Text color */
+    /* Text color */
     color: #222; /* Remove the background color to make it transparent */
     background-color: #fff;
 }
@@ -142,27 +142,27 @@ table.k-e-collapse-table {
 
 table {
     /*prevent inherit for nested table*/
-    border-collapse:separate;
+    border-collapse: separate;
 }
 
 blockquote, ul, ol, dl {
-/* giving blockquotes and lists room to breath */
+    /* giving blockquotes and lists room to breath */
     margin: 1em;
 }
 
 ul, ol, dl {
-/* bringing lists on to the page with breathing room */
+    /* bringing lists on to the page with breathing room */
     margin-left: 2em;
 }
 
 dl dd {
-/* providing spacing for definition terms */
+    /* providing spacing for definition terms */
     margin-left: 1em;
 }
 
 table.k-e-collapse-table >tbody>tr>th,
 table.k-e-collapse-table >tbody>tr>td {
-/* padding to make the table readable */
+    /* padding to make the table readable */
     /*padding: .5em;*/
     /*th,td no need to specify ? inherit from table ?*/
     border-color: black;
@@ -173,15 +173,15 @@ th {
 }
 
 caption {
-/* coordinated margin to match cell's padding */
+    /* coordinated margin to match cell's padding */
     margin-bottom: .5em;
     /*ie6,7下会换行，强制不换行*/
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 /*编辑器内p不要有间隔了，两个p来出间隔。p,*/
 fieldset, table, pre {
-/* so things don't run into each other */
+    /* so things don't run into each other */
     /*margin-bottom: 1em;*/
 }
 
