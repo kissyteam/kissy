@@ -260,7 +260,7 @@
 <span id='line253' class='line'>253</span>                  * Get the value of a property for the first element in the set of matched elements.
 <span id='line254' class='line'>254</span>                  * or
 <span id='line255' class='line'>255</span>                  * Set one or more properties for the set of matched elements.
-<span id='line256' class='line'>256</span>                  * @param {Array&lt;HTMLElement>|String} selector matched elements
+<span id='line256' class='line'>256</span>                  * @param {Array&lt;HTMLElement>|String|HTMLElement} selector matched elements
 <span id='line257' class='line'>257</span>                  * @param {String|Object} name
 <span id='line258' class='line'>258</span>                  * The name of the property to set.
 <span id='line259' class='line'>259</span>                  * or
@@ -301,7 +301,7 @@
 <span id='line294' class='line'>294</span> 
 <span id='line295' class='line'>295</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line296' class='line'>296</span>                  * Whether one of the matched elements has specified property name
-<span id='line297' class='line'>297</span>                  * @param {Array&lt;HTMLElement>|String} selector 元素
+<span id='line297' class='line'>297</span>                  * @param {Array&lt;HTMLElement>|String|HTMLElement} selector 元素
 <span id='line298' class='line'>298</span>                  * @param {String} name The name of property to test
 <span id='line299' class='line'>299</span>                  * @return {boolean}
 <span id='line300' class='line'>300</span>                  */</span><span class="WHIT">
@@ -318,7 +318,7 @@
 <span id='line311' class='line'>311</span> 
 <span id='line312' class='line'>312</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line313' class='line'>313</span>                  * Remove a property for the set of matched elements.
-<span id='line314' class='line'>314</span>                  * @param {Array&lt;HTMLElement>|String} selector matched elements
+<span id='line314' class='line'>314</span>                  * @param {Array&lt;HTMLElement>|String|HTMLElement} selector matched elements
 <span id='line315' class='line'>315</span>                  * @param {String} name The name of the property to remove.
 <span id='line316' class='line'>316</span>                  */</span><span class="WHIT">
 <span id='line317' class='line'>317</span> </span><span class="WHIT">                </span><span class="NAME">removeProp</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">

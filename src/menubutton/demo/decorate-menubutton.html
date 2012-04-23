@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>decorate menubutton</title>
-<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../../button/assets/custombutton.css" rel="stylesheet"/>
 <link href="../assets/menubutton.css" rel="stylesheet"/>
 <link href="../../overlay/assets/cool.css" rel="stylesheet"/>
@@ -26,91 +26,111 @@
         position: absolute;
     }
 </style>
+<style>
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
+    }
+</style>
 </head>
 <body>
+<div id="wrap">
 
-<h1 id="describe">菜单按钮演示</h1>
-<div style="height:200px;overflow: auto;border:1px solid red;">
-    <h2>设计说明</h2>
-    <ol>
-        <li>支持键盘，鼠标互操作</li>
-        <li>符合 wai-aria 规范</li>
-        <li>构建组件层次</li>
-    </ol>
+    <h1 id="describe">菜单按钮演示</h1>
+    <div style="height:200px;overflow: auto;border:1px solid red;">
+        <h2>设计说明</h2>
+        <ol>
+            <li>支持键盘，鼠标互操作</li>
+            <li>符合 wai-aria 规范</li>
+            <li>构建组件层次</li>
+        </ol>
 
-    <h2>使用说明</h2>
-    <ol>
-        <li>
-            tab 移动焦点到按钮：按钮周边粉框
-        </li>
-        <li>
-            按钮获得焦点时点击上或下键，弹出菜单
-            <ol>
-                <li>或点击按钮弹出菜单</li>
-            </ol>
-        </li>
+        <h2>使用说明</h2>
+        <ol>
+            <li>
+                tab 移动焦点到按钮：按钮周边粉框
+            </li>
+            <li>
+                按钮获得焦点时点击上或下键，弹出菜单
+                <ol>
+                    <li>或点击按钮弹出菜单</li>
+                </ol>
+            </li>
 
 
-        <li>
-            菜单弹出后，上下键选择菜单项
-            <ol>
-                <li>或通过鼠标掠过</li>
-            </ol>
-        </li>
+            <li>
+                菜单弹出后，上下键选择菜单项
+                <ol>
+                    <li>或通过鼠标掠过</li>
+                </ol>
+            </li>
 
-        <li>
-            带有子菜单的菜单项通过右键激活子菜单，左键收缩子菜单
-            <ol>
-                <li>或通过鼠标掠过，自动弹出子菜单</li>
-            </ol>
-        </li>
+            <li>
+                带有子菜单的菜单项通过右键激活子菜单，左键收缩子菜单
+                <ol>
+                    <li>或通过鼠标掠过，自动弹出子菜单</li>
+                </ol>
+            </li>
 
-        <li>
-            菜单项弹出后，按下 enter 或 space 则选中当前高亮菜单项
-            <ol>
-                <li>或通过鼠标点击选中任意菜单项</li>
-            </ol>
-        </li>
+            <li>
+                菜单项弹出后，按下 enter 或 space 则选中当前高亮菜单项
+                <ol>
+                    <li>或通过鼠标点击选中任意菜单项</li>
+                </ol>
+            </li>
 
-        <li>
-            esc 隐藏下拉菜单（焦点仍然在按钮上）
-            <ol>
-                <li>或通过鼠标点击文档空白区域（按钮失去焦点）</li>
-            </ol>
-        </li>
-    </ol>
-</div>
-
-<h1>装饰已有元素为菜单按钮</h1>
-<div class="goog-inline-block goog-button" id="exist">
-    淘宝网
-    <div class="goog-menu goog-popupmenu">
-        <div class="goog-menuitem">我要买</div>
-        <div class="goog-menuitem">我要卖</div>
+            <li>
+                esc 隐藏下拉菜单（焦点仍然在按钮上）
+                <ol>
+                    <li>或通过鼠标点击文档空白区域（按钮失去焦点）</li>
+                </ol>
+            </li>
+        </ol>
     </div>
-</div>
 
-<script src="../../../build/kissy.js"></script>
-<script>
+    <h1>装饰已有元素为菜单按钮</h1>
+    <div class="ks-inline-block goog-button" id="exist">
+        淘宝网
+        <div class="goog-menu goog-popupmenu">
+            <div class="goog-menuitem">我要买</div>
+            <div class="goog-menuitem">我要卖</div>
+        </div>
+    </div>
 
-    KISSY.Config.tag = Math.random();
-</script>
-<!--
+    <script src="../../../build/kissy.js"></script>
+    <script>
+
+        KISSY.Config.tag = Math.random();
+    </script>
+    <!--
 <script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
 -->
 
-<script>
+    <script>
 
-    KISSY.ready(function (S) {
-        KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
-            var $ = S.all;
-            //return;
-            new MenuButton({
-                srcNode:"#exist",
-                prefixCls:"goog-"
-            }).render();
+        KISSY.ready(function (S) {
+            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+                var $ = S.all;
+                //return;
+                new MenuButton({
+                    srcNode:"#exist",
+                    prefixCls:"goog-"
+                }).render();
+            });
         });
-    });
-</script>
+    </script>
+</div>
 </body>
 </html>

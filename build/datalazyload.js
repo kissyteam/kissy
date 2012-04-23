@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -16,7 +16,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         CUSTOM = '-custom',
         MANUAL = 'manual',
         DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize', DURATION = 100,
+        SCROLL = 'scroll',
+        TOUCH_MOVE = "touchmove",
+        RESIZE = 'resize', DURATION = 100,
 
         defaultConfig = {
 
@@ -197,6 +199,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     self._loadItems();
                     if (self._getItemsLength() === 0) {
                         Event.remove(win, SCROLL, loader);
+                        Event.remove(win, TOUCH_MOVE, loader);
                         Event.remove(win, RESIZE, resizeHandler);
                     }
                 },
@@ -205,6 +208,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
+            Event.on(win, TOUCH_MOVE, loader);
             Event.on(win, RESIZE, resizeHandler = function () {
                 self.threshold = self._getThreshold();
                 loader();
@@ -276,7 +280,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             var self = this;
 
             if (self.checkElemInViewport(area)) {
-                self._loadAreaData(area.parentNode, area, self.config.execScript);
+                self._loadAreaData(area, self.config.execScript);
             } else {
                 return true;
             }
@@ -286,7 +290,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData:function (container, area, execScript) {
+        _loadAreaData:function (area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
@@ -437,7 +441,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     default:
                         DOM.query('textarea', container).each(function (area) {
                             if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                                self._loadAreaData(container, area);
+                                self._loadAreaData(area);
                             }
                         });
                 }
@@ -526,6 +530,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-12 monitor touchmove in iphone
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
  *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调

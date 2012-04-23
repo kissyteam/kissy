@@ -24,12 +24,12 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + this.getCls(MENU_FILTER) + "'/>")
+                    filterWrap = $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER) + "'/>")
                         .appendTo(contentEl));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + this.getCls(MENU_FILTER_LABEL) + "'/>")
+                    $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER_LABEL) + "'/>")
                         .appendTo(filterWrap));
             }
             if (!self.get("filterInput")) {
@@ -38,7 +38,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + this.getCls(MENU_CONTENT) + "'/>")
+                    $("<div class='" + this.getCssClassWithPrefix(MENU_CONTENT) + "'/>")
                         .appendTo(contentEl));
             }
         },
@@ -55,17 +55,17 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER))
-                    .one("." + this.getCls(MENU_FILTER_LABEL))
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER))
+                    .one("." + this.getCssClassWithPrefix(MENU_FILTER_LABEL))
             },
             filterWrap:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER));
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER));
             },
             menuContent:function(el) {
-                return el.one("." + this.getCls(MENU_CONTENT));
+                return el.one("." + this.getCssClassWithPrefix(MENU_CONTENT));
             },
             filterInput:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER)).one("input");
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
             }
         }
     });

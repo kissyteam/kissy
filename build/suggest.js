@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 18:40
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview 提示补全组件
@@ -470,6 +470,8 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                 footer = self.footer,
                 mouseDownItem, mouseLeaveFooter;
 
+            // note by yiminghe@gmail.com :
+            // bug:不应该用 mousemove，chrome 键盘选择时，鼠标所在处也会触发 mousemove
             Event.on(content, 'mousemove', function (ev) {
                 if (self._keyTimer) return;
 
@@ -504,6 +506,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                 if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
                     if (UA.ie && UA.ie < 9) {
+                        // #114
                         input.onbeforedeactivate = function () {
                             win.event.returnValue = false;
                             input.onbeforedeactivate = null;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 12:03
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -9,7 +9,7 @@ build time: Mar 23 12:19
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
-    var win=S.Env.host;
+    var win = S.Env.host;
 
     function getMenu(self, init) {
         var m = self.get("menu");
@@ -143,7 +143,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleKeyEventInternal:function (e) {
+                handleKeyEventInternal:function (e) {
                     var self = this,
                         menu = getMenu(self);
 
@@ -159,7 +159,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     }
                     //转发给 menu 处理
                     if (menu && menu.get("visible")) {
-                        var handledByMenu = menu._handleKeydown(e);
+                        var handledByMenu = menu.handleKeydown(e);
                         // esc
                         if (e.keyCode == KeyCodes.ESC) {
                             self.set("collapsed", true);
@@ -181,7 +181,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * handle click or enter key
                  */
-                _performInternal:function () {
+                performActionInternal:function () {
                     var self = this;
                     self.set("collapsed", !self.get("collapsed"));
 
@@ -190,9 +190,9 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleBlur:function (e) {
+                handleBlur:function (e) {
                     var self = this;
-                    MenuButton.superclass._handleBlur.call(self, e);
+                    MenuButton.superclass.handleBlur.call(self, e);
                     // such as : click the document
                     self.set("collapsed", true);
                 },
@@ -251,7 +251,6 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 // 禁用时关闭已显示菜单
                 _uiSetDisabled:function (v) {
                     var self = this;
-                    MenuButton.superclass._uiSetDisabled.apply(self, S.makeArray(arguments));
                     !v && self.set("collapsed", true);
                 },
 
@@ -304,7 +303,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 DefaultRender:MenuButtonRender
             });
 
-    Component.UIStore.setUIByClass("menu-button", {
+    Component.UIStore.setUIConstructorByCssClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });
@@ -336,9 +335,9 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
+    var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
-        '<div class="{prefixCls}inline-block ' +
+        '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
@@ -358,7 +357,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetContent:function(v) {
-            var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
+            var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
         },
@@ -366,7 +365,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetCollapsed:function(v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCls(COLLAPSE_CLS);
+                cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
@@ -397,7 +396,7 @@ KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
             }
         }
     });
-    Component.UIStore.setUIByClass("option", {
+    Component.UIStore.setUIConstructorByCssClass("option", {
         priority:10,
         ui:Option
     });
@@ -588,7 +587,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
         return select;
     };
 
-    Component.UIStore.setUIByClass("select", {
+    Component.UIStore.setUIConstructorByCssClass("select", {
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Select
     });

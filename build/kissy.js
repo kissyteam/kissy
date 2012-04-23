@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 19 17:44
+build time: Apr 23 11:53
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 19 17:44
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120419174447';
+        S.__BUILD_TIME = '20120423115339';
     })();
 
     return S;
@@ -1001,6 +1001,13 @@ build time: Apr 19 17:44
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
+
+
+            ucfirst:function (s) {
+                s += "";
+                return s.charAt(0).toUpperCase() + s.substring(1);
+            },
+
             /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
@@ -3849,7 +3856,7 @@ build time: Apr 19 17:44
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120419174447'
+        tag:'20120423115339'
     }, getBaseInfo()));
 
     /**
@@ -4205,7 +4212,7 @@ build time: Apr 19 17:44
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 29 23:41
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview ua
@@ -4411,7 +4418,7 @@ KISSY.add("ua/css", function (S, UA) {
         v;
     S.each(o, function (key) {
         if (v = UA[key]) {
-            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+            className += " ks-" + key + (parseInt(v) + "");
             className += " ks-" + key;
         }
     });
@@ -4490,7 +4497,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 9 12:04
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview   dom-attr
@@ -4747,7 +4754,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * Get the value of a property for the first element in the set of matched elements.
                  * or
                  * Set one or more properties for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String|Object} name
                  * The name of the property to set.
                  * or
@@ -4788,7 +4795,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Whether one of the matched elements has specified property name
-                 * @param {Array<HTMLElement>|String} selector 元素
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
                  * @param {String} name The name of property to test
                  * @return {boolean}
                  */
@@ -4805,7 +4812,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove a property for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String} name The name of the property to remove.
                  */
                 removeProp:function (selector, name) {
@@ -5754,8 +5761,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
-                // _removeData 不需要？刚克隆出来本来就没
+                // remove event data (but without dom attached listener) which is copied from above DOM.data
                 Event._removeData(dest);
+                // attach src's event data and dom attached listener to dest
                 Event._clone(src, dest);
             }
         }
@@ -7421,7 +7429,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|Document|HTMLElement|window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get:function (selector, context) {
@@ -7878,7 +7886,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay === "none" || oldDisplay === "") {
+            if (oldDisplay == "none" || oldDisplay == "") {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
                     defaultDisplayDetectIframe = doc.createElement("iframe");
@@ -8798,7 +8806,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview responsible for registering event
@@ -11107,7 +11115,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11616,7 +11624,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 9 11:47
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview form data  serialization util
@@ -13481,7 +13489,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview   cookie
@@ -13595,7 +13603,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview attribute management
@@ -13627,7 +13635,7 @@ KISSY.add('base/attribute', function (S, undef) {
      */
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
-        return self.fire(when + capitalFirst(name) + 'Change', {
+        return self.fire(when + S.ucfirst(name) + 'Change', {
             attrName:attrName,
             subAttrName:subAttrName,
             prevVal:prevVal,
@@ -14103,10 +14111,6 @@ KISSY.add('base/attribute', function (S, undef) {
             }
         });
 
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
-
     function validate(self, name, value, all) {
         var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
             e,
@@ -14220,7 +14224,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:18
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview anim
@@ -15580,7 +15584,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 19:33
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview   anim-node-plugin

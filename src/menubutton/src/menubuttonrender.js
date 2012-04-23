@@ -4,9 +4,9 @@
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
+    var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
-        '<div class="{prefixCls}inline-block ' +
+        '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
@@ -26,7 +26,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetContent:function(v) {
-            var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
+            var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
         },
@@ -34,7 +34,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetCollapsed:function(v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCls(COLLAPSE_CLS);
+                cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 

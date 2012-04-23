@@ -39,7 +39,7 @@ KISSY.add("component/uistore", function (S) {
     }
 
 
-    function getCls(cls) {
+    function getCssClassWithPrefix(cls) {
         var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
             if (cs[i]) {
@@ -54,7 +54,7 @@ KISSY.add("component/uistore", function (S) {
      * @memberOf Component
      */
     return {
-        getCls:getCls,
+        getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.

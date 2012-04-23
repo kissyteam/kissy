@@ -1,5 +1,5 @@
 /**
- * @fileOverview Model and Control for button
+ * @fileOverview Button control for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
@@ -9,6 +9,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
+     * @extends UIBase.ContentBox
      */
     var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
         /**@lends Button.prototype */
@@ -31,24 +32,37 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
                 return e.keyCode == KeyCodes.SPACE;
             },
 
-            /* button 的默认行为就是触发 click*/
-            performActionInternal:function () {
+            performActionInternal:function (ev) {
                 var self = this;
+                // button 的默认行为就是触发 click
                 self.fire("click");
             }
         }, {
-            ATTRS:{
+            ATTRS:/**@lends Button.prototype */
+            {
                 /**
-                 * @inheritedDoc
-                 * disabled:{}
+                 * Value associated with button component.
                  */
                 value:{},
+                /**
+                 *Aria-describedby attribute.
+                 * @type String
+                 */
                 describedby:{
                     view:true
                 },
+                /**
+                 * Tooltip for button.
+                 * @type String
+                 */
                 tooltip:{
                     view:true
                 },
+                /**
+                 * Add collapse-right/left css class to root element.
+                 * enum { "left","right" }
+                 * @type String
+                 */
                 collapseSide:{
                     view:true
                 }
@@ -56,7 +70,6 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
         });
 
     Button.DefaultRender = CustomRender;
-
 
     Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview Model and Control for button
@@ -14,21 +14,22 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
+     * @extends UIBase.ContentBox
      */
     var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 
             bindUI:function () {
-                this.get("el").on("keyup", this._handleKeyEventInternal, this);
+                this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
 
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
                 if (e.keyCode == KeyCodes.ENTER &&
                     e.type == "keydown" ||
                     e.keyCode == KeyCodes.SPACE &&
                         e.type == "keyup") {
-                    return this._performInternal(e);
+                    return this.performActionInternal(e);
                 }
                 // Return true for space keypress (even though the event is handled on keyup)
                 // as preventDefault needs to be called up keypress to take effect in IE and
@@ -37,16 +38,12 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
             },
 
             /* button 的默认行为就是触发 click*/
-            _performInternal:function () {
+            performActionInternal:function () {
                 var self = this;
                 self.fire("click");
             }
         }, {
             ATTRS:{
-                /**
-                 * @inheritedDoc
-                 * disabled:{}
-                 */
                 value:{},
                 describedby:{
                     view:true
@@ -63,7 +60,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     Button.DefaultRender = CustomRender;
 
 
-    Component.UIStore.setUIByClass("button", {
+    Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Button
     });
@@ -86,24 +83,25 @@ KISSY.add("button", function(S, Button, Render, Split) {
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase, Component) {
+KISSY.add("button/buttonrender", function (S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return UIBase.create(Component.Render, {
-        createDom:function() {
+        createDom:function () {
             //set wai-aria role
-            this.get("el").attr("role", "button")
-                .addClass(this.getCls("inline-block button"));
+            this.get("el")
+                .attr("role", "button")
+                .addClass("ks-inline-block");
         },
-        _uiSetTooltip:function(title) {
+        _uiSetTooltip:function (title) {
             this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function(describedby) {
+        _uiSetDescribedby:function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
         },
 
-        _uiSetCollapseSide:function(side) {
+        _uiSetCollapseSide:function (side) {
             var self = this,
-                cls = self.getCls("button-collapse-"),
+                cls = self.getCssClassWithPrefix("button-collapse-"),
                 el = self.get("el");
             el.removeClass(cls + "left " + cls + "right");
             if (side) {
@@ -112,24 +110,13 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            /**
-             * @inheritedDoc
-             * disabled:{}
-             */
-
-            /**
-             * @inheritedDoc
-             * prefixCls:{}
-             */
-
-                // aria-describledby support
             describedby:{},
             tooltip:{},
             collapseSide:{}
         }
     });
 }, {
-    requires:['uibase','component']
+    requires:['uibase', 'component']
 });/**
  * @fileOverview view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
@@ -154,10 +141,10 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                     id = S.guid('ks-button-labelby');
                 el.attr("aria-labelledby", id);
                 //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(self.getCls(CONTENT_CLS));
+                contentEl.addClass(self.getCssClassWithPrefix(CONTENT_CLS));
                 var elChildren = S.makeArray(contentEl[0].childNodes),
                     innerEl = new Node("<div id='" + id + "' " +
-                        "class='" + self.getCls(INNER_CLS) + "'/>")
+                        "class='" + self.getCssClassWithPrefix(INNER_CLS) + "'/>")
                         .appendTo(contentEl);
                 // content 由 contentboxrender 处理
                 for (var i = 0; i < elChildren.length; i++) {
@@ -188,16 +175,16 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
  * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/split", function(S) {
+KISSY.add("button/split", function (S) {
 
     var handles = {
-        content:function(e) {
-            var first = this,t = e.target;
+        content:function (e) {
+            var first = this, t = e.target;
             first.__set("content", t.get("content"));
             first.__set("value", t.get("value"));
         },
-        value:function(e) {
-            var first = this,t = e.target;
+        value:function (e) {
+            var first = this, t = e.target;
             first.__set("value", t.get("value"));
         }
     };
@@ -222,7 +209,7 @@ KISSY.add("button/split", function(S) {
     };
 
     S.extend(Split, S.Base, {
-        render:function() {
+        render:function () {
             var self = this,
                 eventType = self.get("eventType"),
                 eventHandler = handles[self.get("eventHandler")],

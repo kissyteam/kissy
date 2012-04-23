@@ -14,7 +14,7 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui));
+                child = element.one("." + self.getCssClassWithPrefix(ui));
             // 可以装饰?
             if (child) {
                 var UI = self.findUIConstructorByNode(child);

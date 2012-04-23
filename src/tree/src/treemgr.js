@@ -88,7 +88,6 @@ KISSY.add("tree/treemgr", function(S, Event) {
 
         _uiSetFocused:function(v) {
             var self = this;
-            self.constructor.superclass._uiSetFocused.call(self, v);
             // 得到焦点时没有选择节点
             // 默认选择自己
             if (v && !self.get("selectedItem")) {

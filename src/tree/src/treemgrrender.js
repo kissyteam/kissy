@@ -19,7 +19,7 @@ KISSY.add("tree/treemgrrender", function(S) {
         __renderUI:function() {
             var self=this;
             self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
-            self.get("rowEl").addClass(self.getCls("tree-root-row"));
+            self.get("rowEl").addClass(self.getCssClassWithPrefix("tree-root-row"));
         },
 
         _uiSetShowRootNode:function(v) {
@@ -27,7 +27,7 @@ KISSY.add("tree/treemgrrender", function(S) {
         },
 
         _uiSetFocused:function(v) {
-            this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
+            this.get("el")[v ? "addClass" : "removeClass"](this.getCssClassWithPrefix(FOCUSED_CLS));
         }
     });
 

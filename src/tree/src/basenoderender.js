@@ -10,7 +10,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
 
-        INLINE_BLOCK = "inline-block",
+        INLINE_BLOCK = " ks-inline-block",
         ITEM_CLS = "tree-item",
 
         FOLDER_ICON_EXPANED = "tree-expanded-folder-icon",
@@ -40,10 +40,10 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
                 iconEl = self.get("iconEl"),
                 expandIconEl = self.get("expandIconEl"),
                 childrenEl = self.get("childrenEl"),
-                expand_cls = [INLINE_BLOCK, ICON_CLS, EXPAND_ICON_CLS, ""].join(" "),
-                icon_cls = self.getCls([INLINE_BLOCK, ICON_CLS, FILE_CLS, ""].join(" ")),
-                folder_cls = self.getCls(
-                    [INLINE_BLOCK, ICON_CLS, expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED, ""].join(" ")),
+                expand_cls = [ICON_CLS, EXPAND_ICON_CLS, ""].join(" "),
+                icon_cls = self.getCssClassWithPrefix([ICON_CLS, FILE_CLS, ""].join(" ")) + INLINE_BLOCK,
+                folder_cls = self.getCssClassWithPrefix(
+                    [ ICON_CLS, expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED, ""].join(" ")) + INLINE_BLOCK,
                 last = !parent ||
                     parent.get("children")[parent.get("children").length - 1].get("view") == self;
             // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
@@ -54,19 +54,19 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
                 } else {
                     expand_cls += FOLDER_COLLAPSED;
                 }
-                expandIconEl.attr("class", self.getCls(S.substitute(expand_cls, {
+                expandIconEl.attr("class", self.getCssClassWithPrefix(S.substitute(expand_cls, {
                     "t":last ? "l" : "t"
-                })));
+                })) + INLINE_BLOCK);
             } else
             //if (isLeaf !== false && (isLeaf ==true || !children.length))
             {
                 iconEl.attr("class", icon_cls);
                 expandIconEl.attr("class",
-                    self.getCls(S.substitute((expand_cls + FILE_EXPAND), {
+                    self.getCssClassWithPrefix(S.substitute((expand_cls + FILE_EXPAND), {
                         "t":last ? "l" : "t"
-                    })));
+                    })) + INLINE_BLOCK);
             }
-            childrenEl && childrenEl.attr("class", self.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
+            childrenEl && childrenEl.attr("class", self.getCssClassWithPrefix(last ? CHILDREN_CLS_L : CHILDREN_CLS));
 
         },
 
@@ -78,7 +78,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
                 labelEl = self.get("labelEl");
 
 
-            rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
+            rowEl = $("<div class='" + self.getCssClassWithPrefix(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
             self.__set("rowEl", rowEl);
 
@@ -88,7 +88,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
                 .appendTo(rowEl);
 
             if (!labelEl) {
-                labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
+                labelEl = $("<span id='" + id + "' class='" + self.getCssClassWithPrefix(LABEL_CLS) + "'/>");
                 self.__set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
@@ -118,7 +118,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
 
         _uiSetSelected:function (v) {
             var self = this,
-                classes = self.getComponentCssClass("-selected"),
+                classes = self.getComponentCssClassWithState("-selected"),
                 // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
                 // .selected .label {background:xx;}
                 rowEl = self.get("rowEl");
@@ -182,20 +182,20 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
 
         HTML_PARSER:{
             childrenEl:function (el) {
-                return el.children("." + this.getCls(CHILDREN_CLS));
+                return el.children("." + this.getCssClassWithPrefix(CHILDREN_CLS));
             },
             labelEl:function (el) {
-                return el.children("." + this.getCls(LABEL_CLS));
+                return el.children("." + this.getCssClassWithPrefix(LABEL_CLS));
             },
             content:function (el) {
-                return el.children("." + this.getCls(LABEL_CLS)).html();
+                return el.children("." + this.getCssClassWithPrefix(LABEL_CLS)).html();
             },
             isLeaf:function (el) {
                 var self = this;
-                if (el.hasClass(self.getCls(LEAF_CLS))) {
+                if (el.hasClass(self.getCssClassWithPrefix(LEAF_CLS))) {
                     return true;
                 }
-                if (el.hasClass(self.getCls(NOT_LEAF_CLS))) {
+                if (el.hasClass(self.getCssClassWithPrefix(NOT_LEAF_CLS))) {
                     return false;
                 }
             }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 9 12:04
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview   dom-attr
@@ -258,7 +258,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * Get the value of a property for the first element in the set of matched elements.
                  * or
                  * Set one or more properties for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String|Object} name
                  * The name of the property to set.
                  * or
@@ -299,7 +299,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Whether one of the matched elements has specified property name
-                 * @param {Array<HTMLElement>|String} selector 元素
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
                  * @param {String} name The name of property to test
                  * @return {boolean}
                  */
@@ -316,7 +316,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove a property for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String} name The name of the property to remove.
                  */
                 removeProp:function (selector, name) {
@@ -1265,8 +1265,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
-                // _removeData 不需要？刚克隆出来本来就没
+                // remove event data (but without dom attached listener) which is copied from above DOM.data
                 Event._removeData(dest);
+                // attach src's event data and dom attached listener to dest
                 Event._clone(src, dest);
             }
         }
@@ -2932,7 +2933,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|Document|HTMLElement|window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get:function (selector, context) {
@@ -3389,7 +3390,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay === "none" || oldDisplay === "") {
+            if (oldDisplay == "none" || oldDisplay == "") {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
                     defaultDisplayDetectIframe = doc.createElement("iframe");

@@ -9,7 +9,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = self.getCls(CHECK_CLS),
+            cls = self.getCssClassWithPrefix(CHECK_CLS),
             checkEl = el.one("." + cls);
         if (!checkEl) {
             checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
@@ -24,14 +24,14 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         _uiSetChecked:function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClass("-checked");
+                cls = self.getComponentCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _uiSetSelected:function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClass("-selected");
+                cls = self.getComponentCssClassWithState("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
@@ -54,7 +54,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         ATTRS:{
             contentElCls:{
                 valueFn:function () {
-                    return this.getCls(CONTENT_CLS);
+                    return this.getCssClassWithPrefix(CONTENT_CLS);
                 }
             },
             elAttrs:{

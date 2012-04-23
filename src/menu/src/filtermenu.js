@@ -114,7 +114,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 var children = self.get("children"),
                     strExp = str && new RegExp(regExpEscape(str), "ig"),
                     // 匹配项样式类
-                    hit = this.getCls(HIT_CLS);
+                    hit = this.getCssClassWithPrefix(HIT_CLS);
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -146,7 +146,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
             decorateInternal:function (el) {
                 var self = this;
                 self.set("el", el);
-                var menuContent = el.one("." + self.getCls("menu-content"));
+                var menuContent = el.one("." + self.getCssClassWithPrefix("menu-content"));
                 self.decorateChildren(menuContent);
             },
 

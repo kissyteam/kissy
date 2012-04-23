@@ -332,7 +332,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
             HTML_PARSER:{
                 expanded:function(el) {
-                    var children = el.one("." + this.getCls("tree-children"));
+                    var children = el.one("." + this.getCssClassWithPrefix("tree-children"));
                     if (!children) {
                         return false;
                     }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview responsible for registering event

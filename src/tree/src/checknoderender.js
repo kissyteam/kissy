@@ -2,27 +2,26 @@
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
-        INLINE_BLOCK = "inline-block";
+        INLINE_BLOCK = " ks-inline-block";
     return UIBase.create(BaseNodeRender, {
 
-        createDom:function() {
+        createDom:function () {
             var self = this;
             var expandIconEl = self.get("expandIconEl"),
-                checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
-                    + ICON_CLS) + "'/>").insertAfter(expandIconEl);
+                checkEl = $("<div class='" + self.getCssClassWithPrefix(ICON_CLS) + INLINE_BLOCK + "'/>").insertAfter(expandIconEl);
             self.__set("checkEl", checkEl);
         },
 
-        _uiSetCheckState:function(s) {
+        _uiSetCheckState:function (s) {
             var self = this;
             var checkEl = self.get("checkEl");
-            checkEl.removeClass(self.getCls(ALL_STATES_CLS))
-                .addClass(self.getCls(CHECK_CLS + "ed" + s));
+            checkEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS + "ed" + s));
         }
 
     }, {
@@ -34,5 +33,5 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
         CHECK_CLS:CHECK_CLS
     });
 }, {
-    requires:['node','uibase','component','./basenoderender']
+    requires:['node', 'uibase', 'component', './basenoderender']
 });

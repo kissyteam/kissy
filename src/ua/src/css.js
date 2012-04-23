@@ -21,7 +21,7 @@ KISSY.add("ua/css", function (S, UA) {
         v;
     S.each(o, function (key) {
         if (v = UA[key]) {
-            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+            className += " ks-" + key + (parseInt(v) + "");
             className += " ks-" + key;
         }
     });

@@ -26,7 +26,7 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
         performActionInternal:function (e) {
             var target = $(e.target);
             // 点击了删除
-            if (target.hasClass(this.getCls(DEL_CLS))) {
+            if (target.hasClass(this.getCssClassWithPrefix(DEL_CLS))) {
                 del(this);
                 return true;
             }

@@ -10,20 +10,6 @@
  *
  * @author attila.c2cle.com (Attila Bodis)
  */
-.c2c-inline-block {
-    position: relative;
-    display: -moz-inline-box; /* Ignored by FF3 and later. */
-    display: inline-block;
-}
-
-* html .c2c-inline-block {
-    display: inline;
-}
-
-*:first-child+html .c2c-inline-block {
-    display: inline;
-}
-
 /* custom button begin */
 .c2c-button {
     margin: 2px;

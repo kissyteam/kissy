@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
+KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -123,7 +123,7 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
              * @function
              * @return {String} class name with prefixCls
              */
-            getCls:UIStore.getCls,
+            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
 
             /**
              * From UIBase, Initialize this component.

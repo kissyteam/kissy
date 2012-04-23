@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 19 17:44
+build time: Apr 23 11:53
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 19 17:44
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120419174447';
+        S.__BUILD_TIME = '20120423115339';
     })();
 
     return S;
@@ -1001,6 +1001,13 @@ build time: Apr 19 17:44
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
+
+
+            ucfirst:function (s) {
+                s += "";
+                return s.charAt(0).toUpperCase() + s.substring(1);
+            },
+
             /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
@@ -3849,7 +3856,7 @@ build time: Apr 19 17:44
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120419174447'
+        tag:'20120423115339'
     }, getBaseInfo()));
 
     /**

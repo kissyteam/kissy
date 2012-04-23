@@ -94,10 +94,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var menu = getMenu(this);
                 menu && menu.hide();
             },
-            /**
-             * @inheritDoc
-             * Sets a timer to show the submenu
-             **/
+
             handleMouseEnter:function (e) {
                 var self = this;
                 if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
@@ -233,7 +230,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             /**
-             * @inheritDoc
+             * @protected
              * Dismisses the submenu on a delay, with the result that the user needs less
              * accuracy when moving to submenus.
              **/

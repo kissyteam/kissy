@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 13 15:15
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview UIBase.Align
@@ -441,11 +441,8 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
+        ucfirst = S.ucfirst,
         noop = S.noop;
-
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 
     /**
      * UIBase for class-based component
@@ -689,11 +686,11 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
                 for (attr in attrs) {
                     if (attrs.hasOwnProperty(attr)) {
-                        m = UI_SET + capitalFirst(attr);
+                        m = UI_SET + ucfirst(attr);
                         if (self[m]) {
                             // 自动绑定事件到对应函数
                             (function (attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function (ev) {
+                                self.on('after' + ucfirst(attr) + 'Change', function (ev) {
                                     self[m](ev.newVal, ev);
                                 });
                             })(attr, m);
@@ -718,7 +715,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
                     attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
-                        var m = UI_SET + capitalFirst(a);
+                        var m = UI_SET + ucfirst(a);
                         //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
                         if ((f = self[m])
                             // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置

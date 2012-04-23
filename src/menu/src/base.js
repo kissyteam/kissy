@@ -13,6 +13,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @name Menu
      * @constructor
      * @extends Component.Container
+     * @extends UIBase.ContentBox
      */
     var Menu = UIBase.create(Component.Container,
         // ! note : 2012-03-31
@@ -61,11 +62,13 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
             },
 
             /**
-             * Attempts to handle a keyboard event; returns true if the event was handled,
-             * false otherwise.  If the container is enabled, and a child is highlighted,
-             * calls the child control's {@code handleKeyEvent} method to give the control
+             * Attempts to handle a keyboard event;
+             * returns true if the event was handled,
+             * false otherwise.
+             * If the container is enabled, and a child is highlighted,
+             * calls the child controller's {@code handleKeydown} method to give the control
              * a chance to handle the event first.
-             * @param  e Key event to handle.
+             * @param {Event.Object} e Key event to handle.
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
              */
@@ -142,6 +145,11 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 self.on("hide", onMenuHide, self);
             },
 
+            /**
+             * Whether this menu contains specified html element.
+             * @param {Node} element Html Element to be tested.
+             * @return {Boolean}
+             */
             containsElement:function (element) {
                 var self = this;
 
@@ -167,27 +175,20 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
                 return false;
             }
-
-            /*
-             hideAll :function(){
-             // 当前高亮项设置为 null，则全部子菜单都隐藏咯
-             this.set("highlightedItem",null);
-             }
-             */
         }, {
-            ATTRS:{
-                // 普通菜单可聚焦
-                // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-
+            ATTRS:/** @lends Menu.prototype*/
+            {
                 visibleMode:{
                     value:"display"
                 },
                 /**
-                 * 当前高亮的儿子菜单项
+                 * Current highlighted child menu item.
+                 * @type Menu.Item
                  */
                 highlightedItem:{},
                 /**
-                 * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
+                 * Current active menu item. Maybe a descendant but not a child of current menu.
+                 * @type Menu.Item
                  */
                 activeItem:{
                     view:true
@@ -208,6 +209,9 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 });
 
 /**
+ * 普通菜单可聚焦
+ * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+ *
  * TODO
  *  - 去除 activeItem
  **/

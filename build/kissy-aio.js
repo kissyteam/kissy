@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 19 17:44
+build time: Apr 23 11:53
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 19 17:44
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120419174447';
+        S.__BUILD_TIME = '20120423115339';
     })();
 
     return S;
@@ -1001,6 +1001,13 @@ build time: Apr 19 17:44
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
+
+
+            ucfirst:function (s) {
+                s += "";
+                return s.charAt(0).toUpperCase() + s.substring(1);
+            },
+
             /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
@@ -3849,7 +3856,7 @@ build time: Apr 19 17:44
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120419174447'
+        tag:'20120423115339'
     }, getBaseInfo()));
 
     /**
@@ -4205,7 +4212,7 @@ build time: Apr 19 17:44
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 29 23:41
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview ua
@@ -4411,7 +4418,7 @@ KISSY.add("ua/css", function (S, UA) {
         v;
     S.each(o, function (key) {
         if (v = UA[key]) {
-            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+            className += " ks-" + key + (parseInt(v) + "");
             className += " ks-" + key;
         }
     });
@@ -4490,7 +4497,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 9 12:04
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview   dom-attr
@@ -4747,7 +4754,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * Get the value of a property for the first element in the set of matched elements.
                  * or
                  * Set one or more properties for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String|Object} name
                  * The name of the property to set.
                  * or
@@ -4788,7 +4795,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Whether one of the matched elements has specified property name
-                 * @param {Array<HTMLElement>|String} selector 元素
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
                  * @param {String} name The name of property to test
                  * @return {boolean}
                  */
@@ -4805,7 +4812,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove a property for the set of matched elements.
-                 * @param {Array<HTMLElement>|String} selector matched elements
+                 * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
                  * @param {String} name The name of the property to remove.
                  */
                 removeProp:function (selector, name) {
@@ -5754,8 +5761,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
-                // _removeData 不需要？刚克隆出来本来就没
+                // remove event data (but without dom attached listener) which is copied from above DOM.data
                 Event._removeData(dest);
+                // attach src's event data and dom attached listener to dest
                 Event._clone(src, dest);
             }
         }
@@ -7421,7 +7429,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|Document|HTMLElement|window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get:function (selector, context) {
@@ -7878,7 +7886,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay === "none" || oldDisplay === "") {
+            if (oldDisplay == "none" || oldDisplay == "") {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
                     defaultDisplayDetectIframe = doc.createElement("iframe");
@@ -8798,7 +8806,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview responsible for registering event
@@ -11107,7 +11115,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11616,7 +11624,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 9 11:47
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview form data  serialization util
@@ -13481,7 +13489,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview   cookie
@@ -13595,7 +13603,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview attribute management
@@ -13627,7 +13635,7 @@ KISSY.add('base/attribute', function (S, undef) {
      */
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
-        return self.fire(when + capitalFirst(name) + 'Change', {
+        return self.fire(when + S.ucfirst(name) + 'Change', {
             attrName:attrName,
             subAttrName:subAttrName,
             prevVal:prevVal,
@@ -14103,10 +14111,6 @@ KISSY.add('base/attribute', function (S, undef) {
             }
         });
 
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
-
     function validate(self, name, value, all) {
         var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
             e,
@@ -14220,7 +14224,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:18
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview anim
@@ -15580,7 +15584,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 5 19:33
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -16143,7 +16147,7 @@ KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -17563,7 +17567,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -17578,7 +17582,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         CUSTOM = '-custom',
         MANUAL = 'manual',
         DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize', DURATION = 100,
+        SCROLL = 'scroll',
+        TOUCH_MOVE = "touchmove",
+        RESIZE = 'resize', DURATION = 100,
 
         defaultConfig = {
 
@@ -17759,6 +17765,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     self._loadItems();
                     if (self._getItemsLength() === 0) {
                         Event.remove(win, SCROLL, loader);
+                        Event.remove(win, TOUCH_MOVE, loader);
                         Event.remove(win, RESIZE, resizeHandler);
                     }
                 },
@@ -17767,6 +17774,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
+            Event.on(win, TOUCH_MOVE, loader);
             Event.on(win, RESIZE, resizeHandler = function () {
                 self.threshold = self._getThreshold();
                 loader();
@@ -17838,7 +17846,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             var self = this;
 
             if (self.checkElemInViewport(area)) {
-                self._loadAreaData(area.parentNode, area, self.config.execScript);
+                self._loadAreaData(area, self.config.execScript);
             } else {
                 return true;
             }
@@ -17848,7 +17856,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData:function (container, area, execScript) {
+        _loadAreaData:function (area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
@@ -17999,7 +18007,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                     default:
                         DOM.query('textarea', container).each(function (area) {
                             if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                                self._loadAreaData(container, area);
+                                self._loadAreaData(area);
                             }
                         });
                 }
@@ -18088,6 +18096,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-12 monitor touchmove in iphone
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
  *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
@@ -18098,7 +18107,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -18329,7 +18338,7 @@ KISSY.add('template', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -18849,7 +18858,7 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:52
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -19449,7 +19458,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             handler,
             node;
@@ -19497,7 +19506,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
             _init:function () {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -19537,7 +19546,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
-                    _handleMouseDown,
+                    handleMouseDown,
                     self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
@@ -19988,7 +19997,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
      * 通知全局管理器开始作用
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             t = ev.target;
 
@@ -20042,7 +20051,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -20261,7 +20270,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             destroy:function () {
                 var self = this,
                     node = self.get('dragNode');
-                node.detach('mousedown', _handleMouseDown, self)
+                node.detach('mousedown', handleMouseDown, self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
             }
@@ -21124,7 +21133,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview resizable support for kissy
@@ -21318,7 +21327,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 13 15:15
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview UIBase.Align
@@ -21758,11 +21767,8 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
+        ucfirst = S.ucfirst,
         noop = S.noop;
-
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 
     /**
      * UIBase for class-based component
@@ -22006,11 +22012,11 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
                 for (attr in attrs) {
                     if (attrs.hasOwnProperty(attr)) {
-                        m = UI_SET + capitalFirst(attr);
+                        m = UI_SET + ucfirst(attr);
                         if (self[m]) {
                             // 自动绑定事件到对应函数
                             (function (attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function (ev) {
+                                self.on('after' + ucfirst(attr) + 'Change', function (ev) {
                                     self[m](ev.newVal, ev);
                                 });
                             })(attr, m);
@@ -22035,7 +22041,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
                     attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
-                        var m = UI_SET + capitalFirst(a);
+                        var m = UI_SET + ucfirst(a);
                         //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
                         if ((f = self[m])
                             // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
@@ -23835,14 +23841,83 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 13 14:49
+build time: Apr 23 11:52
 */
 /**
- * @fileOverview model and control base class for kissy
+ * @fileOverview mvc based component framework for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+    /**
+     * @name Component
+     * @namespace
+     */
+    var Component = {
+        Controller:Controller,
+        Render:Render,
+        Container:Container,
+        UIStore:UIStore,
+        DelegateChildren:DelegateChildren,
+        DecorateChild:DecorateChild,
+        "DecorateChildren":DecorateChildren
+    };
+    Component.Controller = Controller;
+    return Component;
+}, {
+    requires:['component/controller',
+        'component/render',
+        'component/container',
+        'component/uistore',
+        'component/delegateChildren',
+        'component/decorateChildren',
+        'component/decorateChild']
+});/**
+ * @fileOverview container can delegate event for its children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
+    /**
+     * Container class. extend it to acquire the abilities of
+     * delegating events and
+     * decorate from pre-rendered dom
+     * for child components.
+     * @name Container
+     * @constructor
+     * @extends Component.Controller
+     * @memberOf Component
+     */
+    return UIBase.create(Controller, [DelegateChildren, DecorateChildren],
+        /**
+         * @lends Component.Container
+         */
+        {
+
+            /**
+             * Generate child component from root element.
+             * @name decorateInternal
+             * @protected
+             * @function
+             * @param {Node} element Root element of current component.
+             */
+
+
+            /**
+             * Get child component which contains current event target node.
+             * @name getOwnerControl
+             * @protected
+             * @function
+             * @param {HTMLElement} target Current event target node.
+             */
+        });
+
+}, {
+    requires:['uibase', './controller', './uistore', './delegateChildren', './decorateChildren']
+});/**
+ * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
+KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -23860,7 +23935,6 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             return v === undefined ? view && view.get(attrName) : v;
         };
     }
-
 
     function initChild(self, c, elBefore) {
         // If this (parent) component doesn't have a DOM yet, call createDom now
@@ -23889,15 +23963,16 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
     }
 
     /**
-     * 不使用 valueFn
+     * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
      */
     function getDefaultView() {
         // 逐层找默认渲染器
         var self = this,
             c = self.constructor,
+            attrs,
+            cfg = {},
             DefaultRender;
-
         while (c && !DefaultRender) {
             DefaultRender = c['DefaultRender'];
             c = c.superclass && c.superclass.constructor;
@@ -23906,8 +23981,7 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            var attrs = self['__attrs'] || {},
-                cfg = {};
+            attrs = self['__attrs'] || {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName], v;
@@ -23925,28 +23999,28 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
         return 0;
     }
 
-    function getClsByHierarchy(self) {
-        if (self.__componentClasses) {
-            return self.__componentClasses;
-        }
+    function setViewCssClassByHierarchy(self, view) {
         var constructor = self.constructor, re = [];
         while (constructor && constructor != Controller) {
-            var cls = UIStore.getClsByUI(constructor);
+            var cls = UIStore.getCssClassByUIConstructor(constructor);
             if (cls) {
                 re.push(cls);
             }
             constructor = constructor.superclass && constructor.superclass.constructor;
         }
-        return self.__componentClasses = re.join(" ");
+        return view.__componentClasses = re.join(" ");
     }
 
-
-    function capitalFirst(s) {
-        return s.charAt(0).toUpperCase() + s.substring(1);
+    function isMouseEventWithinElement(e, elem) {
+        var relatedTarget = e.relatedTarget;
+        // 在里面或等于自身都不算 mouseenter/leave
+        return relatedTarget &&
+            ( relatedTarget === elem[0] ||
+                elem.contains(relatedTarget) );
     }
 
     /**
-     * model and control for component
+     * Base Controller class for KISSY Component.
      * @class
      * @memberOf Component
      * @name Controller
@@ -23954,13 +24028,23 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
      * @extends UIBase.Box
      */
     var Controller = UIBase.create([UIBase.Box],
-        /** @lends Component.Controller.prototype */
+        /** @lends Component.Controller# */
         {
 
-            getCls:UIStore.getCls,
+            /**
+             * Get full class name for current component
+             * @param classes {String} class names without prefixCls. Separated by space.
+             * @function
+             * @return {String} class name with prefixCls
+             */
+            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
 
+            /**
+             * From UIBase, Initialize this component.
+             * @override
+             * @protected
+             */
             initializer:function () {
-
                 // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
                     attrs = self['__attrs'] || {};
@@ -23970,7 +24054,7 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                         if (attrCfg.view) {
                             // setter 不应该有实际操作，仅用于正规化比较好
                             // attrCfg.setter = wrapperViewSetter(attrName);
-                            self.on("after" + capitalFirst(attrName) + "Change",
+                            self.on("after" + S.ucfirst(attrName) + "Change",
                                 wrapperViewSetter(attrName));
                             // 逻辑层读值直接从 view 层读
                             // 那么如果存在默认值也设置在 view 层
@@ -23982,8 +24066,9 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
-             * control 层的渲染 ui 就是 render view
-             * finally，不能被 override
+             * From UIBase. Call view object to render ui elements.
+             * @protected
+             * @override
              */
             renderUI:function () {
                 var self = this, i, child;
@@ -23999,22 +24084,57 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
-             * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
+             * From UIBase. Constructor(or get) view object to create ui elements.
+             * @protected
+             * @override
              */
             createDom:function () {
-                var self = this;
-                var view = self.get("view") || getDefaultView.call(self);
+                var self = this,
+                    view = self.get("view") || getDefaultView.call(self);
+                setViewCssClassByHierarchy(self, view);
                 view.create();
-                view._renderCls(getClsByHierarchy(self));
-                if (!self.get("allowTextSelection_")) {
-                    view.get("el").unselectable();
+                if (!self.get("focusable")) {
+                    view.get("el").unselectable(undefined);
                 }
                 self.__set("view", view);
             },
 
+            _uiSetHandleMouseEvents:function (v) {
+                var self = this,
+                    el = self.get("el");
+                if (v) {
+                    el.on("mouseenter", self.handleMouseEnter, self);
+                    el.on("mouseleave", self.handleMouseLeave, self);
+                    el.on("mousedown", self.handleMouseDown, self);
+                    el.on("mouseup", self.handleMouseUp, self);
+                    el.on("dblclick", self.handleDblClick, self);
+                } else {
+                    el.detach("mouseenter", self.handleMouseEnter, self);
+                    el.detach("mouseleave", self.handleMouseLeave, self);
+                    el.detach("mousedown", self.handleMouseDown, self);
+                    el.detach("mouseup", self.handleMouseUp, self);
+                    el.detach("dblclick", self.handleDblClick, self);
+                }
+            },
+
+            _uiSetFocusable:function (v) {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (v) {
+                    el.on("focus", self.handleFocus, self);
+                    el.on("blur", self.handleBlur, self);
+                    el.on("keydown", self.handleKeydown, self);
+                } else {
+                    el.detach("focus", self.handleFocus, self);
+                    el.detach("blur", self.handleBlur, self);
+                    el.detach("keydown", self.handleKeydown, self);
+                }
+            },
+
             /**
-             * Returns the DOM element into which child components are to be rendered,
-             or null if the container itself hasn't been rendered yet.  Overrides
+             * Call view object to returns the DOM element into which child components are to be rendered,
+             * or null if the container itself hasn't been rendered yet.
+             * @protected
              */
             getContentElement:function () {
                 var view = this.get('view');
@@ -24022,9 +24142,20 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
-             *
-             * @param c  children to be added
-             * @param {int=} index  position to be inserted
+             * 焦点所在元素即键盘事件处理元素
+             */
+            getKeyEventTarget:function () {
+                var view = this.get('view');
+                return view && view.getKeyEventTarget();
+            },
+
+            /**
+             * Add the specified component as a child of current component
+             * at the given 0-based index.
+             * @param {Component.Controller} c  Child component to be added
+             * @param {Number} [index]  0-based index at which
+             * the new child component is to be inserted;
+             * If not specified , the new child component will be inserted at last position.
              */
             addChild:function (c, index) {
                 var self = this,
@@ -24040,9 +24171,17 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
-             * @public
-             * @param c
-             * @param destroy
+             * Removed the given child from this component,and returns it.
+             *
+             * If destroy is true, calls {@link UIBase.#destroy} on the removed child component,
+             * and subsequently detaches the child's DOM from the document.
+             * Otherwise it is the caller's responsibility to
+             * clean up the child component's DOM.
+             *
+             * @param {Component.Controller} c The child component to be removed.
+             * @param {Boolean} [destroy=false] If true,
+             * calls {@link UIBase.#destroy} on the removed child component.
+             * @return {Component.Controller} The removed component.
              */
             removeChild:function (c, destroy) {
                 var children = this.get("children"),
@@ -24053,8 +24192,15 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                 if (destroy) {
                     c.destroy();
                 }
+                return c;
             },
 
+            /**
+             * Removes every child component attached to current component.
+             * @see Component.Controller#removeChild
+             * @param {Boolean} [destroy] If true,
+             * calls {@link UIBase.#destroy} on the removed child component.
+             */
             removeChildren:function (destroy) {
                 var self = this,
                     i,
@@ -24065,231 +24211,195 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                 self.__set("children", []);
             },
 
+            /**
+             * Returns the child at the given index, or null if the index is out of bounds.
+             * @param {Number} index 0-based index.
+             * @return {Component.Controller} The child at the given index; null if none.
+             */
             getChildAt:function (index) {
                 var children = this.get("children");
-                return children[index];
+                return children[index] || null;
             },
 
-            _uiSetHandleMouseEvents:function (v) {
-                var self = this,
-                    el = self.get("el");
-                if (v) {
-                    el.on("mouseenter", self._handleMouseEnter, self);
-                    el.on("mouseleave", self._handleMouseLeave, self);
-                    el.on("mousedown", self._handleMouseDown, self);
-                    el.on("mouseup", self._handleMouseUp, self);
-                    el.on("dblclick", self._handleDblClick, self);
-                } else {
-                    el.detach("mouseenter", self._handleMouseEnter, self);
-                    el.detach("mouseleave", self._handleMouseLeave, self);
-                    el.detach("mousedown", self._handleMouseDown, self);
-                    el.detach("mouseup", self._handleMouseUp, self);
-                    el.detach("dblclick", self._handleDblClick, self);
-                }
-            },
-
-            _handleDblClick:function (e) {
+            /**
+             * Handle dblclick events. By default, this performs its associated action by calling
+             * {@link Component.Controller#performActionInternal}.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
+             */
+            handleDblClick:function (ev) {
                 var self = this;
-                if (!self.get("disabled")) {
-                    self._performInternal(e);
-                }
-            },
-
-            _isMouseEventWithinElement:function (e, elem) {
-                var relatedTarget = e.relatedTarget;
-                if (!relatedTarget) {
-                    return false;
-                }
-                // 在里面或等于自身都不算 mouseenter/leave
-                if (relatedTarget === elem[0]
-                    || elem.contains(relatedTarget)) {
+                if (self.get("disabled")) {
                     return true;
                 }
+                self.performActionInternal(ev);
             },
 
-            _handleMouseOver:function (e) {
+            /**
+             * Called by it's container component to dispatch mouseenter event.
+             * @private
+             * @param {Event.Object} ev DOM event to handle.
+             */
+            handleMouseOver:function (ev) {
                 var self = this,
                     el = self.get("el");
                 if (self.get("disabled")) {
                     return true;
                 }
-                if (!self._isMouseEventWithinElement(e, el)) {
-                    self._handleMouseEnter(e);
-                }
-            },
-
-
-            _handleMouseOut:function (e) {
-                var self = this,
-                    el = self.get("el");
-                if (self.get("disabled")) {
-                    return true;
-                }
-                if (!self._isMouseEventWithinElement(e, el)) {
-                    self._handleMouseLeave(e);
+                if (!isMouseEventWithinElement(ev, el)) {
+                    self.handleMouseEnter(ev);
                 }
             },
 
             /**
-             * root element handler for mouse enter
-             * @param [e]
+             * Called by it's container component to dispatch mouseleave event.
+             * @private
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleMouseEnter:function (e) {
-                var self = this;
+            handleMouseOut:function (ev) {
+                var self = this,
+                    el = self.get("el");
                 if (self.get("disabled")) {
                     return true;
                 }
-                if (0) {
-                    S.log(e);
+                if (!isMouseEventWithinElement(ev, el)) {
+                    self.handleMouseLeave(ev);
+                }
+            },
+
+            /**
+             * Handle mouseenter events. If the component is not disabled, highlights it.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
+             */
+            handleMouseEnter:function (ev) {
+                var self = this;
+                if (self.get("disabled")) {
+                    return true;
                 }
                 self.set("highlighted", true);
             },
 
             /**
-             * root element handler for mouse leave
+             * Handle mouseleave events. If the component is not disabled, de-highlights it.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleMouseLeave:function (e) {
+            handleMouseLeave:function (ev) {
                 var self = this;
                 if (self.get("disabled")) {
                     return true;
-                }
-                if (1 > 2) {
-                    S.log(e);
                 }
                 self.set("active", false);
                 self.set("highlighted", false);
             },
 
             /**
-             * root element handler for mouse down
-             * @param ev
+             * Handles mousedown events. If the component is not disabled,
+             * If the component is activeable, then activate it.
+             * If the component is focusable, then focus it,
+             * else prevent it from receiving keyboard focus.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleMouseDown:function (ev) {
-                var self = this, el;
+            handleMouseDown:function (ev) {
+                var self = this,
+                    isMouseActionButton = ev.which == 1,
+                    el;
                 if (self.get("disabled")) {
                     return true;
                 }
-                if (ev.which == 1 && self.get("activeable")) {
-                    self.set("active", true);
-                }
-                el = self.getKeyEventTarget();
-                // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
-                if (ev.which == 1 && el.attr("tabindex") >= 0) {
-                    el[0].focus();
-                }
-                // Cancel the default action unless the control
-                // allows text selection.
-                if (ev.which == 1 && !self.get("allowTextSelection_")) {
-                    // firefox/chrome 不会引起焦点转移
-                    var n = ev.target.nodeName;
-                    n = n && n.toLowerCase();
-                    // do not prevent focus when click on editable element
-                    if (n != "input" && n != "textarea") {
-                        ev.preventDefault();
+                if (isMouseActionButton &&
+                    !self.get("disabled")) {
+                    el = self.getKeyEventTarget();
+                    if (self.get("activeable")) {
+                        self.set("active", true);
+                    }
+                    if (self.get("focusable")) {
+                        el[0].focus();
+                        self.set("focused", true);
+                    } else {
+                        // firefox/chrome 不会引起焦点转移
+                        var n = ev.target.nodeName;
+                        n = n && n.toLowerCase();
+                        // do not prevent focus when click on editable element
+                        if (n != "input" && n != "textarea") {
+                            ev.preventDefault();
+                        }
                     }
                 }
             },
 
             /**
-             * whether component can receive focus
+             * Handles mouseup events.
+             * If this component is not disabled, performs its associated action by calling
+             * {@link Component.Controller#performActionInternal}, then deactivates it.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _uiSetFocusable:function (v) {
-                var self = this,
-                    el = self.getKeyEventTarget();
-                if (v) {
-                    el.on("focus", self._handleFocus, self);
-                    el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self._handleKeydown, self);
-                } else {
-                    el.detach("focus", self._handleFocus, self);
-                    el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self._handleKeydown, self);
-                }
-            },
-
-            _uiSetFocused:function (v) {
-                this._forwardSetAttrToView("focused", v);
-            },
-
-            _uiSetHighlighted:function (v) {
-                this._forwardSetAttrToView("highlighted", v);
-            },
-
-            _forwardSetAttrToView:function (attrName, v) {
-                var view = this.get("view");
-                view["_set" + capitalFirst(attrName)].call(view, v, getClsByHierarchy(this));
-            },
-
-
-            _uiSetDisabled:function (v) {
-                this._forwardSetAttrToView("disabled", v);
-            },
-
-
-            _uiSetActive:function (v) {
-                this._forwardSetAttrToView("active", v);
-            },
-
-            /**
-             * 焦点所在元素即键盘事件处理元素
-             */
-            getKeyEventTarget:function () {
-                return this.get("view").getKeyEventTarget();
-            },
-            /**
-             * root element handler for mouse up
-             */
-            _handleMouseUp:function (ev) {
+            handleMouseUp:function (ev) {
                 var self = this;
                 if (self.get("disabled")) {
                     return true;
                 }
                 // 左键
                 if (self.get("active") && ev.which == 1) {
-                    self._performInternal(ev);
+                    self.performActionInternal(ev);
                     self.set("active", false);
                 }
             },
+
             /**
-             * root element handler for focus
+             * Handles focus events. Style focused class.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleFocus:function () {
+            handleFocus:function (ev) {
                 this.set("focused", true);
             },
+
             /**
-             * root element handler for blur
+             * Handles blur events. Remove focused class.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleBlur:function () {
+            handleBlur:function (ev) {
                 this.set("focused", false);
             },
 
-            _handleKeyEventInternal:function (ev) {
+            /**
+             * Handle enter keydown event to {@link Component.Controller#performActionInternal}.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
+             */
+            handleKeyEventInternal:function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
-                    return this._performInternal(ev);
+                    return this.performActionInternal(ev);
                 }
             },
+
             /**
-             * root element handler for keydown
-             * @param ev
+             * Handle keydown events.
+             * If the component is not disabled, call {@link Component.Controller#handleKeyEventInternal}
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _handleKeydown:function (ev) {
+            handleKeydown:function (ev) {
                 var self = this;
                 if (self.get("disabled")) {
                     return true;
                 }
-                if (self._handleKeyEventInternal(ev)) {
+                if (self.handleKeyEventInternal(ev)) {
                     ev.halt();
-                    return true;
                 }
             },
 
             /**
-             * root element handler for click
+             * Performs the appropriate action when this component is activated by the user.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
              */
-            _performInternal:function (e) {
-                if (0) {
-                    alert(e);
-                }
+            performActionInternal:function (ev) {
             },
 
             destructor:function () {
@@ -24310,16 +24420,23 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
              * @lends Component.Controller#
              */
             {
-                /*
-                 session state
-                 */
 
-                // 是否绑定鼠标事件
+                /**
+                 * Enables or disables mouse event handling for the component.
+                 * Containers may set this attribute to disable mouse event handling
+                 * in their child component.
+                 * Default : true.
+                 * @type Boolean
+                 */
                 handleMouseEvents:{
                     value:true
                 },
 
-                // 是否支持焦点处理
+                /**
+                 * Whether this component can get focus.
+                 * Default : true.
+                 * @type Boolean
+                 */
                 focusable:{
                     /*
                      observer synchronization , model 分成两类：
@@ -24328,11 +24445,8 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                      problem : Observer behavior is hard to understand and debug because it's implicit behavior.
 
                      Keeping screen state and session state synchronized is an important task
-                     Data Binding
-                     */
-                    view:true,
-                    value:true
-                    /*
+                     Data Binding.
+
                      In general data binding gets tricky
                      because if you have to avoid cycles where a change to the control,
                      changes the record set, which updates the control,
@@ -24345,45 +24459,80 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
                      just confined to initial upload and
                      then propagating changes from the controls to the session state.
                      */
-                    // sync
+                    view:true,
+                    value:true
                 },
 
+                /**
+                 * Whether this component can be activated.
+                 * Default : true.
+                 * @type Boolean
+                 */
                 activeable:{
                     value:true
                 },
 
-                focused:{},
+                /**
+                 * Whether this component has focus.
+                 * @type Boolean
+                 */
+                focused:{
+                    view:true
+                },
 
-                active:{},
+                /**
+                 * Whether this component is activated.
+                 * @type Boolean
+                 */
+                active:{
+                    view:true
+                },
 
-                highlighted:{},
+                /**
+                 * Whether this component is highlighted.
+                 * @type Boolean
+                 */
+                highlighted:{
+                    view:true
+                },
 
-                //子组件
+                /**
+                 * Array of child components
+                 * @type Component.Controller[]
+                 */
                 children:{
                     value:[]
                 },
 
-                // 转交给渲染层
+                /**
+                 * This component's prefix css class.
+                 * @type String
+                 */
                 prefixCls:{
                     view:true,
                     value:"ks-"
                 },
 
-                // 父组件
-                // Parent component to which events will be propagated.
+                /**
+                 * This component's parent component.
+                 * @type Component.Controller
+                 */
                 parent:{
                 },
 
-                //渲染层
+                /**
+                 * Renderer used to render this component.
+                 * @type Component.Render
+                 */
                 view:{
                 },
 
-                //是否禁用
-                disabled:{},
-
-                // 是否允许 DOM 结构内的文字选定
-                allowTextSelection_:{
-                    value:false
+                /**
+                 * Whether this component is disabled.
+                 * @type Boolean
+                 */
+                disabled:{
+                    view:true
                 }
             },
 
@@ -24391,10 +24540,6 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
         },
         "Component_Controller"
     );
-
-    if (0) {
-        Controller._uiSetHandleMouseEvents()._uiSetActive();
-    }
 
     return Controller;
 }, {
@@ -24406,55 +24551,10 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
  *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
  **//**
- * @fileOverview mvc based component framework for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-
-    /**
-     * @name Component
-     * @namespace
-     */
-    var Component = {
-        Controller:Controller,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
-        DecorateChildren:DecorateChildren
-    };
-    Component.Controller = Controller;
-    return Component;
-}, {
-    requires:['component/Controller',
-        'component/render',
-        'component/container',
-        'component/uistore',
-        'component/delegatechildren',
-        'component/decoratechildren',
-        'component/decoratechild']
-});/**
- * @fileOverview container can delegate event for its children
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
-    /**
-     * 多继承，容器也是组件，具备代理儿子事件以及递归装饰儿子的功能
-     * @name Container
-     * @constructor
-     * @extends Component.Controller
-     * @memberOf Component
-     */
-    return UIBase.create(Controller, [DelegateChildren, DecorateChildren]);
-
-}, {
-    requires:['uibase', './Controller', './uistore', './delegatechildren', './decoratechildren']
-});/**
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decoratechild", function (S, DecorateChildren) {
+KISSY.add("component/decorateChild", function (S, DecorateChildren) {
     function DecorateChild() {
 
     }
@@ -24466,10 +24566,10 @@ KISSY.add("component/decoratechild", function (S, DecorateChildren) {
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui));
+                child = element.one("." + self.getCssClassWithPrefix(ui));
             // 可以装饰?
             if (child) {
-                var UI = self._findUIByClass(child);
+                var UI = self.findUIConstructorByNode(child);
                 if (UI) {
                     // 可以直接装饰
                     self.decorateChildrenInternal(UI, child, prefixCls);
@@ -24483,18 +24583,20 @@ KISSY.add("component/decoratechild", function (S, DecorateChildren) {
 
     return DecorateChild;
 }, {
-    requires:['./decoratechildren']
+    requires:['./decorateChildren']
 });/**
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decoratechildren", function(S, UIStore) {
+KISSY.add("component/decorateChildren", function (S, UIStore) {
+
+
     function DecorateChildren() {
 
     }
 
     S.augment(DecorateChildren, {
-        decorateInternal:function(el) {
+        decorateInternal:function (el) {
             var self = this;
             // 不用 __set , 通知 view 更新
             self.set("el", el);
@@ -24502,41 +24604,39 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
         },
 
         /**
-         * 生成一个组件
+         * Get component's constructor from KISSY Node.
+         * @protected
+         * @param {Node} childNode Child component's root node.
          */
-        decorateChildrenInternal:function(UI, c, prefixCls) {
+        findUIConstructorByNode:function (childNode) {
+            var self = this,
+                cls = childNode.attr("class") || "",
+                prefixCls = self.get("prefixCls");
+            // 过滤掉特定前缀
+            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+            var UI = UIStore.getUIConstructorByCssClass(cls);
+            if (!UI) {
+                S.log(childNode);
+                S.log("can not find ui " + cls + " from this markup");
+            }
+            return UI;
+        },
+
+        // 生成一个组件
+        decorateChildrenInternal:function (UI, c, prefixCls) {
             this.addChild(new UI({
                 srcNode:c,
                 prefixCls:prefixCls
             }));
         },
 
-        /**
-         * 得到适合装饰该节点的组件类
-         * @param c
-         */
-        _findUIByClass:function(c) {
+        // container 需要在装饰时对儿子特殊处理，递归装饰
+        decorateChildren:function (el) {
             var self = this,
-                cls = c.attr("class") || "",
+                children = el.children(),
                 prefixCls = self.get("prefixCls");
-            // 过滤掉特定前缀
-            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = UIStore.getUIByClass(cls);
-            if (!UI) {
-                S.log(c);
-                S.log("can not find ui " + cls + " from this markup");
-            }
-            return UI;
-        },
-
-        /**
-         * container 需要在装饰时对儿子特殊处理，递归装饰
-         */
-        decorateChildren:function(el) {
-            var self = this,children = el.children(),
-                prefixCls = self.get("prefixCls");
-            children.each(function(c) {
-                var UI = self._findUIByClass(c);
+            children.each(function (c) {
+                var UI = self.findUIConstructorByNode(c);
                 self.decorateChildrenInternal(UI, c, prefixCls);
             });
         }
@@ -24550,11 +24650,8 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegatechildren", function (S) {
+KISSY.add("component/delegateChildren", function (S) {
 
-    /**
-     * @name Component.DelegateChildren
-     */
     function DelegateChildren() {
 
     }
@@ -24572,19 +24669,19 @@ KISSY.add("component/delegatechildren", function (S) {
                 // Child control identified; forward the event.
                 switch (e.type) {
                     case "mousedown":
-                        control._handleMouseDown(e);
+                        control.handleMouseDown(e);
                         break;
                     case "mouseup":
-                        control._handleMouseUp(e);
+                        control.handleMouseUp(e);
                         break;
                     case "mouseover":
-                        control._handleMouseOver(e);
+                        control.handleMouseOver(e);
                         break;
                     case "mouseout":
-                        control._handleMouseOut(e);
+                        control.handleMouseOut(e);
                         break;
                     case "dblclick":
-                        control._handleDblClick(e);
+                        control.handleDblClick(e);
                         break;
                     default:
                         S.error(e.type + " unhandled!");
@@ -24592,18 +24689,18 @@ KISSY.add("component/delegatechildren", function (S) {
             }
         },
 
-        getOwnerControl:function (node) {
+        getOwnerControl:function (target) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,
                 elem = this.get("el")[0];
-            while (node && node !== elem) {
+            while (target && target !== elem) {
                 for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
+                    if (children[i].get("el")[0] === target) {
                         return children[i];
                     }
                 }
-                node = node.parentNode;
+                target = target.parentNode;
             }
             return null;
         }
@@ -24617,30 +24714,50 @@ KISSY.add("component/delegatechildren", function (S) {
  */
 KISSY.add("component/render", function (S, UIBase, UIStore) {
 
-    function tagFunc(self, classes, tag) {
-        return self.getCls(classes.split(/\s+/).join(tag + " ") + tag);
-    }
-
+    /**
+     * Base Render class for KISSY Component.
+     * @class
+     * @memberOf Component
+     * @name Render
+     * @extends UIBase
+     */
     return UIBase.create([UIBase.Box.Render], {
 
-        _completeClasses:function (classes, tag) {
-            return tagFunc(this, classes, tag);
+        /**
+         * Get all css class name to be applied to the root element of this component for given state.
+         * the css class names are prefixed with component name.
+         * @param {String} [state] This component's state info.
+         */
+        getComponentCssClassWithState:function (state) {
+            var self = this, componentCls = this.__componentClasses;
+            state = state || "";
+            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
         },
 
         /**
-         * @protected
+         * Get full class name (with prefix) for current component
+         * @param classes {String} class names without prefixCls. Separated by space.
+         * @function
+         * @return {String} class name with prefixCls
+         * @private
          */
-        _renderCls:function (componentCls) {
+        getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+
+        createDom:function () {
             var self = this;
-            self.get("el").addClass(self.getCls(componentCls));
+            self.get("el").addClass(self.getComponentCssClassWithState());
         },
 
-        getCls:UIStore.getCls,
-
+        /**
+         * Returns the dom element which is responsible for listening keyboard events.
+         */
         getKeyEventTarget:function () {
             return this.get("el");
         },
 
+        /**
+         * Return the dom element into which child component to be rendered.
+         */
         getContentElement:function () {
             return this.get("contentEl") || this.get("el");
         },
@@ -24661,17 +24778,21 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setHighlighted:function (v, componentCls) {
-            var self = this, el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-hover"));
+        _uiSetHighlighted:function (v) {
+            var self = this,
+                componentCls = self.getComponentCssClassWithState("-hover"),
+                el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
         /**
          * @protected
          */
-        _setDisabled:function (v, componentCls) {
-            var self = this, el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-disabled"))
+        _uiSetDisabled:function (v) {
+            var self = this,
+                componentCls = self.getComponentCssClassWithState("-disabled"),
+                el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](componentCls)
                 //不能被 tab focus 到
                 //support aria
                 .attr({
@@ -24683,26 +24804,30 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setActive:function (v, componentCls) {
-            var self = this;
-            self.get("el")[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-active"))
+        _uiSetActive:function (v) {
+            var self = this,
+                componentCls = self.getComponentCssClassWithState("-active");
+            self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-pressed", !!v);
         },
         /**
          * @protected
          */
-        _setFocused:function (v, componentCls) {
-            var self = this, el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-focused"));
+        _uiSetFocused:function (v) {
+            var self = this,
+                el = self.get("el"),
+                componentCls = self.getComponentCssClassWithState("-focused");
+            el[v ? 'addClass' : 'removeClass'](componentCls);
         }
 
-    }, {
+    }, {//  screen state
         ATTRS:{
-            /**
-             *  screen state
-             */
             prefixCls:{},
-            focusable:{}
+            focusable:{},
+            focused:{},
+            active:{},
+            disabled:{},
+            highlighted:{}
         }
     }, "Component_Render");
 }, {
@@ -24711,7 +24836,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
  * @fileOverview storage for component's css
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uistore", function(S) {
+KISSY.add("component/uistore", function (S) {
     var uis = {
         // 不带前缀 prefixCls
         /*
@@ -24722,8 +24847,8 @@ KISSY.add("component/uistore", function(S) {
          */
     };
 
-    function getUIByClass(cls) {
-        var cs = cls.split(/\s+/),p = -1,ui = null;
+    function getUIConstructorByCssClass(cls) {
+        var cs = cls.split(/\s+/), p = -1, ui = null;
         for (var i = 0; i < cs.length; i++) {
             var uic = uis[cs[i]];
             if (uic && uic.priority > p) {
@@ -24733,7 +24858,7 @@ KISSY.add("component/uistore", function(S) {
         return ui;
     }
 
-    function getClsByUI(constructor) {
+    function getCssClassByUIConstructor(constructor) {
         for (var u in uis) {
             var ui = uis[u];
             if (ui.ui == constructor) {
@@ -24743,16 +24868,12 @@ KISSY.add("component/uistore", function(S) {
         return 0;
     }
 
-    function getClsByInstance(self) {
-        return getClsByUI(self.constructor);
-    }
-
-    function setUIByClass(cls, uic) {
+    function setUIConstructorByCssClass(cls, uic) {
         uis[cls] = uic;
     }
 
 
-    function getCls(cls) {
+    function getCssClassWithPrefix(cls) {
         var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
             if (cs[i]) {
@@ -24762,26 +24883,53 @@ KISSY.add("component/uistore", function(S) {
         return cs.join(" ");
     }
 
+    /**
+     * @name UIStore
+     * @memberOf Component
+     */
     return {
-        getCls:getCls,
-        getClsByUI:getClsByUI,
-        getClsByInstance:getClsByInstance,
-        getUIByClass:getUIByClass,
-        setUIByClass:setUIByClass,
+        getCssClassWithPrefix:getCssClassWithPrefix,
+        /**
+         * Get css class name for this component constructor.
+         * @param {Function} constructor Component's constructor.
+         * @type {Function}
+         * @return {String}
+         */
+        getCssClassByUIConstructor:getCssClassByUIConstructor,
+        /**
+         * Get component constructor by css class name.
+         * @param {String} classNames Class names separated by space.
+         * @type {Function}
+         * @return {Function}
+         */
+        getUIConstructorByCssClass:getUIConstructorByCssClass,
+        /**
+         * Associate css class with component constructor.
+         * @type {Function}
+         * @param {String} className Component's class name.
+         * @param {Function} componentConstructor Component's constructor.
+         */
+        setUIConstructorByCssClass:setUIConstructorByCssClass,
+
+        /**
+         * Component's constructor's priority enum.
+         * Used for getCssClassByUIConstructor, when multiple component constructors are found.
+         * @type Object
+         */
         PRIORITY:{
             LEVEL1:10,
             LEVEL2:20,
             LEVEL3:30,
             LEVEL4:40,
-            LEVEL5:50,
-            LEVEL6:60
+            "LEVEL5":50,
+            "LEVEL6":60
         }
     };
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview accordion aria support
@@ -28040,7 +28188,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -28255,14 +28403,6 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * whether this component's text content can be selected. Default:true
-                 * @type Boolean
-                 */
-                allowTextSelection_:{
-                    value:true
-                },
-
-                /**
                  * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
@@ -28273,7 +28413,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
 
     Overlay.DefaultRender = OverlayRender;
 
-    Component.UIStore.setUIByClass("overlay", {
+    Component.UIStore.setUIConstructorByCssClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Overlay
     });
@@ -28352,7 +28492,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
 
     Dialog.DefaultRender = DialogRender;
 
-    Component.UIStore.setUIByClass("dialog", {
+    Component.UIStore.setUIConstructorByCssClass("dialog", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Dialog
     });
@@ -28474,16 +28614,22 @@ KISSY.add("overlay/effect", function (S) {
  * @fileOverview overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay", function(S, O, OR, D, DR, P) {
+KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     O.Render = OR;
     D.Render = DR;
     O.Dialog = D;
     S.Dialog = D;
-    O.Popup = S.Popup = P;
+    O.Popup = P;
+    S.Overlay = Overlay;
     return O;
 }, {
-    requires:["overlay/base","overlay/overlayrender",
-        "overlay/dialog","overlay/dialogrender", "overlay/popup"]
+    requires:[
+        "overlay/base",
+        "overlay/overlayrender",
+        "overlay/dialog",
+        "overlay/dialogrender",
+        "overlay/popup"
+    ]
 });/**
  * @fileOverview KISSY Overlay
  * @author  yiminghe@gmail.com,乔花<qiaohua@taobao.com>
@@ -28711,7 +28857,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
         });
 
 
-    Component.UIStore.setUIByClass("popup", {
+    Component.UIStore.setUIConstructorByCssClass("popup", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Popup
     });
@@ -28728,7 +28874,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 18:40
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview 提示补全组件
@@ -29197,6 +29343,8 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                 footer = self.footer,
                 mouseDownItem, mouseLeaveFooter;
 
+            // note by yiminghe@gmail.com :
+            // bug:不应该用 mousemove，chrome 键盘选择时，鼠标所在处也会触发 mousemove
             Event.on(content, 'mousemove', function (ev) {
                 if (self._keyTimer) return;
 
@@ -29231,6 +29379,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                 if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
                     if (UA.ie && UA.ie < 9) {
+                        // #114
                         input.onbeforedeactivate = function () {
                             win.event.returnValue = false;
                             input.onbeforedeactivate = null;
@@ -29914,7 +30063,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview auto render
@@ -30550,7 +30699,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 19 16:51
+build time: Apr 23 11:52
 */
 /**
  * KISSY Calendar
@@ -32351,7 +32500,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 13 14:47
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -32368,6 +32517,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @name Menu
      * @constructor
      * @extends Component.Container
+     * @extends UIBase.ContentBox
      */
     var Menu = UIBase.create(Component.Container,
         // ! note : 2012-03-31
@@ -32384,8 +32534,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 this.set("activeItem", v);
             },
 
-            _handleBlur:function (e) {
-                Menu.superclass._handleBlur.call(this, e);
+            handleBlur:function (e) {
+                Menu.superclass.handleBlur.call(this, e);
                 this.set("highlightedItem", undefined);
             },
 
@@ -32406,8 +32556,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 return undefined;
             },
 
-            _handleKeydown:function (e) {
-                if (this._handleKeyEventInternal(e)) {
+            handleKeydown:function (e) {
+                if (this.handleKeyEventInternal(e)) {
                     e.halt();
                     return true;
                 }
@@ -32424,13 +32574,13 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
              */
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
 
                 // Give the highlighted control the chance to handle the key event.
                 var highlightedItem = this.get("highlightedItem");
 
                 // 先看当前活跃 menuitem 是否要处理
-                if (highlightedItem && highlightedItem._handleKeydown(e)) {
+                if (highlightedItem && highlightedItem.handleKeydown(e)) {
                     return true;
                 }
 
@@ -32522,29 +32672,19 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
                 return false;
             }
-
-            /*
-             hideAll :function(){
-             // 当前高亮项设置为 null，则全部子菜单都隐藏咯
-             this.set("highlightedItem",null);
-             }
-             */
         }, {
             ATTRS:{
-                // 普通菜单可聚焦
-                // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-                focusable:{
-                    value:true
-                },
                 visibleMode:{
                     value:"display"
                 },
                 /**
-                 * 当前高亮的儿子菜单项
+                 * Current highlighted child menu item.
+                 * @type Menu.Item
                  */
                 highlightedItem:{},
                 /**
-                 * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
+                 * Current active menu item. Maybe a descendant but not a child of current menu.
+                 * @type Menu.Item
                  */
                 activeItem:{
                     view:true
@@ -32553,7 +32693,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
             DefaultRender:MenuRender
         });
 
-    Component.UIStore.setUIByClass("menu", {
+    Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
@@ -32565,6 +32705,9 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 });
 
 /**
+ * 普通菜单可聚焦
+ * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+ *
  * TODO
  *  - 去除 activeItem
  **//**
@@ -32590,9 +32733,9 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            _handleMouseEnter:function () {
+            handleMouseEnter:function () {
                 var self = this;
-                FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
+                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
                 // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
                 self.getKeyEventTarget()[0].select();
@@ -32683,7 +32826,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 var children = self.get("children"),
                     strExp = str && new RegExp(regExpEscape(str), "ig"),
                     // 匹配项样式类
-                    hit = this.getCls(HIT_CLS);
+                    hit = this.getCssClassWithPrefix(HIT_CLS);
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -32715,7 +32858,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
             decorateInternal:function (el) {
                 var self = this;
                 self.set("el", el);
-                var menuContent = el.one("." + self.getCls("menu-content"));
+                var menuContent = el.one("." + self.getCssClassWithPrefix("menu-content"));
                 self.decorateChildren(menuContent);
             },
 
@@ -32759,7 +32902,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
         }
     );
 
-    Component.UIStore.setUIByClass("filtermenu", {
+    Component.UIStore.setUIConstructorByCssClass("filtermenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:FilterMenu
     });
@@ -32793,12 +32936,12 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + this.getCls(MENU_FILTER) + "'/>")
+                    filterWrap = $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER) + "'/>")
                         .appendTo(contentEl));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + this.getCls(MENU_FILTER_LABEL) + "'/>")
+                    $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER_LABEL) + "'/>")
                         .appendTo(filterWrap));
             }
             if (!self.get("filterInput")) {
@@ -32807,7 +32950,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + this.getCls(MENU_CONTENT) + "'/>")
+                    $("<div class='" + this.getCssClassWithPrefix(MENU_CONTENT) + "'/>")
                         .appendTo(contentEl));
             }
         },
@@ -32824,17 +32967,17 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER))
-                    .one("." + this.getCls(MENU_FILTER_LABEL))
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER))
+                    .one("." + this.getCssClassWithPrefix(MENU_FILTER_LABEL))
             },
             filterWrap:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER));
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER));
             },
             menuContent:function(el) {
-                return el.one("." + this.getCls(MENU_CONTENT));
+                return el.one("." + this.getCssClassWithPrefix(MENU_CONTENT));
             },
             filterInput:function(el) {
-                return el.one("." + this.getCls(MENU_FILTER)).one("input");
+                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
             }
         }
     });
@@ -32880,23 +33023,23 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var MenuItem = UIBase.create(Component.Controller, [UIBase.ContentBox], {
 
-        _handleMouseEnter:function (e) {
+        handleMouseEnter:function (e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseEnter.call(this, e)) {
+            if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
                 return true;
             }
             this.get("parent").set("highlightedItem", this);
         },
 
-        _handleMouseLeave:function (e) {
+        handleMouseLeave:function (e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseLeave.call(this, e)) {
+            if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
                 return true;
             }
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _performInternal:function () {
+        performActionInternal:function () {
             var self = this;
             // 可选
             if (self.get("selectable")) {
@@ -32911,14 +33054,6 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 target:self
             });
             return true;
-        },
-
-        _uiSetChecked:function (v) {
-            this._forwardSetAttrToView("checked", v);
-        },
-
-        _uiSetSelected:function (v) {
-            this._forwardSetAttrToView("selected", v);
         },
 
         _uiSetHighlighted:function (v) {
@@ -32980,13 +33115,17 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
 
-            checked:{},
-            selected:{}
+            checked:{
+                view:true
+            },
+            selected:{
+                view:true
+            }
         },
 
         HTML_PARSER:{
             selectable:function (el) {
-                var cls = this.getCls("menuitem-selectable");
+                var cls = this.getCssClassWithPrefix("menuitem-selectable");
                 return el.hasClass(cls);
             }
         }
@@ -32994,7 +33133,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     MenuItem.DefaultRender = MenuItemRender;
 
-    Component.UIStore.setUIByClass("menuitem", {
+    Component.UIStore.setUIConstructorByCssClass("menuitem", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:MenuItem
     });
@@ -33013,7 +33152,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = self.getCls(CHECK_CLS),
+            cls = self.getCssClassWithPrefix(CHECK_CLS),
             checkEl = el.one("." + cls);
         if (!checkEl) {
             checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
@@ -33025,19 +33164,17 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
     return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
 
-        _setSelected:function (v, componentCls) {
+        _uiSetChecked:function (v) {
             var self = this,
-                tag = "-selected",
                 el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
+                cls = self.getComponentCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _setChecked:function (v, componentCls) {
+        _uiSetSelected:function (v) {
             var self = this,
-                tag = "-checked",
                 el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
+                cls = self.getComponentCssClassWithState("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
@@ -33060,7 +33197,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         ATTRS:{
             contentElCls:{
                 valueFn:function () {
-                    return this.getCls(CONTENT_CLS);
+                    return this.getCssClassWithPrefix(CONTENT_CLS);
                 }
             },
             elAttrs:{
@@ -33186,7 +33323,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
                 }
             }
         },
-        _handleMouseLeave:function () {
+        handleMouseLeave:function () {
             var self = this,
                 parent;
             if (!self.get(autoHideOnMouseLeave)) {
@@ -33217,18 +33354,18 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }, self.get("autoHideDelay"));
             parent = getAutoHideParentMenu(self);
             if (parent) {
-                parent._handleMouseLeave();
+                parent.handleMouseLeave();
             }
         },
 
-        _handleMouseEnter:function () {
+        handleMouseEnter:function () {
             var self = this;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
             var parent = getAutoHideParentMenu(self);
             if (parent) {
-                parent._handleMouseEnter();
+                parent.handleMouseEnter();
             }
             self._clearLeaveHideTimers();
         },
@@ -33238,9 +33375,9 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
          *  suppose it has focus (as a context menu),
          *  then it must hide when click document
          */
-        _handleBlur:function () {
+        handleBlur:function () {
             var self = this;
-            PopupMenu.superclass._handleBlur.apply(self, arguments);
+            PopupMenu.superclass.handleBlur.apply(self, arguments);
             self.hide();
         }
     }, {
@@ -33260,7 +33397,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
         DefaultRender:PopupMenuRender
     });
 
-    Component.UIStore.setUIByClass("popupmenu", {
+    Component.UIStore.setUIConstructorByCssClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:PopupMenu
     });
@@ -33303,7 +33440,7 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
         DefaultRender:SeparatorRender
     });
 
-    Component.UIStore.setUIByClass("menuseparator", {
+    Component.UIStore.setUIConstructorByCssClass("menuseparator", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Separator
     });
@@ -33426,9 +33563,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * @inheritDoc
              * Sets a timer to show the submenu
              **/
-            _handleMouseEnter:function (e) {
+            handleMouseEnter:function (e) {
                 var self = this;
-                if (SubMenu.superclass._handleMouseEnter.call(self, e)) {
+                if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
                     return true;
                 }
                 self.clearTimers();
@@ -33490,7 +33627,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var self = this;
                 if (e.newVal) {
                     self.clearTimers();
-                    // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                    // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
                     // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
                     self.get("parent").set("highlightedItem", self);
                 }
@@ -33504,12 +33641,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             // click ，立即显示
-            _performInternal:function () {
+            performActionInternal:function () {
                 var self = this;
                 self.clearTimers();
                 self.showMenu();
                 //  trigger click event from menuitem
-                SubMenu.superclass._performInternal.apply(self, arguments);
+                SubMenu.superclass.performActionInternal.apply(self, arguments);
             },
 
             /**
@@ -33520,7 +33657,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * @param e A key event.
              * @return {boolean} Whether the event was handled.
              */
-            _handleKeydown:function (e) {
+            handleKeydown:function (e) {
                 var self = this,
                     menu = getMenu(self),
                     hasKeyboardControl_ = menu && menu.get("visible"),
@@ -33540,12 +33677,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     }
                     // enter as click
                     else if (e.keyCode == Event.KeyCodes.ENTER) {
-                        return this._performInternal(e);
+                        return this.performActionInternal(e);
                     }
                     else {
                         return undefined;
                     }
-                } else if (menu._handleKeydown(e)) {
+                } else if (menu.handleKeydown(e)) {
                 }
                 // The menu has control and the key hasn't yet been handled, on left arrow
                 // we turn off key control.
@@ -33647,7 +33784,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     );
 
 
-    Component.UIStore.setUIByClass("submenu", {
+    Component.UIStore.setUIConstructorByCssClass("submenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:SubMenu
     });
@@ -33693,7 +33830,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:52
 */
 /**
  * @fileOverview Model and Control for button
@@ -33706,21 +33843,22 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
+     * @extends UIBase.ContentBox
      */
     var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 
             bindUI:function () {
-                this.get("el").on("keyup", this._handleKeyEventInternal, this);
+                this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
 
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
                 if (e.keyCode == KeyCodes.ENTER &&
                     e.type == "keydown" ||
                     e.keyCode == KeyCodes.SPACE &&
                         e.type == "keyup") {
-                    return this._performInternal(e);
+                    return this.performActionInternal(e);
                 }
                 // Return true for space keypress (even though the event is handled on keyup)
                 // as preventDefault needs to be called up keypress to take effect in IE and
@@ -33729,16 +33867,12 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
             },
 
             /* button 的默认行为就是触发 click*/
-            _performInternal:function () {
+            performActionInternal:function () {
                 var self = this;
                 self.fire("click");
             }
         }, {
             ATTRS:{
-                /**
-                 * @inheritedDoc
-                 * disabled:{}
-                 */
                 value:{},
                 describedby:{
                     view:true
@@ -33755,7 +33889,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     Button.DefaultRender = CustomRender;
 
 
-    Component.UIStore.setUIByClass("button", {
+    Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Button
     });
@@ -33778,24 +33912,25 @@ KISSY.add("button", function(S, Button, Render, Split) {
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase, Component) {
+KISSY.add("button/buttonrender", function (S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return UIBase.create(Component.Render, {
-        createDom:function() {
+        createDom:function () {
             //set wai-aria role
-            this.get("el").attr("role", "button")
-                .addClass(this.getCls("inline-block button"));
+            this.get("el")
+                .attr("role", "button")
+                .addClass("ks-inline-block");
         },
-        _uiSetTooltip:function(title) {
+        _uiSetTooltip:function (title) {
             this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function(describedby) {
+        _uiSetDescribedby:function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
         },
 
-        _uiSetCollapseSide:function(side) {
+        _uiSetCollapseSide:function (side) {
             var self = this,
-                cls = self.getCls("button-collapse-"),
+                cls = self.getCssClassWithPrefix("button-collapse-"),
                 el = self.get("el");
             el.removeClass(cls + "left " + cls + "right");
             if (side) {
@@ -33804,24 +33939,13 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            /**
-             * @inheritedDoc
-             * disabled:{}
-             */
-
-            /**
-             * @inheritedDoc
-             * prefixCls:{}
-             */
-
-                // aria-describledby support
             describedby:{},
             tooltip:{},
             collapseSide:{}
         }
     });
 }, {
-    requires:['uibase','component']
+    requires:['uibase', 'component']
 });/**
  * @fileOverview view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
@@ -33846,10 +33970,10 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                     id = S.guid('ks-button-labelby');
                 el.attr("aria-labelledby", id);
                 //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(self.getCls(CONTENT_CLS));
+                contentEl.addClass(self.getCssClassWithPrefix(CONTENT_CLS));
                 var elChildren = S.makeArray(contentEl[0].childNodes),
                     innerEl = new Node("<div id='" + id + "' " +
-                        "class='" + self.getCls(INNER_CLS) + "'/>")
+                        "class='" + self.getCssClassWithPrefix(INNER_CLS) + "'/>")
                         .appendTo(contentEl);
                 // content 由 contentboxrender 处理
                 for (var i = 0; i < elChildren.length; i++) {
@@ -33880,16 +34004,16 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
  * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/split", function(S) {
+KISSY.add("button/split", function (S) {
 
     var handles = {
-        content:function(e) {
-            var first = this,t = e.target;
+        content:function (e) {
+            var first = this, t = e.target;
             first.__set("content", t.get("content"));
             first.__set("value", t.get("value"));
         },
-        value:function(e) {
-            var first = this,t = e.target;
+        value:function (e) {
+            var first = this, t = e.target;
             first.__set("value", t.get("value"));
         }
     };
@@ -33914,7 +34038,7 @@ KISSY.add("button/split", function(S) {
     };
 
     S.extend(Split, S.Base, {
-        render:function() {
+        render:function () {
             var self = this,
                 eventType = self.get("eventType"),
                 eventHandler = handles[self.get("eventHandler")],
@@ -33938,7 +34062,7 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -33946,7 +34070,7 @@ build time: Mar 23 12:19
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
-    var win=S.Env.host;
+    var win = S.Env.host;
 
     function getMenu(self, init) {
         var m = self.get("menu");
@@ -34080,7 +34204,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleKeyEventInternal:function (e) {
+                handleKeyEventInternal:function (e) {
                     var self = this,
                         menu = getMenu(self);
 
@@ -34096,7 +34220,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     }
                     //转发给 menu 处理
                     if (menu && menu.get("visible")) {
-                        var handledByMenu = menu._handleKeydown(e);
+                        var handledByMenu = menu.handleKeydown(e);
                         // esc
                         if (e.keyCode == KeyCodes.ESC) {
                             self.set("collapsed", true);
@@ -34118,7 +34242,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * handle click or enter key
                  */
-                _performInternal:function () {
+                performActionInternal:function () {
                     var self = this;
                     self.set("collapsed", !self.get("collapsed"));
 
@@ -34127,9 +34251,9 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 /**
                  * @inheritDoc
                  */
-                _handleBlur:function (e) {
+                handleBlur:function (e) {
                     var self = this;
-                    MenuButton.superclass._handleBlur.call(self, e);
+                    MenuButton.superclass.handleBlur.call(self, e);
                     // such as : click the document
                     self.set("collapsed", true);
                 },
@@ -34241,7 +34365,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 DefaultRender:MenuButtonRender
             });
 
-    Component.UIStore.setUIByClass("menu-button", {
+    Component.UIStore.setUIConstructorByCssClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });
@@ -34273,9 +34397,9 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
+    var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
-        '<div class="{prefixCls}inline-block ' +
+        '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
@@ -34295,7 +34419,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetContent:function(v) {
-            var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
+            var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
         },
@@ -34303,7 +34427,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetCollapsed:function(v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCls(COLLAPSE_CLS);
+                cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
@@ -34334,7 +34458,7 @@ KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
             }
         }
     });
-    Component.UIStore.setUIByClass("option", {
+    Component.UIStore.setUIConstructorByCssClass("option", {
         priority:10,
         ui:Option
     });
@@ -34525,7 +34649,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
         return select;
     };
 
-    Component.UIStore.setUIByClass("select", {
+    Component.UIStore.setUIConstructorByCssClass("select", {
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Select
     });
@@ -34548,7 +34672,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -34570,7 +34694,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
     });
 
 
-    Component.UIStore.setUIByClass(TREE_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(TREE_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Tree
     });
@@ -34745,7 +34869,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 self.get("tree").set("selectedItem", self);
             },
 
-            _performInternal:function(e) {
+            performActionInternal:function(e) {
                 var self = this,
                     target = $(e.target),
                     tree = self.get("tree"),
@@ -34833,11 +34957,6 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 }
             },
 
-            _uiSetSelected:function(v) {
-                this._forwardSetAttrToView("selected", v);
-            },
-
-
             expandAll:function() {
                 var self = this;
                 self.set("expanded", true);
@@ -34894,7 +35013,9 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                  * 是否选中
                  * @type Boolean
                  */
-                selected:{},
+                selected:{
+                    view:true
+                },
 
                 expanded:{
                     value:false,
@@ -34924,7 +35045,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
             HTML_PARSER:{
                 expanded:function(el) {
-                    var children = el.one("." + this.getCls("tree-children"));
+                    var children = el.one("." + this.getCssClassWithPrefix("tree-children"));
                     if (!children) {
                         return false;
                     }
@@ -34933,7 +35054,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
             }
         });
 
-    Component.UIStore.setUIByClass(ITEM_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(ITEM_CLS, {
         priority:10,
         ui:BaseNode
     });
@@ -34946,7 +35067,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
@@ -34954,7 +35075,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
 
-        INLINE_BLOCK = "inline-block",
+        INLINE_BLOCK = " ks-inline-block",
         ITEM_CLS = "tree-item",
 
         FOLDER_ICON_EXPANED = "tree-expanded-folder-icon",
@@ -34974,8 +35095,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
     return UIBase.create(Component.Render, {
 
-        _computeClass:function(children, parent
-                               //, cause
+        _computeClass:function (children, parent
+                                //, cause
             ) {
             // S.log("hi " + cause + ": " + this.get("content"));
             var self = this,
@@ -34984,10 +35105,10 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 iconEl = self.get("iconEl"),
                 expandIconEl = self.get("expandIconEl"),
                 childrenEl = self.get("childrenEl"),
-                expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
-                icon_cls = self.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
-                folder_cls = self.getCls(
-                    [INLINE_BLOCK,ICON_CLS,expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED,""].join(" ")),
+                expand_cls = [ICON_CLS, EXPAND_ICON_CLS, ""].join(" ")+INLINE_BLOCK,
+                icon_cls = self.getCssClassWithPrefix([ICON_CLS, FILE_CLS, ""].join(" "))+INLINE_BLOCK,
+                folder_cls = self.getCssClassWithPrefix(
+                    [ ICON_CLS, expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED, ""].join(" "))+INLINE_BLOCK,
                 last = !parent ||
                     parent.get("children")[parent.get("children").length - 1].get("view") == self;
             // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
@@ -34998,7 +35119,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 } else {
                     expand_cls += FOLDER_COLLAPSED;
                 }
-                expandIconEl.attr("class", self.getCls(S.substitute(expand_cls, {
+                expandIconEl.attr("class", self.getCssClassWithPrefix(S.substitute(expand_cls, {
                     "t":last ? "l" : "t"
                 })));
             } else
@@ -35006,15 +35127,15 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             {
                 iconEl.attr("class", icon_cls);
                 expandIconEl.attr("class",
-                    self.getCls(S.substitute((expand_cls + FILE_EXPAND), {
+                    self.getCssClassWithPrefix(S.substitute((expand_cls + FILE_EXPAND), {
                         "t":last ? "l" : "t"
                     })));
             }
-            childrenEl && childrenEl.attr("class", self.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
+            childrenEl && childrenEl.attr("class", self.getCssClassWithPrefix(last ? CHILDREN_CLS_L : CHILDREN_CLS));
 
         },
 
-        createDom:function() {
+        createDom:function () {
             var self = this,
                 el = self.get("el"),
                 id,
@@ -35022,7 +35143,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 labelEl = self.get("labelEl");
 
 
-            rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
+            rowEl = $("<div class='" + self.getCssClassWithPrefix(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
             self.__set("rowEl", rowEl);
 
@@ -35032,7 +35153,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 .appendTo(rowEl);
 
             if (!labelEl) {
-                labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
+                labelEl = $("<span id='" + id + "' class='" + self.getCssClassWithPrefix(LABEL_CLS) + "'/>");
                 self.__set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
@@ -35047,7 +35168,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         },
 
-        _uiSetExpanded:function(v) {
+        _uiSetExpanded:function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
             if (childrenEl) {
@@ -35060,32 +35181,33 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             self.get("el").attr("aria-expanded", v);
         },
 
-        _setSelected:function(v, classes) {
+        _uiSetSelected:function (v) {
             var self = this,
+                classes = self.getComponentCssClassWithState("-selected"),
                 // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
                 // .selected .label {background:xx;}
                 rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self._completeClasses(classes, "-selected"));
+            rowEl[v ? "addClass" : "removeClass"](classes);
             self.get("el").attr("aria-selected", v);
         },
 
-        _uiSetContent:function(c) {
+        _uiSetContent:function (c) {
             this.get("labelEl").html(c);
         },
 
-        _uiSetDepth:function(v) {
+        _uiSetDepth:function (v) {
             this.get("el").attr("aria-level", v);
         },
 
-        _uiSetAriaSize:function(v) {
+        _uiSetAriaSize:function (v) {
             this.get("el").attr("aria-setsize", v);
         },
 
-        _uiSetAriaPosInSet:function(v) {
+        _uiSetAriaPosInSet:function (v) {
             this.get("el").attr("aria-posinset", v);
         },
 
-        _uiSetTooltip:function(v) {
+        _uiSetTooltip:function (v) {
             this.get("el").attr("title", v);
         },
 
@@ -35095,7 +35217,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @override
          */
-        getContentElement:function() {
+        getContentElement:function () {
             var self = this;
             if (self.get("childrenEl")) {
                 return self.get("childrenEl");
@@ -35119,25 +35241,26 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             depth:{},
             labelEl:{},
             content:{},
-            isLeaf:{}
+            isLeaf:{},
+            selected:{}
         },
 
         HTML_PARSER:{
-            childrenEl:function(el) {
-                return el.children("." + this.getCls(CHILDREN_CLS));
+            childrenEl:function (el) {
+                return el.children("." + this.getCssClassWithPrefix(CHILDREN_CLS));
             },
-            labelEl:function(el) {
-                return el.children("." + this.getCls(LABEL_CLS));
+            labelEl:function (el) {
+                return el.children("." + this.getCssClassWithPrefix(LABEL_CLS));
             },
-            content:function(el) {
-                return el.children("." + this.getCls(LABEL_CLS)).html();
+            content:function (el) {
+                return el.children("." + this.getCssClassWithPrefix(LABEL_CLS)).html();
             },
-            isLeaf:function(el) {
+            isLeaf:function (el) {
                 var self = this;
-                if (el.hasClass(self.getCls(LEAF_CLS))) {
+                if (el.hasClass(self.getCssClassWithPrefix(LEAF_CLS))) {
                     return true;
                 }
-                if (el.hasClass(self.getCls(NOT_LEAF_CLS))) {
+                if (el.hasClass(self.getCssClassWithPrefix(NOT_LEAF_CLS))) {
                     return false;
                 }
             }
@@ -35148,7 +35271,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
     });
 
 }, {
-    requires:['node','uibase','component']
+    requires:['node', 'uibase', 'component']
 });/**
  * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
@@ -35161,7 +35284,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         EMPTY = 0;
 
     var CheckNode = UIBase.create(BaseNode, {
-        _performInternal:function(e) {
+        performActionInternal:function(e) {
             var self=this;
             // 需要通知 tree 获得焦点
             self.get("tree").get("el")[0].focus();
@@ -35257,7 +35380,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         EMPTY:EMPTY
     });
 
-    Component.UIStore.setUIByClass(CHECK_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(CHECK_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:CheckNode
     });
@@ -35269,27 +35392,26 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
-        INLINE_BLOCK = "inline-block";
+        INLINE_BLOCK = " ks-inline-block";
     return UIBase.create(BaseNodeRender, {
 
-        createDom:function() {
+        createDom:function () {
             var self = this;
             var expandIconEl = self.get("expandIconEl"),
-                checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
-                    + ICON_CLS) + "'/>").insertAfter(expandIconEl);
+                checkEl = $("<div class='" + self.getCssClassWithPrefix(ICON_CLS) + INLINE_BLOCK + "'/>").insertAfter(expandIconEl);
             self.__set("checkEl", checkEl);
         },
 
-        _uiSetCheckState:function(s) {
+        _uiSetCheckState:function (s) {
             var self = this;
             var checkEl = self.get("checkEl");
-            checkEl.removeClass(self.getCls(ALL_STATES_CLS))
-                .addClass(self.getCls(CHECK_CLS + "ed" + s));
+            checkEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS + "ed" + s));
         }
 
     }, {
@@ -35301,7 +35423,7 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
         CHECK_CLS:CHECK_CLS
     });
 }, {
-    requires:['node','uibase','component','./basenoderender']
+    requires:['node', 'uibase', 'component', './basenoderender']
 });/**
  * @fileOverview root node represent a check tree
  * @author yiminghe@gmail.com
@@ -35314,7 +35436,7 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
         DefaultRender:CheckTreeRender
     });
 
-    Component.UIStore.setUIByClass(CHECK_TREE_CLS, {
+    Component.UIStore.setUIConstructorByCssClass(CHECK_TREE_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:CheckTree
     });
@@ -35400,16 +35522,16 @@ KISSY.add("tree/treemgr", function(S, Event) {
             delete this.__getAllNodes()[c.get("id")];
         },
 
-        _handleKeyEventInternal:function(e) {
+        handleKeyEventInternal:function(e) {
             var current = this.get("selectedItem");
             if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
-                return current._performInternal(e);
+                return current.performActionInternal(e);
             }
             return current._keyNav(e);
         },
 
-        // 重写 delegatechildren ，缓存加快从节点获取对象速度
+        // 重写 delegateChildren ，缓存加快从节点获取对象速度
         getOwnerControl:function(node) {
             var self = this,
                 n,
@@ -35469,7 +35591,7 @@ KISSY.add("tree/treemgrrender", function(S) {
         __renderUI:function() {
             var self=this;
             self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
-            self.get("rowEl").addClass(self.getCls("tree-root-row"));
+            self.get("rowEl").addClass(self.getCssClassWithPrefix("tree-root-row"));
         },
 
         _uiSetShowRootNode:function(v) {
@@ -35477,7 +35599,7 @@ KISSY.add("tree/treemgrrender", function(S) {
         },
 
         _uiSetFocused:function(v) {
-            this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
+            this.get("el")[v ? "addClass" : "removeClass"](this.getCssClassWithPrefix(FOCUSED_CLS));
         }
     });
 
@@ -35497,7 +35619,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -36072,7 +36194,7 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview validation
@@ -37590,7 +37712,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview mvc base

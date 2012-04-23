@@ -41,18 +41,18 @@ KISSY.add("component/delegateChildren", function (S) {
             }
         },
 
-        getOwnerControl:function (node) {
+        getOwnerControl:function (target) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,
                 elem = this.get("el")[0];
-            while (node && node !== elem) {
+            while (target && target !== elem) {
                 for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
+                    if (children[i].get("el")[0] === target) {
                         return children[i];
                     }
                 }
-                node = node.parentNode;
+                target = target.parentNode;
             }
             return null;
         }

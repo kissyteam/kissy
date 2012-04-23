@@ -42,7 +42,6 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
         },
 
         _uiSetHighlighted:function (v) {
-            MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
@@ -110,7 +109,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
         HTML_PARSER:{
             selectable:function (el) {
-                var cls = this.getCls("menuitem-selectable");
+                var cls = this.getCssClassWithPrefix("menuitem-selectable");
                 return el.hasClass(cls);
             }
         }

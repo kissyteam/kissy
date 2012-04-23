@@ -11,35 +11,32 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @memberOf Component
      * @name Render
      * @extends UIBase
-     * @extends UIBase.Box.Render
      */
-    var Render = UIBase.create([UIBase.Box.Render], {
+    return UIBase.create([UIBase.Box.Render], {
 
         /**
          * Get all css class name to be applied to the root element of this component for given state.
          * the css class names are prefixed with component name.
          * @param {String} [state] This component's state info.
          */
-        getComponentCssClass:function (state) {
+        getComponentCssClassWithState:function (state) {
             var self = this, componentCls = this.__componentClasses;
-            if (state) {
-                return self.getCls(componentCls.split(/\s+/).join(state + " ") + state);
-            } else {
-                return componentCls;
-            }
+            state = state || "";
+            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
         },
 
         /**
-         * Get full class name for current component
+         * Get full class name (with prefix) for current component
          * @param classes {String} class names without prefixCls. Separated by space.
          * @function
          * @return {String} class name with prefixCls
+         * @private
          */
-        getCls:UIStore.getCls,
+        getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
 
         createDom:function () {
             var self = this;
-            self.get("el").addClass(self.getComponentCssClass());
+            self.get("el").addClass(self.getComponentCssClassWithState());
         },
 
         /**
@@ -74,7 +71,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
          */
         _uiSetHighlighted:function (v) {
             var self = this,
-                componentCls = self.getComponentCssClass("-hover"),
+                componentCls = self.getComponentCssClassWithState("-hover"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
@@ -84,7 +81,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
          */
         _uiSetDisabled:function (v) {
             var self = this,
-                componentCls = self.getComponentCssClass("-disabled"),
+                componentCls = self.getComponentCssClassWithState("-disabled"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls)
                 //不能被 tab focus 到
@@ -100,7 +97,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
          */
         _uiSetActive:function (v) {
             var self = this,
-                componentCls = self.getComponentCssClass("-active");
+                componentCls = self.getComponentCssClassWithState("-active");
             self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-pressed", !!v);
         },
@@ -110,15 +107,12 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
         _uiSetFocused:function (v) {
             var self = this,
                 el = self.get("el"),
-                componentCls = self.getComponentCssClass("-focused");
+                componentCls = self.getComponentCssClassWithState("-focused");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         }
 
-    }, {
-        ATTRS:/**
-         *  screen state
-         */
-        {
+    }, {//  screen state
+        ATTRS:{
             prefixCls:{},
             focusable:{},
             focused:{},
@@ -127,8 +121,6 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
             highlighted:{}
         }
     }, "Component_Render");
-
-    return Render;
 }, {
     requires:['uibase', './uistore']
 });

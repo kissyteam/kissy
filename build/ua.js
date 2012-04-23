@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 29 23:41
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview ua
@@ -207,7 +207,7 @@ KISSY.add("ua/css", function (S, UA) {
         v;
     S.each(o, function (key) {
         if (v = UA[key]) {
-            className += " ks-" + key + ((v + "").replace(/\./g, "_"));
+            className += " ks-" + key + (parseInt(v) + "");
             className += " ks-" + key;
         }
     });

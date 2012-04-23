@@ -22,10 +22,10 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                     id = S.guid('ks-button-labelby');
                 el.attr("aria-labelledby", id);
                 //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(self.getCls(CONTENT_CLS));
+                contentEl.addClass(self.getCssClassWithPrefix(CONTENT_CLS));
                 var elChildren = S.makeArray(contentEl[0].childNodes),
                     innerEl = new Node("<div id='" + id + "' " +
-                        "class='" + self.getCls(INNER_CLS) + "'/>")
+                        "class='" + self.getCssClassWithPrefix(INNER_CLS) + "'/>")
                         .appendTo(contentEl);
                 // content 由 contentboxrender 处理
                 for (var i = 0; i < elChildren.length; i++) {

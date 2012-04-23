@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 12 21:10
+build time: Apr 23 11:52
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -601,7 +601,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             handler,
             node;
@@ -649,7 +649,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
             _init:function () {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -689,7 +689,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
-                    _handleMouseDown,
+                    handleMouseDown,
                     self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
@@ -1140,7 +1140,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
      * 通知全局管理器开始作用
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    function handleMouseDown(ev) {
         var self = this,
             t = ev.target;
 
@@ -1194,7 +1194,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on('mousedown', handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -1413,7 +1413,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             destroy:function () {
                 var self = this,
                     node = self.get('dragNode');
-                node.detach('mousedown', _handleMouseDown, self)
+                node.detach('mousedown', handleMouseDown, self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
             }

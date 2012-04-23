@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 13 14:50
+build time: Apr 23 11:52
 */
 /**
  * Combobox derived from autocomplete
@@ -85,9 +85,9 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteR
                 .append(self.get("el"))
                 .append(button);
         },
-        _setFocused:function (v) {
+        _uiSetFocused:function (v) {
             var self = this;
-            Render.superclass._setFocused.apply(self, arguments);
+            Render.superclass._uiSetFocused.apply(self, arguments);
             self.get("container")[v ? "addClass" : "removeClass"](self.get("prefixCls")
                 + "combobox-focused");
         },
@@ -318,8 +318,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 self.sendRequest(value);
             },
 
-            _handleBlur:function () {
-                AutoComplete.superclass._handleBlur.apply(this, arguments);
+            handleBlur:function () {
+                AutoComplete.superclass.handleBlur.apply(this, arguments);
                 var autoCompleteMenu = this.get("menu");
                 // S.log("input blur!!!!!!!");
                 if (autoCompleteMenu) {
@@ -390,7 +390,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 alignImmediately(this);
             },
 
-            _handleKeyEventInternal:function (e) {
+            handleKeyEventInternal:function (e) {
                 var self = this,
                     el = self.get("el"),
                     autoCompleteMenu = self.get("menu");
@@ -414,7 +414,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 }
                 var activeItem;
                 if (autoCompleteMenu.get("visible")) {
-                    var handledByMenu = autoCompleteMenu._handleKeydown(e);
+                    var handledByMenu = autoCompleteMenu.handleKeydown(e);
 
                     if (updateInputOnDownUp) {
                         if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
@@ -436,7 +436,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (e.keyCode == KeyCodes.TAB) {
                         if (activeItem = autoCompleteMenu.get("activeItem")) {
-                            activeItem._performInternal();
+                            activeItem.performActionInternal();
                             // only prevent focus change in multiple mode
                             if (self.get("multiple")) {
                                 return true;
@@ -612,16 +612,9 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
              * @lends AutoComplete
              */
             {
-                focusable:{
-                    value:true
-                },
 
                 handleMouseEvents:{
                     value:false
-                },
-
-                allowTextSelection_:{
-                    value:true
                 },
 
                 /**
@@ -802,7 +795,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
         "AutoComplete"
     );
 
-    Component.UIStore.setUIByClass("autocomplete-input", {
+    Component.UIStore.setUIConstructorByCssClass("autocomplete-input", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:AutoComplete
     });
@@ -1093,7 +1086,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
         "AutoComplete_Menu"
     );
 
-    Component.UIStore.setUIByClass("autocomplete-menu", {
+    Component.UIStore.setUIConstructorByCssClass("autocomplete-menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:AutoCompleteMenu
     });

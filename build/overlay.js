@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Apr 23 11:53
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -216,14 +216,6 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * whether this component's text content can be selected. Default:true
-                 * @type Boolean
-                 */
-                allowTextSelection_:{
-                    value:true
-                },
-
-                /**
                  * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
@@ -234,7 +226,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
 
     Overlay.DefaultRender = OverlayRender;
 
-    Component.UIStore.setUIByClass("overlay", {
+    Component.UIStore.setUIConstructorByCssClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Overlay
     });
@@ -313,7 +305,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
 
     Dialog.DefaultRender = DialogRender;
 
-    Component.UIStore.setUIByClass("dialog", {
+    Component.UIStore.setUIConstructorByCssClass("dialog", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Dialog
     });
@@ -435,16 +427,22 @@ KISSY.add("overlay/effect", function (S) {
  * @fileOverview overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay", function(S, O, OR, D, DR, P) {
+KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     O.Render = OR;
     D.Render = DR;
     O.Dialog = D;
     S.Dialog = D;
-    O.Popup = S.Popup = P;
+    O.Popup = P;
+    S.Overlay = Overlay;
     return O;
 }, {
-    requires:["overlay/base","overlay/overlayrender",
-        "overlay/dialog","overlay/dialogrender", "overlay/popup"]
+    requires:[
+        "overlay/base",
+        "overlay/overlayrender",
+        "overlay/dialog",
+        "overlay/dialogrender",
+        "overlay/popup"
+    ]
 });/**
  * @fileOverview KISSY Overlay
  * @author  yiminghe@gmail.com,乔花<qiaohua@taobao.com>
@@ -672,7 +670,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
         });
 
 
-    Component.UIStore.setUIByClass("popup", {
+    Component.UIStore.setUIConstructorByCssClass("popup", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Popup
     });

@@ -2,16 +2,16 @@
  * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/split", function(S) {
+KISSY.add("button/split", function (S) {
 
     var handles = {
-        content:function(e) {
-            var first = this,t = e.target;
+        content:function (e) {
+            var first = this, t = e.target;
             first.__set("content", t.get("content"));
             first.__set("value", t.get("value"));
         },
-        value:function(e) {
-            var first = this,t = e.target;
+        value:function (e) {
+            var first = this, t = e.target;
             first.__set("value", t.get("value"));
         }
     };
@@ -36,7 +36,7 @@ KISSY.add("button/split", function(S) {
     };
 
     S.extend(Split, S.Base, {
-        render:function() {
+        render:function () {
             var self = this,
                 eventType = self.get("eventType"),
                 eventHandler = handles[self.get("eventHandler")],

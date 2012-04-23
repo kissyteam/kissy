@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>KISSY Menu Demo</title>
-<link href="../button/assets/common.css" rel="stylesheet"/>
+<link href="../../build/css/base.css" rel="stylesheet"/>
 <link href="assets/menu.css" rel="stylesheet"/>
 <link href="assets/menuitem.css" rel="stylesheet"/>
 <link href="assets/submenu.css" rel="stylesheet"/>
@@ -20,39 +20,58 @@
         padding: 0 5px;
     }
 </style>
+<style>
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
+    }
+</style>
 </head>
 <body>
+<div id="wrap">
+    <h1 id="describe">普通菜单</h1>
 
-<h1 id="describe">普通菜单</h1>
+    <div id="menuitem_container" style="width:200px;position:relative;height:150px;">
 
-<div id="menuitem_container" style="width:200px;position:relative;height:150px;">
+    </div>
+    <label>禁用：<input type="checkbox" id='dis'/></label>
 
+    <h1>可过滤菜单</h1>
+
+    <a target="_blank" href="./demo/filtermenu.html">filtermenu demo</a>
+    <br>
+    <a target="_blank" href="./demo/contextmenu.html">contextmenu demo</a>
+    <br>
+    <a target="_blank" href="./demo/topmenu.html">topmenu demo</a>
+    <br>
+    <a target="_blank" href="./demo/mouse-menubutton.html">another menubutton demo</a>
+    <br>
+    <a target="_blank" href="./demo/large.html">large data test</a>
+    <h2>known issue</h2>
+    <ol>
+        <li>
+            <del>点击文档不能关闭子菜单</del>
+        </li>
+        <li>
+            <del>鼠标脱离菜单，菜单自动隐藏（需配置）</del>
+        </li>
+        <li>
+            同级 menuitem 太多 ie 性能不行
+        </li>
+    </ol>
 </div>
-<label>禁用：<input type="checkbox" id='dis'/></label>
-
-<h1>可过滤菜单</h1>
-
-<a target="_blank" href="./demo/filtermenu.html">filtermenu demo</a>
-<br>
-<a target="_blank" href="./demo/contextmenu.html">contextmenu demo</a>
-<br>
-<a target="_blank" href="./demo/topmenu.html">topmenu demo</a>
-<br>
-<a target="_blank" href="./demo/mouse-menubutton.html">another menubutton demo</a>
-<br>
-<a target="_blank" href="./demo/large.html">large data test</a>
-<h2>known issue</h2>
-<ol>
-    <li>
-        <del>点击文档不能关闭子菜单</del>
-    </li>
-    <li>
-        <del>鼠标脱离菜单，菜单自动隐藏（需配置）</del>
-    </li>
-    <li>
-        同级 menuitem 太多 ie 性能不行
-    </li>
-</ol>
 <script src="../../build/kissy.js"></script>
 <script src="./demo/delmenuitemrender.js"></script>
 <script src="./demo/delmenuitem.js"></script>
@@ -60,7 +79,7 @@
 
     KISSY.Config.tag = Math.random();
     KISSY.use("node,menu,menu/delmenuitem",
-            function (S, Node, Menu,DelMenuItem) {
+            function (S, Node, Menu, DelMenuItem) {
                 //view
                 //render to container : button_container
 
