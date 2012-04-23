@@ -6,20 +6,26 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 
     function getMenuChildren(self) {
         // 需要初始化 menu
-        var m = self._getMenu(1);
+        var m = self.getMenu(1);
         return m && m.get("children") || [];
     }
 
-
+    /**
+     * Select component which supports single selection from a drop down menu
+     * with semantics similar to native HTML select.
+     * @class
+     * @memberOf MenuButton
+     */
     var Select = UIBase.create(MenuButton, {
 
             /**
+             * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
              * @protected
              */
-            __bindMenu:function () {
+            bindMenu:function () {
                 var self = this,
-                    menu = self._getMenu();
-                Select.superclass.__bindMenu.call(self);
+                    menu = self.getMenu();
+                Select.superclass.bindMenu.call(self);
                 if (menu) {
                     menu.on("show", self._handleMenuShow, self);
                 }
@@ -32,26 +38,43 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
                 var self = this, m = self.get("menu");
                 m.set("highlightedItem", self.get("selectedItem") || m.getChildAt(0));
             },
-            /**
-             * @private
-             */
+
             _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
                 self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
-            _handleMenuClick:function (e) {
+
+            /**
+             * Handle click on drop down menu.
+             * Set selected menu item as current selectedItem and hide drop down menu.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             * @override
+             * @param {Event.Object} e
+             */
+            handleMenuClick:function (e) {
                 var self = this;
                 self.set("selectedItem", e.target);
                 self.set("collapsed", true);
-                Select.superclass._handleMenuClick.call(self, e);
+                Select.superclass.handleMenuClick.call(self, e);
             },
 
+            /**
+             * Removes all menu items from current select, and set selectedItem to null.
+             * @override
+             */
             removeItems:function () {
                 var self = this;
                 Select.superclass.removeItems.apply(self, arguments);
                 self.set("selectedItem", null);
             },
+
+            /**
+             * Remove specified item from current select.
+             * If specified item is selectedItem, then set selectedItem to null.
+             * @override
+             */
             removeItem:function (c) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
@@ -59,12 +82,14 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
                     self.set("selectedItem", null);
                 }
             },
+
             _uiSetSelectedItem:function (v, ev) {
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
                 }
                 this._updateCaption();
             },
+
             _uiSetDefaultCaption:function () {
                 this._updateCaption();
             }
@@ -93,14 +118,18 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
                     }
                 },
 
-
-                // @inheritedDoc  from button
-                // content :{}
-
+                /**
+                 * Selected option of current select component.
+                 * @type Menu.Option
+                 */
                 selectedItem:{
                 },
 
                 // 只是 selectedItem 的一个视图，无状态
+                /**
+                 * SelectedIndex of current select component.
+                 * @type Number
+                 */
                 selectedIndex:{
                     setter:function (index) {
                         var self = this,
@@ -118,13 +147,22 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
                     }
                 },
 
+                /**
+                 * Default caption to be shown when no option is selected.
+                 * @type String
+                 */
                 defaultCaption:{
                     value:""
                 }
             }
-        }
-    );
+        }, "Menu_Select");
 
+
+    /**
+     * Generate a select component from native select element.
+     * @param {HTMLElement} element Native html select element.
+     * @param {Object} cfg Extra configuration for current select component.
+     */
     Select.decorate = function (element, cfg) {
         element = S.one(element);
         cfg = cfg || {};
@@ -135,16 +173,6 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             selectedItem = null,
             curValue = element.val(),
             options = element.all("option");
-
-        S.mix(cfg, {
-            menu:function () {
-                var m = this.constructMenu();
-                for (var i = 0; i < allItems.length; i++) {
-                    m.addChild(new Option(allItems[i]));
-                }
-                return m;
-            }
-        });
 
         options.each(function (option) {
             var item = {
@@ -162,11 +190,26 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             allItems.push(item);
         });
 
+        S.mix(cfg, {
+            menu:function () {
+                var m = new Menu.PopupMenu(S.mix({
+                    prefixCls:this.get("prefixCls")
+                }, this.get("menuCfg")));
+                for (var i = 0; i < allItems.length; i++) {
+                    m.addChild(new Option(allItems[i]));
+                }
+                return m;
+            }
+        });
+
         var select = new Select(S.mix(cfg, selectedItem));
+
         select.render();
 
         if (name = element.attr("name")) {
-            var input = new Node("<input type='hidden' name='" + name
+            var input = new Node("<input" +
+                " type='hidden'" +
+                " name='" + name
                 + "' value='" + curValue + "'>").insertBefore(element, undefined);
 
             select.on("afterSelectedItemChange", function (e) {
@@ -185,11 +228,6 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
         priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Select
     });
-
-
-    if (1 > 2) {
-        Select._uiSetDefaultCaption();
-    }
 
     return Select;
 

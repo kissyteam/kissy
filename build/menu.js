@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:56
+build time: Apr 23 17:26
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -67,11 +67,13 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
             },
 
             /**
-             * Attempts to handle a keyboard event; returns true if the event was handled,
-             * false otherwise.  If the container is enabled, and a child is highlighted,
-             * calls the child control's {@code handleKeyEvent} method to give the control
+             * Attempts to handle a keyboard event;
+             * returns true if the event was handled,
+             * false otherwise.
+             * If the container is enabled, and a child is highlighted,
+             * calls the child controller's {@code handleKeydown} method to give the control
              * a chance to handle the event first.
-             * @param  e Key event to handle.
+             * @param {Event.Object} e Key event to handle.
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
              */
@@ -148,6 +150,11 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 self.on("hide", onMenuHide, self);
             },
 
+            /**
+             * Whether this menu contains specified html element.
+             * @param {Node} element Html Element to be tested.
+             * @return {Boolean}
+             */
             containsElement:function (element) {
                 var self = this;
 
@@ -174,7 +181,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 return false;
             }
         }, {
-            ATTRS:{
+            ATTRS:/** @lends Menu.prototype*/
+            {
                 visibleMode:{
                     value:"display"
                 },
@@ -192,7 +200,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        });
+        },"Menu");
 
     Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -400,8 +408,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 }
             },
             DefaultRender:FilterMenuRender
-        }
-    );
+        }, "Menu_FilterMenu");
 
     Component.UIStore.setUIConstructorByCssClass("filtermenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
@@ -417,21 +424,21 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
+KISSY.add("menu/filtermenurender", function (S, Node, UIBase, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
     return UIBase.create(MenuRender, {
-        getContentElement:function() {
+        getContentElement:function () {
             return this.get("menuContent");
         },
 
-        getKeyEventTarget:function() {
+        getKeyEventTarget:function () {
             return this.get("filterInput");
         },
-        createDom:function() {
+        createDom:function () {
             var self = this;
             var contentEl = MenuRender.prototype.getContentElement.call(this);
             var filterWrap = self.get("filterWrap");
@@ -456,7 +463,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
         },
 
-        _uiSetLabel:function(v) {
+        _uiSetLabel:function (v) {
             this.get("labelEl").html(v);
         }
     }, {
@@ -467,24 +474,24 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         },
 
         HTML_PARSER:{
-            labelEl:function(el) {
+            labelEl:function (el) {
                 return el.one("." + this.getCssClassWithPrefix(MENU_FILTER))
                     .one("." + this.getCssClassWithPrefix(MENU_FILTER_LABEL))
             },
-            filterWrap:function(el) {
+            filterWrap:function (el) {
                 return el.one("." + this.getCssClassWithPrefix(MENU_FILTER));
             },
-            menuContent:function(el) {
+            menuContent:function (el) {
                 return el.one("." + this.getCssClassWithPrefix(MENU_CONTENT));
             },
-            filterInput:function(el) {
+            filterInput:function (el) {
                 return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
             }
         }
-    });
+    }, "Menu_FilterMenu_Render");
 
 }, {
-    requires:['node','uibase','./menurender']
+    requires:['node', 'uibase', './menurender']
 });/**
  * @fileOverview menu
  * @author yiminghe@gmail.com
@@ -629,7 +636,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 return el.hasClass(cls);
             }
         }
-    });
+    },"Menu_Item");
 
     MenuItem.DefaultRender = MenuItemRender;
 
@@ -714,7 +721,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
         }
-    });
+    }, "Menu_Item_Render");
 }, {
     requires:['node', 'uibase', 'component']
 });/**
@@ -758,7 +765,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         ATTRS:{
             activeItem:{}
         }
-    });
+    },"Menu_Render");
 }, {
     requires:['ua','uibase','component']
 });/**
@@ -895,7 +902,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }
         },
         DefaultRender:PopupMenuRender
-    });
+    },"Menu_PopupMenu");
 
     Component.UIStore.setUIConstructorByCssClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
@@ -914,14 +921,14 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
     return UIBase.create(MenuRender, [
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ]);
+    ],"Menu_PopupMenu_Render");
 }, {
     requires:['ua','uibase','./menurender']
 });/**
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
 
     var Separator = UIBase.create(Component.Controller, {
     }, {
@@ -938,7 +945,7 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
             }
         },
         DefaultRender:SeparatorRender
-    });
+    }, "Menu_Separator");
 
     Component.UIStore.setUIConstructorByCssClass("menuseparator", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
@@ -948,21 +955,21 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase','component','./separatorrender']
+    requires:['uibase', 'component', './separatorrender']
 });/**
  * @fileOverview menu separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
+KISSY.add("menu/separatorrender", function (S, UIBase, Component) {
 
     return UIBase.create(Component.Render, {
-        createDom:function() {
+        createDom:function () {
             this.get("el").attr("role", "separator");
         }
-    });
+    }, "Menu_Separator_Render");
 
 }, {
-    requires:['uibase','component']
+    requires:['uibase', 'component']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -1059,10 +1066,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var menu = getMenu(this);
                 menu && menu.hide();
             },
-            /**
-             * @inheritDoc
-             * Sets a timer to show the submenu
-             **/
+
             handleMouseEnter:function (e) {
                 var self = this;
                 if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
@@ -1198,7 +1202,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             /**
-             * @inheritDoc
+             * @protected
              * Dismisses the submenu on a delay, with the result that the user needs less
              * accuracy when moving to submenus.
              **/
@@ -1219,14 +1223,14 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal:function (ui, el, cls) {
+            decorateChildrenInternal:function (ui, el) {
                 // 不能用 diaplay:none
                 el.css("visibility", "hidden");
                 var docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui({
                     srcNode:el,
-                    prefixCls:cls
+                    prefixCls:self.get("prefixCls")
                 });
                 this.__set("menu", menu);
             },
@@ -1280,8 +1284,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             DefaultRender:SubMenuRender
-        }
-    );
+        }, "Menu_SubMenu");
 
 
     Component.UIStore.setUIConstructorByCssClass("submenu", {
@@ -1300,11 +1303,11 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
+KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
         var SubMenuRender;
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
-            renderUI:function() {
+            renderUI:function () {
                 var self = this,
                     el = self.get("el"),
                     contentEl = self.get("contentEl");
@@ -1313,17 +1316,16 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
                     prefixCls:this.get("prefixCls")
                 }));
             },
-            _uiSetContent:function(v) {
+            _uiSetContent:function (v) {
                 var self = this;
                 SubMenuRender.superclass._uiSetContent.call(self, v);
                 self.get("contentEl").append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             }
-
-        });
+        }, "Menu_SubMenu_Render");
         return SubMenuRender;
     },
     {
-        requires:['uibase','./menuitemrender']
+        requires:['uibase', './menuitemrender']
     });

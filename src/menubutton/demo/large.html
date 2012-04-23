@@ -70,10 +70,17 @@
             var holder = $("#holder");
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var start = S.now();
+
                 for (var i = 0; i < 50; i++) {
                     (function (i) {
 
-                        new MenuButton.Select({
+                        function constructMenu(self) {
+                           return new Menu.PopupMenu(S.mix({
+                                prefixCls:self.get("prefixCls")
+                            }, self.get("menuCfg")));
+                        }
+
+                        var b=new MenuButton.Select({
                             defaultCaption:"请选择",
                             prefixCls:"c2c-",
                             render:holder,
@@ -89,7 +96,7 @@
                                 }
                             },
                             menu:function () {
-                                var m = this.constructMenu();
+                                var m = constructMenu(b);
                                 for (var j = 0; j < 10; j++) {
                                     m.addChild(new MenuButton.Option({
                                         prefixCls:"c2c-",

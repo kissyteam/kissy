@@ -37,21 +37,20 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
         },
 
         // 生成一个组件
-        decorateChildrenInternal:function (UI, c, prefixCls) {
+        decorateChildrenInternal:function (UI, c) {
             this.addChild(new UI({
                 srcNode:c,
-                prefixCls:prefixCls
+                prefixCls:self.get("prefixCls")
             }));
         },
 
         // container 需要在装饰时对儿子特殊处理，递归装饰
         decorateChildren:function (el) {
             var self = this,
-                children = el.children(),
-                prefixCls = self.get("prefixCls");
+                children = el.children();
             children.each(function (c) {
                 var UI = self.findUIConstructorByNode(c);
-                self.decorateChildrenInternal(UI, c, prefixCls);
+                self.decorateChildrenInternal(UI, c);
             });
         }
     });

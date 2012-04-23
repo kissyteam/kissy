@@ -113,7 +113,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 return el.hasClass(cls);
             }
         }
-    });
+    },"Menu_Item");
 
     MenuItem.DefaultRender = MenuItemRender;
 

@@ -2,7 +2,7 @@
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
+KISSY.add("menubutton/menubuttonrender", function (S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
@@ -13,7 +13,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
 
-        createDom:function() {
+        createDom:function () {
             var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
                     content:this.get("content") || "",
@@ -25,20 +25,20 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetContent:function(v) {
+        _uiSetContent:function (v) {
             var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
         },
 
-        _uiSetCollapsed:function(v) {
+        _uiSetCollapsed:function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
-        _uiSetActiveItem:function(v) {
+        _uiSetActiveItem:function (v) {
             this.get("el").attr("aria-activedescendant",
                 (v && v.get("el").attr("id")) || "");
         }
@@ -49,7 +49,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             collapsed:{
             }
         }
-    });
+    }, "MenuButton_Render");
 }, {
-    requires:['uibase','button']
+    requires:['uibase', 'button']
 });

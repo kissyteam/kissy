@@ -187,8 +187,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                 }
             },
             DefaultRender:FilterMenuRender
-        }
-    );
+        }, "Menu_FilterMenu");
 
     Component.UIStore.setUIConstructorByCssClass("filtermenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,

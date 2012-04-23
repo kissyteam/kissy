@@ -71,7 +71,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
         }
-    });
+    }, "Menu_Item_Render");
 }, {
     requires:['node', 'uibase', 'component']
 });

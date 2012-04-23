@@ -195,7 +195,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        });
+        },"Menu");
 
     Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

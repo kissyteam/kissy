@@ -251,14 +251,14 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal:function (ui, el, cls) {
+            decorateChildrenInternal:function (ui, el) {
                 // 不能用 diaplay:none
                 el.css("visibility", "hidden");
                 var docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui({
                     srcNode:el,
-                    prefixCls:cls
+                    prefixCls:self.get("prefixCls")
                 });
                 this.__set("menu", menu);
             },
@@ -312,8 +312,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             },
 
             DefaultRender:SubMenuRender
-        }
-    );
+        }, "Menu_SubMenu");
 
 
     Component.UIStore.setUIConstructorByCssClass("submenu", {

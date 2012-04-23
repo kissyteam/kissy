@@ -2,7 +2,7 @@
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
 
     var Separator = UIBase.create(Component.Controller, {
     }, {
@@ -19,7 +19,7 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
             }
         },
         DefaultRender:SeparatorRender
-    });
+    }, "Menu_Separator");
 
     Component.UIStore.setUIConstructorByCssClass("menuseparator", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
@@ -29,5 +29,5 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase','component','./separatorrender']
+    requires:['uibase', 'component', './separatorrender']
 });

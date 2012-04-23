@@ -39,7 +39,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         ATTRS:{
             activeItem:{}
         }
-    });
+    },"Menu_Render");
 }, {
     requires:['ua','uibase','component']
 });

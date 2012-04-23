@@ -132,7 +132,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }
         },
         DefaultRender:PopupMenuRender
-    });
+    },"Menu_PopupMenu");
 
     Component.UIStore.setUIConstructorByCssClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
