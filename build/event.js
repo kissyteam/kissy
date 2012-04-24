@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 24 18:24
 */
 /**
  * @fileOverview responsible for registering event
@@ -2004,7 +2004,9 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
                 publish = getEventPublishObj(self);
             type = trim(type);
             if (type) {
-                publish[type] = cfg;
+                splitAndRun(type, function (t) {
+                    publish[t] = cfg;
+                });
             }
         },
 
