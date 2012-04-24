@@ -1,0 +1,28 @@
+<script type="text/javascript" src="../../../../build/seed.js"></script>
+<script type="text/javascript" src="../../../../build/ua.js"></script>
+<script type="text/javascript" src="../../../../build/dom.js"></script>
+<script type="text/javascript" src="../../../../build/event.js"></script>
+<script type="text/javascript" src="../../../../build/json.js"></script>
+<script type="text/javascript" src="../../base.js"></script>
+<script type="text/javascript" src="../../xhrobject.js"></script>
+<script type="text/javascript" src="../../iframe-upload.js"></script>
+<script type="text/javascript" src="../../form-serializer.js"></script>
+<script type="text/javascript" src="../../form.js"></script>
+<script type="text/javascript" src="../../jsonp.js"></script>
+<script type="text/javascript" src="../../script.js"></script>
+<script type="text/javascript" src="../../xhr.js"></script>
+<script type="text/javascript" src="../../xdr.js"></script>
+<script type="text/javascript" src="../../../ajax.js"></script>
+<script type="text/javascript" src="../../subdomain.js"></script>
+<script type="text/javascript" src="../../xhrbase.js"></script>
+<script type="text/javascript">
+    KISSY.use("ajax",function(S,io){
+        io({
+            url:'../ajax-json.php',
+            dataType:'json',
+            success:function(){
+                throw new Error("hahahah !");
+            }
+        });
+    });
+</script>

@@ -8878,7 +8878,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhrbase", function(S, io) {
+KISSY.add("ajax/xhrbase", function (S, io) {
     var OK_CODE = 200,
         win = window,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -8893,7 +8893,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
     function createStandardXHR(_, refWin) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
-        } catch(e) {
+        } catch (e) {
             //S.log("createStandardXHR error");
         }
         return undefined;
@@ -8902,13 +8902,13 @@ KISSY.add("ajax/xhrbase", function(S, io) {
     function createActiveXHR(_, refWin) {
         try {
             return new (refWin || win)['ActiveXObject']("Microsoft.XMLHTTP");
-        } catch(e) {
+        } catch (e) {
             S.log("createActiveXHR error");
         }
         return undefined;
     }
 
-    XhrBase.xhr = win.ActiveXObject ? function(crossDomain, refWin) {
+    XhrBase.xhr = win.ActiveXObject ? function (crossDomain, refWin) {
         if (crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
@@ -8921,7 +8921,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
     }
 
     S.mix(XhrBase.proto, {
-        sendInternal:function() {
+        sendInternal:function () {
 
             var self = this,
                 xhrObj = self.xhrObj,
@@ -8959,7 +8959,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
                         xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                     }
                 }
-            } catch(e) {
+            } catch (e) {
                 S.log("setRequestHeader in xhr error : ");
                 S.log(e);
             }
@@ -8971,37 +8971,39 @@ KISSY.add("ajax/xhrbase", function(S, io) {
             } else {
                 // _XDomainRequest 单独的回调机制
                 if (isInstanceOfXDomainRequest(xhr)) {
-                    xhr.onload = function() {
+                    xhr.onload = function () {
                         xhr.readyState = 4;
                         xhr.status = 200;
                         self._callback();
                     };
-                    xhr.onerror = function() {
+                    xhr.onerror = function () {
                         xhr.readyState = 4;
                         xhr.status = 500;
                         self._callback();
                     };
                 } else {
-                    xhr.onreadystatechange = function() {
+                    xhr.onreadystatechange = function () {
                         self._callback();
                     };
                 }
             }
         },
         // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-        abort:function() {
+        abort:function () {
             this._callback(0, 1);
         },
 
-        _callback:function(event, abort) {
+        _callback:function (event, abort) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+            var self = this,
+                xhr = self.xhr,
+                xhrObj = self.xhrObj,
+                c = xhrObj.config;
+
             try {
-                var self = this,
-                    xhr = self.xhr,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
+
                 //abort or complete
                 if (abort || xhr.readyState == 4) {
 
@@ -9019,6 +9021,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
                         if (xhr.readyState !== 4) {
                             xhr.abort();
                         }
+                        return;
                     } else {
                         var status = xhr.status;
 
@@ -9039,9 +9042,9 @@ KISSY.add("ajax/xhrbase", function(S, io) {
                         // statusText for faulty cross-domain requests
                         try {
                             var statusText = xhr.statusText;
-                        } catch(e) {
-                            S.log("xhr statustext error : ");
-                            S.log(e);
+                        } catch (e) {
+                            S.log("xhr statustext error : ", "error");
+                            S.log(e, "error");
                             // We normalize with Webkit giving an empty statusText
                             statusText = "";
                         }
@@ -9056,9 +9059,6 @@ KISSY.add("ajax/xhrbase", function(S, io) {
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
-
-                        xhrObj.callback(status, statusText);
-
                     }
                 }
             } catch (firefoxAccessException) {
@@ -9066,6 +9066,11 @@ KISSY.add("ajax/xhrbase", function(S, io) {
                 if (!abort) {
                     xhrObj.callback(-1, firefoxAccessException);
                 }
+                return;
+            }
+
+            if (xhr.readyState == 4) {
+                xhrObj.callback(status, statusText);
             }
         }
     });

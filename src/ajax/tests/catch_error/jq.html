@@ -1,0 +1,11 @@
+<script type="text/javascript" src="http://localhost/lib/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+    $.ajax({
+        url:'../ajax-json.php',
+        dataType:'json',
+        success:function () {
+            throw new Error("hahahah !");
+        }
+    });
+</script>

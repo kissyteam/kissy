@@ -4,7 +4,7 @@
     header("Pragma: no-cache");
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Credentials: true");
-    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Origin: http://chengyu.taobao.ali.com");
     header("Access-Control-Allow-Headers: Content-Type, *");
   
     echo '{"'.$_REQUEST["action"].'":1}';
