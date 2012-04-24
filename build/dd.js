@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Mar 28 11:38
+build time: Apr 24 20:15
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -1371,7 +1371,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
-        win = S.Env.host,
+        win = window,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,

@@ -100,21 +100,6 @@
                 Droppable = DD.Droppable,
                 Proxy = DD.Proxy;
 
-
-        var p;
-        /**
-         * 集中监听所有
-         */
-        DDM.on("dragstart", function(ev) {
-
-            var c = ev.drag;
-            p = c.get("dragNode").css("position");
-        });
-        DDM.on("dragend", function(ev) {
-            var c = ev.drag;
-            c.get("dragNode").css("position", p);
-        });
-
         /**
          * 拖放排序
          */

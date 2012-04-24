@@ -5,7 +5,7 @@
 KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
-        win = S.Env.host,
+        win = window,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
