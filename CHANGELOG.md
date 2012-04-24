@@ -34,6 +34,7 @@ History:
  - [+] Event.on 支持 data 绑定
  - [x] Event.delegate 重构，fix #76
  - [*] valuechange 透明支持 webkitspeechchange 事件
+ - [*] publish 支持空格分隔的多个事件名字符串
 
  - [+] io 调用返回 Promise 类型，可以进行链式操作
  - [+] io 增加 formdata 上传示例
