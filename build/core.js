@@ -9021,7 +9021,6 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                         if (xhr.readyState !== 4) {
                             xhr.abort();
                         }
-                        return;
                     } else {
                         var status = xhr.status;
 
@@ -9059,18 +9058,15 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
+                        xhrObj.callback(status, statusText);
                     }
                 }
             } catch (firefoxAccessException) {
+                S.log(firefoxAccessException.stack || firefoxAccessException, "error");
                 xhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj.callback(-1, firefoxAccessException);
                 }
-                return;
-            }
-
-            if (xhr.readyState == 4) {
-                xhrObj.callback(status, statusText);
             }
         }
     });

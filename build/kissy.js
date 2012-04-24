@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Apr 24 11:08
+build time: Apr 24 11:58
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Apr 24 11:08
          */
         version:'1.20',
 
-        buildTime:'20120424110855',
+        buildTime:'20120424115835',
 
         /**
          * Returns a new object containing all of the properties of
@@ -11943,7 +11943,6 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                         if (xhr.readyState !== 4) {
                             xhr.abort();
                         }
-                        return;
                     } else {
                         var status = xhr.status;
 
@@ -11981,18 +11980,15 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
+                        xhrObj.callback(status, statusText);
                     }
                 }
             } catch (firefoxAccessException) {
+                S.log(firefoxAccessException.stack || firefoxAccessException, "error");
                 xhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj.callback(-1, firefoxAccessException);
                 }
-                return;
-            }
-
-            if (xhr.readyState == 4) {
-                xhrObj.callback(status, statusText);
             }
         }
     });
