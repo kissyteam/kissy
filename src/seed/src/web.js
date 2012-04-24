@@ -94,11 +94,7 @@
              */
             ready:function (fn) {
 
-                function f() {
-                    fn(S);
-                }
-
-                readyPromise.then(f);
+                readyPromise.then(fn);
 
                 return this;
             },
