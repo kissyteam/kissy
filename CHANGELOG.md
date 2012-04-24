@@ -77,6 +77,8 @@ History:
 
  - [+] 增加 autocomplete/combobox 组件
 
+ - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
+
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
 

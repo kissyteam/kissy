@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 24 15:10
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -15,6 +15,7 @@ KISSY.add('template', function (S) {
         // start/end tag mark
         tagStartEnd = {
             '#':'start',
+            '@':'start',
             '/':'end'
         },
 
@@ -62,12 +63,11 @@ KISSY.add('template', function (S) {
                 // escape escape ... . in case \ is consumed when run tpl parser function
                 // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
-                .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
+                .replace(/\{\{([#/@]?)(?!\}\})([^}]*)\}\}/g,
                 function (all, expr, body) {
                     _parser = "";
                     // must restore quote , if str is used as code directly
                     body = restoreQuote(trim(body));
-                    //body = trim(body);
                     // is an expression
                     if (expr) {
                         _empty_index = body.indexOf(' ');
@@ -95,7 +95,7 @@ KISSY.add('template', function (S) {
                     else {
                         _parser = KS_TEMPL +
                             '.push(' +
-                            // prevent variable undefined error when look up in with ,simple variable substitution
+                            // prevent variable undefined error when look up in with, simple variable substitution
                             // with({}){alert(x);} => ReferenceError: x is not defined
                             'typeof (' + body + ') ==="undefined"?"":' + body +
                             ');';
@@ -223,6 +223,10 @@ KISSY.add('template', function (S) {
 
 });
 /**
+ * 2012-04-24 yiminghe@gmail.com
+ *      - support {{@if test}}t{{/if}} to prevent collision with velocity template engine
+ *
+ *
  * 2011-09-20 note by yiminghe :
  *      - code style change
  *      - remove reg cache , ugly to see
