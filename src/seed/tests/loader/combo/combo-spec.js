@@ -2,20 +2,28 @@ describe("KISSY ComboLoader", function () {
     var S = KISSY,
         ComboLoader = S.Loader.Combo;
 
-    S.config({
-        combine:true,
-        map:[
-            [/\?t=.*/, ""]
-        ]
-    });
 
     it("should works simply", function () {
+
+        var p = S.config("packages");
+        for (var i in p) {
+            delete p[i];
+        }
+
+        S.config({
+            combine:true,
+            map:[
+                [/\?t=.*/, ""]
+            ]
+        });
+
         var ret = 0;
+
         S.config({
             packages:[
                 {
                     name:'tests3',
-                    path:'./'
+                    path:'/kissy_git/kissy/src/seed/tests/loader/combo/'
                 }
             ]
         });
@@ -26,6 +34,9 @@ describe("KISSY ComboLoader", function () {
             },
             "tests3/b":{
                 requires:["./c", "dom"]
+            },
+            dom:{
+                requires:['ua']
             }
         });
 
@@ -41,6 +52,9 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("should calculate rightly", function () {
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
         S.Env.mods = {};
         var l = new ComboLoader(S);
         l.add({
@@ -66,6 +80,9 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("should trunk url automatically", function () {
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
         S.Env.mods = {};
         var x = {}, k = 3000;
         for (var i = 0; i < 100; i++) {
@@ -94,7 +111,11 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("should works for native mod", function () {
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
         S.Env.mods = {};
+        S.DOM = null;
         S.add({
             dom:{requires:['ua']}
         });
@@ -104,16 +125,25 @@ describe("KISSY ComboLoader", function () {
         waitsFor(function () {
             return S.DOM;
         });
+
     });
 
     it("should works for packages", function () {
+
+        var p = S.config("packages");
+        for (var i in p) {
+            delete p[i];
+        }
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
         S.Env.mods = {};
 
         S.config({
             packages:[
                 {
                     name:'tests',
-                    path:'./'
+                    path:'/kissy_git/kissy/src/seed/tests/loader/combo/'
                 }
             ]
         });
@@ -126,8 +156,7 @@ describe("KISSY ComboLoader", function () {
             },
             dom:{
                 requires:['ua']
-            },
-            x:{}
+            }
         });
 
         S.DOM = null;
@@ -142,13 +171,21 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("should works for multiple use at the same time", function () {
+
+        var p = S.config("packages");
+        for (var i in p) {
+            delete p[i];
+        }
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
         S.Env.mods = {};
 
         S.config({
             packages:[
                 {
                     name:'tests2',
-                    path:'./'
+                    path:'/kissy_git/kissy/src/seed/tests/loader/combo/'
                 }
             ]
         });
@@ -190,5 +227,47 @@ describe("KISSY ComboLoader", function () {
         runs(function () {
             expect(order).toEqual([1, 2]);
         });
+    });
+
+
+    it("should load mod not config", function () {
+        var p = S.config("packages");
+        for (var i in p) {
+            delete p[i];
+        }
+
+        S.Env.mods = {};
+
+        S.config({
+            packages:[
+                {
+                    name:'tests4',
+                    path:'/kissy_git/kissy/src/seed/tests/loader/combo/'
+                }
+            ]
+        });
+
+        S.DOM = null;
+
+        var ret = 0;
+
+        S.use('tests4/a', function (S, a) {
+            ret = 9;
+        });
+
+        waitsFor(function () {
+            return S.DOM && (ret === 9);
+        });
+    });
+
+    it("clean", function () {
+        S.config({
+            combine:false
+        });
+        S.config("map").length = 0;
+        var p = S.config("packages");
+        for (var i in p) {
+            delete p[i];
+        }
     });
 });

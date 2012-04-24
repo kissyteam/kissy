@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 18:24
+build time: Apr 24 21:27
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -597,7 +597,7 @@ build time: Apr 24 18:24
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120424182431';
+        S.__BUILD_TIME = '20120424212716';
     })();
 
     return S;
@@ -2496,7 +2496,8 @@ build time: Apr 24 18:24
         },
 
         attachMod:function (self, mod) {
-            if (mod.status == data.ATTACHED) {
+
+            if (mod.status != data.LOADED) {
                 return;
             }
 
@@ -3475,9 +3476,9 @@ build time: Apr 24 18:24
                     // 检测到 a 已经 attach 则调用该函数
                     // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
                     utils.isAttached(SS, newRequires)) {
-                if (mod.status == LOADED) {
-                    utils.attachMod(SS, mod);
-                }
+
+                utils.attachMod(SS, mod);
+
                 if (mod.status == ATTACHED) {
                     callbackBeCalled = 1;
                     callback();
@@ -4059,7 +4060,7 @@ build time: Apr 24 18:24
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120424182431'
+        tag:'20120424212716'
     }, getBaseInfo()));
 
     /**

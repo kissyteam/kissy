@@ -223,9 +223,9 @@
                     // 检测到 a 已经 attach 则调用该函数
                     // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
                     utils.isAttached(SS, newRequires)) {
-                if (mod.status == LOADED) {
-                    utils.attachMod(SS, mod);
-                }
+
+                utils.attachMod(SS, mod);
+
                 if (mod.status == ATTACHED) {
                     callbackBeCalled = 1;
                     callback();

@@ -263,7 +263,8 @@
         },
 
         attachMod:function (self, mod) {
-            if (mod.status == data.ATTACHED) {
+
+            if (mod.status != data.LOADED) {
                 return;
             }
 
