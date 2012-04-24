@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 12:31
+build time: Apr 24 16:50
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 24 12:31
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120424123143';
+        S.__BUILD_TIME = '20120424165010';
     })();
 
     return S;
@@ -2372,20 +2372,22 @@ build time: Apr 24 12:31
         // 注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, fn, config) {
             config = config || {};
+            var mods = self.Env.mods,
+                mod = mods[name];
+
+            if (mod && mod.fn) {
+                S.log(name + " is defined more than once");
+                return;
+            }
 
             utils.createModuleInfo(self, name);
 
-            var mods = self.Env.mods,
-                mod = mods[name];
+            mod = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-            if (mod.fn) {
-                S.log(name + " is defined more than once");
-                return;
-            }
 
             mod.fn = fn;
 
@@ -3858,7 +3860,7 @@ build time: Apr 24 12:31
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120424123143'
+        tag:'20120424165010'
     }, getBaseInfo()));
 
     /**
@@ -18096,7 +18098,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 24 15:10
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -18110,6 +18112,7 @@ KISSY.add('template', function (S) {
         // start/end tag mark
         tagStartEnd = {
             '#':'start',
+            '@':'start',
             '/':'end'
         },
 
@@ -18157,12 +18160,11 @@ KISSY.add('template', function (S) {
                 // escape escape ... . in case \ is consumed when run tpl parser function
                 // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
-                .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
+                .replace(/\{\{([#/@]?)(?!\}\})([^}]*)\}\}/g,
                 function (all, expr, body) {
                     _parser = "";
                     // must restore quote , if str is used as code directly
                     body = restoreQuote(trim(body));
-                    //body = trim(body);
                     // is an expression
                     if (expr) {
                         _empty_index = body.indexOf(' ');
@@ -18190,7 +18192,7 @@ KISSY.add('template', function (S) {
                     else {
                         _parser = KS_TEMPL +
                             '.push(' +
-                            // prevent variable undefined error when look up in with ,simple variable substitution
+                            // prevent variable undefined error when look up in with, simple variable substitution
                             // with({}){alert(x);} => ReferenceError: x is not defined
                             'typeof (' + body + ') ==="undefined"?"":' + body +
                             ');';
@@ -18318,6 +18320,10 @@ KISSY.add('template', function (S) {
 
 });
 /**
+ * 2012-04-24 yiminghe@gmail.com
+ *      - support {{@if test}}t{{/if}} to prevent collision with velocity template engine
+ *
+ *
  * 2011-09-20 note by yiminghe :
  *      - code style change
  *      - remove reg cache , ugly to see

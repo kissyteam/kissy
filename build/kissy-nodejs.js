@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 12:31
+build time: Apr 24 16:50
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -597,7 +597,7 @@ build time: Apr 24 12:31
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120424123143';
+        S.__BUILD_TIME = '20120424165010';
     })();
 
     return S;
@@ -2571,20 +2571,22 @@ build time: Apr 24 12:31
         // 注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, fn, config) {
             config = config || {};
+            var mods = self.Env.mods,
+                mod = mods[name];
+
+            if (mod && mod.fn) {
+                S.log(name + " is defined more than once");
+                return;
+            }
 
             utils.createModuleInfo(self, name);
 
-            var mods = self.Env.mods,
-                mod = mods[name];
+            mod = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-            if (mod.fn) {
-                S.log(name + " is defined more than once");
-                return;
-            }
 
             mod.fn = fn;
 
@@ -4057,7 +4059,7 @@ build time: Apr 24 12:31
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120424123143'
+        tag:'20120424165010'
     }, getBaseInfo()));
 
     /**

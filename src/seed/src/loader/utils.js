@@ -338,20 +338,22 @@
         // 注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, fn, config) {
             config = config || {};
+            var mods = self.Env.mods,
+                mod = mods[name];
+
+            if (mod && mod.fn) {
+                S.log(name + " is defined more than once");
+                return;
+            }
 
             utils.createModuleInfo(self, name);
 
-            var mods = self.Env.mods,
-                mod = mods[name];
+            mod = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-            if (mod.fn) {
-                S.log(name + " is defined more than once");
-                return;
-            }
 
             mod.fn = fn;
 

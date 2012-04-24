@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Demo - SplitButton</title>
+<link href="http://a.tbcdn.cn/s/kissy/1.2.0/css/base.css" rel="stylesheet"/>
+<link href="../../button/demo/splitbutton.html" rel="stylesheet"/>
+<link href="../assets/custombutton.css" rel="stylesheet"/>
+<link href="../../menubutton/assets/menubutton.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<style>
+    .goog-button-collapse-left .goog-menu-button-caption {
+        text-indent: -999px;
+    }
+</style>
+</head>
+<body>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/buttonrender.js"></script>
+<script src="../src/customrender.js"></script>
+<script src="../src/split.js"></script>
+<script src="../src/button.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        KISSY.use("menubutton,button,menu", function (S, MenuButton, Button, Menu) {
+            var $ = S.all;
+
+            var b = new Button({
+                prefixCls:"goog-",
+                content:"已买到的宝贝"
+            });
+
+            var mb = new MenuButton({
+                prefixCls:"goog-",
+                content:"请选择"
+            });
+
+            mb.addItem(new Menu.Item({content:"已买到的宝贝",
+                prefixCls:"goog-"}));
+
+            mb.addItem(new Menu.Item({content:"已卖出的宝贝",
+                prefixCls:"goog-"}));
+
+
+            // 渲染为一组分离按钮
+            new Button.Split({
+                first:b,
+                second:mb
+            }).render();
+
+
+            b.on("click", function () {
+                alert(b.get("content") + " : clicked");
+            });
+
+        });
+    });
+</script>
+</body>
+</html>
