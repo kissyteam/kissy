@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 24 11:42
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 23 11:53
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120423115339';
+        S.__BUILD_TIME = '20120424114239';
     })();
 
     return S;
@@ -1710,7 +1710,8 @@ build time: Apr 23 11:53
             try {
                 return fulfilled ? fulfilled(value) : value;
             } catch (e) {
-                S.log(e,"error");
+                // print stack info for firefox/chrome
+                S.log(e.stack || e, "error");
                 return new Reject(e);
             }
         }
@@ -1719,7 +1720,8 @@ build time: Apr 23 11:53
             try {
                 return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
-                S.log(e,"error");
+                // print stack info for firefox/chrome
+                S.log(e.stack || e, "error");
                 return new Reject(e);
             }
         }
@@ -2955,8 +2957,7 @@ build time: Apr 23 11:53
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var self = this,
-            SS = self.SS,
+        var SS = self.SS,
             base,
             scripts = S.Env.host.document.getElementsByTagName("script"),
             re,
@@ -3003,6 +3004,7 @@ build time: Apr 23 11:53
             }
         }
         S.log("interactive script does not have package config ：" + src, "error");
+        return undefined;
     }
 
 })(KISSY);
@@ -3856,7 +3858,7 @@ build time: Apr 23 11:53
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120423115339'
+        tag:'20120424114239'
     }, getBaseInfo()));
 
     /**
@@ -3966,15 +3968,7 @@ build time: Apr 23 11:53
             ready:function (fn) {
 
                 function f() {
-                    try {
-                        fn(S);
-                    } catch (e) {
-                        // print stack info for firefox/chrome
-                        S.log(e.stack, "error");
-                        if (S.Config.debug) {
-                            throw e;
-                        }
-                    }
+                    fn(S);
                 }
 
                 readyPromise.then(f);

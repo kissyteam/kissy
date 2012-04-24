@@ -227,7 +227,8 @@
             try {
                 return fulfilled ? fulfilled(value) : value;
             } catch (e) {
-                S.log(e,"error");
+                // print stack info for firefox/chrome
+                S.log(e.stack || e, "error");
                 return new Reject(e);
             }
         }
@@ -236,7 +237,8 @@
             try {
                 return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
-                S.log(e,"error");
+                // print stack info for firefox/chrome
+                S.log(e.stack || e, "error");
                 return new Reject(e);
             }
         }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: Apr 24 11:42
 */
 /**
  * @fileOverview form data  serialization util
@@ -1084,7 +1084,6 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (firefoxAccessException) {
-                S.log(firefoxAccessException, "error");
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj._xhrReady(-1, firefoxAccessException);

@@ -187,7 +187,6 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (firefoxAccessException) {
-                S.log(firefoxAccessException, "error");
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
                     xhrObj._xhrReady(-1, firefoxAccessException);

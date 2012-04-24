@@ -95,15 +95,7 @@
             ready:function (fn) {
 
                 function f() {
-                    try {
-                        fn(S);
-                    } catch (e) {
-                        // print stack info for firefox/chrome
-                        S.log(e.stack, "error");
-                        if (S.Config.debug) {
-                            throw e;
-                        }
-                    }
+                    fn(S);
                 }
 
                 readyPromise.then(f);
