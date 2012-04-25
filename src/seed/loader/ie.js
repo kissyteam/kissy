@@ -45,16 +45,24 @@
                 === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
-            var packages = self.Config.packages;
+            var packages = self.Config.packages,
+                finalPackagePath,
+                finalPackageLength = -1;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)) {
                     var p_path = packages[p].path;
                     if (packages.hasOwnProperty(p) &&
                         src.lastIndexOf(p_path, 0) === 0) {
-                        return utils.removePostfix(src.substring(p_path.length));
+                        if (p_path.length > finalPackageLength) {
+                            finalPackageLength = p_path.length;
+                            finalPackagePath = p_path;
+                        }
                     }
                 }
+            }
+            if (finalPackagePath) {
+                return utils.removePostfix(src.substring(finalPackagePath.length));
             }
             S.log("interactive script does not have package config ：" + src, "error");
         }

@@ -38,7 +38,7 @@
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)) {
                     if (S.startsWith(modName, p) &&
-                        p.length > pName) {
+                        p.length > pName.length) {
                         pName = p;
                     }
                 }

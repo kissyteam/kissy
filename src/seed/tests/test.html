@@ -9,12 +9,14 @@
 
 <script src="../../../build/seed.js" charset="utf-8"></script>
 <script>
-    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+    KISSY.Config.mappedRules = [];
+    KISSY.Config.combines = {};
 </script>
 <script src="kissy-spec.js"></script>
 <script src="lang-spec.js"></script>
 <script src="web-spec.js"></script>
 <script src="loader-spec.js"></script>
+<script src="./loader/package_path_longest_match/packag-longest-match-spec.js"></script>
 </head>
 <body>
 <h1>KISSY Seed Test Cases</h1>
@@ -27,7 +29,7 @@
 </div>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
+    jasmine.getEnv().execute(function () {
         if (parent && parent.jasmine.kissyNext) {
             parent.jasmine.kissyNext(this.results().failedCount);
         }

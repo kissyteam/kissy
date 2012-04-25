@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Apr 24 20:15
+build time: Apr 25 18:34
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: Apr 24 20:15
          */
         version:'1.20',
 
-        buildTime:'20120424201516',
+        buildTime:'20120425183403',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2185,16 +2185,24 @@ build time: Apr 24 20:15
                 === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
-            var packages = self.Config.packages;
+            var packages = self.Config.packages,
+                finalPackagePath,
+                finalPackageLength = -1;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)) {
                     var p_path = packages[p].path;
                     if (packages.hasOwnProperty(p) &&
                         src.lastIndexOf(p_path, 0) === 0) {
-                        return utils.removePostfix(src.substring(p_path.length));
+                        if (p_path.length > finalPackageLength) {
+                            finalPackageLength = p_path.length;
+                            finalPackagePath = p_path;
+                        }
                     }
                 }
+            }
+            if (finalPackagePath) {
+                return utils.removePostfix(src.substring(finalPackagePath.length));
             }
             S.log("interactive script does not have package config ：" + src, "error");
         }
@@ -2455,7 +2463,7 @@ build time: Apr 24 20:15
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)) {
                     if (S.startsWith(modName, p) &&
-                        p.length > pName) {
+                        p.length > pName.length) {
                         pName = p;
                     }
                 }
