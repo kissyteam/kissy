@@ -14,6 +14,7 @@
         data = Loader.STATUS,
         utils = {},
         host = S.Env.host,
+        win = host,
         doc = host.document,
         loc = host.location,
         // 当前页面所在的目录
@@ -72,7 +73,7 @@
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
                 if (S.startsWith(modName, p) &&
-                    p.length > pName) {
+                    p.length > pName.length) {
                     pName = p;
                 }
             }
@@ -192,6 +193,11 @@
             if (!path.match(/^(http(s)?)|(file):/i) &&
                 !startsWith(path, "/")) {
                 path = __pagePath + path;
+            }
+
+            if (startsWith(path, "/")) {
+                var loc = win.location;
+                path = loc.protocol + "//" + loc.host + path;
             }
 
             return normalizePath(path);

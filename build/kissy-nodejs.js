@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 21:27
+build time: Apr 25 19:09
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -597,7 +597,7 @@ build time: Apr 24 21:27
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120424212716';
+        S.__BUILD_TIME = '20120425190909';
     })();
 
     return S;
@@ -2247,6 +2247,7 @@ build time: Apr 24 21:27
         data = Loader.STATUS,
         utils = {},
         host = S.Env.host,
+        win = host,
         doc = host.document,
         loc = host.location,
         // 当前页面所在的目录
@@ -2305,7 +2306,7 @@ build time: Apr 24 21:27
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
                 if (S.startsWith(modName, p) &&
-                    p.length > pName) {
+                    p.length > pName.length) {
                     pName = p;
                 }
             }
@@ -2425,6 +2426,11 @@ build time: Apr 24 21:27
             if (!path.match(/^(http(s)?)|(file):/i) &&
                 !startsWith(path, "/")) {
                 path = __pagePath + path;
+            }
+
+            if (startsWith(path, "/")) {
+                var loc = win.location;
+                path = loc.protocol + "//" + loc.host + path;
             }
 
             return normalizePath(path);
@@ -3194,16 +3200,25 @@ build time: Apr 24 21:27
         if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
             return utils.removePostfix(src.substring(base.length));
         }
-        var packages = SS.Config.packages;
+        var packages = SS.Config.packages,
+            finalPackagePath,
+            finalPackageLength = -1;
         //外部模块去除包路径，得到模块名
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
                 var p_path = packages[p].path;
                 if (packages.hasOwnProperty(p) &&
                     src.lastIndexOf(p_path, 0) === 0) {
-                    return utils.removePostfix(src.substring(p_path.length));
+                    // longest match
+                    if (p_path.length > finalPackageLength) {
+                        finalPackageLength = p_path.length;
+                        finalPackagePath = p_path;
+                    }
                 }
             }
+        }
+        if (finalPackagePath) {
+            return utils.removePostfix(src.substring(finalPackagePath.length));
         }
         S.log("interactive script does not have package config ：" + src, "error");
         return undefined;
@@ -4060,7 +4075,7 @@ build time: Apr 24 21:27
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120424212716'
+        tag:'20120425190909'
     }, getBaseInfo()));
 
     /**
