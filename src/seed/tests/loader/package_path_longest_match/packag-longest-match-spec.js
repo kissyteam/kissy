@@ -10,11 +10,11 @@ describe("loader package", function () {
             packages:[
                 {
                     name:"test",
-                    path:"/kissy_git/kissy1.2/src/seed/tests/loader/package_path_longest_match/"
+                    path:"http://localhost/kissy_git/kissy1.2/src/seed/tests/loader/package_path_longest_match/"
                 },
                 {
                     name:"test2",
-                    path:"/kissy_git/kissy1.2/src/seed/tests/loader/package_path_longest_match/test/"
+                    path:"http://localhost/kissy_git/kissy1.2/src/seed/tests/loader/package_path_longest_match/test/"
                 }
             ]
         });
