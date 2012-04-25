@@ -149,6 +149,10 @@
         // src 必定是绝对路径
         // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
         // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+        // note:
+        // <script src='/x.js'></script>
+        // ie6-8 => re.src == '/x.js'
+        // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.absoluteFilePath(re.src);
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径
