@@ -4,7 +4,7 @@
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
-    var ieMode = document.documentMode || UA.ie;
+    // var ieMode = document.documentMode || UA.ie;
 
     /*
      inspired by closure library by Google
@@ -23,12 +23,13 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          </div>
          </div>
          **/
-        // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
-        //  In other browsers it only includes elements with position absolute, relative or
-        // fixed, not elements with overflow set to auto or scroll.
-        if (UA.ie && ieMode < 8) {
-            return element.offsetParent;
-        }
+            // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
+            //  In other browsers it only includes elements with position absolute, relative or
+            // fixed, not elements with overflow set to auto or scroll.
+//        if (UA.ie && ieMode < 8) {
+//            return element.offsetParent;
+//        }
+            // 统一的 offsetParent 方法
         var doc = element.ownerDocument,
             body = doc.body,
             positionStyle = DOM.css(element, 'position'),
@@ -188,6 +189,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         // Right edge outside viewport, try to move it.
         if (pos.left + size.width > viewport.right &&
             overflow.adjustX) {
+            // 保证左边界和可视区域左边界对齐
             pos.left = Math.max(viewport.right - size.width, viewport.left);
             status.adjustX = 1;
         }
@@ -216,6 +218,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         // Bottom edge outside viewport, try to move it.
         if (pos.top + size.height > viewport.bottom &&
             overflow.adjustY) {
+            // 保证上边界和可视区域上边界对齐
             pos.top = Math.max(viewport.bottom - size.height, viewport.top);
             status.adjustY = 1;
         }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 25 19:09
+build time: Apr 25 21:51
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 25 19:09
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120425190909';
+        S.__BUILD_TIME = '20120425215125';
     })();
 
     return S;
@@ -2992,6 +2992,10 @@ build time: Apr 25 19:09
         // src 必定是绝对路径
         // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
         // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+        // note:
+        // <script src='/x.js'></script>
+        // ie6-8 => re.src == '/x.js'
+        // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.absoluteFilePath(re.src);
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径
@@ -3876,7 +3880,7 @@ build time: Apr 25 19:09
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120425190909'
+        tag:'20120425215125'
     }, getBaseInfo()));
 
     /**

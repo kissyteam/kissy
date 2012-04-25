@@ -58,7 +58,10 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         // DOM.query("#x")
         else if (isSelectorString) {
             selector = trim(selector);
-            if (contexts.length == 1 && selector) {
+            // shortcut
+            if (simpleContext && selector == "body") {
+                ret = [doc.body]
+            } else if (contexts.length == 1 && selector) {
                 ret = quickFindBySelectorStr(selector, contexts[0]);
             }
         }

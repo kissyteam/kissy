@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: Apr 25 21:44
 */
 /**
  * @fileOverview UIBase.Align
@@ -9,13 +9,15 @@ build time: Apr 23 11:53
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
+    // var ieMode = document.documentMode || UA.ie;
+
     /*
      inspired by closure library by Google
      see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**
-     * 得到影响元素显示的父亲元素
+     * 得到会导致元素显示不全的祖先元素
      */
     function getOffsetParent(element) {
         // ie 这个也不是完全可行
@@ -26,34 +28,30 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          </div>
          </div>
          **/
-//            if (UA['ie']) {
-//                return element.offsetParent;
-//            }
-        var body = element.ownerDocument.body,
+            // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
+            //  In other browsers it only includes elements with position absolute, relative or
+            // fixed, not elements with overflow set to auto or scroll.
+//        if (UA.ie && ieMode < 8) {
+//            return element.offsetParent;
+//        }
+            // 统一的 offsetParent 方法
+        var doc = element.ownerDocument,
+            body = doc.body,
             positionStyle = DOM.css(element, 'position'),
             skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
 
-        for (var parent = element.parentNode;
-             parent && parent != body;
-             parent = parent.parentNode) {
+        if (!skipStatic) {
+            return element.nodeName.toLowerCase() == 'html' ? null : element.parentNode;
+        }
+
+        for (var parent = element.parentNode; parent && parent != body; parent = parent.parentNode) {
 
             positionStyle = DOM.css(parent, 'position');
 
-            skipStatic = skipStatic && positionStyle == 'static';
-
-            var parentOverflow = DOM.css(parent, "overflow");
-
-            // 必须有 overflow 属性，可能会隐藏掉子孙元素
-            if (parentOverflow != 'visible' && (
-                // 元素初始为 fixed absolute ，遇到 父亲不是 定位元素忽略
-                // 否则就可以
-                !skipStatic ||
-                    positionStyle == 'fixed' ||
-                    positionStyle == 'absolute' ||
-                    positionStyle == 'relative'
-                )) {
+            if (positionStyle != "static") {
                 return parent;
             }
+
         }
         return null;
     }
@@ -62,6 +60,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      * 获得元素的显示部分的区域
      */
     function getVisibleRectForElement(element) {
+
         var visibleRect = {
             left:0,
             right:Infinity,
@@ -69,47 +68,44 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             bottom:Infinity
         };
 
+        var doc = element.ownerDocument;
+        var body = doc.body;
+        var documentElement = doc.documentElement;
+
+        // Determine the size of the visible rect by climbing the dom accounting for
+        // all scrollable containers.
         for (var el = element; el = getOffsetParent(el);) {
+            // clientWidth is zero for inline block elements in ie.
+            if ((!UA.ie || el.clientWidth != 0) &&
+                // body may have overflow set on it, yet we still get the entire
+                // viewport. In some browsers, el.offsetParent may be
+                // document.documentElement, so check for that too.
+                (el != body && el != documentElement && DOM.css(el, 'overflow') != 'visible')) {
+                var pos = DOM.offset(el);
+                // add border
+                pos.left += el.clientLeft;
+                pos.top += el.clientTop;
 
-            var clientWidth = el.clientWidth;
-
-            if (
-            // clientWidth is zero for inline block elements in IE.
-                (!UA['ie'] || clientWidth !== 0)
-            // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
-            // && (!UA['webkit'] || clientHeight != 0 || el != body)
-            // overflow 不为 visible 则可以限定其内元素
-            // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
-            // offsetParent 已经判断过了
-            // && DOM.css(el, 'overflow') != 'visible'
-                ) {
-                var clientLeft = el.clientLeft,
-                    clientTop = el.clientTop,
-                    pos = DOM.offset(el),
-                    client = {
-                        left:clientLeft,
-                        top:clientTop
-                    };
-                pos.left += client.left;
-                pos.top += client.top;
-
-                visibleRect.top = Math.max(visibleRect['top'], pos.top);
+                visibleRect.top = Math.max(visibleRect.top, pos.top);
                 visibleRect.right = Math.min(visibleRect.right,
+                    // consider area without scrollBar
                     pos.left + el.clientWidth);
-                visibleRect.bottom = Math.min(visibleRect['bottom'],
+                visibleRect.bottom = Math.min(visibleRect.bottom,
                     pos.top + el.clientHeight);
                 visibleRect.left = Math.max(visibleRect.left, pos.left);
             }
         }
 
-        var scrollX = DOM.scrollLeft(),
-            scrollY = DOM.scrollTop();
-
+        // Clip by window's viewport.
+        var scrollX = DOM.scrollLeft(), scrollY = DOM.scrollTop();
         visibleRect.left = Math.max(visibleRect.left, scrollX);
-        visibleRect.top = Math.max(visibleRect['top'], scrollY);
-        visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
-        visibleRect.bottom = Math.min(visibleRect['bottom'], scrollY + DOM.viewportHeight());
-
+        visibleRect.top = Math.max(visibleRect.top, scrollY);
+        var winSize = {
+            width:DOM.viewportWidth(),
+            height:DOM.viewportHeight()
+        };
+        visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
+        visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
         return visibleRect.top >= 0 && visibleRect.left >= 0 &&
             visibleRect.bottom > visibleRect.top &&
             visibleRect.right > visibleRect.left ?
@@ -198,6 +194,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         // Right edge outside viewport, try to move it.
         if (pos.left + size.width > viewport.right &&
             overflow.adjustX) {
+            // 保证左边界和可视区域左边界对齐
             pos.left = Math.max(viewport.right - size.width, viewport.left);
             status.adjustX = 1;
         }
@@ -226,6 +223,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         // Bottom edge outside viewport, try to move it.
         if (pos.top + size.height > viewport.bottom &&
             overflow.adjustY) {
+            // 保证上边界和可视区域上边界对齐
             pos.top = Math.max(viewport.bottom - size.height, viewport.top);
             status.adjustY = 1;
         }
@@ -264,6 +262,11 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     function Align() {
     }
+
+
+    Align.__getOffsetParent = getOffsetParent;
+
+    Align.__getVisibleRectForElement = getVisibleRectForElement;
 
     Align.ATTRS =
     /**
