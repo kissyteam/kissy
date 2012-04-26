@@ -447,16 +447,15 @@
 
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
-            ret = true;
+            i;
         modNames = S.makeArray(modNames);
-        S.each(modNames, function (name) {
-            var mod = mods[name];
+        for (i = 0; i < modNames.length; i++) {
+            var mod = mods[modNames[i]];
             if (!mod || mod.status !== status) {
-                ret = false;
-                return ret;
+                return false;
             }
-        });
-        return ret;
+        }
+        return true;
     }
 
     var normalizePath = utils.normalizePath;

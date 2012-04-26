@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 25 21:51
+build time: Apr 26 15:31
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -597,7 +597,7 @@ build time: Apr 25 21:51
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120425215125';
+        S.__BUILD_TIME = '20120426153133';
     })();
 
     return S;
@@ -2680,16 +2680,15 @@ build time: Apr 25 21:51
 
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
-            ret = true;
+            i;
         modNames = S.makeArray(modNames);
-        S.each(modNames, function (name) {
-            var mod = mods[name];
+        for (i = 0; i < modNames.length; i++) {
+            var mod = mods[modNames[i]];
             if (!mod || mod.status !== status) {
-                ret = false;
-                return ret;
+                return false;
             }
-        });
-        return ret;
+        }
+        return true;
     }
 
     var normalizePath = utils.normalizePath;
@@ -4079,7 +4078,7 @@ build time: Apr 25 21:51
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120425215125'
+        tag:'20120426153133'
     }, getBaseInfo()));
 
     /**

@@ -67,8 +67,6 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
         ALIGN = {
             points:["bl", "tl"],
             overflow:{
-                failX:1,
-                failY:1,
                 adjustX:1,
                 adjustY:1
             }

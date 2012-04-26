@@ -99,7 +99,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 水平/垂直滚动效果
-        scroll:function (fromEls, toEls, callback,fromIndex, index) {
+        scroll:function (fromEls, toEls, callback, fromIndex, index) {
             var self = this,
                 cfg = self.config,
                 isX = cfg.effect === SCROLLX,
@@ -149,14 +149,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 panels0 = panels[0],
                 activeIndex = host.activeIndex;
 
-            // 1. 获取高宽
-            host.viewSize = [
-                cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
-                cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
-            ];
-            if (!host.viewSize[0]) {
-                S.log('switchable must specify viewSize if there is not panels', 'error')
-            }
             // 注：所有 panel 的尺寸应该相同
             // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
@@ -184,17 +176,20 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                             DOM.css(panels, FLOAT, LEFT);
                             // 设置最大宽度，以保证有空间让 panels 水平排布
                             DOM.width(content, "9999px");
-                            //DOM.width(content, host.viewSize[0] * (len / steps));
-//							self._autoSetContentWidth(host);
-//							//添加元素时重新计算
-//							host.on(EVENT_ADDED,function(){
-//								self._autoSetContentWidth(host);
-//							});
-//							//删除元素时重新计算
-//							host.on(EVENT_REMOVED,function(){
-//								self._autoSetContentWidth(host);
-//							});
                         }
+
+                        // 只有 scrollX, scrollY 需要设置 viewSize
+                        // 其他情况下不需要
+                        // 1. 获取高宽
+                        host.viewSize = [
+                            cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
+                            cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
+                        ];
+
+                        if (!host.viewSize[0]) {
+                            S.log('switchable must specify viewSize if there is no panels', 'error')
+                        }
+
                         break;
 
                     // 如果是透明效果，则初始化透明
@@ -217,18 +212,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
 
             // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
         }
-
-//        ,_autoSetContentWidth:function (host) {
-//            var cfg = host.config,
-//                panels = host.panels,
-//                content = host.content,
-//                steps = cfg.steps,
-//                len = panels.length;
-//
-//            // 设置最大宽度，以保证有空间让 panels 水平排布
-//            DOM.width(content, host.viewSize[0] * (len / steps));
-//
-//        }
     });
 
     /**

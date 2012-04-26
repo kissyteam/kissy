@@ -1,12 +1,13 @@
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
+KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, AutoRender, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
-        Tabs:Tabs
+        Tabs:Tabs,
+        "Aria":Aria
     };
     S.mix(Switchable, re);
     return Switchable;
@@ -21,11 +22,9 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, autopla
         "switchable/carousel/base",
         "switchable/carousel/aria",
         "switchable/circular",
-        "switchable/countdown",
         "switchable/effect",
         "switchable/lazyload",
         "switchable/slide/base",
-        "switchable/slide/aria",
         "switchable/tabs/base",
         "switchable/tabs/aria"
     ]

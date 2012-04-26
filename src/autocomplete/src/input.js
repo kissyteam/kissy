@@ -9,8 +9,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
     var ALIGN = {
         points:["bl", "tl"],
         overflow:{
-            failX:1,
-            failY:1,
             adjustX:1,
             adjustY:1
         }

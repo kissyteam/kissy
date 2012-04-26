@@ -34,7 +34,6 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
     var default_focus = ["a","input","button","object"];
     var oriTabIndex = "oriTabIndex";
     return {
-
         setTabIndex:function(root, v) {
             root.tabIndex = v;
             S.each(DOM.query("*", root),function(n) {
