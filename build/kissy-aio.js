@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Apr 25 18:34
+build time: Apr 26 12:07
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Apr 25 18:34
          */
         version:'1.20',
 
-        buildTime:'20120425183403',
+        buildTime:'20120426120744',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1890,6 +1890,13 @@ build time: Apr 25 18:34
             }
 
             function build(fullpath, path) {
+
+                if (mod[fullpath + "__builded"]) {
+                    return;
+                }
+
+                mod[fullpath + "__builded"] = 1;
+
                 if (!mod[fullpath] && mod[path]) {
                     //如果是 ./ 或 ../ 则相对当前模块路径
                     mod[path] = utils.normalDepModuleName(mod.name, mod[path]);

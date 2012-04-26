@@ -20,6 +20,13 @@
             }
 
             function build(fullpath, path) {
+
+                if (mod[fullpath + "__builded"]) {
+                    return;
+                }
+
+                mod[fullpath + "__builded"] = 1;
+
                 if (!mod[fullpath] && mod[path]) {
                     //如果是 ./ 或 ../ 则相对当前模块路径
                     mod[path] = utils.normalDepModuleName(mod.name, mod[path]);
