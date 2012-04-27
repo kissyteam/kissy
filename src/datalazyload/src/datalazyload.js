@@ -162,6 +162,16 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         return undefined;
     }
 
+    // 两块区域是否相交
+    function isCross(r1, r2) {
+        var r = {};
+        r.top = Math.max(r1.top, r2.top);
+        r.bottom = Math.min(r1.bottom, r2.bottom);
+        r.left = Math.max(r1.left, r2.left);
+        r.right = Math.min(r1.right, r2.right);
+        return r.bottom >= r.top && r.right >= r.left;
+    }
+
     S.augment(DataLazyload, {
 
         /**
@@ -400,8 +410,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                 vh, vw;
 
             if (c !== undefined) {
-                vh = DOM.height(c);
-                vw = DOM.width(c);
+                vh = DOM.outerHeight(c);
+                vw = DOM.outerWidth(c);
             } else {
                 vh = DOM.viewportHeight();
                 vw = DOM.viewportWidth();
@@ -486,6 +496,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             });
         },
 
+        /**
+         * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
+         * @private
+         * @param elem
+         */
         checkElemInViewport:function (elem) {
             elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
             var self = this,
@@ -500,22 +515,38 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                 inContainer = true,
                 container = getContainer(elem, self.containers);
 
+            var elemRegion = {
+                left:left,
+                top:top,
+                right:left + DOM.outerWidth(elem),
+                bottom:top + DOM.outerHeight(elem)
+            };
+
+            var windowReigon = {
+                top:scrollTop,
+                left:scrollLeft,
+                // 窗口需要考虑滚动条
+                bottom:scrollTop + threshold.top,
+                right:scrollLeft + threshold.left
+            };
+
             if (container) {
                 var containerThreshold = self._getThreshold(container),
                     containerOffset = DOM.offset(container);
-                inContainer = ( top < containerThreshold.top + containerOffset.top &&
-                    top >= containerOffset.top ) &&
-                    ( left < containerThreshold.left + containerOffset.left &&
-                        left >= containerOffset.left );
+                var containerRegion = {
+                    // 容器不需要考虑滚动条
+                    left:containerOffset.left,
+                    right:containerThreshold.left,
+                    top:containerOffset.top,
+                    bottom:containerThreshold.top
+                };
+                inContainer = isCross(containerRegion, elemRegion);
             }
 
             // 确保在容器内出现
             // 并且在视窗内也出现
-            return inContainer &&
-                (top < threshold.top + scrollTop &&
-                    top >= scrollTop) &&
-                (left < threshold.left + scrollLeft &&
-                    left >= scrollLeft);
+            var inWin = isCross(windowReigon, elemRegion);
+            return inContainer && inWin;
         },
 
         destroy:function () {
@@ -609,6 +640,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
  *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口

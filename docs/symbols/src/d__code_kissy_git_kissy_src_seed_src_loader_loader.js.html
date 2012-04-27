@@ -156,70 +156,83 @@
 <span id='line149' class='line'>149</span> </span><span class="WHIT">        </span><span class="COMM">// src 必定是绝对路径</span><span class="WHIT">
 <span id='line150' class='line'>150</span> </span><span class="WHIT">        </span><span class="COMM">// or re.hasAttribute ? re.src :  re.getAttribute('src', 4);</span><span class="WHIT">
 <span id='line151' class='line'>151</span> </span><span class="WHIT">        </span><span class="COMM">// http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx</span><span class="WHIT">
-<span id='line152' class='line'>152</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.absoluteFilePath</span><span class="PUNC">(</span><span class="NAME">re.src</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line153' class='line'>153</span> </span><span class="WHIT">        </span><span class="COMM">// 注意：模块名不包含后缀名以及参数，所以去除</span><span class="WHIT">
-<span id='line154' class='line'>154</span> </span><span class="WHIT">        </span><span class="COMM">// 系统模块去除系统路径</span><span class="WHIT">
-<span id='line155' class='line'>155</span> </span><span class="WHIT">        </span><span class="COMM">// 需要 base norm , 防止 base 被指定为相对路径</span><span class="WHIT">
-<span id='line156' class='line'>156</span> </span><span class="WHIT">        </span><span class="COMM">// configs 统一处理</span><span class="WHIT">
-<span id='line157' class='line'>157</span> </span><span class="WHIT">        </span><span class="COMM">// SS.Config.base = SS.normalBasePath(self.Config.base);</span><span class="WHIT">
-<span id='line158' class='line'>158</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">src.lastIndexOf</span><span class="PUNC">(</span><span class="NAME">base</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SS.Config.base</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line159' class='line'>159</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">utils.removePostfix</span><span class="PUNC">(</span><span class="NAME">src.substring</span><span class="PUNC">(</span><span class="NAME">base.length</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line160' class='line'>160</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line161' class='line'>161</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SS.Config.packages</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line162' class='line'>162</span> </span><span class="WHIT">        </span><span class="COMM">//外部模块去除包路径，得到模块名</span><span class="WHIT">
-<span id='line163' class='line'>163</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line164' class='line'>164</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">packages.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line165' class='line'>165</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p_path</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">path</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line166' class='line'>166</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">packages.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
-<span id='line167' class='line'>167</span> </span><span class="WHIT">                    </span><span class="NAME">src.lastIndexOf</span><span class="PUNC">(</span><span class="NAME">p_path</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line168' class='line'>168</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">utils.removePostfix</span><span class="PUNC">(</span><span class="NAME">src.substring</span><span class="PUNC">(</span><span class="NAME">p_path.length</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line169' class='line'>169</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line170' class='line'>170</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line171' class='line'>171</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line172' class='line'>172</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="STRN">"interactive script does not have package config ："</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">src</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"error"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line173' class='line'>173</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line174' class='line'>174</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line175' class='line'>175</span> 
-<span id='line176' class='line'>176</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NAME">KISSY</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line177' class='line'>177</span> 
-<span id='line178' class='line'>178</span> </span><span class="COMM">/**
-<span id='line179' class='line'>179</span>  * 2012-02-21 yiminghe@gmail.com refactor:
-<span id='line180' class='line'>180</span>  *
-<span id='line181' class='line'>181</span>  * 拆分 ComboLoader 与 Loader
-<span id='line182' class='line'>182</span>  *
-<span id='line183' class='line'>183</span>  * 2011-01-04 chengyu&lt;yiminghe@gmail.com> refactor:
-<span id='line184' class='line'>184</span>  *
-<span id='line185' class='line'>185</span>  * adopt requirejs :
-<span id='line186' class='line'>186</span>  *
-<span id='line187' class='line'>187</span>  * 1. packages(cfg) , cfg :{
-<span id='line188' class='line'>188</span>  *    name : 包名，用于指定业务模块前缀
-<span id='line189' class='line'>189</span>  *    path: 前缀包名对应的路径
-<span id='line190' class='line'>190</span>  *    charset: 该包下所有文件的编码
-<span id='line191' class='line'>191</span>  *
-<span id='line192' class='line'>192</span>  * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
-<span id='line193' class='line'>193</span>  *    moduleName add 时可以不写
-<span id='line194' class='line'>194</span>  *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+<span id='line152' class='line'>152</span> </span><span class="WHIT">        </span><span class="COMM">// note:</span><span class="WHIT">
+<span id='line153' class='line'>153</span> </span><span class="WHIT">        </span><span class="COMM">// &lt;script src='/x.js'>&lt;/script></span><span class="WHIT">
+<span id='line154' class='line'>154</span> </span><span class="WHIT">        </span><span class="COMM">// ie6-8 => re.src == '/x.js'</span><span class="WHIT">
+<span id='line155' class='line'>155</span> </span><span class="WHIT">        </span><span class="COMM">// ie9 or firefox/chrome => re.src == 'http://localhost/x.js'</span><span class="WHIT">
+<span id='line156' class='line'>156</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.absoluteFilePath</span><span class="PUNC">(</span><span class="NAME">re.src</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line157' class='line'>157</span> </span><span class="WHIT">        </span><span class="COMM">// 注意：模块名不包含后缀名以及参数，所以去除</span><span class="WHIT">
+<span id='line158' class='line'>158</span> </span><span class="WHIT">        </span><span class="COMM">// 系统模块去除系统路径</span><span class="WHIT">
+<span id='line159' class='line'>159</span> </span><span class="WHIT">        </span><span class="COMM">// 需要 base norm , 防止 base 被指定为相对路径</span><span class="WHIT">
+<span id='line160' class='line'>160</span> </span><span class="WHIT">        </span><span class="COMM">// configs 统一处理</span><span class="WHIT">
+<span id='line161' class='line'>161</span> </span><span class="WHIT">        </span><span class="COMM">// SS.Config.base = SS.normalBasePath(self.Config.base);</span><span class="WHIT">
+<span id='line162' class='line'>162</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">src.lastIndexOf</span><span class="PUNC">(</span><span class="NAME">base</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SS.Config.base</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line163' class='line'>163</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">utils.removePostfix</span><span class="PUNC">(</span><span class="NAME">src.substring</span><span class="PUNC">(</span><span class="NAME">base.length</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line164' class='line'>164</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line165' class='line'>165</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SS.Config.packages</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line166' class='line'>166</span> </span><span class="WHIT">            </span><span class="NAME">finalPackagePath</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line167' class='line'>167</span> </span><span class="WHIT">            </span><span class="NAME">finalPackageLength</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line168' class='line'>168</span> </span><span class="WHIT">        </span><span class="COMM">//外部模块去除包路径，得到模块名</span><span class="WHIT">
+<span id='line169' class='line'>169</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line170' class='line'>170</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">packages.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line171' class='line'>171</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p_path</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">packages</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">path</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line172' class='line'>172</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">packages.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span id='line173' class='line'>173</span> </span><span class="WHIT">                    </span><span class="NAME">src.lastIndexOf</span><span class="PUNC">(</span><span class="NAME">p_path</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line174' class='line'>174</span> </span><span class="WHIT">                    </span><span class="COMM">// longest match</span><span class="WHIT">
+<span id='line175' class='line'>175</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">p_path.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">finalPackageLength</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line176' class='line'>176</span> </span><span class="WHIT">                        </span><span class="NAME">finalPackageLength</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">p_path.length</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line177' class='line'>177</span> </span><span class="WHIT">                        </span><span class="NAME">finalPackagePath</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">p_path</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line178' class='line'>178</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line179' class='line'>179</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line180' class='line'>180</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line181' class='line'>181</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line182' class='line'>182</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">finalPackagePath</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line183' class='line'>183</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">utils.removePostfix</span><span class="PUNC">(</span><span class="NAME">src.substring</span><span class="PUNC">(</span><span class="NAME">finalPackagePath.length</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line184' class='line'>184</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line185' class='line'>185</span> </span><span class="WHIT">        </span><span class="NAME">S.log</span><span class="PUNC">(</span><span class="STRN">"interactive script does not have package config ："</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">src</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"error"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line186' class='line'>186</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line187' class='line'>187</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line188' class='line'>188</span> 
+<span id='line189' class='line'>189</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NAME">KISSY</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line190' class='line'>190</span> 
+<span id='line191' class='line'>191</span> </span><span class="COMM">/**
+<span id='line192' class='line'>192</span>  * 2012-02-21 yiminghe@gmail.com refactor:
+<span id='line193' class='line'>193</span>  *
+<span id='line194' class='line'>194</span>  * 拆分 ComboLoader 与 Loader
 <span id='line195' class='line'>195</span>  *
-<span id='line196' class='line'>196</span>  * 3. S.use(["dom"],function(S,DOM){
-<span id='line197' class='line'>197</span>  *    });
-<span id='line198' class='line'>198</span>  *    依赖注入，发生于 add 和 use 时期
+<span id='line196' class='line'>196</span>  * 2011-01-04 chengyu&lt;yiminghe@gmail.com> refactor:
+<span id='line197' class='line'>197</span>  *
+<span id='line198' class='line'>198</span>  * adopt requirejs :
 <span id='line199' class='line'>199</span>  *
-<span id='line200' class='line'>200</span>  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
-<span id='line201' class='line'>201</span>  *
-<span id='line202' class='line'>202</span>  * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
-<span id='line203' class='line'>203</span>  *
-<span id='line204' class='line'>204</span>  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
-<span id='line205' class='line'>205</span>  *
-<span id='line206' class='line'>206</span>  * 2011-03-01 yiminghe@gmail.com note:
-<span id='line207' class='line'>207</span>  *
-<span id='line208' class='line'>208</span>  * compatibility
-<span id='line209' class='line'>209</span>  *
-<span id='line210' class='line'>210</span>  * 1. 保持兼容性，不得已而为之
-<span id='line211' class='line'>211</span>  *      支持 { host : }
-<span id='line212' class='line'>212</span>  *      如果 requires 都已经 attached，支持 add 后立即 attach
-<span id='line213' class='line'>213</span>  *      支持 { attach : false } 显示控制 add 时是否 attach
-<span id='line214' class='line'>214</span>  *      支持 { global : Editor } 指明模块来源
-<span id='line215' class='line'>215</span>  *
-<span id='line216' class='line'>216</span>  * 2011-05-04 初步拆分文件，tmd 乱了
-<span id='line217' class='line'>217</span>  */</span><span class="WHIT">
-<span id='line218' class='line'>218</span> </span></pre></body></html>
+<span id='line200' class='line'>200</span>  * 1. packages(cfg) , cfg :{
+<span id='line201' class='line'>201</span>  *    name : 包名，用于指定业务模块前缀
+<span id='line202' class='line'>202</span>  *    path: 前缀包名对应的路径
+<span id='line203' class='line'>203</span>  *    charset: 该包下所有文件的编码
+<span id='line204' class='line'>204</span>  *
+<span id='line205' class='line'>205</span>  * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
+<span id='line206' class='line'>206</span>  *    moduleName add 时可以不写
+<span id='line207' class='line'>207</span>  *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+<span id='line208' class='line'>208</span>  *
+<span id='line209' class='line'>209</span>  * 3. S.use(["dom"],function(S,DOM){
+<span id='line210' class='line'>210</span>  *    });
+<span id='line211' class='line'>211</span>  *    依赖注入，发生于 add 和 use 时期
+<span id='line212' class='line'>212</span>  *
+<span id='line213' class='line'>213</span>  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
+<span id='line214' class='line'>214</span>  *
+<span id='line215' class='line'>215</span>  * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
+<span id='line216' class='line'>216</span>  *
+<span id='line217' class='line'>217</span>  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+<span id='line218' class='line'>218</span>  *
+<span id='line219' class='line'>219</span>  * 2011-03-01 yiminghe@gmail.com note:
+<span id='line220' class='line'>220</span>  *
+<span id='line221' class='line'>221</span>  * compatibility
+<span id='line222' class='line'>222</span>  *
+<span id='line223' class='line'>223</span>  * 1. 保持兼容性，不得已而为之
+<span id='line224' class='line'>224</span>  *      支持 { host : }
+<span id='line225' class='line'>225</span>  *      如果 requires 都已经 attached，支持 add 后立即 attach
+<span id='line226' class='line'>226</span>  *      支持 { attach : false } 显示控制 add 时是否 attach
+<span id='line227' class='line'>227</span>  *      支持 { global : Editor } 指明模块来源
+<span id='line228' class='line'>228</span>  *
+<span id='line229' class='line'>229</span>  * 2011-05-04 初步拆分文件，tmd 乱了
+<span id='line230' class='line'>230</span>  */</span><span class="WHIT">
+<span id='line231' class='line'>231</span> </span></pre></body></html>
