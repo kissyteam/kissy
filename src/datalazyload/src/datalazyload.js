@@ -1,7 +1,7 @@
 /**
  * @fileOverview 数据延迟加载组件
  */
-KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
+KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -14,33 +14,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         NONE = 'none',
         SCROLL = 'scroll',
         TOUCH_MOVE = "touchmove",
-        RESIZE = 'resize', DURATION = 100,
-        defaultConfig = {
-            /**
-             * 懒处理模式
-             *  auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *  manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
-             * 注：对于 textarea 数据，只有手动模式
-             */
-            mod:MANUAL,
-
-            /**
-             * 当前视窗往下，diff px 外的 img/textarea 延迟加载
-             * 适当设置此值，可以让用户在拖动时感觉数据已经加载好
-             * 默认为当前视窗高度（两屏以外的才延迟加载）
-             */
-            diff:DEFAULT,
-
-            /**
-             * 图像的占位图，默认无
-             */
-            placeholder:NONE,
-
-            /**
-             * 是否执行 textarea 里面的脚本
-             */
-            execScript:true
-        };
+        RESIZE = 'resize',
+        DURATION = 100;
 
     function isValidContainer(c) {
         return c.nodeType != 9;
@@ -89,13 +64,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
         area.style.display = NONE;
         area.className = ''; // clear hook
-
         var content = DOM.create('<div>');
         // area 直接是 container 的儿子
         area.parentNode.insertBefore(content, area);
         DOM.html(content, area.value, execScript);
     }
-
 
     /**
      * filter for lazyload textarea
@@ -104,10 +77,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         return DOM.hasClass(area, AREA_DATA_CLS);
     }
 
-
     /**
      * LazyLoad elements which are out of current viewPort.
      * @constructor
+     * @name DataLazyload
+     * @extends Base
      */
     function DataLazyload(containers, config) {
         var self = this;
@@ -128,39 +102,99 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             containers = [DOM.get(containers) || doc];
         }
 
-        /**
-         * LazyLoad elements 's container.
-         * @type Array
-         */
-        self.containers = containers;
+        config.containers = containers;
 
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
+        DataLazyload.superclass.constructor.call(self, config);
 
         /**
          * 需要延迟下载的图片
          * @type Array
+         * @private
          */
-        //self.images
+        //self._images
 
-        /**
+        /*
          * 需要延迟处理的 textarea
          * @type Array
+         * @private
          */
-        //self.areaes
+        //self._areaes
 
         /**
          * 和延迟项绑定的回调函数
          * @type object
          */
-        self.callbacks = {els:[], fns:[]};
+        self._callbacks = {els:[], fns:[]};
 
         self._init();
-        return undefined;
     }
+
+    DataLazyload.ATTRS =
+    /**
+     * @lends DataLazyload#
+     */
+    {
+        mod:{
+            value:MANUAL
+        },
+        /**
+         * Distance outside viewport or specified container to pre load.
+         * Default : pre load one screen height and width.
+         * @type Number|Object
+         * @example
+         * <code>
+         *  diff : 50 // pre load 50px outside viewport or specified container
+         *  // or more detailed :
+         *  {
+         *    left:20, // pre load 50px outside left edge of viewport or specified container
+         *    right:30, // pre load 50px outside right edge of viewport or specified container
+         *    top:50, // pre load 50px outside top edge of viewport or specified container
+         *    bottom:60 // pre load 50px outside bottom edge of viewport or specified container
+         *  }
+         * </code>
+         */
+        diff:{
+            value:DEFAULT
+        },
+        /**
+         * Placeholder img url for lazy loaded _images.
+         * Default : empty
+         * @type String
+         */
+        placeholder:{
+            value:NONE
+        },
+
+        /**
+         * Whether execute script in lazy loaded textarea.
+         * Default : true
+         * @type Boolean
+         */
+        execScript:{
+            value:true
+        },
+
+        /**
+         * Containers which will be monitor scroll event to lazy load elements within it.
+         * Default : [ document ]
+         * @type HTMLElement[]
+         */
+        containers:{
+            valueFn:function () {
+                return [doc];
+            }
+        },
+
+        /**
+         * Whether destroy this component when all lazy loaded elements are loaded.
+         * Default : true
+         * @type Boolean
+         * @since 1.3
+         */
+        autoDestroy:{
+            value:true
+        }
+    };
 
     // 两块区域是否相交
     function isCross(r1, r2) {
@@ -172,418 +206,468 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         return r.bottom >= r.top && r.right >= r.left;
     }
 
-    S.augment(DataLazyload, {
-
+    S.extend(DataLazyload,
+        Base,
         /**
-         * 初始化
-         * @protected
+         * @lends DataLazyload#
          */
-        _init:function () {
-            var self = this;
-            self._filterItems();
-            self._initLoadEvent();
-        },
+        {
 
-        /**
-         * 获取并初始化需要延迟的 images 和 areaes
-         * @protected
-         */
-        _filterItems:function () {
-            var self = this,
-                containers = self.containers,
-                n, N, imgs, areaes, i, img,
-                lazyImgs = [], lazyAreas = [];
+            /**
+             * 初始化
+             */
+            _init:function () {
+                var self = this;
+                self._filterItems();
+                self._initLoadEvent();
+            },
 
-            for (n = 0, N = containers.length; n < N; ++n) {
-                imgs = removeExisting(DOM.query('img', containers[n]), lazyImgs);
-                lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
+            /**
+             * 获取并初始化需要延迟的 _images 和 _areaes
+             */
+            _filterItems:function () {
+                var self = this,
+                    containers = self.get("containers"),
+                    n, N, imgs, _areaes, i, img,
+                    lazyImgs = [], lazyAreas = [];
 
-                areaes = removeExisting(DOM.query('textarea', containers[n]), lazyAreas);
-                lazyAreas = lazyAreas.concat(S.filter(areaes, filterArea, self));
-            }
+                for (n = 0, N = containers.length; n < N; ++n) {
+                    imgs = removeExisting(DOM.query('img', containers[n]), lazyImgs);
+                    lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
-            self.images = lazyImgs;
-            self.areaes = lazyAreas;
-        },
-
-        /**
-         * filter for lazyload image
-         */
-        _filterImg:function (img) {
-            var self = this,
-                dataSrc = img.getAttribute(IMG_SRC_DATA),
-                placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MANUAL;
-
-            // 手工模式，只处理有 data-src 的图片
-            if (isManualMod) {
-                if (dataSrc) {
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    }
-                    return true;
-                }
-            }
-            // 自动模式，只处理 threshold 外无 data-src 的图片
-            else {
-                // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
-                if (!dataSrc && !self.checkElemInViewport(img)) {
-                    DOM.attr(img, IMG_SRC_DATA, img.src);
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    } else {
-                        img.removeAttribute('src');
-                    }
-                    return true;
-                }
-            }
-        },
-
-
-        /**
-         * 初始化加载事件
-         * @protected
-         */
-        _initLoadEvent:function () {
-            var self = this,
-                // 加载延迟项
-                loadItems = function () {
-                    self._loadItems();
-                    if (self._getItemsLength() === 0) {
-                        self.destroy();
-                    }
-                },
-                // 加载函数
-                load = S.buffer(loadItems, DURATION, this);
-
-            // scroll 和 resize 时，加载图片
-            Event.on(win, SCROLL, load);
-            Event.on(win, TOUCH_MOVE, load);
-            Event.on(win, RESIZE, load);
-
-            S.each(self.containers, function (c) {
-                if (isValidContainer(c)) {
-                    Event.on(c, SCROLL, load);
-                    Event.on(c, TOUCH_MOVE, load);
-                }
-            });
-
-            self.load = load;
-
-            // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (self._getItemsLength()) {
-                S.ready(loadItems);
-            }
-        },
-
-        /**
-         * 加载延迟项
-         */
-        _loadItems:function () {
-            var self = this;
-            self._loadImgs();
-            self._loadAreas();
-            self._fireCallbacks();
-        },
-
-        /**
-         * 加载图片
-         * @protected
-         */
-        _loadImgs:function () {
-            var self = this;
-            self.images = S.filter(self.images, self._loadImg, self);
-        },
-
-        /**
-         * 监控滚动，处理图片
-         */
-        _loadImg:function (img) {
-            var self = this;
-            if (self.checkElemInViewport(img)) {
-                loadImgSrc(img);
-            } else {
-                return true;
-            }
-        },
-
-
-        /**
-         * 加载 textarea 数据
-         * @protected
-         */
-        _loadAreas:function () {
-            var self = this;
-            self.areaes = S.filter(self.areaes, self._loadArea, self);
-        },
-
-        /**
-         * 监控滚动，处理 textarea
-         */
-        _loadArea:function (area) {
-            var self = this;
-
-            if (self.checkElemInViewport(area)) {
-                loadAreaData(area, self.config.execScript);
-            } else {
-                return true;
-            }
-        },
-
-        /**
-         * 触发回调
-         */
-        _fireCallbacks:function () {
-            var self = this,
-                callbacks = self.callbacks,
-                els = callbacks.els,
-                fns = callbacks.fns,
-                i, el, fn, remainEls = [], remainFns = [];
-
-            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (self.checkElemInViewport(el)) {
-                    fn.call(el);
-                } else {
-                    remainEls.push(el);
-                    remainFns.push(fn);
+                    _areaes = removeExisting(DOM.query('textarea', containers[n]), lazyAreas);
+                    lazyAreas = lazyAreas.concat(S.filter(_areaes, filterArea, self));
                 }
 
-            }
-            callbacks.els = remainEls;
-            callbacks.fns = remainFns;
-        },
+                self._images = lazyImgs;
+                self._areaes = lazyAreas;
+            },
 
-        /**
-         * 添加回调函数。当 el 即将出现在视图中时，触发 fn
-         */
-        addCallback:function (el, fn) {
-            var callbacks = this.callbacks;
-            el = DOM.get(el);
+            /**
+             * filter for lazyload image
+             */
+            _filterImg:function (img) {
+                var self = this,
+                    dataSrc = img.getAttribute(IMG_SRC_DATA),
+                    placeholder = self.get("placeholder"),
+                    isManualMod = self.get("mod") === MANUAL;
 
-            if (el && S.isFunction(fn)) {
-                callbacks.els.push(el);
-                callbacks.fns.push(fn);
-            }
-
-            // add 立即检测，防止首屏元素问题
-            this._fireCallbacks();
-        },
-
-        removeElements:function (el) {
-            if (S.isArray(el)) {
-                S.each(el, function (e) {
-                    this.removeElements(e);
-                });
-                return;
-            }
-
-            var self = this,
-                callbacks = self.callbacks,
-                fns = callbacks.fns,
-                els = callbacks.els,
-                newEls = [],
-                newFns = [];
-
-            // els 里 el 会重复，不同的 callback
-            for (var i = 0; i < els.length; i++) {
-                if (els[i] != el) {
-                    newEls.push(els[i]);
-                    newFns.push(fns[i]);
-                }
-            }
-            callbacks.els = newEls;
-            callbacks.fns = newFns;
-
-            removeFromEls(el, self.images);
-            removeFromEls(el, self.areaes);
-        },
-
-        /**
-         * 获取阈值
-         * @protected
-         */
-        _getThreshold:function (c) {
-            var diff = this.config.diff,
-                diffX = diff,
-                diffY = diff,
-                left, top,
-                vh, vw;
-
-            if (c !== undefined) {
-                vh = DOM.outerHeight(c);
-                vw = DOM.outerWidth(c);
-            } else {
-                vh = DOM.viewportHeight();
-                vw = DOM.viewportWidth();
-            }
-
-            if (S.isArray(diff)) {
-                diffX = diff[0];
-                diffY = diff[1];
-            }
-
-            if (diffY === DEFAULT) {
-                // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-                top = 2 * vh;
-            }
-            else {
-                // 将 diff 转换成数值
-                top = vh + (+diffY);
-            }
-
-            if (diffX === DEFAULT) {
-                // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-                left = 2 * vw;
-            }
-            else {
-                // 将 diff 转换成数值
-                left = vw + (+diffX);
-            }
-
-            return {
-                left:left,
-                top:top
-            };
-        },
-
-        /**
-         * 获取当前延迟项的数量
-         * @protected
-         */
-        _getItemsLength:function () {
-            var self = this;
-            return self.images.length + self.areaes.length + self.callbacks.els.length;
-        },
-
-        /**
-         * 加载自定义延迟数据
-         * @static
-         */
-        loadCustomLazyData:function (containers, type, flag) {
-            var imgs;
-
-            if (type === 'img-src') {
-                type = 'img';
-            }
-
-            // 支持数组
-            if (!S.isArray(containers)) {
-                containers = [DOM.get(containers)];
-            }
-
-            // 遍历处理
-            S.each(containers, function (container) {
-                switch (type) {
-                    case 'img':
-                        if (container.nodeName === 'IMG') { // 本身就是图片
-                            imgs = [container];
-                        } else {
-                            imgs = DOM.query('img', container);
+                // 手工模式，只处理有 data-src 的图片
+                if (isManualMod) {
+                    if (dataSrc) {
+                        if (placeholder !== NONE) {
+                            img.src = placeholder;
                         }
-
-                        S.each(imgs, function (img) {
-                            loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
-                        });
-                        break;
-
-                    default:
-                        DOM.query('textarea', container).each(function (area) {
-                            if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                                loadAreaData(area, true);
-                            }
-                        });
+                        return true;
+                    }
                 }
-            });
-        },
+                // 自动模式，只处理 threshold 外无 data-src 的图片
+                else {
+                    // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
+                    if (!dataSrc && !self._checkElemInViewport(img)) {
+                        DOM.attr(img, IMG_SRC_DATA, img.src);
+                        if (placeholder !== NONE) {
+                            img.src = placeholder;
+                        } else {
+                            img.removeAttribute('src');
+                        }
+                        return true;
+                    }
+                }
+            },
 
-        /**
-         * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
-         * @private
-         * @param elem
-         */
-        checkElemInViewport:function (elem) {
-            elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
-            var self = this,
-                threshold = self._getThreshold(),
-                scrollTop = DOM.scrollTop(),
-                scrollLeft = DOM.scrollLeft(),
-                elemOffset = DOM.offset(elem),
-                left = elemOffset.left,
+
+            /**
+             * 初始化加载事件
+             */
+            _initLoadEvent:function () {
+                var self = this,
+                    autoDestroy = self.get("autoDestroy"),
+                    // 加载延迟项
+                    loadItems = function () {
+                        self._loadItems();
+                        if (autoDestroy &&
+                            self._getItemsLength() === 0) {
+                            self.destroy();
+                        }
+                    },
+                    // 加载函数
+                    load = S.buffer(loadItems, DURATION, this);
+
+                // scroll 和 resize 时，加载图片
+                Event.on(win, SCROLL, load);
+                Event.on(win, TOUCH_MOVE, load);
+                Event.on(win, RESIZE, load);
+
+                S.each(self.get("containers"), function (c) {
+                    if (isValidContainer(c)) {
+                        Event.on(c, SCROLL, load);
+                        Event.on(c, TOUCH_MOVE, load);
+                    }
+                });
+
+                self._loadFn = load;
+
+                // 需要立即加载一次，以保证第一屏的延迟项可见
+                if (self._getItemsLength()) {
+                    S.ready(loadItems);
+                }
+            },
+
+            /**
+             * 加载延迟项
+             */
+            _loadItems:function () {
+                var self = this;
+                self._loadImgs();
+                self._loadAreas();
+                self._fireCallbacks();
+            },
+
+            /**
+             * 加载图片
+             */
+            _loadImgs:function () {
+                var self = this;
+                self._images = S.filter(self._images, self._loadImg, self);
+            },
+
+            /**
+             * 监控滚动，处理图片
+             */
+            _loadImg:function (img) {
+                var self = this;
+                if (self._checkElemInViewport(img)) {
+                    loadImgSrc(img);
+                } else {
+                    return true;
+                }
+            },
+
+
+            /**
+             * 加载 textarea 数据
+             */
+            _loadAreas:function () {
+                var self = this;
+                self._areaes = S.filter(self._areaes, self._loadArea, self);
+            },
+
+            /**
+             * 监控滚动，处理 textarea
+             */
+            _loadArea:function (area) {
+                var self = this;
+                if (self._checkElemInViewport(area)) {
+                    loadAreaData(area, self.get("execScript"));
+                } else {
+                    return true;
+                }
+            },
+
+            /**
+             * 触发回调
+             */
+            _fireCallbacks:function () {
+                var self = this,
+                    callbacks = self._callbacks,
+                    els = callbacks.els,
+                    fns = callbacks.fns,
+                    i, el, fn, remainEls = [], remainFns = [];
+
+                for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                    if (self._checkElemInViewport(el)) {
+                        fn.call(el);
+                    } else {
+                        remainEls.push(el);
+                        remainFns.push(fn);
+                    }
+
+                }
+                callbacks.els = remainEls;
+                callbacks.fns = remainFns;
+            },
+
+            /**
+             * Register callback function.
+             * When el is in viewport, then fn is called.
+             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {Function} fn Callback function to be called when el is in viewport.
+             */
+            addCallback:function (el, fn) {
+                var self = this,
+                    callbacks = self._callbacks;
+                el = DOM.get(el);
+
+                if (el && S.isFunction(fn)) {
+                    callbacks.els.push(el);
+                    callbacks.fns.push(fn);
+                }
+
+                // add 立即检测，防止首屏元素问题
+                self._fireCallbacks();
+            },
+
+            /**
+             * Remove a callback function. See {@link DataLazyload#addCallback}
+             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {Function} [fn] Callback function to be called when el is in viewport.
+             *                        If not specified, remove all callbacks associated with el.
+             * @since 1.3
+             */
+            removeCallback:function (el, fn) {
+                var callbacks = this._callbacks,
+                    els = [],
+                    fns = [],
+                    curFns = callbacks.fns;
+
+                el = DOM.get(el);
+
+                S.each(callbacks.els, function (curEl, index) {
+                    if (curEl == el) {
+                        if (fn === undefined || fn == curFns[index]) {
+                            return;
+                        }
+                    }
+
+                    els.push(curEl);
+                    fns.push(curFns[index]);
+                });
+
+                callbacks.fns = fns;
+                callbacks.els = els;
+            },
+
+            /**
+             * Add a array of imgs or textareas to be lazy loaded to monitor list.
+             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @since 1.3
+             */
+            addElements:function (els) {
+                if (!S.isArray(els)) {
+                    els = [els];
+                }
+                var self = this,
+                    imgs = self._images || [],
+                    areaes = self._areaes || [];
+                S.each(els, function (el) {
+                    var nodeName = el.nodeName.toLowerCase();
+                    if (nodeName == "img") {
+                        if (!S.inArray(el, imgs)) {
+                            imgs.push(el);
+                        }
+                    } else if (nodeName == "textarea") {
+                        if (!S.inArray(el, areaes)) {
+                            areaes.push(el);
+                        }
+                    }
+                });
+                self._images = imgs;
+                self._areaes = areaes;
+            },
+
+            /**
+             * Remove a array of element from monitor list. See {@link DataLazyload#addElements}.
+             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @since 1.3
+             */
+            removeElements:function (els) {
+                if (!S.isArray(els)) {
+                    els = [els];
+                }
+                var self = this,
+                    imgs = [], areaes = [];
+                S.each(self._images, function (img) {
+                    if (!S.inArray(img, els)) {
+                        imgs.push(img);
+                    }
+                });
+                S.each(self._areaes, function (area) {
+                    if (!S.inArray(area, els)) {
+                        areaes.push(area);
+                    }
+                });
+                self._images = img;
+                self._areaes = areaes;
+            },
+
+            /**
+             * 获取 c 的有效渲染区域（加上预加载差值）
+             * @protected
+             */
+            _getBoundingRect:function (c) {
+                var vh, vw, left, top;
+
+                if (c !== undefined &&
+                    !S.isWindow(c) &&
+                    c.nodeType != 9) {
+                    vh = DOM.outerHeight(c);
+                    vw = DOM.outerWidth(c);
+                    var offset = DOM.offset(c);
+                    left = offset.left;
+                    top = offset.top;
+                } else {
+                    vh = DOM.viewportHeight();
+                    vw = DOM.viewportWidth();
+                    left = DOM.scrollLeft();
+                    top = DOM.scrollTop();
+                }
+
+                var diff = this.get("diff"),
+                    diffX = diff === DEFAULT ? vw : diff,
+                    diffX0 = 0,
+                    diffX1 = diffX,
+                    diffY = diff === DEFAULT ? vh : diff,
+                    // 兼容，默认只向下预读
+                    diffY0 = 0,
+                    diffY1 = diffY,
+                    right = left + vw,
+                    bottom = top + vh;
+
+                if (S.isObject(diff)) {
+                    diffX0 = diff.left;
+                    diffX1 = diff.right;
+                    diffY0 = diff.top;
+                    diffY1 = diff.bottom;
+                }
+
+                left -= diffX0;
+                right += diffX1;
+                top -= diffY0;
+                bottom += diffY1;
+
+                return {
+                    left:left,
+                    top:top,
+                    right:right,
+                    bottom:bottom
+                };
+            },
+
+            /**
+             * 获取当前延迟项的数量
+             * @protected
+             */
+            _getItemsLength:function () {
+                var self = this;
+                return self._images.length + self._areaes.length + self._callbacks.els.length;
+            },
+
+            /**
+             * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
+             * @private
+             * @param elem
+             */
+            _checkElemInViewport:function (elem) {
                 // 注：elem 可能处于 display: none 状态，DOM.offset(elem).top 返回 0
                 // 这种情况下用 elem.parentNode 的 Y 值来替代
-                top = elemOffset.top,
-                inContainer = true,
-                container = getContainer(elem, self.containers);
+                elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
 
-            var elemRegion = {
-                left:left,
-                top:top,
-                right:left + DOM.outerWidth(elem),
-                bottom:top + DOM.outerHeight(elem)
-            };
+                var self = this,
+                    elemOffset = DOM.offset(elem),
+                    inContainer = true,
+                    container = getContainer(elem, self.get("containers")),
+                    windowRegion = self._getBoundingRect(),
+                    inWin,
+                    containerRegion,
+                    left = elemOffset.left,
+                    top = elemOffset.top,
+                    elemRegion = {
+                        left:left,
+                        top:top,
+                        right:left + DOM.outerWidth(elem),
+                        bottom:top + DOM.outerHeight(elem)
+                    };
 
-            var windowReigon = {
-                top:scrollTop,
-                left:scrollLeft,
-                // 窗口需要考虑滚动条
-                bottom:scrollTop + threshold.top,
-                right:scrollLeft + threshold.left
-            };
-
-            if (container) {
-                var containerThreshold = self._getThreshold(container),
-                    containerOffset = DOM.offset(container);
-                var containerRegion = {
-                    // 容器不需要考虑滚动条
-                    left:containerOffset.left,
-                    right:containerThreshold.left,
-                    top:containerOffset.top,
-                    bottom:containerThreshold.top
-                };
-                inContainer = isCross(containerRegion, elemRegion);
-            }
-
-            // 确保在容器内出现
-            // 并且在视窗内也出现
-            var inWin = isCross(windowReigon, elemRegion);
-            return inContainer && inWin;
-        },
-
-        destroy:function () {
-
-            var self = this, load = self.load;
-            Event.remove(win, SCROLL, load);
-            Event.remove(win, TOUCH_MOVE, load);
-            Event.remove(win, RESIZE, load);
-            S.each(self.containers, function (c) {
-                if (isValidContainer(c)) {
-                    Event.remove(c, SCROLL, load);
-                    Event.remove(c, TOUCH_MOVE, load);
+                if (container) {
+                    containerRegion = self._getBoundingRect(container);
+                    inContainer = isCross(containerRegion, elemRegion);
                 }
-            });
-            self.callbacks.els = [];
-            self.callbacks.fns = [];
-            self.images = [];
-            self.areaes = [];
-            S.log("datalazyload is destroyed!");
 
-        }
-    });
+                // 确保在容器内出现
+                // 并且在视窗内也出现
+                inWin = isCross(windowRegion, elemRegion);
+                return inContainer && inWin;
+            },
 
-    function removeFromEls(el, arr) {
-        var index = S.indexOf(el, arr);
-        if (index != -1) {
-            arr.splice(index, 1);
+            /**
+             * Destroy this component.Will fire destroy event.
+             */
+            destroy:function () {
+                var self = this, load = self._loadFn;
+                Event.remove(win, SCROLL, load);
+                Event.remove(win, TOUCH_MOVE, load);
+                Event.remove(win, RESIZE, load);
+                S.each(self.get("containers"), function (c) {
+                    if (isValidContainer(c)) {
+                        Event.remove(c, SCROLL, load);
+                        Event.remove(c, TOUCH_MOVE, load);
+                    }
+                });
+                self._callbacks.els = [];
+                self._callbacks.fns = [];
+                self._images = [];
+                self._areaes = [];
+                S.log("datalazyload is destroyed!");
+                self.fire("destroy");
+            }
+        });
+
+    /**
+     * Load lazyload textarea and imgs manually.
+     * @name loadCustomLazyData
+     * @function
+     * @memberOf DataLazyload
+     * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
+     * @param {String} type Type of lazy loaded element. "img" or "textarea"
+     * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
+     * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
+     */
+    function loadCustomLazyData(containers, type, flag) {
+        var imgs;
+
+        if (type === 'img-src') {
+            type = 'img';
         }
-        return index;
+
+        // 支持数组
+        if (!S.isArray(containers)) {
+            containers = [DOM.get(containers)];
+        }
+
+        // 遍历处理
+        S.each(containers, function (container) {
+            switch (type) {
+                case 'img':
+                    if (container.nodeName === 'IMG') { // 本身就是图片
+                        imgs = [container];
+                    } else {
+                        imgs = DOM.query('img', container);
+                    }
+
+                    S.each(imgs, function (img) {
+                        loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
+                    });
+                    break;
+
+                default:
+                    DOM.query('textarea', container).each(function (area) {
+                        if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
+                            loadAreaData(area, true);
+                        }
+                    });
+            }
+        });
     }
 
-    // attach static methods
-    DataLazyload.loadCustomLazyData = DataLazyload.prototype.loadCustomLazyData;
+
+    DataLazyload.loadCustomLazyData = loadCustomLazyData;
+
+    S.DataLazyload = DataLazyload;
 
     return DataLazyload;
 
-}, { requires:['dom', 'event'] });
+}, { requires:['dom', 'event', 'base'] });
 
 /**
  * NOTES:
@@ -614,7 +698,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
  *  1. http://davidwalsh.name/lazyload MooTools 的图片延迟插件
  *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
- *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
+ *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-_images/
  *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
  *
  * 特别要注意的测试用例:
@@ -640,6 +724,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
  *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
