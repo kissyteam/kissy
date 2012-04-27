@@ -106,7 +106,9 @@
 
 
         $(window).on("resize", S.buffer(function () {
-            $(container).height($(window).height() - $("#top").outerHeight() - 2);
+            // -2
+            // -4 for ie<8
+            $(container).height($(window).height() - $("#top").outerHeight() - 4);
         }));
 
         $(window).fire("resize");
