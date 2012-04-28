@@ -24,6 +24,7 @@ History:
  - [!] 删除 KISSY.app 方法
  - [+] package 增加 debug 配置，可以对包级别设置 debug
  - [!] 删除 csspath/cssfullpath 配置
+ - [+] 内置 gallery 包地址
 
  - [*] KISSY.ready try catch 达到互不影响的效果
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 16:40
+build time: Apr 28 16:52
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 28 16:40
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120428163958';
+        S.__BUILD_TIME = '20120428165205';
     })();
 
     return S;
@@ -3879,7 +3879,7 @@ build time: Apr 28 16:40
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120428163958'
+        tag:'20120428165205'
     }, getBaseInfo()));
 
     /**
@@ -4215,6 +4215,14 @@ build time: Apr 28 16:40
         }
     });
 
+    S.config({
+        packages:[
+            {
+                name:"gallery",
+                path:S.Loader.Utils.normalizePath(S.Config.base + '../')
+            }
+        ]
+    });
 })(KISSY);
 /**
  * TODO: implement conditional loader
