@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: Apr 28 15:41
 */
 /*
 KISSY CSS Reset
@@ -108,4 +108,8 @@ mark { background: #ff0; }
 .ks-clear { *zoom: 1; }
 
 /* inline block */
-.ks-inline-block { display: inline-block; *display: inline; }
+.ks-inline-block {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
+}

@@ -4,9 +4,7 @@
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
-    return UIBase.create(Component.Render, [
-        UIBase.ContentBox.Render
-    ], {
+    return UIBase.create(Component.Render,{
 
         renderUI:function() {
             var el = this.get("el");

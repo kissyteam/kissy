@@ -254,13 +254,14 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             decorateChildrenInternal:function (ui, el) {
                 // 不能用 diaplay:none
                 el.css("visibility", "hidden");
-                var docBody = S.one(el[0].ownerDocument.body);
+                var self = this,
+                    docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui({
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 });
-                this.__set("menu", menu);
+                self.__set("menu", menu);
             },
 
             destructor:function () {

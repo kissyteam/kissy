@@ -13,4 +13,8 @@
 .ks-clear { *zoom: 1; }
 
 /* inline block */
-.ks-inline-block { display: inline-block; *display: inline; }
+.ks-inline-block {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
+}

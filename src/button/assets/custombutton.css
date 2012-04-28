@@ -12,154 +12,75 @@
  */
 
 .goog-button {
-  margin: 2px;
-  border: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  color: #000;
-  /* Client apps may override the URL at which they serve the image. */
-  background: #ddd url(button-bg.png) repeat-x top left;
-  text-decoration: none;
-  list-style: none;
-  vertical-align: middle;
-  cursor: default;
-  outline: none;
-}
-
-/* Pseudo-rounded corners. */
-.goog-button-outer-box,
-.goog-button-inner-box {
-  border-style: solid;
-  border-color: #aaa;
-  vertical-align: top;
-}
-
-.goog-button-outer-box {
-  margin: 0;
-  border-width: 1px 0;
-  padding: 0;
-}
-
-.goog-button-inner-box {
-  /* By default in FF2, block elements inside a moz-inline-box are stacked
+    margin: 2px;
+    font-family: Arial, sans-serif;
+    color: #000;
+    /* Client apps may override the URL at which they serve the image. */
+    background: #ddd url(button-bg.png) repeat-x top left;
+    text-decoration: none;
+    list-style: none;
+    vertical-align: middle;
+    cursor: default;
+    outline: none;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: #aaa;
+    border-width: 1px;
+    /* By default in FF2, block elements inside a moz-inline-box are stacked
    * horizontally next to each other.  This stops that weird behavior. */
-  -moz-box-orient: vertical;
-  margin: 0 -1px;
-  border-width: 0 1px;
-  padding: 3px 4px;
-  white-space: nowrap; /* Prevents buttons from line breaking on android. */
-}
-
-/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-button-inner-box {
-  /* IE6 needs to have the box shifted to make the borders line up. */
-  left: -1px;
-}
-/* Pre-IE7 BiDi fixes. */
-* html .goog-button-rtl .goog-button-outer-box {
-  /* @noflip */ left: -1px;
-}
-* html .goog-button-rtl .goog-button-inner-box {
-  /* @noflip */ right: auto;
-}
-
-/* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-button-inner-box {
-  /* IE7 needs to have the box shifted to make the borders line up. */
-  left: -1px;
-}
-/* IE7 BiDi fix. */
-*:first-child+html .goog-button-rtl .goog-button-inner-box {
-  /* @noflip */ left: 1px;
-}
-
-/* Safari-only hacks. */
-::root .goog-button,
-::root .goog-button-outer-box {
-  /* Required to make pseudo-rounded corners work on Safari. */
-  line-height: 0;
-}
-
-::root .goog-button-inner-box {
-  /* Required to make pseudo-rounded corners work on Safari. */
-  line-height: normal;
+    -moz-box-orient: vertical;
+    padding: 3px 4px;
+    white-space: nowrap; /* Prevents buttons from line breaking on android. */
 }
 
 /* State: disabled. */
 .goog-button-disabled {
-  background-image: none !important;
-  opacity: 0.3;
-  cursor: default !important;
-  -moz-opacity: 0.3;
-  filter: alpha(opacity=30);
-}
-
-.goog-button-disabled .goog-button-outer-box,
-.goog-button-disabled .goog-button-inner-box {
-  color: #333 !important;
-  border-color: #999 !important;
+    background-image: none !important;
+    opacity: 0.3;
+    cursor: default !important;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+    color: #333 !important;
+    border-color: #999 !important;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
 * html .goog-button-disabled {
-  margin: 2px 1px !important;
-  padding: 0 1px !important;
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
 *:first-child+html .goog-button-disabled {
-  margin: 2px 1px !important;
-  padding: 0 1px !important;
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
 }
 
 /* State: hover. */
-.goog-button-hover .goog-button-outer-box,
-.goog-button-hover .goog-button-inner-box {
-  border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
+.goog-button-hover {
+    border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
 
 /* State: active, checked. */
 .goog-button-active,
 .goog-button-checked {
-  background-color: #bbb;
-  background-position: bottom left;
+    background-color: #bbb;
+    background-position: bottom left;
 }
 
 /* State: focused. */
-.goog-button-focused .goog-button-outer-box,
-.goog-button-focused .goog-button-inner-box {
-  border-color: orange;
+.goog-button-focused {
+    border-color: orange;
 }
 
-/* Pill (collapsed border) styles. */
-.goog-button-collapse-right,
-.goog-button-collapse-right .goog-button-outer-box,
-.goog-button-collapse-right .goog-button-inner-box {
-  margin-right: 0 !important;
+.goog-button-collapse-left {
+    margin-left: 0 !important;
+    border-radius: 0 2px 2px 0;
+    border-left: none;
 }
 
-.goog-button-collapse-left,
-.goog-button-collapse-left .goog-button-outer-box,
-.goog-button-collapse-left .goog-button-inner-box {
-  margin-left: 0 !important;
-}
-
-.goog-button-collapse-left .goog-button-inner-box  {
-  border-left: 1px solid #fff !important;
-}
-
-.goog-button-collapse-left.goog-button-checked
-.goog-button-inner-box {
-  border-left: 1px solid #ddd !important;
-}
-
-/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-button-collapse-left .goog-button-inner-box {
-  left: 0 !important;
-}
-
-/* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-button-collapse-left
-.goog-button-inner-box {
-  left: 0 !important;
+.goog-button-collapse-right {
+    border-right: none !important;
+    border-radius: 2px 0 0 2px;
+    margin-right: 0 !important;
 }

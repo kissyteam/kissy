@@ -8,17 +8,16 @@ KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function () {
                 var self = this,
-                    el = self.get("el"),
-                    contentEl = self.get("contentEl");
-                el.attr("aria-haspopup", "true");
-                contentEl.append(S.substitute(ARROW_TMPL, {
+                    el = self.get("el");
+                el.attr("aria-haspopup", "true")
+                    .append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             },
-            _uiSetContent:function (v) {
+            _uiSetHtml:function (v) {
                 var self = this;
-                SubMenuRender.superclass._uiSetContent.call(self, v);
-                self.get("contentEl").append(S.substitute(ARROW_TMPL, {
+                SubMenuRender.superclass._uiSetHtml.call(self, v);
+                self.get("el").append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             }

@@ -4,8 +4,7 @@
  */
 KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
-    var CHECK_CLS = "menuitem-checkbox",
-        CONTENT_CLS = "menuitem-content";
+    var CHECK_CLS = "menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
@@ -19,7 +18,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
+    return UIBase.create(Component.Render, {
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -52,11 +51,6 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            contentElCls:{
-                valueFn:function () {
-                    return this.getCssClassWithPrefix(CONTENT_CLS);
-                }
-            },
             elAttrs:{
                 valueFn:function () {
                     return {

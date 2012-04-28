@@ -9,7 +9,7 @@ KISSY.add("menu/delmenuitemrender", function (S, Node, UIBase, Component, Menu) 
     var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X<' + '/span>';
 
     function addDel(self) {
-        self.get("contentEl").append(S.substitute(DEL_TMPL, {
+        self.get("el").append(S.substitute(DEL_TMPL, {
             prefixCls:self.get("prefixCls"),
             tooltip:self.get("delTooltip")
         }));

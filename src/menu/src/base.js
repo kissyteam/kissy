@@ -13,12 +13,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @name Menu
      * @constructor
      * @extends Component.Container
-     * @extends UIBase.ContentBox
      */
     var Menu = UIBase.create(Component.Container,
-        // ! note : 2012-03-31
-        // sync with menu render,extends contentBox too!
-        [UIBase.ContentBox],
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -198,7 +194,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        },"Menu");
+        }, "Menu");
 
     Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

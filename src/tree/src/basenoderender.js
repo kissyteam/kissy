@@ -151,6 +151,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @override
+         * @return {Node}
          */
         getContentElement:function () {
             var self = this;

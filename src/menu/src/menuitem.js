@@ -13,7 +13,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
      * @memberOf Menu
      * @extends Component.Controller
      */
-    var MenuItem = UIBase.create(Component.Controller, [UIBase.ContentBox],
+    var MenuItem = UIBase.create(Component.Controller,
         /**
          * @lends Menu.Item#
          */
@@ -152,6 +152,15 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                  */
                 selected:{
                     view:true
+                },
+
+                content:{
+                    getter:function () {
+                        return this.get("html");
+                    },
+                    setter:function (v) {
+                        return this.set("html", v);
+                    }
                 }
             },
 

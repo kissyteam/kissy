@@ -41,6 +41,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
      * @extends UIBase.Align
      */
     var PopupMenu = UIBase.create(Menu, [
+        UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
     ],

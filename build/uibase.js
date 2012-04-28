@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 26 20:38
+build time: Apr 28 15:02
 */
 /**
  * @fileOverview UIBase.Align
@@ -1585,9 +1585,8 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 c = "";
             }
 
-            contentEl = new Node(constructEl(
-                self.get("prefixCls") + "contentbox "
-                    + (self.get("contentElCls") || ""),
+            contentEl = new Node(constructEl("ks-contentbox "
+                + (self.get("contentElCls") || ""),
                 self.get("contentElStyle"),
                 undefined,
                 undefined,

@@ -3,26 +3,48 @@
 <head>
 <meta charset="utf-8"/>
 <title>Demo - SplitButton</title>
-<link href="http://a.tbcdn.cn/s/kissy/1.2.0/css/base.css" rel="stylesheet"/>
-<link href="../../button/demo/splitbutton.html" rel="stylesheet"/>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../assets/custombutton.css" rel="stylesheet"/>
 <link href="../../menubutton/assets/menubutton.css" rel="stylesheet"/>
 <link href="../../menu/assets/menu.css" rel="stylesheet"/>
 <link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
 <link href="../../menu/assets/submenu.css" rel="stylesheet"/>
 <style>
-    .goog-button-collapse-left .goog-menu-button-caption {
-        text-indent: -999px;
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
     }
 </style>
 </head>
 <body>
+<div id="wrap">
+    <h1>
+        split button demo
+    </h1>
+
+    <div id="container">
+
+    </div>
+</div>
 <script src="../../../build/kissy.js"></script>
-<script src="../src/base.js"></script>
-<script src="../src/buttonrender.js"></script>
-<script src="../src/customrender.js"></script>
-<script src="../src/split.js"></script>
 <script src="../src/button.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/buttonRender.js"></script>
+<script src="../src/split.js"></script>
+<script src="../src/toggle.js"></script>
+<script src="../src/toggleRender.js"></script>
 <script>
     KISSY.ready(function (S) {
         KISSY.use("menubutton,button,menu", function (S, MenuButton, Button, Menu) {
@@ -30,27 +52,31 @@
 
             var b = new Button({
                 prefixCls:"goog-",
-                content:"已买到的宝贝"
+                content:"已买到的宝贝",
+                render:'#container'
             });
 
             var mb = new MenuButton({
                 prefixCls:"goog-",
-                content:"请选择"
+                content:"请选择",
+                render:'#container'
             });
 
-            mb.addItem(new Menu.Item({content:"已买到的宝贝",
-                prefixCls:"goog-"}));
+            mb.addItem(new Menu.Item({
+                content:"已买到的宝贝",
+                prefixCls:"goog-"
+            }));
 
-            mb.addItem(new Menu.Item({content:"已卖出的宝贝",
-                prefixCls:"goog-"}));
-
+            mb.addItem(new Menu.Item({
+                content:"已卖出的宝贝",
+                prefixCls:"goog-"
+            }));
 
             // 渲染为一组分离按钮
             new Button.Split({
                 first:b,
                 second:mb
             }).render();
-
 
             b.on("click", function () {
                 alert(b.get("content") + " : clicked");

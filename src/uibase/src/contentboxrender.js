@@ -55,9 +55,8 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 c = "";
             }
 
-            contentEl = new Node(constructEl(
-                self.get("prefixCls") + "contentbox "
-                    + (self.get("contentElCls") || ""),
+            contentEl = new Node(constructEl("ks-contentbox "
+                + (self.get("contentElCls") || ""),
                 self.get("contentElStyle"),
                 undefined,
                 undefined,

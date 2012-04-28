@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 17:26
+build time: Apr 28 16:37
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -18,12 +18,8 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @name Menu
      * @constructor
      * @extends Component.Container
-     * @extends UIBase.ContentBox
      */
     var Menu = UIBase.create(Component.Container,
-        // ! note : 2012-03-31
-        // sync with menu render,extends contentBox too!
-        [UIBase.ContentBox],
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -73,9 +69,12 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * If the container is enabled, and a child is highlighted,
              * calls the child controller's {@code handleKeydown} method to give the control
              * a chance to handle the event first.
+             * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Key event to handle.
              * @return {boolean} Whether the event was handled by the container (or one of
              *     its children).
+             * @protected
+             * @override
              */
             handleKeyEventInternal:function (e) {
 
@@ -200,7 +199,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        },"Menu");
+        }, "Menu");
 
     Component.UIStore.setUIConstructorByCssClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -344,7 +343,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        c.get("contentEl").html(content);
+                        c.get("el").html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -352,7 +351,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("contentEl").html(content.replace(strExp, function (m) {
+                            c.get("el").html(content.replace(strExp, function (m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -529,114 +528,171 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
-    var MenuItem = UIBase.create(Component.Controller, [UIBase.ContentBox], {
+    /**
+     * A menu item component which menu is consisted of.
+     * @class
+     * @name Item
+     * @memberOf Menu
+     * @extends Component.Controller
+     */
+    var MenuItem = UIBase.create(Component.Controller,
+        /**
+         * @lends Menu.Item#
+         */
+        {
 
-        handleMouseEnter:function (e) {
-            // 父亲不允许自己处理
-            if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
-                return true;
-            }
-            this.get("parent").set("highlightedItem", this);
-        },
-
-        handleMouseLeave:function (e) {
-            // 父亲不允许自己处理
-            if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
-                return true;
-            }
-            this.get("parent").set("highlightedItem", undefined);
-        },
-
-        performActionInternal:function () {
-            var self = this;
-            // 可选
-            if (self.get("selectable")) {
-                self.set("selected", true);
-            }
-            // 可选中，取消选中
-            if (self.get("checkable")) {
-                self.set("checked", !self.get("checked"));
-            }
-            self.get("parent").fire("click", {
-                // 使用熟悉的 target，而不是自造新词！
-                target:self
-            });
-            return true;
-        },
-
-        _uiSetHighlighted:function (v) {
-            // 是否要滚动到当前菜单项(横向，纵向)
-            if (v) {
-                var el = this.get("el"),
-                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
-                    p = el.parent(function (e) {
-                        return $(e).css("overflow") != "visible";
-                    }, this.get("parent").get("el").parent());
-                if (!p) {
-                    return;
+            /**
+             * Handle mouseenter event. Make parent menu to highlight itself.
+             * Protected, should only be overridden by subclasses.
+             * @param {Event.Object} e Mouseenter event object.
+             * @protected
+             * @override
+             */
+            handleMouseEnter:function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
+                    return true;
                 }
-                el.scrollIntoView(p, undefined, undefined, true);
-            }
-        },
-
-        containsElement:function (element) {
-            return this.get('view') && this.get('view').containsElement(element);
-        }
-
-    }, {
-        ATTRS:{
-
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
-
-            visibleMode:{
-                value:"display"
+                this.get("parent").set("highlightedItem", this);
             },
 
             /**
-             * 是否绑定鼠标事件
+             * Handle mouseleave event. Make parent menu to unhighlight itself.
+             * Protected, should only be overridden by subclasses.
+             * @param {Event.Object} e Mouseleave event object.
+             * @protected
              * @override
              */
-            handleMouseEvents:{
-                value:false
+            handleMouseLeave:function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
+                    return true;
+                }
+                this.get("parent").set("highlightedItem", null);
             },
 
-            selectable:{
-                view:true
+            /**
+             * Perform default action when click on enter on this menuitem.
+             * If selectable, then make it selected.
+             * If checkable, then toggle it.
+             * Finally fire click on its parent menu.
+             * @protected
+             * @override
+             */
+            performActionInternal:function () {
+                var self = this;
+                // 可选
+                if (self.get("selectable")) {
+                    self.set("selected", true);
+                }
+                // 可选中，取消选中
+                if (self.get("checkable")) {
+                    self.set("checked", !self.get("checked"));
+                }
+                self.get("parent").fire("click", {
+                    target:self
+                });
+                return true;
             },
 
-            checkable:{
-                view:true
+            _uiSetHighlighted:function (v) {
+                // 是否要滚动到当前菜单项(横向，纵向)
+                if (v) {
+                    var el = this.get("el"),
+                        // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                        // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                        p = el.parent(function (e) {
+                            return $(e).css("overflow") != "visible";
+                        }, this.get("parent").get("el").parent());
+                    if (!p) {
+                        return;
+                    }
+                    el.scrollIntoView(p, undefined, undefined, true);
+                }
             },
 
-            // @inheritedDoc
-            // option.text
-            // content:{},
-
-            // option.value
-            value:{},
-
-            checked:{
-                view:true
-            },
-            selected:{
-                view:true
+            /**
+             * Check whether this menu item contains specified element.
+             * @param {Node} element Element to be tested.
+             */
+            containsElement:function (element) {
+                return this.get('view') && this.get('view').containsElement(element);
             }
-        },
 
-        HTML_PARSER:{
-            selectable:function (el) {
-                var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                return el.hasClass(cls);
+        }, {
+            ATTRS:/**
+             * @lends Menu.Item#
+             */
+            {
+
+                focusable:{
+                    value:false
+                },
+
+                visibleMode:{
+                    value:"display"
+                },
+
+                handleMouseEvents:{
+                    value:false
+                },
+
+                /**
+                 * Whether the menu item is selectable or not.
+                 * Set to true for option.
+                 * @type Boolean
+                 */
+                selectable:{
+                    view:true
+                },
+
+                /**
+                 * Whether the menu item is checkable or not.
+                 * Set to true for checkbox option.
+                 * @type Boolean
+                 */
+                checkable:{
+                    view:true
+                },
+
+                /**
+                 * The value associated with the menu item.
+                 */
+                value:{},
+
+                /**
+                 * Whether the menu item is checked.
+                 * @type Boolean
+                 */
+                checked:{
+                    view:true
+                },
+
+                /**
+                 * Whether the menu item is selected.
+                 * @type Boolean
+                 */
+                selected:{
+                    view:true
+                },
+
+                content:{
+                    getter:function () {
+                        return this.get("html");
+                    },
+                    setter:function (v) {
+                        return this.set("html", v);
+                    }
+                }
+            },
+
+            HTML_PARSER:{
+                selectable:function (el) {
+                    var cls = this.getCssClassWithPrefix("menuitem-selectable");
+                    return el.hasClass(cls);
+                }
             }
-        }
-    },"Menu_Item");
+        }, "Menu_Item");
 
     MenuItem.DefaultRender = MenuItemRender;
 
@@ -654,8 +710,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
  */
 KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
-    var CHECK_CLS = "menuitem-checkbox",
-        CONTENT_CLS = "menuitem-content";
+    var CHECK_CLS = "menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
@@ -669,7 +724,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
+    return UIBase.create(Component.Render, {
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -702,11 +757,6 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            contentElCls:{
-                valueFn:function () {
-                    return this.getCssClassWithPrefix(CONTENT_CLS);
-                }
-            },
             elAttrs:{
                 valueFn:function () {
                     return {
@@ -730,9 +780,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
-    return UIBase.create(Component.Render, [
-        UIBase.ContentBox.Render
-    ], {
+    return UIBase.create(Component.Render,{
 
         renderUI:function() {
             var el = this.get("el");
@@ -806,103 +854,145 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
      * @name PopupMenu
      * @memberOf Menu
      * @constructor
+     * @extends Menu
+     * @extends UIBase.Position
+     * @extends UIBase.Align
      */
     var PopupMenu = UIBase.create(Menu, [
+        UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
-    ], {
-        _clearLeaveHideTimers:function () {
-            var self = this, i, item, menu;
-            if (!self.get(autoHideOnMouseLeave)) {
-                return;
-            }
-            // 清除自身
-            clearOwn(self);
-            var cs = self.get("children");
-            for (i = 0; i < cs.length; i++) {
-                item = cs[i];
-                // 递归清除子菜单
-                if ((menu = item.get("menu")) &&
-                    // 不是懒加载函数
-                    !S.isFunction(menu) &&
-                    menu.get(autoHideOnMouseLeave)) {
-                    menu._clearLeaveHideTimers();
+    ],
+        /**
+         * @lends Menu.PopupMenu#
+         */
+        {
+            _clearLeaveHideTimers:function () {
+                var self = this, i, item, menu;
+                if (!self.get(autoHideOnMouseLeave)) {
+                    return;
                 }
-            }
-        },
-        handleMouseLeave:function () {
-            var self = this,
-                parent;
-            if (!self.get(autoHideOnMouseLeave)) {
-                return;
-            }
-            self._leaveHideTimer = setTimeout(function () {
-                self.hide();
-                var subMenuItem = self.get("parent"), m;
-                if (subMenuItem) {
-                    m = getParentMenu(self);
-                    // 过段时间仍然是父亲 submenu 仍然是他的兄弟中高亮，证明已经离开
-                    // 否则
-                    // 1.鼠标移到 submenu 的话，submenu mouseenter clearTimers,
-                    //   这个 timer 执行不了！
-                    //
-                    // 2.鼠标移到了 submenu 并列的其他 menuitem，
-                    //   导致其他 menuitem highlighted
-                    //   那么 当前所属 submenu unhighlighted
-                    //   执行 clearTimers ，这个 timer 仍然不执行
-
-                    // 那么只剩下一种情况，移除了整个嵌套的 menu，
-                    // 那么执行该 timer
-                    // menu hide 并且将其所属的 submenu 高亮去掉！
-                    if (m && m.get("highlightedItem") === subMenuItem) {
-                        m.set("highlightedItem", null);
+                // 清除自身
+                clearOwn(self);
+                var cs = self.get("children");
+                for (i = 0; i < cs.length; i++) {
+                    item = cs[i];
+                    // 递归清除子菜单
+                    if ((menu = item.get("menu")) &&
+                        // 不是懒加载函数
+                        !S.isFunction(menu) &&
+                        menu.get(autoHideOnMouseLeave)) {
+                        menu._clearLeaveHideTimers();
                     }
                 }
-            }, self.get("autoHideDelay"));
-            parent = getAutoHideParentMenu(self);
-            if (parent) {
-                parent.handleMouseLeave();
-            }
-        },
-
-        handleMouseEnter:function () {
-            var self = this;
-            if (!self.get(autoHideOnMouseLeave)) {
-                return;
-            }
-            var parent = getAutoHideParentMenu(self);
-            if (parent) {
-                parent.handleMouseEnter();
-            }
-            self._clearLeaveHideTimers();
-        },
-
-
-        /**
-         *  suppose it has focus (as a context menu),
-         *  then it must hide when click document
-         */
-        handleBlur:function () {
-            var self = this;
-            PopupMenu.superclass.handleBlur.apply(self, arguments);
-            self.hide();
-        }
-    }, {
-        ATTRS:{
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            focusable:{
-                value:false
             },
-            visibleMode:{
-                value:"visibility"
+
+            /**
+             * Handle mouseleave event.Make parent subMenu item unHighlighted.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             * @override
+             */
+            handleMouseLeave:function () {
+                var self = this,
+                    parent;
+                if (!self.get(autoHideOnMouseLeave)) {
+                    return;
+                }
+                self._leaveHideTimer = setTimeout(function () {
+                    self.hide();
+                    var subMenuItem = self.get("parent"), m;
+                    if (subMenuItem) {
+                        m = getParentMenu(self);
+                        // 过段时间仍然是父亲 submenu 仍然是他的兄弟中高亮，证明已经离开
+                        // 否则
+                        // 1.鼠标移到 submenu 的话，submenu mouseenter clearTimers,
+                        //   这个 timer 执行不了！
+                        //
+                        // 2.鼠标移到了 submenu 并列的其他 menuitem，
+                        //   导致其他 menuitem highlighted
+                        //   那么 当前所属 submenu unhighlighted
+                        //   执行 clearTimers ，这个 timer 仍然不执行
+
+                        // 那么只剩下一种情况，移除了整个嵌套的 menu，
+                        // 那么执行该 timer
+                        // menu hide 并且将其所属的 submenu 高亮去掉！
+                        if (m && m.get("highlightedItem") === subMenuItem) {
+                            m.set("highlightedItem", null);
+                        }
+                    }
+                }, self.get("autoHideDelay"));
+                parent = getAutoHideParentMenu(self);
+                if (parent) {
+                    parent.handleMouseLeave();
+                }
             },
-            autoHideOnMouseLeave:{},
-            autoHideDelay:{
-                value:100
+
+            /**
+             * Handle mouseenter event.Make parent subMenu item highlighted.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             * @override
+             */
+            handleMouseEnter:function () {
+                var self = this;
+                if (!self.get(autoHideOnMouseLeave)) {
+                    return;
+                }
+                var parent = getAutoHideParentMenu(self);
+                if (parent) {
+                    parent.handleMouseEnter();
+                }
+                self._clearLeaveHideTimers();
+            },
+
+
+            /**
+             * Suppose it has focus (as a context menu), then it must hide when lose focus.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             * @override
+             */
+            handleBlur:function () {
+                var self = this;
+                PopupMenu.superclass.handleBlur.apply(self, arguments);
+                self.hide();
             }
-        },
-        DefaultRender:PopupMenuRender
-    },"Menu_PopupMenu");
+        }, {
+            ATTRS:/**
+             * @lends Menu.PopupMenu#
+             */
+            {
+                // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+                /**
+                 * Whether the popup menu is focuable.
+                 * Default : false.
+                 * @type Boolean
+                 */
+                focusable:{
+                    value:false
+                },
+                visibleMode:{
+                    value:"visibility"
+                },
+                /**
+                 * Whether the popup menu hides when mouseleave.
+                 * Default : false.
+                 * @type Boolean
+                 */
+                autoHideOnMouseLeave:{},
+                /**
+                 * After how much time the popup menu hides when mouseleave.
+                 * Unit : second.
+                 * Default : 0.1.
+                 * @type Number
+                 */
+                autoHideDelay:{
+                    value:0.1
+                }
+            },
+            DefaultRender:PopupMenuRender
+        }, "Menu_PopupMenu");
 
     Component.UIStore.setUIConstructorByCssClass("popupmenu", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
@@ -917,13 +1007,14 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
  * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
+KISSY.add("menu/popupmenurender", function (S, UA, UIBase, MenuRender) {
     return UIBase.create(MenuRender, [
+        UIBase.ContentBox.Render,
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ],"Menu_PopupMenu_Render");
+    ], "Menu_PopupMenu_Render");
 }, {
-    requires:['ua','uibase','./menurender']
+    requires:['ua', 'uibase', './menurender']
 });/**
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
@@ -1226,13 +1317,14 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             decorateChildrenInternal:function (ui, el) {
                 // 不能用 diaplay:none
                 el.css("visibility", "hidden");
-                var docBody = S.one(el[0].ownerDocument.body);
+                var self = this,
+                    docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui({
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 });
-                this.__set("menu", menu);
+                self.__set("menu", menu);
             },
 
             destructor:function () {
@@ -1309,17 +1401,16 @@ KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function () {
                 var self = this,
-                    el = self.get("el"),
-                    contentEl = self.get("contentEl");
-                el.attr("aria-haspopup", "true");
-                contentEl.append(S.substitute(ARROW_TMPL, {
+                    el = self.get("el");
+                el.attr("aria-haspopup", "true")
+                    .append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             },
-            _uiSetContent:function (v) {
+            _uiSetHtml:function (v) {
                 var self = this;
-                SubMenuRender.superclass._uiSetContent.call(self, v);
-                self.get("contentEl").append(S.substitute(ARROW_TMPL, {
+                SubMenuRender.superclass._uiSetHtml.call(self, v);
+                self.get("el").append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             }

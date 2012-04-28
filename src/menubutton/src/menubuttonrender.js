@@ -2,24 +2,24 @@
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonrender", function (S, UIBase, Button) {
+KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
         '<div class="ks-inline-block ' +
-        '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
+        '{prefixCls}menu-button-dropdown"><' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
     return UIBase.create(Button.Render, {
 
         createDom:function () {
-            var innerEl = this.get("innerEl"),
+            var el = this.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:this.get("content") || "",
+                    content:this.get("content"),
                     prefixCls:this.get("prefixCls")
                 });
-            innerEl
+            el
                 .html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);

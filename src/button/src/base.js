@@ -2,7 +2,7 @@
  * @fileOverview Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
 
     var KeyCodes = Event.KeyCodes;
     /**
@@ -11,10 +11,9 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @extends Component.Controller
      * @extends UIBase.ContentBox
      */
-    var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
+    var Button = UIBase.create(Component.Controller, [],
         /**@lends Button.prototype */
         {
-
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
@@ -65,11 +64,21 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
                  */
                 collapseSide:{
                     view:true
+                },
+                // for compatibility
+                // recommend set/get html attribute directly
+                content:{
+                    getter:function () {
+                        return this.get("html");
+                    },
+                    setter:function (v) {
+                        return this.set("html", v);
+                    }
                 }
             }
         });
 
-    Button.DefaultRender = CustomRender;
+    Button.DefaultRender = ButtonRender;
 
     Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -79,5 +88,5 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['event', 'uibase', 'component', './customrender']
+    requires:['event', 'uibase', 'component', './buttonRender']
 });

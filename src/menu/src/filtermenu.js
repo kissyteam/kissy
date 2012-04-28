@@ -123,7 +123,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        c.get("contentEl").html(content);
+                        c.get("el").html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -131,7 +131,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("contentEl").html(content.replace(strExp, function (m) {
+                            c.get("el").html(content.replace(strExp, function (m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
