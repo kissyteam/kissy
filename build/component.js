@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -13,15 +13,14 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
      * @namespace
      */
     var Component = {
-        Controller:Controller,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
+        "Controller":Controller,
+        "Render":Render,
+        "Container":Container,
+        "UIStore":UIStore,
+        "DelegateChildren":DelegateChildren,
+        "DecorateChild":DecorateChild,
         "DecorateChildren":DecorateChildren
     };
-    Component.Controller = Controller;
     return Component;
 }, {
     requires:['component/controller',
@@ -54,20 +53,23 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
 
             /**
              * Generate child component from root element.
-             * @name decorateInternal
              * @protected
              * @function
              * @param {Node} element Root element of current component.
              */
+            decorateInternal:function (element) {
 
+            },
 
             /**
-             * Get child component which contains current event target node.
-             * @name getOwnerControl
+             * Get child component which contains current event target node.             *
              * @protected
              * @function
              * @param {HTMLElement} target Current event target node.
              */
+            getOwnerControl:function (target) {
+
+            }
         });
 
 }, {
@@ -725,14 +727,13 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
             // 不用 __set , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCssClassWithPrefix(ui));
             // 可以装饰?
             if (child) {
                 var UI = self.findUIConstructorByNode(child);
                 if (UI) {
                     // 可以直接装饰
-                    self.decorateChildrenInternal(UI, child, prefixCls);
+                    self.decorateChildrenInternal(UI, child);
                 } else {
                     // 装饰其子节点集合
                     self.decorateChildren(child);
@@ -783,21 +784,20 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
         },
 
         // 生成一个组件
-        decorateChildrenInternal:function (UI, c, prefixCls) {
+        decorateChildrenInternal:function (UI, c) {
             this.addChild(new UI({
                 srcNode:c,
-                prefixCls:prefixCls
+                prefixCls:self.get("prefixCls")
             }));
         },
 
         // container 需要在装饰时对儿子特殊处理，递归装饰
         decorateChildren:function (el) {
             var self = this,
-                children = el.children(),
-                prefixCls = self.get("prefixCls");
+                children = el.children();
             children.each(function (c) {
                 var UI = self.findUIConstructorByNode(c);
-                self.decorateChildrenInternal(UI, c, prefixCls);
+                self.decorateChildrenInternal(UI, c);
             });
         }
     });
@@ -881,115 +881,140 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @name Render
      * @extends UIBase
      */
-    return UIBase.create([UIBase.Box.Render], {
-
+    return UIBase.create([UIBase.Box.Render],
         /**
-         * Get all css class name to be applied to the root element of this component for given state.
-         * the css class names are prefixed with component name.
-         * @param {String} [state] This component's state info.
+         * @lends Component.Render#
          */
-        getComponentCssClassWithState:function (state) {
-            var self = this, componentCls = this.__componentClasses;
-            state = state || "";
-            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
-        },
+        {
 
-        /**
-         * Get full class name (with prefix) for current component
-         * @param classes {String} class names without prefixCls. Separated by space.
-         * @function
-         * @return {String} class name with prefixCls
-         * @private
-         */
-        getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            /**
+             * Get all css class name to be applied to the root element of this component for given state.
+             * the css class names are prefixed with component name.
+             * @param {String} [state] This component's state info.
+             */
+            getComponentCssClassWithState:function (state) {
+                var self = this, componentCls = this.__componentClasses;
+                state = state || "";
+                return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
+            },
 
-        createDom:function () {
-            var self = this;
-            self.get("el").addClass(self.getComponentCssClassWithState());
-        },
+            /**
+             * Get full class name (with prefix) for current component
+             * @param classes {String} class names without prefixCls. Separated by space.
+             * @function
+             * @return {String} class name with prefixCls
+             * @private
+             */
+            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
 
-        /**
-         * Returns the dom element which is responsible for listening keyboard events.
-         */
-        getKeyEventTarget:function () {
-            return this.get("el");
-        },
+            createDom:function () {
+                var self = this;
+                self.get("el").addClass(self.getComponentCssClassWithState());
+            },
 
-        /**
-         * Return the dom element into which child component to be rendered.
-         */
-        getContentElement:function () {
-            return this.get("contentEl") || this.get("el");
-        },
+            /**
+             * Returns the dom element which is responsible for listening keyboard events.
+             */
+            getKeyEventTarget:function () {
+                return this.get("el");
+            },
 
-        /**
-         * @protected
-         */
-        _uiSetFocusable:function (v) {
-            var el = this.getKeyEventTarget(),
-                tabindex = el.attr("tabindex");
-            if (tabindex >= 0 && !v) {
-                el.attr("tabindex", -1);
-            } else if (!(tabindex >= 0) && v) {
-                el.attr("tabindex", 0);
+            /**
+             * Return the dom element into which child component to be rendered.
+             */
+            getContentElement:function () {
+                return this.get("contentEl") || this.get("el");
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetFocusable:function (v) {
+                var el = this.getKeyEventTarget(),
+                    tabindex = el.attr("tabindex");
+                if (tabindex >= 0 && !v) {
+                    el.attr("tabindex", -1);
+                } else if (!(tabindex >= 0) && v) {
+                    el.attr("tabindex", 0);
+                }
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetHighlighted:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-hover"),
+                    el = self.get("el");
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetDisabled:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-disabled"),
+                    el = self.get("el");
+                el[v ? 'addClass' : 'removeClass'](componentCls)
+                    //不能被 tab focus 到
+                    //support aria
+                    .attr({
+                        "tabindex":v ? -1 : 0,
+                        "aria-disabled":v
+                    });
+
+            },
+            /**
+             * @protected
+             */
+            _uiSetActive:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-active");
+                self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr("aria-pressed", !!v);
+            },
+            /**
+             * @protected
+             */
+            _uiSetFocused:function (v) {
+                var self = this,
+                    el = self.get("el"),
+                    componentCls = self.getComponentCssClassWithState("-focused");
+                el[v ? 'addClass' : 'removeClass'](componentCls);
             }
-        },
 
-        /**
-         * @protected
-         */
-        _uiSetHighlighted:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-hover"),
-                el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](componentCls);
-        },
-
-        /**
-         * @protected
-         */
-        _uiSetDisabled:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-disabled"),
-                el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](componentCls)
-                //不能被 tab focus 到
-                //support aria
-                .attr({
-                    "tabindex":v ? -1 : 0,
-                    "aria-disabled":v
-                });
-
-        },
-        /**
-         * @protected
-         */
-        _uiSetActive:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-active");
-            self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
-                .attr("aria-pressed", !!v);
-        },
-        /**
-         * @protected
-         */
-        _uiSetFocused:function (v) {
-            var self = this,
-                el = self.get("el"),
-                componentCls = self.getComponentCssClassWithState("-focused");
-            el[v ? 'addClass' : 'removeClass'](componentCls);
-        }
-
-    }, {//  screen state
-        ATTRS:{
-            prefixCls:{},
-            focusable:{},
-            focused:{},
-            active:{},
-            disabled:{},
-            highlighted:{}
-        }
-    }, "Component_Render");
+        }, {//  screen state
+            ATTRS:/**
+             * @lends Component.Render#
+             */
+            {
+                /**
+                 * see {@link Component.Controller#prefixCls}
+                 */
+                prefixCls:{},
+                /**
+                 * see {@link Component.Controller#focusable}
+                 */
+                focusable:{},
+                /**
+                 * see {@link Component.Controller#focused}
+                 */
+                focused:{},
+                /**
+                 * see {@link Component.Controller#active}
+                 */
+                active:{},
+                /**
+                 * see {@link Component.Controller#disabled}
+                 */
+                disabled:{},
+                /**
+                 * see {@link Component.Controller#highlighted}
+                 */
+                highlighted:{}
+            }
+        }, "Component_Render");
 }, {
     requires:['uibase', './uistore']
 });/**
@@ -1045,15 +1070,17 @@ KISSY.add("component/uistore", function (S) {
 
     /**
      * @name UIStore
+     * @namespace
      * @memberOf Component
      */
-    return {
+    var UIStore = /** @lends Component.UIStore */{
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
          * @type {Function}
          * @return {String}
+         * @function
          */
         getCssClassByUIConstructor:getCssClassByUIConstructor,
         /**
@@ -1061,6 +1088,7 @@ KISSY.add("component/uistore", function (S) {
          * @param {String} classNames Class names separated by space.
          * @type {Function}
          * @return {Function}
+         * @function
          */
         getUIConstructorByCssClass:getUIConstructorByCssClass,
         /**
@@ -1068,6 +1096,7 @@ KISSY.add("component/uistore", function (S) {
          * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
+         * @function
          */
         setUIConstructorByCssClass:setUIConstructorByCssClass,
 
@@ -1085,4 +1114,6 @@ KISSY.add("component/uistore", function (S) {
             "LEVEL6":60
         }
     };
+
+    return UIStore;
 });

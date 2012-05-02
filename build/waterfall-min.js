@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 KISSY.add("waterfall/base",function(g,o,r){function e(){e.superclass.constructor.apply(this,arguments);this._init()}function p(a,c,b,f){var j=[].concat(g.makeArray(a)),h={},e;0<j.length?e=setTimeout(function(){var h=+new Date;do{var l=j.shift();c.call(b,l)}while(0<j.length&&50>+new Date-h);0<j.length?e=setTimeout(arguments.callee,25):f&&f.call(b,a)},25):f&&g.later(f,0,!1,b,[a]);h.stop=function(){e&&(clearTimeout(e),j=[],a.each(function(a){a.stop()}))};return h}function t(){var a=this._containerRegion;
 a&&this.get("container").width()===a.width||this.adjust()}function n(){var a=this.get("container").width(),c=this.get("curColHeights");c.length=Math.max(parseInt(a/this.get("colWidth")),this.get("minColCount"));this._containerRegion={width:a};g.each(c,function(a,f){c[f]=0});this.set("colItems",[])}function k(a,c,b,f){for(var j=a.get("effect"),b=m(b),h=a.get("curColHeights"),e=a.get("container"),s=h.length,l=0,g=a._containerRegion,i=Number.MAX_VALUE,d=0;d<s;d++)h[d]<i&&(i=h[d],l=d);s||(i=0);s=Math.max(g.width-

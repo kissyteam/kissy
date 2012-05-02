@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 16:52
+build time: May 2 10:13
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 28 16:52
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120428165205';
+        S.__BUILD_TIME = '20120502101330';
     })();
 
     return S;
@@ -3879,7 +3879,7 @@ build time: Apr 28 16:52
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120428165205'
+        tag:'20120502101330'
     }, getBaseInfo()));
 
     /**
@@ -4231,7 +4231,7 @@ build time: Apr 28 16:52
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview ua
@@ -4516,7 +4516,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 25 21:51
+build time: May 2 10:12
 */
 /**
  * @fileOverview   dom-attr
@@ -8829,7 +8829,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 18:24
+build time: May 2 10:12
 */
 /**
  * @fileOverview responsible for registering event
@@ -11140,7 +11140,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:12
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11649,7 +11649,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 11:42
+build time: May 2 10:12
 */
 /**
  * @fileOverview form data  serialization util
@@ -13513,7 +13513,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview   cookie
@@ -13627,7 +13627,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview attribute management
@@ -14248,7 +14248,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview anim
@@ -15608,7 +15608,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -16171,7 +16171,7 @@ KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -17591,12 +17591,12 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 27 12:49
+build time: May 2 10:12
 */
 /**
  * @fileOverview 数据延迟加载组件
  */
-KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
+KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -17609,33 +17609,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         NONE = 'none',
         SCROLL = 'scroll',
         TOUCH_MOVE = "touchmove",
-        RESIZE = 'resize', DURATION = 100,
-        defaultConfig = {
-            /**
-             * 懒处理模式
-             *  auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *  manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
-             * 注：对于 textarea 数据，只有手动模式
-             */
-            mod:MANUAL,
-
-            /**
-             * 当前视窗往下，diff px 外的 img/textarea 延迟加载
-             * 适当设置此值，可以让用户在拖动时感觉数据已经加载好
-             * 默认为当前视窗高度（两屏以外的才延迟加载）
-             */
-            diff:DEFAULT,
-
-            /**
-             * 图像的占位图，默认无
-             */
-            placeholder:NONE,
-
-            /**
-             * 是否执行 textarea 里面的脚本
-             */
-            execScript:true
-        };
+        RESIZE = 'resize',
+        DURATION = 100;
 
     function isValidContainer(c) {
         return c.nodeType != 9;
@@ -17684,13 +17659,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
         area.style.display = NONE;
         area.className = ''; // clear hook
-
         var content = DOM.create('<div>');
         // area 直接是 container 的儿子
         area.parentNode.insertBefore(content, area);
         DOM.html(content, area.value, execScript);
     }
-
 
     /**
      * filter for lazyload textarea
@@ -17699,10 +17672,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         return DOM.hasClass(area, AREA_DATA_CLS);
     }
 
-
     /**
      * LazyLoad elements which are out of current viewPort.
      * @constructor
+     * @name DataLazyload
+     * @extends Base
      */
     function DataLazyload(containers, config) {
         var self = this;
@@ -17723,39 +17697,99 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             containers = [DOM.get(containers) || doc];
         }
 
-        /**
-         * LazyLoad elements 's container.
-         * @type Array
-         */
-        self.containers = containers;
+        config.containers = containers;
 
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
+        DataLazyload.superclass.constructor.call(self, config);
 
         /**
          * 需要延迟下载的图片
          * @type Array
+         * @private
          */
-        //self.images
+        //self._images
 
-        /**
+        /*
          * 需要延迟处理的 textarea
          * @type Array
+         * @private
          */
-        //self.areaes
+        //self._areaes
 
         /**
          * 和延迟项绑定的回调函数
          * @type object
          */
-        self.callbacks = {els:[], fns:[]};
+        self._callbacks = {els:[], fns:[]};
 
         self._init();
-        return undefined;
     }
+
+    DataLazyload.ATTRS =
+    /**
+     * @lends DataLazyload#
+     */
+    {
+        mod:{
+            value:MANUAL
+        },
+        /**
+         * Distance outside viewport or specified container to pre load.
+         * Default : pre load one screen height and width.
+         * @type Number|Object
+         * @example
+         * <code>
+         *  diff : 50 // pre load 50px outside viewport or specified container
+         *  // or more detailed :
+         *  {
+         *    left:20, // pre load 50px outside left edge of viewport or specified container
+         *    right:30, // pre load 50px outside right edge of viewport or specified container
+         *    top:50, // pre load 50px outside top edge of viewport or specified container
+         *    bottom:60 // pre load 50px outside bottom edge of viewport or specified container
+         *  }
+         * </code>
+         */
+        diff:{
+            value:DEFAULT
+        },
+        /**
+         * Placeholder img url for lazy loaded _images.
+         * Default : empty
+         * @type String
+         */
+        placeholder:{
+            value:NONE
+        },
+
+        /**
+         * Whether execute script in lazy loaded textarea.
+         * Default : true
+         * @type Boolean
+         */
+        execScript:{
+            value:true
+        },
+
+        /**
+         * Containers which will be monitor scroll event to lazy load elements within it.
+         * Default : [ document ]
+         * @type HTMLElement[]
+         */
+        containers:{
+            valueFn:function () {
+                return [doc];
+            }
+        },
+
+        /**
+         * Whether destroy this component when all lazy loaded elements are loaded.
+         * Default : true
+         * @type Boolean
+         * @since 1.3
+         */
+        autoDestroy:{
+            value:true
+        }
+    };
 
     // 两块区域是否相交
     function isCross(r1, r2) {
@@ -17767,418 +17801,468 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         return r.bottom >= r.top && r.right >= r.left;
     }
 
-    S.augment(DataLazyload, {
-
+    S.extend(DataLazyload,
+        Base,
         /**
-         * 初始化
-         * @protected
+         * @lends DataLazyload#
          */
-        _init:function () {
-            var self = this;
-            self._filterItems();
-            self._initLoadEvent();
-        },
+        {
 
-        /**
-         * 获取并初始化需要延迟的 images 和 areaes
-         * @protected
-         */
-        _filterItems:function () {
-            var self = this,
-                containers = self.containers,
-                n, N, imgs, areaes, i, img,
-                lazyImgs = [], lazyAreas = [];
+            /**
+             * 初始化
+             */
+            _init:function () {
+                var self = this;
+                self._filterItems();
+                self._initLoadEvent();
+            },
 
-            for (n = 0, N = containers.length; n < N; ++n) {
-                imgs = removeExisting(DOM.query('img', containers[n]), lazyImgs);
-                lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
+            /**
+             * 获取并初始化需要延迟的 _images 和 _areaes
+             */
+            _filterItems:function () {
+                var self = this,
+                    containers = self.get("containers"),
+                    n, N, imgs, _areaes, i, img,
+                    lazyImgs = [], lazyAreas = [];
 
-                areaes = removeExisting(DOM.query('textarea', containers[n]), lazyAreas);
-                lazyAreas = lazyAreas.concat(S.filter(areaes, filterArea, self));
-            }
+                for (n = 0, N = containers.length; n < N; ++n) {
+                    imgs = removeExisting(DOM.query('img', containers[n]), lazyImgs);
+                    lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
-            self.images = lazyImgs;
-            self.areaes = lazyAreas;
-        },
-
-        /**
-         * filter for lazyload image
-         */
-        _filterImg:function (img) {
-            var self = this,
-                dataSrc = img.getAttribute(IMG_SRC_DATA),
-                placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MANUAL;
-
-            // 手工模式，只处理有 data-src 的图片
-            if (isManualMod) {
-                if (dataSrc) {
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    }
-                    return true;
-                }
-            }
-            // 自动模式，只处理 threshold 外无 data-src 的图片
-            else {
-                // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
-                if (!dataSrc && !self.checkElemInViewport(img)) {
-                    DOM.attr(img, IMG_SRC_DATA, img.src);
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    } else {
-                        img.removeAttribute('src');
-                    }
-                    return true;
-                }
-            }
-        },
-
-
-        /**
-         * 初始化加载事件
-         * @protected
-         */
-        _initLoadEvent:function () {
-            var self = this,
-                // 加载延迟项
-                loadItems = function () {
-                    self._loadItems();
-                    if (self._getItemsLength() === 0) {
-                        self.destroy();
-                    }
-                },
-                // 加载函数
-                load = S.buffer(loadItems, DURATION, this);
-
-            // scroll 和 resize 时，加载图片
-            Event.on(win, SCROLL, load);
-            Event.on(win, TOUCH_MOVE, load);
-            Event.on(win, RESIZE, load);
-
-            S.each(self.containers, function (c) {
-                if (isValidContainer(c)) {
-                    Event.on(c, SCROLL, load);
-                    Event.on(c, TOUCH_MOVE, load);
-                }
-            });
-
-            self.load = load;
-
-            // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (self._getItemsLength()) {
-                S.ready(loadItems);
-            }
-        },
-
-        /**
-         * 加载延迟项
-         */
-        _loadItems:function () {
-            var self = this;
-            self._loadImgs();
-            self._loadAreas();
-            self._fireCallbacks();
-        },
-
-        /**
-         * 加载图片
-         * @protected
-         */
-        _loadImgs:function () {
-            var self = this;
-            self.images = S.filter(self.images, self._loadImg, self);
-        },
-
-        /**
-         * 监控滚动，处理图片
-         */
-        _loadImg:function (img) {
-            var self = this;
-            if (self.checkElemInViewport(img)) {
-                loadImgSrc(img);
-            } else {
-                return true;
-            }
-        },
-
-
-        /**
-         * 加载 textarea 数据
-         * @protected
-         */
-        _loadAreas:function () {
-            var self = this;
-            self.areaes = S.filter(self.areaes, self._loadArea, self);
-        },
-
-        /**
-         * 监控滚动，处理 textarea
-         */
-        _loadArea:function (area) {
-            var self = this;
-
-            if (self.checkElemInViewport(area)) {
-                loadAreaData(area, self.config.execScript);
-            } else {
-                return true;
-            }
-        },
-
-        /**
-         * 触发回调
-         */
-        _fireCallbacks:function () {
-            var self = this,
-                callbacks = self.callbacks,
-                els = callbacks.els,
-                fns = callbacks.fns,
-                i, el, fn, remainEls = [], remainFns = [];
-
-            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (self.checkElemInViewport(el)) {
-                    fn.call(el);
-                } else {
-                    remainEls.push(el);
-                    remainFns.push(fn);
+                    _areaes = removeExisting(DOM.query('textarea', containers[n]), lazyAreas);
+                    lazyAreas = lazyAreas.concat(S.filter(_areaes, filterArea, self));
                 }
 
-            }
-            callbacks.els = remainEls;
-            callbacks.fns = remainFns;
-        },
+                self._images = lazyImgs;
+                self._areaes = lazyAreas;
+            },
 
-        /**
-         * 添加回调函数。当 el 即将出现在视图中时，触发 fn
-         */
-        addCallback:function (el, fn) {
-            var callbacks = this.callbacks;
-            el = DOM.get(el);
+            /**
+             * filter for lazyload image
+             */
+            _filterImg:function (img) {
+                var self = this,
+                    dataSrc = img.getAttribute(IMG_SRC_DATA),
+                    placeholder = self.get("placeholder"),
+                    isManualMod = self.get("mod") === MANUAL;
 
-            if (el && S.isFunction(fn)) {
-                callbacks.els.push(el);
-                callbacks.fns.push(fn);
-            }
-
-            // add 立即检测，防止首屏元素问题
-            this._fireCallbacks();
-        },
-
-        removeElements:function (el) {
-            if (S.isArray(el)) {
-                S.each(el, function (e) {
-                    this.removeElements(e);
-                });
-                return;
-            }
-
-            var self = this,
-                callbacks = self.callbacks,
-                fns = callbacks.fns,
-                els = callbacks.els,
-                newEls = [],
-                newFns = [];
-
-            // els 里 el 会重复，不同的 callback
-            for (var i = 0; i < els.length; i++) {
-                if (els[i] != el) {
-                    newEls.push(els[i]);
-                    newFns.push(fns[i]);
-                }
-            }
-            callbacks.els = newEls;
-            callbacks.fns = newFns;
-
-            removeFromEls(el, self.images);
-            removeFromEls(el, self.areaes);
-        },
-
-        /**
-         * 获取阈值
-         * @protected
-         */
-        _getThreshold:function (c) {
-            var diff = this.config.diff,
-                diffX = diff,
-                diffY = diff,
-                left, top,
-                vh, vw;
-
-            if (c !== undefined) {
-                vh = DOM.outerHeight(c);
-                vw = DOM.outerWidth(c);
-            } else {
-                vh = DOM.viewportHeight();
-                vw = DOM.viewportWidth();
-            }
-
-            if (S.isArray(diff)) {
-                diffX = diff[0];
-                diffY = diff[1];
-            }
-
-            if (diffY === DEFAULT) {
-                // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-                top = 2 * vh;
-            }
-            else {
-                // 将 diff 转换成数值
-                top = vh + (+diffY);
-            }
-
-            if (diffX === DEFAULT) {
-                // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-                left = 2 * vw;
-            }
-            else {
-                // 将 diff 转换成数值
-                left = vw + (+diffX);
-            }
-
-            return {
-                left:left,
-                top:top
-            };
-        },
-
-        /**
-         * 获取当前延迟项的数量
-         * @protected
-         */
-        _getItemsLength:function () {
-            var self = this;
-            return self.images.length + self.areaes.length + self.callbacks.els.length;
-        },
-
-        /**
-         * 加载自定义延迟数据
-         * @static
-         */
-        loadCustomLazyData:function (containers, type, flag) {
-            var imgs;
-
-            if (type === 'img-src') {
-                type = 'img';
-            }
-
-            // 支持数组
-            if (!S.isArray(containers)) {
-                containers = [DOM.get(containers)];
-            }
-
-            // 遍历处理
-            S.each(containers, function (container) {
-                switch (type) {
-                    case 'img':
-                        if (container.nodeName === 'IMG') { // 本身就是图片
-                            imgs = [container];
-                        } else {
-                            imgs = DOM.query('img', container);
+                // 手工模式，只处理有 data-src 的图片
+                if (isManualMod) {
+                    if (dataSrc) {
+                        if (placeholder !== NONE) {
+                            img.src = placeholder;
                         }
-
-                        S.each(imgs, function (img) {
-                            loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
-                        });
-                        break;
-
-                    default:
-                        DOM.query('textarea', container).each(function (area) {
-                            if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                                loadAreaData(area, true);
-                            }
-                        });
+                        return true;
+                    }
                 }
-            });
-        },
+                // 自动模式，只处理 threshold 外无 data-src 的图片
+                else {
+                    // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
+                    if (!dataSrc && !self._checkElemInViewport(img)) {
+                        DOM.attr(img, IMG_SRC_DATA, img.src);
+                        if (placeholder !== NONE) {
+                            img.src = placeholder;
+                        } else {
+                            img.removeAttribute('src');
+                        }
+                        return true;
+                    }
+                }
+            },
 
-        /**
-         * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
-         * @private
-         * @param elem
-         */
-        checkElemInViewport:function (elem) {
-            elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
-            var self = this,
-                threshold = self._getThreshold(),
-                scrollTop = DOM.scrollTop(),
-                scrollLeft = DOM.scrollLeft(),
-                elemOffset = DOM.offset(elem),
-                left = elemOffset.left,
+
+            /**
+             * 初始化加载事件
+             */
+            _initLoadEvent:function () {
+                var self = this,
+                    autoDestroy = self.get("autoDestroy"),
+                    // 加载延迟项
+                    loadItems = function () {
+                        self._loadItems();
+                        if (autoDestroy &&
+                            self._getItemsLength() === 0) {
+                            self.destroy();
+                        }
+                    },
+                    // 加载函数
+                    load = S.buffer(loadItems, DURATION, this);
+
+                // scroll 和 resize 时，加载图片
+                Event.on(win, SCROLL, load);
+                Event.on(win, TOUCH_MOVE, load);
+                Event.on(win, RESIZE, load);
+
+                S.each(self.get("containers"), function (c) {
+                    if (isValidContainer(c)) {
+                        Event.on(c, SCROLL, load);
+                        Event.on(c, TOUCH_MOVE, load);
+                    }
+                });
+
+                self._loadFn = load;
+
+                // 需要立即加载一次，以保证第一屏的延迟项可见
+                if (self._getItemsLength()) {
+                    S.ready(loadItems);
+                }
+            },
+
+            /**
+             * 加载延迟项
+             */
+            _loadItems:function () {
+                var self = this;
+                self._loadImgs();
+                self._loadAreas();
+                self._fireCallbacks();
+            },
+
+            /**
+             * 加载图片
+             */
+            _loadImgs:function () {
+                var self = this;
+                self._images = S.filter(self._images, self._loadImg, self);
+            },
+
+            /**
+             * 监控滚动，处理图片
+             */
+            _loadImg:function (img) {
+                var self = this;
+                if (self._checkElemInViewport(img)) {
+                    loadImgSrc(img);
+                } else {
+                    return true;
+                }
+            },
+
+
+            /**
+             * 加载 textarea 数据
+             */
+            _loadAreas:function () {
+                var self = this;
+                self._areaes = S.filter(self._areaes, self._loadArea, self);
+            },
+
+            /**
+             * 监控滚动，处理 textarea
+             */
+            _loadArea:function (area) {
+                var self = this;
+                if (self._checkElemInViewport(area)) {
+                    loadAreaData(area, self.get("execScript"));
+                } else {
+                    return true;
+                }
+            },
+
+            /**
+             * 触发回调
+             */
+            _fireCallbacks:function () {
+                var self = this,
+                    callbacks = self._callbacks,
+                    els = callbacks.els,
+                    fns = callbacks.fns,
+                    i, el, fn, remainEls = [], remainFns = [];
+
+                for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                    if (self._checkElemInViewport(el)) {
+                        fn.call(el);
+                    } else {
+                        remainEls.push(el);
+                        remainFns.push(fn);
+                    }
+
+                }
+                callbacks.els = remainEls;
+                callbacks.fns = remainFns;
+            },
+
+            /**
+             * Register callback function.
+             * When el is in viewport, then fn is called.
+             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {Function} fn Callback function to be called when el is in viewport.
+             */
+            addCallback:function (el, fn) {
+                var self = this,
+                    callbacks = self._callbacks;
+                el = DOM.get(el);
+
+                if (el && S.isFunction(fn)) {
+                    callbacks.els.push(el);
+                    callbacks.fns.push(fn);
+                }
+
+                // add 立即检测，防止首屏元素问题
+                self._fireCallbacks();
+            },
+
+            /**
+             * Remove a callback function. See {@link DataLazyload#addCallback}
+             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {Function} [fn] Callback function to be called when el is in viewport.
+             *                        If not specified, remove all callbacks associated with el.
+             * @since 1.3
+             */
+            removeCallback:function (el, fn) {
+                var callbacks = this._callbacks,
+                    els = [],
+                    fns = [],
+                    curFns = callbacks.fns;
+
+                el = DOM.get(el);
+
+                S.each(callbacks.els, function (curEl, index) {
+                    if (curEl == el) {
+                        if (fn === undefined || fn == curFns[index]) {
+                            return;
+                        }
+                    }
+
+                    els.push(curEl);
+                    fns.push(curFns[index]);
+                });
+
+                callbacks.fns = fns;
+                callbacks.els = els;
+            },
+
+            /**
+             * Add a array of imgs or textareas to be lazy loaded to monitor list.
+             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @since 1.3
+             */
+            addElements:function (els) {
+                if (!S.isArray(els)) {
+                    els = [els];
+                }
+                var self = this,
+                    imgs = self._images || [],
+                    areaes = self._areaes || [];
+                S.each(els, function (el) {
+                    var nodeName = el.nodeName.toLowerCase();
+                    if (nodeName == "img") {
+                        if (!S.inArray(el, imgs)) {
+                            imgs.push(el);
+                        }
+                    } else if (nodeName == "textarea") {
+                        if (!S.inArray(el, areaes)) {
+                            areaes.push(el);
+                        }
+                    }
+                });
+                self._images = imgs;
+                self._areaes = areaes;
+            },
+
+            /**
+             * Remove a array of element from monitor list. See {@link DataLazyload#addElements}.
+             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @since 1.3
+             */
+            removeElements:function (els) {
+                if (!S.isArray(els)) {
+                    els = [els];
+                }
+                var self = this,
+                    imgs = [], areaes = [];
+                S.each(self._images, function (img) {
+                    if (!S.inArray(img, els)) {
+                        imgs.push(img);
+                    }
+                });
+                S.each(self._areaes, function (area) {
+                    if (!S.inArray(area, els)) {
+                        areaes.push(area);
+                    }
+                });
+                self._images = img;
+                self._areaes = areaes;
+            },
+
+            /**
+             * 获取 c 的有效渲染区域（加上预加载差值）
+             * @protected
+             */
+            _getBoundingRect:function (c) {
+                var vh, vw, left, top;
+
+                if (c !== undefined &&
+                    !S.isWindow(c) &&
+                    c.nodeType != 9) {
+                    vh = DOM.outerHeight(c);
+                    vw = DOM.outerWidth(c);
+                    var offset = DOM.offset(c);
+                    left = offset.left;
+                    top = offset.top;
+                } else {
+                    vh = DOM.viewportHeight();
+                    vw = DOM.viewportWidth();
+                    left = DOM.scrollLeft();
+                    top = DOM.scrollTop();
+                }
+
+                var diff = this.get("diff"),
+                    diffX = diff === DEFAULT ? vw : diff,
+                    diffX0 = 0,
+                    diffX1 = diffX,
+                    diffY = diff === DEFAULT ? vh : diff,
+                    // 兼容，默认只向下预读
+                    diffY0 = 0,
+                    diffY1 = diffY,
+                    right = left + vw,
+                    bottom = top + vh;
+
+                if (S.isObject(diff)) {
+                    diffX0 = diff.left;
+                    diffX1 = diff.right;
+                    diffY0 = diff.top;
+                    diffY1 = diff.bottom;
+                }
+
+                left -= diffX0;
+                right += diffX1;
+                top -= diffY0;
+                bottom += diffY1;
+
+                return {
+                    left:left,
+                    top:top,
+                    right:right,
+                    bottom:bottom
+                };
+            },
+
+            /**
+             * 获取当前延迟项的数量
+             * @protected
+             */
+            _getItemsLength:function () {
+                var self = this;
+                return self._images.length + self._areaes.length + self._callbacks.els.length;
+            },
+
+            /**
+             * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
+             * @private
+             * @param elem
+             */
+            _checkElemInViewport:function (elem) {
                 // 注：elem 可能处于 display: none 状态，DOM.offset(elem).top 返回 0
                 // 这种情况下用 elem.parentNode 的 Y 值来替代
-                top = elemOffset.top,
-                inContainer = true,
-                container = getContainer(elem, self.containers);
+                elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
 
-            var elemRegion = {
-                left:left,
-                top:top,
-                right:left + DOM.outerWidth(elem),
-                bottom:top + DOM.outerHeight(elem)
-            };
+                var self = this,
+                    elemOffset = DOM.offset(elem),
+                    inContainer = true,
+                    container = getContainer(elem, self.get("containers")),
+                    windowRegion = self._getBoundingRect(),
+                    inWin,
+                    containerRegion,
+                    left = elemOffset.left,
+                    top = elemOffset.top,
+                    elemRegion = {
+                        left:left,
+                        top:top,
+                        right:left + DOM.outerWidth(elem),
+                        bottom:top + DOM.outerHeight(elem)
+                    };
 
-            var windowReigon = {
-                top:scrollTop,
-                left:scrollLeft,
-                // 窗口需要考虑滚动条
-                bottom:scrollTop + threshold.top,
-                right:scrollLeft + threshold.left
-            };
-
-            if (container) {
-                var containerThreshold = self._getThreshold(container),
-                    containerOffset = DOM.offset(container);
-                var containerRegion = {
-                    // 容器不需要考虑滚动条
-                    left:containerOffset.left,
-                    right:containerThreshold.left,
-                    top:containerOffset.top,
-                    bottom:containerThreshold.top
-                };
-                inContainer = isCross(containerRegion, elemRegion);
-            }
-
-            // 确保在容器内出现
-            // 并且在视窗内也出现
-            var inWin = isCross(windowReigon, elemRegion);
-            return inContainer && inWin;
-        },
-
-        destroy:function () {
-
-            var self = this, load = self.load;
-            Event.remove(win, SCROLL, load);
-            Event.remove(win, TOUCH_MOVE, load);
-            Event.remove(win, RESIZE, load);
-            S.each(self.containers, function (c) {
-                if (isValidContainer(c)) {
-                    Event.remove(c, SCROLL, load);
-                    Event.remove(c, TOUCH_MOVE, load);
+                if (container) {
+                    containerRegion = self._getBoundingRect(container);
+                    inContainer = isCross(containerRegion, elemRegion);
                 }
-            });
-            self.callbacks.els = [];
-            self.callbacks.fns = [];
-            self.images = [];
-            self.areaes = [];
-            S.log("datalazyload is destroyed!");
 
-        }
-    });
+                // 确保在容器内出现
+                // 并且在视窗内也出现
+                inWin = isCross(windowRegion, elemRegion);
+                return inContainer && inWin;
+            },
 
-    function removeFromEls(el, arr) {
-        var index = S.indexOf(el, arr);
-        if (index != -1) {
-            arr.splice(index, 1);
+            /**
+             * Destroy this component.Will fire destroy event.
+             */
+            destroy:function () {
+                var self = this, load = self._loadFn;
+                Event.remove(win, SCROLL, load);
+                Event.remove(win, TOUCH_MOVE, load);
+                Event.remove(win, RESIZE, load);
+                S.each(self.get("containers"), function (c) {
+                    if (isValidContainer(c)) {
+                        Event.remove(c, SCROLL, load);
+                        Event.remove(c, TOUCH_MOVE, load);
+                    }
+                });
+                self._callbacks.els = [];
+                self._callbacks.fns = [];
+                self._images = [];
+                self._areaes = [];
+                S.log("datalazyload is destroyed!");
+                self.fire("destroy");
+            }
+        });
+
+    /**
+     * Load lazyload textarea and imgs manually.
+     * @name loadCustomLazyData
+     * @function
+     * @memberOf DataLazyload
+     * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
+     * @param {String} type Type of lazy loaded element. "img" or "textarea"
+     * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
+     * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
+     */
+    function loadCustomLazyData(containers, type, flag) {
+        var imgs;
+
+        if (type === 'img-src') {
+            type = 'img';
         }
-        return index;
+
+        // 支持数组
+        if (!S.isArray(containers)) {
+            containers = [DOM.get(containers)];
+        }
+
+        // 遍历处理
+        S.each(containers, function (container) {
+            switch (type) {
+                case 'img':
+                    if (container.nodeName === 'IMG') { // 本身就是图片
+                        imgs = [container];
+                    } else {
+                        imgs = DOM.query('img', container);
+                    }
+
+                    S.each(imgs, function (img) {
+                        loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
+                    });
+                    break;
+
+                default:
+                    DOM.query('textarea', container).each(function (area) {
+                        if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
+                            loadAreaData(area, true);
+                        }
+                    });
+            }
+        });
     }
 
-    // attach static methods
-    DataLazyload.loadCustomLazyData = DataLazyload.prototype.loadCustomLazyData;
+
+    DataLazyload.loadCustomLazyData = loadCustomLazyData;
+
+    S.DataLazyload = DataLazyload;
 
     return DataLazyload;
 
-}, { requires:['dom', 'event'] });
+}, { requires:['dom', 'event', 'base'] });
 
 /**
  * NOTES:
@@ -18209,7 +18293,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
  *  1. http://davidwalsh.name/lazyload MooTools 的图片延迟插件
  *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
- *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
+ *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-_images/
  *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
  *
  * 特别要注意的测试用例:
@@ -18235,6 +18319,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
  *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
@@ -18248,7 +18333,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 15:10
+build time: May 2 10:13
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -18483,7 +18568,7 @@ KISSY.add('template', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:12
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -19003,7 +19088,7 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -21278,7 +21363,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview resizable support for kissy
@@ -21472,7 +21557,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 15:02
+build time: May 2 10:13
 */
 /**
  * @fileOverview UIBase.Align
@@ -23971,7 +24056,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -23983,15 +24068,14 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
      * @namespace
      */
     var Component = {
-        Controller:Controller,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
+        "Controller":Controller,
+        "Render":Render,
+        "Container":Container,
+        "UIStore":UIStore,
+        "DelegateChildren":DelegateChildren,
+        "DecorateChild":DecorateChild,
         "DecorateChildren":DecorateChildren
     };
-    Component.Controller = Controller;
     return Component;
 }, {
     requires:['component/controller',
@@ -24024,20 +24108,23 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
 
             /**
              * Generate child component from root element.
-             * @name decorateInternal
              * @protected
              * @function
              * @param {Node} element Root element of current component.
              */
+            decorateInternal:function (element) {
 
+            },
 
             /**
-             * Get child component which contains current event target node.
-             * @name getOwnerControl
+             * Get child component which contains current event target node.             *
              * @protected
              * @function
              * @param {HTMLElement} target Current event target node.
              */
+            getOwnerControl:function (target) {
+
+            }
         });
 
 }, {
@@ -24695,14 +24782,13 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
             // 不用 __set , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCssClassWithPrefix(ui));
             // 可以装饰?
             if (child) {
                 var UI = self.findUIConstructorByNode(child);
                 if (UI) {
                     // 可以直接装饰
-                    self.decorateChildrenInternal(UI, child, prefixCls);
+                    self.decorateChildrenInternal(UI, child);
                 } else {
                     // 装饰其子节点集合
                     self.decorateChildren(child);
@@ -24753,21 +24839,20 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
         },
 
         // 生成一个组件
-        decorateChildrenInternal:function (UI, c, prefixCls) {
+        decorateChildrenInternal:function (UI, c) {
             this.addChild(new UI({
                 srcNode:c,
-                prefixCls:prefixCls
+                prefixCls:self.get("prefixCls")
             }));
         },
 
         // container 需要在装饰时对儿子特殊处理，递归装饰
         decorateChildren:function (el) {
             var self = this,
-                children = el.children(),
-                prefixCls = self.get("prefixCls");
+                children = el.children();
             children.each(function (c) {
                 var UI = self.findUIConstructorByNode(c);
-                self.decorateChildrenInternal(UI, c, prefixCls);
+                self.decorateChildrenInternal(UI, c);
             });
         }
     });
@@ -24851,115 +24936,140 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @name Render
      * @extends UIBase
      */
-    return UIBase.create([UIBase.Box.Render], {
-
+    return UIBase.create([UIBase.Box.Render],
         /**
-         * Get all css class name to be applied to the root element of this component for given state.
-         * the css class names are prefixed with component name.
-         * @param {String} [state] This component's state info.
+         * @lends Component.Render#
          */
-        getComponentCssClassWithState:function (state) {
-            var self = this, componentCls = this.__componentClasses;
-            state = state || "";
-            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
-        },
+        {
 
-        /**
-         * Get full class name (with prefix) for current component
-         * @param classes {String} class names without prefixCls. Separated by space.
-         * @function
-         * @return {String} class name with prefixCls
-         * @private
-         */
-        getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            /**
+             * Get all css class name to be applied to the root element of this component for given state.
+             * the css class names are prefixed with component name.
+             * @param {String} [state] This component's state info.
+             */
+            getComponentCssClassWithState:function (state) {
+                var self = this, componentCls = this.__componentClasses;
+                state = state || "";
+                return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
+            },
 
-        createDom:function () {
-            var self = this;
-            self.get("el").addClass(self.getComponentCssClassWithState());
-        },
+            /**
+             * Get full class name (with prefix) for current component
+             * @param classes {String} class names without prefixCls. Separated by space.
+             * @function
+             * @return {String} class name with prefixCls
+             * @private
+             */
+            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
 
-        /**
-         * Returns the dom element which is responsible for listening keyboard events.
-         */
-        getKeyEventTarget:function () {
-            return this.get("el");
-        },
+            createDom:function () {
+                var self = this;
+                self.get("el").addClass(self.getComponentCssClassWithState());
+            },
 
-        /**
-         * Return the dom element into which child component to be rendered.
-         */
-        getContentElement:function () {
-            return this.get("contentEl") || this.get("el");
-        },
+            /**
+             * Returns the dom element which is responsible for listening keyboard events.
+             */
+            getKeyEventTarget:function () {
+                return this.get("el");
+            },
 
-        /**
-         * @protected
-         */
-        _uiSetFocusable:function (v) {
-            var el = this.getKeyEventTarget(),
-                tabindex = el.attr("tabindex");
-            if (tabindex >= 0 && !v) {
-                el.attr("tabindex", -1);
-            } else if (!(tabindex >= 0) && v) {
-                el.attr("tabindex", 0);
+            /**
+             * Return the dom element into which child component to be rendered.
+             */
+            getContentElement:function () {
+                return this.get("contentEl") || this.get("el");
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetFocusable:function (v) {
+                var el = this.getKeyEventTarget(),
+                    tabindex = el.attr("tabindex");
+                if (tabindex >= 0 && !v) {
+                    el.attr("tabindex", -1);
+                } else if (!(tabindex >= 0) && v) {
+                    el.attr("tabindex", 0);
+                }
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetHighlighted:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-hover"),
+                    el = self.get("el");
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            /**
+             * @protected
+             */
+            _uiSetDisabled:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-disabled"),
+                    el = self.get("el");
+                el[v ? 'addClass' : 'removeClass'](componentCls)
+                    //不能被 tab focus 到
+                    //support aria
+                    .attr({
+                        "tabindex":v ? -1 : 0,
+                        "aria-disabled":v
+                    });
+
+            },
+            /**
+             * @protected
+             */
+            _uiSetActive:function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState("-active");
+                self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr("aria-pressed", !!v);
+            },
+            /**
+             * @protected
+             */
+            _uiSetFocused:function (v) {
+                var self = this,
+                    el = self.get("el"),
+                    componentCls = self.getComponentCssClassWithState("-focused");
+                el[v ? 'addClass' : 'removeClass'](componentCls);
             }
-        },
 
-        /**
-         * @protected
-         */
-        _uiSetHighlighted:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-hover"),
-                el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](componentCls);
-        },
-
-        /**
-         * @protected
-         */
-        _uiSetDisabled:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-disabled"),
-                el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](componentCls)
-                //不能被 tab focus 到
-                //support aria
-                .attr({
-                    "tabindex":v ? -1 : 0,
-                    "aria-disabled":v
-                });
-
-        },
-        /**
-         * @protected
-         */
-        _uiSetActive:function (v) {
-            var self = this,
-                componentCls = self.getComponentCssClassWithState("-active");
-            self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
-                .attr("aria-pressed", !!v);
-        },
-        /**
-         * @protected
-         */
-        _uiSetFocused:function (v) {
-            var self = this,
-                el = self.get("el"),
-                componentCls = self.getComponentCssClassWithState("-focused");
-            el[v ? 'addClass' : 'removeClass'](componentCls);
-        }
-
-    }, {//  screen state
-        ATTRS:{
-            prefixCls:{},
-            focusable:{},
-            focused:{},
-            active:{},
-            disabled:{},
-            highlighted:{}
-        }
-    }, "Component_Render");
+        }, {//  screen state
+            ATTRS:/**
+             * @lends Component.Render#
+             */
+            {
+                /**
+                 * see {@link Component.Controller#prefixCls}
+                 */
+                prefixCls:{},
+                /**
+                 * see {@link Component.Controller#focusable}
+                 */
+                focusable:{},
+                /**
+                 * see {@link Component.Controller#focused}
+                 */
+                focused:{},
+                /**
+                 * see {@link Component.Controller#active}
+                 */
+                active:{},
+                /**
+                 * see {@link Component.Controller#disabled}
+                 */
+                disabled:{},
+                /**
+                 * see {@link Component.Controller#highlighted}
+                 */
+                highlighted:{}
+            }
+        }, "Component_Render");
 }, {
     requires:['uibase', './uistore']
 });/**
@@ -25015,15 +25125,17 @@ KISSY.add("component/uistore", function (S) {
 
     /**
      * @name UIStore
+     * @namespace
      * @memberOf Component
      */
-    return {
+    var UIStore = /** @lends Component.UIStore */{
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
          * @type {Function}
          * @return {String}
+         * @function
          */
         getCssClassByUIConstructor:getCssClassByUIConstructor,
         /**
@@ -25031,6 +25143,7 @@ KISSY.add("component/uistore", function (S) {
          * @param {String} classNames Class names separated by space.
          * @type {Function}
          * @return {Function}
+         * @function
          */
         getUIConstructorByCssClass:getUIConstructorByCssClass,
         /**
@@ -25038,6 +25151,7 @@ KISSY.add("component/uistore", function (S) {
          * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
+         * @function
          */
         setUIConstructorByCssClass:setUIConstructorByCssClass,
 
@@ -25055,11 +25169,13 @@ KISSY.add("component/uistore", function (S) {
             "LEVEL6":60
         }
     };
+
+    return UIStore;
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 26 15:27
+build time: May 2 10:13
 */
 /**
  * @fileOverview accordion aria support
@@ -28054,7 +28170,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 19:47
+build time: May 2 10:13
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -28740,7 +28856,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview 提示补全组件
@@ -29929,7 +30045,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:12
 */
 /**
  * @fileOverview auto render
@@ -30565,7 +30681,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * KISSY Calendar
@@ -32366,7 +32482,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 16:37
+build time: May 2 10:13
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -33788,13 +33904,13 @@ KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
- * @fileOverview Model and Control for button
+ * @fileOverview Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
 
     var KeyCodes = Event.KeyCodes;
     /**
@@ -33803,10 +33919,9 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @extends Component.Controller
      * @extends UIBase.ContentBox
      */
-    var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
+    var Button = UIBase.create(Component.Controller, [],
         /**@lends Button.prototype */
         {
-
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
@@ -33824,28 +33939,54 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
                 return e.keyCode == KeyCodes.SPACE;
             },
 
-            /* button 的默认行为就是触发 click*/
-            performActionInternal:function () {
+            performActionInternal:function (ev) {
                 var self = this;
+                // button 的默认行为就是触发 click
                 self.fire("click");
             }
         }, {
-            ATTRS:{
+            ATTRS:/**@lends Button.prototype */
+            {
+                /**
+                 * Value associated with button component.
+                 */
                 value:{},
+                /**
+                 *Aria-describedby attribute.
+                 * @type String
+                 */
                 describedby:{
                     view:true
                 },
+                /**
+                 * Tooltip for button.
+                 * @type String
+                 */
                 tooltip:{
                     view:true
                 },
+                /**
+                 * Add collapse-right/left css class to root element.
+                 * enum { "left","right" }
+                 * @type String
+                 */
                 collapseSide:{
                     view:true
+                },
+                // for compatibility
+                // recommend set/get html attribute directly
+                content:{
+                    getter:function () {
+                        return this.get("html");
+                    },
+                    setter:function (v) {
+                        return this.set("html", v);
+                    }
                 }
             }
         });
 
-    Button.DefaultRender = CustomRender;
-
+    Button.DefaultRender = ButtonRender;
 
     Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -33855,26 +33996,32 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['event', 'uibase', 'component', './customrender']
+    requires:['event', 'uibase', 'component', './buttonRender']
 });/**
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function(S, Button, Render, Split) {
+KISSY.add("button", function (S, Button, Render, Split, Toggle) {
     Button.Render = Render;
     Button.Split = Split;
+    Button.Toggle = Toggle;
     return Button;
 }, {
-    requires:['button/base','button/customrender','button/split']
+    requires:[
+        'button/base',
+        'button/buttonRender',
+        'button/split',
+        'button/toggle'
+    ]
 });/**
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function (S, UIBase, Component) {
+KISSY.add("button/buttonRender", function (S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, [], {
         createDom:function () {
-            //set wai-aria role
+            // set wai-aria role
             this.get("el")
                 .attr("role", "button")
                 .addClass("ks-inline-block");
@@ -33905,60 +34052,6 @@ KISSY.add("button/buttonrender", function (S, UIBase, Component) {
 }, {
     requires:['uibase', 'component']
 });/**
- * @fileOverview view for button , double div for pseudo-round corner
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
-
-    //双层 div 模拟圆角
-    var CONTENT_CLS = "button-outer-box",
-        INNER_CLS = "button-inner-box";
-
-
-    return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
-
-            /**
-             *  Controller 会在 create 后进行 unselectable，
-             *  需要所有的节点创建工作放在 createDom 中
-             */
-            createDom:function () {
-                var self = this,
-                    el = self.get("el"),
-                    contentEl = self.get("contentEl"),
-                    id = S.guid('ks-button-labelby');
-                el.attr("aria-labelledby", id);
-                //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(self.getCssClassWithPrefix(CONTENT_CLS));
-                var elChildren = S.makeArray(contentEl[0].childNodes),
-                    innerEl = new Node("<div id='" + id + "' " +
-                        "class='" + self.getCssClassWithPrefix(INNER_CLS) + "'/>")
-                        .appendTo(contentEl);
-                // content 由 contentboxrender 处理
-                for (var i = 0; i < elChildren.length; i++) {
-                    innerEl.append(elChildren[i]);
-                }
-                self.__set("innerEl", innerEl);
-            },
-
-            /**
-             * 内容移到内层
-             * @override
-             * @param v
-             */
-            _uiSetContent:function (v) {
-                this.get("innerEl").html(v);
-            }
-        }, {
-            /**
-             * @inheritedDoc
-             * content:{}
-             */
-            innerEl:{}
-        }
-    );
-}, {
-    requires:['node', 'uibase', './buttonrender']
-});/**
  * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
@@ -33966,61 +34059,156 @@ KISSY.add("button/split", function (S) {
 
     var handles = {
         content:function (e) {
-            var first = this, t = e.target;
-            first.__set("content", t.get("content"));
-            first.__set("value", t.get("value"));
+            var self = this,
+                first = self.get("first"),
+                t = e.target;
+            first.set("content", t.get("content"));
+            first.set("value", t.get("value"));
+            if (self.get("hideAfterMenuClick")) {
+                self.get("second").set("collapsed", true);
+            }
         },
         value:function (e) {
-            var first = this, t = e.target;
-            first.__set("value", t.get("value"));
+            var self = this,
+                first = self.get("first"),
+                t = e.target;
+            first.set("value", t.get("value"));
+            if (self.get("hideAfterMenuClick")) {
+                self.get("second").set("collapsed", true);
+            }
         }
     };
 
+    /**
+     * Combining button and menubutton to form SplitButton.
+     * @class
+     * @memberOf Button
+     * @extends Base
+     */
     function Split() {
         Split.superclass.constructor.apply(this, arguments);
     }
 
-    Split.ATTRS = {
-        // 第一个组件按钮
+    Split.ATTRS =
+    /**
+     * @lends Button.Split#
+     */
+    {
+        /**
+         * Button instance.
+         * @type {Button}
+         */
         first:{},
-        // 第二个组件
+        /**
+         * MenuButton instance.
+         * @type {MenuButton}
+         */
         second:{},
-        // 第二个组件的见ring事件
+        /**
+         * Event type to listen on the menubutton.
+         * Default : click.
+         * @type String
+         */
         eventType:{
             value:"click"
         },
+        /**
+         * Event handler type.
+         * Enum : "content", "value".
+         * "content" : sync first button with second menubutton 's content and value.
+         * "value" : sync first button with second menubutton 's  value only.
+         * @type String
+         */
         eventHandler:{
             // 或者 value
             value:"content"
+        },
+        /**
+         * Whether hide menubutton 's drop menu after click on it.
+         * Default : true
+         * @type Boolean
+         */
+        hideAfterMenuClick:{
+            value:true
         }
     };
 
-    S.extend(Split, S.Base, {
-        render:function () {
-            var self = this,
-                eventType = self.get("eventType"),
-                eventHandler = handles[self.get("eventHandler")],
-                first = self.get("first"),
-                second = self.get("second");
-            first.__set("collapseSide", "right");
-            second.__set("collapseSide", "left");
-            first.render();
-            second.render();
-            if (eventType && eventHandler) {
-                second.on(eventType, eventHandler, first);
+    S.extend(Split, S.Base,
+        /**
+         * @lends Button.Split#
+         */
+        {
+            /**
+             * Render button and menubutton together.
+             */
+            render:function () {
+                var self = this,
+                    eventType = self.get("eventType"),
+                    eventHandler = handles[self.get("eventHandler")],
+                    first = self.get("first"),
+                    second = self.get("second");
+                first.set("collapseSide", "right");
+                second.set("collapseSide", "left");
+                first.render();
+                second.render();
+                if (eventType && eventHandler) {
+                    second.on(eventType, eventHandler, self);
+                }
             }
-        }
-    });
+        });
 
     return Split;
 
 }, {
     requires:['base']
+});/**
+ * ToggleButton for KISSY
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('button/toggle', function (S, UIBase, Button, ToggleRender) {
+
+    return UIBase.create(Button, [], {
+        performActionInternal:function () {
+            var self = this;
+            self.set("checked", !self.get("checked"));
+            self.constructor.superclass.performActionInternal.apply(self, arguments);
+        }
+    }, {
+        DefaultRender:ToggleRender,
+        ATTRS:{
+            checked:{
+                value:false,
+                view:true
+            }
+        }
+    });
+
+}, {
+    requires:['uibase', './base', './toggleRender']
+});/**
+ * Render for ToggleButton
+ */
+KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
+
+    return UIBase.create(ButtonRender, [], {
+        _uiSetChecked:function (v) {
+            var self = this,
+                cls = self.getComponentCssClassWithState("-checked");
+            self.get("el")[v ? 'addClass' : 'removeClass'](cls);
+        }
+    }, {
+        ATTRS:{
+            checked:{}
+        }
+    });
+
+}, {
+    requires:['uibase', './buttonRender']
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 16:38
+build time: May 2 10:13
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -34753,7 +34941,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 12:12
+build time: May 2 10:13
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -34796,7 +34984,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
@@ -34812,7 +35000,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
          */
         [Component.DecorateChild],
         {
-            _keyNav:function(e) {
+            _keyNav:function (e) {
                 var self = this,
                     processed = true,
                     n,
@@ -34878,8 +35066,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return processed;
             },
 
-            getLastVisibleDescendant:function() {
-                var self = this,children = self.get("children");
+            getLastVisibleDescendant:function () {
+                var self = this, children = self.get("children");
                 // 没有展开或者根本没有儿子节点，可视的只有自己
                 if (!self.get("expanded") || !children.length) {
                     return self;
@@ -34888,7 +35076,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return children[children.length - 1].getLastVisibleDescendant();
             },
 
-            getNextVisibleNode:function() {
+            getNextVisibleNode:function () {
                 var self = this,
                     children = self.get("children"),
                     parent = self.get("parent");
@@ -34905,8 +35093,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return n;
             },
 
-            getPreviousVisibleNode:function() {
-                var self = this,prev = self.prev();
+            getPreviousVisibleNode:function () {
+                var self = this, prev = self.prev();
                 if (!prev) {
                     prev = self.get("parent");
                 } else {
@@ -34915,8 +35103,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return prev;
             },
 
-            next:function() {
-                var self = this,parent = self.get("parent");
+            next:function () {
+                var self = this, parent = self.get("parent");
                 if (!parent) {
                     return null;
                 }
@@ -34928,7 +35116,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return siblings[index + 1];
             },
 
-            prev:function() {
+            prev:function () {
                 var self = this, parent = self.get("parent");
                 if (!parent) {
                     return null;
@@ -34945,12 +35133,12 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
              * 选中当前节点
              * @public
              */
-            select : function() {
+            select:function () {
                 var self = this;
                 self.get("tree").set("selectedItem", self);
             },
 
-            performActionInternal:function(e) {
+            performActionInternal:function (e) {
                 var self = this,
                     target = $(e.target),
                     tree = self.get("tree"),
@@ -34973,23 +35161,23 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
             },
 
             // 默认 addChild，这里需要设置 tree 属性
-            decorateChildrenInternal:function(ui, c, cls) {
+            decorateChildrenInternal:function (ui, c) {
                 var self = this;
                 self.addChild(new ui({
                     srcNode:c,
                     tree:self.get("tree"),
-                    prefixCls:cls
+                    prefixCls:self.get("prefixCls")
                 }));
             },
 
-            addChild:function(c) {
-                var self = this,tree = self.get("tree");
+            addChild:function (c) {
+                var self = this, tree = self.get("tree");
                 c.__set("tree", tree);
                 c.__set("depth", self.get('depth') + 1);
                 BaseNode.superclass.addChild.call(self, c);
                 self._updateRecursive();
                 tree._register(c);
-                S.each(c.get("children"), function(cc) {
+                S.each(c.get("children"), function (cc) {
                     tree._register(cc);
                 });
             },
@@ -34998,32 +35186,32 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
              每次添加/删除节点，都检查自己以及自己子孙 class
              每次 expand/collapse，都检查
              */
-            _computeClass:function(cause) {
-                var self = this,view = self.get("view");
+            _computeClass:function (cause) {
+                var self = this, view = self.get("view");
                 view._computeClass(self.get('children'), self.get("parent"), cause);
             },
 
-            _updateRecursive:function() {
-                var self = this,len = self.get('children').length;
+            _updateRecursive:function () {
+                var self = this, len = self.get('children').length;
                 self._computeClass("_updateRecursive");
-                S.each(self.get("children"), function(c, index) {
+                S.each(self.get("children"), function (c, index) {
                     c._computeClass("_updateRecursive_children");
                     c.get("view").set("ariaPosInSet", index + 1);
                     c.get("view").set("ariaSize", len);
                 });
             },
 
-            removeChild:function(c) {
-                var self = this,tree = self.get("tree");
+            removeChild:function (c) {
+                var self = this, tree = self.get("tree");
                 tree._unregister(c);
-                S.each(c.get("children"), function(cc) {
+                S.each(c.get("children"), function (cc) {
                     tree._unregister(cc);
                 });
                 BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
                 self._updateRecursive();
             },
 
-            _uiSetExpanded:function(v) {
+            _uiSetExpanded:function (v) {
                 var self = this,
                     tree = self.get("tree");
                 self._computeClass("expanded-" + v);
@@ -35038,18 +35226,18 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 }
             },
 
-            expandAll:function() {
+            expandAll:function () {
                 var self = this;
                 self.set("expanded", true);
-                S.each(self.get("children"), function(c) {
+                S.each(self.get("children"), function (c) {
                     c.expandAll();
                 });
             },
 
-            collapseAll:function() {
+            collapseAll:function () {
                 var self = this;
                 self.set("expanded", false);
-                S.each(self.get("children"), function(c) {
+                S.each(self.get("children"), function (c) {
                     c.collapseAll();
                 });
             }
@@ -35063,7 +35251,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                     value:false
                 },
                 id:{
-                    getter:function() {
+                    getter:function () {
                         var self = this,
                             id = self.get("el").attr("id");
                         if (!id) {
@@ -35125,7 +35313,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
             },
 
             HTML_PARSER:{
-                expanded:function(el) {
+                expanded:function (el) {
                     var children = el.one("." + this.getCssClassWithPrefix("tree-children"));
                     if (!children) {
                         return false;
@@ -35143,7 +35331,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
     return BaseNode;
 
 }, {
-    requires:['node','uibase','component','./basenoderender']
+    requires:['node', 'uibase', 'component', './basenoderender']
 });/**
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
@@ -35297,6 +35485,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @override
+         * @return {Node}
          */
         getContentElement:function () {
             var self = this;
@@ -35699,7 +35888,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -36274,7 +36463,7 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview validation
@@ -37792,7 +37981,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview mvc base

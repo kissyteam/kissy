@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
- * @fileOverview Model and Control for button
+ * @fileOverview Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
 
     var KeyCodes = Event.KeyCodes;
     /**
@@ -16,10 +16,9 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @extends Component.Controller
      * @extends UIBase.ContentBox
      */
-    var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
+    var Button = UIBase.create(Component.Controller, [],
         /**@lends Button.prototype */
         {
-
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
             },
@@ -37,28 +36,54 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
                 return e.keyCode == KeyCodes.SPACE;
             },
 
-            /* button 的默认行为就是触发 click*/
-            performActionInternal:function () {
+            performActionInternal:function (ev) {
                 var self = this;
+                // button 的默认行为就是触发 click
                 self.fire("click");
             }
         }, {
-            ATTRS:{
+            ATTRS:/**@lends Button.prototype */
+            {
+                /**
+                 * Value associated with button component.
+                 */
                 value:{},
+                /**
+                 *Aria-describedby attribute.
+                 * @type String
+                 */
                 describedby:{
                     view:true
                 },
+                /**
+                 * Tooltip for button.
+                 * @type String
+                 */
                 tooltip:{
                     view:true
                 },
+                /**
+                 * Add collapse-right/left css class to root element.
+                 * enum { "left","right" }
+                 * @type String
+                 */
                 collapseSide:{
                     view:true
+                },
+                // for compatibility
+                // recommend set/get html attribute directly
+                content:{
+                    getter:function () {
+                        return this.get("html");
+                    },
+                    setter:function (v) {
+                        return this.set("html", v);
+                    }
                 }
             }
         });
 
-    Button.DefaultRender = CustomRender;
-
+    Button.DefaultRender = ButtonRender;
 
     Component.UIStore.setUIConstructorByCssClass("button", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -68,26 +93,32 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['event', 'uibase', 'component', './customrender']
+    requires:['event', 'uibase', 'component', './buttonRender']
 });/**
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function(S, Button, Render, Split) {
+KISSY.add("button", function (S, Button, Render, Split, Toggle) {
     Button.Render = Render;
     Button.Split = Split;
+    Button.Toggle = Toggle;
     return Button;
 }, {
-    requires:['button/base','button/customrender','button/split']
+    requires:[
+        'button/base',
+        'button/buttonRender',
+        'button/split',
+        'button/toggle'
+    ]
 });/**
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function (S, UIBase, Component) {
+KISSY.add("button/buttonRender", function (S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, [], {
         createDom:function () {
-            //set wai-aria role
+            // set wai-aria role
             this.get("el")
                 .attr("role", "button")
                 .addClass("ks-inline-block");
@@ -118,60 +149,6 @@ KISSY.add("button/buttonrender", function (S, UIBase, Component) {
 }, {
     requires:['uibase', 'component']
 });/**
- * @fileOverview view for button , double div for pseudo-round corner
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
-
-    //双层 div 模拟圆角
-    var CONTENT_CLS = "button-outer-box",
-        INNER_CLS = "button-inner-box";
-
-
-    return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
-
-            /**
-             *  Controller 会在 create 后进行 unselectable，
-             *  需要所有的节点创建工作放在 createDom 中
-             */
-            createDom:function () {
-                var self = this,
-                    el = self.get("el"),
-                    contentEl = self.get("contentEl"),
-                    id = S.guid('ks-button-labelby');
-                el.attr("aria-labelledby", id);
-                //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(self.getCssClassWithPrefix(CONTENT_CLS));
-                var elChildren = S.makeArray(contentEl[0].childNodes),
-                    innerEl = new Node("<div id='" + id + "' " +
-                        "class='" + self.getCssClassWithPrefix(INNER_CLS) + "'/>")
-                        .appendTo(contentEl);
-                // content 由 contentboxrender 处理
-                for (var i = 0; i < elChildren.length; i++) {
-                    innerEl.append(elChildren[i]);
-                }
-                self.__set("innerEl", innerEl);
-            },
-
-            /**
-             * 内容移到内层
-             * @override
-             * @param v
-             */
-            _uiSetContent:function (v) {
-                this.get("innerEl").html(v);
-            }
-        }, {
-            /**
-             * @inheritedDoc
-             * content:{}
-             */
-            innerEl:{}
-        }
-    );
-}, {
-    requires:['node', 'uibase', './buttonrender']
-});/**
  * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
@@ -179,54 +156,149 @@ KISSY.add("button/split", function (S) {
 
     var handles = {
         content:function (e) {
-            var first = this, t = e.target;
-            first.__set("content", t.get("content"));
-            first.__set("value", t.get("value"));
+            var self = this,
+                first = self.get("first"),
+                t = e.target;
+            first.set("content", t.get("content"));
+            first.set("value", t.get("value"));
+            if (self.get("hideAfterMenuClick")) {
+                self.get("second").set("collapsed", true);
+            }
         },
         value:function (e) {
-            var first = this, t = e.target;
-            first.__set("value", t.get("value"));
+            var self = this,
+                first = self.get("first"),
+                t = e.target;
+            first.set("value", t.get("value"));
+            if (self.get("hideAfterMenuClick")) {
+                self.get("second").set("collapsed", true);
+            }
         }
     };
 
+    /**
+     * Combining button and menubutton to form SplitButton.
+     * @class
+     * @memberOf Button
+     * @extends Base
+     */
     function Split() {
         Split.superclass.constructor.apply(this, arguments);
     }
 
-    Split.ATTRS = {
-        // 第一个组件按钮
+    Split.ATTRS =
+    /**
+     * @lends Button.Split#
+     */
+    {
+        /**
+         * Button instance.
+         * @type {Button}
+         */
         first:{},
-        // 第二个组件
+        /**
+         * MenuButton instance.
+         * @type {MenuButton}
+         */
         second:{},
-        // 第二个组件的见ring事件
+        /**
+         * Event type to listen on the menubutton.
+         * Default : click.
+         * @type String
+         */
         eventType:{
             value:"click"
         },
+        /**
+         * Event handler type.
+         * Enum : "content", "value".
+         * "content" : sync first button with second menubutton 's content and value.
+         * "value" : sync first button with second menubutton 's  value only.
+         * @type String
+         */
         eventHandler:{
             // 或者 value
             value:"content"
+        },
+        /**
+         * Whether hide menubutton 's drop menu after click on it.
+         * Default : true
+         * @type Boolean
+         */
+        hideAfterMenuClick:{
+            value:true
         }
     };
 
-    S.extend(Split, S.Base, {
-        render:function () {
-            var self = this,
-                eventType = self.get("eventType"),
-                eventHandler = handles[self.get("eventHandler")],
-                first = self.get("first"),
-                second = self.get("second");
-            first.__set("collapseSide", "right");
-            second.__set("collapseSide", "left");
-            first.render();
-            second.render();
-            if (eventType && eventHandler) {
-                second.on(eventType, eventHandler, first);
+    S.extend(Split, S.Base,
+        /**
+         * @lends Button.Split#
+         */
+        {
+            /**
+             * Render button and menubutton together.
+             */
+            render:function () {
+                var self = this,
+                    eventType = self.get("eventType"),
+                    eventHandler = handles[self.get("eventHandler")],
+                    first = self.get("first"),
+                    second = self.get("second");
+                first.set("collapseSide", "right");
+                second.set("collapseSide", "left");
+                first.render();
+                second.render();
+                if (eventType && eventHandler) {
+                    second.on(eventType, eventHandler, self);
+                }
             }
-        }
-    });
+        });
 
     return Split;
 
 }, {
     requires:['base']
+});/**
+ * ToggleButton for KISSY
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('button/toggle', function (S, UIBase, Button, ToggleRender) {
+
+    return UIBase.create(Button, [], {
+        performActionInternal:function () {
+            var self = this;
+            self.set("checked", !self.get("checked"));
+            self.constructor.superclass.performActionInternal.apply(self, arguments);
+        }
+    }, {
+        DefaultRender:ToggleRender,
+        ATTRS:{
+            checked:{
+                value:false,
+                view:true
+            }
+        }
+    });
+
+}, {
+    requires:['uibase', './base', './toggleRender']
+});/**
+ * Render for ToggleButton
+ */
+KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
+
+    return UIBase.create(ButtonRender, [], {
+        _uiSetChecked:function (v) {
+            var self = this,
+                cls = self.getComponentCssClassWithState("-checked");
+            self.get("el")[v ? 'addClass' : 'removeClass'](cls);
+        }
+    }, {
+        ATTRS:{
+            checked:{}
+        }
+    });
+
+}, {
+    requires:['uibase', './buttonRender']
 });

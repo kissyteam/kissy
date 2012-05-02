@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 25 21:51
+build time: May 2 10:12
 */
 /**
  * @fileOverview   dom-attr

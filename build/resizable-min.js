@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 KISSY.add("resizable/base",function(n,d,s,k){function o(a){var a=a.newVal,f=this.dds,g=this.get("node");this.destroy();for(b=0;b<a.length;b++){var c=a[b],e=p("<div class='"+q+" "+q+"-"+c+"'></div>").prependTo(g),c=f[c]=new t({node:e,cursor:null});c.on("drag",u,this);c.on("dragstart",v,this)}}function v(){var a=this.get("node");this._width=a.width();this._top=parseInt(a.css("top"));this._left=parseInt(a.css("left"));this._height=a.height()}function u(a){var f=this.get("node"),g=a.target,c;a:{c=this.dds;
 for(var e in c)if(c[e]==g){c=e;break a}c=0}e=this._width;var d=this._height,h=this.get("minWidth"),i=this.get("maxWidth"),l=this.get("minHeight"),w=this.get("maxHeight"),a=j[c](h,i,l,w,this._top,this._left,e,d,a.top-g.startNodePos.top,a.left-g.startNodePos.left),g=["width","height","top","left"];for(b=0;b<g.length;b++)a[b]&&f.css(g[b],a[b])}function m(a){var f;m.superclass.constructor.apply(this,arguments);this.on("afterHanldersChange",o,this);f=this.get("node");this.dds={};"static"==f.css("position")&&

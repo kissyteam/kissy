@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 26 15:27
+build time: May 2 10:13
 */
 KISSY.add("switchable/accordion/aria",function(e,c,f,g,b){function i(a){var d;e.each(this.triggers,function(h){if(h==a||c.contains(h,a))d=h});return d}function k(a){var d;e.each(this.panels,function(h){if(h==a||c.contains(h,a))d=h});return d}function j(a){var d=i.call(this,a);d||(a=k.call(this,a),d=this.triggers[e.indexOf(a,this.panels)]);return d}function r(a){switch(a.keyCode){case t:case n:a.ctrlKey&&!a.altKey&&!a.shiftKey&&a.halt();break;case D:a.ctrlKey&&!a.altKey&&a.halt()}}function a(a){var c=
 a.target,s=this.triggers,b=!a.ctrlKey&&!a.shiftKey&&!a.altKey,g=a.ctrlKey&&!a.shiftKey&&!a.altKey;switch(a.keyCode){case w:case x:if((c=i.call(this,c))&&b)this.switchTo(e.indexOf(c,this.triggers)),a.halt();break;case u:case p:if(c=i.call(this,c))h.call(this,c),a.halt();break;case y:case q:if(c=i.call(this,c))m.call(this,c),a.halt();break;case n:g&&(a.halt(),c=j.call(this,c),m.call(this,c));break;case t:g&&(a.halt(),c=j.call(this,c),h.call(this,c));break;case l:b&&(j.call(this,c),d.call(this,0,!0),

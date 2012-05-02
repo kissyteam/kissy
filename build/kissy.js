@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 28 16:52
+build time: May 2 10:13
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: Apr 28 16:52
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120428165205';
+        S.__BUILD_TIME = '20120502101330';
     })();
 
     return S;
@@ -3879,7 +3879,7 @@ build time: Apr 28 16:52
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120428165205'
+        tag:'20120502101330'
     }, getBaseInfo()));
 
     /**
@@ -4231,7 +4231,7 @@ build time: Apr 28 16:52
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview ua
@@ -4516,7 +4516,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 25 21:51
+build time: May 2 10:12
 */
 /**
  * @fileOverview   dom-attr
@@ -8829,7 +8829,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 18:24
+build time: May 2 10:12
 */
 /**
  * @fileOverview responsible for registering event
@@ -11140,7 +11140,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:12
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11649,7 +11649,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 24 11:42
+build time: May 2 10:12
 */
 /**
  * @fileOverview form data  serialization util
@@ -13513,7 +13513,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview   cookie
@@ -13627,7 +13627,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview attribute management
@@ -14248,7 +14248,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * @fileOverview anim
@@ -15608,7 +15608,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:53
+build time: May 2 10:13
 */
 /**
  * @fileOverview   anim-node-plugin

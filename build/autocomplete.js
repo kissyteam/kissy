@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Apr 23 11:52
+build time: May 2 10:12
 */
 /**
  * Combobox derived from autocomplete
@@ -223,8 +223,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
     var ALIGN = {
         points:["bl", "tl"],
         overflow:{
-            failX:1,
-            failY:1,
             adjustX:1,
             adjustY:1
         }
