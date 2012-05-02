@@ -30,7 +30,8 @@ KISSY.add("editor/core/walker", function (S, KE) {
             guard,
             userGuard = self.guard,
             type = self.type,
-            getSourceNodeFn = ( rtl ? '_4e_previousSourceNode' : '_4e_nextSourceNode' );
+            getSourceNodeFn = ( rtl ? '_4e_previousSourceNode' :
+                '_4e_nextSourceNode' );
 
         // This is the first call. Initialize it.
         if (!self._.start) {
@@ -91,9 +92,9 @@ KISSY.add("editor/core/walker", function (S, KE) {
         // otherwise simply use the boundary guard.
         if (userGuard) {
             guard = function (node, movingOut) {
-                if (stopGuard(node, movingOut) === FALSE)
+                if (stopGuard(node, movingOut) === FALSE) {
                     return FALSE;
-
+                }
                 return userGuard(node, movingOut);
             };
         }
@@ -101,47 +102,47 @@ KISSY.add("editor/core/walker", function (S, KE) {
             guard = stopGuard;
         }
 
-        if (self.current)
+        if (self.current) {
             node = this.current[ getSourceNodeFn ](FALSE, type, guard);
-        else {
+        } else {
             // Get the first node to be returned.
 
             if (rtl) {
                 node = range.endContainer;
-
                 if (range.endOffset > 0) {
                     node = new Node(node[0].childNodes[range.endOffset - 1]);
-                    if (guard(node) === FALSE)
+                    if (guard(node) === FALSE) {
                         node = NULL;
-                }
-                else
+                    }
+                } else {
                     node = ( guard(node, TRUE) === FALSE ) ?
-                        NULL : node._4e_previousSourceNode(TRUE, type, guard);
+                        NULL : node._4e_previousSourceNode(TRUE, type, guard, undefined);
+                }
             }
             else {
                 node = range.startContainer;
                 node = new Node(node[0].childNodes[range.startOffset]);
 
-                if (node && node[0]) {
-                    if (guard(node) === FALSE)
+                if (node.length) {
+                    if (guard(node) === FALSE) {
                         node = NULL;
-                }
-                else
+                    }
+                } else {
                     node = ( guard(range.startContainer, TRUE) === FALSE ) ?
-                        NULL : range.startContainer._4e_nextSourceNode(TRUE, type, guard);
+                        NULL : range.startContainer._4e_nextSourceNode(TRUE, type, guard, undefined);
+                }
             }
         }
 
-        while (node && node[0] && !self._.end) {
+        while (node && !self._.end) {
             self.current = node;
-
             if (!self.evaluator || self.evaluator(node) !== FALSE) {
-                if (!breakOnFalse)
+                if (!breakOnFalse) {
                     return node;
-            }
-            else if (breakOnFalse && self.evaluator)
+                }
+            } else if (breakOnFalse && self.evaluator) {
                 return FALSE;
-
+            }
             node = node[ getSourceNodeFn ](FALSE, type, guard);
         }
 
@@ -149,24 +150,15 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return self.current = NULL;
     }
 
-    /**
-     *
-     * @param  {boolean=} rtl
-     * @return {(boolean)}
-     */
     function iterateToLast(rtl) {
-        var node, last = NULL;
-
-        while (( node = iterate.call(this, rtl) ))
+        var node,
+            last = NULL;
+        while (node = iterate.call(this, rtl)) {
             last = node;
-
+        }
         return last;
     }
 
-    /**
-     * @constructor
-     * @name Walker
-     */
     function Walker(range) {
         this.range = range;
 
@@ -175,7 +167,6 @@ KISSY.add("editor/core/walker", function (S, KE) {
          * it's to be considered into the walk or not. If not provided, all
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
-         * @name CKEDITOR.dom.walker.prototype.evaluator
          * @property
          * @type Function
          */
@@ -187,7 +178,6 @@ KISSY.add("editor/core/walker", function (S, KE) {
          * entering and exiting nodes, as well as for the matched nodes.
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
-         * @name CKEDITOR.dom.walker.prototype.guard
          * @property
          * @type Function
          */
@@ -226,7 +216,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         },
 
         /**
-         * Check all nodes at right, executing the evaluation fuction.
+         * Check all nodes at right, executing the evaluation function.
          * @returns {boolean} "FALSE" if the evaluator function returned
          *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
          */
@@ -235,7 +225,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         },
 
         /**
-         * Check all nodes at left, executing the evaluation fuction.
+         * Check all nodes at left, executing the evaluation function.
          * 是不是 (不能后退了)
          * @returns {boolean} "FALSE" if the evaluator function returned
          *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
@@ -306,12 +296,13 @@ KISSY.add("editor/core/walker", function (S, KE) {
     };
 
     /**
-     * Whether the node is a text node() containing only whitespaces characters.
+     * Whether the node is a text node containing only whitespaces characters.
      * @param {boolean} [isReject]
      */
     Walker.whitespaces = function (isReject) {
         return function (node) {
-            var isWhitespace = node.nodeType == KEN.NODE_TEXT && !S.trim(node.nodeValue);
+            var isWhitespace = node.nodeType == KEN.NODE_TEXT &&
+                !S.trim(node.nodeValue);
             return isReject ^ isWhitespace;
         };
     };
@@ -338,11 +329,12 @@ KISSY.add("editor/core/walker", function (S, KE) {
         isWhitespaces = Walker.whitespaces(),
         isBookmark = Walker.bookmark(),
         toSkip = function (node) {
-            return isBookmark(node)
-                || isWhitespaces(node)
-                || node.nodeType == 1
-                && DOM._4e_name(node) in dtd.$inline
-                && !( DOM._4e_name(node) in dtd.$empty );
+            var name = DOM._4e_name(node);
+            return isBookmark(node) ||
+                isWhitespaces(node) ||
+                node.nodeType == 1 &&
+                    name in dtd.$inline &&
+                    !( name in dtd.$empty );
         };
 
     // Check if there's a filler node at the end of an element, and return it.
@@ -359,13 +351,11 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return false;
     };
 
-    var editorDom = {
+    KE.Utils.injectDom({
         _4e_getBogus:function (el) {
-            return KE.Walker.getBogus(new Node(el));
+            return Walker.getBogus(new Node(el));
         }
-    };
-
-    KE.Utils.injectDom(editorDom);
+    });
 
     KE.Walker = Walker;
 }, {

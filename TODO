@@ -2,3 +2,6 @@
  v1.3:
 
   - 拆分模块，借鉴 YUI3 利用 cdn 自动 combo
+  - 编辑器模块化重构，添加单元测试
+  - autocomplete/suggest 重写
+  - 触屏支持

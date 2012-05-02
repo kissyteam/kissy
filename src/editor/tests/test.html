@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Editor Test Runner</title>
+
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<script src="../../../build/kissy.js"></script>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+</style>
+</head>
+<body>
+<script src="../../../build/uibase.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/dd.js"></script>
+<script src="../../../build/editor.js"></script>
+<script src="./dom-spec.js"></script>
+<script>
+    KISSY.use("editor", function () {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function () {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/htmlparser.js"></script>
+<script src="../../../build/dd.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../../build/overlay.js"></script>
+<!--
+core
+-->
+
+<script src="../../src/editor/core/base.js"></script>
+<script src="../../src/editor/core/dom.js"></script>
+<script src="../../src/editor/core/domIterator.js"></script>
+<script src="../../src/editor/core/meta.js"></script>
+<script src="../../src/editor/core/elementPath.js"></script>
+<script src="../../src/editor/core/focusManager.js"></script>
+<script src="../../src/editor/core/range.js"></script>
+<script src="../../src/editor/core/selection.js"></script>
+<script src="../../src/editor/core/styles.js"></script>
+<script src="../../src/editor/core/utils.js"></script>
+<script src="../../src/editor/core/walker.js"></script>
+<script src="../../src/editor/core/zIndexManager.js"></script>
+<script src="../../src/editor.js"></script>
+<!--
+core plugins
+-->
+<script src="../../src/editor/core/clipboard/index.js"></script>
+<script src="../../src/editor/core/enterKey/index.js"></script>
+<script src="../../src/editor/core/htmlDataProcessor/index.js"></script>
+<script src="../../src/editor/core/selection/index.js"></script>
+<!--
+other plugins
+-->
+</head>
+<body>
+<div id="d1">
+    <div id="d2">
+
+        <div id="d3">
+            <span id="s2">s2</span>
+            <span id="s3">s3</span>
+        </div>
+
+        <span id="s1">s1</span>
+    </div>
+    <span id="s0">s0</span>
+</div>
+<script>
+    KISSY.ready(function (S) {
+        S.use("editor", function () {
+            var DOM = S.DOM;
+            var s2 = DOM.get("#s2");
+            var d2 = DOM.get("#d2");
+            DOM._4e_breakParent(s2, d2);
+        });
+    });
+</script>
+</body>
+</html>

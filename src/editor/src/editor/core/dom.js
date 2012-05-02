@@ -18,6 +18,7 @@ KISSY.add("editor/core/dom", function (S) {
         Node = S.Node,
         Utils = KE.Utils,
         REMOVE_EMPTY = {
+            "a":1,
             "abbr":1,
             "acronym":1,
             "address":1,
@@ -101,10 +102,7 @@ KISSY.add("editor/core/dom", function (S) {
          * @param el {(Node)}
          */
             normalEl = function (el) {
-            if (el && !el[0]) {
-                return new Node(el);
-            }
-            return el;
+            return new Node(el);
         },
         editorDom = {
 
@@ -115,8 +113,8 @@ KISSY.add("editor/core/dom", function (S) {
              */
             _4e_isBlockBoundary:function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
-                return blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
-                    nodeNameMatches[ DOM._4e_name(el) ];
+                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
+                    nodeNameMatches[ DOM._4e_name(el) ]);
             },
 
             /**
@@ -294,53 +292,14 @@ KISSY.add("editor/core/dom", function (S) {
              * <b><i>13</i></b>
              * </code>
              */
-            _4e_mergeSiblings:(function () {
-                function mergeElements(element, sibling, isNext) {
-                    if (sibling[0] && sibling[0].nodeType == KEN.NODE_ELEMENT) {
-                        // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
-                        // queuing them to be moved later. (#5567)
-                        var pendingNodes = [];
-
-                        while (sibling.attr('_ke_bookmark') || sibling._4e_isEmptyInlineRemovable(undefined)) {
-                            pendingNodes.push(sibling);
-                            sibling = isNext ? sibling.next() : sibling.previous();
-                            if (!sibling) {
-                                return;
-                            }
-                        }
-
-                        if (element._4e_isIdentical(sibling, undefined)) {
-                            // Save the last child to be checked too, to merge things like
-                            // <b><i></i></b><b><i></i></b> => <b><i></i></b>
-                            var innerSibling = isNext ? element[0].lastChild : element[0].firstChild;
-
-                            // Move pending nodes first into the target element.
-                            while (pendingNodes.length) {
-                                pendingNodes.shift()._4e_move(element, !isNext, undefined);
-                            }
-
-                            sibling._4e_moveChildren(element, !isNext, undefined);
-                            sibling.remove();
-
-                            // Now check the last inner child (see two comments above).
-                            if (innerSibling[0] && innerSibling[0].nodeType == KEN.NODE_ELEMENT)
-                                innerSibling._4e_mergeSiblings();
-                        }
-                    }
+            _4e_mergeSiblings:function (thisElement) {
+                thisElement = normalEl(thisElement);
+                // 只合并空元素不占用空间的标签
+                if (REMOVE_EMPTY[thisElement._4e_name()]) {
+                    mergeElements(thisElement, TRUE);
+                    mergeElements(thisElement);
                 }
-
-                return function (thisElement) {
-                    thisElement = normalEl(thisElement);
-                    // note by yiminghe,why not just merge whatever
-                    // Merge empty links and anchors also. (#5567)
-                    if (!( REMOVE_EMPTY[ thisElement._4e_name() ] ||
-                        thisElement._4e_name() == "a" )) {
-                        return;
-                    }
-                    mergeElements(thisElement, new Node(thisElement[0].nextSibling), TRUE);
-                    mergeElements(thisElement, new Node(thisElement[0].previousSibling));
-                };
-            })(),
+            },
 
             /**
              * 将一个字符串节点拆散为两个字符串节点，并返回最后一个
@@ -374,7 +333,7 @@ KISSY.add("editor/core/dom", function (S) {
                 if (!!(doc.documentMode)) {
                     var workaround = doc.createTextNode("");
                     DOM.insertAfter(workaround, ret);
-                    DOM._4e_remove(workaround);
+                    DOM.remove(workaround);
                 }
 
                 return ret;
@@ -626,7 +585,7 @@ KISSY.add("editor/core/dom", function (S) {
             /**
              * 得到元素及其所有祖先元素在其兄弟节点中的序号。
              * @param el
-             * @param normalized
+             * @param [normalized]
              */
             _4e_address:function (el, normalized) {
                 var address = [],
@@ -867,6 +826,47 @@ KISSY.add("editor/core/dom", function (S) {
                 return dtd && dtd['#'];
             }
         };
+
+
+    function mergeElements(element, isNext) {
+        var sibling = element[isNext ? "next" : "prev"]();
+
+        if (sibling &&
+            sibling[0].nodeType == KEN.NODE_ELEMENT) {
+
+            // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
+            // queuing them to be moved later. (#5567)
+            var pendingNodes = [];
+
+            while (sibling.attr('_ke_bookmark') ||
+                sibling._4e_isEmptyInlineRemovable(undefined)) {
+                pendingNodes.push(sibling);
+                sibling = isNext ? sibling.next() : sibling.prev();
+                if (!sibling) {
+                    return;
+                }
+            }
+
+            if (element._4e_isIdentical(sibling, undefined)) {
+                // Save the last child to be checked too, to merge things like
+                // <b><i></i></b><b><i></i></b> => <b><i></i></b>
+                var innerSibling = new Node(isNext ? element[0].lastChild : element[0].firstChild);
+
+                // Move pending nodes first into the target element.
+                while (pendingNodes.length) {
+                    pendingNodes.shift()._4e_move(element, !isNext, undefined);
+                }
+
+                sibling._4e_moveChildren(element, !isNext, undefined);
+                sibling.remove();
+
+                // Now check the last inner child (see two comments above).
+                if (innerSibling[0] && innerSibling[0].nodeType == KEN.NODE_ELEMENT) {
+                    innerSibling._4e_mergeSiblings();
+                }
+            }
+        }
+    }
 
     Utils.injectDom(editorDom);
 }, {
