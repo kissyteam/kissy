@@ -87,13 +87,12 @@ KISSY.add('editor/plugin/listUtils/index', function (S, KE) {
                             ||
                             //用于替换标签,ul->ol ,ol->ul
                             listArray[ currentIndex ].parent._4e_name() != rootNode._4e_name()) {
-
-                            rootNode = listArray[ currentIndex ].parent._4e_clone(false, true);
+                            rootNode = listArray[ currentIndex ].parent.clone(false);
                             retval.appendChild(rootNode[0]);
                         }
-                        currentListItem = rootNode[0].appendChild(item.element._4e_clone(false, true)[0]);
+                        currentListItem = rootNode[0].appendChild(item.element.clone(false)[0]);
                         for (var i = 0; i < item.contents.length; i++) {
-                            currentListItem.appendChild(item.contents[i]._4e_clone(true, true)[0]);
+                            currentListItem.appendChild(item.contents[i].clone(true)[0]);
                         }
                         currentIndex++;
                     } else if (item.indent == Math.max(indentLevel, 0) + 1) {
@@ -106,7 +105,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, KE) {
                         item.grandparent) {
 
                         if (listNodeNames[ item.grandparent._4e_name() ]) {
-                            currentListItem = item.element._4e_clone(false, true)[0];
+                            currentListItem = item.element.clone(false)[0];
                         } else {
                             // Create completely new blocks here, attributes are dropped.
                             //为什么要把属性去掉？？？#3857
@@ -119,7 +118,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, KE) {
                         }
 
                         for (i = 0; i < item.contents.length; i++) {
-                            var ic = item.contents[i]._4e_clone(true, true);
+                            var ic = item.contents[i].clone(true);
                             //如果是list中，应该只退出ul，保留margin-left
                             if (currentListItem.nodeType == KEN.NODE_DOCUMENT_FRAGMENT) {
                                 item.element._4e_copyAttributes(new Node(ic));

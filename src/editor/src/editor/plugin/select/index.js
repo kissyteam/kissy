@@ -409,9 +409,9 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
                 menu = self.menu,
                 menuNode = self.menuNode,
                 t = $(ev.target),
-                a = t._4e_ascendant(function (n) {
-                    return menuNode.contains(n) && n._4e_name() == "a";
-                }, true);
+                a = t.closest(function (n) {
+                    return DOM.contains(menuNode,n) && DOM._4e_name(n) == "a";
+                }, undefined);
 
             if (!a || !a.attr("data-value")) {
                 return;

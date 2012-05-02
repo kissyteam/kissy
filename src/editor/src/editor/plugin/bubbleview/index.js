@@ -4,26 +4,27 @@
  */
 KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
     var Event = S.Event,
-        Node = S.Node,
         undefined = ("a" in {}),
-        DOM = S.DOM;
-
-    var BubbleView = UIBase.create(Overlay, [], {}, {
-        ATTRS:{
-            zIndex:{
-                value:KE.baseZIndex(KE.zIndexManager.BUBBLE_VIEW)
-            },
-            elCls:{
-                value:"ke-bubbleview-bubble"
-            },
-            effect:{
-                value:{
-                    effect:"fade",
-                    duration:0.3
+        DOM = S.DOM,
+        BubbleView = UIBase.create(Overlay, [], {}, {
+            ATTRS:{
+                zIndex:{
+                    value:KE.baseZIndex(KE.zIndexManager.BUBBLE_VIEW)
+                },
+                elCls:{
+                    value:"ke-bubbleview-bubble"
+                },
+                prefixCls:{
+                    value:"ke-"
+                },
+                effect:{
+                    value:{
+                        effect:"fade",
+                        duration:0.3
+                    }
                 }
             }
-        }
-    });
+        });
 
     function inRange(t, b, r) {
         return t <= r && b >= r;
@@ -61,7 +62,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
                 overlap(self, bubble)) {
                 if (!archor) {
                     archor = bubble;
-                } else if (archor.get("y") < h.bubble.get("y")) {
+                } else if (archor.get("y") < bubble.get("y")) {
                     archor = bubble;
                 }
             }
@@ -78,20 +79,19 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
             return undefined;
         }
 
-        var editorWin = editor.get("iframe")[0].contentWindow;
-
-        var iframeXY = editor.get("iframe").offset(),
+        var editorWin = editor.get("iframe")[0].contentWindow,
+            iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
             right = left + DOM.width(editorWin),
             bottom = top + DOM.height(editorWin),
-            elXY = el._4e_getOffset(document),
+            elXY = el.offset(undefined,window),
             elTop = elXY.top,
             elLeft = elXY.left,
             elRight = elLeft + el.width(),
-            elBottom = elTop + el.height();
-
-        var x, y;
+            elBottom = elTop + el.height(),
+            x,
+            y;
 
         // 对其下边
         // el 位于编辑区域，下边界超了编辑区域下边界
@@ -121,7 +121,6 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
         var filter = cfg.filter,
             editor = cfg.editor,
             bubble = new BubbleView({
-                autoRender:true,
                 editor:editor
             }),
             stamp = S.stamp(editor),
@@ -130,7 +129,9 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
         bubble.init = cfg.init;
 
         if (bubble.init) {
-            bubble.init();
+            bubble.on('afterRenderUI', function () {
+                bubble.init();
+            });
         }
 
         myBubbles.push(bubble);

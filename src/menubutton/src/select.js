@@ -48,7 +48,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
-                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
+                self.set("html", item ? item.get("html") : self.get("defaultCaption"));
             },
 
             /**

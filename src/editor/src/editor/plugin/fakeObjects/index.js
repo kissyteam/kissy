@@ -51,10 +51,10 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, KE) {
             var temp = new Node('<div>', null, this.get("document")[0]);
             temp.html(html);
             // When returning the node, remove it from its parent to detach it.
-            return temp._4e_first(
+            return temp.first(
                 function (n) {
                     return n.nodeType == KEN.NODE_ELEMENT;
-                }, undefined).remove();
+                }).remove();
         }
     });
 

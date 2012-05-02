@@ -360,20 +360,24 @@ KISSY.add("editor/core/selection", function (S) {
                                 // Limit the fix only to non-block elements.(#3950)
                                 if (startOffset == ( startContainer[0].nodeType === KEN.NODE_ELEMENT ?
                                     startContainer[0].childNodes.length : startContainer[0].nodeValue.length )
-                                    && !startContainer._4e_isBlockBoundary())
+                                    && !startContainer._4e_isBlockBoundary()) {
                                     range.setStartAfter(startContainer);
-                                else break;
+                                } else {
+                                    break;
+                                }
                             }
 
                             node = range.startContainer;
 
-                            if (node[0].nodeType != KEN.NODE_ELEMENT)
+                            if (node[0].nodeType != KEN.NODE_ELEMENT) {
                                 return node.parent();
+                            }
 
                             node = new Node(node[0].childNodes[range.startOffset]);
 
-                            if (!node[0] || node[0].nodeType != KEN.NODE_ELEMENT)
+                            if (!node[0] || node[0].nodeType != KEN.NODE_ELEMENT) {
                                 return range.startContainer;
+                            }
 
                             var child = node[0].firstChild;
                             while (child && child.nodeType == KEN.NODE_ELEMENT) {
@@ -387,16 +391,20 @@ KISSY.add("editor/core/selection", function (S) {
                     if (OLD_IE) {
                         range = sel.createRange();
                         range.collapse(TRUE);
-                        node = range.parentElement();
+                        node = new Node(range.parentElement());
                     }
                     else {
                         node = sel.anchorNode;
-                        if (node && node.nodeType != KEN.NODE_ELEMENT)
+                        if (node && node.nodeType != KEN.NODE_ELEMENT) {
                             node = node.parentNode;
+                        }
+                        if (node) {
+                            node = new Node(node);
+                        }
                     }
             }
 
-            return cache.startElement = ( node ? DOM._4e_wrap(node) : NULL );
+            return cache.startElement = node;
         },
 
         /**
@@ -415,14 +423,13 @@ KISSY.add("editor/core/selection", function (S) {
             if (cache.selectedElement !== undefined)
                 return cache.selectedElement;
 
-
             // Is it native IE control type selection?
-
             if (OLD_IE) {
                 var range = self.getNative().createRange();
                 node = range.item && range.item(0);
+            }
 
-            }// Figure it out by checking if there's a single enclosed
+            // Figure it out by checking if there's a single enclosed
             // node of the range.
             if (!node) {
                 node = (function () {
@@ -431,7 +438,7 @@ KISSY.add("editor/core/selection", function (S) {
                         selected;
 
                     // Check first any enclosed element, e.g. <ul>[<li><a href="#">item</a></li>]</ul>
-                    //脱两层？？2是啥意思？
+                    // 脱两层？？2是啥意思？
                     for (var i = 2;
                          i && !
                              (
@@ -448,11 +455,11 @@ KISSY.add("editor/core/selection", function (S) {
                         range.shrink(KER.SHRINK_ELEMENT);
                     }
 
-                    return  selected && selected[0];
+                    return  selected;
                 })();
             }
 
-            return cache.selectedElement = DOM._4e_wrap(node);
+            return cache.selectedElement = new Node(node);
         },
 
 
@@ -606,7 +613,7 @@ KISSY.add("editor/core/selection", function (S) {
             // If we have split the block, adds a temporary span at the
             // range position and scroll relatively to it.
             var start = this.getStartElement();
-            start && start._4e_scrollIntoView();
+            start && start.scrollIntoView(undefined, false);
         },
         removeAllRanges:function () {
             var sel = this.getNative();

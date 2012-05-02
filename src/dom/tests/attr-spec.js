@@ -72,7 +72,12 @@ KISSY.use("dom", function (S, DOM) {
                 // ie<8 return false , === radio.checked
                 // expect(radio.getAttribute("checked")).toBe(undefined);
                 expect(DOM.attr(input, 'value')).toBe('hello');
+                expect(DOM.val(input)).toBe('hello');
+                DOM.attr(input, 'value', 'zz');
+                expect(DOM.val(input)).toBe('zz');
 
+                DOM.attr(input, 'value', 'hello');
+                DOM.val(input, 'hello')
             });
 
             it("should return style correctly", function () {

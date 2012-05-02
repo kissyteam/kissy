@@ -66,7 +66,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * elem 为 document 时，返回关联的 window
          * elem 为 undefined 时，返回当前 window
          * 其它值，返回 false
-         * @return {window}
+         * @return {window|Document|HTMLElement}
          */
         _getWin:function (elem) {
             return (elem && ('scrollTo' in elem) && elem['document']) ?

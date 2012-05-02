@@ -9,15 +9,14 @@
 KISSY.add("editor/core/dom", function (S) {
 
     var TRUE = true,
+        undefined = undefined,
         FALSE = false,
         NULL = null,
         KE = S.Editor,
         DOM = S.DOM,
         UA = S.UA,
-        doc = document,
         Node = S.Node,
         Utils = KE.Utils,
-        GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect',
         REMOVE_EMPTY = {
             "abbr":1,
             "acronym":1,
@@ -96,123 +95,128 @@ KISSY.add("editor/core/dom", function (S) {
          * @param el {(Node)}
          */
             normalElDom = function (el) {
-            return   el[0] || el;
+            return el && (el[0] || el);
         },
         /**
          * @param el {(Node)}
          */
             normalEl = function (el) {
-            if (el && !el[0]) return new Node(el);
+            if (el && !el[0]) {
+                return new Node(el);
+            }
             return el;
         },
         editorDom = {
-            _4e_wrap:normalEl,
-            _4e_unwrap:normalElDom,
+
             /**
-             *
-             * @param el {(Node)}
-             * @param customNodeNames {Object}
+             * 是否是块状元素或块状元素边界
+             * @param el
+             * @param [customNodeNames]
              */
             _4e_isBlockBoundary:function (el, customNodeNames) {
-                el = normalEl(el);
-                var nodeNameMatches = S.mix(S.mix({}, blockBoundaryNodeNameMatch), customNodeNames || {});
-
-                return blockBoundaryDisplayMatch[ el.css('display') ] ||
-                    nodeNameMatches[ el._4e_name() ];
+                var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
+                return blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
+                    nodeNameMatches[ DOM._4e_name(el) ];
             },
 
             /**
-             *
-             * @param elem {Node|Document}
+             * 同 {@link DOM._getWin}
              */
-            _4e_getWin:function (elem) {
-                return (elem && ('scrollTo' in elem) && elem["document"]) ?
-                    elem :
-                    elem && elem.nodeType === 9 ?
-                        elem.defaultView || elem.parentWindow :
-                        FALSE;
-            },
+            _4e_getWin:DOM._getWin,
+
             /**
-             *
-             * @param el {(Node)}
+             * 返回当前元素在父元素中所有儿子节点中的序号
+             * @param el
              */
-            _4e_index:function (el) {
-                var siblings = el.parentNode.childNodes;
+            _4e_index:function (el, normalized) {
+                var siblings = el.parentNode.childNodes,
+                    candidate,
+                    currentIndex = -1;
+
                 for (var i = 0; i < siblings.length; i++) {
-                    if (siblings[i] === el) return i;
+                    candidate = siblings[i];
+
+                    // 连续的字符串节点合并
+                    if (normalized &&
+                        candidate.nodeType == 3 &&
+                        candidate.previousSibling &&
+                        candidate.previousSibling.nodeType == 3) {
+                        continue;
+                    }
+
+                    currentIndex++;
+
+                    if (candidate === el) {
+                        return currentIndex;
+                    }
                 }
                 return -1;
             },
+
             /**
-             *
-             * @param el {(Node)}
-             * @param [evaluator] {function(KISSY.Node)}
-             */
-            _4e_first:function (el, evaluator) {
-                var first = el.firstChild,
-                    retval = first;
-                if (retval && evaluator && !evaluator(retval)) {
-                    retval = DOM._4e_next(retval, evaluator);
-                }
-                return retval;
-            },
-            /**
-             *
-             * @param thisElement {(Node)}
-             * @param target {(Node)}
-             * @param [toStart] {boolean}
+             * 把 thisElement 移到 target 的前面或后面
+             * @param thisElement
+             * @param target
+             * @param toStart
              */
             _4e_move:function (thisElement, target, toStart) {
-                DOM._4e_remove(thisElement);
                 target = normalElDom(target);
                 if (toStart) {
                     target.insertBefore(thisElement, target.firstChild);
-                }
-                else {
+                } else {
                     target.appendChild(thisElement);
                 }
             },
 
             /**
-             *
-             * @param [thisElement] {Node}
+             * 得到小写的标签名
+             * @param thisElement
              */
             _4e_name:function (thisElement) {
                 var nodeName = thisElement.nodeName.toLowerCase();
-                //note by yiminghe:http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
+                // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
                 if (UA['ie']) {
                     var scopeName = thisElement['scopeName'];
-                    if (scopeName && scopeName != 'HTML')
+                    if (scopeName && scopeName != 'HTML') {
                         nodeName = scopeName.toLowerCase() + ':' + nodeName;
+                    }
                 }
                 return nodeName;
             },
+
             /**
-             *
-             * @param thisElement {(Node)}
-             * @param otherElement {(Node)}
+             * 两个元素是否名称和属性都相同
+             * @param thisElement
+             * @param otherElement
              */
             _4e_isIdentical:function (thisElement, otherElement) {
-                thisElement = normalEl(thisElement);
-                otherElement = normalEl(otherElement);
-                if (thisElement._4e_name() != otherElement._4e_name())
+                if (!otherElement) {
                     return FALSE;
+                }
 
-                var thisAttributes = thisElement[0].attributes,
-                    otherAttributes = otherElement[0].attributes,
-                    thisLength = thisAttributes.length,
+                otherElement = normalElDom(otherElement);
+
+                if (DOM._4e_name(thisElement) != DOM._4e_name(otherElement)) {
+                    return FALSE;
+                }
+
+                var thisAttributes = thisElement.attributes,
+                    otherAttributes = otherElement.attributes;
+
+                var thisLength = thisAttributes.length,
                     otherLength = otherAttributes.length;
 
-                if (thisLength != otherLength)
+                if (thisLength != otherLength) {
                     return FALSE;
+                }
 
                 for (var i = 0; i < thisLength; i++) {
                     var attribute = thisAttributes[i],
                         name = attribute.name;
-                    if (attribute.specified
-                        &&
-                        thisElement.attr(name) != otherElement.attr(name))
+                    if (attribute.specified &&
+                        DOM.attr(thisElement, name) != DOM.attr(otherElement, name)) {
                         return FALSE;
+                    }
                 }
 
                 // For IE, we have to for both elements, because it's difficult to
@@ -222,10 +226,10 @@ KISSY.add("editor/core/dom", function (S) {
                     for (i = 0; i < otherLength; i++) {
                         attribute = otherAttributes[ i ];
                         name = attribute.name;
-                        if (attribute.specified
-                            &&
-                            thisElement.attr(name) != otherElement.attr(name))
+                        if (attribute.specified &&
+                            DOM.attr(thisElement, name) != DOM.attr(otherElement, name)) {
                             return FALSE;
+                        }
                     }
                 }
 
@@ -233,20 +237,22 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             *
-             * @param thisElement {(Node)}
+             * inline 元素是否没有包含有效文字内容
+             * @param thisElement
              */
-            _4e_isEmptyInlineRemoveable:function (thisElement) {
+            _4e_isEmptyInlineRemovable:function (thisElement) {
                 var children = thisElement.childNodes;
                 for (var i = 0, count = children.length; i < count; i++) {
                     var child = children[i],
                         nodeType = child.nodeType;
 
-                    if (nodeType == KEN.NODE_ELEMENT && child.getAttribute('_ke_bookmark'))
+                    if (nodeType == KEN.NODE_ELEMENT &&
+                        child.getAttribute('_ke_bookmark')) {
                         continue;
+                    }
 
-                    if (nodeType == KEN.NODE_ELEMENT && !editorDom._4e_isEmptyInlineRemoveable(child)
-                        || nodeType == KEN.NODE_TEXT && S.trim(child.nodeValue)) {
+                    if (nodeType == KEN.NODE_ELEMENT && !DOM._4e_isEmptyInlineRemovable(child) ||
+                        nodeType == KEN.NODE_TEXT && S.trim(child.nodeValue)) {
                         return FALSE;
                     }
                 }
@@ -254,52 +260,53 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             *
-             * @param thisElement {(Node)}
-             * @param target {(Node)}
-             * @param toStart {boolean}
+             * 把 thisElement 的所有儿子节点都插入到 target 节点的前面或后面
+             * @param thisElement
+             * @param target
+             * @param toStart
              */
             _4e_moveChildren:function (thisElement, target, toStart) {
-                target = target[0] || target;
+                target = normalElDom(target);
 
-                if (thisElement == target)
+                if (thisElement == target) {
                     return;
+                }
 
                 var child;
 
                 if (toStart) {
-                    while (( child = thisElement.lastChild ))
+                    while (child = thisElement.lastChild) {
                         target.insertBefore(thisElement.removeChild(child), target.firstChild);
+                    }
                 } else {
-                    while (( child = thisElement.firstChild ))
+                    while (child = thisElement.firstChild) {
                         target.appendChild(thisElement.removeChild(child));
+                    }
                 }
             },
 
             /**
-             *
-             * @param elem {(Node)}
+             * 将当前元素和周围的元素合并
+             * @example
+             * <code>
+             * <b><i>1</i></b><b><i>3</i></b>
+             * =>
+             * <b><i>13</i></b>
+             * </code>
              */
-            _4e_mergeSiblings:( function () {
-
-                /**
-                 *
-                 * @param element {(Node)}
-                 * @param sibling {(Node)}
-                 * @param  {boolean=} isNext
-                 */
+            _4e_mergeSiblings:(function () {
                 function mergeElements(element, sibling, isNext) {
                     if (sibling[0] && sibling[0].nodeType == KEN.NODE_ELEMENT) {
                         // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
                         // queuing them to be moved later. (#5567)
                         var pendingNodes = [];
 
-                        while (sibling.attr('_ke_bookmark')
-                            || sibling._4e_isEmptyInlineRemoveable(undefined)) {
+                        while (sibling.attr('_ke_bookmark') || sibling._4e_isEmptyInlineRemovable(undefined)) {
                             pendingNodes.push(sibling);
-                            sibling = isNext ? new Node(sibling[0].nextSibling) : new Node(sibling[0].previousSibling);
-                            if (!sibling[0] || sibling[0].nodeType != KEN.NODE_ELEMENT)
+                            sibling = isNext ? sibling.next() : sibling.previous();
+                            if (!sibling) {
                                 return;
+                            }
                         }
 
                         if (element._4e_isIdentical(sibling, undefined)) {
@@ -308,8 +315,9 @@ KISSY.add("editor/core/dom", function (S) {
                             var innerSibling = isNext ? element[0].lastChild : element[0].firstChild;
 
                             // Move pending nodes first into the target element.
-                            while (pendingNodes.length)
+                            while (pendingNodes.length) {
                                 pendingNodes.shift()._4e_move(element, !isNext, undefined);
+                            }
 
                             sibling._4e_moveChildren(element, !isNext, undefined);
                             sibling.remove();
@@ -323,136 +331,75 @@ KISSY.add("editor/core/dom", function (S) {
 
                 return function (thisElement) {
                     thisElement = normalEl(thisElement);
-                    //note by yiminghe,why not just merge whatever
+                    // note by yiminghe,why not just merge whatever
                     // Merge empty links and anchors also. (#5567)
-                    if (!
-                        ( REMOVE_EMPTY[ thisElement._4e_name() ]
-                            ||
-                            thisElement._4e_name() == "a" )
-                        )
+                    if (!( REMOVE_EMPTY[ thisElement._4e_name() ] ||
+                        thisElement._4e_name() == "a" )) {
                         return;
-
+                    }
                     mergeElements(thisElement, new Node(thisElement[0].nextSibling), TRUE);
                     mergeElements(thisElement, new Node(thisElement[0].previousSibling));
                 };
-            } )(),
+            })(),
 
             /**
-             * @param elem {(Node)}
-             * @param [refDocument] {Document}
-             */
-            _4e_getOffset:function (elem, refDocument) {
-                var box,
-                    x = 0,
-                    y = 0,
-                    currentWindow = elem.ownerDocument.defaultView || elem.ownerDocument.parentWindow,
-                    currentDoc = elem.ownerDocument,
-                    currentDocElem = currentDoc.documentElement;
-                refDocument = refDocument || currentDoc;
-                //same with DOM.offset
-                if (elem[GET_BOUNDING_CLIENT_RECT]) {
-                    if (elem !== currentDoc.body && currentDocElem !== elem) {
-                        box = elem[GET_BOUNDING_CLIENT_RECT]();
-                        //相对于refDocument，里层iframe的滚动不计
-                        x = box.left + (refDocument === currentDoc ? DOM["scrollLeft"](currentWindow) : 0);
-                        y = box.top + (refDocument === currentDoc ? DOM["scrollTop"](currentWindow) : 0);
-                    }
-                    if (refDocument) {
-                        var refWindow = refDocument.defaultView || refDocument.parentWindow;
-                        if (currentWindow != refWindow && currentWindow['frameElement']) {
-                            //note:when iframe is static ,still some mistake
-                            var iframePosition = editorDom._4e_getOffset(currentWindow['frameElement'], refDocument);
-                            x += iframePosition.left;
-                            y += iframePosition.top;
-                        }
-                    }
-                }
-                return { left:x, top:y };
-            },
-
-            /**
-             * @param el {(Node)}
-             * @param offset {number}
+             * 将一个字符串节点拆散为两个字符串节点，并返回最后一个
+             * @param el
+             * @param offset
              */
             _4e_splitText:function (el, offset) {
                 var doc = el.ownerDocument;
-                if (!el || el.nodeType != KEN.NODE_TEXT) return;
+
+                if (el.nodeType != KEN.NODE_TEXT) {
+                    return;
+                }
                 // If the offset is after the last char, IE creates the text node
                 // on split, but don't include it into the DOM. So, we have to do
                 // that manually here.
                 if (UA['ie'] && offset == el.nodeValue.length) {
                     var next = doc.createTextNode("");
                     DOM.insertAfter(next, el);
-                    return new Node(next);
+                    return next;
                 }
 
-
-                var retval = new Node(el.splitText(offset));
+                var ret = el.splitText(offset);
 
                 // IE BUG: IE8 does not update the childNodes array in DOM after splitText(),
                 // we need to make some DOM changes to make it update. (#3436)
-                //我靠！UA['ie']==8 不对，
-                //判断不出来:UA['ie']==7 && doc.documentMode==7
-                //浏览器模式：当ie8处于兼容视图以及ie7时，UA['ie']==7
-                //文本模式: mode=5 ,mode=7, mode=8
-                //alert("ua:"+UA['ie']);
-                //alert("mode:"+doc.documentMode);
-                //ie8 浏览器有问题，而不在于是否哪个模式
-                if (!!doc['documentMode']) {
+                // UA['ie']==8 不对，
+                // 判断不出来:UA['ie']==7 && doc.documentMode==7
+                // 浏览器模式：当ie8处于兼容视图以及ie7时，UA['ie']==7
+                // 文本模式: mode=5 ,mode=7, mode=8
+                // ie8 浏览器有问题，而不在于是否哪个模式
+                if (!!(doc.documentMode)) {
                     var workaround = doc.createTextNode("");
-                    DOM.insertAfter(workaround, retval[0]);
+                    DOM.insertAfter(workaround, ret);
                     DOM._4e_remove(workaround);
                 }
 
-                return retval;
+                return ret;
             },
 
             /**
-             * @param node {(Node)}
-             * @param closerFirst {boolean}
+             * 得到该节点的所有附近节点集合（包括自身）
+             * @param node
+             * @param closerFirst
              */
             _4e_parents:function (node, closerFirst) {
-                node = normalEl(node);
                 var parents = [];
+                parents.__IS_NODELIST = 1;
                 do {
                     parents[  closerFirst ? 'push' : 'unshift' ](node);
-                } while (( node = node.parent() ));
-
+                } while (node = node.parentNode);
                 return parents;
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param [includeChildren] {boolean}
-             * @param [cloneId] {string}
-             */
-            _4e_clone:function (el, includeChildren, cloneId) {
-                var $clone = el.cloneNode(includeChildren);
-
-                if (!cloneId) {
-                    var removeIds = function (node) {
-                        if (node.nodeType != KEN.NODE_ELEMENT)
-                            return;
-
-                        node.removeAttribute('id');
-
-                        var childs = node.childNodes;
-                        for (var i = 0; i < childs.length; i++)
-                            removeIds(childs[ i ]);
-                    };
-
-                    // The "id" attribute should never be cloned to avoid duplication.
-                    removeIds($clone);
-                }
-                return new Node($clone);
-            },
-            /**
-             * 深度优先遍历获取下一结点
-             * @param el {(Node)}
-             * @param [startFromSibling] {boolean}
-             * @param [nodeType] {number}
-             * @param [guard] {function(KISSY.Node)}
+             * 得到该节点在前序遍历下的下一个节点
+             * @param el
+             * @param startFromSibling
+             * @param nodeType
+             * @param guard
              */
             _4e_nextSourceNode:function (el, startFromSibling, nodeType, guard) {
                 // If "guard" is a node, transform it in a function.
@@ -501,11 +448,11 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param startFromSibling {boolean}
-             * @param nodeType {number}
-             * @param guard {function(KISSY.Node)}
+             * 得到该节点在从右向左前序遍历下的下一个节点( rtl 情况)
+             * @param el
+             * @param startFromSibling
+             * @param nodeType
+             * @param guard
              */
             _4e_previousSourceNode:function (el, startFromSibling, nodeType, guard) {
                 if (guard && !guard.call) {
@@ -515,7 +462,7 @@ KISSY.add("editor/core/dom", function (S) {
                     };
                 }
 
-                var node = ( !startFromSibling && el.lastChild),
+                var node = !startFromSibling && el.lastChild,
                     parent = el;
 
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
@@ -552,61 +499,35 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param node {(Node)}
+             * 得到两个节点的公共祖先节点
+             * @param el
+             * @param node
              */
             _4e_commonAncestor:function (el, node) {
-                el = normalEl(el);
-                node = normalEl(node);
 
-                if (el.equals(node)) {
+                node = normalElDom(node);
+
+                if (el === node) {
                     return el;
                 }
-                if (node[0].nodeType != KEN.NODE_TEXT && node.contains(el)) {
+
+                if (DOM.contains(node, el)) {
                     return node;
                 }
-                var start = el[0].nodeType == KEN.NODE_TEXT ? el.parent() : el;
+
+                var start = el;
 
                 do {
-                    if (start[0].nodeType != KEN.NODE_TEXT && start.contains(node)) {
+                    if (DOM.contains(start, node)) {
                         return start;
                     }
-                } while (start = start.parent());
+                } while (start = start.parentNode);
 
                 return NULL;
             },
 
             /**
-             * @param el {(Node)}
-             * @param [name] {string}
-             * @param [includeSelf] {boolean}
-             */
-            _4e_ascendant:function (el, name, includeSelf) {
-                el = normalElDom(el);
-                if (!includeSelf) {
-                    el = el.parentNode;
-                }
-                if (name && !S.isFunction(name)) {
-                    var n = name;
-                    name = function (node) {
-                        return node._4e_name() == n;
-                    };
-                }
-                //到document就完了
-                while (el && el.nodeType != 9) {
-                    if (!name || name(new Node(el)) === TRUE)
-                        return new Node(el);
-
-                    el = el.parentNode;
-                }
-                return NULL;
-            },
-
-            /**
-             * 统一的属性处理方式
-             * @param el {(Node)}
-             * @param otherNode {(Node)}
+             * 判断当前元素是否有设置过属性
              */
             _4e_hasAttributes:Utils.ieEngine < 9 ?
                 function (el) {
@@ -619,38 +540,42 @@ KISSY.add("editor/core/dom", function (S) {
                                 // the attributes collection will still contain the "class"
                                 // attribute, which will be marked as "specified", even if the
                                 // outerHTML of the element is not displaying the class attribute.
-                                // Note : I was not able to reproduce it outside the editor,
-                                // but I've faced it while working on the TC of #1391.
-                                if (el.getAttribute('class'))
+                                if (el.getAttribute('class')) {
                                     return TRUE;
+                                }
                                 break;
                             default :
-                                if (attribute.specified)
+                                if (attribute.specified) {
                                     return TRUE;
+                                }
                         }
                     }
                     return FALSE;
                 } : function (el) {
-                //删除firefox自己添加的标志
+                // 删除firefox自己添加的标志
                 if (UA.gecko) {
                     el.removeAttribute("_moz_dirty");
                 }
-                //使用原生
-                //ie8 莫名其妙多个shape？？specified为false
+                // 使用原生
+                // ie8 莫名其妙多个shape？？specified为false
                 return el.hasAttributes();
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param otherNode {(Node)}
+             * 得到两个元素的位置关系，参见
+             * <a href='https://developer.mozilla.org/en/DOM/Node.compareDocumentPosition'>
+             *     compareDocumentPosition
+             * </a>
+             * 注意：这里的 following 和 preceding 和 mdc 相反！
+             * @param el
+             * @param otherNode
              */
             _4e_position:function (el, otherNode) {
                 var $other = normalElDom(otherNode);
 
-
-                if (el.compareDocumentPosition)
+                if (el.compareDocumentPosition) {
                     return el.compareDocumentPosition($other);
+                }
 
                 // IE and Safari have no support for compareDocumentPosition.
 
@@ -659,13 +584,14 @@ KISSY.add("editor/core/dom", function (S) {
                 }
 
                 // Only element nodes support contains and sourceIndex.
-                if (el.nodeType == KEN.NODE_ELEMENT && $other.nodeType == KEN.NODE_ELEMENT) {
-                    if (el.contains) {
-                        if (el.contains($other))
-                            return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING;
+                if (el.nodeType == KEN.NODE_ELEMENT &&
+                    $other.nodeType == KEN.NODE_ELEMENT) {
+                    if (DOM.contains(el, $other)) {
+                        return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING;
+                    }
 
-                        if ($other.contains(el))
-                            return KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING;
+                    if (DOM.contains($other, el)) {
+                        return KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING;
                     }
 
                     if ('sourceIndex' in el) {
@@ -679,19 +605,15 @@ KISSY.add("editor/core/dom", function (S) {
 
                 // For nodes that don't support compareDocumentPosition, contains
                 // or sourceIndex, their "address" is compared.
-
-                var addressOfThis = DOM._4e_address(el, undefined),
-                    addressOfOther = DOM._4e_address($other, undefined),
+                var addressOfThis = DOM._4e_address(el),
+                    addressOfOther = DOM._4e_address($other),
                     minLevel = Math.min(addressOfThis.length, addressOfOther.length);
 
                 // Determinate preceed/follow relationship.
                 for (var i = 0; i <= minLevel - 1; i++) {
                     if (addressOfThis[ i ] != addressOfOther[ i ]) {
-                        if (i < minLevel) {
-                            return addressOfThis[ i ] < addressOfOther[ i ] ?
-                                KEP.POSITION_PRECEDING : KEP.POSITION_FOLLOWING;
-                        }
-                        break;
+                        return addressOfThis[ i ] < addressOfOther[ i ] ?
+                            KEP.POSITION_PRECEDING : KEP.POSITION_FOLLOWING;
                     }
                 }
 
@@ -702,9 +624,9 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param normalized {boolean}
+             * 得到元素及其所有祖先元素在其兄弟节点中的序号。
+             * @param el
+             * @param normalized
              */
             _4e_address:function (el, normalized) {
                 var address = [],
@@ -712,45 +634,24 @@ KISSY.add("editor/core/dom", function (S) {
                     node = el;
 
                 while (node && node != $documentElement) {
-                    var parentNode = node.parentNode,
-                        currentIndex = -1;
-
-                    if (parentNode) {
-                        for (var i = 0; i < parentNode.childNodes.length; i++) {
-                            var candidate = parentNode.childNodes[i];
-
-                            if (normalized &&
-                                candidate.nodeType == 3 &&
-                                candidate.previousSibling &&
-                                candidate.previousSibling.nodeType == 3) {
-                                continue;
-                            }
-
-                            currentIndex++;
-
-                            if (candidate == node)
-                                break;
-                        }
-
-                        address.unshift(currentIndex);
-                    }
-
-                    node = parentNode;
+                    address.unshift(DOM._4e_index(node, normalized));
+                    node = node.parentNode;
                 }
+
                 return address;
             },
 
             /**
-             *
-             * @param el {(Node)}
-             * @param [preserveChildren] {boolean}
+             * 删除一个元素
+             * @param el
+             * @param preserveChildren 是否保留其子元素（将子元素插入到当前元素之前）
              */
             _4e_remove:function (el, preserveChildren) {
                 var parent = el.parentNode;
                 if (parent) {
                     if (preserveChildren) {
                         // Move all children before the node.
-                        for (var child; ( child = el.firstChild );) {
+                        for (var child; child = el.firstChild;) {
                             parent.insertBefore(el.removeChild(child), el);
                         }
                     }
@@ -758,9 +659,10 @@ KISSY.add("editor/core/dom", function (S) {
                 }
                 return el;
             },
+
             /**
-             *
-             * @param el {(Node)}
+             * 清除左右空的字符串节点
+             * @param el
              */
             _4e_trim:function (el) {
                 DOM._4e_ltrim(el);
@@ -768,11 +670,12 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * @param el {(Node)}
+             * 清除左边空的字符串节点
+             * @param el
              */
             _4e_ltrim:function (el) {
                 var child;
-                while (( child = el.firstChild )) {
+                while (child = el.firstChild) {
                     if (child.nodeType == KEN.NODE_TEXT) {
                         var trimmed = Utils.ltrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
@@ -782,7 +685,7 @@ KISSY.add("editor/core/dom", function (S) {
                             continue;
                         }
                         else if (trimmed.length < originalLength) {
-                            new Node(child)._4e_splitText(originalLength - trimmed.length, undefined);
+                            DOM._4e_splitText(child, originalLength - trimmed.length);
                             // IE BUG: child.remove() may raise JavaScript errors here. (#81)
                             el.removeChild(el.firstChild);
                         }
@@ -792,11 +695,12 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * @param el {(Node)}
+             * 清除右边空的字符串节点
+             * @param el
              */
             _4e_rtrim:function (el) {
                 var child;
-                while (( child = el.lastChild )) {
+                while (child = el.lastChild) {
                     if (child.type == KEN.NODE_TEXT) {
                         var trimmed = Utils.rtrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
@@ -804,7 +708,7 @@ KISSY.add("editor/core/dom", function (S) {
                             el.removeChild(child);
                             continue;
                         } else if (trimmed.length < originalLength) {
-                            new Node(child)._4e_splitText(trimmed.length, undefined);
+                            DOM._4e_splitText(child, trimmed.length);
                             // IE BUG: child.getNext().remove() may raise JavaScript errors here.
                             // (#81)
                             el.removeChild(el.lastChild);
@@ -815,77 +719,44 @@ KISSY.add("editor/core/dom", function (S) {
 
                 if (!UA['ie'] && !UA.opera) {
                     child = el.lastChild;
-                    if (child && child.nodeType == 1 && child.nodeName.toLowerCase() == 'br') {
-                        // Use "eChildNode.parentNode" instead of "node" to avoid IE bug (#324).
-                        child.parentNode.removeChild(child);
+                    if (child &&
+                        child.nodeType == 1 &&
+                        DOM._4e_name(child) == 'br') {
+                        el.removeChild(child);
                     }
                 }
             },
 
             /**
-             * @param el {(Node)}
+             * 将一个 bogus 元素添加到元素末尾
+             * @param el
              */
             _4e_appendBogus:function (el) {
-                var lastChild = el.lastChild;
+                var lastChild = el.lastChild, bogus;
 
                 // Ignore empty/spaces text.
                 while (lastChild &&
                     lastChild.nodeType == KEN.NODE_TEXT &&
-                    !S.trim(lastChild.nodeValue))
+                    !S.trim(lastChild.nodeValue)) {
                     lastChild = lastChild.previousSibling;
+                }
+
                 if (!lastChild ||
                     lastChild.nodeType == KEN.NODE_TEXT ||
                     DOM._4e_name(lastChild) !== 'br') {
-                    var bogus = UA.opera ?
+                    bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
                         el.ownerDocument.createElement('br');
-
-                    UA.gecko && bogus.setAttribute('type', '_moz');
+                    if (UA.gecko) {
+                        bogus.setAttribute('type', '_moz');
+                    }
                     el.appendChild(bogus);
                 }
             },
 
-
             /**
-             * @param el {(Node)}
-             * @param [evaluator] {function(KISSY.Node)}
-             */
-            _4e_previous:function (el, evaluator) {
-                var previous = el, retval;
-                do {
-                    previous = previous.previousSibling;
-                    retval = previous && new Node(previous);
-                } while (retval && evaluator && !evaluator(retval));
-                return retval;
-            },
-
-            /**
-             * @param el {(Node)}
-             * @param evaluator {function(KISSY.Node)}
-             */
-            _4e_last:function (el, evaluator) {
-                var last = el.lastChild,
-                    retval = last;
-                if (retval && evaluator && !evaluator(retval)) {
-                    retval = DOM._4e_previous(retval, evaluator);
-                }
-                return retval;
-            },
-            /**
-             * @param el {(Node)}
-             * @param evaluator {function(KISSY.Node)}
-             */
-            _4e_next:function (el, evaluator) {
-                var next = el,
-                    retval;
-                do {
-                    next = next.nextSibling;
-                    retval = next;
-                } while (retval && evaluator && !evaluator(retval));
-                return retval;
-            },
-            /**
-             * @param el {(Node)}
+             * 得到元素的 outerHTML
+             * @param el
              */
             _4e_outerHtml:function (el) {
                 if (el.outerHTML) {
@@ -900,10 +771,11 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * @param element {(Node)}
-             * @param database {Object}
-             * @param name {string}
-             * @param value {string}
+             * 设置元素的自定义 data 值，并记录
+             * @param element
+             * @param database
+             * @param name
+             * @param value
              */
             _4e_setMarker:function (element, database, name, value) {
                 element = normalEl(element);
@@ -917,9 +789,10 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * @param element {(Node)}
-             * @param database {Object}
-             * @param [removeFromDatabase] {boolean}
+             * 清除元素设置的自定义 data 值。
+             * @param element
+             * @param database
+             * @param removeFromDatabase
              */
             _4e_clearMarkers:function (element, database, removeFromDatabase) {
                 element = normalEl(element);
@@ -938,12 +811,13 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * @param el {(Node)}
-             * @param dest  {(Node)}
-             * @param skipAttributes {Object}
+             * 把属性从 target 复制到 el 上.
+             * @param el
+             * @param target
+             * @param skipAttributes
              */
-            _4e_copyAttributes:function (el, dest, skipAttributes) {
-                dest = normalEl(dest);
+            _4e_copyAttributes:function (el, target, skipAttributes) {
+                target = normalEl(target);
                 var attributes = el.attributes;
                 skipAttributes = skipAttributes || {};
 
@@ -955,50 +829,42 @@ KISSY.add("editor/core/dom", function (S) {
                         attrValue;
 
                     // We can set the type only once, so do it with the proper value, not copying it.
-                    if (attrName in skipAttributes)
+                    if (attrName in skipAttributes) {
                         continue;
+                    }
 
-                    if (attrName == 'checked' && ( attrValue = DOM.attr(el, attrName) ))
-                        dest.attr(attrName, attrValue);
+                    if (attrName == 'checked' && ( attrValue = DOM.attr(el, attrName) )) {
+                        target.attr(attrName, attrValue);
+                    }
                     // IE BUG: value attribute is never specified even if it exists.
                     else if (attribute.specified ||
                         ( UA['ie'] && attribute.value && attrName == 'value' )) {
                         attrValue = DOM.attr(el, attrName);
-                        if (attrValue === NULL)
+                        if (attrValue === NULL) {
                             attrValue = attribute.nodeValue;
-                        dest.attr(attrName, attrValue);
+                        }
+                        target.attr(attrName, attrValue);
                     }
                 }
 
                 // The style:
                 if (el.style.cssText !== '') {
-                    dest[0].style.cssText = el.style.cssText;
+                    target[0].style.cssText = el.style.cssText;
                 }
             },
 
             /**
-             *
-             * @param el {(Node)}
+             * 当前元素是否可以被编辑
+             * @param el
              */
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM._4e_name(el),
                     xhtml_dtd = KE.XHTML_DTD,
-                    dtd = !xhtml_dtd.$nonEditable[ name ]
-                        && ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
-
+                    dtd = !xhtml_dtd.$nonEditable[ name ] &&
+                        ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
-                return ( dtd && dtd['#'] );
-            },
-            /**
-             * 修正scrollIntoView在可视区域内不需要滚动
-             * @param {Node} [elem]
-             */
-            _4e_scrollIntoView:function (elem) {
-                elem = normalEl(elem);
-                var doc = elem[0].ownerDocument;
-                // 底部对齐
-                elem.scrollIntoView(doc, false);
+                return dtd && dtd['#'];
             }
         };
 

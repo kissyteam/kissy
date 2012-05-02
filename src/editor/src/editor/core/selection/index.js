@@ -347,7 +347,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
             isNotBookmark = KE.Walker.bookmark(FALSE, TRUE);
         //除去注释和空格的下一个有效元素
         var nextValidEl = function (node) {
-            return isNotWhitespace(node) && node && node.nodeType != 8
+            return isNotWhitespace(node) && node.nodeType != 8
         };
 
         // 光标可以不能放在里面
@@ -376,7 +376,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
             // kissy-editor #12
             if (UA['gecko']) {
                 var pathBlock = path.block || path.blockLimit,
-                    lastNode = pathBlock && pathBlock._4e_last(isNotEmpty);
+                    lastNode = pathBlock && pathBlock.last(isNotEmpty);
                 if (pathBlock
                     // style as block
                     && pathBlock._4e_isBlockBoundary()
@@ -406,14 +406,14 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock._4e_next(nextValidEl);
+                        var element = fixedBlock.next(nextValidEl);
                         if (element &&
                             element[0].nodeType == KEN.NODE_ELEMENT &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock._4e_previous(nextValidEl);
+                            element = fixedBlock.prev(nextValidEl);
                             if (element &&
                                 element[0].nodeType == KEN.NODE_ELEMENT &&
                                 !cannotCursorPlaced[element]) {

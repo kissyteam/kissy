@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:46
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -398,7 +398,7 @@ build time: May 2 10:13
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120502101330';
+        S.__BUILD_TIME = '20120502174657';
     })();
 
     return S;
@@ -3879,7 +3879,7 @@ build time: May 2 10:13
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120502101330'
+        tag:'20120502174657'
     }, getBaseInfo()));
 
     /**
@@ -4516,7 +4516,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:46
 */
 /**
  * @fileOverview   dom-attr
@@ -5233,7 +5233,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * elem 为 document 时，返回关联的 window
          * elem 为 undefined 时，返回当前 window
          * 其它值，返回 false
-         * @return {window}
+         * @return {window|Document|HTMLElement}
          */
         _getWin:function (elem) {
             return (elem && ('scrollTo' in elem) && elem['document']) ?
@@ -24056,7 +24056,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:42
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -24110,21 +24110,17 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * Generate child component from root element.
              * @protected
              * @function
+             * @name decorateInternal
              * @param {Node} element Root element of current component.
              */
-            decorateInternal:function (element) {
-
-            },
 
             /**
              * Get child component which contains current event target node.             *
              * @protected
+             * @name getOwnerControl
              * @function
              * @param {HTMLElement} target Current event target node.
              */
-            getOwnerControl:function (target) {
-
-            }
         });
 
 }, {
@@ -32482,7 +32478,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:36
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -32783,7 +32779,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem"),
-                                content = item && item.get("content");
+                                content = item && item.get("html");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1
                                 && lastWord) {
@@ -32819,7 +32815,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
-                    var content = c.get("content");
+                    var content = c.get("html");
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容
@@ -33156,7 +33152,10 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 selected:{
                     view:true
                 },
-
+                /**
+                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * @deprecated 1.3
+                 */
                 content:{
                     getter:function () {
                         return this.get("html");
@@ -33904,7 +33903,7 @@ KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:36
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -33917,7 +33916,6 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
-     * @extends UIBase.ContentBox
      */
     var Button = UIBase.create(Component.Controller, [],
         /**@lends Button.prototype */
@@ -33939,7 +33937,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
                 return e.keyCode == KeyCodes.SPACE;
             },
 
-            performActionInternal:function (ev) {
+            performActionInternal:function () {
                 var self = this;
                 // button 的默认行为就是触发 click
                 self.fire("click");
@@ -33973,8 +33971,10 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
                 collapseSide:{
                     view:true
                 },
-                // for compatibility
-                // recommend set/get html attribute directly
+                /**
+                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * @deprecated 1.3
+                 */
                 content:{
                     getter:function () {
                         return this.get("html");
@@ -34208,7 +34208,7 @@ KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:36
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -34603,18 +34603,18 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         createDom:function () {
-            var el = this.get("el"),
+            var self = this,
+                el = self.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:this.get("content"),
-                    prefixCls:this.get("prefixCls")
+                    content:self.get("html"),
+                    prefixCls:self.get("prefixCls")
                 });
-            el
-                .html(html)
+            el.html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetContent:function (v) {
+        _uiSetHtml:function (v) {
             var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
@@ -34737,7 +34737,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
-                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
+                self.set("html", item ? item.get("html") : self.get("defaultCaption"));
             },
 
             /**

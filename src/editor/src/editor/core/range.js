@@ -341,7 +341,7 @@ KISSY.add("editor/core/range", function (S) {
                         !levelStartNode.equals(startNode)
                     ) {
                     // action = 0 = Delete
-                    levelClone = clone.appendChild(levelStartNode._4e_clone()[0]);
+                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
                 }
                 else {
                     levelClone = null;
@@ -394,7 +394,7 @@ KISSY.add("editor/core/range", function (S) {
                         !levelStartNode.equals(endNode)
                     ) {
                     // action = 0 = Delete
-                    levelClone = clone.appendChild(levelStartNode._4e_clone()[0]);
+                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
                 } else {
                     levelClone = null;
                 }
@@ -669,7 +669,7 @@ KISSY.add("editor/core/range", function (S) {
 
                 // Normalize the start.
                 while (startContainer[0].nodeType == KEN.NODE_TEXT
-                    && ( previous = startContainer._4e_previous() )
+                    && ( previous = startContainer.prev() )
                     && previous[0].nodeType == KEN.NODE_TEXT) {
                     startContainer = previous;
                     startOffset += previous[0].nodeValue.length;
@@ -693,7 +693,7 @@ KISSY.add("editor/core/range", function (S) {
 
                     // Normalize the end.
                     while (endContainer[0].nodeType == KEN.NODE_TEXT
-                        && ( previous = endContainer._4e_previous() )
+                        && ( previous = endContainer.prev() )
                         && previous[0].nodeType == KEN.NODE_TEXT) {
                         endContainer = previous;
                         endOffset += previous[0].nodeValue.length;
@@ -732,7 +732,7 @@ KISSY.add("editor/core/range", function (S) {
 
             // If collapsed, the endNode will not be created.
             if (!collapsed) {
-                endNode = startNode._4e_clone();
+                endNode = startNode.clone();
                 endNode.html('&nbsp;');
 
                 if (serializable)
@@ -1542,7 +1542,7 @@ KISSY.add("editor/core/range", function (S) {
             self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
             var documentFragment = self.extractContents(),
                 // Duplicate the element after it.
-                clone = toSplit._4e_clone(FALSE);
+                clone = toSplit.clone(FALSE);
 
             // Place the extracted contents into the duplicated element.
             clone[0].appendChild(documentFragment);
@@ -1577,12 +1577,12 @@ KISSY.add("editor/core/range", function (S) {
 
                 // Non-editable non-inline elements are to be bypassed, getting the next one.
                 if (xhtml_dtd.$empty[ el._4e_name() ])
-                    el = el[ isMoveToEnd ? '_4e_previous' : '_4e_next' ](nonWhitespaceOrBookmarkEval);
+                    el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
                 else {
                     if (isMoveToEnd) {
-                        el = el._4e_last(nonWhitespaceOrBookmarkEval);
+                        el = el.last(nonWhitespaceOrIsBookmark);
                     } else {
-                        el = el._4e_first(nonWhitespaceOrBookmarkEval);
+                        el = el.first(nonWhitespaceOrIsBookmark);
                     }
                 }
                 // Stop immediately if we've found a text node.
@@ -1625,19 +1625,19 @@ KISSY.add("editor/core/range", function (S) {
         return c1 || c2 || c3;
     }
 
-    var whitespaceEval = new Walker.whitespaces(),
-        bookmarkEval = new Walker.bookmark();
+    var isWhitespace = new Walker.whitespaces(),
+        isBookmark = new Walker.bookmark();
 
-    function nonWhitespaceOrBookmarkEval(node) {
+    function nonWhitespaceOrIsBookmark(node) {
         // Whitespaces and bookmark nodes are to be ignored.
-        return !whitespaceEval(node) && !bookmarkEval(node);
+        return !isWhitespace(node) && !isBookmark(node);
     }
 
     function getCheckStartEndBlockEvalFunction(isStart) {
-        var hadBr = FALSE, bookmarkEvaluator = Walker.bookmark(TRUE);
+        var hadBr = FALSE, isBookmarkuator = Walker.bookmark(TRUE);
         return function (node) {
             // First ignore bookmark nodes.
-            if (bookmarkEvaluator(node))
+            if (isBookmarkuator(node))
                 return TRUE;
 
             if (node[0].nodeType == KEN.NODE_TEXT) {

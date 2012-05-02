@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:36
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -396,18 +396,18 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         createDom:function () {
-            var el = this.get("el"),
+            var self = this,
+                el = self.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:this.get("content"),
-                    prefixCls:this.get("prefixCls")
+                    content:self.get("html"),
+                    prefixCls:self.get("prefixCls")
                 });
-            el
-                .html(html)
+            el.html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetContent:function (v) {
+        _uiSetHtml:function (v) {
             var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);
@@ -530,7 +530,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
             _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
-                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
+                self.set("html", item ? item.get("html") : self.get("defaultCaption"));
             },
 
             /**

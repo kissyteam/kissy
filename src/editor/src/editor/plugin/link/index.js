@@ -22,11 +22,7 @@ KISSY.add("editor/plugin/link/index", function (S, KE, BubbleView, Utils, Dialog
 
     function checkLink(lastElement) {
         lastElement = $(lastElement);
-        return lastElement._4e_ascendant(function (node) {
-            return node._4e_name() === 'a';
-            // <a><img></a> 不能嵌套 a
-            // && (!!node.attr("href"));
-        }, true);
+        return lastElement.closest('a', undefined);
     }
 
 

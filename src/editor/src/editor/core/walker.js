@@ -7,10 +7,9 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/walker", function (S) {
+KISSY.add("editor/core/walker", function (S, KE) {
 
-    var KE = S.Editor,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
@@ -19,18 +18,13 @@ KISSY.add("editor/core/walker", function (S) {
         dtd = KE.XHTML_DTD,
         Node = S.Node;
 
-    /**
-     *
-     * @param  {boolean=} rtl
-     * @param  {boolean=} breakOnFalse
-     *
-     */
+
     function iterate(rtl, breakOnFalse) {
         var self = this;
         // Return NULL if we have reached the end.
-        if (this._.end)
+        if (self._.end) {
             return NULL;
-
+        }
         var node,
             range = self.range,
             guard,
@@ -42,7 +36,7 @@ KISSY.add("editor/core/walker", function (S) {
         if (!self._.start) {
             self._.start = 1;
 
-            // Trim text nodes and optmize the range boundaries. DOM changes
+            // Trim text nodes and optimize the range boundaries. DOM changes
             // may happen at this point.
             range.trim();
 
@@ -58,27 +52,17 @@ KISSY.add("editor/core/walker", function (S) {
             // Gets the node that stops the walker when going LTR.
             var limitLTR = range.endContainer,
                 blockerLTR = new Node(limitLTR[0].childNodes[range.endOffset]);
-            //从左到右保证在 range 区间内获取 nextSourceNode
+            // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
-                node = DOM._4e_wrap(node);
-                //从endContainer移出去，失败返回false
+                // 从endContainer移出去，失败返回false
                 return (
-                    node
-                        && node[0]
+                    ( !movingOut || !limitLTR.equals(node) )
+                        // 到达深度遍历的最后一个节点，结束
                         &&
-                        (!movingOut
-                            ||
-                            !DOM.equals(limitLTR, node)
-                            )
-                        //到达深度遍历的最后一个节点，结束
+                        ( !DOM.equals(node, blockerLTR) )
                         &&
-
-                        (!blockerLTR[0] || !node.equals(blockerLTR))
-
-                        //从body移出也结束
-                        && ( node[0].nodeType != KEN.NODE_ELEMENT
-                        || !movingOut
-                        || node._4e_name() != 'body' )
+                        // 从body移出也结束
+                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
                     );
             };
         }
@@ -87,16 +71,15 @@ KISSY.add("editor/core/walker", function (S) {
         if (rtl && !self._.guardRTL) {
             // Gets the node that stops the walker when going LTR.
             var limitRTL = range.startContainer,
-                blockerRTL = ( range.startOffset > 0 ) && new Node(limitRTL[0].childNodes[range.startOffset - 1]);
+                blockerRTL = ( range.startOffset > 0 ) &&
+                    new Node(limitRTL[0].childNodes[range.startOffset - 1]);
 
             self._.guardRTL = function (node, movingOut) {
-                node = DOM._4e_wrap(node);
+
                 return (
-                    node
-                        && node[0]
-                        && ( !movingOut || !node.equals(limitRTL)  )
-                        && ( !blockerRTL[0] || !node.equals(blockerRTL) )
-                        && ( node[0].nodeType != KEN.NODE_ELEMENT || !movingOut || node._4e_name() != 'body' )
+                    ( !movingOut || !DOM.equals(node, limitRTL[0]) ) &&
+                        ( !blockerRTL || !DOM.equals(node, blockerRTL[0]) ) &&
+                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
                     );
             };
         }
@@ -291,18 +274,17 @@ KISSY.add("editor/core/walker", function (S) {
 
     Walker.blockBoundary = function (customNodeNames) {
         return function (node) {
-            node = DOM._4e_wrap(node);
-            return !( node && node[0].nodeType == KEN.NODE_ELEMENT
-                && node._4e_isBlockBoundary(customNodeNames) );
+            return !(node.nodeType == KEN.NODE_ELEMENT &&
+                DOM._4e_isBlockBoundary(node, customNodeNames) );
         };
     };
 
     /**
      * Whether the to-be-evaluated node is a bookmark node OR bookmark node
      * inner contents.
-     * @param {boolean} contentOnly Whether only test againt the text content of
+     * @param {boolean} [contentOnly] Whether only test againt the text content of
      * bookmark node instead of the element itself(default).
-     * @param {boolean} isReject Whether should return 'FALSE' for the bookmark
+     * @param {boolean} [isReject] Whether should return 'FALSE' for the bookmark
      * node instead of 'TRUE'(default).
      */
     Walker.bookmark = function (contentOnly, isReject) {
@@ -325,12 +307,11 @@ KISSY.add("editor/core/walker", function (S) {
 
     /**
      * Whether the node is a text node() containing only whitespaces characters.
-     * @param {boolean=} isReject
+     * @param {boolean} [isReject]
      */
     Walker.whitespaces = function (isReject) {
         return function (node) {
-            var isWhitespace = node && ( node.nodeType == KEN.NODE_TEXT )
-                && !S.trim(node.nodeValue);
+            var isWhitespace = node.nodeType == KEN.NODE_TEXT && !S.trim(node.nodeValue);
             return isReject ^ isWhitespace;
         };
     };
@@ -359,9 +340,9 @@ KISSY.add("editor/core/walker", function (S) {
         toSkip = function (node) {
             return isBookmark(node)
                 || isWhitespaces(node)
-                || node.type == 1
-                && node._4e_name() in dtd.$inline
-                && !( node._4e_name() in dtd.$empty );
+                || node.nodeType == 1
+                && DOM._4e_name(node) in dtd.$inline
+                && !( DOM._4e_name(node) in dtd.$empty );
         };
 
     // Check if there's a filler node at the end of an element, and return it.
@@ -369,7 +350,7 @@ KISSY.add("editor/core/walker", function (S) {
         // Bogus are not always at the end, e.g. <p><a>text<br /></a></p>
         do {
             tail = tail._4e_previousSourceNode();
-        } while (toSkip(tail));
+        } while (toSkip(tail[0]));
 
         if (tail && ( !UA.ie ? tail._4e_name() == "br"
             : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()) )) {
@@ -388,5 +369,5 @@ KISSY.add("editor/core/walker", function (S) {
 
     KE.Walker = Walker;
 }, {
-    requires:['./utils', './dom']
+    requires:['./base', './utils', './dom']
 });

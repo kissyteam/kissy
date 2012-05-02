@@ -72,13 +72,13 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
             node = nextBlock.parent();
             if (node._4e_name() == 'li') {
                 nextBlock._4e_breakParent(node);
-                nextBlock._4e_move(nextBlock._4e_next(), true);
+                nextBlock._4e_move(nextBlock.next(), true);
             }
         }
         else if (previousBlock && ( node = previousBlock.parent() ) && node._4e_name() == 'li') {
             previousBlock._4e_breakParent(node);
-            range.moveToElementEditablePosition(previousBlock._4e_next());
-            previousBlock._4e_move(previousBlock._4e_previous());
+            range.moveToElementEditablePosition(previousBlock.next());
+            previousBlock._4e_move(previousBlock.prev());
         }
 
         // If we have both the previous and next blocks, it means that the
@@ -88,11 +88,11 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
             // If the next block is an <li> with another list tree as the first
             // child, we'll need to append a filler (<br>/NBSP) or the list item
             // wouldn't be editable. (#1420)
-            if (nextBlock._4e_name() == 'li'
-                &&
-                ( node = nextBlock._4e_first(Walker.invisible(true)) )
-                && S.inArray(node._4e_name(), ['ul', 'ol']))
-                (UA['ie'] ? new Node(doc.createTextNode('\xa0')) : new Node(doc.createElement('br'))).insertBefore(node);
+            if (nextBlock._4e_name() == 'li' &&
+                ( node = nextBlock.first(Walker.invisible(true)) ) &&
+                S.inArray(node._4e_name(), ['ul', 'ol']))
+                (UA['ie'] ? new Node(doc.createTextNode('\xa0')) :
+                    new Node(doc.createElement('br'))).insertBefore(node);
 
             // Move the selection to the end block.
             if (nextBlock)
@@ -107,11 +107,11 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                 // (later in the code).
                 if (previousBlock._4e_name() == 'li' || !headerTagRegex.test(previousBlock._4e_name())) {
                     // Otherwise, duplicate the previous block.
-                    newBlock = previousBlock._4e_clone();
+                    newBlock = previousBlock.clone();
                 }
             }
             else if (nextBlock)
-                newBlock = nextBlock._4e_clone();
+                newBlock = nextBlock.clone();
 
             if (!newBlock)
                 newBlock = new Node("<" + blockTag + ">", null, doc);
@@ -128,7 +128,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                         break;
                     //<li><strong>^</strong></li>
                     if (dtd.$removeEmpty[ element._4e_name() ]) {
-                        element = element._4e_clone();
+                        element = element.clone();
                         newBlock._4e_moveChildren(element);
                         newBlock.append(element);
                     }
@@ -165,13 +165,13 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                 tmpNode.html('&nbsp;');
 
                 range.insertNode(tmpNode);
-                tmpNode._4e_scrollIntoView();
+                tmpNode.scrollIntoView(undefined,false);
                 range.deleteContents();
             }
             else {
                 // We may use the above scroll logic for the new block case
                 // too, but it gives some weird result with Opera.
-                newBlock._4e_scrollIntoView();
+                newBlock.scrollIntoView(undefined,false);
             }
         }
         range.select();

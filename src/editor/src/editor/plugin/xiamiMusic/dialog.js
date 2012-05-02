@@ -236,14 +236,14 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, KE, FlashDialog, Selec
             self._xiamia_list.on("click", function (ev) {
                 ev.preventDefault();
                 var t = new Node(ev.target),
-                    add = t._4e_ascendant(function (node) {
+                    add = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            node.hasClass("ke-xiami-add", undefined);
-                    }, true),
-                    paging = t._4e_ascendant(function (node) {
+                            DOM.hasClass(node,"ke-xiami-add");
+                    }, undefined),
+                    paging = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            node.hasClass("ke-xiami-page-item", undefined);
-                    }, true);
+                            DOM.hasClass(node,"ke-xiami-page-item");
+                    }, undefined);
                 if (add) {
                     self._dinfo = {
                         url:("http://www.xiami.com/widget/" +

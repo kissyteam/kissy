@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:42
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -55,21 +55,17 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * Generate child component from root element.
              * @protected
              * @function
+             * @name decorateInternal
              * @param {Node} element Root element of current component.
              */
-            decorateInternal:function (element) {
-
-            },
 
             /**
              * Get child component which contains current event target node.             *
              * @protected
+             * @name getOwnerControl
              * @function
              * @param {HTMLElement} target Current event target node.
              */
-            getOwnerControl:function (target) {
-
-            }
         });
 
 }, {

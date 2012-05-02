@@ -14,18 +14,18 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         createDom:function () {
-            var el = this.get("el"),
+            var self = this,
+                el = self.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:this.get("content"),
-                    prefixCls:this.get("prefixCls")
+                    content:self.get("html"),
+                    prefixCls:self.get("prefixCls")
                 });
-            el
-                .html(html)
+            el.html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetContent:function (v) {
+        _uiSetHtml:function (v) {
             var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
             caption.html("");
             v && caption.append(v);

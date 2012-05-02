@@ -140,9 +140,9 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
                     followingList._4e_name() in listNodeNames) {
                     // IE requires a filler NBSP for nested list inside empty list item,
                     // otherwise the list item will be inaccessiable. (#4476)
-                    if (UA['ie'] && !li._4e_first(function (node) {
+                    if (UA['ie'] && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
-                    }, undefined)) {
+                    })) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));
                     }
                     li[0].appendChild(followingList[0]);
@@ -227,7 +227,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
         var bookmarks = selection.createBookmarks(true);
 
         if (nearestListBlock) {
-            var firstListItem = nearestListBlock._4e_first(undefined, undefined);
+            var firstListItem = nearestListBlock.first();
             while (firstListItem && firstListItem._4e_name() != "li") {
                 firstListItem = firstListItem.next();
             }

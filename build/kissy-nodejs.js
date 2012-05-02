@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:46
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -597,7 +597,7 @@ build time: May 2 10:13
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120502101330';
+        S.__BUILD_TIME = '20120502174657';
     })();
 
     return S;
@@ -4078,7 +4078,7 @@ build time: May 2 10:13
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120502101330'
+        tag:'20120502174657'
     }, getBaseInfo()));
 
     /**
@@ -4715,7 +4715,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:46
 */
 /**
  * @fileOverview   dom-attr
@@ -5432,7 +5432,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * elem 为 document 时，返回关联的 window
          * elem 为 undefined 时，返回当前 window
          * 其它值，返回 false
-         * @return {window}
+         * @return {window|Document|HTMLElement}
          */
         _getWin:function (elem) {
             return (elem && ('scrollTo' in elem) && elem['document']) ?

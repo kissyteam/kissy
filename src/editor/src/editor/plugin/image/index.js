@@ -105,7 +105,6 @@ KISSY.add("editor/plugin/image/index", function (S, KE, Button, BubbleView, Cont
                         editor.notifySelectionChange();
                         ev.halt();
                     });
-
                     bubble.on("show", function () {
                         var a = bubble.selectedEl;
                         if (a) {

@@ -73,7 +73,7 @@
 <span id='line66' class='line'> 66</span>          * elem 为 document 时，返回关联的 window
 <span id='line67' class='line'> 67</span>          * elem 为 undefined 时，返回当前 window
 <span id='line68' class='line'> 68</span>          * 其它值，返回 false
-<span id='line69' class='line'> 69</span>          * @return {window}
+<span id='line69' class='line'> 69</span>          * @return {window|Document|HTMLElement}
 <span id='line70' class='line'> 70</span>          */</span><span class="WHIT">
 <span id='line71' class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">_getWin</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">elem</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line72' class='line'> 72</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">elem</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'scrollTo'</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">[</span><span class="STRN">'document'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">

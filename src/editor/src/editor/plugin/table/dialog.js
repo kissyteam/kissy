@@ -400,10 +400,8 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
                 c = caption.text();
             }
             d.tcaption.val(c);
-            var head = selectedTable._4e_first(function (n) {
-                return DOM._4e_name(n) == "thead";
-            });
-            var rowLenth = (selectedTable.one("tbody") ?
+            var head = selectedTable.first("thead"),
+                rowLenth = (selectedTable.one("tbody") ?
                 selectedTable.one("tbody").children().length : 0)
                 + (head ? head.children("tr").length : 0);
             d.trows.val(rowLenth);

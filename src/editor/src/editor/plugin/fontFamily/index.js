@@ -77,6 +77,7 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, KE, ui, cmd) {
                 cmdType:"fontFamily",
                 title:"字体",
                 width:"110px",
+                mode:KE.WYSIWYG_MODE,
                 defaultValue:fontFamilies.defaultValue,
                 popUpWidth:fontFamilies.width,
                 items:fontFamilies.items

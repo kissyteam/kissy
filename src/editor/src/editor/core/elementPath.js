@@ -46,8 +46,7 @@ KISSY.add("editor/core/elementPath", function(S) {
         },
         // Check if an element contains any block element.
         checkHasBlock = function(element) {
-            element = DOM._4e_unwrap(element);
-            var childNodes = element.childNodes;
+            var childNodes = element[0].childNodes;
             for (var i = 0, count = childNodes.length; i < count; i++) {
                 var child = childNodes[i];
                 if (child.nodeType == KEN.NODE_ELEMENT

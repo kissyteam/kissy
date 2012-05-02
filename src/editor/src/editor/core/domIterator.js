@@ -258,7 +258,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                     // block.
                     if (!range.checkStartOfBlock() || !range.checkEndOfBlock()) {
                         // The resulting block will be a clone of the current one.
-                        block = block._4e_clone(FALSE);
+                        block = block.clone(FALSE);
 
                         // Extract the range contents, moving it to the new block.
                         block[0].appendChild(range.extractContents());
@@ -304,9 +304,9 @@ KISSY.add("editor/core/domIterator", function (S) {
                 if (lastChild[0] && lastChild[0].nodeType == KEN.NODE_ELEMENT && lastChild._4e_name() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
-                        || lastChild._4e_previous(bookmarkGuard)
-                        || lastChild._4e_next(bookmarkGuard))
-                        lastChild._4e_remove();
+                        || lastChild.prev(bookmarkGuard)
+                        || lastChild.next(bookmarkGuard))
+                        lastChild.remove();
                 }
             }
 

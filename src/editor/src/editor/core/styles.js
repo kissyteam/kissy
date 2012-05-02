@@ -558,7 +558,7 @@ KISSY.add("editor/core/styles", function (S) {
                     return new Array(match.length).join('&nbsp;') + ' ';
                 });
 
-            var newBlockClone = newBlock._4e_clone();
+            var newBlockClone = newBlock.clone();
             newBlockClone.html(blockHtml);
             docFrag.appendChild(newBlockClone[0]);
         }
@@ -700,7 +700,7 @@ KISSY.add("editor/core/styles", function (S) {
                             // parent, it means that the parent can't be included
                             // in this style DTD, so apply the style immediately.
                             while (
-                                (applyStyle = !includedNode._4e_next(notBookmark))
+                                (applyStyle = !includedNode.next(notBookmark))
                                     && ( (parentNode = includedNode.parent()) &&
                                     dtd[ parentNode._4e_name() ] )
                                     && ( parentNode._4e_position(firstNode) |
@@ -923,7 +923,7 @@ KISSY.add("editor/core/styles", function (S) {
             // Re-create the style tree after/before the boundary element,
             // the replication start from bookmark start node to define the
             // new range.
-            if (boundaryElement && boundaryElement[0]) {
+            if (boundaryElement.length) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
                     var newElement = startPath.elements[ i ];
@@ -933,18 +933,15 @@ KISSY.add("editor/core/styles", function (S) {
                     else if (newElement.match)
                         continue;
                     else
-                        newElement = newElement._4e_clone();
+                        newElement = newElement.clone();
                     newElement[0].appendChild(clonedElement[0]);
                     clonedElement = newElement;
                 }
                 //脱离当前的元素，将 bookmark 插入到当前元素后面
                 //<strong>xx|</strong>  ->
                 //<strong>xx<strong>|
-                DOM[ boundaryElement.match == 'start' ?
-                    'insertBefore' : 'insertAfter' ](
-                    DOM._4e_unwrap(clonedElement),
-                    DOM._4e_unwrap(boundaryElement)
-                );
+                clonedElement[ boundaryElement.match == 'start' ? 'insertBefore' :
+                    'insertAfter' ](boundaryElement);
             }
         } else {
             /*

@@ -40,8 +40,8 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
             if (range.collapsed) {
                 // Walker does not handle collapsed ranges yet - fall back to old API.
                 var startNode = range.getCommonAncestor(),
-                    nearestCell = startNode._4e_ascendant('td', true) ||
-                        startNode._4e_ascendant('th', true);
+                    nearestCell = startNode.closest('td', undefined) ||
+                        startNode.closest('th', undefined);
                 if (nearestCell)
                     retval.push(nearestCell);
             } else {
@@ -87,12 +87,12 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
 
     function insertRow(selection, insertBefore) {
         // Get the row where the selection is placed in.
-        var row = selection.getStartElement()._4e_ascendant('tr', undefined);
+        var row = selection.getStartElement().parent('tr');
         if (!row)
             return;
 
         // Create a clone of the row.
-        var newRow = row._4e_clone(true, undefined);
+        var newRow = row.clone(true);
         // Insert the new row before of it.
         newRow.insertBefore(row);
         // Clean one of the rows to produce the illusion of
@@ -121,7 +121,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
                 i == cellsCount - 1 && ( nextRowIndex = rowIndex + 1 );
             }
 
-            var table = row._4e_ascendant('table', undefined),
+            var table = row.parent('table'),
                 rows = table[0].rows,
                 rowCount = rows.length;
 
@@ -142,7 +142,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
             return cursorPosition;
         }
         else if (selectionOrRow instanceof Node) {
-            table = selectionOrRow._4e_ascendant('table', undefined);
+            table = selectionOrRow.parent('table');
 
             if (table[0].rows.length == 1)
                 table.remove();
@@ -156,15 +156,15 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
     function insertColumn(selection, insertBefore) {
         // Get the cell where the selection is placed in.
         var startElement = selection.getStartElement(),
-            cell = startElement._4e_ascendant('td', true) ||
-                startElement._4e_ascendant('th', true);
+            cell = startElement.closest('td', undefined) ||
+                startElement.closest('th', undefined);
 
         if (!cell) {
             return;
         }
 
         // Get the cell's table.
-        var table = cell._4e_ascendant('table', undefined),
+        var table = cell.parent('table'),
             cellIndex = cell[0].cellIndex;
         // Loop through all rows available in the table.
         for (var i = 0; i < table[0].rows.length; i++) {
@@ -187,7 +187,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
 
     function getFocusElementAfterDelCols(cells) {
         var cellIndexList = [],
-            table = cells[ 0 ] && cells[ 0 ]._4e_ascendant('table', undefined),
+            table = cells[ 0 ] && cells[ 0 ].parent('table'),
             i, length,
             targetIndex, targetCell;
 
@@ -221,7 +221,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
             }
         }
 
-        return targetCell ? new Node(targetCell) : table._4e_previous(undefined, undefined);
+        return targetCell ? new Node(targetCell) : table.prev();
     }
 
     function deleteColumns(selectionOrCell) {
@@ -239,7 +239,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
             return elementToFocus;
         } else if (selectionOrCell instanceof Node) {
             // Get the cell's table.
-            var table = selectionOrCell._4e_ascendant('table', undefined);
+            var table = selectionOrCell.parent('table');
 
             //该单元格所属的列已经被删除了
             if (!table)
@@ -286,17 +286,17 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
     function getSel(editor) {
         var selection = editor.getSelection(),
             startElement = selection && selection.getStartElement(),
-            table = startElement && startElement._4e_ascendant('table', true);
+            table = startElement && startElement.closest('table', undefined);
         if (!table)
             return undefined;
-        var td = startElement._4e_ascendant(function (n) {
-            var name = n._4e_name();
+        var td = startElement.closest(function (n) {
+            var name = DOM._4e_name(n);
             return table.contains(n) && (name == "td" || name == "th");
-        }, true);
-        var tr = startElement._4e_ascendant(function (n) {
-            var name = n._4e_name();
+        },undefined);
+        var tr = startElement.closest(function (n) {
+            var name = DOM._4e_name(n);
             return table.contains(n) && name == "tr";
-        }, true);
+        }, undefined);
         return {
             table:table,
             td:td,
@@ -412,7 +412,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
                 "删除表格":function () {
                     var selection = editor.getSelection(),
                         startElement = selection && selection.getStartElement(),
-                        table = startElement && startElement._4e_ascendant('table', true);
+                        table = startElement && startElement.closest('table', undefined);
 
                     if (!table) {
                         return;

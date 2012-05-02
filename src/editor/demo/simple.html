@@ -273,45 +273,44 @@ KISSY.use('editor', function (S, Editor) {
     };
 
     window.editor = new Editor(cfg)
-            .use("sourceArea" +
-            ",separator" +
-            ",bold," +
-            "italic," +
-            "fontFamily," +
-            "fontSize," +
-            "strikeThrough," +
-            "underline," +
-            "separator" +
-        //",checkboxSourcearea" +
-            ",image" +
-            ",link" +
-            ",foreColor" +
-            ",backColor" +
-            ",resize" +
-            ",draft" +
-            ",undo" +
-            ",indent" +
-            ",outdent" +
-            ",insertUnorderedList" +
-            ",insertOrderedList" +
-            ",elementPath" +
-            ",pageBreak" +
-            ",preview" +
-            ",maximize" +
-            ",removeFormat" +
-            ",heading" +
-            ",justifyLeft" +
-            ",justifyCenter" +
-            ",justifyRight" +
-            ",table" +
-            ",smiley" +
-            ",flash" +
-            ",xiamiMusic" +
-            ",multipleUpload" +
-            ",video" +
-            ",dragUpload"
-
-            , function () {
+            .use(
+            "sourceArea" +
+                    ",separator" +
+                    ",bold," +
+                    "italic," +
+                    "fontFamily," +
+                    "fontSize," +
+                    "strikeThrough," +
+                    "underline," +
+                    "separator" +
+                //",checkboxSourcearea" +
+                    ",image" +
+                    ",link" +
+                    ",foreColor" +
+                    ",backColor" +
+                    ",resize" +
+                    ",draft" +
+                    ",undo" +
+                    ",indent" +
+                    ",outdent" +
+                    ",insertUnorderedList" +
+                    ",insertOrderedList" +
+                    ",elementPath" +
+                    ",pageBreak" +
+                    ",preview" +
+                    ",maximize" +
+                    ",removeFormat" +
+                    ",heading" +
+                    ",justifyLeft" +
+                    ",justifyCenter" +
+                    ",justifyRight" +
+                    ",table" +
+                    ",smiley" +
+                    ",flash" +
+                    ",xiamiMusic" +
+                    ",multipleUpload" +
+                    ",video" +
+                    ",dragUpload", function () {
                 this.on("blur", function () {
                     S.log("editor blur");
                 });

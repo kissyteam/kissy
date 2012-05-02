@@ -64,8 +64,7 @@ KISSY.add("editor/core/utils", function (S) {
                     var refWindow = destDoc.defaultView || destDoc.parentWindow;
                     if (currentWindow != refWindow && currentWindow['frameElement']) {
                         //note:when iframe is static ,still some mistake
-                        var iframePosition = DOM._4e_getOffset(currentWindow['frameElement'],
-                            destDoc);
+                        var iframePosition = DOM.offset(currentWindow['frameElement'], undefined, refWindow);
                         x += iframePosition.left;
                         y += iframePosition.top;
                     }
@@ -181,14 +180,6 @@ KISSY.add("editor/core/utils", function (S) {
             },
             /**
              *
-             * @param str {string}
-             * @return {string}
-             */
-            trim:function (str) {
-                return this.ltrim(this.rtrim(str));
-            },
-            /**
-             *
              * @param var_args {...Object}
              * @return {Object}
              */
@@ -223,12 +214,11 @@ KISSY.add("editor/core/utils", function (S) {
              */
             verifyInputs:function (inputs, warn) {
                 for (var i = 0; i < inputs.length; i++) {
-                    var input = DOM._4e_wrap(inputs[i]),
+                    var input = new Node(inputs[i]),
                         v = S.trim(Utils.valInput(input)),
                         verify = input.attr("data-verify"),
                         warning = input.attr("data-warning");
-                    if (verify &&
-                        !new RegExp(verify).test(v)) {
+                    if (verify && !new RegExp(verify).test(v)) {
                         alert(warning);
                         return FALSE;
                     }
@@ -355,7 +345,7 @@ KISSY.add("editor/core/utils", function (S) {
                     document['frames'][id].name = id;
                 }
 
-                var form = DOM._4e_unwrap(o.form),
+                var form =o.form,
                     buf = {
                         target:DOM.attr(form, "target"),
                         method:DOM.attr(form, "method"),
@@ -450,11 +440,9 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return arr;
             },
+
             //直接判断引擎，防止兼容性模式影响
-            ieEngine:(function () {
-                if (!UA['ie']) return;
-                return document['documentMode'] || UA['ie'];
-            })(),
+            ieEngine:document['documentMode'] || UA['ie'],
 
             /**
              * 点击 el 或者 el 内的元素，不会使得焦点转移
@@ -478,11 +466,11 @@ KISSY.add("editor/core/utils", function (S) {
                                 var args = [].slice.call(arguments, 0);
                                 args.unshift(this[0]);
                                 var ret = editorDom[dm].apply(NULL, args);
-                                if (ret && ret.nodeType) {
+                                if (ret && (ret.nodeType || S.isWindow(ret))) {
                                     return new Node(ret);
                                 } else {
                                     if (S.isArray(ret)) {
-                                        if (ret[0] && ret[0].nodeType) {
+                                        if (ret.__IS_NODELIST || (ret[0] && ret[0].nodeType)) {
                                             return new Node(ret);
                                         }
                                     }

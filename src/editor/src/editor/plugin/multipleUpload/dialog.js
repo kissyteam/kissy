@@ -350,7 +350,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
                     var t = new Node(ev.target),
                         td = t.parent(".ke-upload-filename");
                     if (td) {
-                        var tr = td._4e_ascendant("tr");
+                        var tr = td.parent("tr");
                         if (tr.hasClass("ke-upload-complete", undefined)) {
                             var url = tr.attr("url"),
                                 fid = tr.attr("fid");

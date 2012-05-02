@@ -40,6 +40,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, KE, ui,cmd) {
                 cmdType:"fontSize",
                 title:"大小",
                 width:"30px",
+                mode:KE.WYSIWYG_MODE,
                 showValue:true,
                 defaultValue:fontSizes.defaultValue,
                 popUpWidth:fontSizes.width,

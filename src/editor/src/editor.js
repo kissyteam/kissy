@@ -152,7 +152,6 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
 
     S.augment(KE, {
         createDom:function () {
-
             var self = this,
                 textarea = self.get("textarea"),
                 editorEl;
@@ -183,8 +182,8 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             // 支持 select 键盘 : 2012-03-16
             // Utils.preventFocus(self.toolBarEl);
 
-            var tw = self.get("width"),
-                th = self.get("height");
+            var tw = self.get(WIDTH),
+                th = self.get(HEIGHT);
             editorEl.css(WIDTH, tw);
             textarea.css(WIDTH, "100%");
             textarea.css(DISPLAY, NONE);
@@ -195,14 +194,18 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             textarea.css(HEIGHT, th);
 
             // 高度由内层决定，工具条会变化
-            editorEl.css("height", "");
+            editorEl.css(HEIGHT, "");
         },
 
+        /**
+         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+         * width 依然在 el 上设置
+         */
         _uiSetHeight:function (v) {
             // S.log("_uiSetHeight : " + v);
             var self = this;
-            self.get("iframeWrapEl").css("height", v);
-            self.get("textarea").css("height", v);
+            self.get("iframeWrapEl").css(HEIGHT, v);
+            self.get("textarea").css(HEIGHT, v);
         },
 
         _uiSetMode:function (v) {
@@ -232,7 +235,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
                 self._attachForm();
             }
 
-            self._setData(textarea.val());
+            // self._setData(textarea.val());
 
             function docReady() {
                 self.detach("docReady", docReady);
@@ -291,8 +294,8 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             if (!self.__editor_created_new) {
                 textarea.insertBefore(editorEl, undefined);
                 textarea.css({
-                    width:self.get("width"),
-                    height:self.get("height")
+                    width:self.get(WIDTH),
+                    height:self.get(HEIGHT)
                 });
                 textarea.show();
             }
@@ -630,7 +633,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
                 range = ranges[ i ];
                 // Remove the original contents.
                 range.deleteContents();
-                clone = !i && element || element._4e_clone(TRUE);
+                clone = !i && element || element.clone(TRUE);
                 init && init(clone);
                 // If we're inserting a block at dtd-violated position, split
                 // the parent blocks until we reach blockLimit.
@@ -700,7 +703,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             selection.selectRanges([ range ]);
             self.focus();
             //http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
-            clone && clone._4e_scrollIntoView();
+            clone && clone.scrollIntoView(undefined,false);
             self._saveLater();
             callback && callback(clone);
         },
@@ -751,7 +754,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
                         // 手动选择 body 的第一个节点
                         if (self.getSelection().getRanges().length == 0) {
                             var r = new KE.Range(editorDoc);
-                            var node = DOM._4e_first(editorDoc.body, function (el) {
+                            var node = DOM.first(editorDoc.body, function (el) {
                                 return el.nodeType == 1 && DOM._4e_name(el) != "br";
                             });
                             if (!node) {

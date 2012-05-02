@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 2 17:36
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -14,7 +14,6 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
-     * @extends UIBase.ContentBox
      */
     var Button = UIBase.create(Component.Controller, [],
         /**@lends Button.prototype */
@@ -36,7 +35,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
                 return e.keyCode == KeyCodes.SPACE;
             },
 
-            performActionInternal:function (ev) {
+            performActionInternal:function () {
                 var self = this;
                 // button 的默认行为就是触发 click
                 self.fire("click");
@@ -70,8 +69,10 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
                 collapseSide:{
                     view:true
                 },
-                // for compatibility
-                // recommend set/get html attribute directly
+                /**
+                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * @deprecated 1.3
+                 */
                 content:{
                     getter:function () {
                         return this.get("html");

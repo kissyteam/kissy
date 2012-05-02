@@ -111,7 +111,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
                 var bogusSpan;
 
                 pastebin = ( UA['webkit']
-                    && ( bogusSpan = pastebin._4e_first() )
+                    && ( bogusSpan = pastebin.first() )
                     && (bogusSpan.hasClass('Apple-style-span') ) ?
                     bogusSpan : pastebin );
 

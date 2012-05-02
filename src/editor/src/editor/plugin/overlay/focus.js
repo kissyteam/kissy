@@ -56,7 +56,7 @@ KISSY.add("editor/plugin/overlay/focus", function (S, KE) {
                         $range.item
                             && $range.item(0).ownerDocument == editor.get("document")[0]) {
                         var $myRange = document.body.createTextRange();
-                        $myRange.moveToElementText(self.get("el")._4e_first()[0]);
+                        $myRange.moveToElementText(self.get("el").first()[0]);
                         $myRange.collapse(true);
                         $myRange.select();
                     }

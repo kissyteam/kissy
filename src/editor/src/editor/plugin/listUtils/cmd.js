@@ -34,7 +34,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
 
             for (var i = 0; i < groupObj.contents.length; i++) {
                 var itemNode = groupObj.contents[i];
-                itemNode = itemNode._4e_ascendant('li', true);
+                itemNode = itemNode.closest('li', undefined);
                 if ((!itemNode || !itemNode[0]) ||
                     itemNode.data('list_item_processed'))
                     continue;
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                 if (child._4e_name() == this.type)
                     listsCreated.push(child);
             }
-            DOM.insertBefore(DOM._4e_unwrap(newList.listNode), DOM._4e_unwrap(groupObj.root));
+            newList.listNode.insertBefore(groupObj.root);
             groupObj.root.remove();
         },
 
@@ -140,7 +140,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
 
             for (var i = 0; i < groupObj.contents.length; i++) {
                 var itemNode = groupObj.contents[i];
-                itemNode = itemNode._4e_ascendant('li', true);
+                itemNode = itemNode.closest('li', undefined);
                 if (!itemNode || itemNode.data('list_item_processed'))
                     continue;
                 selectedListItems.push(itemNode);
@@ -183,18 +183,17 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                 if (( boundaryNode = new Node(docFragment[ isStart ? 'firstChild' : 'lastChild' ]) )
                     && !( boundaryNode[0].nodeType == KEN.NODE_ELEMENT &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
-                    && ( siblingNode = groupObj.root[ isStart ? '_4e_previous' : '_4e_next' ]
+                    && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true)) )
                     && !( boundaryNode[0].nodeType == KEN.NODE_ELEMENT &&
-                    siblingNode._4e_isBlockBoundary({ br:1 }, undefined) ))
-                    DOM[ isStart ? 'insertBefore' : 'insertAfter' ](editor.get("document")[0].createElement('br'),
-                        DOM._4e_unwrap(boundaryNode));
+                    siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
+                    boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
+                }
             }
 
             compensateBrs(true);
             compensateBrs(undefined);
-
-            DOM.insertBefore(DOM._4e_unwrap(docFragment), DOM._4e_unwrap(groupObj.root));
+            groupObj.root.before(docFragment);
             groupObj.root.remove();
         },
 
@@ -328,7 +327,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                 // listNode._4e_mergeSiblings();
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
-                        '_4e_previous' : '_4e_next' ](Walker.whitespaces(true));
+                        'prev' : 'next' ](Walker.whitespaces(true));
                     if (sibling && sibling[0] &&
                         sibling._4e_name() == self.type) {
                         sibling.remove();

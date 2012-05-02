@@ -1,5 +1,5 @@
 /**
- * set up editor variable
+ * Set up editor constructor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
@@ -178,6 +178,10 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
         }, "Editor");
 
     Editor.DefaultRender = UIBase.create(Component.Render, [UIBase.Box.Render], {
+        /**
+         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）
+         * width 依然在 el 上设置
+         */
         _uiSetHeight:function () {
         }
     });

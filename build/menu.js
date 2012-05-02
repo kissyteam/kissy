@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 2 17:36
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -302,7 +302,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem"),
-                                content = item && item.get("content");
+                                content = item && item.get("html");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1
                                 && lastWord) {
@@ -338,7 +338,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
-                    var content = c.get("content");
+                    var content = c.get("html");
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容
@@ -675,7 +675,10 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                 selected:{
                     view:true
                 },
-
+                /**
+                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * @deprecated 1.3
+                 */
                 content:{
                     getter:function () {
                         return this.get("html");
