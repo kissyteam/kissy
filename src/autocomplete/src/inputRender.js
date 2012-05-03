@@ -1,5 +1,5 @@
 /**
- * render aria properties to input element
+ * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {

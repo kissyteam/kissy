@@ -1,5 +1,5 @@
 /**
- * @creator: lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 
 KISSY.use("base", function(S,Base) {

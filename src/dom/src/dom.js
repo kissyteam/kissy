@@ -1,5 +1,6 @@
 /**
  * @fileOverview dom
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dom", function (S, DOM) {
 

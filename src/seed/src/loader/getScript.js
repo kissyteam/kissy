@@ -1,6 +1,6 @@
 /**
  * @fileOverview getScript support for css and js callback after load
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {

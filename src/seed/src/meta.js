@@ -1,5 +1,5 @@
 /**
- * module meta info for auto combo
+ * @fileOverview module meta info for auto combo
  * @author yiminghe@gmail.com
  */
 (function (S) {

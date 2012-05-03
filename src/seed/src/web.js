@@ -1,6 +1,6 @@
 /**
- * @fileOverview   web.js
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @fileOverview web.js
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
 (function (S, undefined) {

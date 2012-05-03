@@ -1,5 +1,5 @@
 /**
- * ToggleButton for KISSY
+ * @fileOverview ToggleButton for KISSY
  * @author yiminghe@gmail.com
  */
 KISSY.add('button/toggle', function (S, UIBase, Button, ToggleRender) {

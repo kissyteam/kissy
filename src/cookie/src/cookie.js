@@ -1,6 +1,6 @@
 /**
- * @fileOverview   cookie
- * @author  lifesinger@gmail.com
+ * @fileOverview cookie
+ * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
 

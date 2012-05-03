@@ -1,5 +1,5 @@
 /**
- * simple event target for loader
+ * @fileOverview simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {

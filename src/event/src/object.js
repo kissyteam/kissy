@@ -1,6 +1,6 @@
 /**
- * @fileOverview   EventObject
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @fileOverview EventObject
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('event/object', function (S, undefined) {
 

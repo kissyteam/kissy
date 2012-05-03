@@ -1,6 +1,6 @@
 /**
  * @fileOverview 提供事件发布和订阅机制
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
     var KS_PUBLISH = "__~ks_publish",

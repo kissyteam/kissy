@@ -1,6 +1,6 @@
 /**
  * @fileOverview use and attach mod
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {

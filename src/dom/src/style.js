@@ -1,6 +1,6 @@
 /**
- * @fileOverview   dom/style
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @fileOverview dom/style
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     "use strict";

@@ -1,6 +1,6 @@
 /**
  * @fileOverview Tabs Widget
- * @creator  lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/slide/base', function(S, Switchable) {
 

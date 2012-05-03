@@ -1,5 +1,5 @@
 /**
- * autoComplete menu.
+ * @fileOverview AutoComplete menu constroller.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {

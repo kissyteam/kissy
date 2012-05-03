@@ -1,7 +1,6 @@
 /**
- * @module     日历
-
- * @creator  拔赤<lijing00333@163.com>
+ * @fileOverview     日历
+ * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/time', function(S, Node,Calendar) {
 

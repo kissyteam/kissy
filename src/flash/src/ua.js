@@ -1,6 +1,6 @@
 /**
- * @fileOverview    Flash UA 探测
- * @author   kingfo<oicuicu@gmail.com>
+ * @fileOverview Flash UA 探测
+ * @author kingfo<oicuicu@gmail.com>
  */
 KISSY.add('flash/ua', function(S, UA) {
 

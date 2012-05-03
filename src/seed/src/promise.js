@@ -1,7 +1,6 @@
 /**
- * implement Promise specification by KISSY
+ * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
- * @description thanks to https://github.com/kriskowal/q
  */
 (function (KISSY, undefined) {
     var S = KISSY;

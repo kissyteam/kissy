@@ -1,7 +1,6 @@
 /**
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
- * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
 KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
 
@@ -31,8 +30,10 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 });
 
 /**
- * note bug:
+ * Refer:
+ *  - http://www.w3.org/TR/wai-aria-practices/#TreeView
  *
- * 1. checked tree 根节点总是 selected ！
- * 2. 根节点 hover 后取消不了了
+ * note bug:
+ *  1. checked tree 根节点总是 selected ！
+ *  2. 根节点 hover 后取消不了了
  **/

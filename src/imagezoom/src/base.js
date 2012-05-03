@@ -1,7 +1,6 @@
 /**
- * @fileoverview 图片放大效果 ImageZoom.
- * @author  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
- * @see silde.html
+ * @fileOverview 图片放大效果 ImageZoom.
+ * @author lifesinger@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoomer, undefined) {
     var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",

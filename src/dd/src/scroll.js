@@ -142,7 +142,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 var self = this,
                     destructors = self[DESTRUCTORS];
                 for (var d in destructors) {
-                    self.unAttach(destructors[d].drag);
+                    self.detachDrag(destructors[d].drag);
                 }
             },
 

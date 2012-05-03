@@ -1,5 +1,5 @@
 /**
- * Combobox derived from autocomplete
+ * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteRender, Node) {

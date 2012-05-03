@@ -1,5 +1,6 @@
 /**
- * Provide basic api for AutoComplete
+ * @fileOverview Provide basic api for AutoComplete.
+ * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
 

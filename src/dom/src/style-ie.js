@@ -1,6 +1,6 @@
 /**
  * @fileOverview style for ie
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
@@ -141,7 +141,8 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         DOM._getComputedStyle = function (elem, name) {
             name = DOM._cssProps[name] || name;
-
+            // currentStyle maybe null
+            // http://msdn.microsoft.com/en-us/library/ms535231.aspx
             var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
 
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值

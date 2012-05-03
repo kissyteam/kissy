@@ -1,5 +1,5 @@
 /**
- * input wrapper for autoComplete component
+ * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender, _, undefined) {

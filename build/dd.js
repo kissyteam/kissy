@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 3 12:12
 */
+/**
+ * @fileOverview Config constrain region for drag and drop
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
     var $ = Node.all, WIN = S.Env.host;
@@ -79,7 +83,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * start monitoring drag
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this;
                 drag.on("dragstart", onDragStart, self)
                     .on("dragend", onDragEnd, self)
@@ -91,7 +95,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this;
                 drag.detach("dragstart", onDragStart, self)
                     .detach("dragend", onDragEnd, self)
@@ -768,7 +772,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * @name DD.Draggable#dragalign
-         * @description fired when need to compute draggable's posititon during dragging
+         * @description fired when need to get draggable 's position during dragging
          * @event
          * @param e
          * @param e.drag current draggable object
@@ -1956,7 +1960,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     node.remove();
                 }
                 for (var d in destructors) {
-                    this.unAttach(destructors[d].drag);
+                    this.detachDrag(destructors[d].drag);
                 }
             }
         });
@@ -2113,7 +2117,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 var self = this,
                     destructors = self[DESTRUCTORS];
                 for (var d in destructors) {
-                    self.unAttach(destructors[d].drag);
+                    self.detachDrag(destructors[d].drag);
                 }
             },
 

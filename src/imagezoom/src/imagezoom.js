@@ -1,5 +1,6 @@
 /**
  * @fileOverview imagezoom
+ * @author qiaohua@taobao.com
  */
 KISSY.add("imagezoom", function(S, ImageZoom) {
     return ImageZoom;

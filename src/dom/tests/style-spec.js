@@ -340,5 +340,15 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
             DOM.remove(div);
         });
 
+        it("css works for element not added to document yet for ie<9", function () {
+            var ret = 0;
+            try {
+                DOM.css(document.createElement("span"), "display");
+                ret = 1;
+            } catch (e) {
+            }
+            expect(ret).toBe(1);
+        });
+
     });
 });

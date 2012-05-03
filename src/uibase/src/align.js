@@ -1,6 +1,6 @@
 /**
  * @fileOverview UIBase.Align
- * @author yiminghe@gmail.com , qiaohua@taobao.com
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 

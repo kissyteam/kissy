@@ -1,7 +1,6 @@
 /**
- * @fileOverview   UIBase
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
- * @see http://martinfowler.com/eaaDev/uiArchs.html
+ * @fileOverview UIBase
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
@@ -414,7 +413,10 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
     requires:["base", "node"]
 });
 /**
+ * Refer:
+ *  - http://martinfowler.com/eaaDev/uiArchs.html
+ *
  * render 和 create 区别
- * render 包括 create ，以及把生成的节点放在 document 中
- * create 仅仅包括创建节点
+ *  - render 包括 create ，以及把生成的节点放在 document 中
+ *  - create 仅仅包括创建节点
  **/

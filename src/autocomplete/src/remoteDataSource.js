@@ -1,5 +1,5 @@
 /**
- * remote datasource
+ * @fileOverview Remote datasource for Autocomplete
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/remoteDataSource", function (S, IO) {

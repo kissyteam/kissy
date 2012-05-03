@@ -1,3 +1,7 @@
+/**
+ * @fileOverview Declare config info for KISSY.
+ * @author yiminghe@gmail.com
+ */
 (function (S) {
     if (typeof require !== 'undefined') {
         return;

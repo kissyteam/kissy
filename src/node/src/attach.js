@@ -1,6 +1,6 @@
 /**
  * @fileOverview import methods from DOM to NodeList.prototype
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 

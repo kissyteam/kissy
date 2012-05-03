@@ -1,3 +1,7 @@
+/**
+ * @fileOverview Config constrain region for drag and drop
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
     var $ = Node.all, WIN = S.Env.host;
@@ -74,7 +78,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * start monitoring drag
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this;
                 drag.on("dragstart", onDragStart, self)
                     .on("dragend", onDragEnd, self)
@@ -86,7 +90,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this;
                 drag.detach("dragstart", onDragStart, self)
                     .detach("dragend", onDragEnd, self)

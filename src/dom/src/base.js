@@ -1,6 +1,6 @@
 /**
- * @fileOverview   dom
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @fileOverview dom
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 

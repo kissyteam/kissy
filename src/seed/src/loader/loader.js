@@ -1,5 +1,5 @@
 /**
- * simple loader from KISSY<=1.2
+ * @fileOverview simple loader from KISSY<=1.2
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {

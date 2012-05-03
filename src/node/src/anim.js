@@ -1,8 +1,8 @@
 /**
- * @fileOverview   anim-node-plugin
- * @author  yiminghe@gmail.com,
- *          lifesinger@gmail.com,
- *          qiaohua@taobao.com,
+ * @fileOverview anim-node-plugin
+ * @author yiminghe@gmail.com,
+ *         lifesinger@gmail.com,
+ *         qiaohua@taobao.com,
  *
  */
 KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {

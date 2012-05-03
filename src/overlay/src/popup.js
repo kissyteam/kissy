@@ -1,6 +1,6 @@
 /**
  * @fileOverview KISSY.Popup
- * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
+ * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 

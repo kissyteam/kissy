@@ -1,6 +1,6 @@
 /**
- * @fileOverview   event-focusin
- * @author  yiminghe@gmail.com
+ * @fileOverview event-focusin
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
     // 让非 IE 浏览器支持 focusin/focusout

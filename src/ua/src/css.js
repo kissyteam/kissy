@@ -1,5 +1,5 @@
 /**
- * attach ua to class of html
+ * @fileOverview attach ua to class of html
  * @author yiminghe@gmail.com
  */
 KISSY.add("ua/css", function (S, UA) {

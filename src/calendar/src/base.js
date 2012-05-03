@@ -1,6 +1,6 @@
 /**
- * KISSY Calendar
- * @creator  拔赤<lijing00333@163.com>
+ * @fileOverview KISSY Calendar
+ * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
     var EventTarget = Event.Target,$ = Node.all;

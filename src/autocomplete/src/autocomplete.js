@@ -1,5 +1,5 @@
 /**
- * export autocomplete
+ * @fileOverview Export Autocomplete.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, RemoteDataSource, Basic, BasicComboBox) {

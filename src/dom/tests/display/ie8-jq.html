@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>display in ie8</title>
+<style>
+    .t {
+        display: inline-block;
+        position: absolute;
+    }
+</style>
+</head>
+<body>
+<div id="c">
+
+</div>
+<script src="http://localhost/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        var span = $(document.createElement("span"));
+        // S.log(span[0].style.display);
+        // http://stackoverflow.com/questions/3722736/weird-ie-behavior-currentstyle-returns-null
+        // http://msdn.microsoft.com/en-us/library/ms535231.aspx
+        // http://bugs.dojotoolkit.org/ticket/15056
+        console.log(span.css("display"));
+    });
+</script>
+</body>
+</html>

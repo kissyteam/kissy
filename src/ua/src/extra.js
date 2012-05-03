@@ -1,6 +1,6 @@
 /**
  * @fileOverview ua-extra
- * @author gonghao<gonghao@ghsky.com>
+ * @author gonghao@ghsky.com
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,

@@ -1,6 +1,6 @@
 /**
  * @fileOverview script/css load across browser
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {

@@ -1,6 +1,6 @@
 /**
  * @fileOverview Switchable Lazyload Plugin
- * @creator  lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 

@@ -1,6 +1,6 @@
 /**
- * @fileOverview    Flash 全局静态类
- * @author   kingfo<oicuicu@gmail.com>
+ * @fileOverview Flash 全局静态类
+ * @author kingfo<oicuicu@gmail.com>
  */
 KISSY.add('flash/base', function(S) {
 

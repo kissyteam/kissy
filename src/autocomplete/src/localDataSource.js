@@ -1,5 +1,5 @@
 /**
- * local dataSource
+ * @fileOverview Local dataSource for Autocomplete
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/localDataSource", function (S) {

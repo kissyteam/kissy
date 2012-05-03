@@ -1,5 +1,6 @@
 /**
- * Render for ToggleButton
+ * @fileOverview Render for ToggleButton
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
 

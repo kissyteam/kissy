@@ -1,5 +1,5 @@
 /**
- * using combo to load module files
+ * @fileOverview using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S) {

@@ -1,6 +1,6 @@
 /**
  * @fileOverview 提示补全组件
- * @creator lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 

@@ -1,5 +1,5 @@
 /**
- * normalize selection getter/setter in textarea/input
+ * @fileOverview normalize selection getter/setter in textarea/input
  * @author yiminghe@gmail.com
  */
 KISSY.add("input-selection", function (S, DOM) {

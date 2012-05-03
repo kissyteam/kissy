@@ -1,10 +1,10 @@
+/**
+ * @fileOverview modified from ckeditor dtd by yiminghe, support html5 tag and dtd
+ * @author yimingh@gmail.com
+ */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
- */
-/**
- * @fileOverview modified from ckeditor dtd by yiminghe , support html5 tag and dtd
- * @author yimingh@gmail.com
  */
 KISSY.add("htmlparser/dtd", function(KY) {
     /**

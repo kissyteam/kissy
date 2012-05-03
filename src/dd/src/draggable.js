@@ -30,7 +30,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * @name DD.Draggable#dragalign
-         * @description fired when need to compute draggable's posititon during dragging
+         * @description fired when need to get draggable 's position during dragging
          * @event
          * @param e
          * @param e.drag current draggable object

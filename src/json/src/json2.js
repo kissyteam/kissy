@@ -1,5 +1,6 @@
 /*
- http://www.JSON.org/json2.js
+ @fileOverview  http://www.JSON.org/json2.js
+
  2010-08-25
 
  Public Domain.

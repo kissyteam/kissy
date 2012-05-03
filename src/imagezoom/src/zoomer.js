@@ -1,6 +1,6 @@
 /**
- * @fileoverview 图像放大区域
- * @author  乔花<qiaohua@taobao.com>
+ * @fileOverview 图像放大区域
+ * @author qiaohua@taobao.com
  */
 KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     var STANDARD = 'standard', INNER = 'inner',
