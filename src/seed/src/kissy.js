@@ -1,6 +1,6 @@
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
     /**
@@ -19,10 +19,13 @@
      * @name KISSY
      */
 
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
+
     var host = this,
         hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
-        hasOwn = Object.prototype.hasOwnProperty,
-        emumProperties = [
+        enumProperties = [
             'hasOwnProperty',
             'isPrototypeOf',
             'propertyIsEnumerable',
@@ -56,10 +59,10 @@
                 if (ov === undefined) {
                     ov = true;
                 }
-                var i, p, len;
+                var i = 0, p, len;
 
                 if (wl && (len = wl.length)) {
-                    for (i = 0; i < len; i++) {
+                    for (; i < len; i++) {
                         p = wl[i];
                         if (p in s) {
                             _mix(p, r, s, ov, deep);
@@ -73,14 +76,12 @@
 
                     // fix #101
                     if (hasEnumBug) {
-                        for (var j = 0; j < emumProperties.length; j++) {
-                            p = emumProperties[j];
-                            if (ov && hasOwn.call(s, p)) {
+                        for (; p = enumProperties[i++];) {
+                            if (ov && hasOwnProperty(s, p)) {
                                 r[p] = s[p];
                             }
                         }
                     }
-
                 }
                 return r;
             }
@@ -318,7 +319,7 @@
                     configs = S.configs;
                 if (S.isObject(c)) {
                     for (var p in c) {
-                        if (c.hasOwnProperty(p)) {
+                        if (hasOwnProperty(c, p)) {
                             S.config(p, c[p]);
                         }
                     }
@@ -375,6 +376,31 @@
              */
             guid:function (pre) {
                 return (pre || EMPTY) + guid++;
+            },
+
+            /**
+             * Get all the property names of o as array
+             * @param {Object} o
+             * @returns {Array}
+             */
+            keys:function (o) {
+                var result = [];
+
+                for (var p in o) {
+                    if (hasOwnProperty(o, p)) {
+                        result.push(p);
+                    }
+                }
+
+                if (hasEnumBug) {
+                    S.each(enumProperties, function (name) {
+                        if (hasOwnProperty(o, name)) {
+                            result.push(name);
+                        }
+                    });
+                }
+
+                return result;
             }
         });
 

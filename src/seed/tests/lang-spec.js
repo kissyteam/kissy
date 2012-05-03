@@ -1,16 +1,16 @@
-describe('lang.js', function() {
-    beforeEach(function() {
+describe('lang.js', function () {
+    beforeEach(function () {
         this.addMatchers({
-            toBeAlmostEqual: function(expected) {
+            toBeAlmostEqual:function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
             },
 
 
-            toBeEqual: function(expected) {
+            toBeEqual:function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
             },
 
-            toBeArrayEq:function(expected) {
+            toBeArrayEq:function (expected) {
                 var actual = this.actual;
                 if (expected.length != actual.length) return false;
                 for (var i = 0; i < expected.length; i++) {
@@ -24,10 +24,10 @@ describe('lang.js', function() {
         host = S.Env.host,
         doc = host['document'],
         web = host['setInterval'],
-        fn = function() {
+        fn = function () {
         };
 
-    it('S.makeArray', function() {
+    it('S.makeArray', function () {
         var o;
 
         // 普通对象(无 length 属性)转换为 [obj]
@@ -42,8 +42,8 @@ describe('lang.js', function() {
         expect(S.makeArray(o)[0]).toBe(o);
 
         // array-like 对象，转换为数组
-        expect(S.makeArray({'0': 0, '1': 1, length: 2}).length).toBe(2);
-        expect(S.makeArray({'0': 0, '1': 1, length: 2})[1]).toBe(1);
+        expect(S.makeArray({'0':0, '1':1, length:2}).length).toBe(2);
+        expect(S.makeArray({'0':0, '1':1, length:2})[1]).toBe(1);
 
         // nodeList 转换为普通数组
         o = document.getElementsByTagName('body');
@@ -56,21 +56,21 @@ describe('lang.js', function() {
         expect(S.makeArray(o).length).toBe(0);
 
         // 伪 array-like 对象
-        o = S.makeArray({a:1,b:2,length:2});
+        o = S.makeArray({a:1, b:2, length:2});
         expect(o.length).toBe(2);
         expect(o[0]).toBe(undefined);
         expect(o[1]).toBe(undefined);
     });
 
-    it('S.param', function() {
+    it('S.param', function () {
         expect(S.param({foo:1, bar:2})).toBe('foo=1&bar=2');
-        expect(S.param({foo:1, bar:[2,3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
+        expect(S.param({foo:1, bar:[2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
 
-        expect(S.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
+        expect(S.param({'&#':'!#='})).toBe('%26%23=!%23%3D');
 
         expect(S.param({foo:1, bar:[]})).toBe('foo=1');
         expect(S.param({foo:{}, bar:2})).toBe('bar=2');
-        expect(S.param({foo:function() {
+        expect(S.param({foo:function () {
         }, bar:2})).toBe('bar=2');
 
         expect(S.param({foo:undefined, bar:2})).toBe('foo=undefined&bar=2');
@@ -80,10 +80,10 @@ describe('lang.js', function() {
         expect(S.param({foo:'', bar:2})).toBe('foo=&bar=2');
         expect(S.param({foo:NaN, bar:2})).toBe('foo=NaN&bar=2');
 
-        expect(S.param({b:[2,3]})).toBe('b%5B%5D=2&b%5B%5D=3')
+        expect(S.param({b:[2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3')
     });
 
-    it('S.unparam', function() {
+    it('S.unparam', function () {
         expect(S.unparam('foo=1&bar=2').foo).toBe('1');
         expect(S.unparam('foo=1&bar=2').bar).toBe('2');
 
@@ -102,7 +102,7 @@ describe('lang.js', function() {
         expect(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
     });
 
-    it("S.escapeHTML", function() {
+    it("S.escapeHTML", function () {
         expect(S.escapeHTML("<")).toBe("&lt;");
         expect(S.escapeHTML(">")).toBe("&gt;");
         expect(S.escapeHTML("&")).toBe("&amp;");
@@ -110,7 +110,7 @@ describe('lang.js', function() {
     });
 
 
-    it("S.unEscapeHTML", function() {
+    it("S.unEscapeHTML", function () {
         expect(S.unEscapeHTML("&lt;")).toBe("<");
         expect(S.unEscapeHTML("&gt;")).toBe(">");
         expect(S.unEscapeHTML("&amp;")).toBe("&");
@@ -119,11 +119,11 @@ describe('lang.js', function() {
     });
 
 
-    it('S.fromUnicode', function() {
+    it('S.fromUnicode', function () {
         expect(S.fromUnicode("ab\\u627F\\u7389c")).toBe("ab承玉c");
     });
 
-    it('S.type', function() {
+    it('S.type', function () {
         expect(S.type(null)).toBe('null');
 
         expect(S.type(undefined)).toBe('undefined');
@@ -163,18 +163,18 @@ describe('lang.js', function() {
         }
     });
 
-    it('S.isNull', function() {
+    it('S.isNull', function () {
         expect(S.isNull(null)).toBe(true);
         expect(S.isNull()).toBe(false);
     });
 
-    it('S.isUndefined', function() {
+    it('S.isUndefined', function () {
         expect(S.isUndefined(null)).toBe(false);
         expect(S.isUndefined()).toBe(true);
         expect(S.isUndefined(undefined)).toBe(true);
     });
 
-    it('S.isBoolean', function() {
+    it('S.isBoolean', function () {
         expect(S.isBoolean(true)).toBe(true);
         expect(S.isBoolean(false)).toBe(true);
         expect(S.isBoolean(Boolean(false))).toBe(true);
@@ -186,7 +186,7 @@ describe('lang.js', function() {
         expect(S.isBoolean(host)).toBe(false);
     });
 
-    it('S.isNumber', function() {
+    it('S.isNumber', function () {
         expect(S.isNumber(1)).toBe(true);
         expect(S.isNumber(0)).toBe(true);
         expect(S.isNumber(Number(1))).toBe(true);
@@ -199,7 +199,7 @@ describe('lang.js', function() {
         expect(S.isNumber('1')).toBe(false);
     });
 
-    it('S.isString', function() {
+    it('S.isString', function () {
         expect(S.isString('')).toBe(true);
         expect(S.isString('a')).toBe(true);
         expect(S.isString(String('a'))).toBe(true);
@@ -210,7 +210,7 @@ describe('lang.js', function() {
         expect(S.isString(host)).toBe(false);
     });
 
-    it('S.isFunction', function() {
+    it('S.isFunction', function () {
         // Make sure that false values return false
         expect(S.isFunction()).toBe(false);
         expect(S.isFunction(null)).toBe(false);
@@ -240,7 +240,7 @@ describe('lang.js', function() {
         }
     });
 
-    it('S.isArray', function() {
+    it('S.isArray', function () {
         expect(S.isArray([])).toBe(true);
 
         expect(S.isArray()).toBe(false);
@@ -251,17 +251,17 @@ describe('lang.js', function() {
         }
     });
 
-    it('S.isDate', function() {
+    it('S.isDate', function () {
         expect(S.isDate(new Date())).toBe(true);
         expect(S.isDate('2010/12/5')).toBe(false);
     });
 
-    it('S.isRegExp', function() {
+    it('S.isRegExp', function () {
         expect(S.isRegExp(/s/)).toBe(true);
         expect(S.isRegExp(new RegExp('asdf'))).toBe(true);
     });
 
-    it('S.isObject', function() {
+    it('S.isObject', function () {
         expect(S.isObject({})).toBe(true);
         expect(S.isObject(new fn())).toBe(true);
         expect(S.isObject(host)).toBe(true);
@@ -273,18 +273,18 @@ describe('lang.js', function() {
         expect(S.isObject(true)).toBe(false);
     });
 
-    it('S.isEmptyObject', function() {
+    it('S.isEmptyObject', function () {
         expect(S.isEmptyObject({})).toBe(true);
         expect(S.isEmptyObject(new Object())).toBe(true);
 
-        expect(S.isEmptyObject({ a: 1 })).toBe(false);
+        expect(S.isEmptyObject({ a:1 })).toBe(false);
         expect(S.isEmptyObject([])).toBe(true);
 
         // Failed in Safari/Opera
         //expect(S.isEmptyObject(fn)).toBe(true);
     });
 
-    it('S.isPlainObject', function() {
+    it('S.isPlainObject', function () {
         // The use case that we want to match
         expect(S.isPlainObject({})).toBe(true);
         expect(S.isPlainObject(new fn)).toBe(true);
@@ -309,7 +309,7 @@ describe('lang.js', function() {
         expect(S.isPlainObject(host)).toBe(false);
     });
 
-    it('S.clone', function() {
+    it('S.clone', function () {
         // non array or plain object, just return
         expect(S.clone()).toBe(undefined);
         expect(S.clone(null)).toBe(null);
@@ -329,7 +329,7 @@ describe('lang.js', function() {
 
 
         // clone plain object
-        var t = { a: 0, b: { b1: 1, b2: 'a' } };
+        var t = { a:0, b:{ b1:1, b2:'a' } };
         var t2 = S.clone(t);
         t.a = 1;
         expect(t2.a).toBe(0);
@@ -351,7 +351,7 @@ describe('lang.js', function() {
                 x:1
             },
             Green = {
-                father: Tom,
+                father:Tom,
                 x:1
             };
         Tom.son = Green;
@@ -371,7 +371,7 @@ describe('lang.js', function() {
 
         // filter function
         var t5 = [1, 2, 3, 4, 5, 6];
-        var t6 = S.clone(t5, function(v) {
+        var t6 = S.clone(t5, function (v) {
             return v % 2 === 0;
         });
         expect(t6.length).toBe(3);
@@ -384,9 +384,9 @@ describe('lang.js', function() {
         var t7 = [],
             t20 = {x:6},
             t21 = {x:7},
-            t22 = [t20,t21],
-            t8 = {x:1,z:t7,q:t22},
-            t9 = {y:1,z:t7,q:t22};
+            t22 = [t20, t21],
+            t8 = {x:1, z:t7, q:t22},
+            t9 = {y:1, z:t7, q:t22};
         t7.push(t8, t9);
         var t10 = S.clone(t7);
         expect(t10).not.toBe(t7);
@@ -413,7 +413,7 @@ describe('lang.js', function() {
         expect(t9.y).toBe(1);
     });
 
-    it('S.trim', function() {
+    it('S.trim', function () {
         var str = '    lots of spaces before and after    ';
         expect(S.trim(str)).toBe('lots of spaces before and after');
 
@@ -427,9 +427,9 @@ describe('lang.js', function() {
         expect(S.trim({})).toBe({}.toString());
     });
 
-    it('S.substitute', function() {
+    it('S.substitute', function () {
         var myString = "{subject} is {property_1} and {property_2}.";
-        var myObject = {subject: 'Jack Bauer', property_1: 'our lord', property_2: 'savior'};
+        var myObject = {subject:'Jack Bauer', property_1:'our lord', property_2:'savior'};
 
         expect(S.substitute(myString, myObject)).toBe('Jack Bauer is our lord and savior.');
 
@@ -439,22 +439,22 @@ describe('lang.js', function() {
         expect(S.substitute(fn)).toBe(fn);
     });
 
-    it('S.each', function() {
+    it('S.each', function () {
         var ret = 0;
 
-        S.each([1,2,3,4,5], function(num) {
+        S.each([1, 2, 3, 4, 5], function (num) {
             ret += num;
         });
 
         expect(ret).toBe(15);
 
         // test context
-        S.each([1], function() {
+        S.each([1], function () {
             expect(this).toBe(host);
         });
     });
 
-    it('S.indexOf', function() {
+    it('S.indexOf', function () {
         var a;
 
         expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
@@ -464,23 +464,23 @@ describe('lang.js', function() {
         expect(S.indexOf({}, [1, 2, 3, 4, undefined])).toBe(-1);
     });
 
-    it('S.lastIndexOf', function() {
+    it('S.lastIndexOf', function () {
         expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
         expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
     });
 
-    it('S.unique', function() {
+    it('S.unique', function () {
         if (host['hostType'] === 'console') return; // BESENShell has bug for Array.prototype.splice
 
-        expect(S.unique([1,2,1]).length).toBe(2);
-        expect(S.unique([1,2,'1']).length).toBe(3);
-        expect(S.unique(['1','1','1']).length).toBe(1);
+        expect(S.unique([1, 2, 1]).length).toBe(2);
+        expect(S.unique([1, 2, '1']).length).toBe(3);
+        expect(S.unique(['1', '1', '1']).length).toBe(1);
 
-        expect(S.unique(['a','b','a'])[0]).toBe('a');
-        expect(S.unique(['a','b','a'], true)[0]).toBe('b');
+        expect(S.unique(['a', 'b', 'a'])[0]).toBe('a');
+        expect(S.unique(['a', 'b', 'a'], true)[0]).toBe('b');
     });
 
-    it('S.inArray', function() {
+    it('S.inArray', function () {
         var a;
 
         expect(S.inArray(2, [1, 2, 3, 4, 5])).toBe(true);
@@ -490,8 +490,8 @@ describe('lang.js', function() {
         expect(S.inArray({}, [1, 2, 3, 4, {}])).toBe(false);
     });
 
-    it('S.filter', function() {
-        var ret = S.filter([1, 2, 3, 4, 5], function(item) {
+    it('S.filter', function () {
+        var ret = S.filter([1, 2, 3, 4, 5], function (item) {
             return item % 2 === 0;
         });
 
@@ -499,7 +499,7 @@ describe('lang.js', function() {
     });
 
 
-    it('S.map', function() {
+    it('S.map', function () {
         function makePseudoPlural(single) {
             return single.replace(/o/g, "e");
         }
@@ -511,7 +511,7 @@ describe('lang.js', function() {
 
 
         var a = S.map("Hello World",
-            function(x) {
+            function (x) {
                 return x.charCodeAt(0);
             });
         expect(a).toBeArrayEq([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]);
@@ -519,21 +519,21 @@ describe('lang.js', function() {
     });
 
 
-    it('S.reduce', function() {
-        var r = S.reduce([0,1,2,3,4], function(previousValue, currentValue, index, array) {
+    it('S.reduce', function () {
+        var r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue, index, array) {
             return previousValue + currentValue;
         });
         expect(r).toBe(10);
 
 
-        r = S.reduce([0,1,2,3,4], function(previousValue, currentValue, index, array) {
+        r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue, index, array) {
             return previousValue + currentValue;
         }, 10);
         expect(r).toBe(20);
     });
 
 
-    it("S.bind", function() {
+    it("S.bind", function () {
         function x() {
             expect(this).toBe(window);
         }
@@ -565,8 +565,8 @@ describe('lang.js', function() {
     });
 
 
-    it("S.throttle", function() {
-        var i = 0,x = {};
+    it("S.throttle", function () {
+        var i = 0, x = {};
 
         function t() {
             i++;
@@ -577,14 +577,14 @@ describe('lang.js', function() {
         z();
         expect(i).toBe(0);
         waits(500);
-        runs(function() {
+        runs(function () {
             z();
             expect(i).toBe(1);
             z();
             expect(i).toBe(1);
         });
         waits(500);
-        runs(function() {
+        runs(function () {
             z();
             expect(i).toBe(2);
             z();
@@ -593,8 +593,8 @@ describe('lang.js', function() {
     });
 
 
-    it("S.buffer", function() {
-        var i = 0,x = {};
+    it("S.buffer", function () {
+        var i = 0, x = {};
 
         function t() {
             i++;
@@ -607,17 +607,17 @@ describe('lang.js', function() {
         z();
         expect(i).toBe(0);
         waits(500);
-        runs(function() {
+        runs(function () {
             expect(i).toBe(1);
         });
         waits(500);
-        runs(function() {
+        runs(function () {
             expect(i).toBe(1);
         });
     });
 
 
-    it("S.every", function() {
+    it("S.every", function () {
         function isBigEnough(element, index, array) {
             return (element >= 10);
         }
@@ -629,7 +629,7 @@ describe('lang.js', function() {
     });
 
 
-    it("S.some", function() {
+    it("S.some", function () {
         function isBigEnough(element, index, array) {
             return (element >= 10);
         }
@@ -642,7 +642,22 @@ describe('lang.js', function() {
         expect(passed).toBe(true);
     });
 
-    it('S.now', function() {
+    it('S.now', function () {
         expect(S.type(S.now())).toBe('number');
+    });
+
+    it('S.keys', function () {
+
+        var x = {
+            toString:function () {
+                return "ha";
+            },
+            "x":2
+        };
+
+        var ret = S.keys(x);
+
+        expect(S.equals(ret, ["x", "toString"]) || S.equals(ret, ["toString", "x"])).toBe(true);
+
     });
 });

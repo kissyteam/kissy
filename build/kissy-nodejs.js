@@ -200,11 +200,11 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:46
+build time: May 3 22:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
     /**
@@ -223,10 +223,13 @@ build time: May 2 17:46
      * @name KISSY
      */
 
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
+
     var host = this,
         hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
-        hasOwn = Object.prototype.hasOwnProperty,
-        emumProperties = [
+        enumProperties = [
             'hasOwnProperty',
             'isPrototypeOf',
             'propertyIsEnumerable',
@@ -260,10 +263,10 @@ build time: May 2 17:46
                 if (ov === undefined) {
                     ov = true;
                 }
-                var i, p, len;
+                var i = 0, p, len;
 
                 if (wl && (len = wl.length)) {
-                    for (i = 0; i < len; i++) {
+                    for (; i < len; i++) {
                         p = wl[i];
                         if (p in s) {
                             _mix(p, r, s, ov, deep);
@@ -277,14 +280,12 @@ build time: May 2 17:46
 
                     // fix #101
                     if (hasEnumBug) {
-                        for (var j = 0; j < emumProperties.length; j++) {
-                            p = emumProperties[j];
-                            if (ov && hasOwn.call(s, p)) {
+                        for (; p = enumProperties[i++];) {
+                            if (ov && hasOwnProperty(s, p)) {
                                 r[p] = s[p];
                             }
                         }
                     }
-
                 }
                 return r;
             }
@@ -522,7 +523,7 @@ build time: May 2 17:46
                     configs = S.configs;
                 if (S.isObject(c)) {
                     for (var p in c) {
-                        if (c.hasOwnProperty(p)) {
+                        if (hasOwnProperty(c, p)) {
                             S.config(p, c[p]);
                         }
                     }
@@ -579,6 +580,31 @@ build time: May 2 17:46
              */
             guid:function (pre) {
                 return (pre || EMPTY) + guid++;
+            },
+
+            /**
+             * Get all the property names of o as array
+             * @param {Object} o
+             * @returns {Array}
+             */
+            keys:function (o) {
+                var result = [];
+
+                for (var p in o) {
+                    if (hasOwnProperty(o, p)) {
+                        result.push(p);
+                    }
+                }
+
+                if (hasEnumBug) {
+                    S.each(enumProperties, function (name) {
+                        if (hasOwnProperty(o, name)) {
+                            result.push(name);
+                        }
+                    });
+                }
+
+                return result;
             }
         });
 
@@ -597,7 +623,7 @@ build time: May 2 17:46
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120502174657';
+        S.__BUILD_TIME = '20120503223829';
     })();
 
     return S;
@@ -605,16 +631,19 @@ build time: May 2 17:46
 })('KISSY', undefined);
 /**
  * @fileOverview   lang
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */
 (function (S, undefined) {
+
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
 
     var TRUE = true,
         FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
-        hasOwnProperty = OP.hasOwnProperty,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
@@ -656,7 +685,7 @@ build time: May 2 17:46
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
+            if (hasOwnProperty(htmlEntities, k)) {
                 reverseEntities[htmlEntities[k]] = k;
             }
         }
@@ -785,7 +814,7 @@ build time: May 2 17:46
 
 
             /**
-             * 两个目标是否内容相同
+             * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
              * @returns {boolean} a.equals(b)
@@ -1158,7 +1187,6 @@ build time: May 2 17:46
                     return FALSE;
                 },
 
-
             /**
              * Creates a new function that, when called, itself calls this function in the context of the provided this value,
              * with a given sequence of arguments preceding any provided when the new function was called.
@@ -1291,7 +1319,7 @@ build time: May 2 17:46
                 }
                 var buf = [], key, val;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
+                    if (hasOwnProperty(o, key)) {
                         val = o[key];
                         key = encode(key);
 
@@ -1353,7 +1381,7 @@ build time: May 2 17:46
                     if (S.endsWith(key, "[]")) {
                         key = key.substring(0, key.length - 2);
                     }
-                    if (hasOwnProperty.call(ret, key)) {
+                    if (hasOwnProperty(ret, key)) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -1623,7 +1651,7 @@ build time: May 2 17:46
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
+                if (hasOwnProperty(input, k)) {
                     if (k !== CLONE_MARKER &&
                         (!f || (f.call(input, input[k], k, input) !== FALSE))) {
                         destination[k] = cloneInternal(input[k], f, memory);
@@ -1646,21 +1674,21 @@ build time: May 2 17:46
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
+            if (hasOwnProperty(b, property)) {
                 if (!hasKey(a, property) && hasKey(b, property)) {
                     mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
                 }
             }
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
+            if (hasOwnProperty(a, property)) {
                 if (!hasKey(b, property) && hasKey(a, property)) {
                     mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
                 }
             }
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
+            if (hasOwnProperty(b, property)) {
                 if (property == COMPARE_MARKER) {
                     continue;
                 }
@@ -1681,9 +1709,8 @@ build time: May 2 17:46
 
 })(KISSY, undefined);
 /**
- * implement Promise specification by KISSY
+ * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
- * @description thanks to https://github.com/kriskowal/q
  */
 (function (KISSY, undefined) {
     var S = KISSY;
@@ -2157,7 +2184,7 @@ build time: May 2 17:46
         "ATTACHED":4
     };
 })(KISSY);/**
- * simple event target for loader
+ * @fileOverview simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -2697,7 +2724,7 @@ build time: May 2 17:46
 
 })(KISSY);/**
  * @fileOverview script/css load across browser
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -2806,7 +2833,7 @@ build time: May 2 17:46
     });
 })(KISSY);/**
  * @fileOverview getScript support for css and js callback after load
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -2993,7 +3020,11 @@ build time: May 2 17:46
  *  - getScript
  *      - 404 in ie<9 trigger success , others trigger error
  *      - syntax error in all trigger success
- **/(function (S) {
+ **//**
+ * @fileOverview Declare config info for KISSY.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -3040,7 +3071,7 @@ build time: May 2 17:46
         S.Config.base = utils.normalBasePath(base);
     };
 })(KISSY);/**
- * simple loader from KISSY<=1.2
+ * @fileOverview simple loader from KISSY<=1.2
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -3271,7 +3302,7 @@ build time: May 2 17:46
  */
 /**
  * @fileOverview use and attach mod
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -3579,7 +3610,7 @@ build time: May 2 17:46
         }
     }
 })(KISSY);/**
- * using combo to load module files
+ * @fileOverview using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3935,8 +3966,8 @@ build time: May 2 17:46
  *      LOADED : load into page
  *      ATTACHED : fn executed
  **//**
- *  @fileOverview mix loader into S and infer KISSy baseUrl if not set
- *  @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @fileOverview mix loader into S and infer KISSy baseUrl if not set
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S) {
 
@@ -4078,7 +4109,7 @@ build time: May 2 17:46
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120502174657'
+        tag:'20120503223829'
     }, getBaseInfo()));
 
     /**
@@ -4092,8 +4123,8 @@ build time: May 2 17:46
     })();
 
 })(KISSY);/**
- * @fileOverview   web.js
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @fileOverview web.js
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
 (function (S, undefined) {
@@ -4313,7 +4344,7 @@ build time: May 2 17:46
 
 })(KISSY, undefined);
 /**
- * module meta info for auto combo
+ * @fileOverview module meta info for auto combo
  * @author yiminghe@gmail.com
  */
 (function (S) {

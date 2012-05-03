@@ -1,15 +1,18 @@
 /**
  * @fileOverview   lang
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */
 (function (S, undefined) {
+
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
 
     var TRUE = true,
         FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
-        hasOwnProperty = OP.hasOwnProperty,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
@@ -51,7 +54,7 @@
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
+            if (hasOwnProperty(htmlEntities, k)) {
                 reverseEntities[htmlEntities[k]] = k;
             }
         }
@@ -180,7 +183,7 @@
 
 
             /**
-             * 两个目标是否内容相同
+             * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
              * @returns {boolean} a.equals(b)
@@ -553,7 +556,6 @@
                     return FALSE;
                 },
 
-
             /**
              * Creates a new function that, when called, itself calls this function in the context of the provided this value,
              * with a given sequence of arguments preceding any provided when the new function was called.
@@ -686,7 +688,7 @@
                 }
                 var buf = [], key, val;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
+                    if (hasOwnProperty(o, key)) {
                         val = o[key];
                         key = encode(key);
 
@@ -748,7 +750,7 @@
                     if (S.endsWith(key, "[]")) {
                         key = key.substring(0, key.length - 2);
                     }
-                    if (hasOwnProperty.call(ret, key)) {
+                    if (hasOwnProperty(ret, key)) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -1018,7 +1020,7 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
+                if (hasOwnProperty(input, k)) {
                     if (k !== CLONE_MARKER &&
                         (!f || (f.call(input, input[k], k, input) !== FALSE))) {
                         destination[k] = cloneInternal(input[k], f, memory);
@@ -1041,21 +1043,21 @@
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
+            if (hasOwnProperty(b, property)) {
                 if (!hasKey(a, property) && hasKey(b, property)) {
                     mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
                 }
             }
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
+            if (hasOwnProperty(a, property)) {
                 if (!hasKey(b, property) && hasKey(a, property)) {
                     mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
                 }
             }
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
+            if (hasOwnProperty(b, property)) {
                 if (property == COMPARE_MARKER) {
                     continue;
                 }

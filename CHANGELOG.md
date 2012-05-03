@@ -25,6 +25,7 @@ History:
  - [+] package 增加 debug 配置，可以对包级别设置 debug
  - [!] 删除 csspath/cssfullpath 配置
  - [+] 内置 gallery 包地址
+ - [+] 增加 KISSY.keys， #101
 
  - [*] KISSY.ready try catch 达到互不影响的效果
 
