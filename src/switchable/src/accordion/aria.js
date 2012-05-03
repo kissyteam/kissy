@@ -85,7 +85,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
 
     function _currentTabFromEvent(t) {
         var triggers = this.triggers,
-            trigger;
+            trigger=null;
         S.each(triggers, function(ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
@@ -107,8 +107,9 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
     }
 
     function getTabFromPanel(panel) {
-        var triggers = this.triggers,
-            panels = this.panels;
+        var self=this,
+            triggers = self.triggers,
+            panels = self.panels;
         return triggers[S.indexOf(panel, panels)];
     }
 
@@ -280,7 +281,8 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
     }
 
     function enter(trigger) {
-        this.switchTo(S.indexOf(trigger, this.triggers));
+        var self=this;
+        self.switchTo(S.indexOf(trigger, self.triggers));
     }
 
 

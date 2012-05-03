@@ -38,26 +38,36 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
     Switchable.Effects = {
 
         // 最朴素的显示/隐藏效果
-        none:function (fromEls, toEls, callback) {
-            if (fromEls) {
-                DOM.css(fromEls, DISPLAY, NONE);
+        none:function (callback) {
+            var self = this,
+                fromIndex = self.fromIndex,
+                panelInfo = self._getFromToPanels(),
+                fromPanels = panelInfo.fromPanels,
+                toPanels = panelInfo.toPanels;
+
+            if (fromPanels) {
+                DOM.css(fromPanels, DISPLAY, NONE);
             }
-            DOM.css(toEls, DISPLAY, BLOCK);
+            DOM.css(toPanels, DISPLAY, BLOCK);
             callback && callback();
         },
 
         // 淡隐淡现效果
-        fade:function (fromEls, toEls, callback) {
-            if (fromEls) {
-                if (fromEls.length !== 1) {
-                    S.error('fade effect only supports steps == 1.');
-                }
-            }
+        fade:function (callback) {
 
             var self = this,
-                cfg = self.config,
-                fromEl = fromEls ? fromEls[0] : null,
-                toEl = toEls[0];
+                fromIndex = self.fromIndex,
+                panelInfo = self._getFromToPanels(),
+                fromPanels = panelInfo.fromPanels,
+                toPanels = panelInfo.toPanels;
+
+            if (fromPanels && fromPanels.length !== 1) {
+                S.error('fade effect only supports steps == 1.');
+            }
+
+            var cfg = self.config,
+                fromEl = fromPanels ? fromPanels[0] : null,
+                toEl = toPanels[0];
 
             if (self.anim) {
                 // 不执行回调
@@ -71,7 +81,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 // 压不住后面了
                 DOM.css(self.anim.toEl, "zIndex", 9);
             }
-
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
@@ -99,11 +108,12 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 水平/垂直滚动效果
-        scroll:function (fromEls, toEls, callback, fromIndex, index) {
+        scroll:function (callback, forceAnimation) {
             var self = this,
+                fromIndex = self.fromIndex,
                 cfg = self.config,
                 isX = cfg.effect === SCROLLX,
-                diff = self.viewSize[isX ? 0 : 1] * index,
+                diff = self.viewSize[isX ? 0 : 1] * self.activeIndex,
                 props = { };
 
             props[isX ? LEFT : TOP] = -diff + PX;
@@ -111,7 +121,9 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
             if (self.anim) {
                 self.anim.stop();
             }
-            if (fromEls) {
+            // 强制动画或者不是初始化
+            if (forceAnimation ||
+                fromIndex > -1) {
                 self.anim = new Anim(self.content, props,
                     cfg.duration,
                     cfg.easing,
@@ -219,17 +231,17 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      */
     S.augment(Switchable, {
 
-        _switchView:function (fromEls, toEls, fromIndex, index, direction, ev, callback) {
+        _switchView:function (direction, ev, callback) {
 
             var self = this,
                 cfg = self.config,
                 effect = cfg.effect,
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
-            fn.call(self, fromEls, toEls, function () {
-                self._fireOnSwitch(fromIndex, index, ev);
+            fn.call(self, function () {
+                self._fireOnSwitch(ev);
                 callback && callback.call(self);
-            }, fromIndex, index, direction);
+            }, direction);
         }
 
     });

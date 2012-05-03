@@ -24,12 +24,14 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
     /**
      * 循环滚动效果函数
      */
-    function circularScroll(fromEls, toEls, callback,fromIndex, index, direction) {
+    function circularScroll(callback, direction) {
         var self = this,
+            fromIndex=self.fromIndex,
             cfg = self.config,
             len = self.length,
             isX = cfg.scrollType === SCROLLX,
             prop = isX ? LEFT : TOP,
+            index = self.activeIndex,
             viewDiff = self.viewSize[isX ? 0 : 1],
             diff = -viewDiff * index,
             panels = self.panels,
@@ -44,9 +46,6 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         // 开始动画
         if (self.anim) {
             self.anim.stop();
-            // 清除 relative 定位的单项，防止速度过快有未清除的情况
-            resetPosition.call(self, panels, 1, prop, viewDiff);
-            resetPosition.call(self, panels, 0, prop, viewDiff);
         }
 
         if (isCritical) {
@@ -56,7 +55,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
         props[prop] = diff + PX;
 
-        if (fromEls) {
+        if (fromIndex > -1) {
             self.anim = new Anim(self.content,
                 props,
                 cfg.duration,

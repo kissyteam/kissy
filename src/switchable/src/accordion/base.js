@@ -2,7 +2,7 @@
  * @fileOverview Accordion Widget
  * @author fool2fish@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
+KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
 
 
     /**
@@ -22,52 +22,52 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
 
     S.extend(Accordion, Switchable, {
 
-            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-                var self = this,
-                    cfg = self.config;
-                if (cfg.multiple) {
-                    DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
-                } else {
-                    Accordion.superclass._switchTrigger.apply(self, arguments);
-                }
-            },
-
-            /**
-             * 重复触发时的有效判断
-             */
-            _triggerIsValid: function(index) {
-                // multiple 模式下，再次触发意味着切换展开/收缩状态
-                return this.config.multiple ||
-                    Accordion.superclass._triggerIsValid.call(this, index);
-            },
-
-            /**
-             * 切换视图
-             */
-            _switchView: function(fromPanels, toPanels, fromIndex,index, direction, ev, callback) {
-                var self = this,
-                    cfg = self.config,
-                    panel = toPanels[0];
-
-                if (cfg.multiple) {
-                    DOM.toggle(panel);
-                    this._fireOnSwitch(fromIndex,index, ev);
-                    callback && callback.call(this);
-                } else {
-                    Accordion.superclass._switchView.apply(self, arguments);
-                }
+        _switchTrigger:function (fromTrigger, toTrigger) {
+            var self = this,
+                cfg = self.config;
+            if (cfg.multiple) {
+                DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
+            } else {
+                Accordion.superclass._switchTrigger.apply(self, arguments);
             }
-        });
+        },
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid:function (index) {
+            // multiple 模式下，再次触发意味着切换展开/收缩状态
+            return this.config.multiple ||
+                Accordion.superclass._triggerIsValid.call(this, index);
+        },
+
+        /**
+         * 切换视图
+         */
+        _switchView:function (direction, ev, callback) {
+            var self = this,
+                cfg = self.config,
+                panel = self._getFromToPanels().toPanels;
+
+            if (cfg.multiple) {
+                DOM.toggle(panel);
+                this._fireOnSwitch(ev);
+                callback && callback.call(this);
+            } else {
+                Accordion.superclass._switchView.apply(self, arguments);
+            }
+        }
+    });
 
     Accordion.Plugins = [];
     Accordion.Config = {
-        markupType: 1,
-        triggerType: 'click',
-        multiple: false
+        markupType:1,
+        triggerType:'click',
+        multiple:false
     };
     return Accordion;
 
-}, { requires:["dom","../base"]});
+}, { requires:["dom", "../base"]});
 
 /**
  * TODO:

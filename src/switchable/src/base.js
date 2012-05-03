@@ -41,6 +41,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
         // 调整配置信息
         config = config || {};
+
         if (!('markupType' in config)) {
             if (config.panelCls) {
                 config.markupType = 1;
@@ -51,10 +52,12 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
         // init config by hierarchy
         var host = this.constructor;
+
         while (host) {
             config = S.merge(host.Config, config);
             host = host.superclass ? host.superclass.constructor : null;
         }
+
         /**
          * the container of widget
          * @type HTMLElement
@@ -97,12 +100,15 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
          */
         self.activeIndex = config.activeIndex;
 
+        var willSwitch;
+
         // 设置了 activeIndex
         // 要配合设置 markup
         if (self.activeIndex > -1) {
         }
         //设置了 switchTo , activeIndex == -1
         else if (typeof config.switchTo == "number") {
+            willSwitch = config.switchTo;
         }
         // 否则，默认都为 0
         // 要配合设置位置 0 的 markup
@@ -110,22 +116,19 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             self.activeIndex = 0;
         }
 
-
         self._init();
         self._initPlugins();
         self.fire(EVENT_INIT);
 
-
-        if (self.activeIndex > -1) {
-        } else if (typeof config.switchTo == "number") {
+        if (willSwitch !== undefined) {
             self.switchTo(config.switchTo);
         }
     }
 
     function getDomEvent(e) {
         var originalEvent = {};
-        originalEvent.type = e.originalEvent.type;
-        originalEvent.target = e.originalEvent.target || e.originalEvent.srcElement;
+        originalEvent.type = e.type;
+        originalEvent.target = e.target;
         return {originalEvent:originalEvent};
     }
 
@@ -155,9 +158,17 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         // 触发延迟
         delay:.1, // 100ms
 
-        activeIndex:-1, // markup 的默认激活项应与 activeIndex 保持一致，激活并不代表动画完成
+
+        /**
+         * 如果 activeIndex 和 switchTo 都不设置，相当于设置了 activeIndex 为 0
+         */
+        // 如果设置了 activeIndex ，则需要为对应的 panel html 添加 activeTriggerCls class
+        activeIndex:-1,
         activeTriggerCls:'ks-active',
-        //switchTo: undefined,  // 初始切换到面板
+        // 初始切换到面板，设置了 switchTo 就不需要设置 activeIndex
+        // 以及为对应 html 添加 activeTriggerCls class
+        switchTo:undefined,
+
 
         // 可见视图内有多少个 panels
         steps:1,
@@ -597,19 +608,16 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         /**
          * 切换操作，对外 api
          * @param index 要切换的项
-         * @param [direction] 方向，用于 effect
+         * @param [direction] 方向，用于 autoplay/circular
          * @param [ev] 引起该操作的事件
          * @param [callback] 运行完回调，和绑定 switch 事件作用一样
          */
         switchTo:function (index, direction, ev, callback) {
             var self = this,
                 cfg = self.config,
-                triggers = self.triggers,
-                panels = self.panels,
-                ingIndex = self.activeIndex,
-                steps = cfg.steps,
-                fromIndex = ingIndex * steps,
-                toIndex = index * steps;
+                fromIndex = self.activeIndex,
+                triggers = self.triggers;
+
 
             // 再次避免重复触发
             if (!self._triggerIsValid(index)) {
@@ -617,41 +625,33 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             }
 
             if (self.fire(EVENT_BEFORE_SWITCH, {
-                fromIndex:ingIndex,
+                fromIndex:fromIndex,
                 toIndex:index
             }) === false) {
                 return self;
             }
 
+            self.fromIndex = fromIndex;
+
             // switch active trigger
             if (cfg.hasTriggers) {
-                self._switchTrigger(ingIndex > -1 ?
-                    triggers[ingIndex] : null,
+                self._switchTrigger(fromIndex > -1 ?
+                    triggers[fromIndex] : null,
                     triggers[index]);
             }
 
             // switch active panels
             if (direction === undefined) {
-                direction = index > ingIndex ? FORWARD : BACKWARD;
+                direction = index > fromIndex ? FORWARD : BACKWARD;
             }
-
 
             // 当前正在处理转移到 index
             self.activeIndex = index;
 
             // switch view
-            self._switchView(
-                ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
-                panels.slice(toIndex, toIndex + steps),
-                ingIndex,
-                index,
-                direction,
-                ev,
-                function () {
-                    callback && callback.call(self, index);
-                }
-            );
-
+            self._switchView(direction, ev, function () {
+                callback && callback.call(self);
+            });
 
             return self; // chain
         },
@@ -659,30 +659,59 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         /**
          * 切换当前触点
          */
-        _switchTrigger:function (fromTrigger, toTrigger/*, index*/) {
+        _switchTrigger:function (fromTrigger, toTrigger) {
             var activeTriggerCls = this.config.activeTriggerCls;
 
             if (fromTrigger) {
                 DOM.removeClass(fromTrigger, activeTriggerCls);
             }
+
             DOM.addClass(toTrigger, activeTriggerCls);
+        },
+
+        _getFromToPanels:function () {
+            var self = this,
+                fromIndex = self.fromIndex,
+                fromPanels,
+                toPanels,
+                steps = self.steps,
+                panels = self.panels,
+                toIndex = self.activeIndex;
+
+            if (fromIndex > -1) {
+                fromPanels = panels.slice(fromIndex * steps, fromIndex * (steps + 1))
+            } else {
+                fromPanels = null;
+            }
+
+            toPanels = panels.slice(toIndex * steps, toIndex * (steps + 1));
+
+            return {
+                fromPanels:fromPanels,
+                toPanels:toPanels
+            };
         },
 
         /**
          * 切换视图
          */
-        _switchView:function (fromPanels, toPanels, fromIndex, index, direction, ev, callback) {
-            var self = this;
+        _switchView:function (direction, ev, callback) {
+            var self = this,
+                panelInfo = self._getFromToPanels(),
+                fromPanels = panelInfo.fromPanels,
+                toPanels = panelInfo.toPanels;
+
             // 最简单的切换效果：直接隐藏/显示
             if (fromPanels) {
                 DOM.css(fromPanels, DISPLAY, NONE);
             }
+
             DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch events
             // 同动画时保持一致，强制异步
             setTimeout(function () {
-                self._fireOnSwitch(fromIndex, index, ev);
+                self._fireOnSwitch(ev);
             }, 0);
 
             callback && callback.call(this);
@@ -691,32 +720,32 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         /**
          * 触发 switch 相关事件
          */
-        _fireOnSwitch:function (fromIndex, index, ev) {
-            this.fire(EVENT_SWITCH, S.mix(ev || {}, {
-                fromIndex:fromIndex,
-                currentIndex:index }));
+        _fireOnSwitch:function (ev) {
+            var self = this;
+            self.fire(EVENT_SWITCH, S.merge(ev, {
+                fromIndex:self.fromIndex,
+                currentIndex:this.activeIndex
+            }));
         },
 
         /**
          * 切换到上一视图
          */
         prev:function (ev) {
-            var self = this,
-                activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ?
-                activeIndex - 1 :
-                self.length - 1, BACKWARD, ev);
+            var self = this;
+            // 循环
+            self.switchTo((self.activeIndex - 1 + self.length) % self.length,
+                BACKWARD, ev);
         },
 
         /**
          * 切换到下一视图
          */
         next:function (ev) {
-            var self = this,
-                activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ?
-                activeIndex + 1 :
-                0, FORWARD, ev);
+            var self = this;
+            // 循环
+            self.switchTo((self.activeIndex + 1) % self.length,
+                FORWARD, ev);
         },
 
         destroy:function () {
@@ -754,6 +783,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
 /**
  * NOTES:
+ *
+ * yiminghe@gmail.com : 2012.05.03
+ *  - 完善 touch 边界情况
+ *  - 增加 fromIndex 属性，表示上一个激活的 trigger index
  *
  * yiminghe@gmail.com : 2012.04.12
  *  - 增加 switch/beforeSwitch 事件对象增加 fromIndex

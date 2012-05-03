@@ -2,7 +2,7 @@
  * @fileOverview Touch support for switchable
  * @author yiminghe@gmail.com
  */
-KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
+KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
 
     S.mix(Switchable.Config, {
         mouseAsTouch:false
@@ -32,7 +32,8 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
         init:function (self) {
 
             var cfg = self.config,
-                effect = cfg.effect;
+                // circular 会修改 cfg.effect
+                effect = cfg.scrollType || cfg.effect;
             if (effect == 'scrolly' ||
                 effect == 'scrollx') {
 
@@ -43,7 +44,8 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
                     startY,
                     realStarted = 0,
                     started = 0,
-                    startElOffset,
+                    startContentOffset = {},
+                    containerRegion = {},
                     prop = "left",
                     diff,
                     viewSize;
@@ -55,60 +57,85 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
 
 
                 function start() {
-                    // edge adjusting , wait
-                    if (self.panels[self.activeIndex].style.position == 'relative') {
-                        // S.log("edge adjusting , wait !");
+
+                    if (// edge adjusting, wait
+                        self.panels[self.activeIndex].style.position == 'relative') {
+                        // S.log("edge adjusting, wait !");
                         return;
                     }
 
+                    // 停止自动播放
                     if (self.stop) {
                         self.stop();
                     }
 
-                    startElOffset = DOM.offset(content);
                     started = 1;
+
+                    startContentOffset = DOM.offset(content);
+                    containerRegion = getRegionFn(container);
+                }
+
+                function inRegionFn(n, l, r) {
+                    return n >= l && n <= r;
+                }
+
+                function getRegionFn(n) {
+                    var containerRegion = DOM.offset(n);
+                    containerRegion.bottom = containerRegion.top +
+                        container.offsetHeight;
+                    containerRegion.right = containerRegion.left +
+                        container.offsetWidth;
+                    return containerRegion;
                 }
 
                 function move(e) {
 
+                    // 拖出边界外就算结束，即使再回来也应该没响应
                     if (!started) {
                         return;
                     }
 
                     var touch = getXyObj(e),
                         currentOffset = {},
-                        inRegion,
-                        containerOffset = DOM.offset(container);
-
-                    containerOffset.bottom = containerOffset.top + container.offsetHeight;
-                    containerOffset.right = containerOffset.left + container.offsetWidth;
+                        inRegion;
 
                     if (effect == 'scrolly') {
                         viewSize = self.viewSize[1];
                         diff = touch.pageY - startY;
-                        currentOffset.top = diff + startElOffset.top;
-                        inRegion = (touch.pageY >= containerOffset.top) &&
-                            (touch.pageY <= containerOffset.bottom);
+                        currentOffset.top = startContentOffset.top + diff;
+                        inRegion = inRegionFn(touch.pageY,
+                            containerRegion.top,
+                            containerRegion.bottom);
                     } else {
                         viewSize = self.viewSize[0];
                         diff = touch.pageX - startX;
-                        currentOffset.left = diff + startElOffset.left;
-                        inRegion = (touch.pageX >= containerOffset.left) &&
-                            (touch.pageX <= containerOffset.right);
+                        currentOffset.left = startContentOffset.left + diff;
+                        inRegion = inRegionFn(touch.pageX,
+                            containerRegion.left,
+                            containerRegion.right);
                     }
 
-                    if (Math.abs(diff) > PIXEL_THRESH) {
+                    // 已经开始或者第一次拖动距离超过 5px
+                    if (realStarted ||
+                        Math.abs(diff) > PIXEL_THRESH) {
                         if (isTouchEvent(e)) {
                             // stop native page scrolling in ios
                             e.preventDefault();
                         }
+                        // 正在进行的动画停止
+                        if (self.anim) {
+                            self.anim.stop();
+                            self.anim = undefined;
+                        }
                         if (!inRegion) {
                             end();
                         } else {
-                            var activeIndex = self.activeIndex;
+                            // 只有初始拖动距离超过 5px 才算开始拖动
+                            // 防止和 click 混淆
                             if (!realStarted) {
                                 realStarted = 1;
                                 if (cfg.circular) {
+                                    var activeIndex = self.activeIndex;
                                     /*
                                      circular logic : only run once after mousedown/touchstart
                                      */
@@ -120,23 +147,9 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
                                             .call(self, self.panels, true, prop, viewSize);
                                     }
                                 }
-
                             }
-
-                            if (!cfg.circular) {
-
-                                if (diff > 0 && activeIndex == 0) {
-
-                                } else if (diff < 0 && activeIndex == self.length - 1) {
-
-                                } else {
-                                    DOM.offset(content, currentOffset);
-                                }
-                            } else {
-                                DOM.offset(content, currentOffset);
-                            }
-
-
+                            // 跟随手指移动
+                            DOM.offset(content, currentOffset);
                         }
                     }
                 }
@@ -156,25 +169,32 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable) {
                     var activeIndex = self.activeIndex,
                         lastIndex = self.length - 1;
 
+                    if (!cfg.circular) {
+                        // 不能循环且到了边界，恢复到原有位置
+                        if (diff < 0 && activeIndex == lastIndex ||
+                            diff > 0 && activeIndex == 0) {
+                            // 强制动画恢复到初始位置
+                            Switchable.Effects[effect].call(self, undefined, true);
+                            return;
+                        }
+                    }
+
                     if (diff < 0 && activeIndex == lastIndex) {
-                        // not allowed to circular
-                        if (!cfg.circular) {
-                            return;
-                        }
+                        // 最后一个到第一个
                     } else if (diff > 0 && activeIndex == 0) {
-                        if (!cfg.circular) {
-                            return;
-                        }
+                        // 第一个到最后一个
                     } else if (activeIndex == 0 || activeIndex == lastIndex) {
-
-                        Switchable.resetPosition.call(self, self.panels,
-                            activeIndex == 0, prop, viewSize);
-
-
+                        // 否则的话恢复位置
+                        Switchable.resetPosition.call(self,
+                            self.panels,
+                            activeIndex == 0,
+                            prop,
+                            viewSize);
                     }
 
                     self[diff < 0 ? 'next' : 'prev']();
 
+                    // 开始自动播放
                     if (self.start) {
                         self.start();
                     }

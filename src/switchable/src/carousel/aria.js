@@ -21,27 +21,26 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
     var KEY_ENTER = 13;
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
-    var setTabIndex = Aria.setTabIndex;
-    var DOM_EVENT = {originalEvent:{target:1}};
-    var FORWARD = 'forward',
+    var setTabIndex = Aria.setTabIndex,
+        DOM_EVENT = {originalEvent:{target:1}},
+        FORWARD = 'forward',
         BACKWARD = 'backward';
 
     function _switch(ev) {
-        var self = this;
-        var steps = self.config.steps;
-        var index = ev.currentIndex;
-        var activeIndex = self.activeIndex;
-        var panels = self.panels;
-        var panel = panels[index * steps];
-        var triggers = self.triggers;
-        var trigger = triggers[index];
-
-        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+        var self = this,
+            steps = self.config.steps,
+            index = ev.currentIndex,
+            activeIndex = self.activeIndex,
+            panels = self.panels,
+            panel = panels[index * steps],
+            triggers = self.triggers,
+            trigger = triggers[index],
+            domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         // dom 事件触发
-        if (domEvent
+        if (domEvent ||
             // 初始化
-            || activeIndex == -1) {
+            activeIndex == -1) {
 
             S.each(triggers, function (t) {
                 setTabIndex(t, -1);
@@ -54,6 +53,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             if (trigger) {
                 setTabIndex(trigger, 0);
             }
+
             setTabIndex(panel, 0);
 
             //dom 事件触发时，才会进行聚焦，否则会干扰用户
@@ -103,16 +103,18 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
     }
 
     function _navKeydown(e) {
-        var key = e.keyCode, t = e.target,
+        var key = e.keyCode,
+            self = this,
+            t = e.target,
             c;
 
         switch (key) {
             case KEY_DOWN:
             case KEY_RIGHT:
 
-                c = findTrigger.call(this, t);
+                c = findTrigger.call(self, t);
                 if (c) {
-                    next.call(this, c);
+                    next.call(self, c);
                     e.halt();
                 }
                 break;
@@ -120,18 +122,19 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             case KEY_UP:
             case KEY_LEFT:
 
-                c = findTrigger.call(this, t);
+                c = findTrigger.call(self, t);
                 if (c) {
-                    prev.call(this, c);
+                    prev.call(self, c);
                     e.halt();
                 }
                 break;
 
             case KEY_ENTER:
             case KEY_SPACE:
-                c = findTrigger.call(this, t);
+                c = findTrigger.call(self, t);
                 if (c) {
-                    this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
+                    self.switchTo(S.indexOf(c, self.triggers),
+                        undefined, DOM_EVENT);
                     e.halt();
                 }
                 break;
@@ -151,15 +154,16 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
 
 
     function nextPanel(c) {
-        var n = DOM.next(c),
-            panels = this.panels;
+        var self = this,
+            n = DOM.next(c),
+            panels = self.panels;
         if (!n) {
             n = panels[0];
         }
         setTabIndex(c, -1);
         setTabIndex(n, 0);
 
-        if (checkPanel.call(this, n, FORWARD)) {
+        if (checkPanel.call(self, n, FORWARD)) {
             n.focus();
         }
     }
@@ -167,29 +171,31 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
 
     function prevPanel(c) {
         var n = DOM.prev(c),
-            panels = this.panels;
+            self = this,
+            panels = self.panels;
         if (!n) {
             n = panels[panels.length - 1];
         }
         setTabIndex(c, -1);
         setTabIndex(n, 0);
-        if (checkPanel.call(this, n, BACKWARD)) {
+        if (checkPanel.call(self, n, BACKWARD)) {
             n.focus();
         }
     }
 
     function checkPanel(p, direction) {
-        var index = S.indexOf(p, this.panels),
-            steps = this.config.steps,
+        var self = this,
+            index = S.indexOf(p, self.panels),
+            steps = self.config.steps,
             dest = Math.floor(index / steps);
         // 在同一个 panel 组，立即返回
-        if (dest == this.activeIndex) {
+        if (dest == self.activeIndex) {
             return 1;
         }
         if (index % steps == 0 || index % steps == steps - 1) {
             //向前动画滚动中，focus，会不正常 ...
             //传递事件，动画后异步 focus
-            this.switchTo(dest, direction, DOM_EVENT);
+            self.switchTo(dest, direction, DOM_EVENT);
             return 0;
         }
         return 1;
@@ -198,7 +204,8 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
 
     function _contentKeydown(e) {
 
-        var key = e.keyCode,
+        var self = this,
+            key = e.keyCode,
             t = e.target,
             c;
 
@@ -206,9 +213,9 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             case KEY_DOWN:
             case KEY_RIGHT:
 
-                c = findPanel.call(this, t);
+                c = findPanel.call(self, t);
                 if (c) {
-                    nextPanel.call(this, c);
+                    nextPanel.call(self, c);
                     e.halt();
                 }
                 break;
@@ -217,9 +224,9 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             case KEY_UP:
             case KEY_LEFT:
 
-                c = findPanel.call(this, t);
+                c = findPanel.call(self, t);
                 if (c) {
-                    prevPanel.call(this, c);
+                    prevPanel.call(self, c);
                     e.halt();
                 }
                 break;
@@ -227,9 +234,9 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             case KEY_ENTER:
             case KEY_SPACE:
 
-                c = findPanel.call(this, t);
+                c = findPanel.call(self, t);
                 if (c) {
-                    this.fire('itemSelected', { item:c });
+                    self.fire('itemSelected', { item:c });
                     e.halt();
                 }
                 break;
