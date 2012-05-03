@@ -38,7 +38,8 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
 
         // 生成一个组件
         decorateChildrenInternal:function (UI, c) {
-            this.addChild(new UI({
+            var self=this;
+            self.addChild(new UI({
                 srcNode:c,
                 prefixCls:self.get("prefixCls")
             }));

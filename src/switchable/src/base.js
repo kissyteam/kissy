@@ -674,17 +674,17 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 fromIndex = self.fromIndex,
                 fromPanels,
                 toPanels,
-                steps = self.steps,
+                steps = self.config.steps,
                 panels = self.panels,
                 toIndex = self.activeIndex;
 
             if (fromIndex > -1) {
-                fromPanels = panels.slice(fromIndex * steps, fromIndex * (steps + 1))
+                fromPanels = panels.slice(fromIndex * steps, (fromIndex + 1) * steps);
             } else {
                 fromPanels = null;
             }
 
-            toPanels = panels.slice(toIndex * steps, toIndex * (steps + 1));
+            toPanels = panels.slice(toIndex * steps, (toIndex + 1) * steps);
 
             return {
                 fromPanels:fromPanels,
@@ -787,6 +787,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  * yiminghe@gmail.com : 2012.05.03
  *  - 完善 touch 边界情况
  *  - 增加 fromIndex 属性，表示上一个激活的 trigger index
+ *  - refactor switchView, 去除多余参数
  *
  * yiminghe@gmail.com : 2012.04.12
  *  - 增加 switch/beforeSwitch 事件对象增加 fromIndex

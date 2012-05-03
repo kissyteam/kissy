@@ -34,6 +34,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
             var cfg = self.config,
                 // circular 会修改 cfg.effect
                 effect = cfg.scrollType || cfg.effect;
+
             if (effect == 'scrolly' ||
                 effect == 'scrollx') {
 
@@ -50,15 +51,14 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                     diff,
                     viewSize;
 
-
                 if (effect == 'scrolly') {
                     prop = "top";
                 }
 
-
                 function start() {
-
                     if (// edge adjusting, wait
+                    // 暂时不像 circular 那样处理
+                    // resetPosition 瞬移会导致 startContentOffset 变化，复杂了
                         self.panels[self.activeIndex].style.position == 'relative') {
                         // S.log("edge adjusting, wait !");
                         return;
@@ -89,7 +89,6 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                 }
 
                 function move(e) {
-
                     // 拖出边界外就算结束，即使再回来也应该没响应
                     if (!started) {
                         return;

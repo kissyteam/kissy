@@ -26,7 +26,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
      */
     function circularScroll(callback, direction) {
         var self = this,
-            fromIndex=self.fromIndex,
+            fromIndex = self.fromIndex,
             cfg = self.config,
             len = self.length,
             isX = cfg.scrollType === SCROLLX,
@@ -35,6 +35,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             viewDiff = self.viewSize[isX ? 0 : 1],
             diff = -viewDiff * index,
             panels = self.panels,
+            steps = self.config.steps,
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
@@ -46,6 +47,12 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         // 开始动画
         if (self.anim) {
             self.anim.stop();
+            // 快速的话会有点问题
+            // 上一个 relative 没清掉：上一个还没有移到该移的位置
+            if (panels[fromIndex * steps].style.position == "relative") {
+                // 快速移到 reset 后的结束位置，用户不会察觉到的！
+                resetPosition.call(self, panels, fromIndex, prop, viewDiff, 1);
+            }
         }
 
         if (isCritical) {
@@ -150,9 +157,10 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
 /**
  * 2012-04-12 yiminghe@gmail.com
- *  - 修复速度过快从 0 到最后或从最后到 0 时的小bug
+ *  - 修复速度过快时从 0 到最后或从最后到 0 时的 bug ： relative 位置没有 reset
  *
- * 承玉：2011.06.02 review switchable
+ * 2012-06-02 yiminghe@gmail.com
+ *  - review switchable
  *
  * TODO:
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活

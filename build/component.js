@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:42
+build time: May 3 15:46
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -56,6 +56,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * @protected
              * @function
              * @name decorateInternal
+             * @memberOf Component.Container#
              * @param {Node} element Root element of current component.
              */
 
@@ -64,6 +65,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * @protected
              * @name getOwnerControl
              * @function
+             * @memberOf Component.Container#
              * @param {HTMLElement} target Current event target node.
              */
         });
@@ -781,7 +783,8 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
 
         // 生成一个组件
         decorateChildrenInternal:function (UI, c) {
-            this.addChild(new UI({
+            var self=this;
+            self.addChild(new UI({
                 srcNode:c,
                 prefixCls:self.get("prefixCls")
             }));

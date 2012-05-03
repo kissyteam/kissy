@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 3 15:39
+build time: May 3 17:44
 */
 /**
  * @fileOverview accordion aria support
@@ -1303,17 +1303,17 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 fromIndex = self.fromIndex,
                 fromPanels,
                 toPanels,
-                steps = self.steps,
+                steps = self.config.steps,
                 panels = self.panels,
                 toIndex = self.activeIndex;
 
             if (fromIndex > -1) {
-                fromPanels = panels.slice(fromIndex * steps, fromIndex * (steps + 1))
+                fromPanels = panels.slice(fromIndex * steps, (fromIndex + 1) * steps);
             } else {
                 fromPanels = null;
             }
 
-            toPanels = panels.slice(toIndex * steps, toIndex * (steps + 1));
+            toPanels = panels.slice(toIndex * steps, (toIndex + 1) * steps);
 
             return {
                 fromPanels:fromPanels,
@@ -1416,6 +1416,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  * yiminghe@gmail.com : 2012.05.03
  *  - 完善 touch 边界情况
  *  - 增加 fromIndex 属性，表示上一个激活的 trigger index
+ *  - refactor switchView, 去除多余参数
  *
  * yiminghe@gmail.com : 2012.04.12
  *  - 增加 switch/beforeSwitch 事件对象增加 fromIndex
@@ -1982,7 +1983,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
      */
     function circularScroll(callback, direction) {
         var self = this,
-            fromIndex=self.fromIndex,
+            fromIndex = self.fromIndex,
             cfg = self.config,
             len = self.length,
             isX = cfg.scrollType === SCROLLX,
@@ -1991,6 +1992,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             viewDiff = self.viewSize[isX ? 0 : 1],
             diff = -viewDiff * index,
             panels = self.panels,
+            steps = self.config.steps,
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
@@ -2002,6 +2004,12 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         // 开始动画
         if (self.anim) {
             self.anim.stop();
+            // 快速的话会有点问题
+            // 上一个 relative 没清掉：上一个还没有移到该移的位置
+            if (panels[fromIndex * steps].style.position == "relative") {
+                // 快速移到 reset 后的结束位置，用户不会察觉到的！
+                resetPosition.call(self, panels, fromIndex, prop, viewDiff, 1);
+            }
         }
 
         if (isCritical) {
@@ -2106,9 +2114,10 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
 /**
  * 2012-04-12 yiminghe@gmail.com
- *  - 修复速度过快从 0 到最后或从最后到 0 时的小bug
+ *  - 修复速度过快时从 0 到最后或从最后到 0 时的 bug ： relative 位置没有 reset
  *
- * 承玉：2011.06.02 review switchable
+ * 2012-06-02 yiminghe@gmail.com
+ *  - review switchable
  *
  * TODO:
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
@@ -2854,6 +2863,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
             var cfg = self.config,
                 // circular 会修改 cfg.effect
                 effect = cfg.scrollType || cfg.effect;
+
             if (effect == 'scrolly' ||
                 effect == 'scrollx') {
 
@@ -2870,15 +2880,14 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                     diff,
                     viewSize;
 
-
                 if (effect == 'scrolly') {
                     prop = "top";
                 }
 
-
                 function start() {
-
                     if (// edge adjusting, wait
+                    // 暂时不像 circular 那样处理
+                    // resetPosition 瞬移会导致 startContentOffset 变化，复杂了
                         self.panels[self.activeIndex].style.position == 'relative') {
                         // S.log("edge adjusting, wait !");
                         return;
@@ -2909,7 +2918,6 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                 }
 
                 function move(e) {
-
                     // 拖出边界外就算结束，即使再回来也应该没响应
                     if (!started) {
                         return;
