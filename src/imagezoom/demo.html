@@ -71,15 +71,15 @@
         border: 1px solid #808080;
         text-align: center;
         position: absolute;
-        left:-9999px;
-        top:-9999px;
+        left: -9999px;
+        top: -9999px;
         overflow: hidden;
     }
 
     .ks-imagezoom-viewer img {
         position: absolute;
-        left:0;
-        top:0;
+        left: 0;
+        top: 0;
     }
 
 </style>
@@ -142,8 +142,8 @@
             bigImageWidth:900,
             bigImageHeight:900,
             // 不设置默认为小图的高宽
-             width:600,
-             height:200,
+            width:600,
+            height:200,
             align:{
                 points:["tr", "tl"],
                 offset:[0, 0]
@@ -152,8 +152,8 @@
 
         Event.on("#imgList img", 'click', function () {
             var data = DOM.attr(this, 'data-ks-imagezoom');
-            DOM.attr('#multi', 'src', data + '_310x310.jpg');
             m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
+            m.changeImageSrc(data + '_310x310.jpg');
             if (data) {
                 m.set('bigImageSrc', data);
                 m.set("bigImageWidth", parseInt(DOM.attr(this, 'data-bigImageWidth')));
