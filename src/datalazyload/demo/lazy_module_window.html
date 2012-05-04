@@ -131,7 +131,7 @@ position: fixed;height: 240px;overflow: hidden;left:0;top:0;background-color: #f
             S.all("#top a").each(function (a, index) {
                 a.on("click", function (e) {
                     e.halt();
-                    mods.item(index).scrollIntoView(window);
+                    mods.item(index)[0].scrollIntoView();
                     $(window).scrollTop($(window).scrollTop() - 240);
                 });
             });
