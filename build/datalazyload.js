@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 4 18:14
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -530,10 +530,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     bottom = top + vh;
 
                 if (S.isObject(diff)) {
-                    diffX0 = diff.left;
-                    diffX1 = diff.right;
-                    diffY0 = diff.top;
-                    diffY1 = diff.bottom;
+                    diffX0 = diff.left || 0;
+                    diffX1 = diff.right || 0;
+                    diffY0 = diff.top || 0;
+                    diffY1 = diff.bottom || 0;
                 }
 
                 left -= diffX0;
