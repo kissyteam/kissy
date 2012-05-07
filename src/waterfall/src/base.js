@@ -77,6 +77,12 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             value:[]
         },
 
+        /**
+         * 排布时水平方向的对齐方式
+         */
+        align:{
+            value:'center'
+        },
 
         minColCount:{
             value:1
@@ -156,14 +162,19 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         }
 
         // 元素保持间隔不变，居中
-        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2,
-            destProp = {
-                // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
-                //    + containerRegion.left,
-                // 元素间固定间隔好点
-                left:dest * self.get("colWidth") + margin,
-                top:guard
-            };
+        var margin = self.get('align') === 'left' ? 0 : Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
+            destProp;
+
+        if (self.get('align') === 'center') {
+            margin /= 2;
+        }
+        destProp = {
+            // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
+            //    + containerRegion.left,
+            // 元素间固定间隔好点
+            left:dest * self.get("colWidth") + margin,
+            top:guard
+        };
 
         /*
          不在容器里，就加上
