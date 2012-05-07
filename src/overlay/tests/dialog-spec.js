@@ -82,7 +82,9 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             });
 
             it("应该可以拖动", function () {
-                if (UA.ie == 9) return;
+                if (UA.ie == 9) {
+                    return;
+                }
 
                 var xy = d.get("xy");
 
@@ -94,12 +96,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
                 waits(100);
                 runs(function () {
-
                     jasmine.simulate(document, "mousemove", {
-                        clientX:xy[0] + 15,
-                        clientY:xy[1] + 15
+                        clientX:xy[0] + 150,
+                        clientY:xy[1] + 150
                     });
-
                 });
                 waits(100);
                 runs(function () {

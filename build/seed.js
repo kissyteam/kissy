@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 4 18:14
+build time: May 7 16:46
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -424,7 +424,7 @@ build time: May 4 18:14
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120504181437';
+        S.__BUILD_TIME = '20120507164616';
     })();
 
     return S;
@@ -1080,11 +1080,13 @@ build time: May 4 18:14
 
                 // The strings and functions also have 'length'
                 if (typeof o.length !== 'number'
-                    // element
-                    || o.nodeName
+                    // form.elements in ie78 has nodeName "form"
+                    // then caution select
+                    // || o.nodeName
                     // window
                     || o.alert
-                    || S.isString(o) || S.isFunction(o)) {
+                    || S.isString(o)
+                    || S.isFunction(o)) {
                     return [o];
                 }
                 var ret = [];
@@ -3910,7 +3912,7 @@ build time: May 4 18:14
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120504181437'
+        tag:'20120507164616'
     }, getBaseInfo()));
 
     /**

@@ -58,11 +58,11 @@ KISSY.use("editor", function (S, Editor) {
             var div = DOM.create("<div>1<b>2</b></div>");
             var span = DOM.create("<span>3<i>4</i></span>");
             DOM._4e_moveChildren(span, div);
-            expect(div.innerHTML).toBe("1<b>2</b>3<i>4</i>");
+            expect(div.innerHTML.toLowerCase()).toBe("1<b>2</b>3<i>4</i>");
             div = DOM.create("<div>1<b>2</b></div>");
             span = DOM.create("<span>3<i>4</i></span>");
             DOM._4e_moveChildren(span, div, true);
-            expect(div.innerHTML).toBe("3<i>4</i>1<b>2</b>");
+            expect(div.innerHTML.toLowerCase()).toBe("3<i>4</i>1<b>2</b>");
         });
 
         it("_4e_isEmptyInlineRemovable works", function () {
@@ -79,14 +79,14 @@ KISSY.use("editor", function (S, Editor) {
                 //"1<b>2</b>" +
                 "<span class='innerlast'>innerlast1</span>" +
                 "</span>" +
-                "<span _ke_bookmark='1' id='s1'></span>" +
+                "<span id='s1' _ke_bookmark='1'></span>" +
                 "<b id='b1'></b>" +
                 "<span class='target'>" +
                 "<span class='innerlast'>innerfirst2</span>" +
                 "3<b>4</b>" +
                 "<span class='innerlast'>innerlast2</span>" +
                 "</span>" +
-                "<span _ke_bookmark='1' id='s2'></span>" +
+                "<span id='s2' _ke_bookmark='1'></span>" +
                 "<b id='b2'></b>" +
                 "<span class='target'>" +
                 "<span class='innerlast'>innerfirst3</span>" +
@@ -100,20 +100,20 @@ KISSY.use("editor", function (S, Editor) {
 
             DOM._4e_mergeSiblings(target);
 
-            expect(div.innerHTML.toLowerCase())
+            expect(div.innerHTML.toLowerCase().replace(/=(\w+)/g,"=\"$1\""))
                 .toBe([
                 "<span class='target'>" ,
                 // "1<b>2</b>" ,
                 "<span class='innerlast'>" ,
                 "innerlast1" ,
-                "<span _ke_bookmark='1' id='s1'></span>" ,
+                "<span id='s1' _ke_bookmark='1'></span>" ,
                 "<b id='b1'></b>" ,
                 "innerfirst2" ,
                 "</span>" ,
                 "3<b>4</b>" ,
                 "<span class='innerlast'>" ,
                 "innerlast2" ,
-                "<span _ke_bookmark='1' id='s2'></span>" ,
+                "<span id='s2' _ke_bookmark='1'></span>" ,
                 "<b id='b2'></b>" ,
                 "innerfirst3" ,
                 "</span>" ,

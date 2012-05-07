@@ -38,14 +38,12 @@ KISSY.add("uibase/position", function (S) {
         xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
             setter:function (v) {
-
                 var self = this,
                     xy = S.makeArray(v);
 
                 /*
                  属性内分发特别注意：
                  xy -> x,y
-
                  */
                 if (xy.length) {
                     xy[0] && self.set("x", xy[0]);
@@ -75,29 +73,6 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
-        //! #112 和 effect 冲突，不好控制，delay
-//        __bindUI:function () {
-//            // fix #112
-//            var self = this,
-//                el = self.get("el");
-//            // show hide event is earlier than afterVisibleChange
-//            self.on("hide", function () {
-//                self.set("hideLeft", el.css("left"));
-//                self.set("hideTop", el.css("top"));
-//                el.css({
-//                    left:HIDE_INDICATOR_PX,
-//                    top:HIDE_INDICATOR_PX
-//                });
-//            });
-//            self.on("show", function () {
-//                if (el.style("left") == HIDE_INDICATOR_PX) {
-//                    el.css("left", self.get("hideLeft"));
-//                }
-//                if (el.style("top") == HIDE_INDICATOR_PX) {
-//                    el.css("top", self.get("hideTop"));
-//                }
-//            });
-//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x

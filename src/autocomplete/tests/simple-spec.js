@@ -4,6 +4,7 @@
  */
 KISSY.use("autocomplete", function (S, AutoComplete) {
 
+    var $ = S.all;
 
     describe("simple autocomplete", function () {
 
@@ -46,9 +47,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -63,12 +70,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
                 var menuElOffset = menuEl.offset();
                 expect(menuElOffset.left).toBeNearEqual(expectLeft);
                 expect(menuElOffset.top).toBeNearEqual(expectTop);
-
+                // must focus again in firefox
+                t.focus();
             });
 
-            waits(30);
+            waits(300);
 
             runs(function () {
+                // firefox will not trigger blur event??
+                // $(t).fire("blur");
                 t.blur();
             });
 
@@ -88,9 +98,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "2";
+            waits(100);
+            runs(function () {
+                t.value = "2";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -114,9 +130,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -158,9 +180,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -175,7 +203,7 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
                 });
 
             });
-            waits(10);
+            waits(100);
             runs(function () {
                 var menu = autoComplete.get("menu");
                 var children = menu.get("children");
@@ -201,7 +229,7 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
                     keyCode:KeyCodes.DOWN
                 });
             });
-            waits(10);
+            waits(100);
             // wrap
             runs(function () {
                 var menu = autoComplete.get("menu");
@@ -221,9 +249,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -259,9 +293,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 
@@ -306,9 +346,15 @@ KISSY.use("autocomplete", function (S, AutoComplete) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            t.value = "1";
+            waits(100);
+            runs(function () {
+                t.value = "1";
+            });
+            waits(100);
 
-            jasmine.simulate(t, "keyup");
+            runs(function () {
+                jasmine.simulate(t, "keyup");
+            });
 
             waits(100);
 

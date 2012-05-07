@@ -374,8 +374,12 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             }
 
             // 新区域位置发生了变化
-            if (newElRegion.left != elRegion.left || newElRegion.top != elRegion.top) {
-                el.offset(newElRegion);
+            if (newElRegion.left != elRegion.left) {
+                self.set("x", newElRegion.left)
+            }
+
+            if (newElRegion.top != elRegion.top) {
+                self.set("y", newElRegion.top)
             }
 
             // 新区域高宽发生了变化

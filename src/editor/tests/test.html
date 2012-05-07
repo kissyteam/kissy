@@ -22,17 +22,20 @@
 <script src="../../../build/uibase.js"></script>
 <script src="../../../build/component.js"></script>
 <script src="../../../build/dd.js"></script>
+<script src="../../../build/htmlparser.js"></script>
 <script src="../../../build/editor.js"></script>
 <script src="./dom-spec.js"></script>
 <script>
-    KISSY.use("editor", function () {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function () {
-            if (parent && parent.jasmine.kissyNext) {
-                parent.jasmine.kissyNext(this.results().failedCount);
-            }
+    window.onload = function () {
+        KISSY.use("editor", function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().execute(function () {
+                if (parent && parent.jasmine.kissyNext) {
+                    parent.jasmine.kissyNext(this.results().failedCount);
+                }
+            });
         });
-    });
+    };
 </script>
 
 </body>

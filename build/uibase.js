@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 7 16:45
 */
 /**
  * @fileOverview UIBase.Align
- * @author yiminghe@gmail.com , qiaohua@taobao.com
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
@@ -379,8 +379,12 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             }
 
             // 新区域位置发生了变化
-            if (newElRegion.left != elRegion.left || newElRegion.top != elRegion.top) {
-                el.offset(newElRegion);
+            if (newElRegion.left != elRegion.left) {
+                self.set("x", newElRegion.left)
+            }
+
+            if (newElRegion.top != elRegion.top) {
+                self.set("y", newElRegion.top)
             }
 
             // 新区域高宽发生了变化
@@ -417,9 +421,8 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
  *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
- * @fileOverview   UIBase
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
- * @see http://martinfowler.com/eaaDev/uiArchs.html
+ * @fileOverview UIBase
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
@@ -832,9 +835,12 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
     requires:["base", "node"]
 });
 /**
+ * Refer:
+ *  - http://martinfowler.com/eaaDev/uiArchs.html
+ *
  * render 和 create 区别
- * render 包括 create ，以及把生成的节点放在 document 中
- * create 仅仅包括创建节点
+ *  - render 包括 create ，以及把生成的节点放在 document 中
+ *  - create 仅仅包括创建节点
  **//**
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
@@ -1356,7 +1362,7 @@ KISSY.add("uibase/closerender", function (S, Node) {
     requires:["node"]
 });/**
  * @fileOverview constrain extension for kissy
- * @author yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add("uibase/constrain", function (S, DOM, Node) {
 
@@ -1471,7 +1477,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
 }, {
     requires:["dom", "node"]
 });/**
- * @fileOverview 里层包裹层定义，适合mask以及shim
+ * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function () {
@@ -1529,7 +1535,7 @@ KISSY.add("uibase/contentbox", function () {
 
     return ContentBox;
 });/**
- * @fileOverview 里层包裹层定义，适合mask以及shim
+ * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
@@ -1982,14 +1988,12 @@ KISSY.add("uibase/position", function (S) {
         xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
             setter:function (v) {
-
                 var self = this,
                     xy = S.makeArray(v);
 
                 /*
                  属性内分发特别注意：
                  xy -> x,y
-
                  */
                 if (xy.length) {
                     xy[0] && self.set("x", xy[0]);
@@ -2019,29 +2023,6 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
-        //! #112 和 effect 冲突，不好控制，delay
-//        __bindUI:function () {
-//            // fix #112
-//            var self = this,
-//                el = self.get("el");
-//            // show hide event is earlier than afterVisibleChange
-//            self.on("hide", function () {
-//                self.set("hideLeft", el.css("left"));
-//                self.set("hideTop", el.css("top"));
-//                el.css({
-//                    left:HIDE_INDICATOR_PX,
-//                    top:HIDE_INDICATOR_PX
-//                });
-//            });
-//            self.on("show", function () {
-//                if (el.style("left") == HIDE_INDICATOR_PX) {
-//                    el.css("left", self.get("hideLeft"));
-//                }
-//                if (el.style("top") == HIDE_INDICATOR_PX) {
-//                    el.css("top", self.get("hideTop"));
-//                }
-//            });
-//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x
@@ -2073,7 +2054,7 @@ KISSY.add("uibase/positionrender", function () {
         x:{
             // 水平方向绝对位置
             valueFn:function () {
-                var self=this;
+                var self = this;
                 // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
                 // el 不在 dom 树中 offset 报错的
                 // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
@@ -2083,7 +2064,7 @@ KISSY.add("uibase/positionrender", function () {
         y:{
             // 垂直方向绝对位置
             valueFn:function () {
-                var self=this;
+                var self = this;
                 return self.get("el") && self.get("el").offset().top;
             }
         },
