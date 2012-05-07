@@ -1,14 +1,16 @@
 /**
- * @fileOverview load content
+ * @fileOverview Dynamic load waterfall items by monitor window scroll.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
-        win=S.Env.host,
+        win = S.Env.host,
+        // > timeChunk interval to allow adjust first
         SCROLL_TIMER = 50;
 
     /**
+     * Dynamic load waterfall items by monitor window scroll.
      * @class
      * @memberOf Waterfall
      */
@@ -16,12 +18,8 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         Loader.superclass.constructor.apply(this, arguments);
     }
 
-
     function doScroll() {
         var self = this;
-        if (self.__pause) {
-            return;
-        }
         S.log("waterfall:doScroll");
         if (self.__loading) {
             return;
@@ -51,7 +49,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     function loadData() {
         var self = this,
-            container = this.get("container");
+            container = self.get("container");
 
         self.__loading = 1;
 
@@ -67,54 +65,81 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         function end() {
             self.end();
         }
-
     }
 
     Loader.ATTRS =
     /**
-     * @lends Waterfall#
+     * @lends Waterfall.Loader#
      */
     {
+        /**
+         * Preload distance below viewport.
+         * Default: 0.
+         * @type Number
+         */
         diff:{
-            getter:function (v) {
-                return v || 0;
-                // 默认一屏内加载
-                //return $(window).height() / 4;
-            }
+            value:0
         }
     };
 
 
     S.extend(Loader, Waterfall,
         /**
-         * @lends Waterfall#
+         * @lends Waterfall.Loader#
          */
         {
             _init:function () {
                 var self = this;
                 Loader.superclass._init.apply(self, arguments);
                 self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-                $(win).on("scroll", self.__onScroll);
-                doScroll.call(self);
+                // 初始化时立即检测一次，但是要等初始化 adjust 完成后.
+                self.__onScroll();
+                self.start();
             },
 
+            /**
+             * Start monitor scroll on window.
+             * @since 1.3
+             */
+            start:function () {
+                var self = this;
+                if (!self.__started) {
+                    $(win).on("scroll", self.__onScroll);
+                    self.__started = 1;
+                }
+            },
+
+            /**
+             * Stop monitor scroll on window.
+             */
             end:function () {
                 $(win).detach("scroll", this.__onScroll);
             },
 
-
+            /**
+             * Use end instead.
+             * @deprecated 1.3
+             */
             pause:function () {
-                this.__pause = 1;
+                this.end();
             },
 
+            /**
+             * Use start instead.
+             * @deprecated 1.3
+             */
             resume:function () {
-                this.__pause = 0;
+                this.start();
             },
 
+            /**
+             * Destroy this instance.
+             */
             destroy:function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
                 $(win).detach("scroll", self.__onScroll);
+                self.__started = 0;
             }
         });
 

@@ -78,7 +78,8 @@ History:
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
  - [+] switchable 增加 add/remove/destroy
 
- - [+] waterfall 增加方法 adjustItem/removeItem 以及配置 adjustEffect。支持调整时的动画。
+ - [+] waterfall 增加方法 adjustItem/removeItem/start 以及配置 adjustEffect。支持调整时的动画。
+ - [+] waterfall item class 支持配置 ks-waterfall-item-fixed-right/left 固定列。
 
  - [+] 增加 autocomplete/combobox 组件
 

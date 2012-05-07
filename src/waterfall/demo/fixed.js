@@ -38,6 +38,19 @@
                             item.height = Math.round(Math.random() * (300 - 180) + 180); // fake height
                             items.push(new S.Node(tpl.render(item)));
                         });
+                        var right = new S.Node('<div class="pin ks-waterfall ks-waterfall-fixed-right">' +
+                            '<div style="height: 100px">' +
+                            S.guid('always right') +
+                            '</div>' +
+                            '</div>');
+                        items.push(right);
+
+                        var left = new S.Node('<div class="pin ks-waterfall ks-waterfall-fixed-left">' +
+                            '<div style="height: 100px">' +
+                            S.guid('always left') +
+                            '</div>' +
+                            '</div>');
+                        items.push(left);
                         success(items);
                     },
                     complete:function () {
@@ -47,14 +60,7 @@
             },
             minColCount:2,
             colWidth:228
-            //align:'left' // right, center (default)
         });
-    waterfall.on('adjustComplete', function () {
-        S.log('after adjust complete!');
-    });
-    waterfall.on('addComplete', function () {
-        S.log('after add complete!');
-    });
     // scrollTo
     $('#BackToTop').on('click', function (e) {
         e.halt();
@@ -63,40 +69,5 @@
         $(window).animate({
             scrollTop:0
         }, 1, "easeOut");
-    });
-
-    var b1 = new Button({
-        content:"停止加载",
-        render:"#button_container",
-        prefixCls:"goog-"
-    });
-
-    // 点击按钮后, 停止瀑布图效果
-    b1.render();
-
-    b1.on("click", function () {
-        waterfall.destroy();
-    });
-
-    $("#ColumnContainer").delegate("click", ".del", function (event) {
-        var w = $(event.currentTarget).parent(".ks-waterfall");
-        waterfall.removeItem(w, {
-            callback:function () {
-                alert("删除完毕");
-            }
-        });
-    });
-
-
-    $("#ColumnContainer").delegate("click", ".grow", function (event) {
-        var w = $(event.currentTarget).parent(".ks-waterfall");
-        waterfall.adjustItem(w, {
-            process:function () {
-                w.append("<p>i grow height by 100</p>");
-            },
-            callback:function () {
-                alert("调整完毕");
-            }
-        });
     });
 });

@@ -223,7 +223,7 @@ a.go-top:active{text-decoration:none;}
                                                                             
                                             
                                             
-                                                                                        
+                                            <span class="desc">Make Elements flow like waterfall.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -245,12 +245,34 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 Waterfall.
                                                 <b class="name"><a href="../symbols/Waterfall.html#.adjustEffect">adjustEffect</a></b>
-                                                <span class="type">{}</span>
+                                                <span class="type">{Object}</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">调整时的特效</span>                                                
+                                                <span class="desc">Effect config object when waterfall item is adjusted on window resize.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.align">align</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Horizontal alignment of waterfall items with container.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.colWidth">colWidth</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Column's width.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -261,7 +283,40 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">错乱节点容器</span>                                                
+                                                <span class="desc">Container which contains waterfall elements.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.curColHeights">curColHeights</a></b>
+                                                <span class="type">{Number[]}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Array of height of current waterfall cols.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.effect">effect</a></b>
+                                                <span class="type">{Object}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Effect config object when waterfall item is added to container.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.minColCount">minColCount</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Minimum col count of waterfall items.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -285,12 +340,22 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.addItems">addItems</a></b>
+                                                <span class="param">(items, callback)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Add array of waterfall items to current instance.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
                                                 <b class="name"><a href="../symbols/Waterfall.html#.adjust">adjust</a></b>
                                                 <span class="param">(callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">调整所有的元素位置</span>                                                
+                                                <span class="desc">Readjust existing waterfall item.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -300,7 +365,37 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">调整一个元素的高度</span>                                                
+                                                <span class="desc">Ajust the height of one specified item.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.destroy">destroy</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Destroy current instance.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.isAdding">isAdding</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether is adding waterfall item.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.isAdjusting">isAdjusting</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether is adjusting waterfall items.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -310,7 +405,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">删除一个元素</span>                                                
+                                                <span class="desc">Remove a waterfall item.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -380,13 +475,13 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">                                                
                                                 <span>Waterfall.</span>
                                                 <b class="name">adjustEffect</b>
-                                                
+                                                <span>{Object}</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    调整时的特效
+                                                    Effect config object when waterfall item is adjusted on window resize.Default: { easing:"",duration:1 }
                                                     
                                                     
                                                 </span>
@@ -401,11 +496,71 @@ a.go-top:active{text-decoration:none;}
                                                     <ul class="list">
                                                     
                                                     <li class="li">
-                                                        <pre class="code"></pre>
+                                                        <pre class="code"><code>     {         easing:'', // easing type         duration:1 // unit is second     }</code></pre>
                                                     </li>
                                                     
                                                     </ul>
                                                 </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".align"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">align</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Horizontal alignment of waterfall items with container.Enum: 'left','center','right'.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".colWidth"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">colWidth</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Column's width.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
                                                 
                                                 
                                                 
@@ -427,7 +582,108 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    错乱节点容器
+                                                    Container which contains waterfall elements.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".curColHeights"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">curColHeights</b>
+                                                <span>{Number[]}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Array of height of current waterfall cols.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".effect"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">effect</b>
+                                                <span>{Object}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Effect config object when waterfall item is added to container.Default: { effect:"fadeIn",duration:1 }
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code"><code>     {         effect:'fadeIn', // or slideUp         duration:1 // unit is second     }</code></pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".minColCount"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">minColCount</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Minimum col count of waterfall items.Event window resize to 0.Default: 1.
                                                     
                                                     
                                                 </span>
@@ -462,6 +718,70 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
+                                            <a name=".addItems"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">addItems</b>
+                                                <span class="param">(items, callback)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line483">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Add array of waterfall items to current instance.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">items</b>
+                                                            
+                                                            
+                                                            <span class="type">{Node[]}</span> 
+                                                            <span class="desc">Waterfall items to be added.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">callback</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">Callback function to be called after waterfall items are added.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name=".adjust"> </a>
                                             <div class="title">
                                                 <span>Waterfall.</span>
@@ -470,11 +790,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line366">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line443">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                调整所有的元素位置
+                                                Readjust existing waterfall item.
                                                 
                                                 
                                             </div>
@@ -491,8 +811,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">callback</b>
                                                             
                                                              ]
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">Callback function to be called after adjust.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -525,11 +845,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line248">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line325">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                调整一个元素的高度
+                                                Ajust the height of one specified item.
                                                 
                                                 
                                             </div>
@@ -547,7 +867,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Node}</span> 
-                                                            <span class="desc">待调整的元素</span>
+                                                            <span class="desc">Waterfall item to be adjusted.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -556,7 +876,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">控制配置</span>
+                                                            <span class="desc">Config object.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -565,7 +885,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">调整结束后的回调</span>
+                                                            <span class="desc">Callback function after the item is adjusted.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -574,7 +894,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">用于做调整操作的函数，可以返回数字表示调整后的高度，不返回的话直接取调整后元素的高度</span>
+                                                            <span class="desc">Adjust logic function.If returns a number, it is used as item height after adjust.else use item.outerHeight(true) as item height after adjust.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -583,7 +903,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">其他元素配合调整位置的特效配置</span>
+                                                            <span class="desc">Same as Waterfall#adjustEffect</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -626,6 +946,152 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name=".destroy"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">destroy</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line507">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Destroy current instance.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".isAdding"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">isAdding</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line300">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether is adding waterfall item.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Since</dt>
+                                                <dd>
+                                                    1.3
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            
+                                                            <span>Boolean</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".isAdjusting"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">isAdjusting</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line291">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether is adjusting waterfall items.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            
+                                                            <span>Boolean</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name=".removeItem"> </a>
                                             <div class="title">
                                                 <span>Waterfall.</span>
@@ -634,11 +1100,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line339">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line416">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                删除一个元素
+                                                Remove a waterfall item.
                                                 
                                                 
                                             </div>
@@ -656,7 +1122,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Node}</span> 
-                                                            <span class="desc">待删除的元素</span>
+                                                            <span class="desc">Waterfall item to be removed.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -665,7 +1131,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">控制配置</span>
+                                                            <span class="desc">Config object.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -674,16 +1140,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">删除结束后的回调</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">cfg.process</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc">用于做删除操作的函数</span>
+                                                            <span class="desc">Callback function to be called after remove.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -692,7 +1149,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">删除后其他元素调整位置特效配置</span>
+                                                            <span class="desc">Same as Waterfall#adjustEffect</span>
                                                         </li>
                                                     
                                                         <li class="li">
