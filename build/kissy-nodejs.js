@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 7 16:46
+build time: May 8 19:40
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -623,7 +623,7 @@ build time: May 7 16:46
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120507164616';
+        S.__BUILD_TIME = '20120508194036';
     })();
 
     return S;
@@ -4111,7 +4111,7 @@ build time: May 7 16:46
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120507164616'
+        tag:'20120508194036'
     }, getBaseInfo()));
 
     /**
@@ -9061,7 +9061,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 8 19:40
 */
 /**
  * @fileOverview responsible for registering event
@@ -9626,6 +9626,7 @@ KISSY.add("event/data", function (S, DOM, Utils) {
     requires:['dom', './utils']
 });/**
  * @fileOverview KISSY Scalable Event Framework
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event,
@@ -9704,8 +9705,8 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
  *   - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
  *   - undelegate() selector 为 ""，那么去除所有委托绑定的 handler
  *//**
- * @fileOverview   event-focusin
- * @author  yiminghe@gmail.com
+ * @fileOverview event-focusin
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
     // 让非 IE 浏览器支持 focusin/focusout
@@ -9905,12 +9906,12 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
 }, {
     requires:['dom', './data', './special']
 });/**
- * @fileOverview   event-hashchange
- * @author  yiminghe@gmail.com , xiaomacji@gmail.com
+ * @fileOverview event-hashchange
+ * @author yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
-    var win=S.Env.host,
+    var win = S.Env.host,
         doc = win.document,
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'],
@@ -9962,7 +9963,9 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // S.log("set iframe html :" + hash);
 
                 var html = S.substitute(IFRAME_TEMPLATE, {
-                    hash:hash,
+                    // 防止 hash 里有代码造成 xss
+                    // 后面通过 innerText，相当于 unEscapeHTML
+                    hash:S.escapeHTML(hash),
                     // 一定要加哦
                     head:DOM._isCustomDomain() ? "<script>document.domain = '" +
                         doc.domain
@@ -10323,8 +10326,8 @@ KISSY.add("event/keycodes", function() {
     return KeyCodes;
 
 });/**
- * @fileOverview   event-mouseenter
- * @author  yiminghe@gmail.com
+ * @fileOverview event-mouseenter
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
     S.each([
@@ -10477,8 +10480,8 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
  **//**
- * @fileOverview   EventObject
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @fileOverview EventObject
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('event/object', function (S, undefined) {
 
@@ -10945,7 +10948,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
  *  - http://bugs.jquery.com/ticket/11049
  **//**
  * @fileOverview 提供事件发布和订阅机制
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
     var KS_PUBLISH = "__~ks_publish",
@@ -11254,8 +11257,7 @@ KISSY.add("event/utils", function (S, DOM) {
 }, {
     requires:['dom']
 });/**
- * @fileOverview  inspired by yui3 :
- *
+ * @fileOverview inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.
