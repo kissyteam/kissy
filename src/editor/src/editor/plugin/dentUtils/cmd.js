@@ -58,6 +58,11 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
         // possible about the surrounding lists, we need to feed it the further
         // ancestor node that is still a list.
         var listParents = listNode._4e_parents(true, undefined);
+
+        listParents.each(function (n, i) {
+            listParents[i] = n;
+        });
+
         for (var i = 0; i < listParents.length; i++) {
             if (listNodeNames[ listParents[i]._4e_name() ]) {
                 listNode = listParents[i];

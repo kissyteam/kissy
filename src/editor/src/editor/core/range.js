@@ -308,6 +308,15 @@ KISSY.add("editor/core/range", function (S) {
             var startParents = startNode._4e_parents(),
                 endParents = endNode._4e_parents();
 
+            startParents.each(function (n, i) {
+                startParents[i] = n;
+            });
+
+            endParents.each(function (n, i) {
+                endParents[i] = n;
+            });
+
+
             // Compare them, to find the top most siblings.
             var i, topStart, topEnd;
 
@@ -1020,7 +1029,11 @@ KISSY.add("editor/core/range", function (S) {
                                 // If this is a visible element.
                                 // We need to check for the bookmark attribute because IE insists on
                                 // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if (sibling.offsetWidth > 0 && !sibling.getAttribute('_ke_bookmark')) {
+                                if ((sibling.offsetWidth > 0
+                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                    // bug report@2012-05-08
+                                    || DOM._4e_name(sibling) == "br")
+                                    && !sibling.getAttribute('_ke_bookmark')) {
                                     // We'll accept it only if we need
                                     // whitespace, and this is an inline
                                     // element with whitespace only.
@@ -1160,7 +1173,10 @@ KISSY.add("editor/core/range", function (S) {
                                 // If this is a visible element.
                                 // We need to check for the bookmark attribute because IE insists on
                                 // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if (sibling.offsetWidth > 0 && !sibling.getAttribute('_ke_bookmark')) {
+                                if ((sibling.offsetWidth > 0
+                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                    // bug report@2012-05-08
+                                    || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
                                     // We'll accept it only if we need
                                     // whitespace, and this is an inline
                                     // element with whitespace only.
