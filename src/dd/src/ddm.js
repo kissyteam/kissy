@@ -264,6 +264,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     function registerEvent(self) {
         Event.on(doc, 'mouseup', self._end, self);
         Event.on(doc, 'mousemove', _showShimMove, self);
+        // ie6 will not response to event when cursor is out of window.
+        if (UA.ie === 6) {
+            doc.body.setCapture();
+        }
     }
 
     /**
@@ -272,6 +276,9 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     function unRegisterEvent(self) {
         Event.remove(doc, 'mousemove', _showShimMove, self);
         Event.remove(doc, 'mouseup', self._end, self);
+        if (UA.ie === 6) {
+            doc.body.releaseCapture();
+        }
     }
 
 
@@ -323,8 +330,9 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         _regToDrag:function (drag) {
             var self = this;
             // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
-            registerEvent(self);
             self.__activeToDrag = drag;
+            registerEvent(self);
+
         },
 
         /**
