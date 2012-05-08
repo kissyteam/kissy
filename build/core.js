@@ -1,68 +1,68 @@
-﻿/**
- combined files : 
+﻿/*
+ Combined modules by KISSY Module Compiler : 
 
-D:\code\kissy_git\kissy1.2\src\ua\base.js
-D:\code\kissy_git\kissy1.2\src\ua\extra.js
-D:\code\kissy_git\kissy1.2\src\ua.js
-D:\code\kissy_git\kissy1.2\src\dom\base.js
-D:\code\kissy_git\kissy1.2\src\dom\attr.js
-D:\code\kissy_git\kissy1.2\src\dom\class.js
-D:\code\kissy_git\kissy1.2\src\dom\create.js
-D:\code\kissy_git\kissy1.2\src\dom\data.js
-D:\code\kissy_git\kissy1.2\src\dom\insertion.js
-D:\code\kissy_git\kissy1.2\src\dom\offset.js
-D:\code\kissy_git\kissy1.2\src\dom\style.js
-D:\code\kissy_git\kissy1.2\src\dom\selector.js
-D:\code\kissy_git\kissy1.2\src\dom\style-ie.js
-D:\code\kissy_git\kissy1.2\src\dom\traversal.js
-D:\code\kissy_git\kissy1.2\src\dom.js
-D:\code\kissy_git\kissy1.2\src\event\keycodes.js
-D:\code\kissy_git\kissy1.2\src\event\object.js
-D:\code\kissy_git\kissy1.2\src\event\utils.js
-D:\code\kissy_git\kissy1.2\src\event\base.js
-D:\code\kissy_git\kissy1.2\src\event\target.js
-D:\code\kissy_git\kissy1.2\src\event\focusin.js
-D:\code\kissy_git\kissy1.2\src\event\hashchange.js
-D:\code\kissy_git\kissy1.2\src\event\valuechange.js
-D:\code\kissy_git\kissy1.2\src\event\delegate.js
-D:\code\kissy_git\kissy1.2\src\event\mouseenter.js
-D:\code\kissy_git\kissy1.2\src\event\submit.js
-D:\code\kissy_git\kissy1.2\src\event\change.js
-D:\code\kissy_git\kissy1.2\src\event\mousewheel.js
-D:\code\kissy_git\kissy1.2\src\event.js
-D:\code\kissy_git\kissy1.2\src\node\base.js
-D:\code\kissy_git\kissy1.2\src\node\attach.js
-D:\code\kissy_git\kissy1.2\src\node\override.js
-D:\code\kissy_git\kissy1.2\src\anim\easing.js
-D:\code\kissy_git\kissy1.2\src\anim\manager.js
-D:\code\kissy_git\kissy1.2\src\anim\fx.js
-D:\code\kissy_git\kissy1.2\src\anim\queue.js
-D:\code\kissy_git\kissy1.2\src\anim\base.js
-D:\code\kissy_git\kissy1.2\src\anim\color.js
-D:\code\kissy_git\kissy1.2\src\anim.js
-D:\code\kissy_git\kissy1.2\src\node\anim.js
-D:\code\kissy_git\kissy1.2\src\node.js
-D:\code\kissy_git\kissy1.2\src\json\json2.js
-D:\code\kissy_git\kissy1.2\src\json.js
-D:\code\kissy_git\kissy1.2\src\ajax\form-serializer.js
-D:\code\kissy_git\kissy1.2\src\ajax\xhrobject.js
-D:\code\kissy_git\kissy1.2\src\ajax\base.js
-D:\code\kissy_git\kissy1.2\src\ajax\xhrbase.js
-D:\code\kissy_git\kissy1.2\src\ajax\subdomain.js
-D:\code\kissy_git\kissy1.2\src\ajax\xdr.js
-D:\code\kissy_git\kissy1.2\src\ajax\xhr.js
-D:\code\kissy_git\kissy1.2\src\ajax\script.js
-D:\code\kissy_git\kissy1.2\src\ajax\jsonp.js
-D:\code\kissy_git\kissy1.2\src\ajax\form.js
-D:\code\kissy_git\kissy1.2\src\ajax\iframe-upload.js
-D:\code\kissy_git\kissy1.2\src\ajax.js
-D:\code\kissy_git\kissy1.2\src\base\attribute.js
-D:\code\kissy_git\kissy1.2\src\base\base.js
-D:\code\kissy_git\kissy1.2\src\base.js
-D:\code\kissy_git\kissy1.2\src\cookie\base.js
-D:\code\kissy_git\kissy1.2\src\cookie.js
-D:\code\kissy_git\kissy1.2\src\core.js
-**/
+ ua/base
+ ua/extra
+ ua
+ dom/base
+ dom/attr
+ dom/class
+ dom/create
+ dom/data
+ dom/insertion
+ dom/offset
+ dom/style
+ dom/selector
+ dom/style-ie
+ dom/traversal
+ dom
+ event/keycodes
+ event/object
+ event/utils
+ event/base
+ event/target
+ event/focusin
+ event/hashchange
+ event/valuechange
+ event/delegate
+ event/mouseenter
+ event/submit
+ event/change
+ event/mousewheel
+ event
+ node/base
+ node/attach
+ node/override
+ anim/easing
+ anim/manager
+ anim/fx
+ anim/queue
+ anim/base
+ anim/color
+ anim
+ node/anim
+ node
+ json/json2
+ json
+ ajax/form-serializer
+ ajax/xhrobject
+ ajax/base
+ ajax/xhrbase
+ ajax/subdomain
+ ajax/xdr
+ ajax/xhr
+ ajax/script
+ ajax/jsonp
+ ajax/form
+ ajax/iframe-upload
+ ajax
+ base/attribute
+ base/base
+ base
+ cookie/base
+ cookie
+ core
+*/
 
 /**
  * @module  ua
@@ -5326,7 +5326,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 // S.log("set iframe html :" + hash);
 
                 var html = S.substitute(IFRAME_TEMPLATE, {
-                    hash: hash,
+                    hash: S.escapeHTML(hash),
                     // 一定要加哦
                     head:DOM._isCustomDomain() ? "<script>document.domain = '" +
                         doc.domain

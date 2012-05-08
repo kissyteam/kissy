@@ -56,7 +56,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 // S.log("set iframe html :" + hash);
 
                 var html = S.substitute(IFRAME_TEMPLATE, {
-                    hash: hash,
+                    hash: S.escapeHTML(hash),
                     // 一定要加哦
                     head:DOM._isCustomDomain() ? "<script>document.domain = '" +
                         doc.domain
