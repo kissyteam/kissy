@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 7 16:45
+build time: May 9 19:36
 */
 /**
  * @fileOverview UIBase.Align
@@ -2163,42 +2163,26 @@ KISSY.add("uibase/resize", function (S) {
  * @fileOverview shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/shimrender", function(S, Node) {
-
+KISSY.add("uibase/shimrender", function () {
+    // only for ie6!
     function Shim() {
     }
 
-    Shim.ATTRS = {
-        shim:{
-            value:true
-        }
-    };
-
     Shim.prototype = {
-
-        _uiSetShim:function(v) {
-            var self = this,el = self.get("el");
-            if (v && !self.__shimEl) {
-                self.__shimEl = new Node("<" + "iframe style='position: absolute;" +
-                    "border: none;" +
-                    "width: expression(this.parentNode.offsetWidth);" +
-                    "top: 0;" +
-                    "opacity: 0;" +
-                    "filter: alpha(opacity=0);" +
-                    "left: 0;" +
-                    "z-index: -1;" +
-                    "height: expression(this.parentNode.offsetHeight);" + "'/>");
-                el.prepend(self.__shimEl);
-            } else if (!v && self.__shimEl) {
-                self.__shimEl.remove();
-                delete self.__shimEl;
-            }
+        __createDom:function () {
+            this.get("el").prepend("<" + "iframe style='position: absolute;" +
+                "border: none;" +
+                "width: expression(this.parentNode.offsetWidth);" +
+                "top: 0;" +
+                "opacity: 0;" +
+                "filter: alpha(opacity=0);" +
+                "left: 0;" +
+                "z-index: -1;" +
+                "height: expression(this.parentNode.offsetHeight);" + "'/>");
         }
     };
 
     return Shim;
-}, {
-    requires:['node']
 });/**
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
