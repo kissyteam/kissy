@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 8 19:40
+build time: May 9 12:54
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -424,7 +424,7 @@ build time: May 8 19:40
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120508194036';
+        S.__BUILD_TIME = '20120509125418';
     })();
 
     return S;
@@ -3849,6 +3849,10 @@ build time: May 8 19:40
             }
         });
 
+    function returnJson(s) {
+        return (new Function("return " + s))();
+    }
+
     /**
      * get base from seed/kissy.js
      * @return base for kissy
@@ -3871,8 +3875,17 @@ build time: May 8 19:40
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.absoluteFilePath(script.src),
-            comboPrefix = script.getAttribute('data-combo-prefix') || '??',
-            comboSep = script.getAttribute('data-combo-sep') || ',',
+            baseInfo = script.getAttribute("data-config");
+        if (baseInfo) {
+            baseInfo = returnJson(baseInfo);
+        } else {
+            baseInfo = {};
+        }
+        baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        baseInfo.comboSep = baseInfo.comboSep || ',';
+
+        var comboPrefix = baseInfo.comboPrefix,
+            comboSep = baseInfo.comboSep,
             parts = src.split(comboSep),
             base,
             part0 = parts[0],
@@ -3900,11 +3913,9 @@ build time: May 8 19:40
                 });
             }
         }
-        return {
-            base:base,
-            comboPrefix:comboPrefix,
-            comboSep:comboSep
-        };
+        return S.mix({
+            base:base
+        }, baseInfo);
     }
 
 
@@ -3912,7 +3923,7 @@ build time: May 8 19:40
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120508194036'
+        tag:'20120509125418'
     }, getBaseInfo()));
 
     /**

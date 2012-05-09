@@ -79,6 +79,10 @@
             }
         });
 
+    function returnJson(s) {
+        return (new Function("return " + s))();
+    }
+
     /**
      * get base from seed/kissy.js
      * @return base for kissy
@@ -101,8 +105,17 @@
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.absoluteFilePath(script.src),
-            comboPrefix = script.getAttribute('data-combo-prefix') || '??',
-            comboSep = script.getAttribute('data-combo-sep') || ',',
+            baseInfo = script.getAttribute("data-config");
+        if (baseInfo) {
+            baseInfo = returnJson(baseInfo);
+        } else {
+            baseInfo = {};
+        }
+        baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        baseInfo.comboSep = baseInfo.comboSep || ',';
+
+        var comboPrefix = baseInfo.comboPrefix,
+            comboSep = baseInfo.comboSep,
             parts = src.split(comboSep),
             base,
             part0 = parts[0],
@@ -130,13 +143,10 @@
                 });
             }
         }
-        return {
-            base:base,
-            comboPrefix:comboPrefix,
-            comboSep:comboSep
-        };
+        return S.mix({
+            base:base
+        }, baseInfo);
     }
-
 
     S.config(S.mix({
         // the default timeout for getScript

@@ -19,6 +19,7 @@ History:
  - [+] 增加 S.Defer/Promise ，支持 Promise 规范
 
  - [+] S.config 增加 combine 配置，支持自动 combo
+ - [+] 支持 <script src='seed|kissy.js' data-config="json"></script> data-config parse 为 json 传入 config
  - [x] KISSY.add(fn) fn 中 this 为模块对象
  - [*] Support tag for individual module : #110
  - [!] 删除 KISSY.app 方法
