@@ -1,3 +1,7 @@
+/**
+ * Test DOM for editor
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("editor", function (S, Editor) {
     var DOM = S.DOM;
 
@@ -100,7 +104,7 @@ KISSY.use("editor", function (S, Editor) {
 
             DOM._4e_mergeSiblings(target);
 
-            expect(div.innerHTML.toLowerCase().replace(/=(\w+)/g,"=\"$1\""))
+            expect(div.innerHTML.toLowerCase().replace(/=(\w+)/g, "=\"$1\""))
                 .toBe([
                 "<span class='target'>" ,
                 // "1<b>2</b>" ,

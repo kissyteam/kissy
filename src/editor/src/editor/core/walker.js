@@ -51,37 +51,35 @@ KISSY.add("editor/core/walker", function (S, KE) {
         // Create the LTR guard function, if necessary.
         if (!rtl && !self._.guardLTR) {
             // Gets the node that stops the walker when going LTR.
-            var limitLTR = range.endContainer,
-                blockerLTR = new Node(limitLTR[0].childNodes[range.endOffset]);
+            var limitLTR = range.endContainer[0],
+                blockerLTR = limitLTR.childNodes[range.endOffset];
             // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                return (
-                    ( !movingOut || !limitLTR.equals(node) )
-                        // 到达深度遍历的最后一个节点，结束
-                        &&
-                        ( !DOM.equals(node, blockerLTR) )
-                        &&
-                        // 从body移出也结束
-                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
-                    );
+                if (movingOut && (limitLTR == node || DOM._4e_name(node) == "body")) {
+                    return false;
+                }
+                // 达到边界的下一个节点,注意 null 的情况
+                // node 永远不能为 null
+                return node != blockerLTR;
+
             };
         }
 
         // Create the RTL guard function, if necessary.
         if (rtl && !self._.guardRTL) {
             // Gets the node that stops the walker when going LTR.
-            var limitRTL = range.startContainer,
-                blockerRTL = ( range.startOffset > 0 ) &&
-                    new Node(limitRTL[0].childNodes[range.startOffset - 1]);
+            var limitRTL = range.startContainer[0],
+                blockerRTL = ( range.startOffset > 0 ) && limitRTL.childNodes[range.startOffset - 1] || null;
 
             self._.guardRTL = function (node, movingOut) {
-
-                return (
-                    ( !movingOut || !DOM.equals(node, limitRTL[0]) ) &&
-                        ( !blockerRTL || !DOM.equals(node, blockerRTL[0]) ) &&
-                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
-                    );
+                // 从endContainer移出去，失败返回false
+                if (movingOut && (limitRTL == node || DOM._4e_name(node) == "body")) {
+                    return false;
+                }
+                // 达到边界的下一个节点,注意 null 的情况
+                // node 永远不能为 null
+                return node != blockerRTL;
             };
         }
 
@@ -136,7 +134,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
         while (node && !self._.end) {
             self.current = node;
-            if (!self.evaluator || self.evaluator(node) !== FALSE) {
+            if (!self.evaluator || self.evaluator(node[0]) !== FALSE) {
                 if (!breakOnFalse) {
                     return node;
                 }
@@ -257,7 +255,10 @@ KISSY.add("editor/core/walker", function (S, KE) {
         reset:function () {
             delete this.current;
             this._ = {};
-        }
+        },
+
+        // for unit test
+        _iterator:iterate
 
     });
 
@@ -338,22 +339,22 @@ KISSY.add("editor/core/walker", function (S, KE) {
         };
 
     // Check if there's a filler node at the end of an element, and return it.
-    Walker.getBogus = function (tail) {
+    function getBogus(tail) {
         // Bogus are not always at the end, e.g. <p><a>text<br /></a></p>
         do {
             tail = tail._4e_previousSourceNode();
-        } while (toSkip(tail[0]));
+        } while (tail && toSkip(tail[0]));
 
         if (tail && ( !UA.ie ? tail._4e_name() == "br"
             : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()) )) {
-            return tail;
+            return tail[0];
         }
         return false;
-    };
+    }
 
     KE.Utils.injectDom({
         _4e_getBogus:function (el) {
-            return Walker.getBogus(new Node(el));
+            return getBogus(new Node(el));
         }
     });
 

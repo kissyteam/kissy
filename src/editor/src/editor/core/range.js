@@ -599,7 +599,6 @@ KISSY.add("editor/core/range", function (S) {
                 var walker = new Walker(walkerRange);
 
                 walker.evaluator = function (node) {
-                    node = node[0] || node;
                     return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
                         KEN.NODE_ELEMENT : KEN.NODE_TEXT );
                 };
@@ -1632,12 +1631,12 @@ KISSY.add("editor/core/range", function (S) {
         // Reject any text node unless it's being bookmark
         // OR it's spaces. (#3883)
         //如果不是文本节点并且是空的，可以继续取下一个判断边界
-        var c1 = node[0].nodeType != KEN.NODE_TEXT
-            && node._4e_name() in dtd.$removeEmpty,
+        var c1 = node.nodeType != KEN.NODE_TEXT
+            && DOM._4e_name(node) in dtd.$removeEmpty,
             //文本为空，可以继续取下一个判断边界
-            c2 = !S.trim(node[0].nodeValue),
+            c2 = !S.trim(node.nodeValue),
             //恩，进去了书签，可以继续取下一个判断边界
-            c3 = !!node.parent().attr('_ke_bookmark');
+            c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
     }
 
@@ -1650,27 +1649,29 @@ KISSY.add("editor/core/range", function (S) {
     }
 
     function getCheckStartEndBlockEvalFunction(isStart) {
-        var hadBr = FALSE, isBookmarkuator = Walker.bookmark(TRUE);
+        var hadBr = FALSE, isBookmark = Walker.bookmark(TRUE);
         return function (node) {
             // First ignore bookmark nodes.
-            if (isBookmarkuator(node))
+            if (isBookmark(node))
                 return TRUE;
 
-            if (node[0].nodeType == KEN.NODE_TEXT) {
+            if (node.nodeType == KEN.NODE_TEXT) {
                 // If there's any visible text, then we're not at the start.
-                if (S.trim(node[0].nodeValue).length)
+                if (S.trim(node.nodeValue).length)
                     return FALSE;
             }
-            else if (node[0].nodeType == KEN.NODE_ELEMENT) {
+            else if (node.nodeType == KEN.NODE_ELEMENT) {
+                var nodeName=DOM._4e_name(node);
                 // If there are non-empty inline elements (e.g. <img />), then we're not
                 // at the start.
-                if (!inlineChildReqElements[ node._4e_name() ]) {
+                if (!inlineChildReqElements[ nodeName ]) {
                     // If we're working at the end-of-block, forgive the first <br /> in non-IE
                     // browsers.
-                    if (!isStart && !UA['ie'] && node._4e_name() == 'br' && !hadBr)
+                    if (!isStart && !UA['ie'] && nodeName == 'br' && !hadBr)
                         hadBr = TRUE;
-                    else
+                    else {
                         return FALSE;
+                    }
                 }
             }
             return TRUE;

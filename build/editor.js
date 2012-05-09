@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 21:01
+build time: May 9 14:53
 */
 /**
  * Set up editor constructor
@@ -3053,6 +3053,15 @@ KISSY.add("editor/core/range", function (S) {
             var startParents = startNode._4e_parents(),
                 endParents = endNode._4e_parents();
 
+            startParents.each(function (n, i) {
+                startParents[i] = n;
+            });
+
+            endParents.each(function (n, i) {
+                endParents[i] = n;
+            });
+
+
             // Compare them, to find the top most siblings.
             var i, topStart, topEnd;
 
@@ -3335,7 +3344,6 @@ KISSY.add("editor/core/range", function (S) {
                 var walker = new Walker(walkerRange);
 
                 walker.evaluator = function (node) {
-                    node = node[0] || node;
                     return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
                         KEN.NODE_ELEMENT : KEN.NODE_TEXT );
                 };
@@ -3765,7 +3773,11 @@ KISSY.add("editor/core/range", function (S) {
                                 // If this is a visible element.
                                 // We need to check for the bookmark attribute because IE insists on
                                 // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if (sibling.offsetWidth > 0 && !sibling.getAttribute('_ke_bookmark')) {
+                                if ((sibling.offsetWidth > 0
+                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                    // bug report@2012-05-08
+                                    || DOM._4e_name(sibling) == "br")
+                                    && !sibling.getAttribute('_ke_bookmark')) {
                                     // We'll accept it only if we need
                                     // whitespace, and this is an inline
                                     // element with whitespace only.
@@ -3905,7 +3917,10 @@ KISSY.add("editor/core/range", function (S) {
                                 // If this is a visible element.
                                 // We need to check for the bookmark attribute because IE insists on
                                 // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if (sibling.offsetWidth > 0 && !sibling.getAttribute('_ke_bookmark')) {
+                                if ((sibling.offsetWidth > 0
+                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                    // bug report@2012-05-08
+                                    || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
                                     // We'll accept it only if we need
                                     // whitespace, and this is an inline
                                     // element with whitespace only.
@@ -4361,12 +4376,12 @@ KISSY.add("editor/core/range", function (S) {
         // Reject any text node unless it's being bookmark
         // OR it's spaces. (#3883)
         //如果不是文本节点并且是空的，可以继续取下一个判断边界
-        var c1 = node[0].nodeType != KEN.NODE_TEXT
-            && node._4e_name() in dtd.$removeEmpty,
+        var c1 = node.nodeType != KEN.NODE_TEXT
+            && DOM._4e_name(node) in dtd.$removeEmpty,
             //文本为空，可以继续取下一个判断边界
-            c2 = !S.trim(node[0].nodeValue),
+            c2 = !S.trim(node.nodeValue),
             //恩，进去了书签，可以继续取下一个判断边界
-            c3 = !!node.parent().attr('_ke_bookmark');
+            c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
     }
 
@@ -4379,27 +4394,29 @@ KISSY.add("editor/core/range", function (S) {
     }
 
     function getCheckStartEndBlockEvalFunction(isStart) {
-        var hadBr = FALSE, isBookmarkuator = Walker.bookmark(TRUE);
+        var hadBr = FALSE, isBookmark = Walker.bookmark(TRUE);
         return function (node) {
             // First ignore bookmark nodes.
-            if (isBookmarkuator(node))
+            if (isBookmark(node))
                 return TRUE;
 
-            if (node[0].nodeType == KEN.NODE_TEXT) {
+            if (node.nodeType == KEN.NODE_TEXT) {
                 // If there's any visible text, then we're not at the start.
-                if (S.trim(node[0].nodeValue).length)
+                if (S.trim(node.nodeValue).length)
                     return FALSE;
             }
-            else if (node[0].nodeType == KEN.NODE_ELEMENT) {
+            else if (node.nodeType == KEN.NODE_ELEMENT) {
+                var nodeName=DOM._4e_name(node);
                 // If there are non-empty inline elements (e.g. <img />), then we're not
                 // at the start.
-                if (!inlineChildReqElements[ node._4e_name() ]) {
+                if (!inlineChildReqElements[ nodeName ]) {
                     // If we're working at the end-of-block, forgive the first <br /> in non-IE
                     // browsers.
-                    if (!isStart && !UA['ie'] && node._4e_name() == 'br' && !hadBr)
+                    if (!isStart && !UA['ie'] && nodeName == 'br' && !hadBr)
                         hadBr = TRUE;
-                    else
+                    else {
                         return FALSE;
+                    }
                 }
             }
             return TRUE;
@@ -7136,7 +7153,7 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120502210130");
+                    url += "t=" + encodeURIComponent("20120509145356");
                 }
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);
@@ -7683,37 +7700,35 @@ KISSY.add("editor/core/walker", function (S, KE) {
         // Create the LTR guard function, if necessary.
         if (!rtl && !self._.guardLTR) {
             // Gets the node that stops the walker when going LTR.
-            var limitLTR = range.endContainer,
-                blockerLTR = new Node(limitLTR[0].childNodes[range.endOffset]);
+            var limitLTR = range.endContainer[0],
+                blockerLTR = limitLTR.childNodes[range.endOffset];
             // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                return (
-                    ( !movingOut || !limitLTR.equals(node) )
-                        // 到达深度遍历的最后一个节点，结束
-                        &&
-                        ( !DOM.equals(node, blockerLTR) )
-                        &&
-                        // 从body移出也结束
-                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
-                    );
+                if (movingOut && (limitLTR == node || DOM._4e_name(node) == "body")) {
+                    return false;
+                }
+                // 达到边界的下一个节点,注意 null 的情况
+                // node 永远不能为 null
+                return node != blockerLTR;
+
             };
         }
 
         // Create the RTL guard function, if necessary.
         if (rtl && !self._.guardRTL) {
             // Gets the node that stops the walker when going LTR.
-            var limitRTL = range.startContainer,
-                blockerRTL = ( range.startOffset > 0 ) &&
-                    new Node(limitRTL[0].childNodes[range.startOffset - 1]);
+            var limitRTL = range.startContainer[0],
+                blockerRTL = ( range.startOffset > 0 ) && limitRTL.childNodes[range.startOffset - 1] || null;
 
             self._.guardRTL = function (node, movingOut) {
-
-                return (
-                    ( !movingOut || !DOM.equals(node, limitRTL[0]) ) &&
-                        ( !blockerRTL || !DOM.equals(node, blockerRTL[0]) ) &&
-                        ( node.nodeType != KEN.NODE_ELEMENT || !movingOut || DOM._4e_name(node) != 'body' )
-                    );
+                // 从endContainer移出去，失败返回false
+                if (movingOut && (limitRTL == node || DOM._4e_name(node) == "body")) {
+                    return false;
+                }
+                // 达到边界的下一个节点,注意 null 的情况
+                // node 永远不能为 null
+                return node != blockerRTL;
             };
         }
 
@@ -7768,7 +7783,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
         while (node && !self._.end) {
             self.current = node;
-            if (!self.evaluator || self.evaluator(node) !== FALSE) {
+            if (!self.evaluator || self.evaluator(node[0]) !== FALSE) {
                 if (!breakOnFalse) {
                     return node;
                 }
@@ -7889,7 +7904,10 @@ KISSY.add("editor/core/walker", function (S, KE) {
         reset:function () {
             delete this.current;
             this._ = {};
-        }
+        },
+
+        // for unit test
+        _iterator:iterate
 
     });
 
@@ -7970,22 +7988,22 @@ KISSY.add("editor/core/walker", function (S, KE) {
         };
 
     // Check if there's a filler node at the end of an element, and return it.
-    Walker.getBogus = function (tail) {
+    function getBogus(tail) {
         // Bogus are not always at the end, e.g. <p><a>text<br /></a></p>
         do {
             tail = tail._4e_previousSourceNode();
-        } while (toSkip(tail[0]));
+        } while (tail && toSkip(tail[0]));
 
         if (tail && ( !UA.ie ? tail._4e_name() == "br"
             : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()) )) {
-            return tail;
+            return tail[0];
         }
         return false;
-    };
+    }
 
     KE.Utils.injectDom({
         _4e_getBogus:function (el) {
-            return Walker.getBogus(new Node(el));
+            return getBogus(new Node(el));
         }
     });
 

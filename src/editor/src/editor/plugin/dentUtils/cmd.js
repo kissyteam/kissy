@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
         isNotBookmark = Walker.bookmark(false, true);
 
     function isListItem(node) {
-        return node[0].nodeType == KEN.NODE_ELEMENT && node._4e_name() == 'li';
+        return node.nodeType == KEN.NODE_ELEMENT && DOM._4e_name(node) == 'li';
     }
 
     function indentList(range, listNode, type) {
