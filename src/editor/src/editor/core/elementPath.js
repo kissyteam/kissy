@@ -1,12 +1,12 @@
 /**
  * modified from ckeditor ,elementPath represents element's tree path from body
- * @author <yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/elementPath", function(S) {
+KISSY.add("editor/core/elementPath", function (S) {
     var KE = S.Editor,
         DOM = S.DOM,
         dtd = KE.XHTML_DTD,
@@ -45,7 +45,7 @@ KISSY.add("editor/core/elementPath", function(S) {
             "form":1
         },
         // Check if an element contains any block element.
-        checkHasBlock = function(element) {
+        checkHasBlock = function (element) {
             var childNodes = element[0].childNodes;
             for (var i = 0, count = childNodes.length; i < count; i++) {
                 var child = childNodes[i];
@@ -58,7 +58,7 @@ KISSY.add("editor/core/elementPath", function(S) {
 
     /**
      * @constructor
-     * @param lastNode {KISSY.Node}
+     * @param lastNode {Node}
      */
     function ElementPath(lastNode) {
         var self = this,
@@ -109,7 +109,7 @@ KISSY.add("editor/core/elementPath", function(S) {
          * @return {boolean} "TRUE" if the paths are equal, containing the same
          * number of elements and the same elements in the same order.
          */
-        compare : function(otherPath) {
+        compare:function (otherPath) {
             var thisElements = this.elements;
             var otherElements = otherPath && otherPath.elements;
 
@@ -124,7 +124,7 @@ KISSY.add("editor/core/elementPath", function(S) {
             return TRUE;
         },
 
-        contains : function(tagNames) {
+        contains:function (tagNames) {
             var elements = this.elements;
             for (var i = 0; i < elements.length; i++) {
                 if (elements[ i ]._4e_name() in tagNames)
@@ -132,8 +132,8 @@ KISSY.add("editor/core/elementPath", function(S) {
             }
             return NULL;
         },
-        toString:function() {
-            var elements = this.elements,i,elNames = [];
+        toString:function () {
+            var elements = this.elements, i, elNames = [];
             for (i = 0; i < elements.length; i++) {
                 elNames.push(elements[i]._4e_name());
             }
@@ -141,6 +141,8 @@ KISSY.add("editor/core/elementPath", function(S) {
         }
     };
     KE.ElementPath = ElementPath;
-},{
-    requires:['./base','./dom']
+
+    return ElementPath;
+}, {
+    requires:['./base', './dom']
 });

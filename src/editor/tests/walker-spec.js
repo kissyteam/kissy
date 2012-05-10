@@ -199,6 +199,7 @@ KISSY.use("editor", function (S, Editor) {
             expect(walker.checkForward()).toBe(false);
 
             div.remove();
+            div2.remove();
         });
 
     });

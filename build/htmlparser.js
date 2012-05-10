@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 10 19:30
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -264,13 +264,13 @@ KISSY.add("htmlparser/Utils", function() {
 /**
  * refer:
  *  -  http://www.w3.org/TR/html5/syntax.html
- **//*
+ **//**
+ * @fileOverview modified from ckeditor dtd by yiminghe, support html5 tag and dtd
+ * @author yimingh@gmail.com
+ */
+/*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
- */
-/**
- * @fileOverview modified from ckeditor dtd by yiminghe , support html5 tag and dtd
- * @author yimingh@gmail.com
  */
 KISSY.add("htmlparser/dtd", function(KY) {
     /**
@@ -1689,7 +1689,15 @@ KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
  * @fileOverview abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Node", function(S) {
+KISSY.add("htmlparser/nodes/Node", function (S) {
+
+    function lineCount(str) {
+        var i = 0;
+        str.replace(/\n/g, function () {
+            i++;
+        });
+        return i;
+    }
 
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
@@ -1699,22 +1707,29 @@ KISSY.add("htmlparser/nodes/Node", function(S) {
         this.nodeName = null;
         this.previousSibling = null;
         this.nextSibling = null;
-
+        this.startLine = lineCount(this.page.getText(0, startPosition));
+        this.endLine = lineCount(this.page.getText(0, endPosition));
         if (S.Config.debug) {
             this.toHtmlContent = this.toHtml();
         }
     }
 
     Node.prototype = {
-        toHtml:function() {
+        toHtml:function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
         },
-        toString:function() {
-            var ret = [];
-            ret.push(this.nodeName + "  [" + this.startPosition + ":" + this.endPosition + "]\n");
-            ret.push(this.toHtml());
+        toString:function () {
+            var ret = [],
+                self = this;
+            ret.push(self.nodeName +
+                "  [ " + self.startPosition + "|" +
+                self.startLine +
+                " : " + self.endPosition +
+                "|" + self.endLine +
+                " ]\n");
+            ret.push(self.toHtml());
             return ret.join("");
         }
     };

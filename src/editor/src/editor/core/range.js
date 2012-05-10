@@ -1,14 +1,12 @@
 /**
- * modified from ckeditor,range implementation across browsers for kissy editor
- * @author <yiminghe@gmail.com>
+ * Range implementation across browsers for kissy editor. Modified from CKEditor.
+ * @author yiminghe@gmail.com
  */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/range", function (S) {
-    var KE = S.Editor;
-
+KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
     /**
      * Enum for range
      * @enum {number}
@@ -17,13 +15,12 @@ KISSY.add("editor/core/range", function (S) {
         POSITION_AFTER_START:1, // <element>^contents</element>		"^text"
         POSITION_BEFORE_END:2, // <element>contents^</element>		"text^"
         POSITION_BEFORE_START:3, // ^<element>contents</element>		^"text"
-        POSITION_AFTER_END:4, // <element>contents</element>^		"text"
+        POSITION_AFTER_END:4, // <element>contents</element>^		"text"^
         ENLARGE_ELEMENT:1,
         ENLARGE_BLOCK_CONTENTS:2,
         ENLARGE_LIST_ITEM_CONTENTS:3,
         START:1,
         END:2,
-        //STARTEND:3,
         SHRINK_ELEMENT:1,
         SHRINK_TEXT:2
     };
@@ -31,21 +28,20 @@ KISSY.add("editor/core/range", function (S) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        //OLD_IE = !window.getSelection,
         KEN = KE.NODE,
         KER = KE.RANGE,
         KEP = KE.POSITION,
-        Walker = KE.Walker,
         DOM = S.DOM,
-        getByAddress = KE.Utils.getByAddress,
+        getByAddress = Utils.getByAddress,
         UA = S.UA,
         dtd = KE.XHTML_DTD,
-        ElementPath = KE.ElementPath,
         Node = S.Node,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
 
     /**
-     * @constructor
+     * Range implementation across browsers.
+     * @memberOf Editor
+     * @class
      * @param document {Document}
      */
     function KERange(document) {
@@ -74,6 +70,7 @@ KISSY.add("editor/core/range", function (S) {
                     DOM.equals(self.startContainer, self.endContainer) &&
                     self.startOffset == self.endOffset );
         },
+
         /**
          * Transforms the startContainer and endContainer properties from text
          * nodes to element nodes, whenever possible. This is actually possible
@@ -81,25 +78,30 @@ KISSY.add("editor/core/range", function (S) {
          * offset is set to zero, or after the last char in the node.
          */
         optimize:function () {
-            var self = this, container = self.startContainer, offset = self.startOffset;
+            var self = this,
+                container = self.startContainer,
+                offset = self.startOffset;
 
             if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset)
+                if (!offset) {
                     self.setStartBefore(container);
-                else if (offset >= container[0].nodeValue.length)
+                } else if (offset >= container[0].nodeValue.length) {
                     self.setStartAfter(container);
+                }
             }
 
             container = self.endContainer;
             offset = self.endOffset;
 
             if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset)
+                if (!offset) {
                     self.setEndBefore(container);
-                else if (offset >= container[0].nodeValue.length)
+                } else if (offset >= container[0].nodeValue.length) {
                     self.setEndAfter(container);
+                }
             }
         },
+
         setStartAfter:function (node) {
             this.setStart(node.parent(), node._4e_index() + 1);
         },
@@ -115,17 +117,27 @@ KISSY.add("editor/core/range", function (S) {
         setEndBefore:function (node) {
             this.setEnd(node.parent(), node._4e_index());
         },
+
+        /**
+         * Make edge bookmarks included in current range.
+         */
         optimizeBookmark:function () {
-            var self = this, startNode = self.startContainer,
+            var self = this,
+                startNode = self.startContainer,
                 endNode = self.endContainer;
 
-            if (startNode && startNode._4e_name() == 'span'
-                && startNode.attr('_ke_bookmark'))
-                self.setStartAt(startNode, KER.POSITION_BEFORE_START);
-            if (endNode && endNode._4e_name() == 'span'
-                && endNode.attr('_ke_bookmark'))
-                self.setEndAt(endNode, KER.POSITION_AFTER_END);
+            if (startNode &&
+                startNode._4e_name() == 'span' &&
+                startNode.attr('_ke_bookmark')) {
+                self.setStartBefore(startNode);
+            }
+            if (endNode &&
+                endNode._4e_name() == 'span' &&
+                endNode.attr('_ke_bookmark')) {
+                self.setEndAfter(endNode);
+            }
         },
+
         /**
          * Sets the start position of a Range.
          * @param {Node} startNode The node to start the range.
@@ -141,9 +153,10 @@ KISSY.add("editor/core/range", function (S) {
 
             // Fixing invalid range start inside dtd empty elements.
             var self = this;
-            if (startNode[0].nodeType == KEN.NODE_ELEMENT
-                && EMPTY[ startNode._4e_name() ])
-                startNode = startNode.parent(), startOffset = startNode._4e_index();
+            if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
+                startNode = startNode.parent();
+                startOffset = startNode._4e_index();
+            }
 
             self.startContainer = startNode;
             self.startOffset = startOffset;
@@ -171,9 +184,10 @@ KISSY.add("editor/core/range", function (S) {
 
             // Fixing invalid range end inside dtd empty elements.
             var self = this;
-            if (endNode[0].nodeType == KEN.NODE_ELEMENT
-                && EMPTY[ endNode._4e_name() ])
-                endNode = endNode.parent(), endOffset = endNode._4e_index() + 1;
+            if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
+                endNode = endNode.parent();
+                endOffset = endNode._4e_index() + 1;
+            }
 
             self.endContainer = endNode;
             self.endOffset = endOffset;
@@ -193,10 +207,11 @@ KISSY.add("editor/core/range", function (S) {
                     break;
 
                 case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT)
+                    if (node[0].nodeType == KEN.NODE_TEXT) {
                         self.setStart(node, node[0].nodeValue.length);
-                    else
+                    } else {
                         self.setStart(node, node[0].childNodes.length);
+                    }
                     break;
 
                 case KER.POSITION_BEFORE_START :
@@ -218,10 +233,11 @@ KISSY.add("editor/core/range", function (S) {
                     break;
 
                 case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT)
+                    if (node[0].nodeType == KEN.NODE_TEXT) {
                         self.setEnd(node, node[0].nodeValue.length);
-                    else
+                    } else {
                         self.setEnd(node, node[0].childNodes.length);
+                    }
                     break;
 
                 case KER.POSITION_BEFORE_START :
@@ -234,23 +250,61 @@ KISSY.add("editor/core/range", function (S) {
 
             self.updateCollapsed();
         },
-        execContentsAction:function (action, docFrag) {
+
+        cloneContents:function () {
+            return this.execContentsAction(2);
+        },
+
+        deleteContents:function () {
+            return this.execContentsAction(0);
+        },
+
+        extractContents:function () {
+            return this.execContentsAction(1);
+        },
+
+        /**
+         * Extract content within range.
+         * @param {Number} action
+         * 0 : delete
+         * 1 : extract
+         * 2 : clone
+         */
+        execContentsAction:function (action) {
             var self = this,
                 startNode = self.startContainer,
                 endNode = self.endContainer,
                 startOffset = self.startOffset,
                 endOffset = self.endOffset,
                 removeStartNode,
+                hasSplitStart = FALSE,
+                hasSplitEnd = FALSE,
                 t,
+                docFrag,
                 doc = self.document,
                 removeEndNode;
+
+            if (self.collapsed) {
+                return docFrag;
+            }
+
+            if (action > 0) {
+                docFrag = doc.createDocumentFragment();
+            }
+
+            // 将 bookmark 包含在选区内
             self.optimizeBookmark();
+
+
+            // endNode -> end guard , not included in range
+
             // For text containers, we must simply split the node and point to the
             // second part. The removal will be handled by the rest of the code .
             //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
-            if (endNode[0].nodeType == KEN.NODE_TEXT)
+            if (endNode[0].nodeType == KEN.NODE_TEXT) {
+                hasSplitEnd = TRUE;
                 endNode = endNode._4e_splitText(endOffset);
-            else {
+            } else {
                 // If the end container has children and the offset is pointing
                 // to a child, then we should start from it.
                 if (endNode[0].childNodes.length > 0) {
@@ -261,23 +315,20 @@ KISSY.add("editor/core/range", function (S) {
                             endNode[0].appendChild(doc.createTextNode(""))
                         );
                         removeEndNode = TRUE;
-                    }
-                    else
+                    } else {
                         endNode = new Node(endNode[0].childNodes[endOffset]);
+                    }
                 }
             }
+
+            // startNode -> start guard , not included in range
 
             // For text containers, we must simply split the node. The removal will
             // be handled by the rest of the code .
             if (startNode[0].nodeType == KEN.NODE_TEXT) {
+                hasSplitStart = TRUE;
                 startNode._4e_splitText(startOffset);
-                // In cases the end node is the same as the start node, the above
-                // splitting will also split the end, so me must move the end to
-                // the second part of the split.
-                if (startNode.equals(endNode))
-                    endNode = new Node(startNode[0].nextSibling);
-            }
-            else {
+            } else {
                 // If the start container has children and the offset is pointing
                 // to a child, then we should start from its previous sibling.
 
@@ -292,10 +343,8 @@ KISSY.add("editor/core/range", function (S) {
                 }
                 else if (startOffset >= startNode[0].childNodes.length) {
                     // Let's create a temporary node and mark it for removal.
-                    //startNode = startNode[0].appendChild(self.document.createTextNode(''));
-                    t = new Node(doc.createTextNode(""));
-                    startNode.append(t);
-                    startNode = t;
+                    startNode = new Node(startNode[0]
+                        .appendChild(doc.createTextNode('')));
                     removeStartNode = TRUE;
                 } else
                     startNode = new Node(
@@ -328,8 +377,9 @@ KISSY.add("editor/core/range", function (S) {
                 // siblings (different nodes that have the same parent).
                 // "i" will hold the index in the parents array for the top
                 // most element.
-                if (!topStart.equals(topEnd))
+                if (!topStart.equals(topEnd)) {
                     break;
+                }
             }
 
             var clone = docFrag,
@@ -344,47 +394,51 @@ KISSY.add("editor/core/range", function (S) {
                 levelStartNode = startParents[j];
 
                 // For Extract and Clone, we must clone this level.
-                if (
-                    clone
-                        &&
-                        !levelStartNode.equals(startNode)
-                    ) {
+                if (action > 0 && !levelStartNode.equals(startNode)) {
                     // action = 0 = Delete
                     levelClone = clone.appendChild(levelStartNode.clone()[0]);
-                }
-                else {
+                } else {
                     levelClone = null;
                 }
+
+                // 开始节点的路径所在父节点不能 clone(TRUE)，其他节点（结束节点路径左边的节点）可以直接 clone(true)
                 currentNode = levelStartNode[0].nextSibling;
+
+                var endParentJ = endParents[ j ],
+                    domEndNode = endNode[0],
+                    domEndParentJ = endParentJ[0];
 
                 while (currentNode) {
                     // Stop processing when the current node matches a node in the
                     // endParents tree or if it is the endNode.
-                    if (DOM.equals(endParents[ j ], currentNode)
-                        ||
-                        DOM.equals(endNode, currentNode))
+                    if (domEndParentJ == currentNode || domEndNode == currentNode) {
                         break;
+                    }
 
                     // Cache the next sibling.
                     currentSibling = currentNode.nextSibling;
 
                     // If cloning, just clone it.
-                    if (action == 2)    // 2 = Clone
+                    if (action == 2) {
+                        // 2 = Clone
                         clone.appendChild(currentNode.cloneNode(TRUE));
-                    else {
+                    } else {
                         // Both Delete and Extract will remove the node.
                         DOM._4e_remove(currentNode);
 
                         // When Extracting, move the removed node to the docFrag.
-                        if (action == 1)    // 1 = Extract
+                        if (action == 1) {
+                            // 1 = Extract
                             clone.appendChild(currentNode);
+                        }
                     }
 
                     currentNode = currentSibling;
                 }
-                //ckeditor这里错了，当前节点的路径所在父节点不能clone(TRUE)，要在后面深入子节点处理
-                if (levelClone)
+                // 开始节点的路径所在父节点不能 clone(TRUE)，要在后面深入子节点处理
+                if (levelClone) {
                     clone = levelClone;
+                }
             }
 
             clone = docFrag;
@@ -395,14 +449,9 @@ KISSY.add("editor/core/range", function (S) {
                 levelStartNode = endParents[ k ];
 
                 // For Extract and Clone, we must clone this level.
-                if (
-                    clone
-                        &&
-                        action > 0
-                        &&
-                        !levelStartNode.equals(endNode)
-                    ) {
+                if (action > 0 && !levelStartNode.equals(endNode)) {
                     // action = 0 = Delete
+                    // 浅复制
                     levelClone = clone.appendChild(levelStartNode.clone()[0]);
                 } else {
                     levelClone = null;
@@ -410,19 +459,12 @@ KISSY.add("editor/core/range", function (S) {
 
                 // The processing of siblings may have already been done by the parent.
                 if (
-                    !startParents[ k ]
-                        ||
-                        !levelStartNode.parent().equals(startParents[ k ].parent())
+                    !startParents[ k ] ||
+                        // 前面 startParents 循环已经处理过了
+                        levelStartNode[0].parentNode != startParents[ k ][0].parentNode
                     ) {
                     currentNode = levelStartNode[0].previousSibling;
                     while (currentNode) {
-                        // Stop processing when the current node matches a node in the
-                        // startParents tree or if it is the startNode.
-                        if (DOM.equals(startParents[ k ], currentNode)
-                            ||
-                            DOM.equals(startNode, currentNode))
-                            break;
-
                         // Cache the next sibling.
                         currentSibling = currentNode.previousSibling;
 
@@ -435,75 +477,88 @@ KISSY.add("editor/core/range", function (S) {
                             DOM._4e_remove(currentNode);
 
                             // When Extracting, mode the removed node to the docFrag.
-                            if (action == 1)    // 1 = Extract
-                                clone.insertBefore(currentNode, clone.firstChild);
+                            if (action == 1) {
+                                // 1 = Extract
+                                clone.insertBefore(currentNode,clone.firstChild);
+                            }
                         }
 
                         currentNode = currentSibling;
                     }
                 }
 
-                if (levelClone)
+                if (levelClone) {
                     clone = levelClone;
+                }
             }
-
-            if (action == 2) {   // 2 = Clone.
+            // 2 = Clone.
+            if (action == 2) {
 
                 // No changes in the DOM should be done, so fix the split text (if any).
 
-                var startTextNode = self.startContainer[0];
-                if (startTextNode.nodeType == KEN.NODE_TEXT
-                    && startTextNode.nextSibling
-                    //yiminghe note:careful,nextsilbling should be text node
-                    && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
-                    startTextNode.data += startTextNode.nextSibling.data;
-                    startTextNode.parentNode.removeChild(startTextNode.nextSibling);
+                if (hasSplitStart) {
+                    var startTextNode = startNode[0];
+                    if (startTextNode.nodeType == KEN.NODE_TEXT
+                        && startTextNode.nextSibling
+                        // careful, next sibling should be text node
+                        && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
+                        startTextNode.data += startTextNode.nextSibling.data;
+                        startTextNode.parentNode.removeChild(startTextNode.nextSibling);
+                    }
                 }
 
-                var endTextNode = self.endContainer[0];
-                if (endTextNode.nodeType == KEN.NODE_TEXT &&
-                    endTextNode.nextSibling &&
-                    endTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
-                    endTextNode.data += endTextNode.nextSibling.data;
-                    endTextNode.parentNode.removeChild(endTextNode.nextSibling);
+                if (hasSplitEnd) {
+                    var endTextNode = endNode[0];
+                    if (endTextNode.nodeType == KEN.NODE_TEXT &&
+                        endTextNode.previousSibling &&
+                        endTextNode.previousSibling.nodeType == KEN.NODE_TEXT) {
+                        endTextNode.previousSibling.data += endTextNode.data;
+                        endTextNode.parentNode.removeChild(endTextNode);
+                    }
                 }
-            }
-            else {
+
+            } else {
+
                 // Collapse the range.
-
                 // If a node has been partially selected, collapse the range between
-                // topStart and topEnd. Otherwise, simply collapse it to the start. (W3C specs).
+                // topStart and topEnd. Otherwise, simply collapse it to the start.
+                // (W3C specs).
                 if (
-                    topStart && topEnd
-                        &&
+                    topStart && topEnd &&
                         (
                             !startNode.parent().equals(topStart.parent())
                                 ||
                                 !endNode.parent().equals(topEnd.parent())
                             )
                     ) {
-                    var endIndex = topEnd._4e_index();
+                    var startIndex = topStart._4e_index();
 
                     // If the start node is to be removed, we must correct the
                     // index to reflect the removal.
                     if (removeStartNode &&
-                        topEnd.parent().equals(startNode.parent()))
-                        endIndex--;
+                        // startNode 和 topStart 同级
+                        topStart.parent().equals(removeStartNode.parent())) {
+                        startIndex--;
+                    }
 
-                    self.setStart(topEnd.parent(), endIndex);
+                    self.setStart(topStart.parent(), startIndex + 1);
                 }
 
                 // Collapse it to the start.
                 self.collapse(TRUE);
+
             }
 
             // Cleanup any marked node.
-            if (removeStartNode)
-                startNode._4e_remove();
+            if (removeStartNode) {
+                startNode.remove();
+            }
 
-            if (removeEndNode && endNode[0].parentNode)
-            //不能使用remove()
-                endNode._4e_remove();
+            if (removeEndNode) {
+                endNode.remove();
+            }
+
+            return docFrag;
         },
 
         collapse:function (toStart) {
@@ -1387,18 +1442,6 @@ KISSY.add("editor/core/range", function (S) {
 
             return walker.checkForward();
         },
-        deleteContents:function () {
-            var self = this;
-            if (self.collapsed)
-                return;
-            self.execContentsAction(0);
-        },
-        extractContents:function () {
-            var self = this, docFrag = self.document.createDocumentFragment();
-            if (!self.collapsed)
-                self.execContentsAction(1, docFrag);
-            return docFrag;
-        },
         /**
          * Check whether current range is on the inner edge of the specified element.
          * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
@@ -1661,7 +1704,7 @@ KISSY.add("editor/core/range", function (S) {
                     return FALSE;
             }
             else if (node.nodeType == KEN.NODE_ELEMENT) {
-                var nodeName=DOM._4e_name(node);
+                var nodeName = DOM._4e_name(node);
                 // If there are non-empty inline elements (e.g. <img />), then we're not
                 // at the start.
                 if (!inlineChildReqElements[ nodeName ]) {

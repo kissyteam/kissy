@@ -1,6 +1,6 @@
 /**
  * common utils for kissy editor
- * @author <yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/utils", function (S) {
 

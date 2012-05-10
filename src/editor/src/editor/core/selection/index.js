@@ -1,7 +1,7 @@
 /**
  * ie selection fix.
  * modified from ckeditor core
- * @author <yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.

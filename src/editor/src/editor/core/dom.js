@@ -1,6 +1,6 @@
 /**
  * dom utils for kissy editor,mainly from ckeditor
- * @author <yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
@@ -124,7 +124,8 @@ KISSY.add("editor/core/dom", function (S) {
 
             /**
              * 返回当前元素在父元素中所有儿子节点中的序号
-             * @param el
+             * @param [el]
+             * @param [normalized]
              */
             _4e_index:function (el, normalized) {
                 var siblings = el.parentNode.childNodes,
@@ -168,7 +169,7 @@ KISSY.add("editor/core/dom", function (S) {
 
             /**
              * 得到小写的标签名
-             * @param thisElement
+             * @param [thisElement]
              */
             _4e_name:function (thisElement) {
                 var nodeName = thisElement.nodeName.toLowerCase();
@@ -302,7 +303,8 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * 将一个字符串节点拆散为两个字符串节点，并返回最后一个
+             * 将一个字符串节点拆散为两个字符串节点，并返回最后一个。
+             * 如果 offset 为 0，仍然拆成两个！第一个字符串为空文字节点。
              * @param el
              * @param offset
              */

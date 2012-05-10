@@ -2,7 +2,7 @@
  * 多实例的管理，主要是焦点控制，主要是为了
  * 1.firefox 焦点失去 bug，记录当前状态
  * 2.窗口隐藏后能够恢复焦点
- * @author <yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/focusManager", function (S) {
     var KE = S.Editor,
