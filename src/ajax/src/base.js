@@ -317,8 +317,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         fire("start", xhrObject);
 
-        var transportContructor = transports[c.dataType[0]] || transports["*"],
-            transport = new transportContructor(xhrObject);
+        var transportConstructor = transports[c.dataType[0]] || transports["*"],
+            transport = new transportConstructor(xhrObject);
         xhrObject.transport = transport;
 
         if (c.contentType) {
