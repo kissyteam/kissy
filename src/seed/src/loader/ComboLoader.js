@@ -169,15 +169,14 @@
 
             add:function (name, fn, config) {
                 var self = this,
-                    requires,
                     SS = self.SS;
 
                 if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
-                if (config && (requires = config.requires)) {
-                    utils.normalDepModuleName(name, requires);
-                }
+
+                name = utils.indexMapStr(name);
+
                 utils.registerModule(SS, name, fn, config);
             },
 
@@ -211,14 +210,18 @@
             },
 
             calculate:function (modNames) {
-                var ret = {}, SS = this.SS;
+                var ret = {},
+                    SS = this.SS,
+                    // 提高性能，不用每个模块都再次提柜计算
+                    // 做个缓存，每个模块对应的待动态加载模块
+                    cache = {};
                 for (var i = 0; i < modNames.length; i++) {
                     var m = modNames[i];
                     if (!utils.isAttached(SS, m)) {
                         if (!utils.isLoaded(SS, m)) {
                             ret[m] = 1;
                         }
-                        S.mix(ret, this.getRequires((m)));
+                        S.mix(ret, this.getRequires(m, cache));
                     }
                 }
                 var ret2 = [];
@@ -249,9 +252,9 @@
                 var res = {
                     js:{},
                     css:{}
-                }, t;
-
-                var comboPrefix = S.Config.comboPrefix,
+                },
+                    t,
+                    comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
                     maxUrlLength = S.Config.comboMaxUrlLength;
 
@@ -303,11 +306,16 @@
             },
 
             // get requires mods need to be loaded dynamically
-            getRequires:function (modName) {
+            getRequires:function (modName, cache) {
                 var self = this,
                     SS = self.SS,
                     mod = self.getModInfo(modName),
-                    ret = {};
+                    // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+                    ret = cache[modName];
+                if (ret) {
+                    return ret;
+                }
+                ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
                     var requires = utils.normalizeModNames(SS, mod.requires, modName);
@@ -332,16 +340,17 @@
                             }
                         }
                         // if not load into page yet
-                        if (!utils.isLoaded(SS, r)
+                        if (!utils.isLoaded(SS, r) &&
                             // and not attached
-                            && !utils.isAttached(SS, r)) {
+                            !utils.isAttached(SS, r)) {
                             ret[r] = 1;
                         }
-                        var ret2 = self.getRequires(r);
+                        var ret2 = self.getRequires(r, cache);
                         S.mix(ret, ret2);
                     }
                 }
-                return ret;
+
+                return cache[modName] = ret;
             }
         });
 

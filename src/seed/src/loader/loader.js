@@ -47,9 +47,9 @@
                 var self = this,
                     SS = self.SS,
                     mod,
-                    requires,
                     mods = SS.Env.mods,
                     o;
+
 
                 if (utils.normAdd(SS, name, fn, config)) {
                     return;
@@ -57,6 +57,8 @@
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
+
+                    name = utils.indexMapStr(name);
 
                     utils.registerModule(SS, name, fn, config);
 
@@ -67,9 +69,8 @@
                         return;
                     }
 
-                    requires = utils.normalizeModNames(SS, mod.requires, name);
 
-                    if (utils.isAttached(SS, requires)) {
+                    if (config && utils.isAttached(SS, config.requires)) {
                         utils.attachMod(SS, mod);
                     }
                     return;
@@ -102,7 +103,7 @@
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
-                        S.log("old_ie get modname by interactive : " + name);
+                        S.log("old_ie get modName by interactive : " + name);
                         utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;

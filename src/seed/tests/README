@@ -12,4 +12,3 @@ scope-spec.js     - kernel 在不同 scope 下的 specs
 web-spec.js       - web.js 的 specs
 
 seed-cases.js     - 测试 kernel 可处理不同 seed
-test-iframe.html  - 测试辅助文件

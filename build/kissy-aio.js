@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 9 19:39
+build time: May 11 15:07
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -424,7 +424,7 @@ build time: May 9 19:39
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120509193932';
+        S.__BUILD_TIME = '20120511150720';
     })();
 
     return S;
@@ -2096,10 +2096,15 @@ build time: May 9 19:39
             });
             return ret;
         }
+        return indexMapStr(s);
+    }
+
+    function indexMapStr(s) {
         if (/(.+\/)(\?t=.+)?$/.test(s)) {
             return RegExp.$1 + "index" + RegExp.$2;
+        } else {
+            return s
         }
-        return s;
     }
 
     function removeSuffixAndTagFromModName(modName) {
@@ -2367,6 +2372,9 @@ build time: May 9 19:39
             return modNames;
         },
 
+
+        indexMapStr:indexMapStr,
+
         /**
          * Three effects:
          * 1. add index : / => /index
@@ -2407,7 +2415,6 @@ build time: May 9 19:39
 
         // 注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, fn, config) {
-            config = config || {};
             var mods = self.Env.mods,
                 mod = mods[name];
 
@@ -2426,6 +2433,11 @@ build time: May 9 19:39
 
 
             mod.fn = fn;
+
+
+            if (config && config.requires) {
+                config.requires = utils.normalizeModNames(self, config.requires, name);
+            }
 
             S.mix((mods[name] = mod), config);
 
@@ -2474,6 +2486,11 @@ build time: May 9 19:39
             // S.add( { name: config } )
             if (S.isPlainObject(name)) {
                 S.each(name, function (modCfg, modName) {
+                    modName = utils.indexMapStr(modName);
+                    if (modCfg.requires) {
+                        modCfg.requires =
+                            utils.normalizeModNames(self, modCfg.requires, modName);
+                    }
                     utils.createModuleInfo(self, modName);
                     S.mix(mods[modName], modCfg);
                 });
@@ -2922,9 +2939,9 @@ build time: May 9 19:39
                 var self = this,
                     SS = self.SS,
                     mod,
-                    requires,
                     mods = SS.Env.mods,
                     o;
+
 
                 if (utils.normAdd(SS, name, fn, config)) {
                     return;
@@ -2932,6 +2949,8 @@ build time: May 9 19:39
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
+
+                    name = utils.indexMapStr(name);
 
                     utils.registerModule(SS, name, fn, config);
 
@@ -2942,9 +2961,8 @@ build time: May 9 19:39
                         return;
                     }
 
-                    requires = utils.normalizeModNames(SS, mod.requires, name);
 
-                    if (utils.isAttached(SS, requires)) {
+                    if (config && utils.isAttached(SS, config.requires)) {
                         utils.attachMod(SS, mod);
                     }
                     return;
@@ -2977,7 +2995,7 @@ build time: May 9 19:39
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
-                        S.log("old_ie get modname by interactive : " + name);
+                        S.log("old_ie get modName by interactive : " + name);
                         utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
@@ -3583,15 +3601,14 @@ build time: May 9 19:39
 
             add:function (name, fn, config) {
                 var self = this,
-                    requires,
                     SS = self.SS;
 
                 if (utils.normAdd(SS, name, fn, config)) {
                     return;
                 }
-                if (config && (requires = config.requires)) {
-                    utils.normalDepModuleName(name, requires);
-                }
+
+                name = utils.indexMapStr(name);
+
                 utils.registerModule(SS, name, fn, config);
             },
 
@@ -3625,14 +3642,18 @@ build time: May 9 19:39
             },
 
             calculate:function (modNames) {
-                var ret = {}, SS = this.SS;
+                var ret = {},
+                    SS = this.SS,
+                    // 提高性能，不用每个模块都再次提柜计算
+                    // 做个缓存，每个模块对应的待动态加载模块
+                    cache = {};
                 for (var i = 0; i < modNames.length; i++) {
                     var m = modNames[i];
                     if (!utils.isAttached(SS, m)) {
                         if (!utils.isLoaded(SS, m)) {
                             ret[m] = 1;
                         }
-                        S.mix(ret, this.getRequires((m)));
+                        S.mix(ret, this.getRequires(m, cache));
                     }
                 }
                 var ret2 = [];
@@ -3663,9 +3684,9 @@ build time: May 9 19:39
                 var res = {
                     js:{},
                     css:{}
-                }, t;
-
-                var comboPrefix = S.Config.comboPrefix,
+                },
+                    t,
+                    comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
                     maxUrlLength = S.Config.comboMaxUrlLength;
 
@@ -3717,11 +3738,16 @@ build time: May 9 19:39
             },
 
             // get requires mods need to be loaded dynamically
-            getRequires:function (modName) {
+            getRequires:function (modName, cache) {
                 var self = this,
                     SS = self.SS,
                     mod = self.getModInfo(modName),
-                    ret = {};
+                    // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+                    ret = cache[modName];
+                if (ret) {
+                    return ret;
+                }
+                ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
                     var requires = utils.normalizeModNames(SS, mod.requires, modName);
@@ -3746,16 +3772,17 @@ build time: May 9 19:39
                             }
                         }
                         // if not load into page yet
-                        if (!utils.isLoaded(SS, r)
+                        if (!utils.isLoaded(SS, r) &&
                             // and not attached
-                            && !utils.isAttached(SS, r)) {
+                            !utils.isAttached(SS, r)) {
                             ret[r] = 1;
                         }
-                        var ret2 = self.getRequires(r);
+                        var ret2 = self.getRequires(r, cache);
                         S.mix(ret, ret2);
                     }
                 }
-                return ret;
+
+                return cache[modName] = ret;
             }
         });
 
@@ -3922,7 +3949,7 @@ build time: May 9 19:39
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120509193932'
+        tag:'20120511150720'
     }, getBaseInfo()));
 
     /**

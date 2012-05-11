@@ -4,9 +4,6 @@
  */
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "");
-    S.config({
-        base:"../../"
-    });
 
     function getStyle(elem, name) {
         if (document.defaultView) {
@@ -60,7 +57,6 @@
             var ok = false;
 
             S.use("node", function (S, Node) {
-
                 ok = true;
                 new Node(document.body).append("<div id='k11x'/>");
                 new Node(document.body).append("<div id='k12'/>");
@@ -226,8 +222,7 @@
             S.Env.mods = {};
 
             S.config({
-                debug:0,
-                base:"../../../build/"
+                debug:0
             });
 
             var ok = 0;

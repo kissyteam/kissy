@@ -20,8 +20,10 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
         this.nodeName = null;
         this.previousSibling = null;
         this.nextSibling = null;
-        this.startLine = lineCount(this.page.getText(0, startPosition));
-        this.endLine = lineCount(this.page.getText(0, endPosition));
+        if (page) {
+            this.startLine = lineCount(this.page.getText(0, startPosition));
+            this.endLine = lineCount(this.page.getText(0, endPosition));
+        }
         if (S.Config.debug) {
             this.toHtmlContent = this.toHtml();
         }

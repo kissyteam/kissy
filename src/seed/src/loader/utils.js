@@ -33,10 +33,15 @@
             });
             return ret;
         }
+        return indexMapStr(s);
+    }
+
+    function indexMapStr(s) {
         if (/(.+\/)(\?t=.+)?$/.test(s)) {
             return RegExp.$1 + "index" + RegExp.$2;
+        } else {
+            return s
         }
-        return s;
     }
 
     function removeSuffixAndTagFromModName(modName) {
@@ -304,6 +309,9 @@
             return modNames;
         },
 
+
+        indexMapStr:indexMapStr,
+
         /**
          * Three effects:
          * 1. add index : / => /index
@@ -344,7 +352,6 @@
 
         // 注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, fn, config) {
-            config = config || {};
             var mods = self.Env.mods,
                 mod = mods[name];
 
@@ -363,6 +370,11 @@
 
 
             mod.fn = fn;
+
+
+            if (config && config.requires) {
+                config.requires = utils.normalizeModNames(self, config.requires, name);
+            }
 
             S.mix((mods[name] = mod), config);
 
@@ -411,6 +423,11 @@
             // S.add( { name: config } )
             if (S.isPlainObject(name)) {
                 S.each(name, function (modCfg, modName) {
+                    modName = utils.indexMapStr(modName);
+                    if (modCfg.requires) {
+                        modCfg.requires =
+                            utils.normalizeModNames(self, modCfg.requires, modName);
+                    }
                     utils.createModuleInfo(self, modName);
                     S.mix(mods[modName], modCfg);
                 });
