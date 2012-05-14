@@ -94,7 +94,7 @@ KISSY.add("editor/core/utils", function (S) {
              * 是否两个数组完全相同
              * @param arrayA {Array}
              * @param arrayB {Array}
-             * @return {boolean}
+             * @return {Boolean}
              */
             arrayCompare:function (arrayA, arrayB) {
                 if (!arrayA && !arrayB)
@@ -115,7 +115,7 @@ KISSY.add("editor/core/utils", function (S) {
              * 根据dom路径得到某个节点
              * @param doc {Document}
              * @param address {Array.<number>}
-             * @param normalized {boolean}
+             * @param normalized {Boolean}
              * @return {Node}
              */
             getByAddress:function (doc, address, normalized) {
@@ -210,7 +210,7 @@ KISSY.add("editor/core/utils", function (S) {
              *
              * @param inputs {Array.<Node>}
              * @param [warn] {string}
-             * @return {boolean} 是否验证成功
+             * @return {Boolean} 是否验证成功
              */
             verifyInputs:function (inputs, warn) {
                 for (var i = 0; i < inputs.length; i++) {

@@ -5,7 +5,8 @@
 KISSY.add("uibase/position", function (S) {
 
     /**
-     * make component positionable
+     * Position extensiong class.
+     * Make component positionable
      * @class
      * @memberOf UIBase
      */
@@ -14,25 +15,25 @@ KISSY.add("uibase/position", function (S) {
 
     Position.ATTRS =
     /**
-     * @lends UIBase.Position.prototype
+     * @lends UIBase.Position#
      */
     {
         /**
-         * 横坐标值
+         * Horizontal axis
          * @type Number
          */
         x:{
             view:true
         },
         /**
-         * 纵坐标值
+         * Vertical axis
          * @type Number
          */
         y:{
             view:true
         },
         /**
-         * 横纵坐标值
+         * Horizontal and vertical axis.
          * @type Number[]
          */
         xy:{
@@ -40,7 +41,6 @@ KISSY.add("uibase/position", function (S) {
             setter:function (v) {
                 var self = this,
                     xy = S.makeArray(v);
-
                 /*
                  属性内分发特别注意：
                  xy -> x,y
@@ -59,7 +59,7 @@ KISSY.add("uibase/position", function (S) {
             }
         },
         /**
-         * z-index 值
+         * z-index value.
          * @type Number
          */
         zIndex:{
@@ -74,9 +74,15 @@ KISSY.add("uibase/position", function (S) {
      */
     {
         /**
-         * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
+         * Move to absolute position.
          * @param {Number|Number[]} x
          * @param {Number} [y]
+         * @example
+         * <code>
+         * move(x, y);
+         * move(x);
+         * move([x,y])
+         * </code>
          */
         move:function (x, y) {
             var self = this;

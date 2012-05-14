@@ -5,7 +5,8 @@
 KISSY.add('uibase/box', function (S) {
 
     /**
-     * Box Implementation
+     * Box extension class.
+     * Represent a dom element.
      * @class
      * @memberOf UIBase
      * @namespace

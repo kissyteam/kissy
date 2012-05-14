@@ -44,7 +44,7 @@
 
 /* State: disabled. */
 .goog-menuitem-disabled .goog-menuitem-accel,
-.goog-menuitem-disabled .goog-menuitem-content {
+.goog-menuitem-disabled{
   color: #ccc !important;
 }
 .goog-menuitem-disabled .goog-menuitem-icon {

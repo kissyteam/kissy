@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 11 15:07
+build time: May 14 17:14
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -45,9 +45,9 @@ build time: May 11 15:07
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {boolean} whether recursive mix if encounter object,
+             * @param deep {Boolean} whether recursive mix if encounter object,
              * if deep is set true,then ov should be set true too!
              * @return {Object} the augmented object
              * @example
@@ -165,7 +165,7 @@ build time: May 11 15:07
              * Applies prototype properties from the supplier to the receiver.
              * @param   {Object} r received object
              * @param   {...Object} s1 object need to  augment
-             *          {boolean} [ov=true] whether overwrite existing property
+             *          {Boolean} [ov=true] whether overwrite existing property
              *          {String[]} [wl] array of white-list properties
              * @return  {Object} the augmented object
              */
@@ -291,9 +291,9 @@ build time: May 11 15:07
              * @param {Array[]} c.map.0 a single map rule
              * @param {RegExp} c.map.0.0 a regular expression to match url
              * @param {String|Function} c.map.0.1 provide replacement for String.replace
-             * @param {boolean} c.combine whether to enable combo
+             * @param {Boolean} c.combine whether to enable combo
              * @param {String} c.base set base for kissy loader.use with caution!
-             * @param {boolean} c.debug whether to enable debug mod
+             * @param {Boolean} c.debug whether to enable debug mod
              * @param [v] config value
              * @example
              * // use gallery from cdn
@@ -424,7 +424,7 @@ build time: May 11 15:07
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120511150720';
+        S.__BUILD_TIME = '20120514171431';
     })();
 
     return S;
@@ -532,7 +532,7 @@ build time: May 11 15:07
             /**
              * stamp a object by guid
              * @param {Object} o object needed to be stamped
-             * @param {boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {Boolean} [readOnly] while set marker on o if marker does not exist
              * @param {String} [marker] the marker will be set on Object
              * @return guid associated with this object
              */
@@ -618,7 +618,7 @@ build time: May 11 15:07
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
-             * @returns {boolean} a.equals(b)
+             * @returns {Boolean} a.equals(b)
              */
             equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
                 // inspired by jasmine
@@ -822,7 +822,7 @@ build time: May 11 15:07
              * Search for a specified value index within an array.
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {boolean} the item exists in arr
+             * @returns {Boolean} the item exists in arr
              */
             inArray:function (item, arr) {
                 return S.indexOf(item, arr) > -1;
@@ -950,7 +950,7 @@ build time: May 11 15:07
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {boolean} whether all elements in the array pass the test implemented by the provided function.
+             * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
              */
             every:every ?
                 function (arr, fn, context) {
@@ -972,7 +972,7 @@ build time: May 11 15:07
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {boolean} whether some element in the array passes the test implemented by the provided function.
+             * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
              */
             some:some ?
                 function (arr, fn, context) {
@@ -1108,7 +1108,7 @@ build time: May 11 15:07
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [arr=true] whether add '[]' to array key of data
              * @return {String}
              */
             param:function (o, sep, eq, arr) {
@@ -1251,7 +1251,7 @@ build time: May 11 15:07
              * test whether a string start with a specified substring
              * @param {String} str the whole string
              * @param {String} prefix a specified substring
-             * @returns {boolean} whether str start with prefix
+             * @returns {Boolean} whether str start with prefix
              */
             startsWith:function (str, prefix) {
                 return str.lastIndexOf(prefix, 0) === 0;
@@ -1261,7 +1261,7 @@ build time: May 11 15:07
              * test whether a string end with a specified substring
              * @param {String} str the whole string
              * @param {String} suffix a specified substring
-             * @returns {boolean} whether str end with suffix
+             * @returns {Boolean} whether str end with suffix
              */
             endsWith:function (str, suffix) {
                 var ind = str.length - suffix.length;
@@ -1340,56 +1340,56 @@ build time: May 11 15:07
              * test whether o is boolean
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isBoolean:isValidParamValue,
             /**
              * test whether o is number
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isNumber:isValidParamValue,
             /**
              * test whether o is String
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isString:isValidParamValue,
             /**
              * test whether o is function
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isFunction:isValidParamValue,
             /**
              * test whether o is Array
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isArray:isValidParamValue,
             /**
              * test whether o is Date
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isDate:isValidParamValue,
             /**
              * test whether o is RegExp
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isRegExp:isValidParamValue,
             /**
              * test whether o is Object
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isObject:isValidParamValue
         });
@@ -3949,7 +3949,7 @@ build time: May 11 15:07
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120511150720'
+        tag:'20120514171431'
     }, getBaseInfo()));
 
     /**

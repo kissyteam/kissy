@@ -5,7 +5,8 @@
 KISSY.add("uibase/contentbox", function () {
 
     /**
-     * ContentBox Implementation
+     * ContentBox extension class.
+     * Represent inner element of component's root element.
      * @class
      * @memberOf UIBase
      */
@@ -50,6 +51,11 @@ KISSY.add("uibase/contentbox", function () {
             view:true
         },
 
+        /**
+         * tag name of contentbox 's root element.
+         * Default: "div"
+         * @type String
+         */
         contentTagName:{
             view:true
         }

@@ -66,7 +66,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * a chance to handle the event first.
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Key event to handle.
-             * @return {boolean} Whether the event was handled by the container (or one of
+             * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
              * @override

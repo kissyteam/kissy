@@ -21,7 +21,6 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Close
      * @extends UIBase.Resize
      * @extends UIBase.Mask
-     * @param {Object} config config object to set properties of its parent class
      */
     var Overlay = UIBase.create(Component.Controller, [
         require("contentbox"),
@@ -72,7 +71,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
                     value:"visibility"

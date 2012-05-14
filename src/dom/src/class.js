@@ -23,7 +23,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
              * @param {String} className One or more class names to search for.
              * multiple class names is separated by space
-             * @return {boolean}
+             * @return {Boolean}
              */
             hasClass:function (selector, className) {
                 return batch(selector, className, function (elem, classNames, cl) {

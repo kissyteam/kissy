@@ -40,7 +40,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         },
         /**
          * 是否预加载大图
-         * @type {boolean}
+         * @type {Boolean}
          */
         preload:{
             value:true

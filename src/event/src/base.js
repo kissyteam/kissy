@@ -51,8 +51,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @param targets html nodes
          * @param {String|Event.Object} eventType event type
          * @param [eventData] additional event data
-         * @param {boolean} [onlyHandlers] only fire handlers
-         * @returns {boolean} The return value of fire/dispatchEvent indicates
+         * @param {Boolean} [onlyHandlers] only fire handlers
+         * @returns {Boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
          */
@@ -116,7 +116,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     /**
      * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     * @return boolean The return value of dispatchEvent indicates
+     * @return {Boolean} The return value of dispatchEvent indicates
      *                 whether any of the listeners which handled the event called preventDefault.
      *                 If preventDefault was called the value is false, else the value is true.
      */

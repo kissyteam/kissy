@@ -40,9 +40,9 @@
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {boolean} whether recursive mix if encounter object,
+             * @param deep {Boolean} whether recursive mix if encounter object,
              * if deep is set true,then ov should be set true too!
              * @return {Object} the augmented object
              * @example
@@ -160,7 +160,7 @@
              * Applies prototype properties from the supplier to the receiver.
              * @param   {Object} r received object
              * @param   {...Object} s1 object need to  augment
-             *          {boolean} [ov=true] whether overwrite existing property
+             *          {Boolean} [ov=true] whether overwrite existing property
              *          {String[]} [wl] array of white-list properties
              * @return  {Object} the augmented object
              */
@@ -286,9 +286,9 @@
              * @param {Array[]} c.map.0 a single map rule
              * @param {RegExp} c.map.0.0 a regular expression to match url
              * @param {String|Function} c.map.0.1 provide replacement for String.replace
-             * @param {boolean} c.combine whether to enable combo
+             * @param {Boolean} c.combine whether to enable combo
              * @param {String} c.base set base for kissy loader.use with caution!
-             * @param {boolean} c.debug whether to enable debug mod
+             * @param {Boolean} c.debug whether to enable debug mod
              * @param [v] config value
              * @example
              * // use gallery from cdn

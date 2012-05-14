@@ -100,7 +100,7 @@
             /**
              * stamp a object by guid
              * @param {Object} o object needed to be stamped
-             * @param {boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {Boolean} [readOnly] while set marker on o if marker does not exist
              * @param {String} [marker] the marker will be set on Object
              * @return guid associated with this object
              */
@@ -186,7 +186,7 @@
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
-             * @returns {boolean} a.equals(b)
+             * @returns {Boolean} a.equals(b)
              */
             equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
                 // inspired by jasmine
@@ -390,7 +390,7 @@
              * Search for a specified value index within an array.
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {boolean} the item exists in arr
+             * @returns {Boolean} the item exists in arr
              */
             inArray:function (item, arr) {
                 return S.indexOf(item, arr) > -1;
@@ -518,7 +518,7 @@
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {boolean} whether all elements in the array pass the test implemented by the provided function.
+             * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
              */
             every:every ?
                 function (arr, fn, context) {
@@ -540,7 +540,7 @@
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {boolean} whether some element in the array passes the test implemented by the provided function.
+             * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
              */
             some:some ?
                 function (arr, fn, context) {
@@ -676,7 +676,7 @@
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [arr=true] whether add '[]' to array key of data
              * @return {String}
              */
             param:function (o, sep, eq, arr) {
@@ -819,7 +819,7 @@
              * test whether a string start with a specified substring
              * @param {String} str the whole string
              * @param {String} prefix a specified substring
-             * @returns {boolean} whether str start with prefix
+             * @returns {Boolean} whether str start with prefix
              */
             startsWith:function (str, prefix) {
                 return str.lastIndexOf(prefix, 0) === 0;
@@ -829,7 +829,7 @@
              * test whether a string end with a specified substring
              * @param {String} str the whole string
              * @param {String} suffix a specified substring
-             * @returns {boolean} whether str end with suffix
+             * @returns {Boolean} whether str end with suffix
              */
             endsWith:function (str, suffix) {
                 var ind = str.length - suffix.length;
@@ -908,56 +908,56 @@
              * test whether o is boolean
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isBoolean:isValidParamValue,
             /**
              * test whether o is number
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isNumber:isValidParamValue,
             /**
              * test whether o is String
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isString:isValidParamValue,
             /**
              * test whether o is function
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isFunction:isValidParamValue,
             /**
              * test whether o is Array
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isArray:isValidParamValue,
             /**
              * test whether o is Date
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isDate:isValidParamValue,
             /**
              * test whether o is RegExp
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isRegExp:isValidParamValue,
             /**
              * test whether o is Object
              * @function
              * @param  o
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             isObject:isValidParamValue
         });

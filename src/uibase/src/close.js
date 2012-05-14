@@ -5,7 +5,8 @@
 KISSY.add("uibase/close", function () {
 
     /**
-     * config detail of close action
+     * Close extension class.
+     * Represent a close button.
      * @class
      * @memberOf UIBase
      */
@@ -19,16 +20,19 @@ KISSY.add("uibase/close", function () {
      */
     {
         /**
-         * 是否自带关闭按钮
-         * @type boolean
+         * Whether close button is visible.
+         * Default: true.
+         * @type Boolean
          */
         closable:{
+            value:true,
             view:true
         },
 
         /**
-         * 点击关闭按钮的动作，销毁("destroy")或隐藏("hide")
-         * @type string
+         * Whether to destroy or hide current element when click close button.
+         * Default: "hide". Can set "destroy" to destroy it when click close button.
+         * @type String
          */
         closeAction:{
             value:HIDE
@@ -41,9 +45,7 @@ KISSY.add("uibase/close", function () {
     };
 
     Close.prototype = {
-
         __bindUI:function () {
-
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function (ev) {

@@ -4,9 +4,9 @@
  */
 KISSY.add("uibase/drag", function (S) {
 
-
     /**
-     * config drag options
+     * Drag extension class.
+     * Make element draggable.
      * @class
      * @memberOf UIBase
      */
@@ -20,60 +20,55 @@ KISSY.add("uibase/drag", function (S) {
      */
     {
         /**
-         * see {@link DD.Draggable#handlers}
+         * Current draggable element's handlers.
+         * See {@link DD.Draggable#handlers}
          */
         handlers:{
             value:[]
         },
         /**
-         * 是否可拖放
-         * @type boolean
+         * Whether current element is draggable.
+         * @type Boolean
          */
         draggable:{value:true}
     };
 
+    function dragExtAction(ev) {
+        this.set("xy", [ev.left, ev.top]);
+    }
+
     Drag.prototype = {
 
         _uiSetHandlers:function (v) {
-            if (v && v.length > 0 && this.__drag) {
-                this.__drag.set("handlers", v);
+            var d;
+            if (v && v.length > 0 && (d = this.__drag)) {
+                d.set("handlers", v);
             }
         },
 
         __bindUI:function () {
-            var Draggable = S.require("dd/draggable");
-            var self = this,
+            var Draggable = S.require("dd/draggable"),
+                d,
+                self = this,
                 el = self.get("el");
             if (self.get("draggable") && Draggable) {
-                self.__drag = new Draggable({
+                d = self.__drag = new Draggable({
                     node:el
                 });
+                d.on("drag", dragExtAction, self);
             }
         },
 
         _uiSetDraggable:function (v) {
-
             var self = this,
                 d = self.__drag;
             if (!d) {
                 return;
             }
-            if (v) {
-                d.detach("drag");
-                d.on("drag", self._dragExtAction, self);
-            } else {
-                d.detach("drag");
-            }
+            d.set("disabled", !v);
         },
 
-        _dragExtAction:function (offset) {
-            this.set("xy", [offset.left, offset.top])
-        },
-        /**
-         *
-         */
         __destructor:function () {
-            //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();
         }

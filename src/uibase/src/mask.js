@@ -5,7 +5,8 @@
 KISSY.add("uibase/mask", function () {
 
     /**
-     * make component can show with mask
+     * Mask extension class.
+     * Make component to be able to show with mask.
      * @class
      * @memberOf UIBase
      */
@@ -14,12 +15,12 @@ KISSY.add("uibase/mask", function () {
 
     Mask.ATTRS =
     /**
-     * @lends UIBase.Mask.prototype
+     * @lends UIBase.Mask#
      */
     {
         /**
          * whether show mask layer when component shows
-         * @type boolean
+         * @type Boolean
          */
         mask:{
             value:false
@@ -28,13 +29,16 @@ KISSY.add("uibase/mask", function () {
 
     Mask.prototype = {
         _uiSetMask:function (v) {
-            var self = this;
+            var self = this,
+                view = self.get("view"),
+                _maskExtShow = view._maskExtShow,
+                _maskExtHide = view._maskExtHide;
             if (v) {
-                self.on("show", self.get("view")._maskExtShow, self.get("view"));
-                self.on("hide", self.get("view")._maskExtHide, self.get("view"));
+                self.on("show", _maskExtShow, view);
+                self.on("hide", _maskExtHide, view);
             } else {
-                self.detach("show", self.get("view")._maskExtShow, self.get("view"));
-                self.detach("hide", self.get("view")._maskExtHide, self.get("view"));
+                self.detach("show", _maskExtShow, view);
+                self.detach("hide", _maskExtHide, view);
             }
         }
     };

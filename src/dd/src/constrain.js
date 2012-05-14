@@ -103,7 +103,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             {
                 /**
                  * constrained container
-                 * @type {boolean|HTMLElement|String}
+                 * @type {Boolean|HTMLElement|String}
                  */
                 constrain:{
                     value:true

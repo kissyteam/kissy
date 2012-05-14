@@ -114,7 +114,7 @@ KISSY.add("editor/core/styles", function (S) {
     /**
      *
      * @param {Document} document
-     * @param {boolean=} remove
+     * @param {Boolean=} remove
      */
     function applyStyle(document, remove) {
         // Get all ranges from the selection.
@@ -1065,7 +1065,7 @@ KISSY.add("editor/core/styles", function (S) {
     /**
      *
      * @param {string} unparsedCssText
-     * @param {boolean=} nativeNormalize
+     * @param {Boolean=} nativeNormalize
      */
     function normalizeCssText(unparsedCssText, nativeNormalize) {
         var styleText = "";
@@ -1261,7 +1261,7 @@ KISSY.add("editor/core/styles", function (S) {
      *
      * @param {string} name
      * @param {string} value
-     * @param {boolean=} isStyle
+     * @param {Boolean=} isStyle
      */
     function normalizeProperty(name, value, isStyle) {
         var temp = new Node('<span>');

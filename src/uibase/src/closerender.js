@@ -10,9 +10,7 @@ KISSY.add("uibase/closerender", function (S, Node) {
     }
 
     Close.ATTRS = {
-        closable:{             // 是否需要关闭按钮
-            value:true,
-            sync:false
+        closable:{
         },
         closeBtn:{
         }
@@ -33,7 +31,6 @@ KISSY.add("uibase/closerender", function (S, Node) {
                 closeBtn = self.get("closeBtn"),
                 closable = self.get("closable"),
                 el = self.get("el");
-
             if (!closeBtn) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +

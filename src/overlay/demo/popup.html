@@ -19,7 +19,7 @@
 <script src="../src/popup.js"></script>
 <script src="../src/aria.js"></script>
 <script src="../src/ariarender.js"></script>
-
+<script src="../src/overlay.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -189,7 +189,8 @@
         <script>
             KISSY.use('node,overlay', function (S, Node, O) {
 
-                window.popup = new O.Popup(Node.one("#dpop"), {
+                window.popup = new O.Popup({
+                    srcNode:'#dpop',
                     trigger:'#img-download',
                     triggerType:'mouse',
                     align:{

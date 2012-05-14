@@ -163,7 +163,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * Determine whether an element has any data or specified data name associated with it.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @returns {boolean}
+             * @returns {Boolean}
              */
             hasData:function (selector, name) {
                 var ret = false,

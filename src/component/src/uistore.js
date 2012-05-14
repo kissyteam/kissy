@@ -96,5 +96,7 @@ KISSY.add("component/uistore", function (S) {
         }
     };
 
+    UIStore.getCssClassWithPrefix = getCssClassWithPrefix;
+
     return UIStore;
 });

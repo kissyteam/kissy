@@ -187,7 +187,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * @param e A key event.
-             * @return {boolean} Whether the event was handled.
+             * @return {Boolean} Whether the event was handled.
              */
             handleKeydown:function (e) {
                 var self = this,
@@ -299,7 +299,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 },
                 /**
                  * whether destroy submenu when destroy itself ,reverse result
-                 * @type {boolean}
+                 * @type {Boolean}
                  */
                 externalSubMenu:{
                     value:false

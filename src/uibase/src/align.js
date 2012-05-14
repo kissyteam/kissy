@@ -205,7 +205,8 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
-     * align component with specified element
+     * Align extension class.
+     * Align component with specified element.
      * @class
      * @memberOf UIBase
      */
@@ -224,7 +225,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
     {
 
         /**
-         * 对齐配置
+         * Align configuration.
          * @type Object
          * @field
          * @example
@@ -392,8 +393,8 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         },
 
         /**
-         * 居中显示到可视区域, 一次性居中
-         * @param {undefined|String|HTMLElement|Node} node 对其元素，falsy 表示窗口可视区域
+         * Make current element center within node.
+         * @param {undefined|String|HTMLElement|Node} node Same as node config of {@link UIBase.Align#align} .
          */
         center:function (node) {
             this.set('align', {

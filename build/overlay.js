@@ -1,28 +1,38 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 14 16:05
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/aria", function(S,Event) {
+KISSY.add("overlay/aria", function (S, Event) {
     function Aria() {
     }
 
-    Aria.ATTRS = {
+    Aria.ATTRS =
+    /**
+     * @lends Overlay#
+     */
+    {
+        /**
+         * Whether support aria.
+         * Focus on show and trap focus in overlay when visible.
+         * Default: false.
+         * @type Boolean
+         */
         aria:{
             view:true
         }
     };
 
     Aria.prototype = {
-
-        __bindUI:function() {
-            var self = this,el = self.get("el");
+        __bindUI:function () {
+            var self = this,
+                el = self.get("el");
             if (self.get("aria")) {
-                el.on("keydown", function(e) {
+                el.on("keydown", function (e) {
                     if (e.keyCode === Event.KeyCodes.ESC) {
                         self.hide();
                         e.halt();
@@ -32,25 +42,18 @@ KISSY.add("overlay/aria", function(S,Event) {
         }
     };
     return Aria;
-},{
+}, {
     requires:['event']
 });/**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/ariarender", function(S, Node) {
+KISSY.add("overlay/ariarender", function (S, Node) {
 
     var $ = Node.all;
 
     function Aria() {
-
     }
-
-//    Aria.ATTRS={
-//      aria:{
-//          value:false
-//      }
-//    };
 
 
     var KEY_TAB = Node.KeyCodes.TAB;
@@ -100,7 +103,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 
     Aria.prototype = {
 
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 el = self.get("el"),
                 header = self.get("header");
@@ -117,13 +120,13 @@ KISSY.add("overlay/ariarender", function(S, Node) {
             }
         },
 
-        __bindUI:function() {
+        __bindUI:function () {
 
             var self = this;
             if (self.get("aria")) {
                 var el = self.get("el"),
                     lastActive;
-                self.on("afterVisibleChange", function(ev) {
+                self.on("afterVisibleChange", function (ev) {
                     if (ev.newVal) {
                         lastActive = el[0].ownerDocument.activeElement;
                         el[0].focus();
@@ -165,7 +168,6 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Close
      * @extends UIBase.Resize
      * @extends UIBase.Mask
-     * @param {Object} config config object to set properties of its parent class
      */
     var Overlay = UIBase.create(Component.Controller, [
         require("contentbox"),
@@ -356,7 +358,7 @@ KISSY.add("overlay/effect", function (S) {
      */
     {
         /**
-         * set v as overlay's show effect <br>
+         * Set v as overlay 's show effect <br>
          * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
          * v.duration (Number): in seconds. Default:0.5. <br>
          * v.easing (String): see {@link Anim.Easing} <br>
@@ -445,7 +447,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     ]
 });/**
  * @fileOverview KISSY Overlay
- * @author  yiminghe@gmail.com,乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -470,9 +472,9 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  */
 /**
  * @fileOverview KISSY.Popup
- * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
+ * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
 
     /**
      * KISSY Popup Component
@@ -482,59 +484,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
      * @param {NodeList} [container] existing dom node
      * @param {Object} config see {@link Overlay}
      */
-    function Popup(container, config) {
-        var self = this;
-
-        // 支持 Popup(config)
-        if (S.isUndefined(config)) {
-            config = container;
-        } else {
-            config.srcNode = container;
-        }
-
-        Popup.superclass.constructor.call(self, config);
-    }
-
-    Popup.ATTRS =
-    /**
-     * @lends Overlay.Popup#
-     */
-    {
-        /**
-         * trigger element to show popup
-         * @type NodeList
-         */
-        trigger:{                          // 触发器
-            setter:function (v) {
-                if (S.isString(v)) {
-                    v = S.all(v);
-                }
-                return v;
-            }
-        },
-        /**
-         * how do activate trigger element. "click" or "mouse",Default:"click"
-         * @type String
-         */
-        triggerType:{value:'click'}, // 触发类型
-        currentTrigger:{},
-        /**
-         * when trigger type is mouse, the delayed time to show popup. Default:100,in milliseconds
-         * @type Number
-         */
-        mouseDelay:{
-            value:100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-        },
-        /**
-         * when trigger type is click, whether support toggle. Default:false
-         * @type Boolean
-         */
-        toggle:{
-            value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
-        }
-    };
-
-    S.extend(Popup, Overlay,
+    var Popup = UIBase.create(Overlay, [],
         /**
          * @lends Overlay.Popup#
          */
@@ -548,13 +498,12 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
 
             initializer:function () {
-                var self = this;
-                // 获取相关联的 DOM 节点
-                var trigger = self.get("trigger");
+                var self = this,
+                    // 获取相关联的 DOM 节点
+                    trigger = self.get("trigger");
                 if (trigger) {
                     if (self.get("triggerType") === 'mouse') {
                         self._bindTriggerMouse();
-
                         self.on('bindUI', function () {
                             self._bindContainerMouse();
                         });
@@ -571,11 +520,10 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
                 self.__mouseEnterPopup = function (ev) {
                     self._clearHiddenTimer();
-
                     timer = S.later(function () {
                         self._showing(ev);
                         timer = undefined;
-                    }, self.get('mouseDelay'));
+                    }, self.get('mouseDelay') * 1000);
                 };
 
                 S.each(trigger, function (el) {
@@ -598,8 +546,8 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
             _bindContainerMouse:function () {
                 var self = this;
-
-                self.get('el').on('mouseleave', self._setHiddenTimer, self)
+                self.get('el')
+                    .on('mouseleave', self._setHiddenTimer, self)
                     .on('mouseenter', self._clearHiddenTimer, self);
             },
 
@@ -607,7 +555,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                 var self = this;
                 self._hiddenTimer = S.later(function () {
                     self._hiding();
-                }, self.get('mouseDelay'));
+                }, self.get('mouseDelay') * 1000);
             },
 
             _clearHiddenTimer:function () {
@@ -624,60 +572,108 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     ev.halt();
                     if (self.get('toggle')) {
                         self[self.get('visible') ? '_hiding' : '_showing'](ev);
+                    } else {
+                        self._showing(ev);
                     }
-                    else  self._showing(ev);
                 };
                 S.each(self.get("trigger"), function (el) {
                     S.one(el).on('click', self.__clickPopup);
                 });
             },
+
             _showing:function (ev) {
                 var self = this;
                 self.set('currentTrigger', S.one(ev.target));
                 self.show();
             },
+
             _hiding:function () {
                 this.set('currentTrigger', undefined);
                 this.hide();
             },
 
             destructor:function () {
-                var self = this;
-                var t = self.get("trigger");
+                var self = this,
+                    root,
+                    t = self.get("trigger");
                 if (t) {
                     if (self.__clickPopup) {
-                        S.each(t, function (el) {
-                            S.one(el).detach('click', self.__clickPopup);
+                        t.each(function (el) {
+                            el.detach('click', self.__clickPopup);
                         });
                     }
                     if (self.__mouseEnterPopup) {
-                        S.each(t, function (el) {
-                            S.one(el).detach('mouseenter', self.__mouseEnterPopup);
+                        t.each(function (el) {
+                            el.detach('mouseenter', self.__mouseEnterPopup);
                         });
                     }
 
                     if (self._mouseLeavePopup) {
-                        S.each(t, function (el) {
-                            S.one(el).detach('mouseleave', self._mouseLeavePopup);
+                        t.each(function (el) {
+                            el.detach('mouseleave', self._mouseLeavePopup);
                         });
                     }
                 }
-                if (self.get('el')) {
-                    self.get('el').detach('mouseleave', self._setHiddenTimer, self)
+                if (root = self.get('el')) {
+                    root.detach('mouseleave', self._setHiddenTimer, self)
                         .detach('mouseenter', self._clearHiddenTimer, self);
+                }
+            }
+        }, {
+            ATTRS:/**
+             * @lends Overlay.Popup#
+             */
+            {
+                /**
+                 * Trigger elements to show popup.
+                 * @type NodeList
+                 */
+                trigger:{                          // 触发器
+                    setter:function (v) {
+                        if (S.isString(v)) {
+                            v = S.all(v);
+                        }
+                        return v;
+                    }
+                },
+                /**
+                 * How to activate trigger element.
+                 * "click" or "mouse",Default:"click".
+                 * @type String
+                 */
+                triggerType:{
+                    // 触发类型
+                    value:'click'
+                },
+                currentTrigger:{},
+                /**
+                 * When trigger type is mouse, the delayed time to show popup.
+                 * Default:0.1, in seconds.
+                 * @type Number
+                 */
+                mouseDelay:{
+                    // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+                    value:0.1
+                },
+                /**
+                 * When trigger type is click, whether support toggle. Default:false
+                 * @type Boolean
+                 */
+                toggle:{
+                    // triggerType 为 click 时, Popup 是否有toggle功能
+                    value:false
                 }
             }
         });
 
-
     Component.UIStore.setUIConstructorByCssClass("popup", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Popup
     });
 
     return Popup;
 }, {
-    requires:[ "component", "./base"]
+    requires:["uibase", "component", "./base"]
 });
 
 /**

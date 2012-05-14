@@ -6,7 +6,8 @@ KISSY.add("uibase/stdmod", function () {
 
 
     /**
-     * generate head,body,foot for component
+     * StdMod extension class.
+     * Generate head, body, foot for component.
      * @class
      * @memberOf UIBase
      */
@@ -14,9 +15,8 @@ KISSY.add("uibase/stdmod", function () {
     }
 
     StdMod.ATTRS =
-
     /**
-     * @lends UIBase.StdMod.prototype
+     * @lends UIBase.StdMod#
      */
     {
         /**

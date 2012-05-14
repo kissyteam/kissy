@@ -254,7 +254,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
 
         /**
          *
-         * @param {boolean=} testIt
+         * @param {Boolean=} testIt
          */
         function saveSelection(testIt) {
             // S.log("saveSelection");

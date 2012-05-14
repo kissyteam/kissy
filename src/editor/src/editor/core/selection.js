@@ -171,7 +171,7 @@ KISSY.add("editor/core/selection", function (S) {
                 /**
                  *
                  * @param {TextRange} range
-                 * @param {boolean=} start
+                 * @param {Boolean=} start
                  */
                 var getBoundaryInformation = function (range, start) {
                     // Creates a collapsed range at the requested boundary.

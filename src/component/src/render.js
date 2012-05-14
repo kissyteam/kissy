@@ -24,7 +24,8 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
              * @param {String} [state] This component's state info.
              */
             getComponentCssClassWithState:function (state) {
-                var self = this, componentCls = this.__componentClasses;
+                var self = this,
+                    componentCls = this.__componentClasses;
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },
@@ -45,6 +46,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
+             * @return {Node}
              */
             getKeyEventTarget:function () {
                 return this.get("el");
@@ -52,22 +54,11 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
             /**
              * Return the dom element into which child component to be rendered.
+             * @return {Node}
              */
             getContentElement:function () {
-                return this.get("contentEl") || this.get("el");
-            },
-
-            /**
-             * @protected
-             */
-            _uiSetFocusable:function (v) {
-                var el = this.getKeyEventTarget(),
-                    tabindex = el.attr("tabindex");
-                if (tabindex >= 0 && !v) {
-                    el.attr("tabindex", -1);
-                } else if (!(tabindex >= 0) && v) {
-                    el.attr("tabindex", 0);
-                }
+                var self = this;
+                return self.get("contentEl") || self.get("el");
             },
 
             /**
@@ -88,13 +79,11 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
                     componentCls = self.getComponentCssClassWithState("-disabled"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr("aria-disabled", v);
+                if (self.get("focusable")) {
                     //不能被 tab focus 到
-                    //support aria
-                    .attr({
-                        "tabindex":v ? -1 : 0,
-                        "aria-disabled":v
-                    });
-
+                    self.getKeyEventTarget().attr("tabIndex", v ? -1 : 0);
+                }
             },
             /**
              * @protected

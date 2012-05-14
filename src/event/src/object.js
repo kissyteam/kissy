@@ -169,7 +169,7 @@ KISSY.add('event/object', function (S, undefined) {
             /**
              * Stops the event propagation and prevents the default
              * event behavior.
-             * @param  {boolean} [immediate] if true additional listeners on the current target will not be executed
+             * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
              */
             halt:function (immediate) {
                 var self = this;

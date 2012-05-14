@@ -17,7 +17,7 @@ KISSY.add("overlay/effect", function (S) {
      */
     {
         /**
-         * set v as overlay's show effect <br>
+         * Set v as overlay 's show effect <br>
          * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
          * v.duration (Number): in seconds. Default:0.5. <br>
          * v.easing (String): see {@link Anim.Easing} <br>

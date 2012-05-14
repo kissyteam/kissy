@@ -259,7 +259,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * or
                  * A map of property-value pairs to set.
                  * @param [value] A value to set for the property.
-                 * @returns {String|undefined|boolean}
+                 * @returns {String|undefined|Boolean}
                  */
                 prop:function (selector, name, value) {
                     var elems = DOM.query(selector);
@@ -296,7 +296,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  * Whether one of the matched elements has specified property name
                  * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
                  * @param {String} name The name of property to test
-                 * @return {boolean}
+                 * @return {Boolean}
                  */
                 hasProp:function (selector, name) {
                     var elems = DOM.query(selector);

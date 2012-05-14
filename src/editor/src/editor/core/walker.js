@@ -197,7 +197,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
         /**
          * Retrieves the next node (at right).
-         * @returns {(boolean)} The next node or NULL if no more
+         * @returns {Boolean} The next node or NULL if no more
          *        nodes are available.
          */
         next:function () {
@@ -206,7 +206,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
         /**
          * Retrieves the previous node (at left).
-         * @returns {(boolean)} The previous node or NULL if no more
+         * @returns {Boolean} The previous node or NULL if no more
          *        nodes are available.
          */
         previous:function () {
@@ -215,7 +215,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
         /**
          * Check all nodes at right, executing the evaluation function.
-         * @returns {boolean} "FALSE" if the evaluator function returned
+         * @returns {Boolean} "FALSE" if the evaluator function returned
          *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
          */
         checkForward:function () {
@@ -225,7 +225,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         /**
          * Check all nodes at left, executing the evaluation function.
          * 是不是 (不能后退了)
-         * @returns {boolean} "FALSE" if the evaluator function returned
+         * @returns {Boolean} "FALSE" if the evaluator function returned
          *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
          */
         checkBackward:function () {
@@ -235,7 +235,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         /**
          * Executes a full walk forward (to the right), until no more nodes
          * are available, returning the last valid node.
-         * @returns {(boolean)} The last node at the right or NULL
+         * @returns {Boolean} The last node at the right or NULL
          *        if no valid nodes are available.
          */
         lastForward:function () {
@@ -245,7 +245,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         /**
          * Executes a full walk backwards (to the left), until no more nodes
          * are available, returning the last valid node.
-         * @returns {(boolean)} The last node at the left or NULL
+         * @returns {Boolean} The last node at the left or NULL
          *        if no valid nodes are available.
          */
         lastBackward:function () {
@@ -273,9 +273,9 @@ KISSY.add("editor/core/walker", function (S, KE) {
     /**
      * Whether the to-be-evaluated node is a bookmark node OR bookmark node
      * inner contents.
-     * @param {boolean} [contentOnly] Whether only test againt the text content of
+     * @param {Boolean} [contentOnly] Whether only test againt the text content of
      * bookmark node instead of the element itself(default).
-     * @param {boolean} [isReject] Whether should return 'FALSE' for the bookmark
+     * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
      * node instead of 'TRUE'(default).
      */
     Walker.bookmark = function (contentOnly, isReject) {
@@ -298,7 +298,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
 
     /**
      * Whether the node is a text node containing only whitespaces characters.
-     * @param {boolean} [isReject]
+     * @param {Boolean} [isReject]
      */
     Walker.whitespaces = function (isReject) {
         return function (node) {

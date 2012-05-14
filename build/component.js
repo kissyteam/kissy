@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 7 16:45
+build time: May 14 16:04
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -13,7 +13,6 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
      * @namespace
      */
     var Component = {
-        "Controller":Controller,
         "Render":Render,
         "Container":Container,
         "UIStore":UIStore,
@@ -21,6 +20,7 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
         "DecorateChild":DecorateChild,
         "DecorateChildren":DecorateChildren
     };
+    Component["Controller"] = Controller;
     return Component;
 }, {
     requires:['component/controller',
@@ -36,7 +36,7 @@ KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, 
  */
 KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
     /**
-     * Container class. extend it to acquire the abilities of
+     * Container class. Extend it to acquire the abilities of
      * delegating events and
      * decorate from pre-rendered dom
      * for child components.
@@ -75,9 +75,8 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
 });/**
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
- * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
+KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, undefined) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -97,11 +96,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
     }
 
     function initChild(self, c, elBefore) {
-        // If this (parent) component doesn't have a DOM yet, call createDom now
-        // to make sure we render the child component's element into the correct
-        // parent element (otherwise render_ with a null first argument would
-        // render the child into the document body, which is almost certainly not
-        // what we want).
+        // 生成父组件的 dom 结构
         self.create();
         var contentEl = self.getContentElement();
         c.__set("parent", self);
@@ -117,8 +112,6 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
         else {
             // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
             c.create();
-            // 设置好，render 时插入到对应位置，这里不需要了
-            // contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
         }
     }
 
@@ -146,8 +139,6 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName], v;
                     if (attrCfg.view) {
-                        // 只设置用户设置的值
-                        // 考虑 c 上的默认值
                         if (( v = self.get(attrName) ) !== undefined) {
                             cfg[attrName] = v;
                         }
@@ -160,7 +151,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
     }
 
     function setViewCssClassByHierarchy(self, view) {
-        var constructor = self.constructor, re = [];
+        var constructor = self.constructor,
+            re = [];
         while (constructor && constructor != Controller) {
             var cls = UIStore.getCssClassByUIConstructor(constructor);
             if (cls) {
@@ -226,6 +218,25 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
+             * From UIBase. Constructor(or get) view object to create ui elements.
+             * @protected
+             * @override
+             */
+            createDom:function () {
+                var self = this,
+                    view = self.get("view") || getDefaultView.call(self);
+                setViewCssClassByHierarchy(self, view);
+                view.create();
+                var el = view.getKeyEventTarget();
+                if (self.get("focusable")) {
+                    el.attr("tabIndex", 0);
+                } else {
+                    el.unselectable(undefined);
+                }
+                self.__set("view", view);
+            },
+
+            /**
              * From UIBase. Call view object to render ui elements.
              * @protected
              * @override
@@ -244,56 +255,32 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
             },
 
             /**
-             * From UIBase. Constructor(or get) view object to create ui elements.
+             * From UIBase. Bind focus event if component is focusable.
              * @protected
              * @override
              */
-            createDom:function () {
+            bindUI:function () {
                 var self = this,
-                    view = self.get("view") || getDefaultView.call(self);
-                setViewCssClassByHierarchy(self, view);
-                view.create();
-                if (!self.get("focusable")) {
-                    view.get("el").unselectable(undefined);
-                }
-                self.__set("view", view);
-            },
-
-            _uiSetHandleMouseEvents:function (v) {
-                var self = this,
-                    el = self.get("el");
-                if (v) {
-                    el.on("mouseenter", self.handleMouseEnter, self);
-                    el.on("mouseleave", self.handleMouseLeave, self);
-                    el.on("mousedown", self.handleMouseDown, self);
-                    el.on("mouseup", self.handleMouseUp, self);
-                    el.on("dblclick", self.handleDblClick, self);
-                } else {
-                    el.detach("mouseenter", self.handleMouseEnter, self);
-                    el.detach("mouseleave", self.handleMouseLeave, self);
-                    el.detach("mousedown", self.handleMouseDown, self);
-                    el.detach("mouseup", self.handleMouseUp, self);
-                    el.detach("dblclick", self.handleDblClick, self);
-                }
-            },
-
-            _uiSetFocusable:function (v) {
-                var self = this,
+                    focusable = self.get("focusable"),
+                    handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
-                if (v) {
-                    el.on("focus", self.handleFocus, self);
-                    el.on("blur", self.handleBlur, self);
-                    el.on("keydown", self.handleKeydown, self);
-                } else {
-                    el.detach("focus", self.handleFocus, self);
-                    el.detach("blur", self.handleBlur, self);
-                    el.detach("keydown", self.handleKeydown, self);
+                if (focusable) {
+                    el.on("focus", self.handleFocus, self)
+                        .on("blur", self.handleBlur, self)
+                        .on("keydown", self.handleKeydown, self);
+                }
+                if (handleMouseEvents) {
+                    el = self.get("el");
+                    el.on("mouseenter", self.handleMouseEnter, self)
+                        .on("mouseleave", self.handleMouseLeave, self)
+                        .on("mousedown", self.handleMouseDown, self)
+                        .on("mouseup", self.handleMouseUp, self)
+                        .on("dblclick", self.handleDblClick, self);
                 }
             },
 
             /**
-             * Call view object to returns the DOM element into which child components are to be rendered,
-             * or null if the container itself hasn't been rendered yet.
+             * 子组件将要渲染到的节点
              * @protected
              */
             getContentElement:function () {
@@ -303,6 +290,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
 
             /**
              * 焦点所在元素即键盘事件处理元素
+             * @protected
              */
             getKeyEventTarget:function () {
                 var view = this.get('view');
@@ -322,8 +310,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                     children = self.get("children"),
                     elBefore = null;
                 if (index !== undefined) {
+                    elBefore = children[index].get("el") || null;
                     children.splice(index, 0, c);
-                    elBefore = children[index] || null;
                 } else {
                     children.push(c);
                 }
@@ -437,7 +425,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                 if (self.get("disabled")) {
                     return true;
                 }
-                self.set("highlighted", true);
+                self.set("highlighted", !!ev);
             },
 
             /**
@@ -451,7 +439,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                     return true;
                 }
                 self.set("active", false);
-                self.set("highlighted", false);
+                self.set("highlighted", !ev);
             },
 
             /**
@@ -469,8 +457,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                 if (self.get("disabled")) {
                     return true;
                 }
-                if (isMouseActionButton &&
-                    !self.get("disabled")) {
+                if (isMouseActionButton) {
                     el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
                         self.set("active", true);
@@ -479,7 +466,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                         el[0].focus();
                         self.set("focused", true);
                     } else {
-                        // firefox/chrome 不会引起焦点转移
+                        // firefox /chrome 不会引起焦点转移
                         var n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
@@ -515,7 +502,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
              * @param {Event.Object} ev DOM event to handle.
              */
             handleFocus:function (ev) {
-                this.set("focused", true);
+                this.set("focused", !!ev);
             },
 
             /**
@@ -524,7 +511,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
              * @param {Event.Object} ev DOM event to handle.
              */
             handleBlur:function (ev) {
-                this.set("focused", false);
+                this.set("focused", !ev);
             },
 
             /**
@@ -565,11 +552,12 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
             destructor:function () {
                 var self = this,
                     i,
+                    view,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     children[i].destroy();
                 }
-                var view = self.get("view");
+                view = self.get("view");
                 if (view) {
                     view.destroy();
                 }
@@ -598,27 +586,6 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
                  * @type Boolean
                  */
                 focusable:{
-                    /*
-                     observer synchronization , model 分成两类：
-                     view 负责监听 view 类 model 变化更新界面
-                     control 负责监听 control 类变化改变逻辑
-                     problem : Observer behavior is hard to understand and debug because it's implicit behavior.
-
-                     Keeping screen state and session state synchronized is an important task
-                     Data Binding.
-
-                     In general data binding gets tricky
-                     because if you have to avoid cycles where a change to the control,
-                     changes the record set, which updates the control,
-                     which updates the record set....
-                     The flow of usage helps avoid these -
-                     we load from the session state to the screen when the screen is opened,
-                     after that any changes to the screen state propagate back to the session state.
-                     It's unusual for the session state to be updated directly once the screen is up.
-                     As a result data binding might not be entirely bi-directional -
-                     just confined to initial upload and
-                     then propagating changes from the controls to the session state.
-                     */
                     view:true,
                     value:true
                 },
@@ -700,13 +667,35 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render) {
         },
         "Component_Controller"
     );
-
     return Controller;
 }, {
     requires:['event', 'uibase', './uistore', './render']
 });
 /**
- *  Note:
+ * observer synchronization, model 分成两类：
+ *  - view 负责监听 view 类 model 变化更新界面
+ *  - control 负责监听 control 类变化改变逻辑
+ * problem: Observer behavior is hard to understand and debug
+ * because it's implicit behavior.
+ *
+ * Keeping screen state and session state synchronized is an important task
+ * Data Binding.
+ *
+ * In general data binding gets tricky
+ * because if you have to avoid cycles where a change to the control,
+ * changes the record set, which updates the control,
+ * which updates the record set....
+ * The flow of usage helps avoid these -
+ * we load from the session state to the screen when the screen is opened,
+ * after that any changes to the screen state propagate back to the session state.
+ * It's unusual for the session state to be updated directly once the screen is up.
+ * As a result data binding might not be entirely bi-directional -
+ * just confined to initial upload and
+ * then propagating changes from the controls to the session state.
+ *
+ *  Refer
+ *    - http://martinfowler.com/eaaDev/uiArchs.html
+ *
  *  控制层元属性配置中 view 的作用
  *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
@@ -815,44 +804,45 @@ KISSY.add("component/delegateChildren", function (S) {
 
     }
 
+    function handleChildMouseEvents(e) {
+        var control = this.getOwnerControl(e.target);
+        if (control) {
+            // Child control identified; forward the event.
+            switch (e.type) {
+                case "mousedown":
+                    control.handleMouseDown(e);
+                    break;
+                case "mouseup":
+                    control.handleMouseUp(e);
+                    break;
+                case "mouseover":
+                    control.handleMouseOver(e);
+                    break;
+                case "mouseout":
+                    control.handleMouseOut(e);
+                    break;
+                case "dblclick":
+                    control.handleDblClick(e);
+                    break;
+                default:
+                    S.error(e.type + " unhandled!");
+            }
+        }
+    }
+
     S.augment(DelegateChildren, {
+
         __bindUI:function () {
             var self = this;
             self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
-                self._handleChildMouseEvents, self);
-        },
-
-        _handleChildMouseEvents:function (e) {
-            var control = this.getOwnerControl(e.target);
-            if (control) {
-                // Child control identified; forward the event.
-                switch (e.type) {
-                    case "mousedown":
-                        control.handleMouseDown(e);
-                        break;
-                    case "mouseup":
-                        control.handleMouseUp(e);
-                        break;
-                    case "mouseover":
-                        control.handleMouseOver(e);
-                        break;
-                    case "mouseout":
-                        control.handleMouseOut(e);
-                        break;
-                    case "dblclick":
-                        control.handleDblClick(e);
-                        break;
-                    default:
-                        S.error(e.type + " unhandled!");
-                }
-            }
+                handleChildMouseEvents, self);
         },
 
         getOwnerControl:function (target) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,
-                elem = this.get("el")[0];
+                elem = self.get("el")[0];
             while (target && target !== elem) {
                 for (var i = 0; i < len; i++) {
                     if (children[i].get("el")[0] === target) {
@@ -878,6 +868,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @class
      * @memberOf Component
      * @name Render
+     * @private
      * @extends UIBase
      */
     return UIBase.create([UIBase.Box.Render],
@@ -892,7 +883,8 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
              * @param {String} [state] This component's state info.
              */
             getComponentCssClassWithState:function (state) {
-                var self = this, componentCls = this.__componentClasses;
+                var self = this,
+                    componentCls = this.__componentClasses;
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },
@@ -922,20 +914,8 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
              * Return the dom element into which child component to be rendered.
              */
             getContentElement:function () {
-                return this.get("contentEl") || this.get("el");
-            },
-
-            /**
-             * @protected
-             */
-            _uiSetFocusable:function (v) {
-                var el = this.getKeyEventTarget(),
-                    tabindex = el.attr("tabindex");
-                if (tabindex >= 0 && !v) {
-                    el.attr("tabindex", -1);
-                } else if (!(tabindex >= 0) && v) {
-                    el.attr("tabindex", 0);
-                }
+                var self = this;
+                return self.get("contentEl") || self.get("el");
             },
 
             /**
@@ -956,13 +936,11 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
                     componentCls = self.getComponentCssClassWithState("-disabled"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr("aria-disabled", v);
+                if (self.get("focusable")) {
                     //不能被 tab focus 到
-                    //support aria
-                    .attr({
-                        "tabindex":v ? -1 : 0,
-                        "aria-disabled":v
-                    });
-
+                    self.getKeyEventTarget().attr("tabIndex", v ? -1 : 0);
+                }
             },
             /**
              * @protected
@@ -1113,6 +1091,8 @@ KISSY.add("component/uistore", function (S) {
             "LEVEL6":60
         }
     };
+
+    UIStore.getCssClassWithPrefix = getCssClassWithPrefix;
 
     return UIStore;
 });

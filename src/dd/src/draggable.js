@@ -251,7 +251,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * use protective shim to cross iframe.default:true
-         * @type boolean
+         * @type Boolean
          */
         shim:{
             value:true
@@ -290,7 +290,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * indicate whether this draggable object is being dragged
-         * @type boolean
+         * @type Boolean
          */
         dragging:{
             value:false,
@@ -316,7 +316,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * set to disable this draggable so that it can not be dragged. default:false
-         * @type boolean
+         * @type Boolean
          */
         disabled:{
             value:false
@@ -324,7 +324,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * whether the drag node moves with cursor.default:false,can be used to resize element.
-         * @type boolean
+         * @type Boolean
          */
         move:{
             value:false
@@ -333,7 +333,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * whether a drag operation can only be trigged by primary(left) mouse button.
          * Setting false will allow for all mousedown events to trigger drag.
-         * @type boolean
+         * @type Boolean
          */
         primaryButtonOnly:{
             value:true
@@ -341,7 +341,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * whether halt mousedown event. default:true
-         * @type boolean
+         * @type Boolean
          */
         halt:{
             value:true

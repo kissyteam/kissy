@@ -227,7 +227,7 @@ a.go-top:active{text-decoration:none;}
                                                                             
                                             
                                             
-                                            <span class="desc">UIBase for class-based component</span>                                            
+                                            <span class="desc">UIBase for class-based component.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -236,6 +236,59 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.html#created">created</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether this component 's dom structure is created.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                UIBase.
+                                                <b class="name"><a href="../symbols/UIBase.html#.HTML_PARSER">HTML_PARSER</a></b>
+                                                <span class="type">{Object}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Parse attribute from existing dom node.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.html#rendered">rendered</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether this component is rendered.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -257,7 +310,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">For overridden.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -267,17 +320,27 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">建立节点，先不放在 dom 树中，为了性能!</span>                                                
+                                                <span class="desc">Create dom structure of this component.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 UIBase.
                                                 <b class="name"><a href="../symbols/UIBase.html#.create">create</a></b>
-                                                <span class="param">(base, exts, px, sx)</span>
+                                                <span class="param">(base, extensions, px, sx)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">根据基类以及扩展类得到新类</span>                                                
+                                                <span class="desc">Create a new class which extends UIBase.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.html#createDom">createDom</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">For overridden.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -287,7 +350,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">销毁组件</span>                                                
+                                                <span class="desc">Destroy this component.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -297,7 +360,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">渲染组件到 dom 结构</span>                                                
+                                                <span class="desc">Put dom structure of this component to document and bind event.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -307,7 +370,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">For overridden.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -317,7 +380,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">protected</span>                                                
+                                                <span class="desc">For overridden.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -410,6 +473,118 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="created"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">created</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether this component 's dom structure is created.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".HTML_PARSER"> </a>
+                                            <div class="title">                                                
+                                                <span>UIBase.</span>
+                                                <b class="name">HTML_PARSER</b>
+                                                <span>{Object}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Parse attribute from existing dom node.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code">HTML_PARSER={   // el: root element of current component.   "isRed":function(el){      return el.hasClass("ks-red");   }};</pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="rendered"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">rendered</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether this component is rendered.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -430,11 +605,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line273">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line304">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                For overridden. Bind logic for subclass component.
                                                 
                                                 
                                             </div>
@@ -469,11 +644,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line190">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line212">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                建立节点，先不放在 dom 树中，为了性能!
+                                                Create dom structure of this component.
                                                 
                                                 
                                             </div>
@@ -504,15 +679,15 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>UIBase.</span>
                                                 <b class="name">create</b>
-                                                <span class="param">(base, exts, px, sx)</span>
+                                                <span class="param">(base, extensions, px, sx)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line326">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line358">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                根据基类以及扩展类得到新类
+                                                Create a new class which extends UIBase.
                                                 
                                                 
                                             </div>
@@ -530,16 +705,16 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function|Function[]}</span> 
-                                                            <span class="desc">基类</span>
+                                                            <span class="desc">Parent class constructor.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">exts</b>
+                                                            <b class="name">extensions</b>
                                                             
                                                             
                                                             <span class="type">{Function[]}</span> 
-                                                            <span class="desc">扩展类</span>
+                                                            <span class="desc">Class constructors for extending.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -548,7 +723,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">原型 mix 对象</span>
+                                                            <span class="desc">Object to be mixed into new class 's prototype.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -557,7 +732,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">静态 mix 对象</span>
+                                                            <span class="desc">Object to be mixed into new class.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -577,11 +752,50 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             <span class="type">{<a href="../symbols/UIBase.html">UIBase</a>}</span> 
-                                                            <span>组合 后 的 新类</span>
+                                                            <span>A new class which extends UIBase.</span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="createDom"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">createDom</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line257">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                For overridden. DOM creation logic of subclass component.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 
                                                 
                                                 
@@ -602,11 +816,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line307">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line339">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                销毁组件
+                                                Destroy this component.
                                                 
                                                 
                                             </div>
@@ -641,11 +855,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line205">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line227">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                渲染组件到 dom 结构
+                                                Put dom structure of this component to document and bind event.
                                                 
                                                 
                                             </div>
@@ -680,11 +894,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line244">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line274">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                For overridden. Render logic of subclass component.
                                                 
                                                 
                                             </div>
@@ -719,11 +933,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line301">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line333">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                protected
+                                                For overridden. Sync attribute with ui.protected
                                                 
                                                 
                                             </div>
@@ -1014,6 +1228,9 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Overlay.Popup.html">Overlay.Popup</a></li>
+            
+            
+            <li><a href="../symbols/Resizable.html">Resizable</a></li>
             
             
             <li><a href="../symbols/UIBase.html">UIBase</a></li>

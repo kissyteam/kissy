@@ -5,7 +5,8 @@
 KISSY.add("uibase/loading", function () {
 
     /**
-     * make component can mask loading
+     * Loading extension class.
+     * Make component to be able to mask loading.
      * @class
      * @memberOf UIBase
      */
@@ -14,7 +15,7 @@ KISSY.add("uibase/loading", function () {
 
     Loading.prototype =
     /**
-     * @lends UIBase.Loading.prototype
+     * @lends UIBase.Loading#
      */
     {
         /**

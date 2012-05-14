@@ -36,7 +36,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
         },
         /**
          * destroy the proxy node at the end of this drag. default:false
-         * @type {boolean}
+         * @type {Boolean}
          */
         destroyOnEnd:{
             value:false
@@ -44,7 +44,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
 
         /**
          * move the original node at the end of the drag. default:true
-         * @type {boolean}
+         * @type {Boolean}
          */
         moveOnEnd:{
             value:true

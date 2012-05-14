@@ -65,6 +65,7 @@ History:
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
 
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
+ - [!] popup 构造器参数和 overlay 一致，第一个参数为 object!
 
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件

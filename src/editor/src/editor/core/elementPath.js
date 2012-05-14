@@ -106,7 +106,7 @@ KISSY.add("editor/core/elementPath", function (S) {
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be
          * compared with this one.
-         * @return {boolean} "TRUE" if the paths are equal, containing the same
+         * @return {Boolean} "TRUE" if the paths are equal, containing the same
          * number of elements and the same elements in the same order.
          */
         compare:function (otherPath) {

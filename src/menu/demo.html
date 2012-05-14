@@ -19,6 +19,11 @@
         margin-right: 5px;
         padding: 0 5px;
     }
+
+    .goog-menu-disabled .goog-menuitem-delete {
+        color: #ccc;
+        border: #ccc;
+    }
 </style>
 <style>
     h1 {
@@ -41,15 +46,9 @@
 </head>
 <body>
 <div id="wrap">
-    <h1 id="describe">普通菜单</h1>
-
-    <div id="menuitem_container" style="width:200px;position:relative;height:150px;">
-
-    </div>
-    <label>禁用：<input type="checkbox" id='dis'/></label>
-
-    <h1>可过滤菜单</h1>
-
+    <h1>KISSY Menu</h1>
+    <a target="_blank" href="./demo/simple.html">simple demo</a>
+    <br>
     <a target="_blank" href="./demo/filtermenu.html">filtermenu demo</a>
     <br>
     <a target="_blank" href="./demo/contextmenu.html">contextmenu demo</a>
@@ -72,110 +71,5 @@
         </li>
     </ol>
 </div>
-<script src="../../build/kissy.js"></script>
-<script src="./demo/delmenuitemrender.js"></script>
-<script src="./demo/delmenuitem.js"></script>
-<script>
-
-    KISSY.Config.tag = Math.random();
-    KISSY.use("node,menu,menu/delmenuitem",
-            function (S, Node, Menu, DelMenuItem) {
-                //view
-                //render to container : button_container
-
-                //model and control
-                //view as a parameter
-
-                var sb = new Menu.PopupMenu({
-                    prefixCls:"goog-",
-                    // boolean，是否鼠标脱离菜单后自动隐藏
-                    autoHideOnMouseLeave:true,
-                    // ms，鼠标脱离菜单多长时间后自动隐藏
-                    autoHideDelay:0.3,
-                    elStyle:{
-                        color:"red"
-                    }
-                });
-                sb.addChild(new Menu.Item({
-                    prefixCls:"goog-",
-                    content:"submenuitem1"}));
-                sb.addChild(new Menu.Item({
-                    prefixCls:"goog-",
-                    content:"submenuitem2"}));
-
-                sb.addChild(new Menu.Separator({
-                    prefixCls:"goog-"
-                }));
-
-                if (true) {
-                    var sb2 = new Menu.PopupMenu({
-                        prefixCls:"goog-",
-                        // boolean，是否鼠标脱离菜单后自动隐藏
-                        autoHideOnMouseLeave:true,
-                        // ms，鼠标脱离菜单多长时间后自动隐藏
-                        autoHideDelay:0.3,
-                        children:[
-                            new Menu.Item({
-                                prefixCls:"goog-",
-                                content:"submenuitem141"})
-                        ],
-                        // bug elStyle 无效
-                        elStyle:{
-                            color:"red"
-                        }
-                    });
-                    sb2.addChild(new Menu.Item({
-                        prefixCls:"goog-",
-                        content:"submenuitem22"}));
-                    var b2 = new Menu.SubMenu({
-                        prefixCls:"goog-",
-                        content:"sub-sub-menu",
-                        menu:sb2
-                    });
-                    sb.addChild(b2);
-                }
-
-                var b = new Menu.SubMenu({
-                    prefixCls:"goog-",
-                    content:"submenu",
-                    menu:sb
-                });
-
-                var menu = new Menu({
-                    prefixCls:"goog-",
-                    render:"#menuitem_container",
-                    children:[b, new Menu.Item({
-                        prefixCls:"goog-",
-                        content:"alone"})]
-                });
-
-                menu.addChild(new DelMenuItem({
-                    prefixCls:"goog-",
-                    content:"可删除"
-                }));
-
-                menu.render();
-
-                menu.on("click", function (ev) {
-                    S.log("selected : " + ev.target.get("content"));
-                });
-
-                menu.on("delete", function (e) {
-                    S.log("deleted : " + e.target.get("content"));
-                });
-
-
-                var dis = Node.one("#dis");
-
-                dis.on("click", function () {
-                    menu.set("disabled", !!dis[0].checked);
-                    var children = menu.get("children");
-                    S.each(children, function (child) {
-                        child.set("disabled", !!dis[0].checked);
-                    });
-                });
-                dis[0].checked = false;
-            });
-</script>
 </body>
 </html>

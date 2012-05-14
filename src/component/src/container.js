@@ -4,7 +4,7 @@
  */
 KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
     /**
-     * Container class. extend it to acquire the abilities of
+     * Container class. Extend it to acquire the abilities of
      * delegating events and
      * decorate from pre-rendered dom
      * for child components.

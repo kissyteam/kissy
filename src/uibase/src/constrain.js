@@ -5,7 +5,8 @@
 KISSY.add("uibase/constrain", function (S, DOM, Node) {
 
     /**
-     * constrain component to specified region
+     * Constrain extension class.
+     * Constrain component to specified region
      * @class
      * @memberOf UIBase
      */
@@ -19,8 +20,11 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
      */
     {
         /**
-         * <br>true:viewport限制 <br> node:限制在该节点范围
-         * @type HTMLElement|boolean
+         * Config constrain region.
+         * True: viewport
+         * Node: specified element.
+         * false: no constrain region.
+         * @type Node|Boolean
          */
         constrain:{
             //不限制
@@ -35,7 +39,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
      * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
      */
     function _getConstrainRegion(constrain) {
-        var ret;
+        var ret = null;
         if (!constrain) {
             return ret;
         }
@@ -50,16 +54,12 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
         }
         // 没有指定 constrain, 表示受限于可视区域
         else {
-            //不要使用 viewportWidth()
-            //The innerWidth attribute, on getting,
-            //must return the viewport width including the size of a rendered scroll bar (if any).
-            //On getting, the clientWidth attribute returns the viewport width
-            //excluding the size of a rendered scroll bar (if any)
-            //  if the element is the root element 
-            var vWidth = S.Env.host.document.documentElement.clientWidth;
-            ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
+            ret = {
+                left:DOM.scrollLeft(),
+                top:DOM.scrollTop()
+            };
             S.mix(ret, {
-                maxLeft:ret.left + vWidth - el.outerWidth(),
+                maxLeft:ret.left + DOM.viewportWidth() - el.outerWidth(),
                 maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }

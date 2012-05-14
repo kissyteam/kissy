@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 9 19:36
+build time: May 14 16:20
 */
 /**
  * @fileOverview UIBase.Align
@@ -210,7 +210,8 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
-     * align component with specified element
+     * Align extension class.
+     * Align component with specified element.
      * @class
      * @memberOf UIBase
      */
@@ -229,7 +230,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
     {
 
         /**
-         * 对齐配置
+         * Align configuration.
          * @type Object
          * @field
          * @example
@@ -397,8 +398,8 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         },
 
         /**
-         * 居中显示到可视区域, 一次性居中
-         * @param {undefined|String|HTMLElement|Node} node 对其元素，falsy 表示窗口可视区域
+         * Make current element center within node.
+         * @param {undefined|String|HTMLElement|Node} node Same as node config of {@link UIBase.Align#align} .
          */
         center:function (node) {
             this.set('align', {
@@ -434,7 +435,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         noop = S.noop;
 
     /**
-     * UIBase for class-based component
+     * UIBase for class-based component.
      * @class
      * @namespace
      * @name UIBase
@@ -542,7 +543,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
      */
     function destroyHierarchy(host) {
         var c = host.constructor,
-            exts,
+            extensions,
             d,
             i;
 
@@ -552,9 +553,9 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
                 c.prototype.destructor.apply(host);
             }
 
-            if ((exts = c.__ks_exts)) {
-                for (i = exts.length - 1; i >= 0; i--) {
-                    d = exts[i] && exts[i].prototype.__destructor;
+            if ((extensions = c.__ks_exts)) {
+                for (i = extensions.length - 1; i >= 0; i--) {
+                    d = extensions[i] && extensions[i].prototype.__destructor;
                     d && d.apply(host);
                 }
             }
@@ -587,14 +588,36 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         }
     }
 
+    /**
+     * Parse attribute from existing dom node.
+     * @type Object
+     * @memberOf UIBase
+     * @example
+     * HTML_PARSER={
+     *    // el: root element of current component.
+     *    "isRed":function(el){
+     *       return el.hasClass("ks-red");
+     *    }
+     * };
+     */
     UIBase.HTML_PARSER = {};
 
-    UIBase.ATTRS = {
-        // 是否已经渲染完毕
+    UIBase.ATTRS =
+    /**
+     * @lends UIBase#
+     */
+    {
+        /**
+         * Whether this component is rendered.
+         * @type Boolean
+         */
         rendered:{
             value:false
         },
-        // dom 节点是否已经创建完毕
+        /**
+         * Whether this component 's dom structure is created.
+         * @type Boolean
+         */
         created:{
             value:false
         }
@@ -607,7 +630,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         {
 
             /**
-             * 建立节点，先不放在 dom 树中，为了性能!
+             * Create dom structure of this component.
              */
             create:function () {
                 var self = this;
@@ -622,7 +645,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
-             * 渲染组件到 dom 结构
+             * Put dom structure of this component to document and bind event.
              */
             render:function () {
                 var self = this;
@@ -650,6 +673,13 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. DOM creation logic of subclass component.
+             * @protected
+             * @function
+             */
+            createDom:noop,
+
+            /**
              * 创建 dom 节点，但不放在 document 中
              */
             _createDom:noop,
@@ -660,6 +690,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             _renderUI:noop,
 
             /**
+             * For overridden. Render logic of subclass component.
              * @protected
              * @function
              */
@@ -689,6 +720,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. Bind logic for subclass component.
              * @protected
              * @function
              */
@@ -717,6 +749,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. Sync attribute with ui.
              * protected
              * @function
              */
@@ -724,7 +757,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
 
             /**
-             * 销毁组件
+             * Destroy this component.
              */
             destroy:function () {
                 var self = this;
@@ -738,26 +771,26 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
          */
         {
             /**
-             * 根据基类以及扩展类得到新类
-             * @param {Function|Function[]} base 基类
-             * @param {Function[]} exts 扩展类
-             * @param {Object} px 原型 mix 对象
-             * @param {Object} sx 静态 mix 对象
-             * @returns {UIBase} 组合 后 的 新类
+             * Create a new class which extends UIBase.
+             * @param {Function|Function[]} base Parent class constructor.
+             * @param {Function[]} extensions Class constructors for extending.
+             * @param {Object} px Object to be mixed into new class 's prototype.
+             * @param {Object} sx Object to be mixed into new class.
+             * @returns {UIBase} A new class which extends UIBase.
              */
-            create:function (base, exts, px, sx) {
+            create:function (base, extensions, px, sx) {
                 var args = S.makeArray(arguments), t;
                 if (S.isArray(base)) {
                     sx = px;
-                    px = exts;
-                    exts = /*@type Function[]*/base;
+                    px = extensions;
+                    extensions = /*@type Function[]*/base;
                     base = UIBase;
                 }
                 base = base || UIBase;
-                if (S.isObject(exts)) {
+                if (S.isObject(extensions)) {
                     sx = px;
-                    px = exts;
-                    exts = [];
+                    px = extensions;
+                    extensions = [];
                 }
 
                 var name = "UIBaseDerived";
@@ -776,14 +809,14 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
                 S.extend(C, base, px, sx);
 
-                if (exts) {
+                if (extensions) {
 
-                    C.__ks_exts = exts;
+                    C.__ks_exts = extensions;
 
                     var desc = {
                         // ATTRS:
                         // HMTL_PARSER:
-                    }, constructors = exts.concat(C);
+                    }, constructors = extensions.concat(C);
 
                     // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                     // 主类最优先
@@ -848,7 +881,8 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 KISSY.add('uibase/box', function (S) {
 
     /**
-     * Box Implementation
+     * Box extension class.
+     * Represent a dom element.
      * @class
      * @memberOf UIBase
      * @namespace
@@ -1247,7 +1281,8 @@ KISSY.add('uibase/boxrender', function (S, Node) {
 KISSY.add("uibase/close", function () {
 
     /**
-     * config detail of close action
+     * Close extension class.
+     * Represent a close button.
      * @class
      * @memberOf UIBase
      */
@@ -1261,16 +1296,19 @@ KISSY.add("uibase/close", function () {
      */
     {
         /**
-         * 是否自带关闭按钮
+         * Whether close button is visible.
+         * Default: true.
          * @type boolean
          */
         closable:{
+            value:true,
             view:true
         },
 
         /**
-         * 点击关闭按钮的动作，销毁("destroy")或隐藏("hide")
-         * @type string
+         * Whether to destroy or hide current element when click close button.
+         * Default: "hide". Can set "destroy" to destroy it when click close button.
+         * @type String
          */
         closeAction:{
             value:HIDE
@@ -1283,9 +1321,7 @@ KISSY.add("uibase/close", function () {
     };
 
     Close.prototype = {
-
         __bindUI:function () {
-
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function (ev) {
@@ -1308,9 +1344,7 @@ KISSY.add("uibase/closerender", function (S, Node) {
     }
 
     Close.ATTRS = {
-        closable:{             // 是否需要关闭按钮
-            value:true,
-            sync:false
+        closable:{
         },
         closeBtn:{
         }
@@ -1331,7 +1365,6 @@ KISSY.add("uibase/closerender", function (S, Node) {
                 closeBtn = self.get("closeBtn"),
                 closable = self.get("closable"),
                 el = self.get("el");
-
             if (!closeBtn) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
@@ -1367,7 +1400,8 @@ KISSY.add("uibase/closerender", function (S, Node) {
 KISSY.add("uibase/constrain", function (S, DOM, Node) {
 
     /**
-     * constrain component to specified region
+     * Constrain extension class.
+     * Constrain component to specified region
      * @class
      * @memberOf UIBase
      */
@@ -1381,8 +1415,11 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
      */
     {
         /**
-         * <br>true:viewport限制 <br> node:限制在该节点范围
-         * @type HTMLElement|boolean
+         * Config constrain region.
+         * True: viewport
+         * Node: specified element.
+         * false: no constrain region.
+         * @type Node|Boolean
          */
         constrain:{
             //不限制
@@ -1397,7 +1434,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
      * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
      */
     function _getConstrainRegion(constrain) {
-        var ret;
+        var ret = null;
         if (!constrain) {
             return ret;
         }
@@ -1412,16 +1449,12 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
         }
         // 没有指定 constrain, 表示受限于可视区域
         else {
-            //不要使用 viewportWidth()
-            //The innerWidth attribute, on getting,
-            //must return the viewport width including the size of a rendered scroll bar (if any).
-            //On getting, the clientWidth attribute returns the viewport width
-            //excluding the size of a rendered scroll bar (if any)
-            //  if the element is the root element 
-            var vWidth = S.Env.host.document.documentElement.clientWidth;
-            ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
+            ret = {
+                left:DOM.scrollLeft(),
+                top:DOM.scrollTop()
+            };
             S.mix(ret, {
-                maxLeft:ret.left + vWidth - el.outerWidth(),
+                maxLeft:ret.left + DOM.viewportWidth() - el.outerWidth(),
                 maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
@@ -1483,7 +1516,8 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
 KISSY.add("uibase/contentbox", function () {
 
     /**
-     * ContentBox Implementation
+     * ContentBox extension class.
+     * Represent inner element of component's root element.
      * @class
      * @memberOf UIBase
      */
@@ -1528,6 +1562,11 @@ KISSY.add("uibase/contentbox", function () {
             view:true
         },
 
+        /**
+         * tag name of contentbox 's root element.
+         * Default: "div"
+         * @type String
+         */
         contentTagName:{
             view:true
         }
@@ -1643,9 +1682,9 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
  */
 KISSY.add("uibase/drag", function (S) {
 
-
     /**
-     * config drag options
+     * Drag extension class.
+     * Make element draggable.
      * @class
      * @memberOf UIBase
      */
@@ -1659,60 +1698,55 @@ KISSY.add("uibase/drag", function (S) {
      */
     {
         /**
-         * see {@link DD.Draggable#handlers}
+         * Current draggable element's handlers.
+         * See {@link DD.Draggable#handlers}
          */
         handlers:{
             value:[]
         },
         /**
-         * 是否可拖放
-         * @type boolean
+         * Whether current element is draggable.
+         * @type Boolean
          */
         draggable:{value:true}
     };
 
+    function dragExtAction(ev) {
+        this.set("xy", [ev.left, ev.top]);
+    }
+
     Drag.prototype = {
 
         _uiSetHandlers:function (v) {
-            if (v && v.length > 0 && this.__drag) {
-                this.__drag.set("handlers", v);
+            var d;
+            if (v && v.length > 0 && (d = this.__drag)) {
+                d.set("handlers", v);
             }
         },
 
         __bindUI:function () {
-            var Draggable = S.require("dd/draggable");
-            var self = this,
+            var Draggable = S.require("dd/draggable"),
+                d,
+                self = this,
                 el = self.get("el");
             if (self.get("draggable") && Draggable) {
-                self.__drag = new Draggable({
+                d = self.__drag = new Draggable({
                     node:el
                 });
+                d.on("drag", dragExtAction, self);
             }
         },
 
         _uiSetDraggable:function (v) {
-
             var self = this,
                 d = self.__drag;
             if (!d) {
                 return;
             }
-            if (v) {
-                d.detach("drag");
-                d.on("drag", self._dragExtAction, self);
-            } else {
-                d.detach("drag");
-            }
+            d.set("disabled", !v);
         },
 
-        _dragExtAction:function (offset) {
-            this.set("xy", [offset.left, offset.top])
-        },
-        /**
-         *
-         */
         __destructor:function () {
-            //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();
         }
@@ -1727,7 +1761,8 @@ KISSY.add("uibase/drag", function (S) {
 KISSY.add("uibase/loading", function () {
 
     /**
-     * make component can mask loading
+     * Loading extension class.
+     * Make component to be able to mask loading.
      * @class
      * @memberOf UIBase
      */
@@ -1736,7 +1771,7 @@ KISSY.add("uibase/loading", function () {
 
     Loading.prototype =
     /**
-     * @lends UIBase.Loading.prototype
+     * @lends UIBase.Loading#
      */
     {
         /**
@@ -1803,7 +1838,8 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
 KISSY.add("uibase/mask", function () {
 
     /**
-     * make component can show with mask
+     * Mask extension class.
+     * Make component to be able to show with mask.
      * @class
      * @memberOf UIBase
      */
@@ -1812,7 +1848,7 @@ KISSY.add("uibase/mask", function () {
 
     Mask.ATTRS =
     /**
-     * @lends UIBase.Mask.prototype
+     * @lends UIBase.Mask#
      */
     {
         /**
@@ -1826,13 +1862,16 @@ KISSY.add("uibase/mask", function () {
 
     Mask.prototype = {
         _uiSetMask:function (v) {
-            var self = this;
+            var self = this,
+                view = self.get("view"),
+                _maskExtShow = view._maskExtShow,
+                _maskExtHide = view._maskExtHide;
             if (v) {
-                self.on("show", self.get("view")._maskExtShow, self.get("view"));
-                self.on("hide", self.get("view")._maskExtHide, self.get("view"));
+                self.on("show", _maskExtShow, view);
+                self.on("hide", _maskExtHide, view);
             } else {
-                self.detach("show", self.get("view")._maskExtShow, self.get("view"));
-                self.detach("hide", self.get("view")._maskExtHide, self.get("view"));
+                self.detach("show", _maskExtShow, view);
+                self.detach("hide", _maskExtHide, view);
             }
         }
     };
@@ -1955,7 +1994,8 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
 KISSY.add("uibase/position", function (S) {
 
     /**
-     * make component positionable
+     * Position extensiong class.
+     * Make component positionable
      * @class
      * @memberOf UIBase
      */
@@ -1964,25 +2004,25 @@ KISSY.add("uibase/position", function (S) {
 
     Position.ATTRS =
     /**
-     * @lends UIBase.Position.prototype
+     * @lends UIBase.Position#
      */
     {
         /**
-         * 横坐标值
+         * Horizontal axis
          * @type Number
          */
         x:{
             view:true
         },
         /**
-         * 纵坐标值
+         * Vertical axis
          * @type Number
          */
         y:{
             view:true
         },
         /**
-         * 横纵坐标值
+         * Horizontal and vertical axis.
          * @type Number[]
          */
         xy:{
@@ -1990,7 +2030,6 @@ KISSY.add("uibase/position", function (S) {
             setter:function (v) {
                 var self = this,
                     xy = S.makeArray(v);
-
                 /*
                  属性内分发特别注意：
                  xy -> x,y
@@ -2009,7 +2048,7 @@ KISSY.add("uibase/position", function (S) {
             }
         },
         /**
-         * z-index 值
+         * z-index value.
          * @type Number
          */
         zIndex:{
@@ -2024,9 +2063,15 @@ KISSY.add("uibase/position", function (S) {
      */
     {
         /**
-         * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
+         * Move to absolute position.
          * @param {Number|Number[]} x
          * @param {Number} [y]
+         * @example
+         * <code>
+         * move(x, y);
+         * move(x);
+         * move([x,y])
+         * </code>
          */
         move:function (x, y) {
             var self = this;
@@ -2105,7 +2150,8 @@ KISSY.add("uibase/positionrender", function () {
 KISSY.add("uibase/resize", function (S) {
 
     /**
-     * make component resizable
+     * Resizable extension class.
+     * Make component resizable
      * @class
      * @memberOf UIBase
      */
@@ -2118,17 +2164,16 @@ KISSY.add("uibase/resize", function (S) {
      */
     {
         /**
-         * 调整大小的配置
+         * Resizable configuration.
+         * See {@link Resizable}
          * @example
          * <code>
          *  {
-         *    minWidth:100, //类型整数, 表示拖动调整大小的最小宽度
-         *    maxWidth:1000, //类型整数, 表示拖动调整大小的最大宽度
-         *    minHeight:100, //类型整数, 表示拖动调整大小的最小高度
-         *    maxHeight:1000, //类型整数, 表示拖动调整大小的最大高度
-         *    handlers:["b","t","r","l","tr","tl","br","bl"] //类型字符串数组, 取自上述 8 个值的集合.
-         *    // handlers 配置表示的数组元素可取上述八种值之一, t,b,l,r 分别表示 top,bottom,left,right,
-         *    // 加上组合共八种取值, 可在上, 下, 左, 右以及左上, 左下, 右上, 右下进行拖动.
+         *    minWidth:100,
+         *    maxWidth:1000,
+         *    minHeight:100,
+         *    maxHeight:1000,
+         *    handlers:["b","t","r","l","tr","tl","br","bl"]
          *  }
          * </code>
          * @type Object
@@ -2147,12 +2192,10 @@ KISSY.add("uibase/resize", function (S) {
         _uiSetResize:function (v) {
             var Resizable = S.require("resizable"),
                 self = this;
-            if (Resizable) {
-                self.resizer && self.resizer.destroy();
+            self.resizer && self.resizer.destroy();
+            if (Resizable && v) {
                 v.node = self.get("el");
-                if (v.handlers) {
-                    self.resizer = new Resizable(v);
-                }
+                self.resizer = new Resizable(v);
             }
         }
     };
@@ -2191,7 +2234,8 @@ KISSY.add("uibase/stdmod", function () {
 
 
     /**
-     * generate head,body,foot for component
+     * StdMod extension class.
+     * Generate head, body, foot for component.
      * @class
      * @memberOf UIBase
      */
@@ -2199,9 +2243,8 @@ KISSY.add("uibase/stdmod", function () {
     }
 
     StdMod.ATTRS =
-
     /**
-     * @lends UIBase.StdMod.prototype
+     * @lends UIBase.StdMod#
      */
     {
         /**

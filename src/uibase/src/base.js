@@ -12,7 +12,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         noop = S.noop;
 
     /**
-     * UIBase for class-based component
+     * UIBase for class-based component.
      * @class
      * @namespace
      * @name UIBase
@@ -120,7 +120,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
      */
     function destroyHierarchy(host) {
         var c = host.constructor,
-            exts,
+            extensions,
             d,
             i;
 
@@ -130,9 +130,9 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
                 c.prototype.destructor.apply(host);
             }
 
-            if ((exts = c.__ks_exts)) {
-                for (i = exts.length - 1; i >= 0; i--) {
-                    d = exts[i] && exts[i].prototype.__destructor;
+            if ((extensions = c.__ks_exts)) {
+                for (i = extensions.length - 1; i >= 0; i--) {
+                    d = extensions[i] && extensions[i].prototype.__destructor;
                     d && d.apply(host);
                 }
             }
@@ -165,14 +165,36 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         }
     }
 
+    /**
+     * Parse attribute from existing dom node.
+     * @type Object
+     * @memberOf UIBase
+     * @example
+     * HTML_PARSER={
+     *    // el: root element of current component.
+     *    "isRed":function(el){
+     *       return el.hasClass("ks-red");
+     *    }
+     * };
+     */
     UIBase.HTML_PARSER = {};
 
-    UIBase.ATTRS = {
-        // 是否已经渲染完毕
+    UIBase.ATTRS =
+    /**
+     * @lends UIBase#
+     */
+    {
+        /**
+         * Whether this component is rendered.
+         * @type Boolean
+         */
         rendered:{
             value:false
         },
-        // dom 节点是否已经创建完毕
+        /**
+         * Whether this component 's dom structure is created.
+         * @type Boolean
+         */
         created:{
             value:false
         }
@@ -185,7 +207,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
         {
 
             /**
-             * 建立节点，先不放在 dom 树中，为了性能!
+             * Create dom structure of this component.
              */
             create:function () {
                 var self = this;
@@ -200,7 +222,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
-             * 渲染组件到 dom 结构
+             * Put dom structure of this component to document and bind event.
              */
             render:function () {
                 var self = this;
@@ -228,6 +250,13 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. DOM creation logic of subclass component.
+             * @protected
+             * @function
+             */
+            createDom:noop,
+
+            /**
              * 创建 dom 节点，但不放在 document 中
              */
             _createDom:noop,
@@ -238,6 +267,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             _renderUI:noop,
 
             /**
+             * For overridden. Render logic of subclass component.
              * @protected
              * @function
              */
@@ -267,6 +297,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. Bind logic for subclass component.
              * @protected
              * @function
              */
@@ -295,6 +326,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
             },
 
             /**
+             * For overridden. Sync attribute with ui.
              * protected
              * @function
              */
@@ -302,7 +334,7 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
 
             /**
-             * 销毁组件
+             * Destroy this component.
              */
             destroy:function () {
                 var self = this;
@@ -316,26 +348,26 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
          */
         {
             /**
-             * 根据基类以及扩展类得到新类
-             * @param {Function|Function[]} base 基类
-             * @param {Function[]} exts 扩展类
-             * @param {Object} px 原型 mix 对象
-             * @param {Object} sx 静态 mix 对象
-             * @returns {UIBase} 组合 后 的 新类
+             * Create a new class which extends UIBase.
+             * @param {Function|Function[]} base Parent class constructor.
+             * @param {Function[]} extensions Class constructors for extending.
+             * @param {Object} px Object to be mixed into new class 's prototype.
+             * @param {Object} sx Object to be mixed into new class.
+             * @returns {UIBase} A new class which extends UIBase.
              */
-            create:function (base, exts, px, sx) {
+            create:function (base, extensions, px, sx) {
                 var args = S.makeArray(arguments), t;
                 if (S.isArray(base)) {
                     sx = px;
-                    px = exts;
-                    exts = /*@type Function[]*/base;
+                    px = extensions;
+                    extensions = /*@type Function[]*/base;
                     base = UIBase;
                 }
                 base = base || UIBase;
-                if (S.isObject(exts)) {
+                if (S.isObject(extensions)) {
                     sx = px;
-                    px = exts;
-                    exts = [];
+                    px = extensions;
+                    extensions = [];
                 }
 
                 var name = "UIBaseDerived";
@@ -354,14 +386,14 @@ KISSY.add('uibase/base', function (S, Base, Node, undefined) {
 
                 S.extend(C, base, px, sx);
 
-                if (exts) {
+                if (extensions) {
 
-                    C.__ks_exts = exts;
+                    C.__ks_exts = extensions;
 
                     var desc = {
                         // ATTRS:
                         // HMTL_PARSER:
-                    }, constructors = exts.concat(C);
+                    }, constructors = extensions.concat(C);
 
                     // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                     // 主类最优先

@@ -2,19 +2,12 @@
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/ariarender", function(S, Node) {
+KISSY.add("overlay/ariarender", function (S, Node) {
 
     var $ = Node.all;
 
     function Aria() {
-
     }
-
-//    Aria.ATTRS={
-//      aria:{
-//          value:false
-//      }
-//    };
 
 
     var KEY_TAB = Node.KeyCodes.TAB;
@@ -64,7 +57,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 
     Aria.prototype = {
 
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 el = self.get("el"),
                 header = self.get("header");
@@ -81,13 +74,13 @@ KISSY.add("overlay/ariarender", function(S, Node) {
             }
         },
 
-        __bindUI:function() {
+        __bindUI:function () {
 
             var self = this;
             if (self.get("aria")) {
                 var el = self.get("el"),
                     lastActive;
-                self.on("afterVisibleChange", function(ev) {
+                self.on("afterVisibleChange", function (ev) {
                     if (ev.newVal) {
                         lastActive = el[0].ownerDocument.activeElement;
                         el[0].focus();
