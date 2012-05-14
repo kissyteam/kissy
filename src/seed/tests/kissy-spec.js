@@ -226,5 +226,8 @@ describe('kissy.js', function () {
         expect(n.y.z).toBe(3);
 
         expect(n.y.a).toBe(n);
+
+        expect(n.__MIX_CIRCULAR).toBeUndefined();
+        expect(n.y.__MIX_CIRCULAR).toBeUndefined();
     });
 });
