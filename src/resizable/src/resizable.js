@@ -2,45 +2,45 @@
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("resizable", function(S, Node, Base, D) {
+KISSY.add("resizable", function (S, Node, Base, D, undefined) {
 
     var $ = Node.all,
         i,
         j,
         Draggable = D.Draggable,
         CLS_PREFIX = "ks-resizable-handler",
-        horizonal = ["l","r"],
-        vertical = ["t","b"],
+        horizontal = ["l", "r"],
+        vertical = ["t", "b"],
         hcNormal = {
-            "t":function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
+            "t":function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
                     t = ot + oh - h;
-                return [0,h,t,0]
+                return [0, h, t, 0]
             },
-            "b":function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
+            "b":function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
                 var h = getBoundValue(minH, maxH, oh + diffT);
-                return [0,h,0,0];
+                return [0, h, 0, 0];
             },
-            "r":function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
+            "r":function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
                 var w = getBoundValue(minW, maxW, ow + diffL);
-                return [w,0,0,0];
+                return [w, 0, 0, 0];
             },
-            "l":function(minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
+            "l":function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
                 var w = getBoundValue(minW, maxW, ow - diffL),
                     l = ol + ow - w;
-                return [w,0,0,l]
+                return [w, 0, 0, l]
             }
         };
 
 
-    for (i = 0; i < horizonal.length; i++) {
+    for (i = 0; i < horizontal.length; i++) {
         for (j = 0; j < vertical.length; j++) {
-            (function(h, v) {
-                hcNormal[ h + v] = hcNormal[ v + h] = function() {
+            (function (h, v) {
+                hcNormal[ h + v] = hcNormal[ v + h] = function () {
                     return merge(hcNormal[h].apply(this, arguments),
                         hcNormal[v].apply(this, arguments));
                 };
-            })(horizonal[i], vertical[j]);
+            })(horizontal[i], vertical[j]);
         }
     }
     function merge(a1, a2) {
@@ -68,7 +68,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
                     " " + CLS_PREFIX +
                     "-" + hc +
                     "'></div>")
-                    .prependTo(node),
+                    .prependTo(node, undefined),
                 dd = dds[hc] = new Draggable({
                     node:el,
                     cursor:null
@@ -91,7 +91,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
         var self = this,
             node = self.get("node"),
             dd = ev.target,
-            hc = _getHanderC(self, dd),
+            hc = _getHandlerC(self, dd),
             ow = self._width,
             oh = self._height,
             minW = self.get("minWidth"),
@@ -103,7 +103,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
             ot = self._top,
             ol = self._left,
             pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL),
-            attr = ["width","height","top","left"];
+            attr = ["width", "height", "top", "left"];
         for (i = 0; i < attr.length; i++) {
             if (pos[i]) {
                 node.css(attr[i], pos[i]);
@@ -111,7 +111,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
         }
     }
 
-    function _getHanderC(self, dd) {
+    function _getHandlerC(self, dd) {
         var dds = self.dds;
         for (var d in dds) {
             if (dds[d] == dd) {
@@ -125,7 +125,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
         var self = this,
             node;
         Resizable.superclass.constructor.apply(self, arguments);
-        self.on("afterHanldersChange", _uiSetHandlers, self);
+        self.on("afterHandlersChange", _uiSetHandlers, self);
         node = self.get("node");
         self.dds = {};
         if (node.css("position") == "static") {
@@ -137,7 +137,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
     }
 
     S.extend(Resizable, Base, {
-        destroy:function() {
+        destroy:function () {
             var self = this,
                 dds = self.dds;
             for (var d in dds) {
@@ -151,7 +151,7 @@ KISSY.add("resizable", function(S, Node, Base, D) {
     }, {
         ATTRS:{
             node:{
-                setter:function(v) {
+                setter:function (v) {
                     return $(v);
                 }
             },
@@ -176,4 +176,4 @@ KISSY.add("resizable", function(S, Node, Base, D) {
 
     return Resizable;
 
-}, { requires:["node","base","dd"] });
+}, { requires:["node", "base", "dd"] });
