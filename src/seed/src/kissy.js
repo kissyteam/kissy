@@ -24,6 +24,7 @@
     }
 
     var host = this,
+        MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR",
         hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'hasOwnProperty',
@@ -53,57 +54,83 @@
              * </code>
              */
             mix:function (r, s, ov, wl, deep) {
-                if (!s || !r) {
-                    return r;
-                }
-                if (ov === undefined) {
-                    ov = true;
-                }
-                var i = 0, p, len;
-
-                if (wl && (len = wl.length)) {
-                    for (; i < len; i++) {
-                        p = wl[i];
-                        if (p in s) {
-                            _mix(p, r, s, ov, deep);
-                        }
-                    }
-                } else {
-                    for (p in s) {
-                        // no hasOwnProperty judge !
-                        _mix(p, r, s, ov, deep);
-                    }
-
-                    // fix #101
-                    if (hasEnumBug) {
-                        for (; p = enumProperties[i++];) {
-                            if (ov && hasOwnProperty(s, p)) {
-                                r[p] = s[p];
-                            }
-                        }
-                    }
+                var cache = [], c, i = 0;
+                mixInternal(r, s, ov, wl, deep, cache);
+                while (c = cache[i++]) {
+                    delete c[MIX_CIRCULAR_DETECTION];
                 }
                 return r;
             }
         },
 
-        _mix = function (p, r, s, ov, deep) {
+        mixInternal = function (r, s, ov, wl, deep, cache) {
+            if (!s || !r) {
+                return r;
+            }
+
+            if (ov === undefined) {
+                ov = true;
+            }
+
+            var i = 0, p, len;
+
+            if (wl && (len = wl.length)) {
+                for (; i < len; i++) {
+                    p = wl[i];
+                    if (p in s) {
+                        _mix(p, r, s, ov, deep, cache);
+                    }
+                }
+            } else {
+
+                s[MIX_CIRCULAR_DETECTION] = r;
+                cache.push(s);
+
+                for (p in s) {
+                    if (p != MIX_CIRCULAR_DETECTION) {
+                        // no hasOwnProperty judge !
+                        _mix(p, r, s, ov, deep, cache);
+                    }
+                }
+
+                // fix #101
+                if (hasEnumBug) {
+                    for (; p = enumProperties[i++];) {
+                        if (hasOwnProperty(s, p)) {
+                            _mix(p, r, s, ov, deep, cache);
+                        }
+                    }
+                }
+            }
+            return r;
+        },
+
+        _mix = function (p, r, s, ov, deep, cache) {
             if (ov || !(p in r)) {
-                var target = r[p], src = s[p];
+                var target = r[p],
+                    src = s[p];
                 // prevent never-end loop
                 if (target === src) {
                     return;
                 }
                 // 来源是数组和对象，并且要求深度 mix
                 if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
-                    // 目标值为对象或数组，直接 mix
-                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
-                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
-                        target :
-                        (S.isArray(src) ? [] : {});
-                    r[p] = S.mix(clone, src, ov, undefined, true);
+                    if (src[MIX_CIRCULAR_DETECTION]) {
+                        r[p] = src[MIX_CIRCULAR_DETECTION];
+                    } else {
+                        // 目标值为对象或数组，直接 mix
+                        // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
+                        var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
+                            target :
+                            (S.isArray(src) ? [] : {});
+                        // 记录循环标志
+                        src[MIX_CIRCULAR_DETECTION] = r[p] = clone;
+                        // 记录被记录了循环标志的对像
+                        cache.push(src);
+                        mixInternal(clone, src, ov, undefined, true, cache);
+                    }
                 } else if (src !== undefined) {
-                    r[p] = s[p];
+                    r[p] = src;
                 }
             }
         },

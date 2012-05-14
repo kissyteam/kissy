@@ -204,4 +204,27 @@ describe('kissy.js', function () {
         expect(typeof S.guid()).toBe('string');
         expect(S.guid() - S.guid()).toBe(-1);
     });
+
+
+    it("S.mix can mix circular reference object", function () {
+        var o = {};
+
+        o.x = 1;
+
+        o.y = {};
+
+        o.y.z = 3;
+
+        o.y.a = o;
+
+        var n = {};
+
+        S.mix(n, o, undefined, undefined, true);
+
+        expect(n.x).toBe(1);
+
+        expect(n.y.z).toBe(3);
+
+        expect(n.y.a).toBe(n);
+    });
 });
