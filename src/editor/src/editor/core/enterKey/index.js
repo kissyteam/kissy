@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                 block = path.block;
             //只有两层？
             if (block &&
-                ( block._4e_name() == 'li' || block.parent()._4e_name() == 'li' )
+                ( block.nodeName() == 'li' || block.parent().nodeName() == 'li' )
 
                 ) {
                 if (editor.hasCommand('outdent')) {
@@ -70,12 +70,12 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
         // If this is a block under a list item, split it as well. (#1647)
         if (nextBlock) {
             node = nextBlock.parent();
-            if (node._4e_name() == 'li') {
+            if (node.nodeName() == 'li') {
                 nextBlock._4e_breakParent(node);
                 nextBlock._4e_move(nextBlock.next(), true);
             }
         }
-        else if (previousBlock && ( node = previousBlock.parent() ) && node._4e_name() == 'li') {
+        else if (previousBlock && ( node = previousBlock.parent() ) && node.nodeName() == 'li') {
             previousBlock._4e_breakParent(node);
             range.moveToElementEditablePosition(previousBlock.next());
             previousBlock._4e_move(previousBlock.prev());
@@ -88,9 +88,9 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
             // If the next block is an <li> with another list tree as the first
             // child, we'll need to append a filler (<br>/NBSP) or the list item
             // wouldn't be editable. (#1420)
-            if (nextBlock._4e_name() == 'li' &&
+            if (nextBlock.nodeName() == 'li' &&
                 ( node = nextBlock.first(Walker.invisible(true)) ) &&
-                S.inArray(node._4e_name(), ['ul', 'ol']))
+                S.inArray(node.nodeName(), ['ul', 'ol']))
                 (UA['ie'] ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
 
@@ -105,7 +105,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                 // Do not enter this block if it's a header tag, or we are in
                 // a Shift+Enter (#77). Create a new block element instead
                 // (later in the code).
-                if (previousBlock._4e_name() == 'li' || !headerTagRegex.test(previousBlock._4e_name())) {
+                if (previousBlock.nodeName() == 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
                     // Otherwise, duplicate the previous block.
                     newBlock = previousBlock.clone();
                 }
@@ -127,7 +127,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
                     if (element.equals(elementPath.block) || element.equals(elementPath.blockLimit))
                         break;
                     //<li><strong>^</strong></li>
-                    if (dtd.$removeEmpty[ element._4e_name() ]) {
+                    if (dtd.$removeEmpty[ element.nodeName() ]) {
                         element = element.clone();
                         newBlock._4e_moveChildren(element);
                         newBlock.append(element);

@@ -7,7 +7,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
@@ -179,7 +179,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
-                nodeName(target, "a"))) {
+                getNodeName(target)=="a")) {
                 var old;
                 try {
                     // execute default action on dom node

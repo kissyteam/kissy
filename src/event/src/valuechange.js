@@ -13,7 +13,7 @@
  */
 KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     var VALUE_CHANGE = "valuechange",
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         KEY = "event/valuechange",
         HISTORY_KEY = KEY + "/history",
         POLL_KEY = KEY + "/poll",
@@ -90,9 +90,8 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 
     special[VALUE_CHANGE] = {
         setup:function () {
-            var target = this;
-            if (nodeName(target, "input")
-                || nodeName(target, "textarea")) {
+            var target = this, nodeName = getNodeName(target);
+            if (nodeName == "input" || nodeName == "textarea") {
                 monitor(target);
             }
         },

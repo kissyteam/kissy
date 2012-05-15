@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 14 16:05
+build time: May 15 20:45
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -218,7 +218,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
                     value:"visibility"
@@ -481,8 +481,7 @@ KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
      * @class
      * @memberOf Overlay
      * @extends Overlay
-     * @param {NodeList} [container] existing dom node
-     * @param {Object} config see {@link Overlay}
+     * @name Popup
      */
     var Popup = UIBase.create(Overlay, [],
         /**

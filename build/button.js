@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:36
+build time: May 15 20:44
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -260,7 +260,7 @@ KISSY.add("button/split", function (S) {
 }, {
     requires:['base']
 });/**
- * ToggleButton for KISSY
+ * @fileOverview ToggleButton for KISSY
  * @author yiminghe@gmail.com
  */
 KISSY.add('button/toggle', function (S, UIBase, Button, ToggleRender) {
@@ -284,7 +284,8 @@ KISSY.add('button/toggle', function (S, UIBase, Button, ToggleRender) {
 }, {
     requires:['uibase', './base', './toggleRender']
 });/**
- * Render for ToggleButton
+ * @fileOverview Render for ToggleButton
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
 

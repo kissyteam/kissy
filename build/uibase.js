@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 14 16:20
+build time: May 15 20:45
 */
 /**
  * @fileOverview UIBase.Align
@@ -399,7 +399,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|Node} node Same as node config of {@link UIBase.Align#align} .
+         * @param {undefined|String|HTMLElement|NodeList} node Same as node config of {@link UIBase.Align#align} .
          */
         center:function (node) {
             this.set('align', {
@@ -1298,7 +1298,7 @@ KISSY.add("uibase/close", function () {
         /**
          * Whether close button is visible.
          * Default: true.
-         * @type boolean
+         * @type Boolean
          */
         closable:{
             value:true,
@@ -1419,7 +1419,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
          * True: viewport
          * Node: specified element.
          * false: no constrain region.
-         * @type Node|Boolean
+         * @type NodeList|Boolean
          */
         constrain:{
             //不限制
@@ -1853,7 +1853,7 @@ KISSY.add("uibase/mask", function () {
     {
         /**
          * whether show mask layer when component shows
-         * @type boolean
+         * @type Boolean
          */
         mask:{
             value:false
@@ -2291,21 +2291,21 @@ KISSY.add("uibase/stdmod", function () {
         },
         /**
          * Html content of header element.
-         * @type Node|String
+         * @type NodeList|String
          */
         headerContent:{
             view:true
         },
         /**
          * Html content of body element.
-         * @type Node|String
+         * @type NodeList|String
          */
         bodyContent:{
             view:true
         },
         /**
          * Html content of footer element.
-         * @type Node|String
+         * @type NodeList|String
          */
         footerContent:{
             view:true

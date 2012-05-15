@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 14 16:04
+build time: May 15 20:44
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -57,7 +57,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * @function
              * @name decorateInternal
              * @memberOf Component.Container#
-             * @param {Node} element Root element of current component.
+             * @param {NodeList} element Root element of current component.
              */
 
             /**
@@ -754,7 +754,7 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
         /**
          * Get component's constructor from KISSY Node.
          * @protected
-         * @param {Node} childNode Child component's root node.
+         * @param {NodeList} childNode Child component's root node.
          */
         findUIConstructorByNode:function (childNode) {
             var self = this,
@@ -868,7 +868,6 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @class
      * @memberOf Component
      * @name Render
-     * @private
      * @extends UIBase
      */
     return UIBase.create([UIBase.Box.Render],
@@ -905,6 +904,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
+             * @return {NodeList}
              */
             getKeyEventTarget:function () {
                 return this.get("el");
@@ -912,6 +912,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
 
             /**
              * Return the dom element into which child component to be rendered.
+             * @return {NodeList}
              */
             getContentElement:function () {
                 var self = this;

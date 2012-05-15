@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 /**
  * @fileOverview attribute management
@@ -263,7 +263,7 @@ KISSY.add('base/attribute', function (S, undef) {
              *                                          return getter's returned value to invoker
              * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
              *                                              if return false,cancel this set action
-             * @param {boolean} [override] whether override existing attribute config ,default true
+             * @param {Boolean} [override] whether override existing attribute config ,default true
              */
             addAttr:function (name, attrConfig, override) {
                 var self = this,
@@ -320,8 +320,8 @@ KISSY.add('base/attribute', function (S, undef) {
              * @param {String|Object} name attribute's name or attribute name and value map
              * @param [value] attribute's value
              * @param {Object} [opts] some options
-             * @param {boolean} [opts.silent] whether fire change event
-             * @returns {boolean} whether pass validator
+             * @param {Boolean} [opts.silent] whether fire change event
+             * @returns {Boolean} whether pass validator
              */
             set:function (name, value, opts) {
                 var self = this;
@@ -479,7 +479,7 @@ KISSY.add('base/attribute', function (S, undef) {
              * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
              * @param {String} name name of attribute
              * @param {Object} [opts] some options
-             * @param {boolean} [opts.silent] whether fire change event
+             * @param {Boolean} [opts.silent] whether fire change event
              */
             reset:function (name, opts) {
                 var self = this;

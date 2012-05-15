@@ -13,7 +13,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
              * 扁平化处理，深度遍历，利用 indent 和顺序来表示一棵树
              */
             listToArray:function (listNode, database, baseArray, baseIndentLevel, grandparentNode) {
-                if (!listNodeNames[ listNode._4e_name() ]) {
+                if (!listNodeNames[ listNode.nodeName() ]) {
                     return [];
                 }
                 if (!baseIndentLevel)
@@ -27,7 +27,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                     var listItem = new Node(listNode[0].childNodes[i]);
 
                     // It may be a text node or some funny stuff.
-                    if (listItem._4e_name() != 'li') {
+                    if (listItem.nodeName() != 'li') {
                         continue;
                     }
                     var itemObj = { 'parent':listNode,
@@ -35,7 +35,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                         element:listItem, contents:[] };
                     if (!grandparentNode) {
                         itemObj.grandparent = listNode.parent();
-                        if (itemObj.grandparent && itemObj.grandparent._4e_name() == 'li')
+                        if (itemObj.grandparent && itemObj.grandparent.nodeName() == 'li')
                             itemObj.grandparent = itemObj.grandparent.parent();
                     }
                     else {
@@ -50,7 +50,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                          j < itemChildCount; j++) {
                         child = new Node(listItem[0].childNodes[j]);
                         if (child[0].nodeType == KEN.NODE_ELEMENT &&
-                            listNodeNames[ child._4e_name() ]) {
+                            listNodeNames[ child.nodeName() ]) {
                             // Note the recursion here, it pushes inner list items with
                             // +1 indentation in the correct order.
                             list.listToArray(child, database, baseArray,
@@ -86,7 +86,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                         if (!rootNode
                             ||
                             //用于替换标签,ul->ol ,ol->ul
-                            listArray[ currentIndex ].parent._4e_name() != rootNode._4e_name()) {
+                            listArray[ currentIndex ].parent.nodeName() != rootNode.nodeName()) {
                             rootNode = listArray[ currentIndex ].parent.clone(false);
                             retval.appendChild(rootNode[0]);
                         }
@@ -104,12 +104,12 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                     } else if (item.indent == -1 && !baseIndex &&
                         item.grandparent) {
 
-                        if (listNodeNames[ item.grandparent._4e_name() ]) {
+                        if (listNodeNames[ item.grandparent.nodeName() ]) {
                             currentListItem = item.element.clone(false)[0];
                         } else {
                             // Create completely new blocks here, attributes are dropped.
                             //为什么要把属性去掉？？？#3857
-                            if (item.grandparent._4e_name() != 'td') {
+                            if (item.grandparent.nodeName() != 'td') {
                                 currentListItem = doc.createElement(paragraphMode);
                                 item.element._4e_copyAttributes(new Node(currentListItem));
                             }
@@ -137,7 +137,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                         }
 
                         if (currentListItem.nodeType == KEN.NODE_ELEMENT &&
-                            DOM._4e_name(currentListItem) == paragraphMode &&
+                            DOM.nodeName(currentListItem) == paragraphMode &&
                             currentListItem.firstChild) {
                             DOM._4e_trim(currentListItem);
                             var firstChild = currentListItem.firstChild;
@@ -149,7 +149,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                             }
                         }
 
-                        var currentListItemName = DOM._4e_name(currentListItem);
+                        var currentListItemName = DOM.nodeName(currentListItem);
                         if (!UA['ie'] && ( currentListItemName == 'div' ||
                             currentListItemName == 'p' )) {
                             DOM._4e_appendBogus(currentListItem);

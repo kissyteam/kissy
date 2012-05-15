@@ -258,7 +258,7 @@ KISSY.add("editor/plugin/color/colorpicker", function (S, Editor, Overlay4E) {
             body.on("click", function (ev) {
                 ev.halt();
                 var t = new S.Node(ev.target);
-                if (t._4e_name() == "a") {
+                if (t.nodeName() == "a") {
                     var c = hex(t.css("background-color"));
                     if (left.contains(t))self._detailColor(c);
                     indicatorValue.val(c);

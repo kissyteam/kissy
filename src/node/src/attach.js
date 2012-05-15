@@ -9,6 +9,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
+            "nodeName",
             "equals",
             "contains",
             "scrollTop",

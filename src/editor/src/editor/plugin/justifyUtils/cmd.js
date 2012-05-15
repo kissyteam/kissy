@@ -51,7 +51,7 @@ KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
                 editor.addCommand(Editor.Utils.getQueryCmd(command), {
                     exec:function (editor, path) {
                         var block = path.block || path.blockLimit;
-                        if (!block || block._4e_name() === "body") {
+                        if (!block || block.nodeName() === "body") {
                             return false;
                         }
                         return isAlign(block, textAlign);

@@ -27,19 +27,19 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
 
         getUrl:function (r) {
             var url = "";
-            if (r._4e_name() == "object") {
+            if (r.nodeName() == "object") {
                 var params = r[0].childNodes;
                 for (var i = 0; i < params.length; i++) {
                     if (params[i].nodeType != 1)continue;
                     if ((DOM.attr(params[i], "name") || "").toLowerCase() == "movie") {
                         url = DOM.attr(params[i], "value");
-                    } else if (DOM._4e_name(params[i]) == "embed") {
+                    } else if (DOM.nodeName(params[i]) == "embed") {
                         url = DOM.attr(params[i], "src");
-                    } else if (DOM._4e_name(params[i]) == "object") {
+                    } else if (DOM.nodeName(params[i]) == "object") {
                         url = DOM.attr(params[i], "data");
                     }
                 }
-            } else if (r._4e_name() == "embed") {
+            } else if (r.nodeName() == "embed") {
                 url = r.attr("src");
             }
             return url;

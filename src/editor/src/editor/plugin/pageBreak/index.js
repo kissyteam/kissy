@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                     var start = range.startContainer,
                         pre = start;
 
-                    while (start._4e_name() !== "body") {
+                    while (start.nodeName() !== "body") {
                         pre = start;
                         start = start.parent();
                     }

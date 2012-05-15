@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
         Event = S.Event,
         checkImg = function (node) {
             node = $(node);
-            return node._4e_name(node) === 'img' &&
+            return node.nodeName(node) === 'img' &&
                 // prevent collision with fake objects
                 (!/(^|\s+)ke_/.test(node[0].className)) &&
                 node;

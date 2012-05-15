@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 20:45
 */
 /**
  * @fileOverview 提示补全组件
- * @creator lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 

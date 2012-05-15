@@ -69,7 +69,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 //chrome 需要添加在能够真正包含div的地方
                 var c = this.el.parent();
                 while (c) {
-                    var n = c._4e_name();
+                    var n = c.nodeName();
                     if (dtd[n] && dtd[n]["div"])
                         return c;
                     c = c.parent();
@@ -410,7 +410,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 menuNode = self.menuNode,
                 t = $(ev.target),
                 a = t.closest(function (n) {
-                    return DOM.contains(menuNode,n) && DOM._4e_name(n) == "a";
+                    return DOM.contains(menuNode,n) && DOM.nodeName(n) == "a";
                 }, undefined);
 
             if (!a || !a.attr("data-value")) {

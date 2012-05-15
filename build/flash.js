@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:45
 */
 /**
- * @fileOverview    Flash 全局静态类
- * @author   kingfo<oicuicu@gmail.com>
+ * @fileOverview Flash 全局静态类
+ * @author kingfo<oicuicu@gmail.com>
  */
 KISSY.add('flash/base', function(S) {
 
@@ -21,8 +21,8 @@ KISSY.add('flash/base', function(S) {
 
 });
 /**
- * @fileOverview    将 swf 嵌入到页面中
- * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
+ * @fileOverview 将 swf 嵌入到页面中
+ * @author kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  */
 KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
 
@@ -404,8 +404,8 @@ KISSY.add("flash", function(S, F) {
 }, {
     requires:["flash/base","flash/embed"]
 });/**
- * @fileOverview    Flash UA 探测
- * @author   kingfo<oicuicu@gmail.com>
+ * @fileOverview Flash UA 探测
+ * @author kingfo<oicuicu@gmail.com>
  */
 KISSY.add('flash/ua', function(S, UA) {
 

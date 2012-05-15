@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:36
+build time: May 15 20:45
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -71,7 +71,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
              * a chance to handle the event first.
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Key event to handle.
-             * @return {boolean} Whether the event was handled by the container (or one of
+             * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
              * @override
@@ -151,7 +151,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {Node} element Html Element to be tested.
+             * @param {NodeList} element Html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {
@@ -613,7 +613,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
             /**
              * Check whether this menu item contains specified element.
-             * @param {Node} element Element to be tested.
+             * @param {NodeList} element Element to be tested.
              */
             containsElement:function (element) {
                 return this.get('view') && this.get('view').containsElement(element);
@@ -1253,7 +1253,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * @param e A key event.
-             * @return {boolean} Whether the event was handled.
+             * @return {Boolean} Whether the event was handled.
              */
             handleKeydown:function (e) {
                 var self = this,
@@ -1365,7 +1365,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 },
                 /**
                  * whether destroy submenu when destroy itself ,reverse result
-                 * @type {boolean}
+                 * @type {Boolean}
                  */
                 externalSubMenu:{
                     value:false

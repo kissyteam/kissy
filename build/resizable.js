@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 14 11:49
+build time: May 15 20:45
 */
 /**
  * @fileOverview resizable support for kissy
@@ -126,6 +126,12 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         return 0;
     }
 
+    /**
+     * Make a element resizable.
+     * @class
+     * @extends Base
+     * @name Resizable
+     */
     function Resizable(cfg) {
         var self = this,
             node;
@@ -141,43 +147,86 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         });
     }
 
-    S.extend(Resizable, Base, {
-        destroy:function () {
-            var self = this,
-                dds = self.dds;
-            for (var d in dds) {
-                if (dds.hasOwnProperty(d)) {
-                    dds[d].destroy();
-                    dds[d].get("node").remove();
-                    delete dds[d];
+    S.extend(Resizable, Base,
+        /**
+         * @lends Resizable#
+         */
+        {
+            /**
+             * make current resizable 's node not resizable.
+             */
+            destroy:function () {
+                var self = this,
+                    dds = self.dds;
+                for (var d in dds) {
+                    if (dds.hasOwnProperty(d)) {
+                        dds[d].destroy();
+                        dds[d].get("node").remove();
+                        delete dds[d];
+                    }
                 }
             }
-        }
-    }, {
-        ATTRS:{
-            node:{
-                setter:function (v) {
-                    return $(v);
+        }, {
+            ATTRS:/**
+             * @lends Resizable#
+             */
+            {
+                /**
+                 * KISSY Node to be resizable.
+                 * @type Node
+                 */
+                node:{
+                    setter:function (v) {
+                        return $(v);
+                    }
+                },
+                /**
+                 * Minimum width can current node resize to.
+                 * @type Number
+                 */
+                minWidth:{
+                    value:0
+                },
+                /**
+                 * Minimum height can current node resize to.
+                 * @type Number
+                 */
+                minHeight:{
+                    value:0
+                },
+                /**
+                 * Maximum width can current node resize to.
+                 * @type Number
+                 */
+                maxWidth:{
+                    value:Number.MAX_VALUE
+                },
+                /**
+                 * Maximum height can current node resize to.
+                 * @type Number
+                 */
+                maxHeight:{
+                    value:Number.MAX_VALUE
+                },
+                /**
+                 * Enumeration of directions can current node resize to.
+                 * Directions:
+                 * "t": top.
+                 * "tr": top-right.
+                 * "r": right.
+                 * "b": bottom.
+                 * "l": left.
+                 * "tl": top-left.
+                 * "bl": bottom-left.
+                 * "br": bottom-right.
+                 * @type String[]
+                 */
+                handlers:{
+                    // t,tr,r,br,b,bl,l,tl
+                    value:[]
                 }
-            },
-            minWidth:{
-                value:0
-            },
-            minHeight:{
-                value:0
-            },
-            maxWidth:{
-                value:Number.MAX_VALUE
-            },
-            maxHeight:{
-                value:Number.MAX_VALUE
-            },
-            handlers:{
-                //t,tr,r,br,b,bl,l,tl
-                value:[]
             }
-        }
-    });
+        });
 
     return Resizable;
 

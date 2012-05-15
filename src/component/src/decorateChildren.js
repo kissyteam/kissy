@@ -20,7 +20,7 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
         /**
          * Get component's constructor from KISSY Node.
          * @protected
-         * @param {Node} childNode Child component's root node.
+         * @param {NodeList} childNode Child component's root node.
          */
         findUIConstructorByNode:function (childNode) {
             var self = this,

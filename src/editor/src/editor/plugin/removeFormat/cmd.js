@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
                                         break;
                                     }
                                     // If this element can be removed (even partially).
-                                    if (tagsRegex.test(pathElement._4e_name())) {
+                                    if (tagsRegex.test(pathElement.nodeName())) {
                                         node._4e_breakParent(pathElement);
                                     }
                                 }
@@ -109,10 +109,10 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
                                     _4e_nextSourceNode(false, KEN.NODE_ELEMENT, undefined, undefined);
 
                                 // This node must not be a fake element.
-                                if (!( currentNode._4e_name() == 'img' &&
+                                if (!( currentNode.nodeName() == 'img' &&
                                     currentNode.attr('_ke_realelement') )) {
                                     // Remove elements nodes that match with this style rules.
-                                    if (tagsRegex.test(currentNode._4e_name()))
+                                    if (tagsRegex.test(currentNode.nodeName()))
                                         currentNode._4e_remove(true);
                                     else {
                                         removeAttrs(currentNode, removeFormatAttributes);

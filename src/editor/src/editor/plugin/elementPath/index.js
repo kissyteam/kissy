@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
             for (i = 0; i < elements.length; i++) {
                 element = elements[i];
                 // 考虑 fake objects
-                var type = element.attr("_ke_real_element_type") || element._4e_name(),
+                var type = element.attr("_ke_real_element_type") || element.nodeName(),
                     a = new Node("<a " +
                         "href='javascript(\"" +
                         type + "\")' " +

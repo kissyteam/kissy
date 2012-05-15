@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:36
+build time: May 15 20:44
 */
 KISSY.add("button/base",function(c,b,d,a,e){var f=b.KeyCodes,c=d.create(a.Controller,[],{bindUI:function(){this.get("el").on("keyup",this.handleKeyEventInternal,this)},handleKeyEventInternal:function(a){return a.keyCode==f.ENTER&&"keydown"==a.type||a.keyCode==f.SPACE&&"keyup"==a.type?this.performActionInternal(a):a.keyCode==f.SPACE},performActionInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:!0},tooltip:{view:!0},collapseSide:{view:!0},content:{getter:function(){return this.get("html")},
 setter:function(a){return this.set("html",a)}}}});c.DefaultRender=e;a.UIStore.setUIConstructorByCssClass("button",{priority:a.UIStore.PRIORITY.LEVEL1,ui:c});return c},{requires:["event","uibase","component","./buttonRender"]});KISSY.add("button",function(c,b,d,a,e){b.Render=d;b.Split=a;b.Toggle=e;return b},{requires:["button/base","button/buttonRender","button/split","button/toggle"]});

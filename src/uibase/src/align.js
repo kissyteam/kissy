@@ -394,7 +394,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|Node} node Same as node config of {@link UIBase.Align#align} .
+         * @param {undefined|String|HTMLElement|NodeList} node Same as node config of {@link UIBase.Align#align} .
          */
         center:function (node) {
             this.set('align', {

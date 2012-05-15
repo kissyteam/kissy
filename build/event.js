@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 8 19:40
+build time: May 15 20:44
 */
 /**
  * @fileOverview responsible for registering event
@@ -194,7 +194,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
@@ -238,8 +238,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @param targets html nodes
          * @param {String|Event.Object} eventType event type
          * @param [eventData] additional event data
-         * @param {boolean} [onlyHandlers] only fire handlers
-         * @returns {boolean} The return value of fire/dispatchEvent indicates
+         * @param {Boolean} [onlyHandlers] only fire handlers
+         * @returns {Boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
          */
@@ -303,7 +303,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     /**
      * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     * @return boolean The return value of dispatchEvent indicates
+     * @return {Boolean} The return value of dispatchEvent indicates
      *                 whether any of the listeners which handled the event called preventDefault.
      *                 If preventDefault was called the value is false, else the value is true.
      */
@@ -366,7 +366,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
-                nodeName(target, "a"))) {
+                getNodeName(target)=="a")) {
                 var old;
                 try {
                     // execute default action on dom node
@@ -1590,7 +1590,7 @@ KISSY.add('event/object', function (S, undefined) {
             /**
              * Stops the event propagation and prevents the default
              * event behavior.
-             * @param  {boolean} [immediate] if true additional listeners on the current target will not be executed
+             * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
              */
             halt:function (immediate) {
                 var self = this;
@@ -1820,12 +1820,12 @@ KISSY.add("event/special", function () {
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
     var mode = S.Env.host.document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
-        var nodeName = DOM._nodeName;
+        var getNodeName = DOM.nodeName;
         special['submit'] = {
             setup:function () {
                 var el = this;
                 // form use native
-                if (nodeName(el, "form")) {
+                if (getNodeName(el) == "form") {
                     return false;
                 }
                 // lazy add submit for inside forms
@@ -1836,11 +1836,11 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
             tearDown:function () {
                 var el = this;
                 // form use native
-                if (nodeName(el, "form")) {
+                if (getNodeName(el) == "form") {
                     return false;
                 }
                 Event.remove(el, "click keypress", detector);
-                S.each(DOM.query("form", el),function (form) {
+                S.each(DOM.query("form", el), function (form) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, "submit", {
@@ -1855,7 +1855,8 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
 
         function detector(e) {
             var t = e.target,
-                form = nodeName(t, "input") || nodeName(t, "button") ? t.form : null;
+                nodeName = getNodeName(t),
+                form = (nodeName == "input" || nodeName == "button") ? t.form : null;
 
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;
@@ -2211,7 +2212,7 @@ KISSY.add("event/utils", function (S, DOM) {
  */
 KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     var VALUE_CHANGE = "valuechange",
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         KEY = "event/valuechange",
         HISTORY_KEY = KEY + "/history",
         POLL_KEY = KEY + "/poll",
@@ -2288,9 +2289,8 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 
     special[VALUE_CHANGE] = {
         setup:function () {
-            var target = this;
-            if (nodeName(target, "input")
-                || nodeName(target, "textarea")) {
+            var target = this, nodeName = getNodeName(target);
+            if (nodeName == "input" || nodeName == "textarea") {
                 monitor(target);
             }
         },

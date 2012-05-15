@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 KISSY.add("autocomplete/BasicComboBox",function(f,g,c,b){function j(b){var a=this.get("menu"),d=this.get("el")[0];a.get("visible")?a.hide():(d.focus(),this.sendRequest(""));b&&b.halt()}return g.create(c,{bindUI:function(){this.get("el");var b=this.get("container");this.get("button");b.on("click",j,this);var a=this.get("menuCfg");a.width||(a.width=b.width())}},{ATTRS:{container:{view:!0},button:{view:!0}},DefaultRender:b})},{requires:["uibase","./basic","./BasicComboBoxRender"]});
 KISSY.add("autocomplete/BasicComboBoxRender",function(f,g,c,b){var j=b.all,i;return i=g.create(c,{createDom:function(){var a=j("<span class='"+this.get("prefixCls")+"combobox'></span>"),b=j("<a tabindex='-1' href='javascript:void(\"open\")'  onmousedown='return false;' class='"+this.get("prefixCls")+"combobox-button'>&#x25BC;</a>").unselectable();this.__set("container",a);this.__set("button",b)},renderUI:function(){var a=this.get("container"),b=this.get("button"),c=this.get("el").parent();a.appendTo(c).append(this.get("el")).append(b)},

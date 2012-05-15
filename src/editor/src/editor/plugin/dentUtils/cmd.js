@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         isNotBookmark = Walker.bookmark(false, true);
 
     function isListItem(node) {
-        return node.nodeType == KEN.NODE_ELEMENT && DOM._4e_name(node) == 'li';
+        return node.nodeType == KEN.NODE_ELEMENT && DOM.nodeName(node) == 'li';
     }
 
     function indentList(range, listNode, type) {
@@ -64,7 +64,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         });
 
         for (var i = 0; i < listParents.length; i++) {
-            if (listNodeNames[ listParents[i]._4e_name() ]) {
+            if (listNodeNames[ listParents[i].nodeName() ]) {
                 listNode = listParents[i];
                 break;
             }
@@ -86,7 +86,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
             // Make sure the newly created sublist get a brand-new element of the same type. (#5372)
             var listRoot = listArray[ i ].parent;
             listArray[ i ].parent =
-                new Node(listRoot[0].ownerDocument.createElement(listRoot._4e_name()));
+                new Node(listRoot[0].ownerDocument.createElement(listRoot.nodeName()));
         }
         /*
          嵌到下层的li
@@ -115,14 +115,14 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         if (type == 'outdent') {
             var parentLiElement;
             if (( parentLiElement = listNode.parent() ) &&
-                parentLiElement._4e_name() == 'li') {
+                parentLiElement.nodeName() == 'li') {
                 var children = newList.listNode.childNodes
                     , count = children.length,
                     child;
 
                 for (i = count - 1; i >= 0; i--) {
                     if (( child = new Node(children[i]) ) &&
-                        child._4e_name() == 'li')
+                        child.nodeName() == 'li')
                         pendingList.push(child);
                 }
             }
@@ -142,7 +142,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
                 // Nest preceding <ul>/<ol> inside current <li> if any.
                 while (( followingList = followingList.next() ) &&
 
-                    followingList._4e_name() in listNodeNames) {
+                    followingList.nodeName() in listNodeNames) {
                     // IE requires a filler NBSP for nested list inside empty list item,
                     // otherwise the list item will be inaccessiable. (#4476)
                     if (UA['ie'] && !li.first(function (node) {
@@ -204,7 +204,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
 
         while (nearestListBlock &&
             !( nearestListBlock[0].nodeType == KEN.NODE_ELEMENT &&
-                listNodeNames[ nearestListBlock._4e_name() ] )) {
+                listNodeNames[ nearestListBlock.nodeName() ] )) {
             nearestListBlock = nearestListBlock.parent();
         }
 
@@ -214,7 +214,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         //注2：哪种情况会出现？
         if (nearestListBlock
             && startContainer[0].nodeType == KEN.NODE_ELEMENT
-            && startContainer._4e_name() in listNodeNames) {
+            && startContainer.nodeName() in listNodeNames) {
             //S.log("indent from ul/ol");
             var walker = new Walker(range);
             walker.evaluator = isListItem;
@@ -223,7 +223,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
 
         if (nearestListBlock
             && endContainer[0].nodeType == KEN.NODE_ELEMENT
-            && endContainer._4e_name() in listNodeNames) {
+            && endContainer.nodeName() in listNodeNames) {
             walker = new Walker(range);
             walker.evaluator = isListItem;
             range.endContainer = walker.previous();
@@ -233,7 +233,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
 
         if (nearestListBlock) {
             var firstListItem = nearestListBlock.first();
-            while (firstListItem && firstListItem._4e_name() != "li") {
+            while (firstListItem && firstListItem.nodeName() != "li") {
                 firstListItem = firstListItem.next();
             }
             var rangeStart = range.startContainer,

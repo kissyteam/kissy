@@ -10,7 +10,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             TEXT = docElement.textContent === undefined ?
                 'innerText' : 'textContent',
             EMPTY = '',
-            nodeName = DOM._nodeName,
+            nodeName = DOM.nodeName,
             isElementNode = DOM._isElementNode,
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
@@ -420,7 +420,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     if (val === undefined) {
                         if (el && el.nodeType === DOM.ELEMENT_NODE) {
                             // browsers index elements by id/name on forms, give priority to attributes.
-                            if (nodeName(el, "form")) {
+                            if (nodeName(el) == "form") {
                                 attrNormalizer = attrNodeHook;
                             }
                             if (attrNormalizer && attrNormalizer.get) {
@@ -438,7 +438,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         for (var i = els.length - 1; i >= 0; i--) {
                             el = els[i];
                             if (el && el.nodeType === DOM.ELEMENT_NODE) {
-                                if (nodeName(el, "form")) {
+                                if (nodeName(el) == "form") {
                                     attrNormalizer = attrNodeHook;
                                 }
                                 if (attrNormalizer && attrNormalizer.set) {
@@ -528,7 +528,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         var elem = DOM.get(selector);
 
                         if (elem) {
-                            hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+                            hook = valHooks[ nodeName(elem) ] || valHooks[ elem.type ];
 
                             if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
                                 return ret;
@@ -566,7 +566,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             });
                         }
 
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+                        hook = valHooks[ nodeName(elem)] || valHooks[ elem.type ];
 
                         // If set returns undefined, fall back to normal setting
                         if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {

@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 20:45
 */
 /**
- * @fileOverview  KISSY Template Engine.
+ * @fileOverview KISSY Template Engine
  * @author yyfrankyy@gmail.com
  */
 KISSY.add('template', function (S) {

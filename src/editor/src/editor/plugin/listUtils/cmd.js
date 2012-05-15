@@ -51,7 +51,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
             var child, length = newList.listNode.childNodes.length;
             for (i = 0; i < length &&
                 ( child = new Node(newList.listNode.childNodes[i]) ); i++) {
-                if (child._4e_name() == this.type)
+                if (child.nodeName() == this.type)
                     listsCreated.push(child);
             }
             newList.listNode.insertBefore(groupObj.root);
@@ -111,7 +111,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     listItem = new Node(doc.createElement('li'));
 
                 // Preserve heading structure when converting to list item. (#5271)
-                if (headerTagRegex.test(contentBlock._4e_name())) {
+                if (headerTagRegex.test(contentBlock.nodeName())) {
                     listItem[0].appendChild(contentBlock[0]);
                 } else {
                     contentBlock._4e_copyAttributes(listItem, undefined, undefined);
@@ -224,10 +224,10 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     startNode = boundaryNodes.startNode,
                     endNode = boundaryNodes.endNode;
 
-                if (startNode[0].nodeType == KEN.NODE_ELEMENT && startNode._4e_name() == 'td')
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT && startNode.nodeName() == 'td')
                     range.setStartAt(boundaryNodes.startNode, KER.POSITION_AFTER_START);
 
-                if (endNode[0].nodeType == KEN.NODE_ELEMENT && endNode._4e_name() == 'td')
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT && endNode.nodeName() == 'td')
                     range.setEndAt(boundaryNodes.endNode, KER.POSITION_BEFORE_END);
 
                 var iterator = range.createIterator(),
@@ -257,7 +257,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     //注意从上往下，从body开始找到最早的list祖先，从那里开始重建!!!
                     for (var i = pathElementsCount - 1; i >= 0 &&
                         ( element = pathElements[ i ] ); i--) {
-                        if (listNodeNames[ element._4e_name() ]
+                        if (listNodeNames[ element.nodeName() ]
                             && blockLimit.contains(element))     // Don't leak outside block limit (#3940).
                         {
                             // If we've encountered a list inside a block limit
@@ -303,7 +303,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
             while (listGroups.length > 0) {
                 groupObj = listGroups.shift();
                 if (!state) {
-                    if (listNodeNames[ groupObj.root._4e_name() ]) {
+                    if (listNodeNames[ groupObj.root.nodeName() ]) {
                         this.changeListType(editor, groupObj, database, listsCreated);
                     } else {
                         //2010-11-17
@@ -312,7 +312,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                         Editor.Utils.clearAllMarkers(database);
                         this.createList(editor, groupObj, listsCreated);
                     }
-                } else if (listNodeNames[ groupObj.root._4e_name() ]) {
+                } else if (listNodeNames[ groupObj.root.nodeName() ]) {
                     this.removeList(editor, groupObj, database);
                 }
             }
@@ -329,7 +329,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     var sibling = listNode[ rtl ?
                         'prev' : 'next' ](Walker.whitespaces(true));
                     if (sibling && sibling[0] &&
-                        sibling._4e_name() == self.type) {
+                        sibling.nodeName() == self.type) {
                         sibling.remove();
                         // Move children order by merge direction.(#3820)
                         sibling._4e_moveChildren(listNode, rtl ? true : false, undefined);
@@ -363,7 +363,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                 ( element = elements[ i ] ) &&
                 element[0] !== blockLimit[0];
                  i++) {
-                if (listNodeNames[name = element._4e_name()]) {
+                if (listNodeNames[name = element.nodeName()]) {
                     if (name == type) {
                         return true;
                     }

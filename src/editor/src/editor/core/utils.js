@@ -121,7 +121,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param doc {Document}
              * @param address {Array.<number>}
              * @param normalized {Boolean}
-             * @return {Node}
+             * @return {NodeList}
              */
             getByAddress:function (doc, address, normalized) {
                 var $ = doc.documentElement;
@@ -242,7 +242,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {Node}
+             * @param inp {NodeList}
              */
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
@@ -256,7 +256,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp  {Node}
+             * @param inp  {NodeList}
              * @param [val]
              */
             valInput:function (inp, val) {
@@ -274,7 +274,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {Node}
+             * @param inp {NodeList}
              * @param tip {string}
              */
             placeholder:function (inp, tip) {

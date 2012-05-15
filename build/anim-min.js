@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 KISSY.add("anim",function(c,b,d){b.Easing=d;c.mix(c,{Anim:b,Easing:b.Easing});return b},{requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]});
 KISSY.add("anim/backgroundPosition",function(c,b,d,e){function g(a){a=a.replace(/left|top/g,"0px").replace(/right|bottom/g,"100%").replace(/([0-9\.]+)(\s|\)|$)/g,"$1px$2");a=a.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);return[parseFloat(a[1]),a[2],parseFloat(a[3]),a[4]]}function a(){a.superclass.constructor.apply(this,arguments)}c.extend(a,e,{load:function(){a.superclass.load.apply(this,arguments);this.unit=["px","px"];if(this.from){var b=g(this.from);this.from=[b[0],b[2]]}else this.from=

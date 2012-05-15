@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 8 17:23
+build time: May 15 20:44
 */
 KISSY.add("dd/constrain",function(f,j,i){function g(){g.superclass.constructor.apply(this,arguments)}function d(a){var d,h,a=a.drag.get("dragNode"),b=this.get("constrain");if(b){if(!0===b){var q=k(c);this.__constrainRegion={left:d=q.scrollLeft(),top:h=q.scrollTop(),right:d+q.width(),bottom:h+q.height()}}if(b.nodeType||f.isString(b))b=k(b);b.getDOMNode?(d=b.offset(),this.__constrainRegion={left:d.left,top:d.top,right:d.left+b.outerWidth(),bottom:d.top+b.outerHeight()}):f.isPlainObject(b)&&(this.__constrainRegion=
 b);this.__constrainRegion&&(this.__constrainRegion.right-=a.outerWidth(),this.__constrainRegion.bottom-=a.outerHeight())}}function a(a){var a=a.info,c=a.left,h=a.top,b=this.__constrainRegion;b&&(a.left=Math.min(Math.max(b.left,c),b.right),a.top=Math.min(Math.max(b.top,h),b.bottom))}function e(){this.__constrainRegion=null}var k=i.all,c=f.Env.host;f.extend(g,j,{__constrainRegion:null,attachDrag:function(c){c.on("dragstart",d,this).on("dragend",e,this).on("dragalign",a,this)},detachDrag:function(c){c.detach("dragstart",

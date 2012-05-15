@@ -329,7 +329,7 @@ KISSY.add("editor/core/selection", function (S) {
          *        selection.
          * @example
          * var element = editor.getSelection().<b>getStartElement()</b>;
-         * alert( element._4e_name() );
+         * alert( element.nodeName() );
          */
         getStartElement:function () {
             var self = this, cache = self._.cache;
@@ -414,7 +414,7 @@ KISSY.add("editor/core/selection", function (S) {
          *       SELECTION_ELEMENT.
          * @example
          * var element = editor.getSelection().<b>getSelectedElement()</b>;
-         * alert( element._4e_name() );
+         * alert( element.nodeName() );
          */
         getSelectedElement:function () {
             var self = this,
@@ -445,7 +445,7 @@ KISSY.add("editor/core/selection", function (S) {
                                  ( enclosed = range.getEnclosedNode() )
                                      && ( enclosed[0].nodeType == KEN.NODE_ELEMENT )
                                      //某些值得这么多的元素？？
-                                     && styleObjectElements[ enclosed._4e_name() ]
+                                     && styleObjectElements[ enclosed.nodeName() ]
                                      && ( selected = enclosed )
                                  ); i--) {
                         // Then check any deep wrapped element, e.g. [<b><i><img /></i></b>]
@@ -681,9 +681,9 @@ KISSY.add("editor/core/selection", function (S) {
                     // IE doesn't support selecting the entire table row/cell, move the selection into cells, e.g.
                     // <table><tbody><tr>[<td>cell</b></td>... => <table><tbody><tr><td>[cell</td>...
                     if (self.startContainer[0].nodeType == KEN.NODE_ELEMENT &&
-                        self.startContainer._4e_name() in nonCells
+                        self.startContainer.nodeName() in nonCells
                         || self.endContainer[0].nodeType == KEN.NODE_ELEMENT &&
-                        self.endContainer._4e_name() in nonCells) {
+                        self.endContainer.nodeName() in nonCells) {
                         self.shrink(KER.SHRINK_ELEMENT, TRUE);
                     }
 
@@ -729,7 +729,7 @@ KISSY.add("editor/core/selection", function (S) {
                                     ||
                                     (
                                         startNode[0].previousSibling &&
-                                            DOM._4e_name(startNode[0].previousSibling) == 'br'
+                                            DOM.nodeName(startNode[0].previousSibling) == 'br'
                                         )
                                     )
                                 );

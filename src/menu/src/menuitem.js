@@ -91,7 +91,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
             /**
              * Check whether this menu item contains specified element.
-             * @param {Node} element Element to be tested.
+             * @param {NodeList} element Element to be tested.
              */
             containsElement:function (element) {
                 return this.get('view') && this.get('view').containsElement(element);

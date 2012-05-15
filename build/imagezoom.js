@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 4 16:58
+build time: May 15 20:45
 */
 /**
  * @fileOverview auto render
@@ -225,7 +225,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, UIBase, Node, Zoo
                 imageTop:{},
                 /**
                  * 显示放大区域标志
-                 * @type {boolean}
+                 * @type {Boolean}
                  */
                 hasZoom:{
                     value:true,
@@ -236,7 +236,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, UIBase, Node, Zoo
 
                 /**
                  * 是否显示放大镜提示图标
-                 * @type {boolean}
+                 * @type {Boolean}
                  */
                 showIcon:{
                     value:true
@@ -323,7 +323,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         },
         /**
          * 是否预加载大图
-         * @type {boolean}
+         * @type {Boolean}
          */
         preload:{
             value:true

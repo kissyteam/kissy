@@ -56,7 +56,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitLTR == node || DOM._4e_name(node) == "body")) {
+                if (movingOut && (limitLTR == node || DOM.nodeName(node) == "body")) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
@@ -74,7 +74,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             self._.guardRTL = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitRTL == node || DOM._4e_name(node) == "body")) {
+                if (movingOut && (limitRTL == node || DOM.nodeName(node) == "body")) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
@@ -290,7 +290,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
      */
     Walker.bookmark = function (contentOnly, isReject) {
         function isBookmarkNode(node) {
-            return  DOM._4e_name(node) == 'span' &&
+            return  DOM.nodeName(node) == 'span' &&
                 DOM.attr(node, '_ke_bookmark');
         }
 
@@ -342,7 +342,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
         isWhitespaces = Walker.whitespaces(),
         isBookmark = Walker.bookmark(),
         toSkip = function (node) {
-            var name = DOM._4e_name(node);
+            var name = DOM.nodeName(node);
             return isBookmark(node) ||
                 isWhitespaces(node) ||
                 node.nodeType == 1 &&
@@ -357,7 +357,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             tail = tail._4e_previousSourceNode();
         } while (tail && toSkip(tail[0]));
 
-        if (tail && ( !UA.ie ? tail._4e_name() == "br"
+        if (tail && ( !UA.ie ? tail.nodeName() == "br"
             : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()) )) {
             return tail[0];
         }

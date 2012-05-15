@@ -171,7 +171,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
     function findAWithImg(img) {
         var ret = img.parent();
         while (ret) {
-            var name = ret._4e_name();
+            var name = ret.nodeName();
             if (name == "a") {
                 return ret;
             }

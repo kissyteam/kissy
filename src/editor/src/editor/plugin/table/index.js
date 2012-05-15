@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
             if (node[0].nodeType == KEN.NODE_ELEMENT &&
-                cellNodeRegex.test(node._4e_name()) &&
+                cellNodeRegex.test(node.nodeName()) &&
                 !node.data('selected_cell')) {
                 node._4e_setMarker(database, 'selected_cell', true, undefined);
                 retval.push(node);
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                     // walked into its children.
 
                     var parent = node.parent();
-                    if (parent && cellNodeRegex.test(parent._4e_name()) &&
+                    if (parent && cellNodeRegex.test(parent.nodeName()) &&
                         !parent.data('selected_cell')) {
                         parent._4e_setMarker(database, 'selected_cell', true, undefined);
                         retval.push(parent);
@@ -290,11 +290,11 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         if (!table)
             return undefined;
         var td = startElement.closest(function (n) {
-            var name = DOM._4e_name(n);
+            var name = DOM.nodeName(n);
             return table.contains(n) && (name == "td" || name == "th");
         },undefined);
         var tr = startElement.closest(function (n) {
-            var name = DOM._4e_name(n);
+            var name = DOM.nodeName(n);
             return table.contains(n) && name == "tr";
         }, undefined);
         return {
@@ -428,8 +428,8 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                     // remove it,except body,as well.( #5416 )
                     var parent = table.parent();
                     if (parent[0].childNodes.length == 1 &&
-                        parent._4e_name() != 'body' &&
-                        parent._4e_name() != 'td') {
+                        parent.nodeName() != 'body' &&
+                        parent.nodeName() != 'td') {
                         parent.remove();
                     } else {
                         table.remove();
@@ -471,7 +471,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             ContextMenu.register({
                 editor:editor,
                 filter:function (node) {
-                    if (S.inArray(DOM._4e_name(node), tableRules)) {
+                    if (S.inArray(DOM.nodeName(node), tableRules)) {
                         return true;
                     }
                 },

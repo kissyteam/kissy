@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:45
 */
 /**
- * normalize selection getter/setter in textarea/input
+ * @fileOverview normalize selection getter/setter in textarea/input
  * @author yiminghe@gmail.com
  */
 KISSY.add("input-selection", function (S, DOM) {

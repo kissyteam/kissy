@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:45
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -24,7 +24,8 @@ KISSY.add('json', function (S, JSON) {
     requires:["json/json2"]
 });
 /*
- http://www.JSON.org/json2.js
+ @fileOverview  http://www.JSON.org/json2.js
+
  2010-08-25
 
  Public Domain.

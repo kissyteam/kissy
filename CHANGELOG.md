@@ -50,6 +50,7 @@ History:
  - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
  - [x] fix #88，去除多余的 tbody
  - [+] DOM 增加 contents/wrap/wrapAll/unwrap/wrapInner
+ - [+] DOM 增加 nodeName 方法，返回小写的 nodeName
 
  - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
 

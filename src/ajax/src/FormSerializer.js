@@ -9,7 +9,7 @@ KISSY.add("ajax/FormSerializer", function(S, DOM) {
     return {
         /**
          * 序列化表单元素
-         * @param {String|HTMLElement[]|HTMLElement|Node} forms
+         * @param {String|HTMLElement[]|HTMLElement|NodeList} forms
          */
         serialize:function(forms) {
             var elements = [],data = {};

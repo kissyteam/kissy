@@ -6,7 +6,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
         rformEls = /^(?:button|input|object|select|textarea)$/i,
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
         _isElementNode = DOM._isElementNode,
@@ -25,7 +25,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             var el = ret[i];
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
-            } else if (nodeName(el, "input")) {
+            } else if (getNodeName(el)=="input") {
                 fixCheckedInternal(el);
             } else if (_isElementNode(el)) {
                 var cs = el.getElementsByTagName("input");
@@ -54,7 +54,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         var ret = [], i, el, nodeName;
         for (i = 0; nodes[i]; i++) {
             el = nodes[i];
-            nodeName = el.nodeName.toLowerCase();
+            nodeName = getNodeName(el);
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
             } else if (nodeName === "script" && isJs(el)) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 KISSY.add("chart/anim",function(e){function g(d,c){this.duration=1E3*d;this.fnEasing=e.isString(c)?h[c]:c}var f=e.namespace("Chart"),h=e.Easing;e.augment(g,{init:function(){this.start=(new Date).getTime();this.finish=this.start+this.duration},get:function(){var d=(new Date).getTime();return d>this.finish?1:this.fnEasing((d-this.start)/this.duration)}});return f.Anim=g});
 KISSY.add("chart/axis",function(e){function g(d,c,a){this.chart=c;this.type=d.type;this.data=d;this.axisData=d.axis();this.cfg=a;this.current_x=-1;this.initEvent();e.each(this.axisData,function(a){a.name="name"in a&&e.isString(a)&&0<a.name.length?"("+a.name+")":!1});this.initdata(this.axisData,a)}var f=KISSY.namespace("Chart"),h=e.Event;e.mix(g,{getMax:function(d,c){var a=Math.ceil((c.height-c.paddingBottom-c.paddingTop)/40),b=d/a,n;if(1>=b)b=1;else if(1<b&&5>=b)b=Math.ceil(b);else if(5<b&&10>=b)b=

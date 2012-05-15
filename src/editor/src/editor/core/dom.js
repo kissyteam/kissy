@@ -114,7 +114,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_isBlockBoundary:function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
                 return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
-                    nodeNameMatches[ DOM._4e_name(el) ]);
+                    nodeNameMatches[ DOM.nodeName(el) ]);
             },
 
             /**
@@ -168,22 +168,6 @@ KISSY.add("editor/core/dom", function (S) {
             },
 
             /**
-             * 得到小写的标签名
-             * @param [thisElement]
-             */
-            _4e_name:function (thisElement) {
-                var nodeName = thisElement.nodeName.toLowerCase();
-                // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
-                if (UA['ie']) {
-                    var scopeName = thisElement['scopeName'];
-                    if (scopeName && scopeName != 'HTML') {
-                        nodeName = scopeName.toLowerCase() + ':' + nodeName;
-                    }
-                }
-                return nodeName;
-            },
-
-            /**
              * 两个元素是否名称和属性都相同
              * @param thisElement
              * @param otherElement
@@ -195,7 +179,7 @@ KISSY.add("editor/core/dom", function (S) {
 
                 otherElement = normalElDom(otherElement);
 
-                if (DOM._4e_name(thisElement) != DOM._4e_name(otherElement)) {
+                if (DOM.nodeName(thisElement) != DOM.nodeName(otherElement)) {
                     return FALSE;
                 }
 
@@ -296,7 +280,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_mergeSiblings:function (thisElement) {
                 thisElement = normalEl(thisElement);
                 // 只合并空元素不占用空间的标签
-                if (REMOVE_EMPTY[thisElement._4e_name()]) {
+                if (REMOVE_EMPTY[thisElement.nodeName()]) {
                     mergeElements(thisElement, TRUE);
                     mergeElements(thisElement);
                 }
@@ -682,7 +666,7 @@ KISSY.add("editor/core/dom", function (S) {
                     child = el.lastChild;
                     if (child &&
                         child.nodeType == 1 &&
-                        DOM._4e_name(child) == 'br') {
+                        DOM.nodeName(child) == 'br') {
                         el.removeChild(child);
                     }
                 }
@@ -704,7 +688,7 @@ KISSY.add("editor/core/dom", function (S) {
 
                 if (!lastChild ||
                     lastChild.nodeType == KEN.NODE_TEXT ||
-                    DOM._4e_name(lastChild) !== 'br') {
+                    DOM.nodeName(lastChild) !== 'br') {
                     bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
                         el.ownerDocument.createElement('br');
@@ -820,7 +804,7 @@ KISSY.add("editor/core/dom", function (S) {
              */
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
-                var name = DOM._4e_name(el),
+                var name = DOM.nodeName(el),
                     xhtml_dtd = Editor.XHTML_DTD,
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );

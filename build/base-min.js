@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 KISSY.add("base/attribute",function(h,j){function n(a,b,c,d,k,g,e){e=e||c;return a.fire(b+h.ucfirst(c)+"Change",{attrName:e,subAttrName:g,prevVal:d,newVal:k})}function f(a,b,c){var d=a[b]||{};c&&(a[b]=d);return d}function e(a){return f(a,"__attrs",!0)}function m(a){return f(a,"__attrVals",!0)}function o(a,b){for(var c=0,d=b.length;a!=j&&c<d;c++)a=a[b[c]];return a}function p(a,b,c,d,k){var d=d||{},g,e,l,f=b;-1!==b.indexOf(".")&&(g=b.split("."),b=g.shift());l=a.get(b);g&&(e=o(l,g));if(!g&&l===c||g&&
 e===c)return j;if(g){var i=e=h.clone(l),p=g.length-1;if(0<=p){for(var q=0;q<p;q++)i=i[g[q]];i!=j&&(i[g[q]]=c)}c=e}if(!d.silent&&!1===n(a,"before",b,l,c,f))return!1;c=a.__set(b,c,d);if(!1===c)return c;d.silent||(c=m(a)[b],n(a,"after",b,l,c,f),k?k.push({prevVal:l,newVal:c,attrName:b,subAttrName:f}):n(a,"","*",[l],[c],[f],[b]));return a}function i(){}function r(a,b,c,d){var k=f(e(a),b,!0).validator;if(k&&(k=h.isString(k)?a[k]:k))if(a=k.call(a,c,b,d),a!==j&&!0!==a)return a;return j}i.INVALID={};var s=

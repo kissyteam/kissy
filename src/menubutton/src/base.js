@@ -276,7 +276,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
             /**
              * Decorate child element to from a child component.
              * @param {Function} UI Child component's constructor
-             * @param {Node} el Child component's root element.
+             * @param {NodeList} el Child component's root element.
              * @protected
              * @override
              */

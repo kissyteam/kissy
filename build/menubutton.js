@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 17:36
+build time: May 15 20:45
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -281,7 +281,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
             /**
              * Decorate child element to from a child component.
              * @param {Function} UI Child component's constructor
-             * @param {Node} el Child component's root element.
+             * @param {NodeList} el Child component's root element.
              * @protected
              * @override
              */

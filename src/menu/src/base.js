@@ -146,7 +146,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {Node} element Html Element to be tested.
+             * @param {NodeList} element Html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {

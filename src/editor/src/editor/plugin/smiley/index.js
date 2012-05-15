@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                         self.smiley.get("el").on("click", function (ev) {
                             var t = new S.Node(ev.target),
                                 icon;
-                            if (t._4e_name() == "a" &&
+                            if (t.nodeName() == "a" &&
                                 (icon = t.attr("data-icon"))) {
                                 var img = new S.Node("<img " +
                                     "alt='' src='" +

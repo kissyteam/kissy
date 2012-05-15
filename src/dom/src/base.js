@@ -1,6 +1,6 @@
 /**
  * @fileOverview dom
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 
@@ -89,8 +89,22 @@ KISSY.add('dom/base', function (S, UA, undefined) {
             return o && !o.nodeType && o.item && !o.setTimeout;
         },
 
-        _nodeName:function (e, name) {
-            return e && e.nodeName.toLowerCase() === name.toLowerCase();
+        /**
+         * Get node 's nodeName in lowercase.
+         * @param {HTMLElement[]|String|HTMLElement|Node} selector Matched elements.
+         * @return {String} el 's nodeName in lowercase
+         */
+        nodeName:function (selector) {
+            var el = DOM.get(selector),
+                nodeName = el.nodeName.toLowerCase();
+            // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
+            if (UA['ie']) {
+                var scopeName = el['scopeName'];
+                if (scopeName && scopeName != 'HTML') {
+                    nodeName = scopeName.toLowerCase() + ':' + nodeName;
+                }
+            }
+            return nodeName;
         }
     };
 

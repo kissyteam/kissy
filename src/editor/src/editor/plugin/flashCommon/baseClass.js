@@ -133,7 +133,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         _dbClick:function (ev) {
             var self = this,
                 t = new Node(ev.target);
-            if (t._4e_name() === "img" && t.hasClass(self.get("cls"), undefined)) {
+            if (t.nodeName() === "img" && t.hasClass(self.get("cls"), undefined)) {
                 self.show(t);
                 ev.halt();
             }

@@ -5,12 +5,12 @@
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
     var mode = S.Env.host.document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
-        var nodeName = DOM._nodeName;
+        var getNodeName = DOM.nodeName;
         special['submit'] = {
             setup:function () {
                 var el = this;
                 // form use native
-                if (nodeName(el, "form")) {
+                if (getNodeName(el) == "form") {
                     return false;
                 }
                 // lazy add submit for inside forms
@@ -21,11 +21,11 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
             tearDown:function () {
                 var el = this;
                 // form use native
-                if (nodeName(el, "form")) {
+                if (getNodeName(el) == "form") {
                     return false;
                 }
                 Event.remove(el, "click keypress", detector);
-                S.each(DOM.query("form", el),function (form) {
+                S.each(DOM.query("form", el), function (form) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, "submit", {
@@ -40,7 +40,8 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
 
         function detector(e) {
             var t = e.target,
-                form = nodeName(t, "input") || nodeName(t, "button") ? t.form : null;
+                nodeName = getNodeName(t),
+                form = (nodeName == "input" || nodeName == "button") ? t.form : null;
 
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;

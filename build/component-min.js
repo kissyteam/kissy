@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 14 16:04
+build time: May 15 20:44
 */
 KISSY.add("component",function(f,e,c,a,b,h,k,j){f={Render:c,Container:a,UIStore:b,DelegateChildren:h,DecorateChild:j,DecorateChildren:k};f.Controller=e;return f},{requires:"component/controller,component/render,component/container,component/uistore,component/delegateChildren,component/decorateChildren,component/decorateChild".split(",")});KISSY.add("component/container",function(f,e,c,a,b,h){return e.create(c,[b,h],{})},{requires:["uibase","./controller","./uistore","./delegateChildren","./decorateChildren"]});
 KISSY.add("component/controller",function(f,e,c,a,b,h){function k(d){return function(g){var g=g.newVal,a=this.get("view");a&&a.set(d,g)}}function j(d){return function(g){var a=this.get("view");return g===h?a&&a.get(d):g}}function l(d,g,a){d.create();var b=d.getContentElement();g.__set("parent",d);g.set("render",b);g.set("elBefore",a);d.get("rendered")?g.render():g.create()}function m(d,a){var b=d.relatedTarget;return b&&(b===a[0]||a.contains(b))}var n=c.create([c.Box],{getCssClassWithPrefix:a.getCssClassWithPrefix,

@@ -624,7 +624,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
             /**
              * Insert a element into current editor.
-             * @param {Node} element
+             * @param {NodeList} element
              */
             insertElement:function (element, init, callback) {
 
@@ -637,7 +637,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 self.focus();
 
                 var clone,
-                    elementName = element._4e_name(),
+                    elementName = element.nodeName(),
                     xhtml_dtd = Editor.XHTML_DTD,
                     KER = Editor.RANGE,
                     KEN = Editor.NODE,
@@ -669,10 +669,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     // the parent blocks until we reach blockLimit.
                     if (isBlock) {
                         while (( current = range.getCommonAncestor(FALSE, TRUE) )
-                            && ( dtd = xhtml_dtd[ current._4e_name() ] )
+                            && ( dtd = xhtml_dtd[ current.nodeName() ] )
                             && !( dtd && dtd [ elementName ] )) {
                             // Split up inline elements.
-                            if (current._4e_name() in xhtml_dtd["span"])
+                            if (current.nodeName() in xhtml_dtd["span"])
                                 range.splitElement(current);
                             // If we're in an empty block which indicate a new paragraph,
                             // simply replace it with the inserting block.(#3664)
@@ -706,7 +706,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 dtd = Editor.XHTML_DTD;
 
                 //行内元素不用加换行
-                if (!dtd['$inline'][clone._4e_name()]) {
+                if (!dtd['$inline'][clone.nodeName()]) {
                     //末尾时 ie 不会自动产生br，手动产生
                     if (!next) {
                         p = new Node("<p>&nbsp;</p>", NULL, doc);
@@ -714,10 +714,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         next = p;
                     }
                     //firefox,replace br with p，和编辑器整体换行保持一致
-                    else if (next._4e_name() == "br"
+                    else if (next.nodeName() == "br"
                         &&
                         //必须符合嵌套规则
-                        dtd[next.parent()._4e_name()]["p"]
+                        dtd[next.parent().nodeName()]["p"]
                         ) {
                         p = new Node("<p>&nbsp;</p>", NULL, doc);
                         next[0].parentNode.replaceChild(p[0], next[0]);
@@ -787,7 +787,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                             if (self.getSelection().getRanges().length == 0) {
                                 var r = new Editor.Range(editorDoc);
                                 var node = DOM.first(editorDoc.body, function (el) {
-                                    return el.nodeType == 1 && DOM._4e_name(el) != "br";
+                                    return el.nodeType == 1 && DOM.nodeName(el) != "br";
                                 });
                                 if (!node) {
                                     node = new Node(editorDoc.createElement("p"));
@@ -833,14 +833,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 if (UA['webkit']) {
                     Event.on(doc, "click", function (ev) {
                         var control = new Node(ev.target);
-                        if (S.inArray(control._4e_name(), ['input', 'select'])) {
+                        if (S.inArray(control.nodeName(), ['input', 'select'])) {
                             ev.preventDefault();
                         }
                     });
                     // Prevent from editig textfield/textarea value.
                     Event.on(doc, "mouseup", function (ev) {
                         var control = new Node(ev.target);
-                        if (S.inArray(control._4e_name(), ['input', 'textarea'])) {
+                        if (S.inArray(control.nodeName(), ['input', 'textarea'])) {
                             ev.preventDefault();
                         }
                     });
@@ -946,7 +946,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 if (UA['webkit']) {
                     Event.on(doc, "mousedown", function (ev) {
                         var control = new Node(ev.target);
-                        if (S.inArray(control._4e_name(), ['img', 'hr', 'input', 'textarea', 'select'])) {
+                        if (S.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select'])) {
                             self.getSelection().selectElement(control);
                         }
                     });
@@ -956,7 +956,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 if (UA['gecko']) {
                     Event.on(doc, "dragstart", function (ev) {
                         var control = new Node(ev.target);
-                        if (control._4e_name() === 'img' && /ke_/.test(control[0].className)) {
+                        if (control.nodeName() === 'img' && /ke_/.test(control[0].className)) {
                             // firefox禁止拖放
                             ev.preventDefault();
                         }
@@ -1145,7 +1145,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         if (
                             disableObjectResizing ||
                                 (
-                                    t._4e_name() === 'table'
+                                    t.nodeName() === 'table'
                                         &&
                                         disableInlineTableEditing )
                             ) {

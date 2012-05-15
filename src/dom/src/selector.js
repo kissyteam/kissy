@@ -13,7 +13,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         isString = S.isString,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
-        nodeName = DOM._nodeName,
+        getNodeName = DOM.nodeName,
         push = Array.prototype.push,
         SPACE = ' ',
         COMMA = ',',
@@ -395,7 +395,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = [];
             for (; i < len; ++i) {
                 el = els[i];
-                if (nodeName(el, tag)) {
+                if (getNodeName(el)==tag) {
                     ret.push(el);
                 }
             }
@@ -502,7 +502,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
                             // 指定 tag 才进行判断
                             if (tag) {
-                                tagRe = nodeName(elem, tag);
+                                tagRe = getNodeName(elem)==tag;
                             }
 
                             // 指定 cls 才进行判断

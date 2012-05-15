@@ -24,7 +24,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
          * True: viewport
          * Node: specified element.
          * false: no constrain region.
-         * @type Node|Boolean
+         * @type NodeList|Boolean
          */
         constrain:{
             //不限制

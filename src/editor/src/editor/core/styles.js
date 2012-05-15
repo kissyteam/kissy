@@ -178,7 +178,7 @@ KISSY.add("editor/core/styles", function (S) {
                 attribs, styles;
 
             // If the element name is the same as the style name.
-            if (element._4e_name() == this.element) {
+            if (element.nodeName() == this.element) {
                 // If no attributes are defined in the element.
                 if (!fullMatch && !element._4e_hasAttributes())
                     return TRUE;
@@ -216,7 +216,7 @@ KISSY.add("editor/core/styles", function (S) {
 
             // Check if the element can be somehow overriden.
             var overrides = getOverrides(this),
-                override = overrides[ element._4e_name() ] || overrides["*"];
+                override = overrides[ element.nodeName() ] || overrides["*"];
 
             if (override) {
                 // If no attributes have been defined, remove the element.
@@ -289,7 +289,7 @@ KISSY.add("editor/core/styles", function (S) {
                             continue;
 
                         if (this.type == KEST.STYLE_OBJECT
-                            && !( element._4e_name() in objectElements ))
+                            && !( element.nodeName() in objectElements ))
                             continue;
 
                         if (this.checkElementRemovable(element, TRUE))
@@ -460,7 +460,7 @@ KISSY.add("editor/core/styles", function (S) {
         // Exclude the ones at header OR at tail,
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
-            //blockName = preBlock._4e_name(),
+            //blockName = preBlock.nodeName(),
             splittedHtml = replace(preBlock._4e_outerHtml(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
@@ -479,8 +479,8 @@ KISSY.add("editor/core/styles", function (S) {
     // for <pre> blocks to make sure content format is well preserved, and merging/splitting adjacent
     // when necessary.(#3188)
     function replaceBlock(block, newBlock) {
-        var newBlockIsPre = newBlock._4e_name == ('pre'),
-            blockIsPre = block._4e_name == ('pre'),
+        var newBlockIsPre = newBlock.nodeName == ('pre'),
+            blockIsPre = block.nodeName == ('pre'),
             isToPre = newBlockIsPre && !blockIsPre,
             isFromPre = !newBlockIsPre && blockIsPre;
 
@@ -505,7 +505,7 @@ KISSY.add("editor/core/styles", function (S) {
     function mergePre(preBlock) {
         var previousBlock;
         if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, KEN.NODE_ELEMENT) )
-            && previousBlock._4e_name() == 'pre' ))
+            && previousBlock.nodeName() == 'pre' ))
             return;
 
         // Merge the previous <pre> block contents into the current <pre>
@@ -617,7 +617,7 @@ KISSY.add("editor/core/styles", function (S) {
             else {
                 var nodeType = currentNode[0].nodeType,
                     nodeName = nodeType == KEN.NODE_ELEMENT ?
-                        currentNode._4e_name() : NULL;
+                        currentNode.nodeName() : NULL;
 
                 if (nodeName && currentNode.attr('_ke_bookmark')) {
                     currentNode = currentNode._4e_nextSourceNode(TRUE);
@@ -647,7 +647,7 @@ KISSY.add("editor/core/styles", function (S) {
                     // http://dev.ckeditor.com/ticket/8470
                     if (currentParent &&
                         elementName == "a" &&
-                        currentParent._4e_name() == elementName) {
+                        currentParent.nodeName() == elementName) {
                         var tmpANode = getElement(self, document, undefined);
                         currentParent._4e_moveChildren(tmpANode);
                         currentParent[0].parentNode.replaceChild(tmpANode[0], currentParent[0]);
@@ -657,7 +657,7 @@ KISSY.add("editor/core/styles", function (S) {
                     // Check if the style element can be a child of the current
                     // node parent or if the element is not defined in the DTD.
                     else if (currentParent && currentParent[0]
-                        && ( ( DTD[currentParent._4e_name()] ||
+                        && ( ( DTD[currentParent.nodeName()] ||
                         DTD["span"] )[ elementName ] ||
                         isUnknownElement )
                         && ( !def["parentRule"] || def["parentRule"](currentParent) )) {
@@ -702,7 +702,7 @@ KISSY.add("editor/core/styles", function (S) {
                             while (
                                 (applyStyle = !includedNode.next(notBookmark))
                                     && ( (parentNode = includedNode.parent()) &&
-                                    dtd[ parentNode._4e_name() ] )
+                                    dtd[ parentNode.nodeName() ] )
                                     && ( parentNode._4e_position(firstNode) |
                                     KEP.POSITION_FOLLOWING |
                                     KEP.POSITION_IDENTICAL |
@@ -751,7 +751,7 @@ KISSY.add("editor/core/styles", function (S) {
                 // Loop through the parents, removing the redundant attributes
                 // from the element to be applied.
                 while (styleNode && parent && styleNode[0] && parent[0]) {
-                    if (parent._4e_name() == elementName) {
+                    if (parent.nodeName() == elementName) {
                         for (attName in def.attributes) {
 
                             if (def.attributes.hasOwnProperty(attName)) {
@@ -863,7 +863,7 @@ KISSY.add("editor/core/styles", function (S) {
      */
     function removeInlineStyle(range) {
         /*
-         * Make sure our range has included all "collpased" parent inline nodes so
+         * Make sure our range has included all "collapsed" parent inline nodes so
          * that our operation logic can be simpler.
          */
         range.enlarge(KER.ENLARGE_ELEMENT);
@@ -908,10 +908,10 @@ KISSY.add("editor/core/styles", function (S) {
                         //yiminghe:note,bug for ckeditor
                         //qc #3700 for chengyu(yiminghe)
                         //从word复制过来的已编辑文本无法使用粗体和斜体等功能取消
-                        if (element._4e_name() != this.element) {
+                        if (element.nodeName() != this.element) {
                             var _overrides = getOverrides(this);
                             removeOverrides(element,
-                                _overrides[ element._4e_name() ] || _overrides["*"]);
+                                _overrides[ element.nodeName() ] || _overrides["*"]);
                         } else {
                             removeFromElement(this, element);
                         }
@@ -1001,12 +1001,12 @@ KISSY.add("editor/core/styles", function (S) {
                     currentNode[0].nodeType == KEN.NODE_ELEMENT &&
                     this.checkElementRemovable(currentNode)) {
                     // Remove style from element or overriding element.
-                    if (currentNode._4e_name() == this["element"])
+                    if (currentNode.nodeName() == this["element"])
                         removeFromElement(this, currentNode);
                     else {
                         var overrides = getOverrides(this);
                         removeOverrides(currentNode,
-                            overrides[ currentNode._4e_name() ] || overrides["*"]);
+                            overrides[ currentNode.nodeName() ] || overrides["*"]);
 
                     }
 
@@ -1218,9 +1218,9 @@ KISSY.add("editor/core/styles", function (S) {
         var def = style._.definition,
             overrides = getOverrides(style),
             attributes = Utils.mix(def["attributes"],
-                (overrides[ element._4e_name()] || overrides["*"] || {})["attributes"]),
+                (overrides[ element.nodeName()] || overrides["*"] || {})["attributes"]),
             styles = Utils.mix(def["styles"],
-                (overrides[ element._4e_name()] || overrides["*"] || {})["styles"]),
+                (overrides[ element.nodeName()] || overrides["*"] || {})["styles"]),
             // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&
                 S.isEmptyObject(styles);

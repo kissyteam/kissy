@@ -464,7 +464,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 var table = frag.firstChild,
                     tableChildren = S.makeArray(table.childNodes);
                 S.each(tableChildren, function (c) {
-                    if (DOM._nodeName(c, "tbody") && !c.childNodes.length) {
+                    if (DOM.nodeName(c) == "tbody" && !c.childNodes.length) {
                         table.removeChild(c);
                     }
                 });

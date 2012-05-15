@@ -58,7 +58,7 @@ KISSY.add("editor/core/elementPath", function (S) {
 
     /**
      * @constructor
-     * @param lastNode {Node}
+     * @param lastNode {NodeList}
      */
     function ElementPath(lastNode) {
         var self = this,
@@ -72,7 +72,7 @@ KISSY.add("editor/core/elementPath", function (S) {
                 if (!this.lastElement)
                     this.lastElement = e;
 
-                var elementName = e._4e_name();
+                var elementName = e.nodeName();
 
                 if (!blockLimit) {
                     if (!block && pathBlockElements[ elementName ]) {
@@ -127,7 +127,7 @@ KISSY.add("editor/core/elementPath", function (S) {
         contains:function (tagNames) {
             var elements = this.elements;
             for (var i = 0; i < elements.length; i++) {
-                if (elements[ i ]._4e_name() in tagNames)
+                if (elements[ i ].nodeName() in tagNames)
                     return elements[ i ];
             }
             return NULL;
@@ -135,7 +135,7 @@ KISSY.add("editor/core/elementPath", function (S) {
         toString:function () {
             var elements = this.elements, i, elNames = [];
             for (i = 0; i < elements.length; i++) {
-                elNames.push(elements[i]._4e_name());
+                elNames.push(elements[i].nodeName());
             }
             return elNames.toString();
         }

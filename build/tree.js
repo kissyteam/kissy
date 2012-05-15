@@ -1,12 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 20:45
 */
 /**
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
- * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
 KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
 
@@ -36,10 +35,12 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 });
 
 /**
- * note bug:
+ * Refer:
+ *  - http://www.w3.org/TR/wai-aria-practices/#TreeView
  *
- * 1. checked tree 根节点总是 selected ！
- * 2. 根节点 hover 后取消不了了
+ * note bug:
+ *  1. checked tree 根节点总是 selected ！
+ *  2. 根节点 hover 后取消不了了
  **//**
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
@@ -545,7 +546,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @override
-         * @return {Node}
+         * @return {NodeList}
          */
         getContentElement:function () {
             var self = this;

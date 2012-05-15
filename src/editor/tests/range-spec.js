@@ -960,7 +960,7 @@ KISSY.use("editor", function (S, Editor) {
                     var div = $("<div><strong><span>  123</span>abc</strong>def</div>")
                         .prependTo("body");
 
-                    var span = div.first().first();
+                    var span = div.first().first("span");
 
                     var textNode1 = $(span[0].firstChild);
 
@@ -974,6 +974,36 @@ KISSY.use("editor", function (S, Editor) {
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
 
+                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                    expect(range.startContainer[0]).toBe(div[0]);
+                    expect(range.endContainer[0]).toBe(div[0]);
+                    expect(range.startOffset).toBe(0);
+                    expect(range.endOffset).toBe(1);
+
+                    div.remove();
+                });
+
+
+                it("enlarge element works with whole whitespace node", function () {
+
+                    var div = $("<div><strong><span> </span>abc</strong>def</div>")
+                        .prependTo("body");
+
+                    var span = div.first().first("span");
+
+                    var textNode1 = $(span[0].firstChild);
+
+                    var textNode2 = $(span[0].nextSibling);
+
+                    var textNode3 = $(span.parent()[0].nextSibling);
+
+                    var range = new Range(document);
+
+                    range.setStart(textNode1, 1);
+                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
+
+                    debugger
                     range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
 
                     expect(range.startContainer[0]).toBe(div[0]);

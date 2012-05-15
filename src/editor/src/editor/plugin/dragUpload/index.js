@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
             function nodeInsert(ev) {
                 var oe = ev['originalEvent'],
                     t = oe.target;
-                if (DOM._4e_name(t) == "img" && t.src.match(/^file:\/\//)) {
+                if (DOM.nodeName(t) == "img" && t.src.match(/^file:\/\//)) {
                     inserted[t.src] = t;
                 }
             }
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                  */
                 if (!S.isEmptyObject(inserted)) {
                     S.each(inserted, function (el) {
-                        if (DOM._4e_name(el) == "img") {
+                        if (DOM.nodeName(el) == "img") {
                             archor = el.nextSibling;
                             ap = el.parentNode;
                             DOM._4e_remove(el);
@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                         "/>");
                     var nakeImg = img[0];
                     ap.insertBefore(nakeImg, archor);
-                    var np = nakeImg.parentNode, np_name = DOM._4e_name(np);
+                    var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
                     // 防止拖放导致插入到 body 以外
                     if (np_name == "head"
                         || np_name == "html") {

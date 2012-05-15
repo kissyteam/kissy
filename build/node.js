@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 20:45
 */
 /**
- * @fileOverview   anim-node-plugin
- * @author  yiminghe@gmail.com,
- *          lifesinger@gmail.com,
- *          qiaohua@taobao.com,
+ * @fileOverview anim-node-plugin
+ * @author yiminghe@gmail.com,
+ *         lifesinger@gmail.com,
+ *         qiaohua@taobao.com,
  *
  */
 KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
@@ -101,7 +101,7 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
  */
 /**
  * @fileOverview import methods from DOM to NodeList.prototype
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
@@ -110,6 +110,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
+            "nodeName",
             "equals",
             "contains",
             "scrollTop",

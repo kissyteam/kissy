@@ -125,7 +125,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
             // the empty space following <body> has been clicked.
             html.on('click', function (evt) {
                 var t = new Node(evt.target);
-                if (t._4e_name() === "html") {
+                if (t.nodeName() === "html") {
                     editor.getSelection().getNative().createRange().select();
                 }
             });
@@ -179,7 +179,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
             var t = new Node(evt.target);
             // If there are elements with layout they fire this event but
             // it must be ignored to allow edit its contents #4682
-            if (t._4e_name() != 'body')
+            if (t.nodeName() != 'body')
                 return;
 
             // If we have saved a range, restore it at this
@@ -353,7 +353,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         // 光标可以不能放在里面
         function cannotCursorPlaced(element) {
             var dtd = Editor.XHTML_DTD;
-            return element._4e_isBlockBoundary() && dtd.$empty[ element._4e_name() ];
+            return element._4e_isBlockBoundary() && dtd.$empty[ element.nodeName() ];
         }
 
         function isNotEmpty(node) {
@@ -383,7 +383,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     // lastNode is not block
                     && !( lastNode && lastNode[0].nodeType == 1 && lastNode._4e_isBlockBoundary() )
                     // not pre
-                    && pathBlock._4e_name() != 'pre'
+                    && pathBlock.nodeName() != 'pre'
                     // does not have bogus
                     && !pathBlock._4e_getBogus()) {
                     pathBlock._4e_appendBogus();
@@ -397,7 +397,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
             }
 
             // 裸的光标出现在 body 里面
-            if (blockLimit._4e_name() == "body") {
+            if (blockLimit.nodeName() == "body") {
                 var fixedBlock = range.fixBlock(TRUE, "p");
                 if (fixedBlock &&
                     // https://dev.ckeditor.com/ticket/8550
@@ -444,7 +444,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                 TRUE);
             lastPath = new Editor.ElementPath(lastRange.startContainer);
             // 不位于 <body><p>^</p></body>
-            if (lastPath.blockLimit._4e_name() !== 'body') {
+            if (lastPath.blockLimit.nodeName() !== 'body') {
                 editBlock = new Node(doc.createElement('p')).appendTo(body);
                 if (!UA['ie']) {
                     editBlock._4e_appendBogus();

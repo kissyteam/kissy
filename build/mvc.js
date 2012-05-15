@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 20:45
 */
 /**
  * @fileOverview mvc base
@@ -103,7 +103,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
              * @param {Function} opts.success
              * @param {Function} opts.error
              * @param {Function} opts.complete
-             * @return  boolean flag
+             * @return {Boolean} flag
              *          true:add success
              *          false:validate error
              */

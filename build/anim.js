@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 /**
  * @fileOverview anim
@@ -422,7 +422,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         {
 
             /**
-             * @return {boolean} whether this animation is running
+             * @return {Boolean} whether this animation is running
              */
             isRunning:function () {
                 return isRunning(this);
@@ -569,8 +569,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     /**
      * stop all the anims currently running
      * @param {HTMLElement} elem element which anim belongs to
-     * @param {boolean} end whether jump to last position
-     * @param {boolean} clearQueue whether clean current queue
+     * @param {Boolean} end whether jump to last position
+     * @param {Boolean} clearQueue whether clean current queue
      * @param {String|Boolean} queueName current queue's name to be cleared
      * @private
      */

@@ -450,12 +450,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     endNode = self.endContainer;
 
                 if (startNode &&
-                    startNode._4e_name() == 'span' &&
+                    startNode.nodeName() == 'span' &&
                     startNode.attr('_ke_bookmark')) {
                     self.setStartBefore(startNode);
                 }
                 if (endNode &&
-                    endNode._4e_name() == 'span' &&
+                    endNode.nodeName() == 'span' &&
                     endNode.attr('_ke_bookmark')) {
                     self.setEndAfter(endNode);
                 }
@@ -476,7 +476,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Fixing invalid range start inside dtd empty elements.
                 var self = this;
-                if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode.nodeName() ]) {
                     startNode = startNode.parent();
                     startOffset = startNode._4e_index();
                 }
@@ -507,7 +507,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Fixing invalid range end inside dtd empty elements.
                 var self = this;
-                if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode.nodeName() ]) {
                     endNode = endNode.parent();
                     endOffset = endNode._4e_index() + 1;
                 }
@@ -1142,7 +1142,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                 // means that we'll need more whitespace to be able
                                 // to expand. For example, <i> can be expanded in
                                 // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                                needsWhiteSpace = !!container;
+                                if (container) {
+                                    needsWhiteSpace = !container[0].nodeValue.length;
+                                }
                             }
 
                             if (container) {
@@ -1216,7 +1218,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                     if ((sibling.offsetWidth > 0
                                         // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
                                         // bug report@2012-05-08
-                                        || DOM._4e_name(sibling) == "br")
+                                        || DOM.nodeName(sibling) == "br")
                                         && !sibling.getAttribute('_ke_bookmark')) {
                                         // We'll accept it only if we need
                                         // whitespace, and this is an inline
@@ -1309,7 +1311,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                             // means that we'll need more whitespace to be able
                             // to expand. For example, <i> can be expanded in
                             // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                            needsWhiteSpace = !( container && container[0].nodeValue.length );
+                            if (container) {
+                                needsWhiteSpace = !container[0].nodeValue.length;
+                            }
 
                             if (container) {
                                 if (!( sibling = container[0].nextSibling )) {
@@ -1365,7 +1369,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                     if ((sibling.offsetWidth > 0
                                         // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
                                         // bug report@2012-05-08
-                                        || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
+                                        || DOM.nodeName(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
                                         // We'll accept it only if we need
                                         // whitespace, and this is an inline
                                         // element with whitespace only.
@@ -1464,7 +1468,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                             // Record the encounted 'tailBr' for later use.
                             tailBrGuard = function (node) {
                                 var retval = boundaryGuard(node);
-                                if (!retval && DOM._4e_name(node) == 'br') {
+                                if (!retval && DOM.nodeName(node) == 'br') {
                                     tailBr = new Node(node);
                                 }
                                 return retval;
@@ -1481,7 +1485,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         // the document position of it with 'enlargeable' node.
                         self.setStartAt(
                             blockBoundary,
-                            blockBoundary._4e_name() != 'br' &&
+                            blockBoundary.nodeName() != 'br' &&
                                 ( !enlargeable && self.checkStartOfBlock()
                                     || enlargeable && blockBoundary.contains(enlargeable) ) ?
                                 KER.POSITION_AFTER_START :
@@ -1717,7 +1721,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         // In Gecko, the last child node must be a bogus <br>.
                         // Note: bogus <br> added under <ul> or <ol> would cause
                         // lists to be incorrectly rendered.
-                        if (!UA['ie'] && !S.inArray(startBlock._4e_name(), ['ul', 'ol']))
+                        if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))
                             startBlock._4e_appendBogus();
                     }
                 }
@@ -1752,7 +1756,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 var self = this, isEditable, xhtml_dtd = dtd;
 
                 // Empty elements are rejected.
-                if (xhtml_dtd.$empty[ el._4e_name() ])
+                if (xhtml_dtd.$empty[ el.nodeName() ])
                     return FALSE;
 
                 while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
@@ -1766,7 +1770,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         // 不要返回，继续找可能的文字位置
                     }
                     // Stop immediately if we've found a non editable inline element (e.g <img>).
-                    else if (xhtml_dtd.$inline[ el._4e_name() ]) {
+                    else if (xhtml_dtd.$inline[ el.nodeName() ]) {
                         self.moveToPosition(el, isMoveToEnd ?
                             KER.POSITION_AFTER_END :
                             KER.POSITION_BEFORE_START);
@@ -1774,7 +1778,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
 
                     // Non-editable non-inline elements are to be bypassed, getting the next one.
-                    if (xhtml_dtd.$empty[ el._4e_name() ])
+                    if (xhtml_dtd.$empty[ el.nodeName() ])
                         el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
                     else {
                         if (isMoveToEnd) {
@@ -1815,7 +1819,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         // OR it's spaces. (#3883)
         //如果不是文本节点并且是空的，可以继续取下一个判断边界
         var c1 = node.nodeType != KEN.NODE_TEXT
-            && DOM._4e_name(node) in dtd.$removeEmpty,
+            && DOM.nodeName(node) in dtd.$removeEmpty,
             //文本为空，可以继续取下一个判断边界
             c2 = !S.trim(node.nodeValue),
             //恩，进去了书签，可以继续取下一个判断边界
@@ -1844,7 +1848,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     return FALSE;
             }
             else if (node.nodeType == KEN.NODE_ELEMENT) {
-                var nodeName = DOM._4e_name(node);
+                var nodeName = DOM.nodeName(node);
                 // If there are non-empty inline elements (e.g. <img />), then we're not
                 // at the start.
                 if (!inlineChildReqElements[ nodeName ]) {

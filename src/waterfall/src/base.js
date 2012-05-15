@@ -312,7 +312,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Ajust the height of one specified item.
-             * @param {Node} item Waterfall item to be adjusted.
+             * @param {NodeList} item Waterfall item to be adjusted.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function after the item is adjusted.
              * @param {Function} cfg.process Adjust logic function.
@@ -406,7 +406,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Remove a waterfall item.
-             * @param {Node} item Waterfall item to be removed.
+             * @param {NodeList} item Waterfall item to be removed.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function to be called after remove.
              * @param {Object} cfg.effect Same as {@link Waterfall#adjustEffect}
@@ -477,7 +477,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Add array of waterfall items to current instance.
-             * @param {Node[]} items Waterfall items to be added.
+             * @param {NodeList[]} items Waterfall items to be added.
              * @param {Function} [callback] Callback function to be called after waterfall items are added.
              */
             addItems:function (items, callback) {

@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
         childRule:function (el) {
             // <span style='color:red'><a href='g.cn'>abcdefg</a></span>
             // 不起作用
-            return !(el._4e_name() == "a" || el.all("a").length);
+            return !(el.nodeName() == "a" || el.all("a").length);
         }
     };
 

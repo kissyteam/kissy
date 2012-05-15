@@ -25,7 +25,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
              * @function
              * @name decorateInternal
              * @memberOf Component.Container#
-             * @param {Node} element Root element of current component.
+             * @param {NodeList} element Root element of current component.
              */
 
             /**

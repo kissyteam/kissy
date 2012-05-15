@@ -131,7 +131,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                 // If it is an element node, let's check if it can be part of the
                 // range.
                 if (!includeNode) {
-                    var nodeName = currentNode._4e_name();
+                    var nodeName = currentNode.nodeName();
 
                     if (currentNode._4e_isBlockBoundary(self.forceBrBreak && { br:1 })) {
                         // <br> boundaries must be part of the range. It will
@@ -238,11 +238,11 @@ KISSY.add("editor/core/domIterator", function (S) {
 
                 if ((!block || !block[0])
                     && !self.enforceRealBlocks
-                    && checkLimits[ startBlockLimit._4e_name() ]
+                    && checkLimits[ startBlockLimit.nodeName() ]
                     && range.checkStartOfBlock()
                     && range.checkEndOfBlock())
                     block = startBlockLimit;
-                else if (!block || ( self.enforceRealBlocks && block._4e_name() == 'li' )) {
+                else if (!block || ( self.enforceRealBlocks && block.nodeName() == 'li' )) {
                     // Create the fixed block.
                     block = new Node(self.range.document.createElement(blockTag || 'p'));
                     // Move the contents of the temporary range to the fixed block.
@@ -252,7 +252,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                     range.insertNode(block);
                     removePreviousBr = removeLastBr = TRUE;
                 }
-                else if (block._4e_name() != 'li') {
+                else if (block.nodeName() != 'li') {
                     // If the range doesn't includes the entire contents of the
                     // block, we must split it, isolating the range in a dedicated
                     // block.
@@ -289,9 +289,9 @@ KISSY.add("editor/core/domIterator", function (S) {
             if (removePreviousBr) {
                 var previousSibling = new Node(block[0].previousSibling);
                 if (previousSibling[0] && previousSibling[0].nodeType == KEN.NODE_ELEMENT) {
-                    if (previousSibling._4e_name() == 'br')
+                    if (previousSibling.nodeName() == 'br')
                         previousSibling._4e_remove();
-                    else if (previousSibling[0].lastChild && DOM._4e_name(previousSibling[0].lastChild) == 'br')
+                    else if (previousSibling[0].lastChild && DOM.nodeName(previousSibling[0].lastChild) == 'br')
                         DOM._4e_remove(previousSibling[0].lastChild);
                 }
             }
@@ -301,7 +301,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                 var bookmarkGuard = Walker.bookmark(FALSE, TRUE);
 
                 var lastChild = new Node(block[0].lastChild);
-                if (lastChild[0] && lastChild[0].nodeType == KEN.NODE_ELEMENT && lastChild._4e_name() == 'br') {
+                if (lastChild[0] && lastChild[0].nodeType == KEN.NODE_ELEMENT && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
                         || lastChild.prev(bookmarkGuard)

@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 20:44
 */
 /**
- * Combobox derived from autocomplete
+ * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, BasicComboBoxRender) {
@@ -51,7 +51,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
 }, {
     requires:['uibase', './basic', './BasicComboBoxRender']
 });/**
- * Combobox derived from autocomplete
+ * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteRender, Node) {
@@ -104,7 +104,7 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteR
 }, {
     requires:['uibase', './inputRender', 'node']
 });/**
- * export autocomplete
+ * @fileOverview Export Autocomplete.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, RemoteDataSource, Basic, BasicComboBox) {
@@ -122,7 +122,8 @@ KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, Remo
         'autocomplete/basic',
         'autocomplete/BasicComboBox']
 })/**
- * Provide basic api for AutoComplete
+ * @fileOverview Provide basic api for AutoComplete.
+ * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
 
@@ -213,7 +214,7 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
 }, {
     requires:['uibase', './input', './menu', './localDataSource', './remoteDataSource']
 });/**
- * input wrapper for autoComplete component
+ * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender, _, undefined) {
@@ -824,7 +825,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **//**
- * render aria properties to input element
+ * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
@@ -860,7 +861,7 @@ KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
 }, {
     requires:['uibase', 'component']
 });/**
- * local dataSource
+ * @fileOverview Local dataSource for Autocomplete
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/localDataSource", function (S) {
@@ -923,7 +924,7 @@ KISSY.add("autocomplete/localDataSource", function (S) {
 
     return LocalDataSource;
 });/**
- * autoComplete menu.
+ * @fileOverview AutoComplete menu constroller.
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
@@ -1097,7 +1098,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
  * 2012-03-26 yiminghe@gmail.com
  *  - refer http://www.w3.org/TR/wai-aria-practices/#autocomplete
  **//**
- * autoComplete menu render
+ * @fileOverview AutoComplete menu render
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/menuRender", function (S, UIBase, Menu) {
@@ -1130,7 +1131,7 @@ KISSY.add("autocomplete/menuRender", function (S, UIBase, Menu) {
 }, {
     requires:['uibase', 'menu']
 });/**
- * remote datasource
+ * @fileOverview Remote datasource for Autocomplete
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/remoteDataSource", function (S, IO) {
