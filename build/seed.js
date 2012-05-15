@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:02
+build time: May 15 11:52
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 15 11:02
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120515110245';
+        S.__BUILD_TIME = '20120515115202';
     })();
 
     return S;
@@ -3976,7 +3976,7 @@ build time: May 15 11:02
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120515110245'
+        tag:'20120515115202'
     }, getBaseInfo()));
 
     /**
@@ -4001,6 +4001,10 @@ build time: May 15 11:02
         doc = win['document'],
 
         docElem = doc.documentElement,
+
+        location = win.location,
+
+        navigator = win.navigator,
 
         EMPTY = '',
 
@@ -4202,7 +4206,7 @@ build time: May 15 11:02
      */
     _bindReady();
 
-    if (navigator.userAgent.match(/MSIE/)) {
+    if (navigator && navigator.userAgent.match(/MSIE/)) {
         try {
             doc.execCommand("BackgroundImageCache", false, true);
         } catch (e) {
@@ -4311,15 +4315,16 @@ build time: May 15 11:02
             requires:['htmlparser', 'core']
         }
     });
-
-    S.config({
-        packages:[
-            {
-                name:"gallery",
-                path:S.Loader.Utils.normalizePath(S.Config.base + '../')
-            }
-        ]
-    });
+    if (S.Loader) {
+        S.config({
+            packages:[
+                {
+                    name:"gallery",
+                    path:S.Loader.Utils.normalizePath(S.Config.base + '../')
+                }
+            ]
+        });
+    }
 })(KISSY);
 /**
  * TODO: implement conditional loader

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:12
+build time: May 15 11:52
 */
 /**
  * @fileOverview form data  serialization util
@@ -1289,11 +1289,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
-        doc = S.Env.host.document,
+        win = S.Env.host,
+        doc = win.document,
+        location = win.location,
         curLocationParts;
 
     try {
-        curLocation = location.href;
+        curLocation = location && location.href||"";
     } catch (e) {
         S.log("ajax/base get curLocation error : ");
         S.log(e);
@@ -1592,8 +1594,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         fire("start", xhrObject);
 
-        var transportContructor = transports[c.dataType[0]] || transports["*"],
-            transport = new transportContructor(xhrObject);
+        var transportConstructor = transports[c.dataType[0]] || transports["*"],
+            transport = new transportConstructor(xhrObject);
         xhrObject.transport = transport;
 
         if (c.contentType) {

@@ -99,15 +99,16 @@
             requires:['htmlparser', 'core']
         }
     });
-
-    S.config({
-        packages:[
-            {
-                name:"gallery",
-                path:S.Loader.Utils.normalizePath(S.Config.base + '../')
-            }
-        ]
-    });
+    if (S.Loader) {
+        S.config({
+            packages:[
+                {
+                    name:"gallery",
+                    path:S.Loader.Utils.normalizePath(S.Config.base + '../')
+                }
+            ]
+        });
+    }
 })(KISSY);
 /**
  * TODO: implement conditional loader

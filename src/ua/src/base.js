@@ -4,7 +4,9 @@
  */
 KISSY.add('ua/base', function (S, undefined) {
 
-    var ua = navigator.userAgent,
+    var win = S.Env.host,
+        navigator = win.navigator,
+        ua = navigator && navigator.userAgent || "",
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,
@@ -14,7 +16,7 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = S.Env.host.document.createElement('div'),
+        div = win.document.createElement('div'),
         s,
         o = {
             // browser core type

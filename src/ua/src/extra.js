@@ -2,9 +2,10 @@
  * @fileOverview ua-extra
  * @author gonghao@ghsky.com
  */
-KISSY.add('ua/extra', function(S, UA) {
-    var ua = navigator.userAgent,
-        win=S.Env.host,
+KISSY.add('ua/extra', function (S, UA) {
+    var win = S.Env.host,
+        navigator = win.navigator,
+        ua = navigator && navigator.userAgent || "",
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -28,7 +29,7 @@ KISSY.add('ua/extra', function(S, UA) {
         shell = 'maxthon';
         try {
             o[shell] = numberify(external['max_version']);
-        } catch(ex) {
+        } catch (ex) {
             o[shell] = 0.1;
         }
     }

@@ -14,11 +14,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
-        doc = S.Env.host.document,
+        win = S.Env.host,
+        doc = win.document,
+        location = win.location,
         curLocationParts;
 
     try {
-        curLocation = location.href;
+        curLocation = location && location.href||"";
     } catch (e) {
         S.log("ajax/base get curLocation error : ");
         S.log(e);

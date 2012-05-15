@@ -1,15 +1,12 @@
 var path = require("path"),
-    fs = require("fs");
+    fs = require("fs"),
+    KISSY=require("KISSY").KISSY,
+    S=KISSY;
 
-require("../../build/kissy-nodejs.js");
-
-var S = KISSY;
-console.log(S.isNumber({}));
-console.log(S.isNumber(1));
-//console.log(S);
-
-S.use("overlay", function(S, Overlay) {
+KISSY.use("overlay", function(S, Overlay) {
+    
     document.body.innerHTML = "<div id='server'></div>";
+    
     var d = new Overlay.Dialog({
         width:"500px",
         render:"#server",
@@ -20,6 +17,7 @@ S.use("overlay", function(S, Overlay) {
     });
     d.center();
     d.show();
+    
     console.log(d.get("el")[0].offsetWidth);
     console.log(d.get("el")[0].offsetHeight);
     console.log(d.get("el").offset());

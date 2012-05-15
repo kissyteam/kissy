@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 2 10:13
+build time: May 15 11:49
 */
 /**
  * @fileOverview ua
@@ -9,7 +9,9 @@ build time: May 2 10:13
  */
 KISSY.add('ua/base', function (S, undefined) {
 
-    var ua = navigator.userAgent,
+    var win = S.Env.host,
+        navigator = win.navigator,
+        ua = navigator && navigator.userAgent || "",
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,
@@ -19,7 +21,7 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = S.Env.host.document.createElement('div'),
+        div = win.document.createElement('div'),
         s,
         o = {
             // browser core type
@@ -185,7 +187,7 @@ KISSY.add('ua/base', function (S, undefined) {
  *
  */
 /**
- * attach ua to class of html
+ * @fileOverview attach ua to class of html
  * @author yiminghe@gmail.com
  */
 KISSY.add("ua/css", function (S, UA) {
@@ -221,11 +223,12 @@ KISSY.add("ua/css", function (S, UA) {
  *  - http://yiminghe.iteye.com/blog/444889
  *//**
  * @fileOverview ua-extra
- * @author gonghao<gonghao@ghsky.com>
+ * @author gonghao@ghsky.com
  */
-KISSY.add('ua/extra', function(S, UA) {
-    var ua = navigator.userAgent,
-        win=S.Env.host,
+KISSY.add('ua/extra', function (S, UA) {
+    var win = S.Env.host,
+        navigator = win.navigator,
+        ua = navigator && navigator.userAgent || "",
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -249,7 +252,7 @@ KISSY.add('ua/extra', function(S, UA) {
         shell = 'maxthon';
         try {
             o[shell] = numberify(external['max_version']);
-        } catch(ex) {
+        } catch (ex) {
             o[shell] = 0.1;
         }
     }

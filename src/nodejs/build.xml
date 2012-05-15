@@ -1,17 +1,13 @@
-<?xml version="1.0"?>
 <!--
     构建 nodejs kissy
 -->
 <project name="nodejs.build" default="build" basedir=".">
     <description>KISSY nodejs Build File</description>
 
-    <property name="copyright.files" value="*-min.css, *-min.js"/>
     <property name="component.name" value="nodejs"/>
-    <property name="bom" value="&#xFEFF;"/>
+    <property name="src.dir" location="./src/"/>
 
-    <import file="../common.xml"/>
-
-    <property name="nodejs.patch.file" location="${kissy.dir}/tools/nodejs-patch/patch.js"/>
+    <import file="../../tools/build-xml/common.xml"/>
 
     <!--
     apply nodejs patch to kissy.js
@@ -20,11 +16,10 @@
         <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
-            <header filtering="no" trimleading="yes">${bom}</header>
-            <path location="${nodejs.patch.file}"/>
+            <path location="${src.dir}/patch.js"/>
             <path location="${kissy.build.dir}/kissy.js"/>
             <filterchain>
-                <deletecharacters chars="${bom}"/>
+                <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>

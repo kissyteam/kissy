@@ -11,6 +11,10 @@
 
         docElem = doc.documentElement,
 
+        location = win.location,
+
+        navigator = win.navigator,
+
         EMPTY = '',
 
         readyDefer = new S.Defer(),
@@ -211,7 +215,7 @@
      */
     _bindReady();
 
-    if (navigator.userAgent.match(/MSIE/)) {
+    if (navigator && navigator.userAgent.match(/MSIE/)) {
         try {
             doc.execCommand("BackgroundImageCache", false, true);
         } catch (e) {

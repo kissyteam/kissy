@@ -33,12 +33,6 @@
         </subant>
     </target>
 
-    <target name="combine-nodejs">
-        <subant target="" failonerror="false" inheritall="false">
-            <fileset dir="./build-xml/nodejs/" includes="**/build.xml"/>
-        </subant>
-    </target>
-
     <!--
       全部构建
     -->

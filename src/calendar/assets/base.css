@@ -1,19 +1,4 @@
-﻿/*
-Copyright 2011, KISSY UI Library v1.20
-MIT Licensed
-build time: Dec 30 10:00
-*/
-/*
-Copyright 2011, KISSY UI Library v1.30dev
-MIT Licensed
-build time: Dec 28 13:33
-*/
-/*
-Copyright 2011, KISSY UI Library v1.20dev
-MIT Licensed
-build time: ${build.time}
-*/
-/* 清除浮动 */
+﻿/* 清除浮动 */
 .ks-clearfix:after {
     content: '\20';
     display: block;
