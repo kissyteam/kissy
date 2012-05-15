@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:52
+build time: May 15 12:06
 */
 /**
  * patch for nodejs
@@ -43,12 +43,9 @@ build time: May 15 11:52
         }
     }
 
-    mix(S, {
-        Env:{
-            mods:{
+    S.Env.mods = {};
 
-            }
-        },
+    mix(S, {
         configs:{
             packages:function (cfgs) {
                 var ps = S.__packages = S.__packages || {};
@@ -205,7 +202,7 @@ build time: May 15 11:52
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:52
+build time: May 15 12:06
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -655,7 +652,7 @@ build time: May 15 11:52
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120515115202';
+        S.__BUILD_TIME = '20120515120642';
     })();
 
     return S;
@@ -4180,7 +4177,7 @@ build time: May 15 11:52
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120515115202'
+        tag:'20120515120642'
     }, getBaseInfo()));
 
     /**
@@ -4537,7 +4534,7 @@ build time: May 15 11:52
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:49
+build time: May 15 12:06
 */
 /**
  * @fileOverview ua
@@ -4547,7 +4544,7 @@ KISSY.add('ua/base', function (S, undefined) {
 
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,
@@ -4764,7 +4761,7 @@ KISSY.add("ua/css", function (S, UA) {
 KISSY.add('ua/extra', function (S, UA) {
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -11960,7 +11957,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:52
+build time: May 15 12:04
 */
 /**
  * @fileOverview form data  serialization util
@@ -13254,7 +13251,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocationParts;
 
     try {
-        curLocation = location && location.href||"";
+        curLocation = location.href;
     } catch (e) {
         S.log("ajax/base get curLocation error : ");
         S.log(e);

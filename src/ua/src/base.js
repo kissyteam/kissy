@@ -6,7 +6,7 @@ KISSY.add('ua/base', function (S, undefined) {
 
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,

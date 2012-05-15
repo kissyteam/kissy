@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:52
+build time: May 15 12:04
 */
 /**
  * @fileOverview form data  serialization util
@@ -1295,7 +1295,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocationParts;
 
     try {
-        curLocation = location && location.href||"";
+        curLocation = location.href;
     } catch (e) {
         S.log("ajax/base get curLocation error : ");
         S.log(e);

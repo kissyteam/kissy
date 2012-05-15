@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 11:49
+build time: May 15 12:06
 */
 /**
  * @fileOverview ua
@@ -11,7 +11,7 @@ KISSY.add('ua/base', function (S, undefined) {
 
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,
@@ -228,7 +228,7 @@ KISSY.add("ua/css", function (S, UA) {
 KISSY.add('ua/extra', function (S, UA) {
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         m, external, shell,
         o = { },
         numberify = UA._numberify;

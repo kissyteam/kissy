@@ -5,7 +5,7 @@
 KISSY.add('ua/extra', function (S, UA) {
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
+        ua = navigator.userAgent,
         m, external, shell,
         o = { },
         numberify = UA._numberify;

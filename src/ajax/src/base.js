@@ -20,7 +20,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocationParts;
 
     try {
-        curLocation = location && location.href||"";
+        curLocation = location.href;
     } catch (e) {
         S.log("ajax/base get curLocation error : ");
         S.log(e);

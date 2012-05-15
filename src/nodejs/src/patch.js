@@ -38,12 +38,9 @@
         }
     }
 
-    mix(S, {
-        Env:{
-            mods:{
+    S.Env.mods = {};
 
-            }
-        },
+    mix(S, {
         configs:{
             packages:function (cfgs) {
                 var ps = S.__packages = S.__packages || {};
