@@ -265,7 +265,7 @@
 <span id='line258' class='line'>258</span>              *                                          return getter's returned value to invoker
 <span id='line259' class='line'>259</span>              * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
 <span id='line260' class='line'>260</span>              *                                              if return false,cancel this set action
-<span id='line261' class='line'>261</span>              * @param {boolean} [override] whether override existing attribute config ,default true
+<span id='line261' class='line'>261</span>              * @param {Boolean} [override] whether override existing attribute config ,default true
 <span id='line262' class='line'>262</span>              */</span><span class="WHIT">
 <span id='line263' class='line'>263</span> </span><span class="WHIT">            </span><span class="NAME">addAttr</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">attrConfig</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">override</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line264' class='line'>264</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
@@ -322,8 +322,8 @@
 <span id='line315' class='line'>315</span>              * @param {String|Object} name attribute's name or attribute name and value map
 <span id='line316' class='line'>316</span>              * @param [value] attribute's value
 <span id='line317' class='line'>317</span>              * @param {Object} [opts] some options
-<span id='line318' class='line'>318</span>              * @param {boolean} [opts.silent] whether fire change event
-<span id='line319' class='line'>319</span>              * @returns {boolean} whether pass validator
+<span id='line318' class='line'>318</span>              * @param {Boolean} [opts.silent] whether fire change event
+<span id='line319' class='line'>319</span>              * @returns {Boolean} whether pass validator
 <span id='line320' class='line'>320</span>              */</span><span class="WHIT">
 <span id='line321' class='line'>321</span> </span><span class="WHIT">            </span><span class="NAME">set</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opts</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line322' class='line'>322</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
@@ -481,7 +481,7 @@
 <span id='line474' class='line'>474</span>              * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
 <span id='line475' class='line'>475</span>              * @param {String} name name of attribute
 <span id='line476' class='line'>476</span>              * @param {Object} [opts] some options
-<span id='line477' class='line'>477</span>              * @param {boolean} [opts.silent] whether fire change event
+<span id='line477' class='line'>477</span>              * @param {Boolean} [opts.silent] whether fire change event
 <span id='line478' class='line'>478</span>              */</span><span class="WHIT">
 <span id='line479' class='line'>479</span> </span><span class="WHIT">            </span><span class="NAME">reset</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opts</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line480' class='line'>480</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">

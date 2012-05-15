@@ -2,14 +2,14 @@
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, KE) {
+KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, Editor) {
     var Event = S.Event,
         undefined = ("a" in {}),
         DOM = S.DOM,
         BubbleView = UIBase.create(Overlay, [], {}, {
             ATTRS:{
                 zIndex:{
-                    value:KE.baseZIndex(KE.zIndexManager.BUBBLE_VIEW)
+                    value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
                 },
                 elCls:{
                     value:"ke-bubbleview-bubble"

@@ -1,6 +1,6 @@
-KISSY.add("editor/plugin/font/cmd", function (S, KE) {
+KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
 
-    var getQueryCmd = KE.Utils.getQueryCmd;
+    var getQueryCmd = Editor.Utils.getQueryCmd;
 
     return {
         addButtonCmd:function (editor, cmdType, style) {
@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/font/cmd", function (S, KE) {
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
                     exec:function (editor, value, apply) {
-                        var style = new KE.Style(styleObj, {
+                        var style = new Editor.Style(styleObj, {
                             value:value
                         }),
                             doc = editor.get("document")[0];
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/font/cmd", function (S, KE) {
                 });
                 editor.addCommand(queryCmd, {
                     exec:function (editor, value, element) {
-                        var style = new KE.Style(styleObj, {
+                        var style = new Editor.Style(styleObj, {
                             value:value
                         });
                         return style.checkElementRemovable(element, true);

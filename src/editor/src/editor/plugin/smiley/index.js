@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/smiley/index", function (S, KE, Overlay4E) {
+KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
     var smiley_markup = "<div class='ke-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, KE, Overlay4E) {
                 contentCls:"ke-toolbar-smiley",
                 title:"插入表情",
                 keepFocus:false,
-                mode:KE.WYSIWYG_MODE
+                mode:Editor.WYSIWYG_MODE
             }, {
                 init:function () {
                     var self = this;
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, KE, Overlay4E) {
                             width:"297px",
                             autoRender:true,
                             elCls:"ke-popup",
-                            zIndex:KE.baseZIndex(KE.zIndexManager.POPUP_MENU),
+                            zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                             mask:false
                         });
                         self.smiley.get("el").on("click", function (ev) {

@@ -2,7 +2,7 @@
  * Add flash plugin.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/index", function (S, KE, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flashUtils) {
 
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
@@ -66,7 +66,7 @@ KISSY.add("editor/plugin/flash/index", function (S, KE, FlashBaseClass, flashUti
                 editor.addButton({
                     contentCls:"ke-toolbar-flash",
                     title:"插入Flash",
-                    mode:KE.WYSIWYG_MODE
+                    mode:Editor.WYSIWYG_MODE
                 }, {
                     offClick:function () {
                         flashControl.show();

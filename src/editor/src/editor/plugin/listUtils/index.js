@@ -1,9 +1,9 @@
-KISSY.add('editor/plugin/listUtils/index', function (S, KE) {
+KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
     var listNodeNames = {ol:1, ul:1},
         Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
-        KEN = KE.NODE,
+        KEN = Editor.NODE,
         list = {
             /*
              * Convert a DOM list tree into a data structure that is easier to

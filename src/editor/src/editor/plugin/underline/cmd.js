@@ -1,6 +1,6 @@
-KISSY.add("editor/plugin/underline/cmd", function (S, KE, Cmd) {
+KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
 
-    var UNDERLINE_STYLE = new KE.Style({
+    var UNDERLINE_STYLE = new Editor.Style({
         element:'u',
         overrides:[
             {

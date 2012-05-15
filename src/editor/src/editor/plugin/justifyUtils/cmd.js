@@ -2,7 +2,7 @@
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyUtils/cmd", function (S, KE) {
+KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
     var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi,
         default_align = "left";
 
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/justifyUtils/cmd", function (S, KE) {
                     }
                 });
 
-                editor.addCommand(KE.Utils.getQueryCmd(command), {
+                editor.addCommand(Editor.Utils.getQueryCmd(command), {
                     exec:function (editor, path) {
                         var block = path.block || path.blockLimit;
                         if (!block || block._4e_name() === "body") {

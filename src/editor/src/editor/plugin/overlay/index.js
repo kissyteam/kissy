@@ -2,7 +2,7 @@
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, KE, UIBase, Overlay, Focus) {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, UIBase, Overlay, Focus) {
     var Overlay4E = UIBase.create(Overlay, [Focus], {
     }, {
         ATTRS:{
@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, KE, UIBase, Overlay, Focus
                 value:"ke-"
             },
             "zIndex":{
-                value:KE.baseZIndex(KE.zIndexManager.OVERLAY)
+                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, KE, UIBase, Overlay, Focus
                 value:true
             },
             "zIndex":{
-                value:KE.baseZIndex(KE.zIndexManager.OVERLAY)
+                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });

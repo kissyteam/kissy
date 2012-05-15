@@ -2,7 +2,7 @@
  * resize functionality
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/resize/index", function (S, KE, DD) {
+KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
     var Node = S.Node;
 
     return {
@@ -49,6 +49,7 @@ KISSY.add("editor/plugin/resize/index", function (S, KE, DD) {
             d.on("dragstart", function () {
                 height = heightEl.height();
                 width = widthEl.width();
+                editor.fire("resizeStart");
             });
 
             d.on("drag", function (ev) {
@@ -61,6 +62,7 @@ KISSY.add("editor/plugin/resize/index", function (S, KE, DD) {
                 if (S.inArray("x", direction)) {
                     editor.set("width", width + diffX);
                 }
+                editor.fire("resize");
             });
 
             editor.on("destroy", function () {

@@ -2,14 +2,14 @@
  * Add indent button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/indent/index", function (S, KE, indexCmd) {
+KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
 
     return {
         init:function (editor) {
             indexCmd.init(editor);
             editor.addButton({
                 title:"增加缩进量 ",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 contentCls:"ke-toolbar-indent"
             }, {
                 offClick:function () {

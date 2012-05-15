@@ -2,8 +2,8 @@
  * undo,redo manager for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/undo/cmd", function (S, KE) {
-    var arrayCompare = KE.Utils.arrayCompare,
+KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
+    var arrayCompare = Editor.Utils.arrayCompare,
         UA = S.UA,
         LIMIT = 30;
 
@@ -140,7 +140,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, KE) {
          */
         save:function (buffer) {
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != KE.WYSIWYG_MODE) {
+            if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
                 return;
             }
 
@@ -177,7 +177,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, KE) {
         restore:function (d) {
 
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != KE.WYSIWYG_MODE) {
+            if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
                 return;
             }
 

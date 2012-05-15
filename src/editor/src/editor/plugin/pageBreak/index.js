@@ -2,7 +2,7 @@
  * pagebreak functionality
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/pageBreak/index", function (S, KE, fakeObjects) {
+KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
     var Node = S.Node,
         CLS = "ke_pagebreak",
         TYPE = "div",
@@ -49,7 +49,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, KE, fakeObjects) {
 
             editor.addButton({
                 title:"分页",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 contentCls:"ke-toolbar-pagebreak"
             }, {
                 offClick:function () {

@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/undo/btn", function (S, KE, Button) {
+KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     function Common() {
         var self = this,
             editor = self.get("editor");

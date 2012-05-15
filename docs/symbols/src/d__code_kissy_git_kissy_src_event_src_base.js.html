@@ -58,8 +58,8 @@
 <span id='line51' class='line'> 51</span>          * @param targets html nodes
 <span id='line52' class='line'> 52</span>          * @param {String|Event.Object} eventType event type
 <span id='line53' class='line'> 53</span>          * @param [eventData] additional event data
-<span id='line54' class='line'> 54</span>          * @param {boolean} [onlyHandlers] only fire handlers
-<span id='line55' class='line'> 55</span>          * @returns {boolean} The return value of fire/dispatchEvent indicates
+<span id='line54' class='line'> 54</span>          * @param {Boolean} [onlyHandlers] only fire handlers
+<span id='line55' class='line'> 55</span>          * @returns {Boolean} The return value of fire/dispatchEvent indicates
 <span id='line56' class='line'> 56</span>          *                 whether any of the listeners which handled the event called preventDefault.
 <span id='line57' class='line'> 57</span>          *                 If preventDefault was called the value is false, else the value is true.
 <span id='line58' class='line'> 58</span>          */</span><span class="WHIT">
@@ -123,7 +123,7 @@
 <span id='line116' class='line'>116</span> 
 <span id='line117' class='line'>117</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line118' class='line'>118</span>      * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-<span id='line119' class='line'>119</span>      * @return boolean The return value of dispatchEvent indicates
+<span id='line119' class='line'>119</span>      * @return {Boolean} The return value of dispatchEvent indicates
 <span id='line120' class='line'>120</span>      *                 whether any of the listeners which handled the event called preventDefault.
 <span id='line121' class='line'>121</span>      *                 If preventDefault was called the value is false, else the value is true.
 <span id='line122' class='line'>122</span>      */</span><span class="WHIT">

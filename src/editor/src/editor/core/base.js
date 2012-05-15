@@ -9,6 +9,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
      * KISSY Editor
      * @class
      * @extends Component.Controller
+     * @extends UIBase.Box
      * @name Editor
      */
     var Editor = UIBase.create(Component.Controller, [UIBase.Box],
@@ -96,7 +97,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
             },
             XHTML_DTD:HtmlParser['DTD'],
             ATTRS:/**
-             * @lends Editor
+             * @lends Editor#
              */
             {
                 /**

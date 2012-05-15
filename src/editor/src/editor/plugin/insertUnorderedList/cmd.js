@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, KE, listCmd) {
+KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, Editor, listCmd) {
 
     var insertUnorderedList = "insertUnorderedList",
         ListCommand = listCmd.ListCommand,
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, KE, listCmd) {
                 });
             }
 
-            var queryUl = KE.Utils.getQueryCmd(insertUnorderedList);
+            var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
 
             if (!editor.hasCommand(queryUl)) {
                 editor.addCommand(queryUl, {

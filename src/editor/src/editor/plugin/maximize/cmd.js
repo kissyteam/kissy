@@ -2,7 +2,7 @@
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/maximize/cmd", function (S, KE) {
+KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
     var UA = S.UA,
         ie = UA['ie'],
         doc = document,
@@ -189,7 +189,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, KE) {
                 var element = sel.getStartElement();
                 //使用原生不行的，会使主窗口滚动
                 //element[0] && element[0].scrollIntoView(true);
-                element && element.scrollIntoView(undefined,false);
+                element && element.scrollIntoView(undefined, false);
             }
         },
 
@@ -220,11 +220,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, KE) {
 
             editorEl.css({
                 position:"absolute",
-                zIndex:KE.baseZIndex(KE.zIndexManager.MAXIMIZE),
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE),
                 width:viewportWidth + "px"
             });
             iframe.css({
-                zIndex:KE.baseZIndex(KE.zIndexManager.MAXIMIZE - 5),
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE - 5),
                 height:viewportHeight + "px",
                 width:viewportWidth + "px"
             });
@@ -255,11 +255,10 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, KE) {
             self._saveSate();
             self._maximize();
             if (!self._resize) {
-                var _maximize = S.buffer(self._maximize, 100, self);
-                self._resize = function () {
-                    _maximize();
+                self._resize = S.buffer(function () {
+                    self._maximize();
                     editor.fire("maximizeWindow");
-                };
+                }, 100);
             }
 
             Event.on(window, "resize", self._resize);

@@ -2,7 +2,7 @@
  * color picker
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/colorpicker", function (S, KE, Overlay4E) {
+KISSY.add("editor/plugin/color/colorpicker", function (S, Editor, Overlay4E) {
     var map = S.map,
         DOM = S.DOM;
 
@@ -201,7 +201,7 @@ KISSY.add("editor/plugin/color/colorpicker", function (S, KE, Overlay4E) {
         this._init();
     }
 
-    var addRes = KE.Utils.addRes, destroyRes = KE.Utils.destroyRes;
+    var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
 
     S.augment(ColorPicker, {
         _init:function () {

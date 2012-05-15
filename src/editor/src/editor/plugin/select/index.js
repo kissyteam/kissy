@@ -2,7 +2,7 @@
  * select component for kissy editor,need refactor to KISSY MenuButton
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
+KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined) {
 
     var Node = S.Node,
         $ = Node.all,
@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
         SELECT_MENU_MARKUP = "<div>",
         SELECT_DISABLED_CLASS = "ke-select-disabled",
         ENABLED = 1,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         DISABLED = 0;
 
     Select.DISABLED = DISABLED;
@@ -101,8 +101,8 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
         });
     };
 
-    var addRes = KE.Utils.addRes,
-        destroyRes = KE.Utils.destroyRes;
+    var addRes = Editor.Utils.addRes,
+        destroyRes = Editor.Utils.destroyRes;
 
     function getTipText(str) {
         if (str && str.indexOf("<") == -1) {
@@ -156,7 +156,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
                     self.menu.hide();
                 }
             });
-            KE.Utils.lazyRun(this, "_prepare", "_real");
+            Editor.Utils.lazyRun(this, "_prepare", "_real");
             self.on("afterValueChange", self._valueChange, self);
             self.on("afterStateChange", self._stateChange, self);
         },
@@ -332,7 +332,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
                 content:SELECT_MENU_MARKUP,
                 elCls:"ke-menu",
                 width:popUpWidth ? popUpWidth : el.width(),
-                zIndex:KE.baseZIndex(KE.zIndexManager.SELECT)
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.SELECT)
             }), items = self.get("items");
 
             menu.on("hide", function () {
@@ -557,7 +557,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
      * 将button ui 和点击功能分离
      * 按钮必须立刻显示出来，功能可以慢慢加载
      */
-    KE.prototype.addSelect = function (cfg, methods, SelectType) {
+    Editor.prototype.addSelect = function (cfg, methods, SelectType) {
 
         SelectType = SelectType || Select;
 
@@ -573,7 +573,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
         S.mix(s, methods);
 
         self.on("selectionChange", function () {
-            if (self.get("mode") == KE.SOURCE_MODE) {
+            if (self.get("mode") == Editor.SOURCE_MODE) {
                 return;
             }
             s.selectionChange && s.selectionChange.apply(s, arguments);
@@ -591,7 +591,7 @@ KISSY.add("editor/plugin/select/index", function (S, KE, Overlay, undefined) {
             ev.halt();
         });
 
-        if (cfg.mode == KE.WYSIWYG_MODE) {
+        if (cfg.mode == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", s.enable, s);
             self.on("sourceMode", s.disable, s);
         }

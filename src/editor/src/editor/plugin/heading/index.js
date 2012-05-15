@@ -2,7 +2,7 @@
  * Heading plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/heading/index", function (S, KE, headingCmd) {
+KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
     return {
         init:function (editor) {
 
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/heading/index", function (S, KE, headingCmd) {
                 items:FORMAT_SELECTION_ITEMS,
                 title:"标题",
                 width:"100px",
-                mode:KE.WYSIWYG_MODE
+                mode:Editor.WYSIWYG_MODE
             }, {
                 click:function (ev) {
                     var self = this,
@@ -63,7 +63,7 @@ KISSY.add("editor/plugin/heading/index", function (S, KE, headingCmd) {
                     // For each element into the elements path.
                     // Check if the element is removable by any of
                     // the styles.
-                    var queryCmd = KE.Utils.getQueryCmd("heading");
+                    var queryCmd = Editor.Utils.getQueryCmd("heading");
                     for (var value in FORMAT_SIZES) {
                         if (FORMAT_SIZES.hasOwnProperty(value) &&
                             editor.execCommand(queryCmd, elementPath, value)) {

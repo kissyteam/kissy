@@ -2,7 +2,7 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontSize/index", function (S, KE, ui,cmd) {
+KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui,cmd) {
 
 
     return {
@@ -40,7 +40,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, KE, ui,cmd) {
                 cmdType:"fontSize",
                 title:"大小",
                 width:"30px",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 showValue:true,
                 defaultValue:fontSizes.defaultValue,
                 popUpWidth:fontSizes.width,

@@ -2,7 +2,7 @@
  * load editor's dialog dynamically
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, KE) {
+KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
     var globalMask,
         loadMask = {
             loading:function () {
@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, KE) {
                         width:S.UA['ie'] == 6 ? S.DOM.docWidth() : "100%",
                         y:0,
                         // 指定全局 loading zIndex 值
-                        "zIndex":KE.baseZIndex(KE.zIndexManager.LOADING),
+                        "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
                         elCls:"ke-global-loading"
                     });
                 }

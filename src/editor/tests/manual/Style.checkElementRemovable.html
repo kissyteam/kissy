@@ -41,7 +41,7 @@ other plugins
 </span>
 <script>
     KISSY.ready(function (S) {
-        var KE = S.Editor;
+        var Editor = S.Editor;
         var fontSize_style = {
             element:'span',
             styles:{ 'font-size':'#(size)' },
@@ -50,7 +50,7 @@ other plugins
             ]
         };
 
-        var removeSize = new KE.Style(fontSize_style, {
+        var removeSize = new Editor.Style(fontSize_style, {
             size:"24px"
         });
 

@@ -2,7 +2,7 @@
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu/index", function (S, KE, Overlay) {
+KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
     var $ = S.all,
         MENUITEM_DISABLED_CLS = "ke-menuitem-disable",
         Event = S.Event;
@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, KE, Overlay) {
                 }
                 setTimeout(function () {
                     cm.selectedEl = t;
-                    cm.show(KE.Utils.getXY(x, y, doc, document));
+                    cm.show(Editor.Utils.getXY(x, y, doc, document));
                     ContextMenu.show(cm);
                 }, 30);
             });
@@ -133,7 +133,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, KE, Overlay) {
             var self = this,
                 menu = self.menu;
             //防止ie 失去焦点，取不到复制等状态
-            KE.fire("contextmenu", {
+            Editor.fire("contextmenu", {
                 contextmenu:self
             });
             menu.set("xy", [offset.left, offset.top]);

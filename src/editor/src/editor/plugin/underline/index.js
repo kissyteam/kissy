@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/underline/index", function (S, KE, ui, cmd) {
+KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);

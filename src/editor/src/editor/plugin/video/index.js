@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/video/index", function (S, KE, flashUtils, FlashBaseClass) {
+KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
@@ -97,7 +97,7 @@ KISSY.add("editor/plugin/video/index", function (S, KE, flashUtils, FlashBaseCla
             editor.addButton({
                 contentCls:"ke-toolbar-video",
                 title:"插入视频",
-                mode:KE.WYSIWYG_MODE
+                mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {
                     flashControl.show();

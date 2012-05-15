@@ -8,13 +8,13 @@
  */
 KISSY.add("editor/core/selection", function (S) {
 
-    var KE = S.Editor;
+    var Editor = S.Editor;
 
     /**
      * selection type enum
      * @enum {number}
      */
-    KE.SELECTION = {
+    Editor.SELECTION = {
         SELECTION_NONE:1,
         SELECTION_TEXT:2,
         SELECTION_ELEMENT:3
@@ -25,17 +25,17 @@ KISSY.add("editor/core/selection", function (S) {
         NULL = null,
         UA = S.UA,
         DOM = S.DOM,
-        //tryThese = KE.Utils.tryThese,
+        //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
-        KES = KE.SELECTION,
-        KER = KE.RANGE,
-        KEN = KE.NODE,
+        KES = Editor.SELECTION,
+        KER = Editor.RANGE,
+        KEN = Editor.NODE,
         // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
         //EventTarget = S.EventTarget,
-        Walker = KE.Walker,
-        //ElementPath = KE.ElementPath,
-        KERange = KE.Range;
+        Walker = Editor.Walker,
+        //ElementPath = Editor.ElementPath,
+        KERange = Editor.Range;
 
     /**
      * @constructor
@@ -449,7 +449,7 @@ KISSY.add("editor/core/selection", function (S) {
                                      && ( selected = enclosed )
                                  ); i--) {
                         // Then check any deep wrapped element, e.g. [<b><i><img /></i></b>]
-                        //一下子退到底  ^<a><span><span><img/></span></span></a>^
+                        // 一下子退到底  ^<a><span><span><img/></span></span></a>^
                         // ->
                         //<a><span><span>^<img/>^</span></span></a>
                         range.shrink(KER.SHRINK_ELEMENT);
@@ -785,7 +785,7 @@ KISSY.add("editor/core/selection", function (S) {
 
     KESelection.getSelection = getSelection;
 
-    KE.Selection = KESelection;
+    Editor.Selection = KESelection;
 
     return KESelection;
 }, {

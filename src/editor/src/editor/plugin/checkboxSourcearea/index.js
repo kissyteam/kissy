@@ -2,11 +2,11 @@
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, KE) {
+KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, Editor) {
     var Node = S.Node;
 
-    var SOURCE_MODE = KE.SOURCE_MODE ,
-        WYSIWYG_MODE = KE.WYSIWYG_MODE;
+    var SOURCE_MODE = Editor.SOURCE_MODE ,
+        WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
     function CheckboxSourceArea(editor) {
         var self = this;

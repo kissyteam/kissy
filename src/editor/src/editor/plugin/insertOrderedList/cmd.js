@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/insertOrderedList/cmd", function (S, KE, listCmd) {
+KISSY.add("editor/plugin/insertOrderedList/cmd", function (S, Editor, listCmd) {
 
     var insertOrderedList = "insertOrderedList",
         ListCommand = listCmd.ListCommand,
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/insertOrderedList/cmd", function (S, KE, listCmd) {
                 });
             }
 
-            var queryOl = KE.Utils.getQueryCmd(insertOrderedList);
+            var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
 
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {

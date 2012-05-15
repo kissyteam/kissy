@@ -2,7 +2,7 @@
  * link dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/dialog", function (S, KE, Overlay4E, Utils) {
+KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
 
     var Dialog = Overlay4E.Dialog,
         _ke_saved_href = Utils._ke_saved_href,
@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, KE, Overlay4E, Utils) {
     function LinkDialog(editor) {
         var self = this;
         self.editor = editor;
-        KE.Utils.lazyRun(self, "_prepareShow", "_real");
+        Editor.Utils.lazyRun(self, "_prepareShow", "_real");
     }
 
     S.augment(LinkDialog, {
@@ -77,7 +77,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, KE, Overlay4E, Utils) {
                 ev && ev.halt();
                 d.hide();
             });
-            KE.Utils.placeholder(d.urlEl, "http://");
+            Editor.Utils.placeholder(d.urlEl, "http://");
         },
 
         _link:function (ev) {
@@ -85,7 +85,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, KE, Overlay4E, Utils) {
             var self = this,
                 d = self.dialog,
                 url = d.urlEl.val();
-            if (!KE.Utils.verifyInputs(d.get("el").all("input"))) {
+            if (!Editor.Utils.verifyInputs(d.get("el").all("input"))) {
                 return;
             }
             d.hide();
@@ -108,11 +108,11 @@ KISSY.add("editor/plugin/link/dialog", function (S, KE, Overlay4E, Utils) {
             //是修改行为
             if (_selectedEl) {
                 var url = _selectedEl.attr(_ke_saved_href) || _selectedEl.attr("href");
-                KE.Utils.valInput(d.urlEl, url);
+                Editor.Utils.valInput(d.urlEl, url);
                 d.urlTitle.val(_selectedEl.attr("title") || "");
                 d.targetEl[0].checked = (_selectedEl.attr("target") == "_blank");
             } else {
-                KE.Utils.resetInput(d.urlEl);
+                Editor.Utils.resetInput(d.urlEl);
                 d.urlTitle.val("");
                 if (cfg.target) {
                     d.targetEl[0].checked = true;

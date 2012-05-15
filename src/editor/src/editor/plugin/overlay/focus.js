@@ -2,9 +2,9 @@
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/focus", function (S, KE) {
+KISSY.add("editor/plugin/overlay/focus", function (S, Editor) {
     var UA = S.UA,
-        focusManager = KE.focusManager;
+        focusManager = Editor.focusManager;
 
     function FocusExt() {
     }

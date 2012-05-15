@@ -7,19 +7,19 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/walker", function (S, KE) {
+KISSY.add("editor/core/walker", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        KEN = KE.NODE,
+        KEN = Editor.NODE,
         DOM = S.DOM,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node;
 
 
-    function iterate(rtl, breakOnFalse) {
+    function iterate(rtl, breakOnFalseRetFalse) {
         var self = this;
         // Return NULL if we have reached the end.
         if (self._.end) {
@@ -135,10 +135,10 @@ KISSY.add("editor/core/walker", function (S, KE) {
         while (node && !self._.end) {
             self.current = node;
             if (!self.evaluator || self.evaluator(node[0]) !== FALSE) {
-                if (!breakOnFalse) {
+                if (!breakOnFalseRetFalse) {
                     return node;
                 }
-            } else if (breakOnFalse && self.evaluator) {
+            } else if (breakOnFalseRetFalse && self.evaluator) {
                 return FALSE;
             }
             node = node[ getSourceNodeFn ](FALSE, type, guard);
@@ -157,6 +157,12 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return last;
     }
 
+    /**
+     * Walker for DOM.
+     * @param {Editor.Range} range
+     * @class
+     * @memberOf Editor
+     */
     function Walker(range) {
         this.range = range;
 
@@ -186,81 +192,85 @@ KISSY.add("editor/core/walker", function (S, KE) {
     }
 
 
-    S.augment(Walker, {
+    S.augment(Walker,
         /**
-         * Stop walking. No more nodes are retrieved if this function gets
-         * called.
+         * @lends Editor.Walker
          */
-        end:function () {
-            this._.end = 1;
-        },
+        {
+            /**
+             * Stop walking. No more nodes are retrieved if this function gets
+             * called.
+             */
+            end:function () {
+                this._.end = 1;
+            },
 
-        /**
-         * Retrieves the next node (at right).
-         * @returns {Boolean} The next node or NULL if no more
-         *        nodes are available.
-         */
-        next:function () {
-            return iterate.call(this);
-        },
+            /**
+             * Retrieves the next node (at right).
+             * @returns {Boolean} The next node or NULL if no more
+             *        nodes are available.
+             */
+            next:function () {
+                return iterate.call(this);
+            },
 
-        /**
-         * Retrieves the previous node (at left).
-         * @returns {Boolean} The previous node or NULL if no more
-         *        nodes are available.
-         */
-        previous:function () {
-            return iterate.call(this, TRUE);
-        },
+            /**
+             * Retrieves the previous node (at left).
+             * @returns {Boolean} The previous node or NULL if no more
+             *        nodes are available.
+             */
+            previous:function () {
+                return iterate.call(this, TRUE);
+            },
 
-        /**
-         * Check all nodes at right, executing the evaluation function.
-         * @returns {Boolean} "FALSE" if the evaluator function returned
-         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-         */
-        checkForward:function () {
-            return iterate.call(this, FALSE, TRUE) !== FALSE;
-        },
+            /**
+             * Check all nodes at right, executing the evaluation function.
+             * @returns {Boolean} "FALSE" if the evaluator function returned
+             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+             */
+            checkForward:function () {
+                return iterate.call(this, FALSE, TRUE) !== FALSE;
+            },
 
-        /**
-         * Check all nodes at left, executing the evaluation function.
-         * 是不是 (不能后退了)
-         * @returns {Boolean} "FALSE" if the evaluator function returned
-         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-         */
-        checkBackward:function () {
-            return iterate.call(this, TRUE, TRUE) !== FALSE;
-        },
+            /**
+             * Check all nodes at left, executing the evaluation function.
+             * 是不是 (不能后退了)
+             * @returns {Boolean} "FALSE" if the evaluator function returned
+             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+             */
+            checkBackward:function () {
+                return iterate.call(this, TRUE, TRUE) !== FALSE;
+            },
 
-        /**
-         * Executes a full walk forward (to the right), until no more nodes
-         * are available, returning the last valid node.
-         * @returns {Boolean} The last node at the right or NULL
-         *        if no valid nodes are available.
-         */
-        lastForward:function () {
-            return iterateToLast.call(this);
-        },
+            /**
+             * Executes a full walk forward (to the right), until no more nodes
+             * are available, returning the last valid node.
+             * @returns {Boolean} The last node at the right or NULL
+             *        if no valid nodes are available.
+             */
+            lastForward:function () {
+                return iterateToLast.call(this);
+            },
 
-        /**
-         * Executes a full walk backwards (to the left), until no more nodes
-         * are available, returning the last valid node.
-         * @returns {Boolean} The last node at the left or NULL
-         *        if no valid nodes are available.
-         */
-        lastBackward:function () {
-            return iterateToLast.call(this, TRUE);
-        },
+            /**
+             * Executes a full walk backwards (to the left), until no more nodes
+             * are available, returning the last valid node.
+             * @returns {Boolean} The last node at the left or NULL
+             *        if no valid nodes are available.
+             */
+            lastBackward:function () {
+                return iterateToLast.call(this, TRUE);
+            },
 
-        reset:function () {
-            delete this.current;
-            this._ = {};
-        },
+            reset:function () {
+                delete this.current;
+                this._ = {};
+            },
 
-        // for unit test
-        _iterator:iterate
+            // for unit test
+            _iterator:iterate
 
-    });
+        });
 
 
     Walker.blockBoundary = function (customNodeNames) {
@@ -292,7 +302,9 @@ KISSY.add("editor/core/walker", function (S, KE) {
                 isBookmarkNode(parent) );
             // Is bookmark node?
             isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-            return isReject ^ isBookmark;
+            // !! 2012-05-15
+            // evaluator check ===false, must turn it to boolean false
+            return !!(isReject ^ isBookmark);
         };
     };
 
@@ -304,7 +316,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return function (node) {
             var isWhitespace = node.nodeType == KEN.NODE_TEXT &&
                 !S.trim(node.nodeValue);
-            return isReject ^ isWhitespace;
+            return !!(isReject ^ isWhitespace);
         };
     };
 
@@ -322,7 +334,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
             // all sorts of empty paragraph, e.g. <br />.
             var isInvisible = whitespace(node) ||
                 node.nodeType == KEN.NODE_ELEMENT && !node.offsetHeight;
-            return isReject ^ isInvisible;
+            return !!(isReject ^ isInvisible);
         };
     };
 
@@ -352,13 +364,13 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return false;
     }
 
-    KE.Utils.injectDom({
+    Editor.Utils.injectDom({
         _4e_getBogus:function (el) {
             return getBogus(new Node(el));
         }
     });
 
-    KE.Walker = Walker;
+    Editor.Walker = Walker;
 
     return Walker;
 }, {

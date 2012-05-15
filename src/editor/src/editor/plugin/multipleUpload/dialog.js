@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
+KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -10,14 +10,14 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
         Node = S.Node,
         Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
-        movie = KE.Utils.debugUrl("/plugin/uploader/uploader.longzang.swf"),
+        movie = Editor.Utils.debugUrl("/plugin/uploader/uploader.longzang.swf"),
         name = "ke-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 
     function MultiUploadDialog(editor) {
         this.editor = editor;
         this.progressBars = {};
-        KE.Utils.lazyRun(this, "_prepareShow", "_realShow");
+        Editor.Utils.lazyRun(this, "_prepareShow", "_realShow");
     }
 
 
@@ -36,8 +36,8 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
 
 
     S.augment(MultiUploadDialog, {
-        addRes:KE.Utils.addRes,
-        destroy:KE.Utils.destroyRes,
+        addRes:Editor.Utils.addRes,
+        destroy:Editor.Utils.destroyRes,
         _prepareShow:function () {
             var self = this,
                 editor = self.editor,
@@ -184,7 +184,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
                     ("position:absolute;" +
                         "width:" + fwidth + "px;" +
                         "height:" + fheight + "px;" +
-                        "z-index:" + KE.baseZIndex(9999) + ";")
+                        "z-index:" + Editor.baseZIndex(9999) + ";")
                     + "'>").appendTo(btnHolder, undefined);
 
             //swfready 要求可见
@@ -380,7 +380,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
 
             //webkit 一旦整个可被选择就会导致点击事件没有
             //因为拖放要求mousedown被阻止,ie9 也是奇怪了！
-            if (!UA['webkit'] && KE.Utils.ieEngine != 9) {
+            if (!UA['webkit'] && Editor.Utils.ieEngine != 9) {
                 d.set("handlers", [d.get("el")]);
             }
         },
@@ -738,7 +738,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, KE,ProgressBar, Ov
                 up = self.up,
                 btn = self.btn,
                 flashPos = self.flashPos,
-                normParams = KE.Utils.normParams;
+                normParams = Editor.Utils.normParams;
             if ("ready" != uploader['getReady']()) {
                 self.tipSpan.html("您的浏览器不支持该功能，" +
                     "请升级当前浏览器，" +

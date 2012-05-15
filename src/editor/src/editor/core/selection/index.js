@@ -7,7 +7,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/selection/index", function (S, KE) {
+KISSY.add("editor/plugin/selection/index", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
@@ -15,8 +15,8 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
         UA = S.UA,
         Event = S.Event,
         Node = S.Node,
-        KES = KE.SELECTION,
-        KEN = KE.NODE;
+        KES = Editor.SELECTION,
+        KEN = Editor.NODE;
 
     /**
      * 2012-01-11 借鉴 tinymce
@@ -119,7 +119,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
         // not editable. (#5634)
         // 终于和ck同步了，我也发现了这个bug，ck3.3.2解决
         if (//ie8 的 7 兼容模式
-            KE.Utils.ieEngine < 8) {
+            Editor.Utils.ieEngine < 8) {
             // The 'click' event is not fired when clicking the
             // scrollbars, so we can use it to check whether
             // the empty space following <body> has been clicked.
@@ -343,8 +343,8 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
             return block._4e_outerHtml().match(emptyParagraphRegexp);
         }
 
-        var isNotWhitespace = KE.Walker.whitespaces(TRUE),
-            isNotBookmark = KE.Walker.bookmark(FALSE, TRUE);
+        var isNotWhitespace = Editor.Walker.whitespaces(TRUE),
+            isNotBookmark = Editor.Walker.bookmark(FALSE, TRUE);
         //除去注释和空格的下一个有效元素
         var nextValidEl = function (node) {
             return isNotWhitespace(node) && node.nodeType != 8
@@ -352,7 +352,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
 
         // 光标可以不能放在里面
         function cannotCursorPlaced(element) {
-            var dtd = KE.XHTML_DTD;
+            var dtd = Editor.XHTML_DTD;
             return element._4e_isBlockBoundary() && dtd.$empty[ element._4e_name() ];
         }
 
@@ -436,13 +436,13 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
              *  当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              *  解决：增加新的 p
              */
-            var lastRange = new KE.Range(doc),
+            var lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方
             lastRange
                 .moveToElementEditablePosition(body,
                 TRUE);
-            lastPath = new KE.ElementPath(lastRange.startContainer);
+            lastPath = new Editor.ElementPath(lastRange.startContainer);
             // 不位于 <body><p>^</p></body>
             if (lastPath.blockLimit._4e_name() !== 'body') {
                 editBlock = new Node(doc.createElement('p')).appendTo(body);

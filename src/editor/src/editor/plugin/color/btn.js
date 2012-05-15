@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/color/btn", function (S, KE, TripleButton, Overlay4E, DialogLoader) {
+KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4E, DialogLoader) {
 
     var Node = S.Node,
         DOM = S.DOM;
@@ -126,7 +126,7 @@ KISSY.add("editor/plugin/color/btn", function (S, KE, TripleButton, Overlay4E, D
                 content:html,
                 autoRender:true,
                 width:170,
-                zIndex:KE.baseZIndex(KE.zIndexManager.POPUP_MENU)
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
             var colorWin = self.colorWin;
@@ -173,7 +173,7 @@ KISSY.add("editor/plugin/color/btn", function (S, KE, TripleButton, Overlay4E, D
     }, {
         ATTRS:{
             mode:{
-                value:KE.WYSIWYG_MODE
+                value:Editor.WYSIWYG_MODE
             }
         }
     });

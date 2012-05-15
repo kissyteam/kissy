@@ -107,7 +107,7 @@
 <span id='line100' class='line'>100</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line101' class='line'>101</span>              * stamp a object by guid
 <span id='line102' class='line'>102</span>              * @param {Object} o object needed to be stamped
-<span id='line103' class='line'>103</span>              * @param {boolean} [readOnly] while set marker on o if marker does not exist
+<span id='line103' class='line'>103</span>              * @param {Boolean} [readOnly] while set marker on o if marker does not exist
 <span id='line104' class='line'>104</span>              * @param {String} [marker] the marker will be set on Object
 <span id='line105' class='line'>105</span>              * @return guid associated with this object
 <span id='line106' class='line'>106</span>              */</span><span class="WHIT">
@@ -193,7 +193,7 @@
 <span id='line186' class='line'>186</span>              * Checks to see whether two object are equals.
 <span id='line187' class='line'>187</span>              * @param a 比较目标1
 <span id='line188' class='line'>188</span>              * @param b 比较目标2
-<span id='line189' class='line'>189</span>              * @returns {boolean} a.equals(b)
+<span id='line189' class='line'>189</span>              * @returns {Boolean} a.equals(b)
 <span id='line190' class='line'>190</span>              */</span><span class="WHIT">
 <span id='line191' class='line'>191</span> </span><span class="WHIT">            </span><span class="NAME">equals</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">a</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">b</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/*internal use*/</span><span class="NAME">mismatchKeys</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/*internal use*/</span><span class="NAME">mismatchValues</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line192' class='line'>192</span> </span><span class="WHIT">                </span><span class="COMM">// inspired by jasmine</span><span class="WHIT">
@@ -397,7 +397,7 @@
 <span id='line390' class='line'>390</span>              * Search for a specified value index within an array.
 <span id='line391' class='line'>391</span>              * @param item individual item to be searched
 <span id='line392' class='line'>392</span>              * @param {Array} arr the array of items where item will be search
-<span id='line393' class='line'>393</span>              * @returns {boolean} the item exists in arr
+<span id='line393' class='line'>393</span>              * @returns {Boolean} the item exists in arr
 <span id='line394' class='line'>394</span>              */</span><span class="WHIT">
 <span id='line395' class='line'>395</span> </span><span class="WHIT">            </span><span class="NAME">inArray</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">item</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line396' class='line'>396</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">S.indexOf</span><span class="PUNC">(</span><span class="NAME">item</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
@@ -525,7 +525,7 @@
 <span id='line518' class='line'>518</span>              * @param arr {Array} the array to iterate
 <span id='line519' class='line'>519</span>              * @param callback {Function} the function to execute on each item
 <span id='line520' class='line'>520</span>              * @param [context] {Object} optional context object
-<span id='line521' class='line'>521</span>              * @returns {boolean} whether all elements in the array pass the test implemented by the provided function.
+<span id='line521' class='line'>521</span>              * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
 <span id='line522' class='line'>522</span>              */</span><span class="WHIT">
 <span id='line523' class='line'>523</span> </span><span class="WHIT">            </span><span class="NAME">every</span><span class="PUNC">:</span><span class="NAME">every</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
 <span id='line524' class='line'>524</span> </span><span class="WHIT">                </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -547,7 +547,7 @@
 <span id='line540' class='line'>540</span>              * @param arr {Array} the array to iterate
 <span id='line541' class='line'>541</span>              * @param callback {Function} the function to execute on each item
 <span id='line542' class='line'>542</span>              * @param [context] {Object} optional context object
-<span id='line543' class='line'>543</span>              * @returns {boolean} whether some element in the array passes the test implemented by the provided function.
+<span id='line543' class='line'>543</span>              * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
 <span id='line544' class='line'>544</span>              */</span><span class="WHIT">
 <span id='line545' class='line'>545</span> </span><span class="WHIT">            </span><span class="NAME">some</span><span class="PUNC">:</span><span class="NAME">some</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
 <span id='line546' class='line'>546</span> </span><span class="WHIT">                </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -683,7 +683,7 @@
 <span id='line676' class='line'>676</span>              * @param {Object} o json data
 <span id='line677' class='line'>677</span>              * @param {String} [sep='&'] separator between each pair of data
 <span id='line678' class='line'>678</span>              * @param {String} [eq='='] separator between key and value of data
-<span id='line679' class='line'>679</span>              * @param {boolean} [arr=true] whether add '[]' to array key of data
+<span id='line679' class='line'>679</span>              * @param {Boolean} [arr=true] whether add '[]' to array key of data
 <span id='line680' class='line'>680</span>              * @return {String}
 <span id='line681' class='line'>681</span>              */</span><span class="WHIT">
 <span id='line682' class='line'>682</span> </span><span class="WHIT">            </span><span class="NAME">param</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">sep</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eq</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -826,7 +826,7 @@
 <span id='line819' class='line'>819</span>              * test whether a string start with a specified substring
 <span id='line820' class='line'>820</span>              * @param {String} str the whole string
 <span id='line821' class='line'>821</span>              * @param {String} prefix a specified substring
-<span id='line822' class='line'>822</span>              * @returns {boolean} whether str start with prefix
+<span id='line822' class='line'>822</span>              * @returns {Boolean} whether str start with prefix
 <span id='line823' class='line'>823</span>              */</span><span class="WHIT">
 <span id='line824' class='line'>824</span> </span><span class="WHIT">            </span><span class="NAME">startsWith</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prefix</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line825' class='line'>825</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">str.lastIndexOf</span><span class="PUNC">(</span><span class="NAME">prefix</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
@@ -836,7 +836,7 @@
 <span id='line829' class='line'>829</span>              * test whether a string end with a specified substring
 <span id='line830' class='line'>830</span>              * @param {String} str the whole string
 <span id='line831' class='line'>831</span>              * @param {String} suffix a specified substring
-<span id='line832' class='line'>832</span>              * @returns {boolean} whether str end with suffix
+<span id='line832' class='line'>832</span>              * @returns {Boolean} whether str end with suffix
 <span id='line833' class='line'>833</span>              */</span><span class="WHIT">
 <span id='line834' class='line'>834</span> </span><span class="WHIT">            </span><span class="NAME">endsWith</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">suffix</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line835' class='line'>835</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ind</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">str.length</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">suffix.length</span><span class="PUNC">;</span><span class="WHIT">
@@ -915,56 +915,56 @@
 <span id='line908' class='line'>908</span>              * test whether o is boolean
 <span id='line909' class='line'>909</span>              * @function
 <span id='line910' class='line'>910</span>              * @param  o
-<span id='line911' class='line'>911</span>              * @returns {boolean}
+<span id='line911' class='line'>911</span>              * @returns {Boolean}
 <span id='line912' class='line'>912</span>              */</span><span class="WHIT">
 <span id='line913' class='line'>913</span> </span><span class="WHIT">            </span><span class="NAME">isBoolean</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line914' class='line'>914</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line915' class='line'>915</span>              * test whether o is number
 <span id='line916' class='line'>916</span>              * @function
 <span id='line917' class='line'>917</span>              * @param  o
-<span id='line918' class='line'>918</span>              * @returns {boolean}
+<span id='line918' class='line'>918</span>              * @returns {Boolean}
 <span id='line919' class='line'>919</span>              */</span><span class="WHIT">
 <span id='line920' class='line'>920</span> </span><span class="WHIT">            </span><span class="NAME">isNumber</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line921' class='line'>921</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line922' class='line'>922</span>              * test whether o is String
 <span id='line923' class='line'>923</span>              * @function
 <span id='line924' class='line'>924</span>              * @param  o
-<span id='line925' class='line'>925</span>              * @returns {boolean}
+<span id='line925' class='line'>925</span>              * @returns {Boolean}
 <span id='line926' class='line'>926</span>              */</span><span class="WHIT">
 <span id='line927' class='line'>927</span> </span><span class="WHIT">            </span><span class="NAME">isString</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line928' class='line'>928</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line929' class='line'>929</span>              * test whether o is function
 <span id='line930' class='line'>930</span>              * @function
 <span id='line931' class='line'>931</span>              * @param  o
-<span id='line932' class='line'>932</span>              * @returns {boolean}
+<span id='line932' class='line'>932</span>              * @returns {Boolean}
 <span id='line933' class='line'>933</span>              */</span><span class="WHIT">
 <span id='line934' class='line'>934</span> </span><span class="WHIT">            </span><span class="NAME">isFunction</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line935' class='line'>935</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line936' class='line'>936</span>              * test whether o is Array
 <span id='line937' class='line'>937</span>              * @function
 <span id='line938' class='line'>938</span>              * @param  o
-<span id='line939' class='line'>939</span>              * @returns {boolean}
+<span id='line939' class='line'>939</span>              * @returns {Boolean}
 <span id='line940' class='line'>940</span>              */</span><span class="WHIT">
 <span id='line941' class='line'>941</span> </span><span class="WHIT">            </span><span class="NAME">isArray</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line942' class='line'>942</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line943' class='line'>943</span>              * test whether o is Date
 <span id='line944' class='line'>944</span>              * @function
 <span id='line945' class='line'>945</span>              * @param  o
-<span id='line946' class='line'>946</span>              * @returns {boolean}
+<span id='line946' class='line'>946</span>              * @returns {Boolean}
 <span id='line947' class='line'>947</span>              */</span><span class="WHIT">
 <span id='line948' class='line'>948</span> </span><span class="WHIT">            </span><span class="NAME">isDate</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line949' class='line'>949</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line950' class='line'>950</span>              * test whether o is RegExp
 <span id='line951' class='line'>951</span>              * @function
 <span id='line952' class='line'>952</span>              * @param  o
-<span id='line953' class='line'>953</span>              * @returns {boolean}
+<span id='line953' class='line'>953</span>              * @returns {Boolean}
 <span id='line954' class='line'>954</span>              */</span><span class="WHIT">
 <span id='line955' class='line'>955</span> </span><span class="WHIT">            </span><span class="NAME">isRegExp</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line956' class='line'>956</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line957' class='line'>957</span>              * test whether o is Object
 <span id='line958' class='line'>958</span>              * @function
 <span id='line959' class='line'>959</span>              * @param  o
-<span id='line960' class='line'>960</span>              * @returns {boolean}
+<span id='line960' class='line'>960</span>              * @returns {Boolean}
 <span id='line961' class='line'>961</span>              */</span><span class="WHIT">
 <span id='line962' class='line'>962</span> </span><span class="WHIT">            </span><span class="NAME">isObject</span><span class="PUNC">:</span><span class="NAME">isValidParamValue</span><span class="WHIT">
 <span id='line963' class='line'>963</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">

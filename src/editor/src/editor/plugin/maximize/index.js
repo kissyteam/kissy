@@ -2,7 +2,7 @@
  * Maximize plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/maximize/index", function (S, KE, maximizeCmd) {
+KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
     var MAXIMIZE_CLASS = "ke-toolbar-maximize",
         RESTORE_CLASS = "ke-toolbar-restore",
         MAXIMIZE_TIP = "全屏",

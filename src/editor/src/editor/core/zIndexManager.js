@@ -3,13 +3,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/zIndexManager", function (S) {
-    var KE = S.Editor;
+    var Editor = S.Editor;
 
     /**
      * z-index manager
      *@enum {number}
      */
-    KE.zIndexManager = {
+    Editor.zIndexManager = {
         BUBBLE_VIEW:(1100),
         POPUP_MENU:(1200),
         // flash 存储设置最高
@@ -24,8 +24,8 @@ KISSY.add("editor/core/zIndexManager", function (S) {
     /**
      * 获得全局最大值
      */
-    KE.baseZIndex = function (z) {
-        return (KE['Config'].baseZIndex || 10000) + z;
+    Editor.baseZIndex = function (z) {
+        return (Editor['Config'].baseZIndex || 10000) + z;
     };
 }, {
     requires:['./base']

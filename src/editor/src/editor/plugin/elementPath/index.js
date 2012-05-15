@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/elementPath/index", function (S, KE) {
+KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
     var CLASS = "ke-element-path";
 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/elementPath/index", function (S, KE) {
             self.holder = new Node("<span>");
             self.holder.appendTo(editor.get("statusBarEl"), undefined);
             editor.on("selectionChange", self._selectionChange, self);
-            KE.Utils.sourceDisable(editor, self);
+            Editor.Utils.sourceDisable(editor, self);
         },
         disable:function () {
             this.holder.css("visibility", "hidden");

@@ -7,10 +7,10 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/core/elementPath", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         DOM = S.DOM,
-        dtd = KE.XHTML_DTD,
-        KEN = KE.NODE,
+        dtd = Editor.XHTML_DTD,
+        KEN = Editor.NODE,
         TRUE = true,
         FALSE = false,
         NULL = null,
@@ -140,7 +140,7 @@ KISSY.add("editor/core/elementPath", function (S) {
             return elNames.toString();
         }
     };
-    KE.ElementPath = ElementPath;
+    Editor.ElementPath = ElementPath;
 
     return ElementPath;
 }, {

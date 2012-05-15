@@ -2,10 +2,10 @@
  * Add removeFormat command for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/removeFormat/cmd", function (S, KE) {
-    var KER = KE.RANGE,
-        ElementPath = KE.ElementPath,
-        KEN = KE.NODE,
+KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
+    var KER = Editor.RANGE,
+        ElementPath = Editor.ElementPath,
+        KEN = Editor.NODE,
         /**
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.

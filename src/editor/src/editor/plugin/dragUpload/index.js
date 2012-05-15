@@ -4,7 +4,7 @@
  * @refer: http://www.html5rocks.com/tutorials/file/filesystem/
  *         http://yiminghe.iteye.com/blog/848613
  */
-KISSY.add("editor/plugin/dragUpload/index", function (S, KE) {
+KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
         UA = S.UA,
@@ -83,7 +83,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, KE) {
                     }
                     var img = new Node("<img " +
                         "src='" +
-                        (KE['Config'].base + "theme/tao-loading.gif") + "'" +
+                        (Editor['Config'].base + "theme/tao-loading.gif") + "'" +
                         "/>");
                     var nakeImg = img[0];
                     ap.insertBefore(nakeImg, archor);
@@ -150,7 +150,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, KE) {
                         fileInput + "\"; filename=\"" + encodeURIComponent(fileName) + "\"\r\n";
                     body += "Content-Type: " + (file.type || "application/octet-stream") + "\r\n\r\n";
                     body += fileData + "\r\n";
-                    serverParams = KE.Utils.normParams(serverParams);
+                    serverParams = Editor.Utils.normParams(serverParams);
                     for (var p in serverParams) {
                         if (serverParams.hasOwnProperty(p)) {
                             body += "--" + boundary + "\r\n";

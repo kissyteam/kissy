@@ -2,7 +2,7 @@
  * link editor support for kissy editor ,innovation from google doc and ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/index", function (S, KE, BubbleView, Utils, DialogLoader) {
+KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, DialogLoader) {
 
     var $ = S.all,
         tipHtml = '<a ' +
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/link/index", function (S, KE, BubbleView, Utils, Dialog
         editor.addButton({
             contentCls:"ke-toolbar-link",
             title:"插入链接",
-            mode:KE.WYSIWYG_MODE
+            mode:Editor.WYSIWYG_MODE
         }, {
             offClick:function () {
                 showLinkEditDialog();
@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/link/index", function (S, KE, BubbleView, Utils, Dialog
                     tipchange = el.one(".ke-bubbleview-change"),
                     tipremove = el.one(".ke-bubbleview-remove");
                 //ie focus not lose
-                KE.Utils.preventFocus(el);
+                Editor.Utils.preventFocus(el);
                 tipchange.on("click", function (ev) {
                     showLinkEditDialog(bubble.selectedEl);
                     ev.halt();

@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
     return {
         init:function (editor) {
             var undefined = undefined,
-                KE = S.Editor,
+                Editor = S.Editor,
                 Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
              * 2。处理 word 复制过来的列表
              */
             (function () {
-                var //equalsIgnoreCase = KE.Utils.equalsIgnoreCase,
+                var //equalsIgnoreCase = Editor.Utils.equalsIgnoreCase,
                     filterStyle = stylesFilter([
                         // word 自有属性名去除
                         [/mso/i],
@@ -399,8 +399,8 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
                 }
 
                 // Find out the list of block-like tags that can contain <br>.
-                var dtd = KE.XHTML_DTD;
-                var blockLikeTags = KE.Utils.mix({},
+                var dtd = Editor.XHTML_DTD;
+                var blockLikeTags = Editor.Utils.mix({},
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;

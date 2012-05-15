@@ -2,8 +2,8 @@
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, Select) {
-    var dtd = KE.XHTML_DTD,
+KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchable, Select) {
+    var dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
         UA = S.UA,
         JSON = S.JSON,
@@ -166,7 +166,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
 
         warning = "请点击浏览上传图片",
 
-        valInput = KE.Utils.valInput;
+        valInput = Editor.Utils.valInput;
 
     function findAWithImg(img) {
         var ret = img.parent();
@@ -210,7 +210,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
             var content = self.d.get("el"),
                 cancel = content.one(".ke-img-cancel"),
                 ok = content.one(".ke-img-insert"),
-                verifyInputs = KE.Utils.verifyInputs,
+                verifyInputs = Editor.Utils.verifyInputs,
                 commonSettingTable = content.one(".ke-img-setting");
             self.uploadForm = content.one(".ke-img-upload-form");
             self.imgLocalUrl = content.one(".ke-img-local-url");
@@ -226,7 +226,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
             self.imgMargin = content.one(".ke-img-margin");
             self.imgLink = content.one(".ke-img-link");
             self.imgLinkBlank = content.one(".ke-img-link-blank");
-            var placeholder = KE.Utils.placeholder;
+            var placeholder = Editor.Utils.placeholder;
             placeholder(self.imgUrl, HTTP_TIP);
             placeholder(self.imgHeight, AUTOMATIC_TIP);
             placeholder(self.imgWidth, AUTOMATIC_TIP);
@@ -259,7 +259,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
 
             var loadingCancel = new Node("<a class='ke-button' style='position:absolute;" +
                 "z-index:" +
-                KE.baseZIndex(KE.zIndexManager.LOADING_CANCEL) + ";" +
+                Editor.baseZIndex(Editor.zIndexManager.LOADING_CANCEL) + ";" +
                 "left:-9999px;" +
                 "top:-9999px;" +
                 "'>取消上传</a>").appendTo(document.body, undefined);
@@ -328,7 +328,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
 
                     self.d.loading();
 
-                    uploadIframe = KE.Utils.doFormUpload({
+                    uploadIframe = Editor.Utils.doFormUpload({
                         form:self.uploadForm,
                         callback:function (r) {
                             uploadIframe = null;
@@ -519,7 +519,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, KE, Overlay4E, Switchable, 
         _update:function (_selectedEl) {
             var self = this,
                 active = 0,
-                resetInput = KE.Utils.resetInput;
+                resetInput = Editor.Utils.resetInput;
             self.selectedEl = _selectedEl;
             if (self.selectedEl && self.imageCfg['remote'] !== false) {
                 valInput(self.imgUrl, self.selectedEl.attr("src"));

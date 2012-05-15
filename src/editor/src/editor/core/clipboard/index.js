@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/clipboard/index", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         Node = S.Node,
         UA = S.UA,
-        KERange = KE.Range,
-        KER = KE.RANGE,
+        KERange = Editor.Range,
+        KER = Editor.RANGE,
         Event = S.Event;
 
     function Paste(editor) {
@@ -218,7 +218,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             return success;
         }
     };
-    var KES = KE.Selection;
+    var KES = Editor.Selection;
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
         if (!UA['ie'] || editor.get("document")[0].compatMode == 'BackCompat')
@@ -256,7 +256,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
     /**
      * 给所有右键都加入复制粘贴
      */
-    KE.on("contextmenu", function (ev) {
+    Editor.on("contextmenu", function (ev) {
         var contextmenu = ev.contextmenu,
             editor = contextmenu.get("editor"),
             // 原始内容

@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/video/dialog", function (S, KE, FlashDialog, Select) {
+KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video",
         DTIP = "自动",
@@ -101,9 +101,9 @@ KISSY.add("editor/plugin/video/dialog", function (S, KE, FlashDialog, Select) {
                 d.hide();
                 ev.halt();
             });
-            KE.Utils.placeholder(self.dUrl, self._urlTip);
-            KE.Utils.placeholder(self.dWidth, DTIP);
-            KE.Utils.placeholder(self.dHeight, DTIP);
+            Editor.Utils.placeholder(self.dUrl, self._urlTip);
+            Editor.Utils.placeholder(self.dWidth, DTIP);
+            Editor.Utils.placeholder(self.dHeight, DTIP);
             self.addRes(action, cancel, self.dUrl, self.dWidth, self.dHeight);
         },
 
@@ -179,17 +179,17 @@ KISSY.add("editor/plugin/video/dialog", function (S, KE, FlashDialog, Select) {
                 f = self.selectedFlash;
             if (f) {
                 var r = editor.restoreRealElement(f);
-                KE.Utils.valInput(self.dUrl, self._getFlashUrl(r));
+                Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dAlign.val(f.css("float"));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
-                KE.Utils.valInput(self.dWidth, parseInt(f.css("width")));
-                KE.Utils.valInput(self.dHeight, parseInt(f.css("height")));
+                Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
+                Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
             } else {
-                KE.Utils.resetInput(self.dUrl);
+                Editor.Utils.resetInput(self.dUrl);
                 self.dAlign.val("none");
                 self.dMargin.val(MARGIN_DEFAULT);
-                KE.Utils.resetInput(self.dWidth);
-                KE.Utils.resetInput(self.dHeight);
+                Editor.Utils.resetInput(self.dWidth);
+                Editor.Utils.resetInput(self.dHeight);
             }
         }
     });

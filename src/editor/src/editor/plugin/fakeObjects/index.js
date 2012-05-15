@@ -2,13 +2,13 @@
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fakeObjects/index", function (S, KE) {
+KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
     var Node = S.Node,
-        KEN = KE.NODE,
-        SPACER_GIF = KE['Config'].base + 'theme/spacer.gif',
+        KEN = Editor.NODE,
+        SPACER_GIF = Editor['Config'].base + 'theme/spacer.gif',
         HtmlParser = S.require("htmlparser");
 
-    S.augment(KE, {
+    S.augment(Editor, {
         //ie6 ,object outHTML error
         createFakeElement:function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
             var style = realElement.attr("style") || '';

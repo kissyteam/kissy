@@ -2,9 +2,9 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font/ui", function (S, KE, TripleButton, Select) {
+KISSY.add("editor/plugin/font/ui", function (S, Editor, TripleButton, Select) {
 
-    var getQueryCmd = KE.Utils.getQueryCmd;
+    var getQueryCmd = Editor.Utils.getQueryCmd;
 
     function FontSelect() {
         FontSelect.superclass.constructor.apply(this, arguments);
@@ -92,7 +92,7 @@ KISSY.add("editor/plugin/font/ui", function (S, KE, TripleButton, Select) {
     }, {
         ATTRS:{
             mode:{
-                value:KE.WYSIWYG_MODE
+                value:Editor.WYSIWYG_MODE
             }
         }
     });

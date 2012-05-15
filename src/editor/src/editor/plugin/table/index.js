@@ -2,12 +2,12 @@
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMenu) {
+KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, ContextMenu) {
 
     var UA = S.UA,
         DOM = S.DOM,
         Node = S.Node,
-        KEN = KE.NODE,
+        KEN = Editor.NODE,
         tableRules = ["tr", "th", "td", "tbody", "table"],
         cellNodeRegex = /^(?:td|th)$/;
 
@@ -67,7 +67,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
             }
         }
 
-        KE.Utils.clearAllMarkers(database);
+        Editor.Utils.clearAllMarkers(database);
         // Restore selection position.
         selection.selectBookmarks(bookmarks);
 
@@ -102,7 +102,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
     }
 
     function deleteRows(selectionOrRow) {
-        if (selectionOrRow instanceof KE.Selection) {
+        if (selectionOrRow instanceof Editor.Selection) {
             var cells = getSelectedCells(selectionOrRow),
                 cellsCount = cells.length,
                 rowsToDelete = [],
@@ -225,7 +225,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
     }
 
     function deleteColumns(selectionOrCell) {
-        if (selectionOrCell instanceof KE.Selection) {
+        if (selectionOrCell instanceof Editor.Selection) {
             var colsToDelete = getSelectedCells(selectionOrCell),
                 elementToFocus = getFocusElementAfterDelCols(colsToDelete);
 
@@ -274,7 +274,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
     }
 
     function placeCursorInCell(cell, placeAtEnd) {
-        var range = new KE.Range(cell[0].ownerDocument);
+        var range = new Editor.Range(cell[0].ownerDocument);
         if (!range['moveToElementEditablePosition'](cell,
             placeAtEnd ? true : undefined)) {
             range.selectNodeContents(cell);
@@ -483,7 +483,7 @@ KISSY.add("editor/plugin/table/index", function (S, KE, DialogLoader, ContextMen
 
             editor.addButton({
                 contentCls:"ke-toolbar-table",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 title:"插入表格"
             }, {
                 offClick:function () {

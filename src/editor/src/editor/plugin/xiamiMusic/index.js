@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/xiamiMusic/index", function (S, KE, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic";
 
@@ -101,7 +101,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, KE, FlashBaseClass, fla
             editor.addButton({
                 contentCls:"ke-toolbar-music",
                 title:"插入虾米音乐",
-                mode:KE.WYSIWYG_MODE
+                mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {
                     xiamiMusic.show();

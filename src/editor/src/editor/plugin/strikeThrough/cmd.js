@@ -1,6 +1,6 @@
-KISSY.add("editor/plugin/strikeThrough/cmd", function (S, KE, Cmd) {
+KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
 
-    var STRIKE_STYLE = new KE.Style({
+    var STRIKE_STYLE = new Editor.Style({
         element:'del',
         overrides:[
             {

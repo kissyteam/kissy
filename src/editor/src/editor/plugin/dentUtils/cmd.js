@@ -6,14 +6,14 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
+KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
 
     var listNodeNames = {ol:1, ul:1},
-        Walker = KE.Walker,
+        Walker = Editor.Walker,
         DOM = S.DOM,
         Node = S.Node,
         UA = S.UA,
-        KEN = KE.NODE,
+        KEN = Editor.NODE,
         isNotWhitespaces = Walker.whitespaces(true),
         INDENT_CSS_PROPERTY = "margin-left",
         INDENT_OFFSET = 40,
@@ -157,7 +157,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, KE, ListUtils) {
         }
 
         // Clean up the markers.
-        KE.Utils.clearAllMarkers(database);
+        Editor.Utils.clearAllMarkers(database);
     }
 
     function indentBlock(range, type) {

@@ -2,7 +2,7 @@
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
+KISSY.add("editor/plugin/flashBridge/index", function (S, Editor, flashUtils) {
 
     var instances = {};
 
@@ -124,18 +124,13 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
         }
     };
 
-    KE.FlashBridge = FlashBridge;
-
-    /**
-     * @module   Flash UA 探测
-     * @author   kingfo<oicuicu@gmail.com>
-     */
+    Editor.FlashBridge = FlashBridge;
 
     var UA = S.UA, fpv, fpvF, firstRun = true;
 
-    /**
-     * 获取 Flash 版本号
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
+    /*
+     获取 Flash 版本号
+     返回数据 [M, S, R] 若未安装，则返回 undefined
      */
     function getFlashVersion() {
         var ver, SF = 'ShockwaveFlash';
@@ -161,19 +156,19 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
         return arrify(ver);
     }
 
-    /**
-     * arrify("10.1.r53") => ["10", "1", "53"]
+    /*
+     arrify("10.1.r53") => ["10", "1", "53"]
      */
     function arrify(ver) {
         return ver.match(/(\d)+/g);
     }
 
-    /**
-     * 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     * ver 参数不符合预期时，返回 0
-     * numerify("10.1 r53") => 10.00100053
-     * numerify(["10", "1", "53"]) => 10.00100053
-     * numerify(12.2) => 12.2
+    /*
+     格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
+     ver 参数不符合预期时，返回 0
+     numerify("10.1 r53") => 10.00100053
+     numerify(["10", "1", "53"]) => 10.00100053
+     numerify(12.2) => 12.2
      */
     function numerify(ver) {
         var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
@@ -183,9 +178,9 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
         return ret || 0;
     }
 
-    /**
-     * pad(12, 5) => "00012"
-     * ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
+    /*
+     pad(12, 5) => "00012"
+     ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
      */
     function pad(num, n) {
         var len = (num + '').length;
@@ -195,9 +190,9 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
         return num;
     }
 
-    /**
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
-     * fpv 全称是 flash player version
+    /*
+     返回数据 [M, S, R] 若未安装，则返回 undefined
+     fpv 全称是 flash player version
      */
     UA.fpv = function (force) {
         // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
@@ -209,13 +204,13 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, KE, flashUtils) {
         return fpv;
     };
 
-    /**
-     * Checks fpv is greater than or equal the specific version.
-     * 普通的 flash 版本检测推荐使用该方法
-     * @param ver eg. "10.1.53"
-     * <code>
-     *    if(S.UA.fpvGEQ('9.9.2')) { ... }
-     * </code>
+    /*
+     Checks fpv is greater than or equal the specific version.
+     普通的 flash 版本检测推荐使用该方法
+     @param ver eg. "10.1.53"
+     <code>
+     if(S.UA.fpvGEQ('9.9.2')) { ... }
+     </code>
      */
     UA.fpvGEQ = function (ver, force) {
         if (firstRun) UA.fpv(force);

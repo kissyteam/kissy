@@ -2,7 +2,7 @@
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashCommon/baseClass", function (S, KE, ContextMenu, BubbleView, DialogLoader, flashUtils) {
+KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, BubbleView, DialogLoader, flashUtils) {
 
     var Node = S.Node;
 
@@ -62,7 +62,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, KE, ContextMenu, B
                         tipChangeEl = el.one(".ke-bubbleview-change"),
                         tipRemoveEl = el.one(".ke-bubbleview-remove");
                     //ie focus not lose
-                    KE.Utils.preventFocus(el);
+                    Editor.Utils.preventFocus(el);
 
                     tipChangeEl.on("click", function (ev) {
                         //回调show，传入选中元素

@@ -2,7 +2,7 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontFamily/index", function (S, KE, ui, cmd) {
+KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
     return {
         init:function (editor) {
@@ -77,7 +77,7 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, KE, ui, cmd) {
                 cmdType:"fontFamily",
                 title:"字体",
                 width:"110px",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 defaultValue:fontFamilies.defaultValue,
                 popUpWidth:fontFamilies.width,
                 items:fontFamilies.items

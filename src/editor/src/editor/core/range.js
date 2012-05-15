@@ -6,12 +6,12 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
+KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) {
     /**
      * Enum for range
      * @enum {number}
      */
-    KE.RANGE = {
+    Editor.RANGE = {
         POSITION_AFTER_START:1, // <element>^contents</element>		"^text"
         POSITION_BEFORE_END:2, // <element>contents^</element>		"text^"
         POSITION_BEFORE_START:3, // ^<element>contents</element>		^"text"
@@ -28,21 +28,329 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        KEN = KE.NODE,
-        KER = KE.RANGE,
-        KEP = KE.POSITION,
+        KEN = Editor.NODE,
+        KER = Editor.RANGE,
+        KEP = Editor.POSITION,
         DOM = S.DOM,
         getByAddress = Utils.getByAddress,
         UA = S.UA,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
+
+
+    /**
+     * Extract html content within range.
+     * @param {Number} action
+     * 0 : delete
+     * 1 : extract
+     * 2 : clone
+     */
+    function execContentsAction(self, action) {
+        var startNode = self.startContainer,
+            endNode = self.endContainer,
+            startOffset = self.startOffset,
+            endOffset = self.endOffset,
+            removeStartNode,
+            hasSplitStart = FALSE,
+            hasSplitEnd = FALSE,
+            t,
+            docFrag = undefined,
+            doc = self.document,
+            removeEndNode;
+
+        if (self.collapsed) {
+            return docFrag;
+        }
+
+        if (action > 0) {
+            docFrag = doc.createDocumentFragment();
+        }
+
+        // 将 bookmark 包含在选区内
+        self.optimizeBookmark();
+
+
+        // endNode -> end guard , not included in range
+
+        // For text containers, we must simply split the node and point to the
+        // second part. The removal will be handled by the rest of the code .
+        //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
+        if (endNode[0].nodeType == KEN.NODE_TEXT) {
+            hasSplitEnd = TRUE;
+            endNode = endNode._4e_splitText(endOffset);
+        } else {
+            // If the end container has children and the offset is pointing
+            // to a child, then we should start from it.
+            if (endNode[0].childNodes.length > 0) {
+                // If the offset points after the last node.
+                if (endOffset >= endNode[0].childNodes.length) {
+                    // Let's create a temporary node and mark it for removal.
+                    endNode = new Node(
+                        endNode[0].appendChild(doc.createTextNode(""))
+                    );
+                    removeEndNode = TRUE;
+                } else {
+                    endNode = new Node(endNode[0].childNodes[endOffset]);
+                }
+            }
+        }
+
+        // startNode -> start guard , not included in range
+
+        // For text containers, we must simply split the node. The removal will
+        // be handled by the rest of the code .
+        if (startNode[0].nodeType == KEN.NODE_TEXT) {
+            hasSplitStart = TRUE;
+            startNode._4e_splitText(startOffset);
+        } else {
+            // If the start container has children and the offset is pointing
+            // to a child, then we should start from its previous sibling.
+
+            // If the offset points to the first node, we don't have a
+            // sibling, so let's use the first one, but mark it for removal.
+            if (!startOffset) {
+                // Let's create a temporary node and mark it for removal.
+                t = new Node(doc.createTextNode(""));
+                startNode.prepend(t);
+                startNode = t;
+                removeStartNode = TRUE;
+            }
+            else if (startOffset >= startNode[0].childNodes.length) {
+                // Let's create a temporary node and mark it for removal.
+                startNode = new Node(startNode[0]
+                    .appendChild(doc.createTextNode('')));
+                removeStartNode = TRUE;
+            } else
+                startNode = new Node(
+                    startNode[0].childNodes[startOffset].previousSibling
+                );
+        }
+
+        // Get the parent nodes tree for the start and end boundaries.
+        //从根到自己
+        var startParents = startNode._4e_parents(),
+            endParents = endNode._4e_parents();
+
+        startParents.each(function (n, i) {
+            startParents[i] = n;
+        });
+
+        endParents.each(function (n, i) {
+            endParents[i] = n;
+        });
+
+
+        // Compare them, to find the top most siblings.
+        var i, topStart, topEnd;
+
+        for (i = 0; i < startParents.length; i++) {
+            topStart = startParents[ i ];
+            topEnd = endParents[ i ];
+
+            // The compared nodes will match until we find the top most
+            // siblings (different nodes that have the same parent).
+            // "i" will hold the index in the parents array for the top
+            // most element.
+            if (!topStart.equals(topEnd)) {
+                break;
+            }
+        }
+
+        var clone = docFrag,
+            levelStartNode,
+            levelClone,
+            currentNode,
+            currentSibling;
+
+        // Remove all successive sibling nodes for every node in the
+        // startParents tree.
+        for (var j = i; j < startParents.length; j++) {
+            levelStartNode = startParents[j];
+
+            // For Extract and Clone, we must clone this level.
+            if (action > 0 && !levelStartNode.equals(startNode)) {
+                // action = 0 = Delete
+                levelClone = clone.appendChild(levelStartNode.clone()[0]);
+            } else {
+                levelClone = null;
+            }
+
+            // 开始节点的路径所在父节点不能 clone(TRUE)，其他节点（结束节点路径左边的节点）可以直接 clone(true)
+            currentNode = levelStartNode[0].nextSibling;
+
+            var endParentJ = endParents[ j ],
+                domEndNode = endNode[0],
+                domEndParentJ = endParentJ[0];
+
+            while (currentNode) {
+                // Stop processing when the current node matches a node in the
+                // endParents tree or if it is the endNode.
+                if (domEndParentJ == currentNode || domEndNode == currentNode) {
+                    break;
+                }
+
+                // Cache the next sibling.
+                currentSibling = currentNode.nextSibling;
+
+                // If cloning, just clone it.
+                if (action == 2) {
+                    // 2 = Clone
+                    clone.appendChild(currentNode.cloneNode(TRUE));
+                } else {
+                    // Both Delete and Extract will remove the node.
+                    DOM._4e_remove(currentNode);
+
+                    // When Extracting, move the removed node to the docFrag.
+                    if (action == 1) {
+                        // 1 = Extract
+                        clone.appendChild(currentNode);
+                    }
+                }
+
+                currentNode = currentSibling;
+            }
+            // 开始节点的路径所在父节点不能 clone(TRUE)，要在后面深入子节点处理
+            if (levelClone) {
+                clone = levelClone;
+            }
+        }
+
+        clone = docFrag;
+
+        // Remove all previous sibling nodes for every node in the
+        // endParents tree.
+        for (var k = i; k < endParents.length; k++) {
+            levelStartNode = endParents[ k ];
+
+            // For Extract and Clone, we must clone this level.
+            if (action > 0 && !levelStartNode.equals(endNode)) {
+                // action = 0 = Delete
+                // 浅复制
+                levelClone = clone.appendChild(levelStartNode.clone()[0]);
+            } else {
+                levelClone = null;
+            }
+
+            // The processing of siblings may have already been done by the parent.
+            if (
+                !startParents[ k ] ||
+                    // 前面 startParents 循环已经处理过了
+                    levelStartNode[0].parentNode != startParents[ k ][0].parentNode
+                ) {
+                currentNode = levelStartNode[0].previousSibling;
+                while (currentNode) {
+                    // Cache the next sibling.
+                    currentSibling = currentNode.previousSibling;
+
+                    // If cloning, just clone it.
+                    if (action == 2) {    // 2 = Clone
+                        clone.insertBefore(currentNode.cloneNode(TRUE),
+                            clone.firstChild);
+                    } else {
+                        // Both Delete and Extract will remove the node.
+                        DOM._4e_remove(currentNode);
+
+                        // When Extracting, mode the removed node to the docFrag.
+                        if (action == 1) {
+                            // 1 = Extract
+                            clone.insertBefore(currentNode, clone.firstChild);
+                        }
+                    }
+
+                    currentNode = currentSibling;
+                }
+            }
+
+            if (levelClone) {
+                clone = levelClone;
+            }
+        }
+        // 2 = Clone.
+        if (action == 2) {
+
+            // No changes in the DOM should be done, so fix the split text (if any).
+
+            if (hasSplitStart) {
+                var startTextNode = startNode[0];
+                if (startTextNode.nodeType == KEN.NODE_TEXT
+                    && startTextNode.nextSibling
+                    // careful, next sibling should be text node
+                    && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
+                    startTextNode.data += startTextNode.nextSibling.data;
+                    startTextNode.parentNode.removeChild(startTextNode.nextSibling);
+                }
+            }
+
+            if (hasSplitEnd) {
+                var endTextNode = endNode[0];
+                if (endTextNode.nodeType == KEN.NODE_TEXT &&
+                    endTextNode.previousSibling &&
+                    endTextNode.previousSibling.nodeType == KEN.NODE_TEXT) {
+                    endTextNode.previousSibling.data += endTextNode.data;
+                    endTextNode.parentNode.removeChild(endTextNode);
+                }
+            }
+
+        } else {
+
+            // Collapse the range.
+            // If a node has been partially selected, collapse the range between
+            // topStart and topEnd. Otherwise, simply collapse it to the start.
+            // (W3C specs).
+            if (
+                topStart && topEnd &&
+                    (
+                        !startNode.parent().equals(topStart.parent())
+                            ||
+                            !endNode.parent().equals(topEnd.parent())
+                        )
+                ) {
+                var startIndex = topStart._4e_index();
+
+                // If the start node is to be removed, we must correct the
+                // index to reflect the removal.
+                if (removeStartNode &&
+                    // startNode 和 topStart 同级
+                    topStart.parent().equals(removeStartNode.parent())) {
+                    startIndex--;
+                }
+
+                self.setStart(topStart.parent(), startIndex + 1);
+            }
+
+            // Collapse it to the start.
+            self.collapse(TRUE);
+
+        }
+
+        // Cleanup any marked node.
+        if (removeStartNode) {
+            startNode.remove();
+        }
+
+        if (removeEndNode) {
+            endNode.remove();
+        }
+
+        return docFrag;
+    }
+
+    function updateCollapsed(self) {
+        self.collapsed = (
+            self.startContainer &&
+                self.endContainer &&
+                self.startContainer[0] == self.endContainer[0] &&
+                self.startOffset == self.endOffset );
+    }
+
 
     /**
      * Range implementation across browsers.
      * @memberOf Editor
      * @class
      * @param document {Document}
+     * @name Range
      */
     function KERange(document) {
         var self = this;
@@ -54,1614 +362,1446 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         self.document = document;
     }
 
-    KERange.prototype.toString = function () {
-        var s = [], self = this;
-        s.push((self.startContainer[0].id || self.startContainer[0].nodeName) + ":" + self.startOffset);
-        s.push((self.endContainer[0].id || self.endContainer[0].nodeName) + ":" + self.endOffset);
-        return s.join("<br/>");
-    };
-    S.augment(KERange, {
-
-        updateCollapsed:function () {
-            var self = this;
-            self.collapsed = (
-                self.startContainer &&
-                    self.endContainer &&
-                    DOM.equals(self.startContainer, self.endContainer) &&
-                    self.startOffset == self.endOffset );
-        },
-
+    S.augment(KERange,
         /**
-         * Transforms the startContainer and endContainer properties from text
-         * nodes to element nodes, whenever possible. This is actually possible
-         * if either of the boundary containers point to a text node, and its
-         * offset is set to zero, or after the last char in the node.
+         * @lends Editor.Range
          */
-        optimize:function () {
-            var self = this,
-                container = self.startContainer,
-                offset = self.startOffset;
+        {
 
-            if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset) {
-                    self.setStartBefore(container);
-                } else if (offset >= container[0].nodeValue.length) {
-                    self.setStartAfter(container);
-                }
-            }
+            /**
+             * Range string representation.
+             */
+            toString:function () {
+                var s = [],
+                    self = this,
+                    startContainer = self.startContainer[0],
+                    endContainer = self.endContainer[0];
+                s.push((startContainer.id || startContainer.nodeName) + ":" + self.startOffset);
+                s.push((endContainer.id || endContainer.nodeName) + ":" + self.endOffset);
+                return s.join("<br/>");
+            },
 
-            container = self.endContainer;
-            offset = self.endOffset;
+            /**
+             * Transforms the startContainer and endContainer properties from text
+             * nodes to element nodes, whenever possible. This is actually possible
+             * if either of the boundary containers point to a text node, and its
+             * offset is set to zero, or after the last char in the node.
+             */
+            optimize:function () {
+                var self = this,
+                    container = self.startContainer,
+                    offset = self.startOffset;
 
-            if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset) {
-                    self.setEndBefore(container);
-                } else if (offset >= container[0].nodeValue.length) {
-                    self.setEndAfter(container);
-                }
-            }
-        },
-
-        setStartAfter:function (node) {
-            this.setStart(node.parent(), node._4e_index() + 1);
-        },
-
-        setStartBefore:function (node) {
-            this.setStart(node.parent(), node._4e_index());
-        },
-
-        setEndAfter:function (node) {
-            this.setEnd(node.parent(), node._4e_index() + 1);
-        },
-
-        setEndBefore:function (node) {
-            this.setEnd(node.parent(), node._4e_index());
-        },
-
-        /**
-         * Make edge bookmarks included in current range.
-         */
-        optimizeBookmark:function () {
-            var self = this,
-                startNode = self.startContainer,
-                endNode = self.endContainer;
-
-            if (startNode &&
-                startNode._4e_name() == 'span' &&
-                startNode.attr('_ke_bookmark')) {
-                self.setStartBefore(startNode);
-            }
-            if (endNode &&
-                endNode._4e_name() == 'span' &&
-                endNode.attr('_ke_bookmark')) {
-                self.setEndAfter(endNode);
-            }
-        },
-
-        /**
-         * Sets the start position of a Range.
-         * @param {Node} startNode The node to start the range.
-         * @param {Number} startOffset An integer greater than or equal to zero
-         *        representing the offset for the start of the range from the start
-         *        of startNode.
-         */
-        setStart:function (startNode, startOffset) {
-            // W3C requires a check for the new position. If it is after the end
-            // boundary, the range should be collapsed to the new start. It seams
-            // we will not need this check for our use of this class so we can
-            // ignore it for now.
-
-            // Fixing invalid range start inside dtd empty elements.
-            var self = this;
-            if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
-                startNode = startNode.parent();
-                startOffset = startNode._4e_index();
-            }
-
-            self.startContainer = startNode;
-            self.startOffset = startOffset;
-
-            if (!self.endContainer) {
-                self.endContainer = startNode;
-                self.endOffset = startOffset;
-            }
-
-            self.updateCollapsed();
-        },
-
-        /**
-         * Sets the end position of a Range.
-         * @param {Node} endNode The node to end the range.
-         * @param {Number} endOffset An integer greater than or equal to zero
-         *        representing the offset for the end of the range from the start
-         *        of endNode.
-         */
-        setEnd:function (endNode, endOffset) {
-            // W3C requires a check for the new position. If it is before the start
-            // boundary, the range should be collapsed to the new end. It seams we
-            // will not need this check for our use of this class so we can ignore
-            // it for now.
-
-            // Fixing invalid range end inside dtd empty elements.
-            var self = this;
-            if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
-                endNode = endNode.parent();
-                endOffset = endNode._4e_index() + 1;
-            }
-
-            self.endContainer = endNode;
-            self.endOffset = endOffset;
-
-            if (!self.startContainer) {
-                self.startContainer = endNode;
-                self.startOffset = endOffset;
-            }
-
-            self.updateCollapsed();
-        },
-        setStartAt:function (node, position) {
-            var self = this;
-            switch (position) {
-                case KER.POSITION_AFTER_START :
-                    self.setStart(node, 0);
-                    break;
-
-                case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT) {
-                        self.setStart(node, node[0].nodeValue.length);
-                    } else {
-                        self.setStart(node, node[0].childNodes.length);
-                    }
-                    break;
-
-                case KER.POSITION_BEFORE_START :
-                    self.setStartBefore(node);
-                    break;
-
-                case KER.POSITION_AFTER_END :
-                    self.setStartAfter(node);
-            }
-
-            self.updateCollapsed();
-        },
-
-        setEndAt:function (node, position) {
-            var self = this;
-            switch (position) {
-                case KER.POSITION_AFTER_START :
-                    self.setEnd(node, 0);
-                    break;
-
-                case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT) {
-                        self.setEnd(node, node[0].nodeValue.length);
-                    } else {
-                        self.setEnd(node, node[0].childNodes.length);
-                    }
-                    break;
-
-                case KER.POSITION_BEFORE_START :
-                    self.setEndBefore(node);
-                    break;
-
-                case KER.POSITION_AFTER_END :
-                    self.setEndAfter(node);
-            }
-
-            self.updateCollapsed();
-        },
-
-        cloneContents:function () {
-            return this.execContentsAction(2);
-        },
-
-        deleteContents:function () {
-            return this.execContentsAction(0);
-        },
-
-        extractContents:function () {
-            return this.execContentsAction(1);
-        },
-
-        /**
-         * Extract content within range.
-         * @param {Number} action
-         * 0 : delete
-         * 1 : extract
-         * 2 : clone
-         */
-        execContentsAction:function (action) {
-            var self = this,
-                startNode = self.startContainer,
-                endNode = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                removeStartNode,
-                hasSplitStart = FALSE,
-                hasSplitEnd = FALSE,
-                t,
-                docFrag,
-                doc = self.document,
-                removeEndNode;
-
-            if (self.collapsed) {
-                return docFrag;
-            }
-
-            if (action > 0) {
-                docFrag = doc.createDocumentFragment();
-            }
-
-            // 将 bookmark 包含在选区内
-            self.optimizeBookmark();
-
-
-            // endNode -> end guard , not included in range
-
-            // For text containers, we must simply split the node and point to the
-            // second part. The removal will be handled by the rest of the code .
-            //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
-            if (endNode[0].nodeType == KEN.NODE_TEXT) {
-                hasSplitEnd = TRUE;
-                endNode = endNode._4e_splitText(endOffset);
-            } else {
-                // If the end container has children and the offset is pointing
-                // to a child, then we should start from it.
-                if (endNode[0].childNodes.length > 0) {
-                    // If the offset points after the last node.
-                    if (endOffset >= endNode[0].childNodes.length) {
-                        // Let's create a temporary node and mark it for removal.
-                        endNode = new Node(
-                            endNode[0].appendChild(doc.createTextNode(""))
-                        );
-                        removeEndNode = TRUE;
-                    } else {
-                        endNode = new Node(endNode[0].childNodes[endOffset]);
+                if (container[0].nodeType != KEN.NODE_ELEMENT) {
+                    if (!offset) {
+                        self.setStartBefore(container);
+                    } else if (offset >= container[0].nodeValue.length) {
+                        self.setStartAfter(container);
                     }
                 }
-            }
 
-            // startNode -> start guard , not included in range
+                container = self.endContainer;
+                offset = self.endOffset;
 
-            // For text containers, we must simply split the node. The removal will
-            // be handled by the rest of the code .
-            if (startNode[0].nodeType == KEN.NODE_TEXT) {
-                hasSplitStart = TRUE;
-                startNode._4e_splitText(startOffset);
-            } else {
-                // If the start container has children and the offset is pointing
-                // to a child, then we should start from its previous sibling.
-
-                // If the offset points to the first node, we don't have a
-                // sibling, so let's use the first one, but mark it for removal.
-                if (!startOffset) {
-                    // Let's create a temporary node and mark it for removal.
-                    t = new Node(doc.createTextNode(""));
-                    startNode.prepend(t);
-                    startNode = t;
-                    removeStartNode = TRUE;
+                if (container[0].nodeType != KEN.NODE_ELEMENT) {
+                    if (!offset) {
+                        self.setEndBefore(container);
+                    } else if (offset >= container[0].nodeValue.length) {
+                        self.setEndAfter(container);
+                    }
                 }
-                else if (startOffset >= startNode[0].childNodes.length) {
-                    // Let's create a temporary node and mark it for removal.
-                    startNode = new Node(startNode[0]
-                        .appendChild(doc.createTextNode('')));
-                    removeStartNode = TRUE;
-                } else
-                    startNode = new Node(
-                        startNode[0].childNodes[startOffset].previousSibling
-                    );
-            }
+            },
 
-            // Get the parent nodes tree for the start and end boundaries.
-            //从根到自己
-            var startParents = startNode._4e_parents(),
-                endParents = endNode._4e_parents();
+            /**
+             * Set range start after node
+             * @param {Node} node
+             */
+            setStartAfter:function (node) {
+                this.setStart(node.parent(), node._4e_index() + 1);
+            },
+            /**
+             * Set range start before node
+             * @param {Node} node
+             */
+            setStartBefore:function (node) {
+                this.setStart(node.parent(), node._4e_index());
+            },
+            /**
+             * Set range end after node
+             * @param {Node} node
+             */
+            setEndAfter:function (node) {
+                this.setEnd(node.parent(), node._4e_index() + 1);
+            },
+            /**
+             * Set range end before node
+             * @param {Node} node
+             */
+            setEndBefore:function (node) {
+                this.setEnd(node.parent(), node._4e_index());
+            },
 
-            startParents.each(function (n, i) {
-                startParents[i] = n;
-            });
+            /**
+             * Make edge bookmarks included in current range.
+             */
+            optimizeBookmark:function () {
+                var self = this,
+                    startNode = self.startContainer,
+                    endNode = self.endContainer;
 
-            endParents.each(function (n, i) {
-                endParents[i] = n;
-            });
-
-
-            // Compare them, to find the top most siblings.
-            var i, topStart, topEnd;
-
-            for (i = 0; i < startParents.length; i++) {
-                topStart = startParents[ i ];
-                topEnd = endParents[ i ];
-
-                // The compared nodes will match until we find the top most
-                // siblings (different nodes that have the same parent).
-                // "i" will hold the index in the parents array for the top
-                // most element.
-                if (!topStart.equals(topEnd)) {
-                    break;
+                if (startNode &&
+                    startNode._4e_name() == 'span' &&
+                    startNode.attr('_ke_bookmark')) {
+                    self.setStartBefore(startNode);
                 }
-            }
+                if (endNode &&
+                    endNode._4e_name() == 'span' &&
+                    endNode.attr('_ke_bookmark')) {
+                    self.setEndAfter(endNode);
+                }
+            },
 
-            var clone = docFrag,
-                levelStartNode,
-                levelClone,
-                currentNode,
-                currentSibling;
+            /**
+             * Sets the start position of a Range.
+             * @param {Node} startNode The node to start the range.
+             * @param {Number} startOffset An integer greater than or equal to zero
+             *        representing the offset for the start of the range from the start
+             *        of startNode.
+             */
+            setStart:function (startNode, startOffset) {
+                // W3C requires a check for the new position. If it is after the end
+                // boundary, the range should be collapsed to the new start. It seams
+                // we will not need this check for our use of this class so we can
+                // ignore it for now.
 
-            // Remove all successive sibling nodes for every node in the
-            // startParents tree.
-            for (var j = i; j < startParents.length; j++) {
-                levelStartNode = startParents[j];
-
-                // For Extract and Clone, we must clone this level.
-                if (action > 0 && !levelStartNode.equals(startNode)) {
-                    // action = 0 = Delete
-                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
-                } else {
-                    levelClone = null;
+                // Fixing invalid range start inside dtd empty elements.
+                var self = this;
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
+                    startNode = startNode.parent();
+                    startOffset = startNode._4e_index();
                 }
 
-                // 开始节点的路径所在父节点不能 clone(TRUE)，其他节点（结束节点路径左边的节点）可以直接 clone(true)
-                currentNode = levelStartNode[0].nextSibling;
+                self.startContainer = startNode;
+                self.startOffset = startOffset;
 
-                var endParentJ = endParents[ j ],
-                    domEndNode = endNode[0],
-                    domEndParentJ = endParentJ[0];
+                if (!self.endContainer) {
+                    self.endContainer = startNode;
+                    self.endOffset = startOffset;
+                }
 
-                while (currentNode) {
-                    // Stop processing when the current node matches a node in the
-                    // endParents tree or if it is the endNode.
-                    if (domEndParentJ == currentNode || domEndNode == currentNode) {
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the end position of a Range.
+             * @param {Node} endNode The node to end the range.
+             * @param {Number} endOffset An integer greater than or equal to zero
+             *        representing the offset for the end of the range from the start
+             *        of endNode.
+             */
+            setEnd:function (endNode, endOffset) {
+                // W3C requires a check for the new position. If it is before the start
+                // boundary, the range should be collapsed to the new end. It seams we
+                // will not need this check for our use of this class so we can ignore
+                // it for now.
+
+                // Fixing invalid range end inside dtd empty elements.
+                var self = this;
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
+                    endNode = endNode.parent();
+                    endOffset = endNode._4e_index() + 1;
+                }
+
+                self.endContainer = endNode;
+                self.endOffset = endOffset;
+
+                if (!self.startContainer) {
+                    self.startContainer = endNode;
+                    self.startOffset = endOffset;
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the start position of a Range by specified rules.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            setStartAt:function (node, position) {
+                var self = this;
+                switch (position) {
+                    case KER.POSITION_AFTER_START :
+                        self.setStart(node, 0);
                         break;
-                    }
 
-                    // Cache the next sibling.
-                    currentSibling = currentNode.nextSibling;
-
-                    // If cloning, just clone it.
-                    if (action == 2) {
-                        // 2 = Clone
-                        clone.appendChild(currentNode.cloneNode(TRUE));
-                    } else {
-                        // Both Delete and Extract will remove the node.
-                        DOM._4e_remove(currentNode);
-
-                        // When Extracting, move the removed node to the docFrag.
-                        if (action == 1) {
-                            // 1 = Extract
-                            clone.appendChild(currentNode);
-                        }
-                    }
-
-                    currentNode = currentSibling;
-                }
-                // 开始节点的路径所在父节点不能 clone(TRUE)，要在后面深入子节点处理
-                if (levelClone) {
-                    clone = levelClone;
-                }
-            }
-
-            clone = docFrag;
-
-            // Remove all previous sibling nodes for every node in the
-            // endParents tree.
-            for (var k = i; k < endParents.length; k++) {
-                levelStartNode = endParents[ k ];
-
-                // For Extract and Clone, we must clone this level.
-                if (action > 0 && !levelStartNode.equals(endNode)) {
-                    // action = 0 = Delete
-                    // 浅复制
-                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
-                } else {
-                    levelClone = null;
-                }
-
-                // The processing of siblings may have already been done by the parent.
-                if (
-                    !startParents[ k ] ||
-                        // 前面 startParents 循环已经处理过了
-                        levelStartNode[0].parentNode != startParents[ k ][0].parentNode
-                    ) {
-                    currentNode = levelStartNode[0].previousSibling;
-                    while (currentNode) {
-                        // Cache the next sibling.
-                        currentSibling = currentNode.previousSibling;
-
-                        // If cloning, just clone it.
-                        if (action == 2) {    // 2 = Clone
-                            clone.insertBefore(currentNode.cloneNode(TRUE),
-                                clone.firstChild);
+                    case KER.POSITION_BEFORE_END :
+                        if (node[0].nodeType == KEN.NODE_TEXT) {
+                            self.setStart(node, node[0].nodeValue.length);
                         } else {
-                            // Both Delete and Extract will remove the node.
-                            DOM._4e_remove(currentNode);
-
-                            // When Extracting, mode the removed node to the docFrag.
-                            if (action == 1) {
-                                // 1 = Extract
-                                clone.insertBefore(currentNode,clone.firstChild);
-                            }
+                            self.setStart(node, node[0].childNodes.length);
                         }
+                        break;
 
-                        currentNode = currentSibling;
+                    case KER.POSITION_BEFORE_START :
+                        self.setStartBefore(node);
+                        break;
+
+                    case KER.POSITION_AFTER_END :
+                        self.setStartAfter(node);
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the end position of a Range by specified rules.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            setEndAt:function (node, position) {
+                var self = this;
+                switch (position) {
+                    case KER.POSITION_AFTER_START :
+                        self.setEnd(node, 0);
+                        break;
+
+                    case KER.POSITION_BEFORE_END :
+                        if (node[0].nodeType == KEN.NODE_TEXT) {
+                            self.setEnd(node, node[0].nodeValue.length);
+                        } else {
+                            self.setEnd(node, node[0].childNodes.length);
+                        }
+                        break;
+
+                    case KER.POSITION_BEFORE_START :
+                        self.setEndBefore(node);
+                        break;
+
+                    case KER.POSITION_AFTER_END :
+                        self.setEndAfter(node);
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Clone html content within range
+             */
+            cloneContents:function () {
+                return execContentsAction(this, 2);
+            },
+
+            /**
+             * Remove html content within range
+             */
+            deleteContents:function () {
+                return execContentsAction(this, 0);
+            },
+
+            /**
+             * Extract html content within range.
+             */
+            extractContents:function () {
+                return execContentsAction(this, 1);
+            },
+
+            /**
+             * Collpase current range
+             * @param {Boolean} toStart
+             */
+            collapse:function (toStart) {
+                var self = this;
+                if (toStart) {
+                    self.endContainer = self.startContainer;
+                    self.endOffset = self.startOffset;
+                } else {
+                    self.startContainer = self.endContainer;
+                    self.startOffset = self.endOffset;
+                }
+                self.collapsed = TRUE;
+            },
+
+            /**
+             * Clone current range.
+             * @return {Editor.Range}
+             */
+            clone:function () {
+                var self = this,
+                    clone = new KERange(self.document);
+
+                clone.startContainer = self.startContainer;
+                clone.startOffset = self.startOffset;
+                clone.endContainer = self.endContainer;
+                clone.endOffset = self.endOffset;
+                clone.collapsed = self.collapsed;
+
+                return clone;
+            },
+
+            /**
+             * Get node which is enclosed by range.
+             * @example
+             * <code>
+             * ^&lt;book/&gt;&lt;span/&gt;&lt;book/&gt;^
+             * =>
+             * ^&lt;span/&gt;^
+             * &lt;/code&gt;
+             */
+            getEnclosedNode:function () {
+                var walkerRange = this.clone();
+                // Optimize and analyze the range to avoid DOM destructive nature of walker.
+                walkerRange.optimize();
+                if (walkerRange.startContainer[0].nodeType != KEN.NODE_ELEMENT ||
+                    walkerRange.endContainer[0].nodeType != KEN.NODE_ELEMENT) {
+                    return NULL;
+                }
+
+                var walker = new Walker(walkerRange),
+                    isNotBookmarks = Walker.bookmark(false, true),
+                    isNotWhitespaces = Walker.whitespaces(TRUE), node, pre;
+
+                walker.evaluator = function (node) {
+                    return isNotWhitespaces(node) && isNotBookmarks(node);
+                };
+
+                //深度优先遍历的第一个元素
+                //        x
+                //     y     z
+                // x->y ,return y
+                node = walker.next();
+                walker.reset();
+                pre = walker.previous();
+                //前后相等，则脱一层皮 :)
+                return node && node.equals(pre) ? node : NULL;
+            },
+
+            /**
+             * Shrink range to its innermost element.(make sure text content is unchanged)
+             * @param mode
+             * @param {Boolean} selectContents
+             */
+            shrink:function (mode, selectContents) {
+                // Unable to shrink a collapsed range.
+                var self = this;
+                if (!self.collapsed) {
+                    mode = mode || KER.SHRINK_TEXT;
+
+                    var walkerRange = self.clone(),
+                        startContainer = self.startContainer,
+                        endContainer = self.endContainer,
+                        startOffset = self.startOffset,
+                        endOffset = self.endOffset,
+                        // Whether the start/end boundary is movable.
+                        moveStart = TRUE,
+                        currentElement,
+                        walker,
+                        moveEnd = TRUE;
+
+                    if (startContainer && startContainer[0].nodeType == KEN.NODE_TEXT) {
+                        if (!startOffset) {
+                            walkerRange.setStartBefore(startContainer);
+                        } else if (startOffset >= startContainer[0].nodeValue.length) {
+                            walkerRange.setStartAfter(startContainer);
+                        } else {
+                            // Enlarge the range properly to avoid walker making
+                            // DOM changes caused by trimming the text nodes later.
+                            walkerRange.setStartBefore(startContainer);
+                            moveStart = FALSE;
+                        }
                     }
-                }
 
-                if (levelClone) {
-                    clone = levelClone;
-                }
-            }
-            // 2 = Clone.
-            if (action == 2) {
-
-                // No changes in the DOM should be done, so fix the split text (if any).
-
-                if (hasSplitStart) {
-                    var startTextNode = startNode[0];
-                    if (startTextNode.nodeType == KEN.NODE_TEXT
-                        && startTextNode.nextSibling
-                        // careful, next sibling should be text node
-                        && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
-                        startTextNode.data += startTextNode.nextSibling.data;
-                        startTextNode.parentNode.removeChild(startTextNode.nextSibling);
-                    }
-                }
-
-                if (hasSplitEnd) {
-                    var endTextNode = endNode[0];
-                    if (endTextNode.nodeType == KEN.NODE_TEXT &&
-                        endTextNode.previousSibling &&
-                        endTextNode.previousSibling.nodeType == KEN.NODE_TEXT) {
-                        endTextNode.previousSibling.data += endTextNode.data;
-                        endTextNode.parentNode.removeChild(endTextNode);
-                    }
-                }
-
-            } else {
-
-                // Collapse the range.
-                // If a node has been partially selected, collapse the range between
-                // topStart and topEnd. Otherwise, simply collapse it to the start.
-                // (W3C specs).
-                if (
-                    topStart && topEnd &&
-                        (
-                            !startNode.parent().equals(topStart.parent())
-                                ||
-                                !endNode.parent().equals(topEnd.parent())
-                            )
-                    ) {
-                    var startIndex = topStart._4e_index();
-
-                    // If the start node is to be removed, we must correct the
-                    // index to reflect the removal.
-                    if (removeStartNode &&
-                        // startNode 和 topStart 同级
-                        topStart.parent().equals(removeStartNode.parent())) {
-                        startIndex--;
+                    if (endContainer && endContainer[0].nodeType == KEN.NODE_TEXT) {
+                        if (!endOffset) {
+                            walkerRange.setEndBefore(endContainer);
+                        } else if (endOffset >= endContainer[0].nodeValue.length) {
+                            walkerRange.setEndAfter(endContainer);
+                        } else {
+                            walkerRange.setEndAfter(endContainer);
+                            moveEnd = FALSE;
+                        }
                     }
 
-                    self.setStart(topStart.parent(), startIndex + 1);
+                    if (moveStart || moveEnd) {
+
+                        walker = new Walker(walkerRange);
+
+                        walker.evaluator = function (node) {
+                            return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
+                                KEN.NODE_ELEMENT : KEN.NODE_TEXT );
+                        };
+
+                        walker.guard = function (node, movingOut) {
+                            node = node[0] || node;
+                            // Stop when we're shrink in element mode while encountering a text node.
+                            if (mode == KER.SHRINK_ELEMENT && node.nodeType == KEN.NODE_TEXT) {
+                                return FALSE;
+                            }
+                            // Stop when we've already walked "through" an element.
+                            if (movingOut && node == currentElement) {
+                                return FALSE;
+                            }
+                            if (!movingOut && node.nodeType == KEN.NODE_ELEMENT) {
+                                currentElement = node;
+                            }
+                            return TRUE;
+                        };
+
+                    }
+
+                    if (moveStart) {
+                        var textStart = walker[mode == KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
+                        if (textStart) {
+                            self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
+                        }
+                    }
+
+                    if (moveEnd) {
+                        walker.reset();
+                        var textEnd = walker[mode == KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
+                        if (textEnd) {
+                            self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
+                        }
+                    }
+
+                    return moveStart || moveEnd;
                 }
+            },
 
-                // Collapse it to the start.
-                self.collapse(TRUE);
+            /**
+             * Create virtual bookmark by remeber its position index.
+             * @param normalized
+             */
+            createBookmark2:function (normalized) {
 
-            }
-
-            // Cleanup any marked node.
-            if (removeStartNode) {
-                startNode.remove();
-            }
-
-            if (removeEndNode) {
-                endNode.remove();
-            }
-
-            return docFrag;
-        },
-
-        collapse:function (toStart) {
-            var self = this;
-            if (toStart) {
-                self.endContainer = self.startContainer;
-                self.endOffset = self.startOffset;
-            } else {
-                self.startContainer = self.endContainer;
-                self.startOffset = self.endOffset;
-            }
-            self.collapsed = TRUE;
-        },
-
-        clone:function () {
-            var self = this,
-                clone = new KERange(self.document);
-
-            clone.startContainer = self.startContainer;
-            clone.startOffset = self.startOffset;
-            clone.endContainer = self.endContainer;
-            clone.endOffset = self.endOffset;
-            clone.collapsed = self.collapsed;
-
-            return clone;
-        },
-        getEnclosedNode:function () {
-            var walkerRange = this.clone();
-            // Optimize and analyze the range to avoid DOM destructive nature of walker.
-            walkerRange.optimize();
-            if (walkerRange.startContainer[0].nodeType != KEN.NODE_ELEMENT
-                || walkerRange.endContainer[0].nodeType != KEN.NODE_ELEMENT)
-                return NULL;
-            //var current = walkerRange.startContainer[0].childNodes[walkerRange.startOffset];
-            var walker = new KE.Walker(walkerRange),
-                isNotBookmarks = bookmark(TRUE, undefined),
-                isNotWhitespaces = whitespaces(TRUE), node, pre;
-            walkerRange.evaluator = function (node) {
-                return isNotWhitespaces(node) && isNotBookmarks(node);
-            };
-
-            //深度优先遍历的第一个元素
-            //        x
-            //     y     z
-            // x->y ,return y
-            node = walker.next();
-            walker.reset();
-            pre = walker.previous();
-            //前后相等，则脱一层皮 :)
-            return node && node.equals(pre) ? node : NULL;
-        },
-        shrink:function (mode, selectContents) {
-            // Unable to shrink a collapsed range.
-            var self = this;
-            if (!self.collapsed) {
-                mode = mode || KER.SHRINK_TEXT;
-
-                var walkerRange = self.clone(),
+                var self = this,
                     startContainer = self.startContainer,
                     endContainer = self.endContainer,
                     startOffset = self.startOffset,
-                    endOffset = self.endOffset;
-                //collapsed = self.collapsed;
+                    endOffset = self.endOffset,
+                    child, previous;
 
-                // Whether the start/end boundary is moveable.
-                var moveStart = 1,
-                    moveEnd = 1;
-
-                if (startContainer && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                    if (!startOffset)
-                        walkerRange.setStartBefore(startContainer);
-                    else if (startOffset >= startContainer[0].nodeValue.length)
-                        walkerRange.setStartAfter(startContainer);
-                    else {
-                        // Enlarge the range properly to avoid walker making
-                        // DOM changes caused by triming the text nodes later.
-                        walkerRange.setStartBefore(startContainer);
-                        moveStart = 0;
-                    }
+                // If there is no range then get out of here.
+                // It happens on initial load in Safari #962 and if the editor it's
+                // hidden also in Firefox
+                if (!startContainer || !endContainer) {
+                    return {
+                        start:0,
+                        end:0
+                    };
                 }
 
-                if (endContainer && endContainer[0].nodeType == KEN.NODE_TEXT) {
-                    if (!endOffset)
-                        walkerRange.setEndBefore(endContainer);
-                    else if (endOffset >= endContainer[0].nodeValue.length)
-                        walkerRange.setEndAfter(endContainer);
-                    else {
-                        walkerRange.setEndAfter(endContainer);
-                        moveEnd = 0;
-                    }
-                }
+                if (normalized) {
+                    // Find out if the start is pointing to a text node that will
+                    // be normalized.
+                    if (startContainer[0].nodeType == KEN.NODE_ELEMENT) {
+                        child = new Node(startContainer[0].childNodes[startOffset]);
 
-                var walker = new Walker(walkerRange);
-
-                walker.evaluator = function (node) {
-                    return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
-                        KEN.NODE_ELEMENT : KEN.NODE_TEXT );
-                };
-
-                var currentElement;
-                walker.guard = function (node, movingOut) {
-
-                    node = node[0] || node;
-                    // Stop when we're shrink in element mode while encountering a text node.
-                    if (mode == KER.SHRINK_ELEMENT && node.nodeType == KEN.NODE_TEXT)
-                        return FALSE;
-
-                    // Stop when we've already walked "through" an element.
-                    if (movingOut && node == currentElement)
-                        return FALSE;
-
-                    if (!movingOut && node.nodeType == KEN.NODE_ELEMENT)
-                        currentElement = node;
-
-                    return TRUE;
-                };
-
-                if (moveStart) {
-                    var textStart = walker[ mode == KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
-                    textStart && self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
-                }
-
-                if (moveEnd) {
-                    walker.reset();
-                    var textEnd = walker[ mode == KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
-                    textEnd && self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
-                }
-
-                return !!( moveStart || moveEnd );
-            }
-        },
-//        getTouchedStartNode : function() {
-//            var self = this,container = self.startContainer;
-//
-//            if (self.collapsed || container[0].nodeType != KEN.NODE_ELEMENT)
-//                return container;
-//
-//            return container.childNodes[self.startOffset] || container;
-//        },
-        createBookmark2:function (normalized) {
-            //debugger;
-            var self = this, startContainer = self.startContainer,
-                endContainer = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                child, previous;
-
-            // If there is no range then get out of here.
-            // It happens on initial load in Safari #962 and if the editor it's
-            // hidden also in Firefox
-            if (!startContainer || !endContainer)
-                return { start:0, end:0 };
-
-            if (normalized) {
-                // Find out if the start is pointing to a text node that will
-                // be normalized.
-                if (startContainer[0].nodeType == KEN.NODE_ELEMENT) {
-                    child = new Node(startContainer[0].childNodes[startOffset]);
-
-                    // In this case, move the start information to that text
-                    // node.
-
-                    //ie 有时 invalid argument？？
-                    if (child && child[0] && child[0].nodeType == KEN.NODE_TEXT
-                        && startOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
-                        startContainer = child;
-                        startOffset = 0;
-                    }
-
-                }
-
-                // Normalize the start.
-                while (startContainer[0].nodeType == KEN.NODE_TEXT
-                    && ( previous = startContainer.prev() )
-                    && previous[0].nodeType == KEN.NODE_TEXT) {
-                    startContainer = previous;
-                    startOffset += previous[0].nodeValue.length;
-                }
-
-                // Process the end only if not normalized.
-                if (!self.collapsed) {
-                    // Find out if the start is pointing to a text node that
-                    // will be normalized.
-                    if (endContainer[0].nodeType == KEN.NODE_ELEMENT) {
-                        child = new Node(endContainer[0].childNodes[endOffset]);
-
-                        // In this case, move the start information to that
-                        // text node.
+                        // In this case, move the start information to that text
+                        // node.
                         if (child && child[0] && child[0].nodeType == KEN.NODE_TEXT
-                            && endOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
-                            endContainer = child;
-                            endOffset = 0;
+                            && startOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
+                            startContainer = child;
+                            startOffset = 0;
+                        }
+
+                    }
+
+                    // Normalize the start.
+                    while (startContainer[0].nodeType == KEN.NODE_TEXT
+                        && ( previous = startContainer.prev() )
+                        && previous[0].nodeType == KEN.NODE_TEXT) {
+                        startContainer = previous;
+                        startOffset += previous[0].nodeValue.length;
+                    }
+
+                    // Process the end only if not normalized.
+                    if (!self.collapsed) {
+                        // Find out if the start is pointing to a text node that
+                        // will be normalized.
+                        if (endContainer[0].nodeType == KEN.NODE_ELEMENT) {
+                            child = new Node(endContainer[0].childNodes[endOffset]);
+
+                            // In this case, move the start information to that
+                            // text node.
+                            if (child && child[0] &&
+                                child[0].nodeType == KEN.NODE_TEXT && endOffset > 0 &&
+                                child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
+                                endContainer = child;
+                                endOffset = 0;
+                            }
+                        }
+
+                        // Normalize the end.
+                        while (endContainer[0].nodeType == KEN.NODE_TEXT
+                            && ( previous = endContainer.prev() )
+                            && previous[0].nodeType == KEN.NODE_TEXT) {
+                            endContainer = previous;
+                            endOffset += previous[0].nodeValue.length;
+                        }
+                    }
+                }
+
+                return {
+                    start:startContainer._4e_address(normalized),
+                    end:self.collapsed ? NULL : endContainer._4e_address(normalized),
+                    startOffset:startOffset,
+                    endOffset:endOffset,
+                    normalized:normalized,
+                    is2:TRUE  // It's a createBookmark2 bookmark.
+                };
+            },
+            /**
+             * Create bookmark by create bookmark node.
+             * @param {Boolean} [serializable]
+             */
+            createBookmark:function (serializable) {
+                var startNode,
+                    endNode,
+                    baseId,
+                    clone,
+                    self = this,
+                    collapsed = self.collapsed;
+                startNode = new Node("<span>", NULL, self.document);
+                startNode.attr('_ke_bookmark', 1);
+                startNode.css('display', 'none');
+
+                // For IE, it must have something inside, otherwise it may be
+                // removed during DOM operations.
+                startNode.html('&nbsp;');
+
+                if (serializable) {
+                    baseId = S.guid('ke_bm_');
+                    startNode.attr('id', baseId + 'S');
+                }
+
+                // If collapsed, the endNode will not be created.
+                if (!collapsed) {
+                    endNode = startNode.clone();
+                    endNode.html('&nbsp;');
+
+                    if (serializable) {
+                        endNode.attr('id', baseId + 'E');
+                    }
+
+                    clone = self.clone();
+                    clone.collapse();
+                    clone.insertNode(endNode);
+                }
+
+                clone = self.clone();
+                clone.collapse(TRUE);
+                clone.insertNode(startNode);
+
+                // Update the range position.
+                if (endNode) {
+                    self.setStartAfter(startNode);
+                    self.setEndBefore(endNode);
+                } else {
+                    self.moveToPosition(startNode, KER.POSITION_AFTER_END);
+                }
+
+                return {
+                    startNode:serializable ? baseId + 'S' : startNode,
+                    endNode:serializable ? baseId + 'E' : endNode,
+                    serializable:serializable,
+                    collapsed:collapsed
+                };
+            },
+
+            /**
+             * Set the start posititon and then collapse range.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            moveToPosition:function (node, position) {
+                var self = this;
+                self.setStartAt(node, position);
+                self.collapse(TRUE);
+            },
+
+            /**
+             * Pull range out of text edge and split text node if range is in the middle of text node.
+             * @param {Boolean} ignoreStart
+             * @param {Boolean} ignoreEnd
+             */
+            trim:function (ignoreStart, ignoreEnd) {
+                var self = this,
+                    startContainer = self.startContainer,
+                    startOffset = self.startOffset,
+                    collapsed = self.collapsed;
+
+                if (( !ignoreStart || collapsed ) &&
+                    startContainer[0] &&
+                    startContainer[0].nodeType == KEN.NODE_TEXT) {
+                    // If the offset is zero, we just insert the new node before
+                    // the start.
+                    if (!startOffset) {
+                        startOffset = startContainer._4e_index();
+                        startContainer = startContainer.parent();
+                    }
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
+                    else if (startOffset >= startContainer[0].nodeValue.length) {
+                        startOffset = startContainer._4e_index() + 1;
+                        startContainer = startContainer.parent();
+                    }
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
+                    else {
+                        var nextText = startContainer._4e_splitText(startOffset);
+
+                        startOffset = startContainer._4e_index() + 1;
+                        startContainer = startContainer.parent();
+
+                        // Check all necessity of updating the end boundary.
+                        if (DOM.equals(self.startContainer, self.endContainer)) {
+                            self.setEnd(nextText, self.endOffset - self.startOffset);
+                        } else if (DOM.equals(startContainer, self.endContainer)) {
+                            self.endOffset += 1;
                         }
                     }
 
-                    // Normalize the end.
-                    while (endContainer[0].nodeType == KEN.NODE_TEXT
-                        && ( previous = endContainer.prev() )
-                        && previous[0].nodeType == KEN.NODE_TEXT) {
-                        endContainer = previous;
-                        endOffset += previous[0].nodeValue.length;
+                    self.setStart(startContainer, startOffset);
+
+                    if (collapsed) {
+                        self.collapse(TRUE);
+                        return;
                     }
                 }
-            }
 
-            return {
-                start:startContainer._4e_address(normalized),
-                end:self.collapsed ? NULL : endContainer._4e_address(normalized),
-                startOffset:startOffset,
-                endOffset:endOffset,
-                normalized:normalized,
-                is2:TRUE        // It's a createBookmark2 bookmark.
-            };
-        },
-        createBookmark:function (serializable) {
-            var startNode,
-                endNode,
-                baseId,
-                clone,
-                self = this,
-                collapsed = self.collapsed;
-            startNode = new Node("<span>", NULL, self.document);
-            startNode.attr('_ke_bookmark', 1);
-            startNode.css('display', 'none');
+                var endContainer = self.endContainer,
+                    endOffset = self.endOffset;
 
-            // For IE, it must have something inside, otherwise it may be
-            // removed during DOM operations.
-            startNode.html('&nbsp;');
+                if (!( ignoreEnd || collapsed ) &&
+                    endContainer[0] && endContainer[0].nodeType == KEN.NODE_TEXT) {
+                    // If the offset is zero, we just insert the new node before
+                    // the start.
+                    if (!endOffset) {
+                        endOffset = endContainer._4e_index();
+                        endContainer = endContainer.parent();
+                    }
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
+                    else if (endOffset >= endContainer.nodeValue.length) {
+                        endOffset = endContainer._4e_index() + 1;
+                        endContainer = endContainer.parent();
+                    }
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
+                    else {
+                        endContainer._4e_splitText(endOffset);
 
-            if (serializable) {
-                baseId = S.guid('ke_bm_');
-                startNode.attr('id', baseId + 'S');
-            }
+                        endOffset = endContainer._4e_index() + 1;
+                        endContainer = endContainer.parent();
+                    }
 
-            // If collapsed, the endNode will not be created.
-            if (!collapsed) {
-                endNode = startNode.clone();
-                endNode.html('&nbsp;');
-
-                if (serializable)
-                    endNode.attr('id', baseId + 'E');
-
-                clone = self.clone();
-                clone.collapse();
-                //S.log(clone.endContainer[0].nodeType);
-                //S.log(clone.endOffset);
-                clone.insertNode(endNode);
-            }
-            //S.log(endNode[0].parentNode.outerHTML);
-            clone = self.clone();
-            clone.collapse(TRUE);
-            clone.insertNode(startNode);
-
-            // Update the range position.
-            if (endNode) {
-                self.setStartAfter(startNode);
-                self.setEndBefore(endNode);
-            }
-            else
-                self.moveToPosition(startNode, KER.POSITION_AFTER_END);
-
-            return {
-                startNode:serializable ? baseId + 'S' : startNode,
-                endNode:serializable ? baseId + 'E' : endNode,
-                serializable:serializable,
-                collapsed:collapsed
-            };
-        },
-        moveToPosition:function (node, position) {
-            var self = this;
-            self.setStartAt(node, position);
-            self.collapse(TRUE);
-        },
-        trim:function (ignoreStart, ignoreEnd) {
-            var self = this,
-                startContainer = self.startContainer,
-                startOffset = self.startOffset,
-                collapsed = self.collapsed;
-            if (( !ignoreStart || collapsed )
-                && startContainer[0] && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                // If the offset is zero, we just insert the new node before
-                // the start.
-                if (!startOffset) {
-                    startOffset = startContainer._4e_index();
-                    startContainer = startContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (startOffset >= startContainer[0].nodeValue.length) {
-                    startOffset = startContainer._4e_index() + 1;
-                    startContainer = startContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
-                    var nextText = startContainer._4e_splitText(startOffset);
-
-                    startOffset = startContainer._4e_index() + 1;
-                    startContainer = startContainer.parent();
-
-                    // Check all necessity of updating the end boundary.
-                    if (DOM.equals(self.startContainer, self.endContainer))
-                        self.setEnd(nextText, self.endOffset - self.startOffset);
-                    else if (DOM.equals(startContainer, self.endContainer))
-                        self.endOffset += 1;
-                }
-
-                self.setStart(startContainer, startOffset);
-
-                if (collapsed) {
-                    self.collapse(TRUE);
-                    return;
-                }
-            }
-
-            var endContainer = self.endContainer, endOffset = self.endOffset;
-
-            if (!( ignoreEnd || collapsed )
-                && endContainer[0] && endContainer[0].nodeType == KEN.NODE_TEXT) {
-                // If the offset is zero, we just insert the new node before
-                // the start.
-                if (!endOffset) {
-                    endOffset = endContainer._4e_index();
-                    endContainer = endContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (endOffset >= endContainer.nodeValue.length) {
-                    endOffset = endContainer._4e_index() + 1;
-                    endContainer = endContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
-                    endContainer._4e_splitText(endOffset);
-
-                    endOffset = endContainer._4e_index() + 1;
-                    endContainer = endContainer.parent();
-                }
-
-                self.setEnd(endContainer, endOffset);
-            }
-        },
-
-        insertNode:function (node) {
-            var self = this;
-            self.optimizeBookmark();
-            self.trim(FALSE, TRUE);
-            var startContainer = self.startContainer,
-                startOffset = self.startOffset,
-                nextNode = startContainer[0].childNodes[startOffset] || null;
-
-            startContainer[0].insertBefore(node[0] || node, nextNode);
-            // Check if we need to update the end boundary.
-            if (DOM.equals(node.parent(), self.endContainer))
-                self.endOffset++;
-
-            // Expand the range to embrace the new node.
-            self.setStartBefore(node);
-        },
-
-        moveToBookmark:function (bookmark) {
-            // Created with createBookmark2().
-            var self = this;
-            if (bookmark.is2) {
-                // Get the start information.
-                var startContainer = getByAddress(self.document, bookmark.start, bookmark.normalized),
-                    startOffset = bookmark.startOffset,
-                    endContainer = bookmark.end && getByAddress(self.document, bookmark.end, bookmark.normalized),
-                    endOffset = bookmark.endOffset;
-
-                // Set the start boundary.
-                self.setStart(startContainer, startOffset);
-
-                // Set the end boundary. If not available, collapse it.
-                if (endContainer)
                     self.setEnd(endContainer, endOffset);
-                else
-                    self.collapse(TRUE);
-            } else {
-                // Created with createBookmark().
-                var serializable = bookmark.serializable,
-                    startNode = serializable ? S.one("#" + bookmark.startNode, self.document) : bookmark.startNode,
-                    endNode = serializable ? S.one("#" + bookmark.endNode, self.document) : bookmark.endNode;
-
-                // Set the range start at the bookmark start node position.
-                self.setStartBefore(startNode);
-
-                // Remove it, because it may interfere in the setEndBefore call.
-                startNode._4e_remove();
-
-                // Set the range end at the bookmark end node position, or simply
-                // collapse it if it is not available.
-                if (endNode && endNode[0]) {
-                    self.setEndBefore(endNode);
-                    endNode._4e_remove();
                 }
-                else
-                    self.collapse(TRUE);
-            }
-        },
-        getCommonAncestor:function (includeSelf, ignoreTextNode) {
-            var self = this, start = self.startContainer,
-                end = self.endContainer,
-                ancestor;
+            },
+            /**
+             * Insert a new node at start position of current range
+             * @param {Node} node
+             */
+            insertNode:function (node) {
+                var self = this;
+                self.optimizeBookmark();
+                self.trim(FALSE, TRUE);
+                var startContainer = self.startContainer,
+                    startOffset = self.startOffset,
+                    nextNode = startContainer[0].childNodes[startOffset] || null;
 
-            if (DOM.equals(start, end)) {
-                if (includeSelf
-                    && start[0].nodeType == KEN.NODE_ELEMENT
-                    && self.startOffset == self.endOffset - 1)
-                    ancestor = new Node(start[0].childNodes[self.startOffset]);
-                else
-                    ancestor = start;
-            }
-            else
-                ancestor = start._4e_commonAncestor(end);
+                startContainer[0].insertBefore(node[0], nextNode);
+                // Check if we need to update the end boundary.
+                if (startContainer[0] == self.endContainer[0]) {
+                    self.endOffset++;
+                }
+                // Expand the range to embrace the new node.
+                self.setStartBefore(node);
+            },
 
-            return ignoreTextNode && ancestor[0].nodeType == KEN.NODE_TEXT
-                ? ancestor.parent() : ancestor;
-        },
-        enlarge:function (unit) {
-            var self = this;
-            switch (unit) {
-                case KER.ENLARGE_ELEMENT :
+            /**
+             * Move range to previous saved bookmark.
+             * @param bookmark
+             */
+            moveToBookmark:function (bookmark) {
+                var self = this,
+                    doc = self.document;
+                if (bookmark.is2) {
+                    // Get the start information.
+                    var startContainer = getByAddress(doc,
+                        bookmark.start, bookmark.normalized),
+                        startOffset = bookmark.startOffset,
+                        endContainer = bookmark.end && getByAddress(doc,
+                            bookmark.end, bookmark.normalized),
+                        endOffset = bookmark.endOffset;
 
-                    if (self.collapsed)
-                        return;
+                    // Set the start boundary.
+                    self.setStart(startContainer, startOffset);
 
-                    // Get the common ancestor.
-                    var commonAncestor = self.getCommonAncestor(), body = new Node(self.document.body),
-                        // For each boundary
-                        //		a. Depending on its position, find out the first node to be checked (a sibling) or, if not available, to be enlarge.
-                        //		b. Go ahead checking siblings and enlarging the boundary as much as possible until the common ancestor is not reached. After reaching the common ancestor, just save the enlargeable node to be used later.
+                    // Set the end boundary. If not available, collapse it.
+                    if (endContainer) {
+                        self.setEnd(endContainer, endOffset);
+                    } else {
+                        self.collapse(TRUE);
+                    }
+                } else {
+                    // Created with createBookmark().
+                    var serializable = bookmark.serializable,
+                        startNode = serializable ? S.one("#" + bookmark.startNode,
+                            doc) : bookmark.startNode,
+                        endNode = serializable ? S.one("#" + bookmark.endNode,
+                            doc) : bookmark.endNode;
 
-                        startTop, endTop,
-                        enlargeable, sibling, commonReached,
+                    // Set the range start at the bookmark start node position.
+                    self.setStartBefore(startNode);
 
-                        // Indicates that the node can be added only if whitespace
-                        // is available before it.
-                        needsWhiteSpace = FALSE, isWhiteSpace, siblingText,
+                    // Remove it, because it may interfere in the setEndBefore call.
+                    startNode._4e_remove();
 
-                        // Process the start boundary.
+                    // Set the range end at the bookmark end node position, or simply
+                    // collapse it if it is not available.
+                    if (endNode && endNode[0]) {
+                        self.setEndBefore(endNode);
+                        endNode._4e_remove();
+                    } else {
+                        self.collapse(TRUE);
+                    }
+                }
+            },
 
-                        container = self.startContainer,
-                        offset = self.startOffset;
+            /**
+             * Find the node which contains current range completely.
+             * @param {Boolean} includeSelf whether to return the only element with in range
+             * @param {Boolean} ignoreTextNode whether to return text node's parent node.
+             */
+            getCommonAncestor:function (includeSelf, ignoreTextNode) {
+                var self = this,
+                    start = self.startContainer,
+                    end = self.endContainer,
+                    ancestor;
 
-                    if (container[0].nodeType == KEN.NODE_TEXT) {
-                        if (offset) {
-                            // Check if there is any non-space text before the
+                if (start[0] == end[0]) {
+                    if (includeSelf &&
+                        start[0].nodeType == KEN.NODE_ELEMENT &&
+                        self.startOffset == self.endOffset - 1) {
+                        ancestor = new Node(start[0].childNodes[self.startOffset]);
+                    } else {
+                        ancestor = start;
+                    }
+                } else {
+                    ancestor = start._4e_commonAncestor(end);
+                }
+
+                return ignoreTextNode && ancestor[0].nodeType == KEN.NODE_TEXT
+                    ? ancestor.parent() : ancestor;
+            },
+            enlarge:function (unit) {
+                var self = this;
+                switch (unit) {
+                    case KER.ENLARGE_ELEMENT :
+
+                        if (self.collapsed) {
+                            return;
+                        }
+
+                        // Get the common ancestor.
+                        var commonAncestor = self.getCommonAncestor(),
+                            body = new Node(self.document.body),
+                            // For each boundary
+                            // a. Depending on its position,
+                            // find out the first node to be checked (a sibling) or,
+                            // if not available, to be enlarge.
+
+                            // b. Go ahead checking siblings and
+                            // enlarging the boundary as much as possible
+                            // until the common ancestor is not reached.
+                            // After reaching the common ancestor,
+                            // just save the enlargeable node to be used later.
+
+                            startTop, endTop,
+                            enlargeable, sibling,
+                            commonReached,
+
+                            // Indicates that the node can be added only if whitespace
+                            // is available before it.
+                            needsWhiteSpace = FALSE, isWhiteSpace, siblingText,
+
+                            // Process the start boundary.
+                            container = self.startContainer,
+                            offset = self.startOffset;
+
+                        if (container[0].nodeType == KEN.NODE_TEXT) {
+                            if (offset) {
+                                // Check if there is any non-space text before the
+                                // offset. Otherwise, container is NULL.
+                                container = !S.trim(container[0].nodeValue.substring(0, offset)).length &&
+                                    container;
+
+                                // If we found only whitespace in the node, it
+                                // means that we'll need more whitespace to be able
+                                // to expand. For example, <i> can be expanded in
+                                // "A <i> [B]</i>", but not in "A<i> [B]</i>".
+                                needsWhiteSpace = !!container;
+                            }
+
+                            if (container) {
+                                if (!( sibling = container[0].previousSibling )) {
+                                    enlargeable = container.parent();
+                                }
+                            }
+                        } else {
+                            // If we have offset, get the node preceeding it as the
+                            // first sibling to be checked.
+                            if (offset) {
+                                sibling = container[0].childNodes[offset - 1] || container[0].lastChild;
+                            }
+
+                            // If there is no sibling, mark the container to be
+                            // enlarged.
+                            if (!sibling) {
+                                enlargeable = container;
+                            }
+                        }
+
+                        while (enlargeable || sibling) {
+                            if (enlargeable && !sibling) {
+                                // If we reached the common ancestor, mark the flag
+                                // for it.
+                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
+                                    commonReached = TRUE;
+                                }
+                                if (!body.contains(enlargeable)) {
+                                    break;
+                                }
+                                // If we don't need space or this element breaks
+                                // the line, then enlarge it.
+                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
+                                    needsWhiteSpace = FALSE;
+
+                                    // If the common ancestor has been reached,
+                                    // we'll not enlarge it immediately, but just
+                                    // mark it to be enlarged later if the end
+                                    // boundary also enlarges it.
+                                    if (commonReached) {
+                                        startTop = enlargeable;
+                                    } else {
+                                        self.setStartBefore(enlargeable);
+                                    }
+                                }
+
+                                sibling = enlargeable[0].previousSibling;
+                            }
+
+                            // Check all sibling nodes preceding the enlargeable
+                            // node. The node will be enlarged only if none of them
+                            // blocks it.
+                            while (sibling) {
+                                // This flag indicates that this node has
+                                // whitespaces at the end.
+                                isWhiteSpace = FALSE;
+
+                                if (sibling.nodeType == KEN.NODE_TEXT) {
+                                    siblingText = sibling.nodeValue;
+
+                                    if (/[^\s\ufeff]/.test(siblingText)) {
+                                        sibling = NULL;
+                                    }
+
+                                    isWhiteSpace = /[\s\ufeff]$/.test(siblingText);
+                                } else {
+                                    // If this is a visible element.
+                                    // We need to check for the bookmark attribute because IE insists on
+                                    // rendering the display:none nodes we use for bookmarks. (#3363)
+                                    if ((sibling.offsetWidth > 0
+                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                        // bug report@2012-05-08
+                                        || DOM._4e_name(sibling) == "br")
+                                        && !sibling.getAttribute('_ke_bookmark')) {
+                                        // We'll accept it only if we need
+                                        // whitespace, and this is an inline
+                                        // element with whitespace only.
+                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
+                                            // It must contains spaces and inline elements only.
+
+                                            siblingText = DOM.text(sibling);
+
+                                            if ((/[^\s\ufeff]/).test(siblingText)) {    // Spaces + Zero Width No-Break Space (U+FEFF)
+                                                sibling = NULL;
+                                            } else {
+                                                var allChildren = sibling.getElementsByTagName('*');
+                                                for (var i = 0, child; child = allChildren[ i++ ];) {
+                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
+                                                        sibling = NULL;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            if (sibling) {
+                                                isWhiteSpace = !!siblingText.length;
+                                            }
+                                        }
+                                        else {
+                                            sibling = NULL;
+                                        }
+                                    }
+                                }
+
+                                // A node with whitespaces has been found.
+                                if (isWhiteSpace) {
+                                    // Enlarge the last enlargeable node, if we
+                                    // were waiting for spaces.
+                                    if (needsWhiteSpace) {
+                                        if (commonReached) {
+                                            startTop = enlargeable;
+                                        } else if (enlargeable) {
+                                            self.setStartBefore(enlargeable);
+                                        }
+                                    } else {
+                                        needsWhiteSpace = TRUE;
+                                    }
+                                }
+
+                                if (sibling) {
+                                    var next = sibling.previousSibling;
+
+                                    if (!enlargeable && !next) {
+                                        // Set the sibling as enlargeable, so it's
+                                        // parent will be get later outside this while.
+                                        enlargeable = new Node(sibling);
+                                        sibling = NULL;
+                                        break;
+                                    }
+
+                                    sibling = next;
+                                }
+                                else {
+                                    // If sibling has been set to NULL, then we
+                                    // need to stop enlarging.
+                                    enlargeable = NULL;
+                                }
+                            }
+
+                            if (enlargeable) {
+                                enlargeable = enlargeable.parent();
+                            }
+                        }
+
+                        // Process the end boundary. This is basically the same
+                        // code used for the start boundary, with small changes to
+                        // make it work in the opposite side (to the right). This
+                        // makes it difficult to reuse the code here. So, fixes to
+                        // the above code are likely to be replicated here.
+                        container = self.endContainer;
+                        offset = self.endOffset;
+
+                        // Reset the common variables.
+                        enlargeable = sibling = NULL;
+                        commonReached = needsWhiteSpace = FALSE;
+
+                        if (container[0].nodeType == KEN.NODE_TEXT) {
+                            // Check if there is any non-space text after the
                             // offset. Otherwise, container is NULL.
-                            container = !S.trim(container[0].nodeValue.substring(0, offset)).length && container;
+                            container = !S.trim(container[0].nodeValue.substring(offset)).length && container;
 
                             // If we found only whitespace in the node, it
                             // means that we'll need more whitespace to be able
                             // to expand. For example, <i> can be expanded in
                             // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                            needsWhiteSpace = !!container;
-                        }
+                            needsWhiteSpace = !( container && container[0].nodeValue.length );
 
-                        if (container) {
-                            if (!( sibling = container[0].previousSibling ))
-                                enlargeable = container.parent();
-                        }
-                    }
-                    else {
-                        // If we have offset, get the node preceeding it as the
-                        // first sibling to be checked.
-                        if (offset)
-                            sibling = container[0].childNodes[offset - 1] || container[0].lastChild;
-
-                        // If there is no sibling, mark the container to be
-                        // enlarged.
-                        if (!sibling)
-                            enlargeable = container;
-                    }
-
-                    while (enlargeable || sibling) {
-                        if (enlargeable && !sibling) {
-                            // If we reached the common ancestor, mark the flag
-                            // for it.
-                            if (!commonReached && DOM.equals(enlargeable, commonAncestor))
-                                commonReached = TRUE;
-
-                            if (!body.contains(enlargeable))
-                                break;
-
-                            // If we don't need space or this element breaks
-                            // the line, then enlarge it.
-                            if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                needsWhiteSpace = FALSE;
-
-                                // If the common ancestor has been reached,
-                                // we'll not enlarge it immediately, but just
-                                // mark it to be enlarged later if the end
-                                // boundary also enlarges it.
-                                if (commonReached)
-                                    startTop = enlargeable;
-                                else
-                                    self.setStartBefore(enlargeable);
-                            }
-
-                            sibling = enlargeable[0].previousSibling;
-                        }
-
-                        // Check all sibling nodes preceeding the enlargeable
-                        // node. The node wil lbe enlarged only if none of them
-                        // blocks it.
-                        while (sibling) {
-                            // This flag indicates that this node has
-                            // whitespaces at the end.
-                            isWhiteSpace = FALSE;
-
-                            if (sibling.nodeType == KEN.NODE_TEXT) {
-                                siblingText = sibling.nodeValue;
-
-                                if (/[^\s\ufeff]/.test(siblingText))
-                                    sibling = NULL;
-
-                                isWhiteSpace = /[\s\ufeff]$/.test(siblingText);
-                            }
-                            else {
-                                // If this is a visible element.
-                                // We need to check for the bookmark attribute because IE insists on
-                                // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if ((sibling.offsetWidth > 0
-                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                    // bug report@2012-05-08
-                                    || DOM._4e_name(sibling) == "br")
-                                    && !sibling.getAttribute('_ke_bookmark')) {
-                                    // We'll accept it only if we need
-                                    // whitespace, and this is an inline
-                                    // element with whitespace only.
-                                    if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                        // It must contains spaces and inline elements only.
-
-                                        siblingText = DOM.text(sibling);
-
-                                        if ((/[^\s\ufeff]/).test(siblingText))    // Spaces + Zero Width No-Break Space (U+FEFF)
-                                            sibling = NULL;
-                                        else {
-                                            var allChildren = sibling.all || sibling.getElementsByTagName('*');
-                                            for (var i = 0, child; child = allChildren[ i++ ];) {
-                                                if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                    sibling = NULL;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (sibling)
-                                            isWhiteSpace = !!siblingText.length;
-                                    }
-                                    else
-                                        sibling = NULL;
+                            if (container) {
+                                if (!( sibling = container[0].nextSibling )) {
+                                    enlargeable = container.parent();
                                 }
                             }
+                        }
+                        else {
+                            // Get the node right after the boudary to be checked
+                            // first.
+                            sibling = container[0].childNodes[offset];
 
-                            // A node with whitespaces has been found.
-                            if (isWhiteSpace) {
-                                // Enlarge the last enlargeable node, if we
-                                // were waiting for spaces.
-                                if (needsWhiteSpace) {
-                                    if (commonReached)
-                                        startTop = enlargeable;
-                                    else if (enlargeable)
-                                        self.setStartBefore(enlargeable);
-                                }
-                                else
-                                    needsWhiteSpace = TRUE;
+                            if (!sibling) {
+                                enlargeable = container;
                             }
+                        }
 
-                            if (sibling) {
-                                var next = sibling.previousSibling;
-
-                                if (!enlargeable && !next) {
-                                    // Set the sibling as enlargeable, so it's
-                                    // parent will be get later outside this while.
-                                    enlargeable = new Node(sibling);
-                                    sibling = NULL;
+                        while (enlargeable || sibling) {
+                            if (enlargeable && !sibling) {
+                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
+                                    commonReached = TRUE;
+                                }
+                                if (!body.contains(enlargeable)) {
                                     break;
                                 }
+                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
+                                    needsWhiteSpace = FALSE;
 
-                                sibling = next;
-                            }
-                            else {
-                                // If sibling has been set to NULL, then we
-                                // need to stop enlarging.
-                                enlargeable = NULL;
-                            }
-                        }
-
-                        if (enlargeable)
-                            enlargeable = enlargeable.parent();
-                    }
-
-                    // Process the end boundary. This is basically the same
-                    // code used for the start boundary, with small changes to
-                    // make it work in the opposite side (to the right). This
-                    // makes it difficult to reuse the code here. So, fixes to
-                    // the above code are likely to be replicated here.
-
-                    container = self.endContainer;
-                    offset = self.endOffset;
-
-                    // Reset the common variables.
-                    enlargeable = sibling = NULL;
-                    commonReached = needsWhiteSpace = FALSE;
-
-                    if (container[0].nodeType == KEN.NODE_TEXT) {
-                        // Check if there is any non-space text after the
-                        // offset. Otherwise, container is NULL.
-                        container = !S.trim(container[0].nodeValue.substring(offset)).length && container;
-
-                        // If we found only whitespace in the node, it
-                        // means that we'll need more whitespace to be able
-                        // to expand. For example, <i> can be expanded in
-                        // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                        needsWhiteSpace = !( container && container[0].nodeValue.length );
-
-                        if (container) {
-                            if (!( sibling = container[0].nextSibling ))
-                                enlargeable = container.parent();
-                        }
-                    }
-                    else {
-                        // Get the node right after the boudary to be checked
-                        // first.
-                        sibling = container[0].childNodes[offset];
-
-                        if (!sibling)
-                            enlargeable = container;
-                    }
-
-                    while (enlargeable || sibling) {
-                        if (enlargeable && !sibling) {
-                            if (!commonReached && DOM.equals(enlargeable, commonAncestor))
-                                commonReached = TRUE;
-
-                            if (!body.contains(enlargeable))
-                                break;
-
-                            if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                needsWhiteSpace = FALSE;
-
-                                if (commonReached)
-                                    endTop = enlargeable;
-                                else if (enlargeable)
-                                    self.setEndAfter(enlargeable);
-                            }
-
-                            sibling = enlargeable[0].nextSibling;
-                        }
-
-                        while (sibling) {
-                            isWhiteSpace = FALSE;
-
-                            if (sibling.nodeType == KEN.NODE_TEXT) {
-                                siblingText = sibling.nodeValue;
-
-                                if (/[^\s\ufeff]/.test(siblingText))
-                                    sibling = NULL;
-
-                                isWhiteSpace = /^[\s\ufeff]/.test(siblingText);
-                            }
-                            else {
-                                // If this is a visible element.
-                                // We need to check for the bookmark attribute because IE insists on
-                                // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if ((sibling.offsetWidth > 0
-                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                    // bug report@2012-05-08
-                                    || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
-                                    // We'll accept it only if we need
-                                    // whitespace, and this is an inline
-                                    // element with whitespace only.
-                                    if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                        // It must contains spaces and inline elements only.
-
-                                        siblingText = DOM.text(sibling);
-
-                                        if ((/[^\s\ufeff]/).test(siblingText))
-                                            sibling = NULL;
-                                        else {
-                                            allChildren = sibling.all || sibling.getElementsByTagName('*');
-                                            for (i = 0; child = allChildren[ i++ ];) {
-                                                if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                    sibling = NULL;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (sibling)
-                                            isWhiteSpace = !!siblingText.length;
-                                    }
-                                    else
-                                        sibling = NULL;
-                                }
-                            }
-
-                            if (isWhiteSpace) {
-                                if (needsWhiteSpace) {
-                                    if (commonReached)
+                                    if (commonReached) {
                                         endTop = enlargeable;
-                                    else
+                                    } else if (enlargeable) {
                                         self.setEndAfter(enlargeable);
+                                    }
+                                }
+
+                                sibling = enlargeable[0].nextSibling;
+                            }
+
+                            while (sibling) {
+                                isWhiteSpace = FALSE;
+
+                                if (sibling.nodeType == KEN.NODE_TEXT) {
+                                    siblingText = sibling.nodeValue;
+
+                                    if (/[^\s\ufeff]/.test(siblingText)) {
+                                        sibling = NULL;
+                                    }
+                                    isWhiteSpace = /^[\s\ufeff]/.test(siblingText);
+                                } else {
+                                    // If this is a visible element.
+                                    // We need to check for the bookmark attribute because IE insists on
+                                    // rendering the display:none nodes we use for bookmarks. (#3363)
+                                    if ((sibling.offsetWidth > 0
+                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                        // bug report@2012-05-08
+                                        || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
+                                        // We'll accept it only if we need
+                                        // whitespace, and this is an inline
+                                        // element with whitespace only.
+                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
+                                            // It must contains spaces and inline elements only.
+
+                                            siblingText = DOM.text(sibling);
+
+                                            if ((/[^\s\ufeff]/).test(siblingText)) {
+                                                sibling = NULL;
+                                            } else {
+                                                allChildren = sibling.getElementsByTagName('*');
+                                                for (i = 0; child = allChildren[ i++ ];) {
+                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
+                                                        sibling = NULL;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            if (sibling) {
+                                                isWhiteSpace = !!siblingText.length;
+                                            }
+                                        }
+                                        else {
+                                            sibling = NULL;
+                                        }
+                                    }
+                                }
+
+                                if (isWhiteSpace) {
+                                    if (needsWhiteSpace) {
+                                        if (commonReached) {
+                                            endTop = enlargeable;
+                                        } else {
+                                            self.setEndAfter(enlargeable);
+                                        }
+                                    }
+                                }
+
+                                if (sibling) {
+                                    next = sibling.nextSibling;
+
+                                    if (!enlargeable && !next) {
+                                        enlargeable = new Node(sibling);
+                                        sibling = NULL;
+                                        break;
+                                    }
+
+                                    sibling = next;
+                                }
+                                else {
+                                    // If sibling has been set to NULL, then we
+                                    // need to stop enlarging.
+                                    enlargeable = NULL;
                                 }
                             }
 
-                            if (sibling) {
-                                next = sibling.nextSibling;
-
-                                if (!enlargeable && !next) {
-                                    enlargeable = new Node(sibling);
-                                    sibling = NULL;
-                                    break;
-                                }
-
-                                sibling = next;
-                            }
-                            else {
-                                // If sibling has been set to NULL, then we
-                                // need to stop enlarging.
-                                enlargeable = NULL;
+                            if (enlargeable) {
+                                enlargeable = enlargeable.parent();
                             }
                         }
 
-                        if (enlargeable)
-                            enlargeable = enlargeable.parent();
-                    }
+                        // If the common ancestor can be enlarged by both boundaries, then include it also.
+                        if (startTop && endTop) {
+                            commonAncestor = startTop.contains(endTop) ? endTop : startTop;
+                            self.setStartBefore(commonAncestor);
+                            self.setEndAfter(commonAncestor);
+                        }
+                        break;
 
-                    // If the common ancestor can be enlarged by both boundaries, then include it also.
-                    if (startTop && endTop) {
-                        commonAncestor = startTop.contains(endTop) ? endTop : startTop;
-                        self.setStartBefore(commonAncestor);
-                        self.setEndAfter(commonAncestor);
-                    }
-                    break;
+                    case KER.ENLARGE_BLOCK_CONTENTS:
+                    case KER.ENLARGE_LIST_ITEM_CONTENTS:
 
-                case KER.ENLARGE_BLOCK_CONTENTS:
-                case KER.ENLARGE_LIST_ITEM_CONTENTS:
+                        // Enlarging the start boundary.
+                        var walkerRange = new KERange(self.document);
+                        body = new Node(self.document.body);
 
-                    // Enlarging the start boundary.
-                    var walkerRange = new KERange(self.document);
-                    body = new Node(self.document.body);
+                        walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
+                        walkerRange.setEnd(self.startContainer, self.startOffset);
 
-                    walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
-                    walkerRange.setEnd(self.startContainer, self.startOffset);
+                        var walker = new Walker(walkerRange),
+                            blockBoundary, // The node on which the enlarging should stop.
+                            tailBr, //
+                            defaultGuard = Walker.blockBoundary(
+                                ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                                { br:1 } : NULL),
+                            // Record the encountered 'blockBoundary' for later use.
+                            boundaryGuard = function (node) {
+                                var retval = defaultGuard(node);
+                                if (!retval) {
+                                    blockBoundary = new Node(node);
+                                }
+                                return retval;
+                            },
+                            // Record the encounted 'tailBr' for later use.
+                            tailBrGuard = function (node) {
+                                var retval = boundaryGuard(node);
+                                if (!retval && DOM._4e_name(node) == 'br') {
+                                    tailBr = new Node(node);
+                                }
+                                return retval;
+                            };
 
-                    var walker = new Walker(walkerRange),
-                        blockBoundary, // The node on which the enlarging should stop.
-                        tailBr, //
-                        defaultGuard = Walker.blockBoundary(
-                            ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                            { br:1 } : NULL),
-                        // Record the encountered 'blockBoundary' for later use.
-                        boundaryGuard = function (node) {
-                            var retval = defaultGuard(node);
-                            if (!retval) {
-                                blockBoundary = new Node(node);
-                            }
-                            return retval;
-                        },
-                        // Record the encounted 'tailBr' for later use.
-                        tailBrGuard = function (node) {
-                            var retval = boundaryGuard(node);
-                            if (!retval && DOM._4e_name(node) == 'br') {
-                                tailBr = new Node(node);
-                            }
-                            return retval;
-                        };
+                        walker.guard = boundaryGuard;
 
-                    walker.guard = boundaryGuard;
+                        enlargeable = walker.lastBackward();
 
-                    enlargeable = walker.lastBackward();
+                        // It's the body which stop the enlarging if no block boundary found.
+                        blockBoundary = blockBoundary || body;
 
-                    // It's the body which stop the enlarging if no block boundary found.
-                    blockBoundary = blockBoundary || body;
+                        // Start the range at different position by comparing
+                        // the document position of it with 'enlargeable' node.
+                        self.setStartAt(
+                            blockBoundary,
+                            blockBoundary._4e_name() != 'br' &&
+                                ( !enlargeable && self.checkStartOfBlock()
+                                    || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                KER.POSITION_AFTER_START :
+                                KER.POSITION_AFTER_END);
 
-                    // Start the range at different position by comparing
-                    // the document position of it with 'enlargeable' node.
-                    self.setStartAt(
-                        blockBoundary,
-                        blockBoundary._4e_name() != 'br' &&
-                            ( !enlargeable && self.checkStartOfBlock()
+                        // Enlarging the end boundary.
+                        walkerRange = self.clone();
+                        walkerRange.collapse();
+                        walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
+                        walker = new Walker(walkerRange);
+
+                        // tailBrGuard only used for on range end.
+                        walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                            tailBrGuard : boundaryGuard;
+                        blockBoundary = NULL;
+                        // End the range right before the block boundary node.
+
+                        enlargeable = walker.lastForward();
+
+                        // It's the body which stop the enlarging if no block boundary found.
+                        blockBoundary = blockBoundary || body;
+
+                        // Start the range at different position by comparing
+                        // the document position of it with 'enlargeable' node.
+                        self.setEndAt(
+                            blockBoundary,
+                            ( !enlargeable && self.checkEndOfBlock()
                                 || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                            KER.POSITION_AFTER_START :
-                            KER.POSITION_AFTER_END);
-
-                    // Enlarging the end boundary.
-                    walkerRange = self.clone();
-                    walkerRange.collapse();
-                    walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
-                    walker = new Walker(walkerRange);
-
-                    // tailBrGuard only used for on range end.
-                    walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                        tailBrGuard : boundaryGuard;
-                    blockBoundary = NULL;
-                    // End the range right before the block boundary node.
-
-                    enlargeable = walker.lastForward();
-
-                    // It's the body which stop the enlarging if no block boundary found.
-                    blockBoundary = blockBoundary || body;
-
-                    // Start the range at different position by comparing
-                    // the document position of it with 'enlargeable' node.
-                    self.setEndAt(
-                        blockBoundary,
-                        ( !enlargeable && self.checkEndOfBlock()
-                            || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                            KER.POSITION_BEFORE_END :
-                            KER.POSITION_BEFORE_START);
-                    // We must include the <br> at the end of range if there's
-                    // one and we're expanding list item contents
-                    if (tailBr)
-                        self.setEndAfter(tailBr);
-            }
-        },
-        checkStartOfBlock:function () {
-            var self = this, startContainer = self.startContainer,
-                startOffset = self.startOffset;
-
-            // If the starting node is a text node, and non-empty before the offset,
-            // then we're surely not at the start of block.
-            if (startOffset && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
-                if (textBefore.length)
-                    return FALSE;
-            }
-
-            // Antecipate the trim() call here, so the walker will not make
-            // changes to the DOM, which would not get reflected into this
-            // range otherwise.
-            self.trim();
-
-            // We need to grab the block element holding the start boundary, so
-            // let's use an element path for it.
-            var path = new ElementPath(self.startContainer);
-
-            // Creates a range starting at the block start until the range start.
-            var walkerRange = self.clone();
-            walkerRange.collapse(TRUE);
-            walkerRange.setStartAt(path.block || path.blockLimit, KER.POSITION_AFTER_START);
-
-            var walker = new Walker(walkerRange);
-            walker.evaluator = getCheckStartEndBlockEvalFunction(TRUE);
-
-            return walker.checkBackward();
-        },
-
-        checkEndOfBlock:function () {
-            var self = this, endContainer = self.endContainer,
-                endOffset = self.endOffset;
-
-            // If the ending node is a text node, and non-empty after the offset,
-            // then we're surely not at the end of block.
-            if (endContainer[0].nodeType == KEN.NODE_TEXT) {
-                var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
-                if (textAfter.length)
-                    return FALSE;
-            }
-
-            // Antecipate the trim() call here, so the walker will not make
-            // changes to the DOM, which would not get reflected into this
-            // range otherwise.
-            self.trim();
-
-            // We need to grab the block element holding the start boundary, so
-            // let's use an element path for it.
-            var path = new ElementPath(self.endContainer);
-
-            // Creates a range starting at the block start until the range start.
-            var walkerRange = self.clone();
-            walkerRange.collapse(FALSE);
-            walkerRange.setEndAt(path.block || path.blockLimit, KER.POSITION_BEFORE_END);
-
-            var walker = new Walker(walkerRange);
-            walker.evaluator = getCheckStartEndBlockEvalFunction(FALSE);
-
-            return walker.checkForward();
-        },
-        /**
-         * Check whether current range is on the inner edge of the specified element.
-         * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
-         * @param {Node} element The target element to check.
-         */
-        checkBoundaryOfElement:function (element, checkType) {
-            var walkerRange = this.clone();
-            // Expand the range to element boundary.
-            walkerRange[ checkType == KER.START ?
-                'setStartAt' : 'setEndAt' ]
-                (element, checkType == KER.START ?
-                    KER.POSITION_AFTER_START
-                    : KER.POSITION_BEFORE_END);
-
-            var walker = new Walker(walkerRange);
-
-            walker.evaluator = elementBoundaryEval;
-            return walker[ checkType == KER.START ?
-                'checkBackward' : 'checkForward' ]();
-        },
-
-        getBoundaryNodes:function () {
-            var self = this, startNode = self.startContainer,
-                endNode = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                childCount;
-
-            if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
-                childCount = startNode[0].childNodes.length;
-                if (childCount > startOffset)
-                    startNode = new Node(startNode[0].childNodes[startOffset]);
-                else if (childCount < 1)
-                    startNode = startNode._4e_previousSourceNode();
-                else        // startOffset > childCount but childCount is not 0
-                {
-                    // Try to take the node just after the current position.
-                    startNode = startNode[0];
-                    while (startNode.lastChild)
-                        startNode = startNode.lastChild;
-                    startNode = new Node(startNode);
-
-                    // Normally we should take the next node in DFS order. But it
-                    // is also possible that we've already reached the end of
-                    // document.
-                    startNode = startNode._4e_nextSourceNode() || startNode;
+                                KER.POSITION_BEFORE_END :
+                                KER.POSITION_BEFORE_START);
+                        // We must include the <br> at the end of range if there's
+                        // one and we're expanding list item contents
+                        if (tailBr) {
+                            self.setEndAfter(tailBr);
+                        }
                 }
-            }
+            },
+            checkStartOfBlock:function () {
+                var self = this, startContainer = self.startContainer,
+                    startOffset = self.startOffset;
 
-            if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
-                childCount = endNode[0].childNodes.length;
-                if (childCount > endOffset)
-                    endNode = new Node(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
-                else if (childCount < 1)
-                    endNode = endNode._4e_previousSourceNode();
-                else        // endOffset > childCount but childCount is not 0
-                {
-                    // Try to take the node just before the current position.
-                    endNode = endNode[0];
-                    while (endNode.lastChild)
-                        endNode = endNode.lastChild;
-                    endNode = new Node(endNode);
-                }
-            }
-
-            // Sometimes the endNode will come right before startNode for collapsed
-            // ranges. Fix it. (#3780)
-            if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
-                startNode = endNode;
-
-            return { startNode:startNode, endNode:endNode };
-        },
-        fixBlock:function (isStart, blockTag) {
-            var self = this,
-                bookmark = self.createBookmark(),
-                fixedBlock = new Node(self.document.createElement(blockTag));
-            self.collapse(isStart);
-            self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
-            fixedBlock[0].appendChild(self.extractContents());
-            fixedBlock._4e_trim();
-            if (!UA['ie']) {
-                fixedBlock._4e_appendBogus();
-            }
-            self.insertNode(fixedBlock);
-            self.moveToBookmark(bookmark);
-            return fixedBlock;
-        },
-        splitBlock:function (blockTag) {
-            var self = this, startPath = new ElementPath(self.startContainer),
-                endPath = new ElementPath(self.endContainer),
-                startBlockLimit = startPath.blockLimit,
-                endBlockLimit = endPath.blockLimit,
-                startBlock = startPath.block,
-                endBlock = endPath.block,
-                elementPath = NULL;
-            // Do nothing if the boundaries are in different block limits.
-            if (!startBlockLimit.equals(endBlockLimit))
-                return NULL;
-
-            // Get or fix current blocks.
-            if (blockTag != 'br') {
-                if (!startBlock) {
-                    startBlock = self.fixBlock(TRUE, blockTag);
-                    endBlock = new ElementPath(self.endContainer).block;
+                // If the starting node is a text node, and non-empty before the offset,
+                // then we're surely not at the start of block.
+                if (startOffset && startContainer[0].nodeType == KEN.NODE_TEXT) {
+                    var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
+                    if (textBefore.length)
+                        return FALSE;
                 }
 
-                if (!endBlock)
-                    endBlock = self.fixBlock(FALSE, blockTag);
-            }
+                // Antecipate the trim() call here, so the walker will not make
+                // changes to the DOM, which would not get reflected into this
+                // range otherwise.
+                self.trim();
 
-            // Get the range position.
-            var isStartOfBlock = startBlock && self.checkStartOfBlock(),
-                isEndOfBlock = endBlock && self.checkEndOfBlock();
+                // We need to grab the block element holding the start boundary, so
+                // let's use an element path for it.
+                var path = new ElementPath(self.startContainer);
 
-            // Delete the current contents.
-            // Why is 2.x doing CheckIsEmpty()?
-            self.deleteContents();
+                // Creates a range starting at the block start until the range start.
+                var walkerRange = self.clone();
+                walkerRange.collapse(TRUE);
+                walkerRange.setStartAt(path.block || path.blockLimit, KER.POSITION_AFTER_START);
 
-            if (startBlock && DOM.equals(startBlock, endBlock)) {
-                if (isEndOfBlock) {
-                    elementPath = new ElementPath(self.startContainer);
-                    self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
-                    endBlock = NULL;
-                }
-                else if (isStartOfBlock) {
-                    elementPath = new ElementPath(self.startContainer);
-                    self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
-                    startBlock = NULL;
-                }
-                else {
-                    endBlock = self.splitElement(startBlock);
+                var walker = new Walker(walkerRange);
+                walker.evaluator = getCheckStartEndBlockEvalFunction(TRUE);
 
-                    // In Gecko, the last child node must be a bogus <br>.
-                    // Note: bogus <br> added under <ul> or <ol> would cause
-                    // lists to be incorrectly rendered.
-                    if (!UA['ie'] && !S.inArray(startBlock._4e_name(), ['ul', 'ol']))
-                        startBlock._4e_appendBogus();
-                }
-            }
+                return walker.checkBackward();
+            },
 
-            return {
-                previousBlock:startBlock,
-                nextBlock:endBlock,
-                wasStartOfBlock:isStartOfBlock,
-                wasEndOfBlock:isEndOfBlock,
-                elementPath:elementPath
-            };
-        },
-        splitElement:function (toSplit) {
-            var self = this;
-            if (!self.collapsed)
-                return NULL;
+            checkEndOfBlock:function () {
+                var self = this, endContainer = self.endContainer,
+                    endOffset = self.endOffset;
 
-            // Extract the contents of the block from the selection point to the end
-            // of its contents.
-            self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
-            var documentFragment = self.extractContents(),
-                // Duplicate the element after it.
-                clone = toSplit.clone(FALSE);
-
-            // Place the extracted contents into the duplicated element.
-            clone[0].appendChild(documentFragment);
-            clone.insertAfter(toSplit);
-            self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
-            return clone;
-        },
-        moveToElementEditablePosition:function (el, isMoveToEnd) {
-            var self = this, isEditable, xhtml_dtd = dtd;
-
-            // Empty elements are rejected.
-            if (xhtml_dtd.$empty[ el._4e_name() ])
-                return FALSE;
-
-            while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
-                isEditable = el._4e_isEditable();
-
-                // If an editable element is found, move inside it.
-                if (isEditable) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_BEFORE_END :
-                        KER.POSITION_AFTER_START);
-                    // 不要返回，继续找可能的文字位置
-                }
-                // Stop immediately if we've found a non editable inline element (e.g <img>).
-                else if (xhtml_dtd.$inline[ el._4e_name() ]) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_AFTER_END :
-                        KER.POSITION_BEFORE_START);
-                    return TRUE;
+                // If the ending node is a text node, and non-empty after the offset,
+                // then we're surely not at the end of block.
+                if (endContainer[0].nodeType == KEN.NODE_TEXT) {
+                    var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
+                    if (textAfter.length)
+                        return FALSE;
                 }
 
-                // Non-editable non-inline elements are to be bypassed, getting the next one.
-                if (xhtml_dtd.$empty[ el._4e_name() ])
-                    el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
-                else {
-                    if (isMoveToEnd) {
-                        el = el.last(nonWhitespaceOrIsBookmark);
-                    } else {
-                        el = el.first(nonWhitespaceOrIsBookmark);
+                // Antecipate the trim() call here, so the walker will not make
+                // changes to the DOM, which would not get reflected into this
+                // range otherwise.
+                self.trim();
+
+                // We need to grab the block element holding the start boundary, so
+                // let's use an element path for it.
+                var path = new ElementPath(self.endContainer);
+
+                // Creates a range starting at the block start until the range start.
+                var walkerRange = self.clone();
+                walkerRange.collapse(FALSE);
+                walkerRange.setEndAt(path.block || path.blockLimit, KER.POSITION_BEFORE_END);
+
+                var walker = new Walker(walkerRange);
+                walker.evaluator = getCheckStartEndBlockEvalFunction(FALSE);
+
+                return walker.checkForward();
+            },
+            /**
+             * Check whether current range is on the inner edge of the specified element.
+             * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
+             * @param {Node} element The target element to check.
+             */
+            checkBoundaryOfElement:function (element, checkType) {
+                var walkerRange = this.clone();
+                // Expand the range to element boundary.
+                walkerRange[ checkType == KER.START ?
+                    'setStartAt' : 'setEndAt' ]
+                    (element, checkType == KER.START ?
+                        KER.POSITION_AFTER_START
+                        : KER.POSITION_BEFORE_END);
+
+                var walker = new Walker(walkerRange);
+
+                walker.evaluator = elementBoundaryEval;
+                return walker[ checkType == KER.START ?
+                    'checkBackward' : 'checkForward' ]();
+            },
+
+            getBoundaryNodes:function () {
+                var self = this, startNode = self.startContainer,
+                    endNode = self.endContainer,
+                    startOffset = self.startOffset,
+                    endOffset = self.endOffset,
+                    childCount;
+
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
+                    childCount = startNode[0].childNodes.length;
+                    if (childCount > startOffset)
+                        startNode = new Node(startNode[0].childNodes[startOffset]);
+                    else if (childCount < 1)
+                        startNode = startNode._4e_previousSourceNode();
+                    else        // startOffset > childCount but childCount is not 0
+                    {
+                        // Try to take the node just after the current position.
+                        startNode = startNode[0];
+                        while (startNode.lastChild)
+                            startNode = startNode.lastChild;
+                        startNode = new Node(startNode);
+
+                        // Normally we should take the next node in DFS order. But it
+                        // is also possible that we've already reached the end of
+                        // document.
+                        startNode = startNode._4e_nextSourceNode() || startNode;
                     }
                 }
-                // Stop immediately if we've found a text node.
-                if (el && el[0].nodeType == KEN.NODE_TEXT) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_AFTER_END :
-                        KER.POSITION_BEFORE_START);
-                    return TRUE;
+
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
+                    childCount = endNode[0].childNodes.length;
+                    if (childCount > endOffset)
+                        endNode = new Node(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
+                    else if (childCount < 1)
+                        endNode = endNode._4e_previousSourceNode();
+                    else        // endOffset > childCount but childCount is not 0
+                    {
+                        // Try to take the node just before the current position.
+                        endNode = endNode[0];
+                        while (endNode.lastChild)
+                            endNode = endNode.lastChild;
+                        endNode = new Node(endNode);
+                    }
                 }
+
+                // Sometimes the endNode will come right before startNode for collapsed
+                // ranges. Fix it. (#3780)
+                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
+                    startNode = endNode;
+
+                return { startNode:startNode, endNode:endNode };
+            },
+            fixBlock:function (isStart, blockTag) {
+                var self = this,
+                    bookmark = self.createBookmark(),
+                    fixedBlock = new Node(self.document.createElement(blockTag));
+                self.collapse(isStart);
+                self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
+                fixedBlock[0].appendChild(self.extractContents());
+                fixedBlock._4e_trim();
+                if (!UA['ie']) {
+                    fixedBlock._4e_appendBogus();
+                }
+                self.insertNode(fixedBlock);
+                self.moveToBookmark(bookmark);
+                return fixedBlock;
+            },
+            splitBlock:function (blockTag) {
+                var self = this, startPath = new ElementPath(self.startContainer),
+                    endPath = new ElementPath(self.endContainer),
+                    startBlockLimit = startPath.blockLimit,
+                    endBlockLimit = endPath.blockLimit,
+                    startBlock = startPath.block,
+                    endBlock = endPath.block,
+                    elementPath = NULL;
+                // Do nothing if the boundaries are in different block limits.
+                if (!startBlockLimit.equals(endBlockLimit))
+                    return NULL;
+
+                // Get or fix current blocks.
+                if (blockTag != 'br') {
+                    if (!startBlock) {
+                        startBlock = self.fixBlock(TRUE, blockTag);
+                        endBlock = new ElementPath(self.endContainer).block;
+                    }
+
+                    if (!endBlock)
+                        endBlock = self.fixBlock(FALSE, blockTag);
+                }
+
+                // Get the range position.
+                var isStartOfBlock = startBlock && self.checkStartOfBlock(),
+                    isEndOfBlock = endBlock && self.checkEndOfBlock();
+
+                // Delete the current contents.
+                // Why is 2.x doing CheckIsEmpty()?
+                self.deleteContents();
+
+                if (startBlock && DOM.equals(startBlock, endBlock)) {
+                    if (isEndOfBlock) {
+                        elementPath = new ElementPath(self.startContainer);
+                        self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
+                        endBlock = NULL;
+                    }
+                    else if (isStartOfBlock) {
+                        elementPath = new ElementPath(self.startContainer);
+                        self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
+                        startBlock = NULL;
+                    }
+                    else {
+                        endBlock = self.splitElement(startBlock);
+
+                        // In Gecko, the last child node must be a bogus <br>.
+                        // Note: bogus <br> added under <ul> or <ol> would cause
+                        // lists to be incorrectly rendered.
+                        if (!UA['ie'] && !S.inArray(startBlock._4e_name(), ['ul', 'ol']))
+                            startBlock._4e_appendBogus();
+                    }
+                }
+
+                return {
+                    previousBlock:startBlock,
+                    nextBlock:endBlock,
+                    wasStartOfBlock:isStartOfBlock,
+                    wasEndOfBlock:isEndOfBlock,
+                    elementPath:elementPath
+                };
+            },
+            splitElement:function (toSplit) {
+                var self = this;
+                if (!self.collapsed)
+                    return NULL;
+
+                // Extract the contents of the block from the selection point to the end
+                // of its contents.
+                self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
+                var documentFragment = self.extractContents(),
+                    // Duplicate the element after it.
+                    clone = toSplit.clone(FALSE);
+
+                // Place the extracted contents into the duplicated element.
+                clone[0].appendChild(documentFragment);
+                clone.insertAfter(toSplit);
+                self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
+                return clone;
+            },
+            moveToElementEditablePosition:function (el, isMoveToEnd) {
+                var self = this, isEditable, xhtml_dtd = dtd;
+
+                // Empty elements are rejected.
+                if (xhtml_dtd.$empty[ el._4e_name() ])
+                    return FALSE;
+
+                while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
+                    isEditable = el._4e_isEditable();
+
+                    // If an editable element is found, move inside it.
+                    if (isEditable) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_BEFORE_END :
+                            KER.POSITION_AFTER_START);
+                        // 不要返回，继续找可能的文字位置
+                    }
+                    // Stop immediately if we've found a non editable inline element (e.g <img>).
+                    else if (xhtml_dtd.$inline[ el._4e_name() ]) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_AFTER_END :
+                            KER.POSITION_BEFORE_START);
+                        return TRUE;
+                    }
+
+                    // Non-editable non-inline elements are to be bypassed, getting the next one.
+                    if (xhtml_dtd.$empty[ el._4e_name() ])
+                        el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
+                    else {
+                        if (isMoveToEnd) {
+                            el = el.last(nonWhitespaceOrIsBookmark);
+                        } else {
+                            el = el.first(nonWhitespaceOrIsBookmark);
+                        }
+                    }
+                    // Stop immediately if we've found a text node.
+                    if (el && el[0].nodeType == KEN.NODE_TEXT) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_AFTER_END :
+                            KER.POSITION_BEFORE_START);
+                        return TRUE;
+                    }
+                }
+
+                return isEditable;
+            },
+
+            selectNodeContents:function (node) {
+                this.setStart(node, 0);
+                this.setEnd(node, node[0].nodeType == KEN.NODE_TEXT ?
+                    node[0].nodeValue.length :
+                    node[0].childNodes.length);
             }
-
-            return isEditable;
-        },
-
-        selectNodeContents:function (node) {
-            this.setStart(node, 0);
-            this.setEnd(node, node[0].nodeType == KEN.NODE_TEXT ?
-                node[0].nodeValue.length :
-                node[0].childNodes.length);
-        }
-    });
+        });
     var inlineChildReqElements = { "abbr":1, "acronym":1, "b":1, "bdo":1,
         "big":1, "cite":1, "code":1, "del":1, "dfn":1,
         "em":1, "font":1, "i":1, "ins":1, "label":1,
@@ -1721,35 +1861,9 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         };
     }
 
-    function bookmark(contentOnly, isReject) {
-        function isBookmarkNode(node) {
-            return ( node && node.nodeName == 'span'
-                && node.getAttribute('_ke_bookmark') );
-        }
-
-        return function (node) {
-            var isBookmark, parent;
-            // Is bookmark inner text node?
-            isBookmark = ( node && !node.nodeName && ( parent = node.parentNode )
-                && isBookmarkNode(parent) );
-            // Is bookmark node?
-            isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-            return isReject ^ isBookmark;
-        };
-    }
-
-    function whitespaces(isReject) {
-        return function (node) {
-            node = node[0] || node;
-            var isWhitespace = node && ( node.nodeType == KEN.NODE_TEXT )
-                && !S.trim(node.nodeValue);
-            return isReject ^ isWhitespace;
-        };
-    }
-
     var editorDom = {
         _4e_breakParent:function (el, parent) {
-            var KERange = KE.Range;
+            var KERange = Editor.Range;
             parent = new Node(parent);
             var range = new KERange(el.ownerDocument);
 
@@ -1769,10 +1883,10 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         }
     };
 
-    KE.Utils.injectDom(editorDom);
+    Editor.Utils.injectDom(editorDom);
 
 
-    KE.Range = KERange;
+    Editor.Range = KERange;
 }, {
     requires:['./base', './utils', './walker', './elementPath', './dom']
 });

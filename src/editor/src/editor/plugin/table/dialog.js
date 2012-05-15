@@ -2,7 +2,7 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
+KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
     var Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
@@ -146,8 +146,8 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
             "<a " +
             "class='ke-table-cancel ke-button'>取消</a>" +
             "</div>",
-        addRes = KE.Utils.addRes,
-        destroyRes = KE.Utils.destroyRes;
+        addRes = Editor.Utils.addRes,
+        destroyRes = Editor.Utils.destroyRes;
 
 
     function valid(str) {
@@ -157,7 +157,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
     function TableDialog(editor) {
         var self = this;
         self.editor = editor;
-        KE.Utils.lazyRun(self, "_prepareTableShow", "_realTableShow");
+        Editor.Utils.lazyRun(self, "_prepareTableShow", "_realTableShow");
     }
 
     S.augment(TableDialog, {
@@ -214,7 +214,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
                     return;
                 }
             }
-            var re = KE.Utils.verifyInputs(inputs);
+            var re = Editor.Utils.verifyInputs(inputs);
             if (!re) return;
             self.dialog.hide();
             setTimeout(function () {
@@ -269,7 +269,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
             d.cellpadding.val(parseInt(d.cellpadding.val()) || 0);
             if (self.selectedTd)self.selectedTd.css("padding", d.cellpadding.val());
             if (valid(d.tcaption.val())) {
-                var tcv = KE.Utils.htmlEncode(trim(d.tcaption.val()));
+                var tcv = Editor.Utils.htmlEncode(trim(d.tcaption.val()));
                 if (caption && caption[0])
                     caption.html(tcv);
                 else {
@@ -336,7 +336,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, KE, Overlay4E,Select) {
 
             html += ">";
             if (valid(d.tcaption.val())) {
-                html += "<caption><span>" + KE.Utils.htmlEncode(trim(d.tcaption.val()))
+                html += "<caption><span>" + Editor.Utils.htmlEncode(trim(d.tcaption.val()))
                     + "</span></caption>";
             }
             if (d.thead.val()) {

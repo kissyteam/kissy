@@ -2,7 +2,7 @@
  * flash dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/dialog", function (S, KE, flashUtils, Overlay4E,Select) {
+KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E,Select) {
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         Dialog = Overlay4E.Dialog,
@@ -68,13 +68,13 @@ KISSY.add("editor/plugin/flash/dialog", function (S, KE, flashUtils, Overlay4E,S
     function FlashDialog(editor) {
         var self = this;
         self.editor = editor;
-        KE.Utils.lazyRun(self, "_prepareShow", "_realShow");
+        Editor.Utils.lazyRun(self, "_prepareShow", "_realShow");
         self._config();
     }
 
     S.augment(FlashDialog, {
-        addRes:KE.Utils.addRes,
-        destroyRes:KE.Utils.destroyRes,
+        addRes:Editor.Utils.addRes,
+        destroyRes:Editor.Utils.destroyRes,
         _config:function () {
             var self = this;
             self._urlTip = TIP;
@@ -133,10 +133,10 @@ KISSY.add("editor/plugin/flash/dialog", function (S, KE, flashUtils, Overlay4E,S
                     self.dHeight.val(parseInt(f.css("height")));
                 }
                 self.dAlign.val(f.css("float"));
-                KE.Utils.valInput(self.dUrl, self._getFlashUrl(r));
+                Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
             } else {
-                KE.Utils.resetInput(self.dUrl);
+                Editor.Utils.resetInput(self.dUrl);
                 self.dWidth.val(cfg['defaultWidth'] || "");
                 self.dHeight.val(cfg['defaultHeight'] || "");
                 self.dAlign.val("none");
@@ -171,7 +171,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, KE, flashUtils, Overlay4E,S
                 ev && ev.halt();
             });
 
-            KE.Utils.placeholder(self.dUrl, self._urlTip);
+            Editor.Utils.placeholder(self.dUrl, self._urlTip);
             self.addRes(action, cancel, self.dUrl);
         },
 
@@ -208,7 +208,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, KE, flashUtils, Overlay4E,S
             if (!dinfo) {
                 return;
             }
-            var re = KE.Utils.verifyInputs(self.dialog.get("el").all("input"));
+            var re = Editor.Utils.verifyInputs(self.dialog.get("el").all("input"));
             if (!re) {
                 return;
             }

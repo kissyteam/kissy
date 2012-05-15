@@ -8,11 +8,11 @@
  */
 KISSY.add("editor/core/styles", function (S) {
 
-    var KE = S.Editor,
+    var Editor = S.Editor,
         TRUE = true,
         FALSE = false,
         NULL = null,
-        Utils = KE.Utils,
+        Utils = Editor.Utils,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -23,15 +23,15 @@ KISSY.add("editor/core/styles", function (S) {
             STYLE_INLINE:2,
             STYLE_OBJECT:3
         },
-        KER = KE.RANGE,
-        KESelection = KE.Selection,
-        KEN = KE.NODE,
-        KEP = KE.POSITION,
-        KERange = KE.Range,
-        //Walker = KE.Walker,
+        KER = Editor.RANGE,
+        KESelection = Editor.Selection,
+        KEN = Editor.NODE,
+        KEP = Editor.POSITION,
+        KERange = Editor.Range,
+        //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
-        ElementPath = KE.ElementPath,
+        ElementPath = Editor.ElementPath,
         blockElements = {
             "address":1,
             "div":1,
@@ -44,7 +44,7 @@ KISSY.add("editor/core/styles", function (S) {
             "p":1,
             "pre":1
         },
-        DTD = KE.XHTML_DTD,
+        DTD = Editor.XHTML_DTD,
         objectElements = {
             //why? a should be same to inline? 但是不能互相嵌套
             //a:1,
@@ -67,7 +67,7 @@ KISSY.add("editor/core/styles", function (S) {
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
 
-    KE.STYLE = KEST;
+    Editor.STYLE = KEST;
 
     function notBookmark(node) {
         //only get attributes on element nodes by kissy
@@ -596,9 +596,9 @@ KISSY.add("editor/core/styles", function (S) {
         var bookmark = range.createBookmark();
 
         // Expand the range.
-
         range.enlarge(KER.ENLARGE_ELEMENT);
         range.trim();
+
         // Get the first node to be processed and the last, which concludes the
         // processing.
         var boundaryNodes = range.createBookmark(),
@@ -1373,7 +1373,7 @@ KISSY.add("editor/core/styles", function (S) {
         }
     }
 
-    KE.Style = KEStyle;
+    Editor.Style = KEStyle;
 }, {
     requires:['./range', './selection', './domIterator', './elementPath']
 });

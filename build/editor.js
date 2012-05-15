@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 10 20:25
+build time: May 15 19:35
 */
 /**
  * Set up editor constructor
@@ -14,6 +14,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
      * KISSY Editor
      * @class
      * @extends Component.Controller
+     * @extends UIBase.Box
      * @name Editor
      */
     var Editor = UIBase.create(Component.Controller, [UIBase.Box],
@@ -101,7 +102,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
             },
             XHTML_DTD:HtmlParser['DTD'],
             ATTRS:/**
-             * @lends Editor
+             * @lends Editor#
              */
             {
                 /**
@@ -203,11 +204,11 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/clipboard/index", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         Node = S.Node,
         UA = S.UA,
-        KERange = KE.Range,
-        KER = KE.RANGE,
+        KERange = Editor.Range,
+        KER = Editor.RANGE,
         Event = S.Event;
 
     function Paste(editor) {
@@ -418,7 +419,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             return success;
         }
     };
-    var KES = KE.Selection;
+    var KES = Editor.Selection;
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
         if (!UA['ie'] || editor.get("document")[0].compatMode == 'BackCompat')
@@ -456,7 +457,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
     /**
      * 给所有右键都加入复制粘贴
      */
-    KE.on("contextmenu", function (ev) {
+    Editor.on("contextmenu", function (ev) {
         var contextmenu = ev.contextmenu,
             editor = contextmenu.get("editor"),
             // 原始内容
@@ -511,11 +512,11 @@ KISSY.add("editor/core/dom", function (S) {
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        KE = S.Editor,
+        Editor = S.Editor,
         DOM = S.DOM,
         UA = S.UA,
         Node = S.Node,
-        Utils = KE.Utils,
+        Utils = Editor.Utils,
         REMOVE_EMPTY = {
             "a":1,
             "abbr":1,
@@ -551,7 +552,7 @@ KISSY.add("editor/core/dom", function (S) {
      * Enum for node type
      * @enum {number}
      */
-    KE.NODE = {
+    Editor.NODE = {
         NODE_ELEMENT:1,
         NODE_TEXT:3,
         "NODE_COMMENT":8,
@@ -561,7 +562,7 @@ KISSY.add("editor/core/dom", function (S) {
      * Enum for node position
      * @enum {number}
      */
-    KE.POSITION = {
+    Editor.POSITION = {
         POSITION_IDENTICAL:0,
         POSITION_DISCONNECTED:1,
         POSITION_FOLLOWING:2,
@@ -569,7 +570,7 @@ KISSY.add("editor/core/dom", function (S) {
         POSITION_IS_CONTAINED:8,
         POSITION_CONTAINS:16
     };
-    var KEN = KE.NODE, KEP = KE.POSITION;
+    var KEN = Editor.NODE, KEP = Editor.POSITION;
 
     /*
      * Anything whose display computed style is block, list-item, table,
@@ -857,9 +858,9 @@ KISSY.add("editor/core/dom", function (S) {
             /**
              * 得到该节点在前序遍历下的下一个节点
              * @param el
-             * @param startFromSibling
-             * @param nodeType
-             * @param guard
+             * @param [startFromSibling]
+             * @param [nodeType]
+             * @param [guard]
              */
             _4e_nextSourceNode:function (el, startFromSibling, nodeType, guard) {
                 // If "guard" is a node, transform it in a function.
@@ -1320,7 +1321,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM._4e_name(el),
-                    xhtml_dtd = KE.XHTML_DTD,
+                    xhtml_dtd = Editor.XHTML_DTD,
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
@@ -1385,13 +1386,13 @@ KISSY.add("editor/core/domIterator", function (S) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        KE = S.Editor,
+        Editor = S.Editor,
         UA = S.UA,
-        Walker = KE.Walker,
-        KERange = KE.Range,
-        KER = KE.RANGE,
-        KEN = KE.NODE,
-        ElementPath = KE.ElementPath,
+        Walker = Editor.Walker,
+        KERange = Editor.Range,
+        KER = Editor.RANGE,
+        KEN = Editor.NODE,
+        ElementPath = Editor.ElementPath,
         Node = S.Node,
         DOM = S.DOM;
 
@@ -1712,10 +1713,10 @@ KISSY.add("editor/core/domIterator", function (S) {
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/core/elementPath", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         DOM = S.DOM,
-        dtd = KE.XHTML_DTD,
-        KEN = KE.NODE,
+        dtd = Editor.XHTML_DTD,
+        KEN = Editor.NODE,
         TRUE = true,
         FALSE = false,
         NULL = null,
@@ -1811,7 +1812,7 @@ KISSY.add("editor/core/elementPath", function (S) {
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be
          * compared with this one.
-         * @return {boolean} "TRUE" if the paths are equal, containing the same
+         * @return {Boolean} "TRUE" if the paths are equal, containing the same
          * number of elements and the same elements in the same order.
          */
         compare:function (otherPath) {
@@ -1845,7 +1846,7 @@ KISSY.add("editor/core/elementPath", function (S) {
             return elNames.toString();
         }
     };
-    KE.ElementPath = ElementPath;
+    Editor.ElementPath = ElementPath;
 
     return ElementPath;
 }, {
@@ -1856,14 +1857,14 @@ KISSY.add("editor/core/elementPath", function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/enterKey/index", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node,
         Event = S.Event,
-        Walker = KE.Walker,
-        ElementPath = KE.ElementPath;
+        Walker = Editor.Walker,
+        ElementPath = Editor.ElementPath;
 
 
     function getRange(editor) {
@@ -2069,7 +2070,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/focusManager", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         DOM = S.DOM,
         Event = S.Event,
         INSTANCES = {},
@@ -2152,8 +2153,8 @@ KISSY.add("editor/core/focusManager", function (S) {
     }
 
     focusManager['refreshAll'] = focusManager.refreshAll;
-    KE.focusManager = focusManager;
-    KE.getInstances = function () {
+    Editor.focusManager = focusManager;
+    Editor.getInstances = function () {
         return INSTANCES;
     };
 
@@ -2174,7 +2175,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
     return {
         init:function (editor) {
             var undefined = undefined,
-                KE = S.Editor,
+                Editor = S.Editor,
                 Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -2188,7 +2189,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
              * 2。处理 word 复制过来的列表
              */
             (function () {
-                var //equalsIgnoreCase = KE.Utils.equalsIgnoreCase,
+                var //equalsIgnoreCase = Editor.Utils.equalsIgnoreCase,
                     filterStyle = stylesFilter([
                         // word 自有属性名去除
                         [/mso/i],
@@ -2562,8 +2563,8 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
                 }
 
                 // Find out the list of block-like tags that can contain <br>.
-                var dtd = KE.XHTML_DTD;
-                var blockLikeTags = KE.Utils.mix({},
+                var dtd = Editor.XHTML_DTD;
+                var blockLikeTags = Editor.Utils.mix({},
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;
@@ -2755,12 +2756,12 @@ KISSY.add("editor/core/meta", function () {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
+KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) {
     /**
      * Enum for range
      * @enum {number}
      */
-    KE.RANGE = {
+    Editor.RANGE = {
         POSITION_AFTER_START:1, // <element>^contents</element>		"^text"
         POSITION_BEFORE_END:2, // <element>contents^</element>		"text^"
         POSITION_BEFORE_START:3, // ^<element>contents</element>		^"text"
@@ -2777,21 +2778,329 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        KEN = KE.NODE,
-        KER = KE.RANGE,
-        KEP = KE.POSITION,
+        KEN = Editor.NODE,
+        KER = Editor.RANGE,
+        KEP = Editor.POSITION,
         DOM = S.DOM,
         getByAddress = Utils.getByAddress,
         UA = S.UA,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
+
+
+    /**
+     * Extract html content within range.
+     * @param {Number} action
+     * 0 : delete
+     * 1 : extract
+     * 2 : clone
+     */
+    function execContentsAction(self, action) {
+        var startNode = self.startContainer,
+            endNode = self.endContainer,
+            startOffset = self.startOffset,
+            endOffset = self.endOffset,
+            removeStartNode,
+            hasSplitStart = FALSE,
+            hasSplitEnd = FALSE,
+            t,
+            docFrag = undefined,
+            doc = self.document,
+            removeEndNode;
+
+        if (self.collapsed) {
+            return docFrag;
+        }
+
+        if (action > 0) {
+            docFrag = doc.createDocumentFragment();
+        }
+
+        // 将 bookmark 包含在选区内
+        self.optimizeBookmark();
+
+
+        // endNode -> end guard , not included in range
+
+        // For text containers, we must simply split the node and point to the
+        // second part. The removal will be handled by the rest of the code .
+        //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
+        if (endNode[0].nodeType == KEN.NODE_TEXT) {
+            hasSplitEnd = TRUE;
+            endNode = endNode._4e_splitText(endOffset);
+        } else {
+            // If the end container has children and the offset is pointing
+            // to a child, then we should start from it.
+            if (endNode[0].childNodes.length > 0) {
+                // If the offset points after the last node.
+                if (endOffset >= endNode[0].childNodes.length) {
+                    // Let's create a temporary node and mark it for removal.
+                    endNode = new Node(
+                        endNode[0].appendChild(doc.createTextNode(""))
+                    );
+                    removeEndNode = TRUE;
+                } else {
+                    endNode = new Node(endNode[0].childNodes[endOffset]);
+                }
+            }
+        }
+
+        // startNode -> start guard , not included in range
+
+        // For text containers, we must simply split the node. The removal will
+        // be handled by the rest of the code .
+        if (startNode[0].nodeType == KEN.NODE_TEXT) {
+            hasSplitStart = TRUE;
+            startNode._4e_splitText(startOffset);
+        } else {
+            // If the start container has children and the offset is pointing
+            // to a child, then we should start from its previous sibling.
+
+            // If the offset points to the first node, we don't have a
+            // sibling, so let's use the first one, but mark it for removal.
+            if (!startOffset) {
+                // Let's create a temporary node and mark it for removal.
+                t = new Node(doc.createTextNode(""));
+                startNode.prepend(t);
+                startNode = t;
+                removeStartNode = TRUE;
+            }
+            else if (startOffset >= startNode[0].childNodes.length) {
+                // Let's create a temporary node and mark it for removal.
+                startNode = new Node(startNode[0]
+                    .appendChild(doc.createTextNode('')));
+                removeStartNode = TRUE;
+            } else
+                startNode = new Node(
+                    startNode[0].childNodes[startOffset].previousSibling
+                );
+        }
+
+        // Get the parent nodes tree for the start and end boundaries.
+        //从根到自己
+        var startParents = startNode._4e_parents(),
+            endParents = endNode._4e_parents();
+
+        startParents.each(function (n, i) {
+            startParents[i] = n;
+        });
+
+        endParents.each(function (n, i) {
+            endParents[i] = n;
+        });
+
+
+        // Compare them, to find the top most siblings.
+        var i, topStart, topEnd;
+
+        for (i = 0; i < startParents.length; i++) {
+            topStart = startParents[ i ];
+            topEnd = endParents[ i ];
+
+            // The compared nodes will match until we find the top most
+            // siblings (different nodes that have the same parent).
+            // "i" will hold the index in the parents array for the top
+            // most element.
+            if (!topStart.equals(topEnd)) {
+                break;
+            }
+        }
+
+        var clone = docFrag,
+            levelStartNode,
+            levelClone,
+            currentNode,
+            currentSibling;
+
+        // Remove all successive sibling nodes for every node in the
+        // startParents tree.
+        for (var j = i; j < startParents.length; j++) {
+            levelStartNode = startParents[j];
+
+            // For Extract and Clone, we must clone this level.
+            if (action > 0 && !levelStartNode.equals(startNode)) {
+                // action = 0 = Delete
+                levelClone = clone.appendChild(levelStartNode.clone()[0]);
+            } else {
+                levelClone = null;
+            }
+
+            // 开始节点的路径所在父节点不能 clone(TRUE)，其他节点（结束节点路径左边的节点）可以直接 clone(true)
+            currentNode = levelStartNode[0].nextSibling;
+
+            var endParentJ = endParents[ j ],
+                domEndNode = endNode[0],
+                domEndParentJ = endParentJ[0];
+
+            while (currentNode) {
+                // Stop processing when the current node matches a node in the
+                // endParents tree or if it is the endNode.
+                if (domEndParentJ == currentNode || domEndNode == currentNode) {
+                    break;
+                }
+
+                // Cache the next sibling.
+                currentSibling = currentNode.nextSibling;
+
+                // If cloning, just clone it.
+                if (action == 2) {
+                    // 2 = Clone
+                    clone.appendChild(currentNode.cloneNode(TRUE));
+                } else {
+                    // Both Delete and Extract will remove the node.
+                    DOM._4e_remove(currentNode);
+
+                    // When Extracting, move the removed node to the docFrag.
+                    if (action == 1) {
+                        // 1 = Extract
+                        clone.appendChild(currentNode);
+                    }
+                }
+
+                currentNode = currentSibling;
+            }
+            // 开始节点的路径所在父节点不能 clone(TRUE)，要在后面深入子节点处理
+            if (levelClone) {
+                clone = levelClone;
+            }
+        }
+
+        clone = docFrag;
+
+        // Remove all previous sibling nodes for every node in the
+        // endParents tree.
+        for (var k = i; k < endParents.length; k++) {
+            levelStartNode = endParents[ k ];
+
+            // For Extract and Clone, we must clone this level.
+            if (action > 0 && !levelStartNode.equals(endNode)) {
+                // action = 0 = Delete
+                // 浅复制
+                levelClone = clone.appendChild(levelStartNode.clone()[0]);
+            } else {
+                levelClone = null;
+            }
+
+            // The processing of siblings may have already been done by the parent.
+            if (
+                !startParents[ k ] ||
+                    // 前面 startParents 循环已经处理过了
+                    levelStartNode[0].parentNode != startParents[ k ][0].parentNode
+                ) {
+                currentNode = levelStartNode[0].previousSibling;
+                while (currentNode) {
+                    // Cache the next sibling.
+                    currentSibling = currentNode.previousSibling;
+
+                    // If cloning, just clone it.
+                    if (action == 2) {    // 2 = Clone
+                        clone.insertBefore(currentNode.cloneNode(TRUE),
+                            clone.firstChild);
+                    } else {
+                        // Both Delete and Extract will remove the node.
+                        DOM._4e_remove(currentNode);
+
+                        // When Extracting, mode the removed node to the docFrag.
+                        if (action == 1) {
+                            // 1 = Extract
+                            clone.insertBefore(currentNode, clone.firstChild);
+                        }
+                    }
+
+                    currentNode = currentSibling;
+                }
+            }
+
+            if (levelClone) {
+                clone = levelClone;
+            }
+        }
+        // 2 = Clone.
+        if (action == 2) {
+
+            // No changes in the DOM should be done, so fix the split text (if any).
+
+            if (hasSplitStart) {
+                var startTextNode = startNode[0];
+                if (startTextNode.nodeType == KEN.NODE_TEXT
+                    && startTextNode.nextSibling
+                    // careful, next sibling should be text node
+                    && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
+                    startTextNode.data += startTextNode.nextSibling.data;
+                    startTextNode.parentNode.removeChild(startTextNode.nextSibling);
+                }
+            }
+
+            if (hasSplitEnd) {
+                var endTextNode = endNode[0];
+                if (endTextNode.nodeType == KEN.NODE_TEXT &&
+                    endTextNode.previousSibling &&
+                    endTextNode.previousSibling.nodeType == KEN.NODE_TEXT) {
+                    endTextNode.previousSibling.data += endTextNode.data;
+                    endTextNode.parentNode.removeChild(endTextNode);
+                }
+            }
+
+        } else {
+
+            // Collapse the range.
+            // If a node has been partially selected, collapse the range between
+            // topStart and topEnd. Otherwise, simply collapse it to the start.
+            // (W3C specs).
+            if (
+                topStart && topEnd &&
+                    (
+                        !startNode.parent().equals(topStart.parent())
+                            ||
+                            !endNode.parent().equals(topEnd.parent())
+                        )
+                ) {
+                var startIndex = topStart._4e_index();
+
+                // If the start node is to be removed, we must correct the
+                // index to reflect the removal.
+                if (removeStartNode &&
+                    // startNode 和 topStart 同级
+                    topStart.parent().equals(removeStartNode.parent())) {
+                    startIndex--;
+                }
+
+                self.setStart(topStart.parent(), startIndex + 1);
+            }
+
+            // Collapse it to the start.
+            self.collapse(TRUE);
+
+        }
+
+        // Cleanup any marked node.
+        if (removeStartNode) {
+            startNode.remove();
+        }
+
+        if (removeEndNode) {
+            endNode.remove();
+        }
+
+        return docFrag;
+    }
+
+    function updateCollapsed(self) {
+        self.collapsed = (
+            self.startContainer &&
+                self.endContainer &&
+                self.startContainer[0] == self.endContainer[0] &&
+                self.startOffset == self.endOffset );
+    }
+
 
     /**
      * Range implementation across browsers.
      * @memberOf Editor
      * @class
      * @param document {Document}
+     * @name Range
      */
     function KERange(document) {
         var self = this;
@@ -2803,1614 +3112,1446 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         self.document = document;
     }
 
-    KERange.prototype.toString = function () {
-        var s = [], self = this;
-        s.push((self.startContainer[0].id || self.startContainer[0].nodeName) + ":" + self.startOffset);
-        s.push((self.endContainer[0].id || self.endContainer[0].nodeName) + ":" + self.endOffset);
-        return s.join("<br/>");
-    };
-    S.augment(KERange, {
-
-        updateCollapsed:function () {
-            var self = this;
-            self.collapsed = (
-                self.startContainer &&
-                    self.endContainer &&
-                    DOM.equals(self.startContainer, self.endContainer) &&
-                    self.startOffset == self.endOffset );
-        },
-
+    S.augment(KERange,
         /**
-         * Transforms the startContainer and endContainer properties from text
-         * nodes to element nodes, whenever possible. This is actually possible
-         * if either of the boundary containers point to a text node, and its
-         * offset is set to zero, or after the last char in the node.
+         * @lends Editor.Range
          */
-        optimize:function () {
-            var self = this,
-                container = self.startContainer,
-                offset = self.startOffset;
+        {
 
-            if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset) {
-                    self.setStartBefore(container);
-                } else if (offset >= container[0].nodeValue.length) {
-                    self.setStartAfter(container);
-                }
-            }
+            /**
+             * Range string representation.
+             */
+            toString:function () {
+                var s = [],
+                    self = this,
+                    startContainer = self.startContainer[0],
+                    endContainer = self.endContainer[0];
+                s.push((startContainer.id || startContainer.nodeName) + ":" + self.startOffset);
+                s.push((endContainer.id || endContainer.nodeName) + ":" + self.endOffset);
+                return s.join("<br/>");
+            },
 
-            container = self.endContainer;
-            offset = self.endOffset;
+            /**
+             * Transforms the startContainer and endContainer properties from text
+             * nodes to element nodes, whenever possible. This is actually possible
+             * if either of the boundary containers point to a text node, and its
+             * offset is set to zero, or after the last char in the node.
+             */
+            optimize:function () {
+                var self = this,
+                    container = self.startContainer,
+                    offset = self.startOffset;
 
-            if (container[0].nodeType != KEN.NODE_ELEMENT) {
-                if (!offset) {
-                    self.setEndBefore(container);
-                } else if (offset >= container[0].nodeValue.length) {
-                    self.setEndAfter(container);
-                }
-            }
-        },
-
-        setStartAfter:function (node) {
-            this.setStart(node.parent(), node._4e_index() + 1);
-        },
-
-        setStartBefore:function (node) {
-            this.setStart(node.parent(), node._4e_index());
-        },
-
-        setEndAfter:function (node) {
-            this.setEnd(node.parent(), node._4e_index() + 1);
-        },
-
-        setEndBefore:function (node) {
-            this.setEnd(node.parent(), node._4e_index());
-        },
-
-        /**
-         * Make edge bookmarks included in current range.
-         */
-        optimizeBookmark:function () {
-            var self = this,
-                startNode = self.startContainer,
-                endNode = self.endContainer;
-
-            if (startNode &&
-                startNode._4e_name() == 'span' &&
-                startNode.attr('_ke_bookmark')) {
-                self.setStartBefore(startNode);
-            }
-            if (endNode &&
-                endNode._4e_name() == 'span' &&
-                endNode.attr('_ke_bookmark')) {
-                self.setEndAfter(endNode);
-            }
-        },
-
-        /**
-         * Sets the start position of a Range.
-         * @param {Node} startNode The node to start the range.
-         * @param {Number} startOffset An integer greater than or equal to zero
-         *        representing the offset for the start of the range from the start
-         *        of startNode.
-         */
-        setStart:function (startNode, startOffset) {
-            // W3C requires a check for the new position. If it is after the end
-            // boundary, the range should be collapsed to the new start. It seams
-            // we will not need this check for our use of this class so we can
-            // ignore it for now.
-
-            // Fixing invalid range start inside dtd empty elements.
-            var self = this;
-            if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
-                startNode = startNode.parent();
-                startOffset = startNode._4e_index();
-            }
-
-            self.startContainer = startNode;
-            self.startOffset = startOffset;
-
-            if (!self.endContainer) {
-                self.endContainer = startNode;
-                self.endOffset = startOffset;
-            }
-
-            self.updateCollapsed();
-        },
-
-        /**
-         * Sets the end position of a Range.
-         * @param {Node} endNode The node to end the range.
-         * @param {Number} endOffset An integer greater than or equal to zero
-         *        representing the offset for the end of the range from the start
-         *        of endNode.
-         */
-        setEnd:function (endNode, endOffset) {
-            // W3C requires a check for the new position. If it is before the start
-            // boundary, the range should be collapsed to the new end. It seams we
-            // will not need this check for our use of this class so we can ignore
-            // it for now.
-
-            // Fixing invalid range end inside dtd empty elements.
-            var self = this;
-            if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
-                endNode = endNode.parent();
-                endOffset = endNode._4e_index() + 1;
-            }
-
-            self.endContainer = endNode;
-            self.endOffset = endOffset;
-
-            if (!self.startContainer) {
-                self.startContainer = endNode;
-                self.startOffset = endOffset;
-            }
-
-            self.updateCollapsed();
-        },
-        setStartAt:function (node, position) {
-            var self = this;
-            switch (position) {
-                case KER.POSITION_AFTER_START :
-                    self.setStart(node, 0);
-                    break;
-
-                case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT) {
-                        self.setStart(node, node[0].nodeValue.length);
-                    } else {
-                        self.setStart(node, node[0].childNodes.length);
-                    }
-                    break;
-
-                case KER.POSITION_BEFORE_START :
-                    self.setStartBefore(node);
-                    break;
-
-                case KER.POSITION_AFTER_END :
-                    self.setStartAfter(node);
-            }
-
-            self.updateCollapsed();
-        },
-
-        setEndAt:function (node, position) {
-            var self = this;
-            switch (position) {
-                case KER.POSITION_AFTER_START :
-                    self.setEnd(node, 0);
-                    break;
-
-                case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == KEN.NODE_TEXT) {
-                        self.setEnd(node, node[0].nodeValue.length);
-                    } else {
-                        self.setEnd(node, node[0].childNodes.length);
-                    }
-                    break;
-
-                case KER.POSITION_BEFORE_START :
-                    self.setEndBefore(node);
-                    break;
-
-                case KER.POSITION_AFTER_END :
-                    self.setEndAfter(node);
-            }
-
-            self.updateCollapsed();
-        },
-
-        cloneContents:function () {
-            return this.execContentsAction(2);
-        },
-
-        deleteContents:function () {
-            return this.execContentsAction(0);
-        },
-
-        extractContents:function () {
-            return this.execContentsAction(1);
-        },
-
-        /**
-         * Extract content within range.
-         * @param {Number} action
-         * 0 : delete
-         * 1 : extract
-         * 2 : clone
-         */
-        execContentsAction:function (action) {
-            var self = this,
-                startNode = self.startContainer,
-                endNode = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                removeStartNode,
-                hasSplitStart = FALSE,
-                hasSplitEnd = FALSE,
-                t,
-                docFrag,
-                doc = self.document,
-                removeEndNode;
-
-            if (self.collapsed) {
-                return docFrag;
-            }
-
-            if (action > 0) {
-                docFrag = doc.createDocumentFragment();
-            }
-
-            // 将 bookmark 包含在选区内
-            self.optimizeBookmark();
-
-
-            // endNode -> end guard , not included in range
-
-            // For text containers, we must simply split the node and point to the
-            // second part. The removal will be handled by the rest of the code .
-            //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
-            if (endNode[0].nodeType == KEN.NODE_TEXT) {
-                hasSplitEnd = TRUE;
-                endNode = endNode._4e_splitText(endOffset);
-            } else {
-                // If the end container has children and the offset is pointing
-                // to a child, then we should start from it.
-                if (endNode[0].childNodes.length > 0) {
-                    // If the offset points after the last node.
-                    if (endOffset >= endNode[0].childNodes.length) {
-                        // Let's create a temporary node and mark it for removal.
-                        endNode = new Node(
-                            endNode[0].appendChild(doc.createTextNode(""))
-                        );
-                        removeEndNode = TRUE;
-                    } else {
-                        endNode = new Node(endNode[0].childNodes[endOffset]);
+                if (container[0].nodeType != KEN.NODE_ELEMENT) {
+                    if (!offset) {
+                        self.setStartBefore(container);
+                    } else if (offset >= container[0].nodeValue.length) {
+                        self.setStartAfter(container);
                     }
                 }
-            }
 
-            // startNode -> start guard , not included in range
+                container = self.endContainer;
+                offset = self.endOffset;
 
-            // For text containers, we must simply split the node. The removal will
-            // be handled by the rest of the code .
-            if (startNode[0].nodeType == KEN.NODE_TEXT) {
-                hasSplitStart = TRUE;
-                startNode._4e_splitText(startOffset);
-            } else {
-                // If the start container has children and the offset is pointing
-                // to a child, then we should start from its previous sibling.
-
-                // If the offset points to the first node, we don't have a
-                // sibling, so let's use the first one, but mark it for removal.
-                if (!startOffset) {
-                    // Let's create a temporary node and mark it for removal.
-                    t = new Node(doc.createTextNode(""));
-                    startNode.prepend(t);
-                    startNode = t;
-                    removeStartNode = TRUE;
+                if (container[0].nodeType != KEN.NODE_ELEMENT) {
+                    if (!offset) {
+                        self.setEndBefore(container);
+                    } else if (offset >= container[0].nodeValue.length) {
+                        self.setEndAfter(container);
+                    }
                 }
-                else if (startOffset >= startNode[0].childNodes.length) {
-                    // Let's create a temporary node and mark it for removal.
-                    startNode = new Node(startNode[0]
-                        .appendChild(doc.createTextNode('')));
-                    removeStartNode = TRUE;
-                } else
-                    startNode = new Node(
-                        startNode[0].childNodes[startOffset].previousSibling
-                    );
-            }
+            },
 
-            // Get the parent nodes tree for the start and end boundaries.
-            //从根到自己
-            var startParents = startNode._4e_parents(),
-                endParents = endNode._4e_parents();
+            /**
+             * Set range start after node
+             * @param {Node} node
+             */
+            setStartAfter:function (node) {
+                this.setStart(node.parent(), node._4e_index() + 1);
+            },
+            /**
+             * Set range start before node
+             * @param {Node} node
+             */
+            setStartBefore:function (node) {
+                this.setStart(node.parent(), node._4e_index());
+            },
+            /**
+             * Set range end after node
+             * @param {Node} node
+             */
+            setEndAfter:function (node) {
+                this.setEnd(node.parent(), node._4e_index() + 1);
+            },
+            /**
+             * Set range end before node
+             * @param {Node} node
+             */
+            setEndBefore:function (node) {
+                this.setEnd(node.parent(), node._4e_index());
+            },
 
-            startParents.each(function (n, i) {
-                startParents[i] = n;
-            });
+            /**
+             * Make edge bookmarks included in current range.
+             */
+            optimizeBookmark:function () {
+                var self = this,
+                    startNode = self.startContainer,
+                    endNode = self.endContainer;
 
-            endParents.each(function (n, i) {
-                endParents[i] = n;
-            });
-
-
-            // Compare them, to find the top most siblings.
-            var i, topStart, topEnd;
-
-            for (i = 0; i < startParents.length; i++) {
-                topStart = startParents[ i ];
-                topEnd = endParents[ i ];
-
-                // The compared nodes will match until we find the top most
-                // siblings (different nodes that have the same parent).
-                // "i" will hold the index in the parents array for the top
-                // most element.
-                if (!topStart.equals(topEnd)) {
-                    break;
+                if (startNode &&
+                    startNode._4e_name() == 'span' &&
+                    startNode.attr('_ke_bookmark')) {
+                    self.setStartBefore(startNode);
                 }
-            }
+                if (endNode &&
+                    endNode._4e_name() == 'span' &&
+                    endNode.attr('_ke_bookmark')) {
+                    self.setEndAfter(endNode);
+                }
+            },
 
-            var clone = docFrag,
-                levelStartNode,
-                levelClone,
-                currentNode,
-                currentSibling;
+            /**
+             * Sets the start position of a Range.
+             * @param {Node} startNode The node to start the range.
+             * @param {Number} startOffset An integer greater than or equal to zero
+             *        representing the offset for the start of the range from the start
+             *        of startNode.
+             */
+            setStart:function (startNode, startOffset) {
+                // W3C requires a check for the new position. If it is after the end
+                // boundary, the range should be collapsed to the new start. It seams
+                // we will not need this check for our use of this class so we can
+                // ignore it for now.
 
-            // Remove all successive sibling nodes for every node in the
-            // startParents tree.
-            for (var j = i; j < startParents.length; j++) {
-                levelStartNode = startParents[j];
-
-                // For Extract and Clone, we must clone this level.
-                if (action > 0 && !levelStartNode.equals(startNode)) {
-                    // action = 0 = Delete
-                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
-                } else {
-                    levelClone = null;
+                // Fixing invalid range start inside dtd empty elements.
+                var self = this;
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ startNode._4e_name() ]) {
+                    startNode = startNode.parent();
+                    startOffset = startNode._4e_index();
                 }
 
-                // 开始节点的路径所在父节点不能 clone(TRUE)，其他节点（结束节点路径左边的节点）可以直接 clone(true)
-                currentNode = levelStartNode[0].nextSibling;
+                self.startContainer = startNode;
+                self.startOffset = startOffset;
 
-                var endParentJ = endParents[ j ],
-                    domEndNode = endNode[0],
-                    domEndParentJ = endParentJ[0];
+                if (!self.endContainer) {
+                    self.endContainer = startNode;
+                    self.endOffset = startOffset;
+                }
 
-                while (currentNode) {
-                    // Stop processing when the current node matches a node in the
-                    // endParents tree or if it is the endNode.
-                    if (domEndParentJ == currentNode || domEndNode == currentNode) {
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the end position of a Range.
+             * @param {Node} endNode The node to end the range.
+             * @param {Number} endOffset An integer greater than or equal to zero
+             *        representing the offset for the end of the range from the start
+             *        of endNode.
+             */
+            setEnd:function (endNode, endOffset) {
+                // W3C requires a check for the new position. If it is before the start
+                // boundary, the range should be collapsed to the new end. It seams we
+                // will not need this check for our use of this class so we can ignore
+                // it for now.
+
+                // Fixing invalid range end inside dtd empty elements.
+                var self = this;
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT && EMPTY[ endNode._4e_name() ]) {
+                    endNode = endNode.parent();
+                    endOffset = endNode._4e_index() + 1;
+                }
+
+                self.endContainer = endNode;
+                self.endOffset = endOffset;
+
+                if (!self.startContainer) {
+                    self.startContainer = endNode;
+                    self.startOffset = endOffset;
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the start position of a Range by specified rules.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            setStartAt:function (node, position) {
+                var self = this;
+                switch (position) {
+                    case KER.POSITION_AFTER_START :
+                        self.setStart(node, 0);
                         break;
-                    }
 
-                    // Cache the next sibling.
-                    currentSibling = currentNode.nextSibling;
-
-                    // If cloning, just clone it.
-                    if (action == 2) {
-                        // 2 = Clone
-                        clone.appendChild(currentNode.cloneNode(TRUE));
-                    } else {
-                        // Both Delete and Extract will remove the node.
-                        DOM._4e_remove(currentNode);
-
-                        // When Extracting, move the removed node to the docFrag.
-                        if (action == 1) {
-                            // 1 = Extract
-                            clone.appendChild(currentNode);
-                        }
-                    }
-
-                    currentNode = currentSibling;
-                }
-                // 开始节点的路径所在父节点不能 clone(TRUE)，要在后面深入子节点处理
-                if (levelClone) {
-                    clone = levelClone;
-                }
-            }
-
-            clone = docFrag;
-
-            // Remove all previous sibling nodes for every node in the
-            // endParents tree.
-            for (var k = i; k < endParents.length; k++) {
-                levelStartNode = endParents[ k ];
-
-                // For Extract and Clone, we must clone this level.
-                if (action > 0 && !levelStartNode.equals(endNode)) {
-                    // action = 0 = Delete
-                    // 浅复制
-                    levelClone = clone.appendChild(levelStartNode.clone()[0]);
-                } else {
-                    levelClone = null;
-                }
-
-                // The processing of siblings may have already been done by the parent.
-                if (
-                    !startParents[ k ] ||
-                        // 前面 startParents 循环已经处理过了
-                        levelStartNode[0].parentNode != startParents[ k ][0].parentNode
-                    ) {
-                    currentNode = levelStartNode[0].previousSibling;
-                    while (currentNode) {
-                        // Cache the next sibling.
-                        currentSibling = currentNode.previousSibling;
-
-                        // If cloning, just clone it.
-                        if (action == 2) {    // 2 = Clone
-                            clone.insertBefore(currentNode.cloneNode(TRUE),
-                                clone.firstChild);
+                    case KER.POSITION_BEFORE_END :
+                        if (node[0].nodeType == KEN.NODE_TEXT) {
+                            self.setStart(node, node[0].nodeValue.length);
                         } else {
-                            // Both Delete and Extract will remove the node.
-                            DOM._4e_remove(currentNode);
-
-                            // When Extracting, mode the removed node to the docFrag.
-                            if (action == 1) {
-                                // 1 = Extract
-                                clone.insertBefore(currentNode,clone.firstChild);
-                            }
+                            self.setStart(node, node[0].childNodes.length);
                         }
+                        break;
 
-                        currentNode = currentSibling;
+                    case KER.POSITION_BEFORE_START :
+                        self.setStartBefore(node);
+                        break;
+
+                    case KER.POSITION_AFTER_END :
+                        self.setStartAfter(node);
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Sets the end position of a Range by specified rules.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            setEndAt:function (node, position) {
+                var self = this;
+                switch (position) {
+                    case KER.POSITION_AFTER_START :
+                        self.setEnd(node, 0);
+                        break;
+
+                    case KER.POSITION_BEFORE_END :
+                        if (node[0].nodeType == KEN.NODE_TEXT) {
+                            self.setEnd(node, node[0].nodeValue.length);
+                        } else {
+                            self.setEnd(node, node[0].childNodes.length);
+                        }
+                        break;
+
+                    case KER.POSITION_BEFORE_START :
+                        self.setEndBefore(node);
+                        break;
+
+                    case KER.POSITION_AFTER_END :
+                        self.setEndAfter(node);
+                }
+
+                updateCollapsed(self);
+            },
+
+            /**
+             * Clone html content within range
+             */
+            cloneContents:function () {
+                return execContentsAction(this, 2);
+            },
+
+            /**
+             * Remove html content within range
+             */
+            deleteContents:function () {
+                return execContentsAction(this, 0);
+            },
+
+            /**
+             * Extract html content within range.
+             */
+            extractContents:function () {
+                return execContentsAction(this, 1);
+            },
+
+            /**
+             * Collpase current range
+             * @param {Boolean} toStart
+             */
+            collapse:function (toStart) {
+                var self = this;
+                if (toStart) {
+                    self.endContainer = self.startContainer;
+                    self.endOffset = self.startOffset;
+                } else {
+                    self.startContainer = self.endContainer;
+                    self.startOffset = self.endOffset;
+                }
+                self.collapsed = TRUE;
+            },
+
+            /**
+             * Clone current range.
+             * @return {Editor.Range}
+             */
+            clone:function () {
+                var self = this,
+                    clone = new KERange(self.document);
+
+                clone.startContainer = self.startContainer;
+                clone.startOffset = self.startOffset;
+                clone.endContainer = self.endContainer;
+                clone.endOffset = self.endOffset;
+                clone.collapsed = self.collapsed;
+
+                return clone;
+            },
+
+            /**
+             * Get node which is enclosed by range.
+             * @example
+             * <code>
+             * ^&lt;book/&gt;&lt;span/&gt;&lt;book/&gt;^
+             * =>
+             * ^&lt;span/&gt;^
+             * &lt;/code&gt;
+             */
+            getEnclosedNode:function () {
+                var walkerRange = this.clone();
+                // Optimize and analyze the range to avoid DOM destructive nature of walker.
+                walkerRange.optimize();
+                if (walkerRange.startContainer[0].nodeType != KEN.NODE_ELEMENT ||
+                    walkerRange.endContainer[0].nodeType != KEN.NODE_ELEMENT) {
+                    return NULL;
+                }
+
+                var walker = new Walker(walkerRange),
+                    isNotBookmarks = Walker.bookmark(false, true),
+                    isNotWhitespaces = Walker.whitespaces(TRUE), node, pre;
+
+                walker.evaluator = function (node) {
+                    return isNotWhitespaces(node) && isNotBookmarks(node);
+                };
+
+                //深度优先遍历的第一个元素
+                //        x
+                //     y     z
+                // x->y ,return y
+                node = walker.next();
+                walker.reset();
+                pre = walker.previous();
+                //前后相等，则脱一层皮 :)
+                return node && node.equals(pre) ? node : NULL;
+            },
+
+            /**
+             * Shrink range to its innermost element.(make sure text content is unchanged)
+             * @param mode
+             * @param {Boolean} selectContents
+             */
+            shrink:function (mode, selectContents) {
+                // Unable to shrink a collapsed range.
+                var self = this;
+                if (!self.collapsed) {
+                    mode = mode || KER.SHRINK_TEXT;
+
+                    var walkerRange = self.clone(),
+                        startContainer = self.startContainer,
+                        endContainer = self.endContainer,
+                        startOffset = self.startOffset,
+                        endOffset = self.endOffset,
+                        // Whether the start/end boundary is movable.
+                        moveStart = TRUE,
+                        currentElement,
+                        walker,
+                        moveEnd = TRUE;
+
+                    if (startContainer && startContainer[0].nodeType == KEN.NODE_TEXT) {
+                        if (!startOffset) {
+                            walkerRange.setStartBefore(startContainer);
+                        } else if (startOffset >= startContainer[0].nodeValue.length) {
+                            walkerRange.setStartAfter(startContainer);
+                        } else {
+                            // Enlarge the range properly to avoid walker making
+                            // DOM changes caused by trimming the text nodes later.
+                            walkerRange.setStartBefore(startContainer);
+                            moveStart = FALSE;
+                        }
                     }
-                }
 
-                if (levelClone) {
-                    clone = levelClone;
-                }
-            }
-            // 2 = Clone.
-            if (action == 2) {
-
-                // No changes in the DOM should be done, so fix the split text (if any).
-
-                if (hasSplitStart) {
-                    var startTextNode = startNode[0];
-                    if (startTextNode.nodeType == KEN.NODE_TEXT
-                        && startTextNode.nextSibling
-                        // careful, next sibling should be text node
-                        && startTextNode.nextSibling.nodeType == KEN.NODE_TEXT) {
-                        startTextNode.data += startTextNode.nextSibling.data;
-                        startTextNode.parentNode.removeChild(startTextNode.nextSibling);
-                    }
-                }
-
-                if (hasSplitEnd) {
-                    var endTextNode = endNode[0];
-                    if (endTextNode.nodeType == KEN.NODE_TEXT &&
-                        endTextNode.previousSibling &&
-                        endTextNode.previousSibling.nodeType == KEN.NODE_TEXT) {
-                        endTextNode.previousSibling.data += endTextNode.data;
-                        endTextNode.parentNode.removeChild(endTextNode);
-                    }
-                }
-
-            } else {
-
-                // Collapse the range.
-                // If a node has been partially selected, collapse the range between
-                // topStart and topEnd. Otherwise, simply collapse it to the start.
-                // (W3C specs).
-                if (
-                    topStart && topEnd &&
-                        (
-                            !startNode.parent().equals(topStart.parent())
-                                ||
-                                !endNode.parent().equals(topEnd.parent())
-                            )
-                    ) {
-                    var startIndex = topStart._4e_index();
-
-                    // If the start node is to be removed, we must correct the
-                    // index to reflect the removal.
-                    if (removeStartNode &&
-                        // startNode 和 topStart 同级
-                        topStart.parent().equals(removeStartNode.parent())) {
-                        startIndex--;
+                    if (endContainer && endContainer[0].nodeType == KEN.NODE_TEXT) {
+                        if (!endOffset) {
+                            walkerRange.setEndBefore(endContainer);
+                        } else if (endOffset >= endContainer[0].nodeValue.length) {
+                            walkerRange.setEndAfter(endContainer);
+                        } else {
+                            walkerRange.setEndAfter(endContainer);
+                            moveEnd = FALSE;
+                        }
                     }
 
-                    self.setStart(topStart.parent(), startIndex + 1);
+                    if (moveStart || moveEnd) {
+
+                        walker = new Walker(walkerRange);
+
+                        walker.evaluator = function (node) {
+                            return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
+                                KEN.NODE_ELEMENT : KEN.NODE_TEXT );
+                        };
+
+                        walker.guard = function (node, movingOut) {
+                            node = node[0] || node;
+                            // Stop when we're shrink in element mode while encountering a text node.
+                            if (mode == KER.SHRINK_ELEMENT && node.nodeType == KEN.NODE_TEXT) {
+                                return FALSE;
+                            }
+                            // Stop when we've already walked "through" an element.
+                            if (movingOut && node == currentElement) {
+                                return FALSE;
+                            }
+                            if (!movingOut && node.nodeType == KEN.NODE_ELEMENT) {
+                                currentElement = node;
+                            }
+                            return TRUE;
+                        };
+
+                    }
+
+                    if (moveStart) {
+                        var textStart = walker[mode == KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
+                        if (textStart) {
+                            self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
+                        }
+                    }
+
+                    if (moveEnd) {
+                        walker.reset();
+                        var textEnd = walker[mode == KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
+                        if (textEnd) {
+                            self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
+                        }
+                    }
+
+                    return moveStart || moveEnd;
                 }
+            },
 
-                // Collapse it to the start.
-                self.collapse(TRUE);
+            /**
+             * Create virtual bookmark by remeber its position index.
+             * @param normalized
+             */
+            createBookmark2:function (normalized) {
 
-            }
-
-            // Cleanup any marked node.
-            if (removeStartNode) {
-                startNode.remove();
-            }
-
-            if (removeEndNode) {
-                endNode.remove();
-            }
-
-            return docFrag;
-        },
-
-        collapse:function (toStart) {
-            var self = this;
-            if (toStart) {
-                self.endContainer = self.startContainer;
-                self.endOffset = self.startOffset;
-            } else {
-                self.startContainer = self.endContainer;
-                self.startOffset = self.endOffset;
-            }
-            self.collapsed = TRUE;
-        },
-
-        clone:function () {
-            var self = this,
-                clone = new KERange(self.document);
-
-            clone.startContainer = self.startContainer;
-            clone.startOffset = self.startOffset;
-            clone.endContainer = self.endContainer;
-            clone.endOffset = self.endOffset;
-            clone.collapsed = self.collapsed;
-
-            return clone;
-        },
-        getEnclosedNode:function () {
-            var walkerRange = this.clone();
-            // Optimize and analyze the range to avoid DOM destructive nature of walker.
-            walkerRange.optimize();
-            if (walkerRange.startContainer[0].nodeType != KEN.NODE_ELEMENT
-                || walkerRange.endContainer[0].nodeType != KEN.NODE_ELEMENT)
-                return NULL;
-            //var current = walkerRange.startContainer[0].childNodes[walkerRange.startOffset];
-            var walker = new KE.Walker(walkerRange),
-                isNotBookmarks = bookmark(TRUE, undefined),
-                isNotWhitespaces = whitespaces(TRUE), node, pre;
-            walkerRange.evaluator = function (node) {
-                return isNotWhitespaces(node) && isNotBookmarks(node);
-            };
-
-            //深度优先遍历的第一个元素
-            //        x
-            //     y     z
-            // x->y ,return y
-            node = walker.next();
-            walker.reset();
-            pre = walker.previous();
-            //前后相等，则脱一层皮 :)
-            return node && node.equals(pre) ? node : NULL;
-        },
-        shrink:function (mode, selectContents) {
-            // Unable to shrink a collapsed range.
-            var self = this;
-            if (!self.collapsed) {
-                mode = mode || KER.SHRINK_TEXT;
-
-                var walkerRange = self.clone(),
+                var self = this,
                     startContainer = self.startContainer,
                     endContainer = self.endContainer,
                     startOffset = self.startOffset,
-                    endOffset = self.endOffset;
-                //collapsed = self.collapsed;
+                    endOffset = self.endOffset,
+                    child, previous;
 
-                // Whether the start/end boundary is moveable.
-                var moveStart = 1,
-                    moveEnd = 1;
-
-                if (startContainer && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                    if (!startOffset)
-                        walkerRange.setStartBefore(startContainer);
-                    else if (startOffset >= startContainer[0].nodeValue.length)
-                        walkerRange.setStartAfter(startContainer);
-                    else {
-                        // Enlarge the range properly to avoid walker making
-                        // DOM changes caused by triming the text nodes later.
-                        walkerRange.setStartBefore(startContainer);
-                        moveStart = 0;
-                    }
+                // If there is no range then get out of here.
+                // It happens on initial load in Safari #962 and if the editor it's
+                // hidden also in Firefox
+                if (!startContainer || !endContainer) {
+                    return {
+                        start:0,
+                        end:0
+                    };
                 }
 
-                if (endContainer && endContainer[0].nodeType == KEN.NODE_TEXT) {
-                    if (!endOffset)
-                        walkerRange.setEndBefore(endContainer);
-                    else if (endOffset >= endContainer[0].nodeValue.length)
-                        walkerRange.setEndAfter(endContainer);
-                    else {
-                        walkerRange.setEndAfter(endContainer);
-                        moveEnd = 0;
-                    }
-                }
+                if (normalized) {
+                    // Find out if the start is pointing to a text node that will
+                    // be normalized.
+                    if (startContainer[0].nodeType == KEN.NODE_ELEMENT) {
+                        child = new Node(startContainer[0].childNodes[startOffset]);
 
-                var walker = new Walker(walkerRange);
-
-                walker.evaluator = function (node) {
-                    return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
-                        KEN.NODE_ELEMENT : KEN.NODE_TEXT );
-                };
-
-                var currentElement;
-                walker.guard = function (node, movingOut) {
-
-                    node = node[0] || node;
-                    // Stop when we're shrink in element mode while encountering a text node.
-                    if (mode == KER.SHRINK_ELEMENT && node.nodeType == KEN.NODE_TEXT)
-                        return FALSE;
-
-                    // Stop when we've already walked "through" an element.
-                    if (movingOut && node == currentElement)
-                        return FALSE;
-
-                    if (!movingOut && node.nodeType == KEN.NODE_ELEMENT)
-                        currentElement = node;
-
-                    return TRUE;
-                };
-
-                if (moveStart) {
-                    var textStart = walker[ mode == KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
-                    textStart && self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
-                }
-
-                if (moveEnd) {
-                    walker.reset();
-                    var textEnd = walker[ mode == KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
-                    textEnd && self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
-                }
-
-                return !!( moveStart || moveEnd );
-            }
-        },
-//        getTouchedStartNode : function() {
-//            var self = this,container = self.startContainer;
-//
-//            if (self.collapsed || container[0].nodeType != KEN.NODE_ELEMENT)
-//                return container;
-//
-//            return container.childNodes[self.startOffset] || container;
-//        },
-        createBookmark2:function (normalized) {
-            //debugger;
-            var self = this, startContainer = self.startContainer,
-                endContainer = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                child, previous;
-
-            // If there is no range then get out of here.
-            // It happens on initial load in Safari #962 and if the editor it's
-            // hidden also in Firefox
-            if (!startContainer || !endContainer)
-                return { start:0, end:0 };
-
-            if (normalized) {
-                // Find out if the start is pointing to a text node that will
-                // be normalized.
-                if (startContainer[0].nodeType == KEN.NODE_ELEMENT) {
-                    child = new Node(startContainer[0].childNodes[startOffset]);
-
-                    // In this case, move the start information to that text
-                    // node.
-
-                    //ie 有时 invalid argument？？
-                    if (child && child[0] && child[0].nodeType == KEN.NODE_TEXT
-                        && startOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
-                        startContainer = child;
-                        startOffset = 0;
-                    }
-
-                }
-
-                // Normalize the start.
-                while (startContainer[0].nodeType == KEN.NODE_TEXT
-                    && ( previous = startContainer.prev() )
-                    && previous[0].nodeType == KEN.NODE_TEXT) {
-                    startContainer = previous;
-                    startOffset += previous[0].nodeValue.length;
-                }
-
-                // Process the end only if not normalized.
-                if (!self.collapsed) {
-                    // Find out if the start is pointing to a text node that
-                    // will be normalized.
-                    if (endContainer[0].nodeType == KEN.NODE_ELEMENT) {
-                        child = new Node(endContainer[0].childNodes[endOffset]);
-
-                        // In this case, move the start information to that
-                        // text node.
+                        // In this case, move the start information to that text
+                        // node.
                         if (child && child[0] && child[0].nodeType == KEN.NODE_TEXT
-                            && endOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
-                            endContainer = child;
-                            endOffset = 0;
+                            && startOffset > 0 && child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
+                            startContainer = child;
+                            startOffset = 0;
+                        }
+
+                    }
+
+                    // Normalize the start.
+                    while (startContainer[0].nodeType == KEN.NODE_TEXT
+                        && ( previous = startContainer.prev() )
+                        && previous[0].nodeType == KEN.NODE_TEXT) {
+                        startContainer = previous;
+                        startOffset += previous[0].nodeValue.length;
+                    }
+
+                    // Process the end only if not normalized.
+                    if (!self.collapsed) {
+                        // Find out if the start is pointing to a text node that
+                        // will be normalized.
+                        if (endContainer[0].nodeType == KEN.NODE_ELEMENT) {
+                            child = new Node(endContainer[0].childNodes[endOffset]);
+
+                            // In this case, move the start information to that
+                            // text node.
+                            if (child && child[0] &&
+                                child[0].nodeType == KEN.NODE_TEXT && endOffset > 0 &&
+                                child[0].previousSibling.nodeType == KEN.NODE_TEXT) {
+                                endContainer = child;
+                                endOffset = 0;
+                            }
+                        }
+
+                        // Normalize the end.
+                        while (endContainer[0].nodeType == KEN.NODE_TEXT
+                            && ( previous = endContainer.prev() )
+                            && previous[0].nodeType == KEN.NODE_TEXT) {
+                            endContainer = previous;
+                            endOffset += previous[0].nodeValue.length;
+                        }
+                    }
+                }
+
+                return {
+                    start:startContainer._4e_address(normalized),
+                    end:self.collapsed ? NULL : endContainer._4e_address(normalized),
+                    startOffset:startOffset,
+                    endOffset:endOffset,
+                    normalized:normalized,
+                    is2:TRUE  // It's a createBookmark2 bookmark.
+                };
+            },
+            /**
+             * Create bookmark by create bookmark node.
+             * @param {Boolean} [serializable]
+             */
+            createBookmark:function (serializable) {
+                var startNode,
+                    endNode,
+                    baseId,
+                    clone,
+                    self = this,
+                    collapsed = self.collapsed;
+                startNode = new Node("<span>", NULL, self.document);
+                startNode.attr('_ke_bookmark', 1);
+                startNode.css('display', 'none');
+
+                // For IE, it must have something inside, otherwise it may be
+                // removed during DOM operations.
+                startNode.html('&nbsp;');
+
+                if (serializable) {
+                    baseId = S.guid('ke_bm_');
+                    startNode.attr('id', baseId + 'S');
+                }
+
+                // If collapsed, the endNode will not be created.
+                if (!collapsed) {
+                    endNode = startNode.clone();
+                    endNode.html('&nbsp;');
+
+                    if (serializable) {
+                        endNode.attr('id', baseId + 'E');
+                    }
+
+                    clone = self.clone();
+                    clone.collapse();
+                    clone.insertNode(endNode);
+                }
+
+                clone = self.clone();
+                clone.collapse(TRUE);
+                clone.insertNode(startNode);
+
+                // Update the range position.
+                if (endNode) {
+                    self.setStartAfter(startNode);
+                    self.setEndBefore(endNode);
+                } else {
+                    self.moveToPosition(startNode, KER.POSITION_AFTER_END);
+                }
+
+                return {
+                    startNode:serializable ? baseId + 'S' : startNode,
+                    endNode:serializable ? baseId + 'E' : endNode,
+                    serializable:serializable,
+                    collapsed:collapsed
+                };
+            },
+
+            /**
+             * Set the start posititon and then collapse range.
+             * @param {Node} node
+             * @param {Number} position
+             */
+            moveToPosition:function (node, position) {
+                var self = this;
+                self.setStartAt(node, position);
+                self.collapse(TRUE);
+            },
+
+            /**
+             * Pull range out of text edge and split text node if range is in the middle of text node.
+             * @param {Boolean} ignoreStart
+             * @param {Boolean} ignoreEnd
+             */
+            trim:function (ignoreStart, ignoreEnd) {
+                var self = this,
+                    startContainer = self.startContainer,
+                    startOffset = self.startOffset,
+                    collapsed = self.collapsed;
+
+                if (( !ignoreStart || collapsed ) &&
+                    startContainer[0] &&
+                    startContainer[0].nodeType == KEN.NODE_TEXT) {
+                    // If the offset is zero, we just insert the new node before
+                    // the start.
+                    if (!startOffset) {
+                        startOffset = startContainer._4e_index();
+                        startContainer = startContainer.parent();
+                    }
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
+                    else if (startOffset >= startContainer[0].nodeValue.length) {
+                        startOffset = startContainer._4e_index() + 1;
+                        startContainer = startContainer.parent();
+                    }
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
+                    else {
+                        var nextText = startContainer._4e_splitText(startOffset);
+
+                        startOffset = startContainer._4e_index() + 1;
+                        startContainer = startContainer.parent();
+
+                        // Check all necessity of updating the end boundary.
+                        if (DOM.equals(self.startContainer, self.endContainer)) {
+                            self.setEnd(nextText, self.endOffset - self.startOffset);
+                        } else if (DOM.equals(startContainer, self.endContainer)) {
+                            self.endOffset += 1;
                         }
                     }
 
-                    // Normalize the end.
-                    while (endContainer[0].nodeType == KEN.NODE_TEXT
-                        && ( previous = endContainer.prev() )
-                        && previous[0].nodeType == KEN.NODE_TEXT) {
-                        endContainer = previous;
-                        endOffset += previous[0].nodeValue.length;
+                    self.setStart(startContainer, startOffset);
+
+                    if (collapsed) {
+                        self.collapse(TRUE);
+                        return;
                     }
                 }
-            }
 
-            return {
-                start:startContainer._4e_address(normalized),
-                end:self.collapsed ? NULL : endContainer._4e_address(normalized),
-                startOffset:startOffset,
-                endOffset:endOffset,
-                normalized:normalized,
-                is2:TRUE        // It's a createBookmark2 bookmark.
-            };
-        },
-        createBookmark:function (serializable) {
-            var startNode,
-                endNode,
-                baseId,
-                clone,
-                self = this,
-                collapsed = self.collapsed;
-            startNode = new Node("<span>", NULL, self.document);
-            startNode.attr('_ke_bookmark', 1);
-            startNode.css('display', 'none');
+                var endContainer = self.endContainer,
+                    endOffset = self.endOffset;
 
-            // For IE, it must have something inside, otherwise it may be
-            // removed during DOM operations.
-            startNode.html('&nbsp;');
+                if (!( ignoreEnd || collapsed ) &&
+                    endContainer[0] && endContainer[0].nodeType == KEN.NODE_TEXT) {
+                    // If the offset is zero, we just insert the new node before
+                    // the start.
+                    if (!endOffset) {
+                        endOffset = endContainer._4e_index();
+                        endContainer = endContainer.parent();
+                    }
+                    // If the offset is at the end, we'll insert it after the text
+                    // node.
+                    else if (endOffset >= endContainer.nodeValue.length) {
+                        endOffset = endContainer._4e_index() + 1;
+                        endContainer = endContainer.parent();
+                    }
+                    // In other case, we split the text node and insert the new
+                    // node at the split point.
+                    else {
+                        endContainer._4e_splitText(endOffset);
 
-            if (serializable) {
-                baseId = S.guid('ke_bm_');
-                startNode.attr('id', baseId + 'S');
-            }
+                        endOffset = endContainer._4e_index() + 1;
+                        endContainer = endContainer.parent();
+                    }
 
-            // If collapsed, the endNode will not be created.
-            if (!collapsed) {
-                endNode = startNode.clone();
-                endNode.html('&nbsp;');
-
-                if (serializable)
-                    endNode.attr('id', baseId + 'E');
-
-                clone = self.clone();
-                clone.collapse();
-                //S.log(clone.endContainer[0].nodeType);
-                //S.log(clone.endOffset);
-                clone.insertNode(endNode);
-            }
-            //S.log(endNode[0].parentNode.outerHTML);
-            clone = self.clone();
-            clone.collapse(TRUE);
-            clone.insertNode(startNode);
-
-            // Update the range position.
-            if (endNode) {
-                self.setStartAfter(startNode);
-                self.setEndBefore(endNode);
-            }
-            else
-                self.moveToPosition(startNode, KER.POSITION_AFTER_END);
-
-            return {
-                startNode:serializable ? baseId + 'S' : startNode,
-                endNode:serializable ? baseId + 'E' : endNode,
-                serializable:serializable,
-                collapsed:collapsed
-            };
-        },
-        moveToPosition:function (node, position) {
-            var self = this;
-            self.setStartAt(node, position);
-            self.collapse(TRUE);
-        },
-        trim:function (ignoreStart, ignoreEnd) {
-            var self = this,
-                startContainer = self.startContainer,
-                startOffset = self.startOffset,
-                collapsed = self.collapsed;
-            if (( !ignoreStart || collapsed )
-                && startContainer[0] && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                // If the offset is zero, we just insert the new node before
-                // the start.
-                if (!startOffset) {
-                    startOffset = startContainer._4e_index();
-                    startContainer = startContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (startOffset >= startContainer[0].nodeValue.length) {
-                    startOffset = startContainer._4e_index() + 1;
-                    startContainer = startContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
-                    var nextText = startContainer._4e_splitText(startOffset);
-
-                    startOffset = startContainer._4e_index() + 1;
-                    startContainer = startContainer.parent();
-
-                    // Check all necessity of updating the end boundary.
-                    if (DOM.equals(self.startContainer, self.endContainer))
-                        self.setEnd(nextText, self.endOffset - self.startOffset);
-                    else if (DOM.equals(startContainer, self.endContainer))
-                        self.endOffset += 1;
-                }
-
-                self.setStart(startContainer, startOffset);
-
-                if (collapsed) {
-                    self.collapse(TRUE);
-                    return;
-                }
-            }
-
-            var endContainer = self.endContainer, endOffset = self.endOffset;
-
-            if (!( ignoreEnd || collapsed )
-                && endContainer[0] && endContainer[0].nodeType == KEN.NODE_TEXT) {
-                // If the offset is zero, we just insert the new node before
-                // the start.
-                if (!endOffset) {
-                    endOffset = endContainer._4e_index();
-                    endContainer = endContainer.parent();
-                }
-                // If the offset is at the end, we'll insert it after the text
-                // node.
-                else if (endOffset >= endContainer.nodeValue.length) {
-                    endOffset = endContainer._4e_index() + 1;
-                    endContainer = endContainer.parent();
-                }
-                // In other case, we split the text node and insert the new
-                // node at the split point.
-                else {
-                    endContainer._4e_splitText(endOffset);
-
-                    endOffset = endContainer._4e_index() + 1;
-                    endContainer = endContainer.parent();
-                }
-
-                self.setEnd(endContainer, endOffset);
-            }
-        },
-
-        insertNode:function (node) {
-            var self = this;
-            self.optimizeBookmark();
-            self.trim(FALSE, TRUE);
-            var startContainer = self.startContainer,
-                startOffset = self.startOffset,
-                nextNode = startContainer[0].childNodes[startOffset] || null;
-
-            startContainer[0].insertBefore(node[0] || node, nextNode);
-            // Check if we need to update the end boundary.
-            if (DOM.equals(node.parent(), self.endContainer))
-                self.endOffset++;
-
-            // Expand the range to embrace the new node.
-            self.setStartBefore(node);
-        },
-
-        moveToBookmark:function (bookmark) {
-            // Created with createBookmark2().
-            var self = this;
-            if (bookmark.is2) {
-                // Get the start information.
-                var startContainer = getByAddress(self.document, bookmark.start, bookmark.normalized),
-                    startOffset = bookmark.startOffset,
-                    endContainer = bookmark.end && getByAddress(self.document, bookmark.end, bookmark.normalized),
-                    endOffset = bookmark.endOffset;
-
-                // Set the start boundary.
-                self.setStart(startContainer, startOffset);
-
-                // Set the end boundary. If not available, collapse it.
-                if (endContainer)
                     self.setEnd(endContainer, endOffset);
-                else
-                    self.collapse(TRUE);
-            } else {
-                // Created with createBookmark().
-                var serializable = bookmark.serializable,
-                    startNode = serializable ? S.one("#" + bookmark.startNode, self.document) : bookmark.startNode,
-                    endNode = serializable ? S.one("#" + bookmark.endNode, self.document) : bookmark.endNode;
-
-                // Set the range start at the bookmark start node position.
-                self.setStartBefore(startNode);
-
-                // Remove it, because it may interfere in the setEndBefore call.
-                startNode._4e_remove();
-
-                // Set the range end at the bookmark end node position, or simply
-                // collapse it if it is not available.
-                if (endNode && endNode[0]) {
-                    self.setEndBefore(endNode);
-                    endNode._4e_remove();
                 }
-                else
-                    self.collapse(TRUE);
-            }
-        },
-        getCommonAncestor:function (includeSelf, ignoreTextNode) {
-            var self = this, start = self.startContainer,
-                end = self.endContainer,
-                ancestor;
+            },
+            /**
+             * Insert a new node at start position of current range
+             * @param {Node} node
+             */
+            insertNode:function (node) {
+                var self = this;
+                self.optimizeBookmark();
+                self.trim(FALSE, TRUE);
+                var startContainer = self.startContainer,
+                    startOffset = self.startOffset,
+                    nextNode = startContainer[0].childNodes[startOffset] || null;
 
-            if (DOM.equals(start, end)) {
-                if (includeSelf
-                    && start[0].nodeType == KEN.NODE_ELEMENT
-                    && self.startOffset == self.endOffset - 1)
-                    ancestor = new Node(start[0].childNodes[self.startOffset]);
-                else
-                    ancestor = start;
-            }
-            else
-                ancestor = start._4e_commonAncestor(end);
+                startContainer[0].insertBefore(node[0], nextNode);
+                // Check if we need to update the end boundary.
+                if (startContainer[0] == self.endContainer[0]) {
+                    self.endOffset++;
+                }
+                // Expand the range to embrace the new node.
+                self.setStartBefore(node);
+            },
 
-            return ignoreTextNode && ancestor[0].nodeType == KEN.NODE_TEXT
-                ? ancestor.parent() : ancestor;
-        },
-        enlarge:function (unit) {
-            var self = this;
-            switch (unit) {
-                case KER.ENLARGE_ELEMENT :
+            /**
+             * Move range to previous saved bookmark.
+             * @param bookmark
+             */
+            moveToBookmark:function (bookmark) {
+                var self = this,
+                    doc = self.document;
+                if (bookmark.is2) {
+                    // Get the start information.
+                    var startContainer = getByAddress(doc,
+                        bookmark.start, bookmark.normalized),
+                        startOffset = bookmark.startOffset,
+                        endContainer = bookmark.end && getByAddress(doc,
+                            bookmark.end, bookmark.normalized),
+                        endOffset = bookmark.endOffset;
 
-                    if (self.collapsed)
-                        return;
+                    // Set the start boundary.
+                    self.setStart(startContainer, startOffset);
 
-                    // Get the common ancestor.
-                    var commonAncestor = self.getCommonAncestor(), body = new Node(self.document.body),
-                        // For each boundary
-                        //		a. Depending on its position, find out the first node to be checked (a sibling) or, if not available, to be enlarge.
-                        //		b. Go ahead checking siblings and enlarging the boundary as much as possible until the common ancestor is not reached. After reaching the common ancestor, just save the enlargeable node to be used later.
+                    // Set the end boundary. If not available, collapse it.
+                    if (endContainer) {
+                        self.setEnd(endContainer, endOffset);
+                    } else {
+                        self.collapse(TRUE);
+                    }
+                } else {
+                    // Created with createBookmark().
+                    var serializable = bookmark.serializable,
+                        startNode = serializable ? S.one("#" + bookmark.startNode,
+                            doc) : bookmark.startNode,
+                        endNode = serializable ? S.one("#" + bookmark.endNode,
+                            doc) : bookmark.endNode;
 
-                        startTop, endTop,
-                        enlargeable, sibling, commonReached,
+                    // Set the range start at the bookmark start node position.
+                    self.setStartBefore(startNode);
 
-                        // Indicates that the node can be added only if whitespace
-                        // is available before it.
-                        needsWhiteSpace = FALSE, isWhiteSpace, siblingText,
+                    // Remove it, because it may interfere in the setEndBefore call.
+                    startNode._4e_remove();
 
-                        // Process the start boundary.
+                    // Set the range end at the bookmark end node position, or simply
+                    // collapse it if it is not available.
+                    if (endNode && endNode[0]) {
+                        self.setEndBefore(endNode);
+                        endNode._4e_remove();
+                    } else {
+                        self.collapse(TRUE);
+                    }
+                }
+            },
 
-                        container = self.startContainer,
-                        offset = self.startOffset;
+            /**
+             * Find the node which contains current range completely.
+             * @param {Boolean} includeSelf whether to return the only element with in range
+             * @param {Boolean} ignoreTextNode whether to return text node's parent node.
+             */
+            getCommonAncestor:function (includeSelf, ignoreTextNode) {
+                var self = this,
+                    start = self.startContainer,
+                    end = self.endContainer,
+                    ancestor;
 
-                    if (container[0].nodeType == KEN.NODE_TEXT) {
-                        if (offset) {
-                            // Check if there is any non-space text before the
+                if (start[0] == end[0]) {
+                    if (includeSelf &&
+                        start[0].nodeType == KEN.NODE_ELEMENT &&
+                        self.startOffset == self.endOffset - 1) {
+                        ancestor = new Node(start[0].childNodes[self.startOffset]);
+                    } else {
+                        ancestor = start;
+                    }
+                } else {
+                    ancestor = start._4e_commonAncestor(end);
+                }
+
+                return ignoreTextNode && ancestor[0].nodeType == KEN.NODE_TEXT
+                    ? ancestor.parent() : ancestor;
+            },
+            enlarge:function (unit) {
+                var self = this;
+                switch (unit) {
+                    case KER.ENLARGE_ELEMENT :
+
+                        if (self.collapsed) {
+                            return;
+                        }
+
+                        // Get the common ancestor.
+                        var commonAncestor = self.getCommonAncestor(),
+                            body = new Node(self.document.body),
+                            // For each boundary
+                            // a. Depending on its position,
+                            // find out the first node to be checked (a sibling) or,
+                            // if not available, to be enlarge.
+
+                            // b. Go ahead checking siblings and
+                            // enlarging the boundary as much as possible
+                            // until the common ancestor is not reached.
+                            // After reaching the common ancestor,
+                            // just save the enlargeable node to be used later.
+
+                            startTop, endTop,
+                            enlargeable, sibling,
+                            commonReached,
+
+                            // Indicates that the node can be added only if whitespace
+                            // is available before it.
+                            needsWhiteSpace = FALSE, isWhiteSpace, siblingText,
+
+                            // Process the start boundary.
+                            container = self.startContainer,
+                            offset = self.startOffset;
+
+                        if (container[0].nodeType == KEN.NODE_TEXT) {
+                            if (offset) {
+                                // Check if there is any non-space text before the
+                                // offset. Otherwise, container is NULL.
+                                container = !S.trim(container[0].nodeValue.substring(0, offset)).length &&
+                                    container;
+
+                                // If we found only whitespace in the node, it
+                                // means that we'll need more whitespace to be able
+                                // to expand. For example, <i> can be expanded in
+                                // "A <i> [B]</i>", but not in "A<i> [B]</i>".
+                                needsWhiteSpace = !!container;
+                            }
+
+                            if (container) {
+                                if (!( sibling = container[0].previousSibling )) {
+                                    enlargeable = container.parent();
+                                }
+                            }
+                        } else {
+                            // If we have offset, get the node preceeding it as the
+                            // first sibling to be checked.
+                            if (offset) {
+                                sibling = container[0].childNodes[offset - 1] || container[0].lastChild;
+                            }
+
+                            // If there is no sibling, mark the container to be
+                            // enlarged.
+                            if (!sibling) {
+                                enlargeable = container;
+                            }
+                        }
+
+                        while (enlargeable || sibling) {
+                            if (enlargeable && !sibling) {
+                                // If we reached the common ancestor, mark the flag
+                                // for it.
+                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
+                                    commonReached = TRUE;
+                                }
+                                if (!body.contains(enlargeable)) {
+                                    break;
+                                }
+                                // If we don't need space or this element breaks
+                                // the line, then enlarge it.
+                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
+                                    needsWhiteSpace = FALSE;
+
+                                    // If the common ancestor has been reached,
+                                    // we'll not enlarge it immediately, but just
+                                    // mark it to be enlarged later if the end
+                                    // boundary also enlarges it.
+                                    if (commonReached) {
+                                        startTop = enlargeable;
+                                    } else {
+                                        self.setStartBefore(enlargeable);
+                                    }
+                                }
+
+                                sibling = enlargeable[0].previousSibling;
+                            }
+
+                            // Check all sibling nodes preceding the enlargeable
+                            // node. The node will be enlarged only if none of them
+                            // blocks it.
+                            while (sibling) {
+                                // This flag indicates that this node has
+                                // whitespaces at the end.
+                                isWhiteSpace = FALSE;
+
+                                if (sibling.nodeType == KEN.NODE_TEXT) {
+                                    siblingText = sibling.nodeValue;
+
+                                    if (/[^\s\ufeff]/.test(siblingText)) {
+                                        sibling = NULL;
+                                    }
+
+                                    isWhiteSpace = /[\s\ufeff]$/.test(siblingText);
+                                } else {
+                                    // If this is a visible element.
+                                    // We need to check for the bookmark attribute because IE insists on
+                                    // rendering the display:none nodes we use for bookmarks. (#3363)
+                                    if ((sibling.offsetWidth > 0
+                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                        // bug report@2012-05-08
+                                        || DOM._4e_name(sibling) == "br")
+                                        && !sibling.getAttribute('_ke_bookmark')) {
+                                        // We'll accept it only if we need
+                                        // whitespace, and this is an inline
+                                        // element with whitespace only.
+                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
+                                            // It must contains spaces and inline elements only.
+
+                                            siblingText = DOM.text(sibling);
+
+                                            if ((/[^\s\ufeff]/).test(siblingText)) {    // Spaces + Zero Width No-Break Space (U+FEFF)
+                                                sibling = NULL;
+                                            } else {
+                                                var allChildren = sibling.getElementsByTagName('*');
+                                                for (var i = 0, child; child = allChildren[ i++ ];) {
+                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
+                                                        sibling = NULL;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            if (sibling) {
+                                                isWhiteSpace = !!siblingText.length;
+                                            }
+                                        }
+                                        else {
+                                            sibling = NULL;
+                                        }
+                                    }
+                                }
+
+                                // A node with whitespaces has been found.
+                                if (isWhiteSpace) {
+                                    // Enlarge the last enlargeable node, if we
+                                    // were waiting for spaces.
+                                    if (needsWhiteSpace) {
+                                        if (commonReached) {
+                                            startTop = enlargeable;
+                                        } else if (enlargeable) {
+                                            self.setStartBefore(enlargeable);
+                                        }
+                                    } else {
+                                        needsWhiteSpace = TRUE;
+                                    }
+                                }
+
+                                if (sibling) {
+                                    var next = sibling.previousSibling;
+
+                                    if (!enlargeable && !next) {
+                                        // Set the sibling as enlargeable, so it's
+                                        // parent will be get later outside this while.
+                                        enlargeable = new Node(sibling);
+                                        sibling = NULL;
+                                        break;
+                                    }
+
+                                    sibling = next;
+                                }
+                                else {
+                                    // If sibling has been set to NULL, then we
+                                    // need to stop enlarging.
+                                    enlargeable = NULL;
+                                }
+                            }
+
+                            if (enlargeable) {
+                                enlargeable = enlargeable.parent();
+                            }
+                        }
+
+                        // Process the end boundary. This is basically the same
+                        // code used for the start boundary, with small changes to
+                        // make it work in the opposite side (to the right). This
+                        // makes it difficult to reuse the code here. So, fixes to
+                        // the above code are likely to be replicated here.
+                        container = self.endContainer;
+                        offset = self.endOffset;
+
+                        // Reset the common variables.
+                        enlargeable = sibling = NULL;
+                        commonReached = needsWhiteSpace = FALSE;
+
+                        if (container[0].nodeType == KEN.NODE_TEXT) {
+                            // Check if there is any non-space text after the
                             // offset. Otherwise, container is NULL.
-                            container = !S.trim(container[0].nodeValue.substring(0, offset)).length && container;
+                            container = !S.trim(container[0].nodeValue.substring(offset)).length && container;
 
                             // If we found only whitespace in the node, it
                             // means that we'll need more whitespace to be able
                             // to expand. For example, <i> can be expanded in
                             // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                            needsWhiteSpace = !!container;
-                        }
+                            needsWhiteSpace = !( container && container[0].nodeValue.length );
 
-                        if (container) {
-                            if (!( sibling = container[0].previousSibling ))
-                                enlargeable = container.parent();
-                        }
-                    }
-                    else {
-                        // If we have offset, get the node preceeding it as the
-                        // first sibling to be checked.
-                        if (offset)
-                            sibling = container[0].childNodes[offset - 1] || container[0].lastChild;
-
-                        // If there is no sibling, mark the container to be
-                        // enlarged.
-                        if (!sibling)
-                            enlargeable = container;
-                    }
-
-                    while (enlargeable || sibling) {
-                        if (enlargeable && !sibling) {
-                            // If we reached the common ancestor, mark the flag
-                            // for it.
-                            if (!commonReached && DOM.equals(enlargeable, commonAncestor))
-                                commonReached = TRUE;
-
-                            if (!body.contains(enlargeable))
-                                break;
-
-                            // If we don't need space or this element breaks
-                            // the line, then enlarge it.
-                            if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                needsWhiteSpace = FALSE;
-
-                                // If the common ancestor has been reached,
-                                // we'll not enlarge it immediately, but just
-                                // mark it to be enlarged later if the end
-                                // boundary also enlarges it.
-                                if (commonReached)
-                                    startTop = enlargeable;
-                                else
-                                    self.setStartBefore(enlargeable);
-                            }
-
-                            sibling = enlargeable[0].previousSibling;
-                        }
-
-                        // Check all sibling nodes preceeding the enlargeable
-                        // node. The node wil lbe enlarged only if none of them
-                        // blocks it.
-                        while (sibling) {
-                            // This flag indicates that this node has
-                            // whitespaces at the end.
-                            isWhiteSpace = FALSE;
-
-                            if (sibling.nodeType == KEN.NODE_TEXT) {
-                                siblingText = sibling.nodeValue;
-
-                                if (/[^\s\ufeff]/.test(siblingText))
-                                    sibling = NULL;
-
-                                isWhiteSpace = /[\s\ufeff]$/.test(siblingText);
-                            }
-                            else {
-                                // If this is a visible element.
-                                // We need to check for the bookmark attribute because IE insists on
-                                // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if ((sibling.offsetWidth > 0
-                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                    // bug report@2012-05-08
-                                    || DOM._4e_name(sibling) == "br")
-                                    && !sibling.getAttribute('_ke_bookmark')) {
-                                    // We'll accept it only if we need
-                                    // whitespace, and this is an inline
-                                    // element with whitespace only.
-                                    if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                        // It must contains spaces and inline elements only.
-
-                                        siblingText = DOM.text(sibling);
-
-                                        if ((/[^\s\ufeff]/).test(siblingText))    // Spaces + Zero Width No-Break Space (U+FEFF)
-                                            sibling = NULL;
-                                        else {
-                                            var allChildren = sibling.all || sibling.getElementsByTagName('*');
-                                            for (var i = 0, child; child = allChildren[ i++ ];) {
-                                                if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                    sibling = NULL;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (sibling)
-                                            isWhiteSpace = !!siblingText.length;
-                                    }
-                                    else
-                                        sibling = NULL;
+                            if (container) {
+                                if (!( sibling = container[0].nextSibling )) {
+                                    enlargeable = container.parent();
                                 }
                             }
+                        }
+                        else {
+                            // Get the node right after the boudary to be checked
+                            // first.
+                            sibling = container[0].childNodes[offset];
 
-                            // A node with whitespaces has been found.
-                            if (isWhiteSpace) {
-                                // Enlarge the last enlargeable node, if we
-                                // were waiting for spaces.
-                                if (needsWhiteSpace) {
-                                    if (commonReached)
-                                        startTop = enlargeable;
-                                    else if (enlargeable)
-                                        self.setStartBefore(enlargeable);
-                                }
-                                else
-                                    needsWhiteSpace = TRUE;
+                            if (!sibling) {
+                                enlargeable = container;
                             }
+                        }
 
-                            if (sibling) {
-                                var next = sibling.previousSibling;
-
-                                if (!enlargeable && !next) {
-                                    // Set the sibling as enlargeable, so it's
-                                    // parent will be get later outside this while.
-                                    enlargeable = new Node(sibling);
-                                    sibling = NULL;
+                        while (enlargeable || sibling) {
+                            if (enlargeable && !sibling) {
+                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
+                                    commonReached = TRUE;
+                                }
+                                if (!body.contains(enlargeable)) {
                                     break;
                                 }
+                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
+                                    needsWhiteSpace = FALSE;
 
-                                sibling = next;
-                            }
-                            else {
-                                // If sibling has been set to NULL, then we
-                                // need to stop enlarging.
-                                enlargeable = NULL;
-                            }
-                        }
-
-                        if (enlargeable)
-                            enlargeable = enlargeable.parent();
-                    }
-
-                    // Process the end boundary. This is basically the same
-                    // code used for the start boundary, with small changes to
-                    // make it work in the opposite side (to the right). This
-                    // makes it difficult to reuse the code here. So, fixes to
-                    // the above code are likely to be replicated here.
-
-                    container = self.endContainer;
-                    offset = self.endOffset;
-
-                    // Reset the common variables.
-                    enlargeable = sibling = NULL;
-                    commonReached = needsWhiteSpace = FALSE;
-
-                    if (container[0].nodeType == KEN.NODE_TEXT) {
-                        // Check if there is any non-space text after the
-                        // offset. Otherwise, container is NULL.
-                        container = !S.trim(container[0].nodeValue.substring(offset)).length && container;
-
-                        // If we found only whitespace in the node, it
-                        // means that we'll need more whitespace to be able
-                        // to expand. For example, <i> can be expanded in
-                        // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                        needsWhiteSpace = !( container && container[0].nodeValue.length );
-
-                        if (container) {
-                            if (!( sibling = container[0].nextSibling ))
-                                enlargeable = container.parent();
-                        }
-                    }
-                    else {
-                        // Get the node right after the boudary to be checked
-                        // first.
-                        sibling = container[0].childNodes[offset];
-
-                        if (!sibling)
-                            enlargeable = container;
-                    }
-
-                    while (enlargeable || sibling) {
-                        if (enlargeable && !sibling) {
-                            if (!commonReached && DOM.equals(enlargeable, commonAncestor))
-                                commonReached = TRUE;
-
-                            if (!body.contains(enlargeable))
-                                break;
-
-                            if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                needsWhiteSpace = FALSE;
-
-                                if (commonReached)
-                                    endTop = enlargeable;
-                                else if (enlargeable)
-                                    self.setEndAfter(enlargeable);
-                            }
-
-                            sibling = enlargeable[0].nextSibling;
-                        }
-
-                        while (sibling) {
-                            isWhiteSpace = FALSE;
-
-                            if (sibling.nodeType == KEN.NODE_TEXT) {
-                                siblingText = sibling.nodeValue;
-
-                                if (/[^\s\ufeff]/.test(siblingText))
-                                    sibling = NULL;
-
-                                isWhiteSpace = /^[\s\ufeff]/.test(siblingText);
-                            }
-                            else {
-                                // If this is a visible element.
-                                // We need to check for the bookmark attribute because IE insists on
-                                // rendering the display:none nodes we use for bookmarks. (#3363)
-                                if ((sibling.offsetWidth > 0
-                                    // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                    // bug report@2012-05-08
-                                    || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
-                                    // We'll accept it only if we need
-                                    // whitespace, and this is an inline
-                                    // element with whitespace only.
-                                    if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                        // It must contains spaces and inline elements only.
-
-                                        siblingText = DOM.text(sibling);
-
-                                        if ((/[^\s\ufeff]/).test(siblingText))
-                                            sibling = NULL;
-                                        else {
-                                            allChildren = sibling.all || sibling.getElementsByTagName('*');
-                                            for (i = 0; child = allChildren[ i++ ];) {
-                                                if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                    sibling = NULL;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (sibling)
-                                            isWhiteSpace = !!siblingText.length;
-                                    }
-                                    else
-                                        sibling = NULL;
-                                }
-                            }
-
-                            if (isWhiteSpace) {
-                                if (needsWhiteSpace) {
-                                    if (commonReached)
+                                    if (commonReached) {
                                         endTop = enlargeable;
-                                    else
+                                    } else if (enlargeable) {
                                         self.setEndAfter(enlargeable);
+                                    }
+                                }
+
+                                sibling = enlargeable[0].nextSibling;
+                            }
+
+                            while (sibling) {
+                                isWhiteSpace = FALSE;
+
+                                if (sibling.nodeType == KEN.NODE_TEXT) {
+                                    siblingText = sibling.nodeValue;
+
+                                    if (/[^\s\ufeff]/.test(siblingText)) {
+                                        sibling = NULL;
+                                    }
+                                    isWhiteSpace = /^[\s\ufeff]/.test(siblingText);
+                                } else {
+                                    // If this is a visible element.
+                                    // We need to check for the bookmark attribute because IE insists on
+                                    // rendering the display:none nodes we use for bookmarks. (#3363)
+                                    if ((sibling.offsetWidth > 0
+                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
+                                        // bug report@2012-05-08
+                                        || DOM._4e_name(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
+                                        // We'll accept it only if we need
+                                        // whitespace, and this is an inline
+                                        // element with whitespace only.
+                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
+                                            // It must contains spaces and inline elements only.
+
+                                            siblingText = DOM.text(sibling);
+
+                                            if ((/[^\s\ufeff]/).test(siblingText)) {
+                                                sibling = NULL;
+                                            } else {
+                                                allChildren = sibling.all || sibling.getElementsByTagName('*');
+                                                for (i = 0; child = allChildren[ i++ ];) {
+                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
+                                                        sibling = NULL;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            if (sibling) {
+                                                isWhiteSpace = !!siblingText.length;
+                                            }
+                                        }
+                                        else {
+                                            sibling = NULL;
+                                        }
+                                    }
+                                }
+
+                                if (isWhiteSpace) {
+                                    if (needsWhiteSpace) {
+                                        if (commonReached) {
+                                            endTop = enlargeable;
+                                        } else {
+                                            self.setEndAfter(enlargeable);
+                                        }
+                                    }
+                                }
+
+                                if (sibling) {
+                                    next = sibling.nextSibling;
+
+                                    if (!enlargeable && !next) {
+                                        enlargeable = new Node(sibling);
+                                        sibling = NULL;
+                                        break;
+                                    }
+
+                                    sibling = next;
+                                }
+                                else {
+                                    // If sibling has been set to NULL, then we
+                                    // need to stop enlarging.
+                                    enlargeable = NULL;
                                 }
                             }
 
-                            if (sibling) {
-                                next = sibling.nextSibling;
-
-                                if (!enlargeable && !next) {
-                                    enlargeable = new Node(sibling);
-                                    sibling = NULL;
-                                    break;
-                                }
-
-                                sibling = next;
-                            }
-                            else {
-                                // If sibling has been set to NULL, then we
-                                // need to stop enlarging.
-                                enlargeable = NULL;
+                            if (enlargeable) {
+                                enlargeable = enlargeable.parent();
                             }
                         }
 
-                        if (enlargeable)
-                            enlargeable = enlargeable.parent();
-                    }
+                        // If the common ancestor can be enlarged by both boundaries, then include it also.
+                        if (startTop && endTop) {
+                            commonAncestor = startTop.contains(endTop) ? endTop : startTop;
+                            self.setStartBefore(commonAncestor);
+                            self.setEndAfter(commonAncestor);
+                        }
+                        break;
 
-                    // If the common ancestor can be enlarged by both boundaries, then include it also.
-                    if (startTop && endTop) {
-                        commonAncestor = startTop.contains(endTop) ? endTop : startTop;
-                        self.setStartBefore(commonAncestor);
-                        self.setEndAfter(commonAncestor);
-                    }
-                    break;
+                    case KER.ENLARGE_BLOCK_CONTENTS:
+                    case KER.ENLARGE_LIST_ITEM_CONTENTS:
 
-                case KER.ENLARGE_BLOCK_CONTENTS:
-                case KER.ENLARGE_LIST_ITEM_CONTENTS:
+                        // Enlarging the start boundary.
+                        var walkerRange = new KERange(self.document);
+                        body = new Node(self.document.body);
 
-                    // Enlarging the start boundary.
-                    var walkerRange = new KERange(self.document);
-                    body = new Node(self.document.body);
+                        walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
+                        walkerRange.setEnd(self.startContainer, self.startOffset);
 
-                    walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
-                    walkerRange.setEnd(self.startContainer, self.startOffset);
+                        var walker = new Walker(walkerRange),
+                            blockBoundary, // The node on which the enlarging should stop.
+                            tailBr, //
+                            defaultGuard = Walker.blockBoundary(
+                                ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                                { br:1 } : NULL),
+                            // Record the encountered 'blockBoundary' for later use.
+                            boundaryGuard = function (node) {
+                                var retval = defaultGuard(node);
+                                if (!retval) {
+                                    blockBoundary = new Node(node);
+                                }
+                                return retval;
+                            },
+                            // Record the encounted 'tailBr' for later use.
+                            tailBrGuard = function (node) {
+                                var retval = boundaryGuard(node);
+                                if (!retval && DOM._4e_name(node) == 'br') {
+                                    tailBr = new Node(node);
+                                }
+                                return retval;
+                            };
 
-                    var walker = new Walker(walkerRange),
-                        blockBoundary, // The node on which the enlarging should stop.
-                        tailBr, //
-                        defaultGuard = Walker.blockBoundary(
-                            ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                            { br:1 } : NULL),
-                        // Record the encountered 'blockBoundary' for later use.
-                        boundaryGuard = function (node) {
-                            var retval = defaultGuard(node);
-                            if (!retval) {
-                                blockBoundary = new Node(node);
-                            }
-                            return retval;
-                        },
-                        // Record the encounted 'tailBr' for later use.
-                        tailBrGuard = function (node) {
-                            var retval = boundaryGuard(node);
-                            if (!retval && DOM._4e_name(node) == 'br') {
-                                tailBr = new Node(node);
-                            }
-                            return retval;
-                        };
+                        walker.guard = boundaryGuard;
 
-                    walker.guard = boundaryGuard;
+                        enlargeable = walker.lastBackward();
 
-                    enlargeable = walker.lastBackward();
+                        // It's the body which stop the enlarging if no block boundary found.
+                        blockBoundary = blockBoundary || body;
 
-                    // It's the body which stop the enlarging if no block boundary found.
-                    blockBoundary = blockBoundary || body;
+                        // Start the range at different position by comparing
+                        // the document position of it with 'enlargeable' node.
+                        self.setStartAt(
+                            blockBoundary,
+                            blockBoundary._4e_name() != 'br' &&
+                                ( !enlargeable && self.checkStartOfBlock()
+                                    || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                KER.POSITION_AFTER_START :
+                                KER.POSITION_AFTER_END);
 
-                    // Start the range at different position by comparing
-                    // the document position of it with 'enlargeable' node.
-                    self.setStartAt(
-                        blockBoundary,
-                        blockBoundary._4e_name() != 'br' &&
-                            ( !enlargeable && self.checkStartOfBlock()
+                        // Enlarging the end boundary.
+                        walkerRange = self.clone();
+                        walkerRange.collapse();
+                        walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
+                        walker = new Walker(walkerRange);
+
+                        // tailBrGuard only used for on range end.
+                        walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                            tailBrGuard : boundaryGuard;
+                        blockBoundary = NULL;
+                        // End the range right before the block boundary node.
+
+                        enlargeable = walker.lastForward();
+
+                        // It's the body which stop the enlarging if no block boundary found.
+                        blockBoundary = blockBoundary || body;
+
+                        // Start the range at different position by comparing
+                        // the document position of it with 'enlargeable' node.
+                        self.setEndAt(
+                            blockBoundary,
+                            ( !enlargeable && self.checkEndOfBlock()
                                 || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                            KER.POSITION_AFTER_START :
-                            KER.POSITION_AFTER_END);
-
-                    // Enlarging the end boundary.
-                    walkerRange = self.clone();
-                    walkerRange.collapse();
-                    walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
-                    walker = new Walker(walkerRange);
-
-                    // tailBrGuard only used for on range end.
-                    walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                        tailBrGuard : boundaryGuard;
-                    blockBoundary = NULL;
-                    // End the range right before the block boundary node.
-
-                    enlargeable = walker.lastForward();
-
-                    // It's the body which stop the enlarging if no block boundary found.
-                    blockBoundary = blockBoundary || body;
-
-                    // Start the range at different position by comparing
-                    // the document position of it with 'enlargeable' node.
-                    self.setEndAt(
-                        blockBoundary,
-                        ( !enlargeable && self.checkEndOfBlock()
-                            || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                            KER.POSITION_BEFORE_END :
-                            KER.POSITION_BEFORE_START);
-                    // We must include the <br> at the end of range if there's
-                    // one and we're expanding list item contents
-                    if (tailBr)
-                        self.setEndAfter(tailBr);
-            }
-        },
-        checkStartOfBlock:function () {
-            var self = this, startContainer = self.startContainer,
-                startOffset = self.startOffset;
-
-            // If the starting node is a text node, and non-empty before the offset,
-            // then we're surely not at the start of block.
-            if (startOffset && startContainer[0].nodeType == KEN.NODE_TEXT) {
-                var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
-                if (textBefore.length)
-                    return FALSE;
-            }
-
-            // Antecipate the trim() call here, so the walker will not make
-            // changes to the DOM, which would not get reflected into this
-            // range otherwise.
-            self.trim();
-
-            // We need to grab the block element holding the start boundary, so
-            // let's use an element path for it.
-            var path = new ElementPath(self.startContainer);
-
-            // Creates a range starting at the block start until the range start.
-            var walkerRange = self.clone();
-            walkerRange.collapse(TRUE);
-            walkerRange.setStartAt(path.block || path.blockLimit, KER.POSITION_AFTER_START);
-
-            var walker = new Walker(walkerRange);
-            walker.evaluator = getCheckStartEndBlockEvalFunction(TRUE);
-
-            return walker.checkBackward();
-        },
-
-        checkEndOfBlock:function () {
-            var self = this, endContainer = self.endContainer,
-                endOffset = self.endOffset;
-
-            // If the ending node is a text node, and non-empty after the offset,
-            // then we're surely not at the end of block.
-            if (endContainer[0].nodeType == KEN.NODE_TEXT) {
-                var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
-                if (textAfter.length)
-                    return FALSE;
-            }
-
-            // Antecipate the trim() call here, so the walker will not make
-            // changes to the DOM, which would not get reflected into this
-            // range otherwise.
-            self.trim();
-
-            // We need to grab the block element holding the start boundary, so
-            // let's use an element path for it.
-            var path = new ElementPath(self.endContainer);
-
-            // Creates a range starting at the block start until the range start.
-            var walkerRange = self.clone();
-            walkerRange.collapse(FALSE);
-            walkerRange.setEndAt(path.block || path.blockLimit, KER.POSITION_BEFORE_END);
-
-            var walker = new Walker(walkerRange);
-            walker.evaluator = getCheckStartEndBlockEvalFunction(FALSE);
-
-            return walker.checkForward();
-        },
-        /**
-         * Check whether current range is on the inner edge of the specified element.
-         * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
-         * @param {Node} element The target element to check.
-         */
-        checkBoundaryOfElement:function (element, checkType) {
-            var walkerRange = this.clone();
-            // Expand the range to element boundary.
-            walkerRange[ checkType == KER.START ?
-                'setStartAt' : 'setEndAt' ]
-                (element, checkType == KER.START ?
-                    KER.POSITION_AFTER_START
-                    : KER.POSITION_BEFORE_END);
-
-            var walker = new Walker(walkerRange);
-
-            walker.evaluator = elementBoundaryEval;
-            return walker[ checkType == KER.START ?
-                'checkBackward' : 'checkForward' ]();
-        },
-
-        getBoundaryNodes:function () {
-            var self = this, startNode = self.startContainer,
-                endNode = self.endContainer,
-                startOffset = self.startOffset,
-                endOffset = self.endOffset,
-                childCount;
-
-            if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
-                childCount = startNode[0].childNodes.length;
-                if (childCount > startOffset)
-                    startNode = new Node(startNode[0].childNodes[startOffset]);
-                else if (childCount < 1)
-                    startNode = startNode._4e_previousSourceNode();
-                else        // startOffset > childCount but childCount is not 0
-                {
-                    // Try to take the node just after the current position.
-                    startNode = startNode[0];
-                    while (startNode.lastChild)
-                        startNode = startNode.lastChild;
-                    startNode = new Node(startNode);
-
-                    // Normally we should take the next node in DFS order. But it
-                    // is also possible that we've already reached the end of
-                    // document.
-                    startNode = startNode._4e_nextSourceNode() || startNode;
+                                KER.POSITION_BEFORE_END :
+                                KER.POSITION_BEFORE_START);
+                        // We must include the <br> at the end of range if there's
+                        // one and we're expanding list item contents
+                        if (tailBr) {
+                            self.setEndAfter(tailBr);
+                        }
                 }
-            }
+            },
+            checkStartOfBlock:function () {
+                var self = this, startContainer = self.startContainer,
+                    startOffset = self.startOffset;
 
-            if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
-                childCount = endNode[0].childNodes.length;
-                if (childCount > endOffset)
-                    endNode = new Node(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
-                else if (childCount < 1)
-                    endNode = endNode._4e_previousSourceNode();
-                else        // endOffset > childCount but childCount is not 0
-                {
-                    // Try to take the node just before the current position.
-                    endNode = endNode[0];
-                    while (endNode.lastChild)
-                        endNode = endNode.lastChild;
-                    endNode = new Node(endNode);
-                }
-            }
-
-            // Sometimes the endNode will come right before startNode for collapsed
-            // ranges. Fix it. (#3780)
-            if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
-                startNode = endNode;
-
-            return { startNode:startNode, endNode:endNode };
-        },
-        fixBlock:function (isStart, blockTag) {
-            var self = this,
-                bookmark = self.createBookmark(),
-                fixedBlock = new Node(self.document.createElement(blockTag));
-            self.collapse(isStart);
-            self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
-            fixedBlock[0].appendChild(self.extractContents());
-            fixedBlock._4e_trim();
-            if (!UA['ie']) {
-                fixedBlock._4e_appendBogus();
-            }
-            self.insertNode(fixedBlock);
-            self.moveToBookmark(bookmark);
-            return fixedBlock;
-        },
-        splitBlock:function (blockTag) {
-            var self = this, startPath = new ElementPath(self.startContainer),
-                endPath = new ElementPath(self.endContainer),
-                startBlockLimit = startPath.blockLimit,
-                endBlockLimit = endPath.blockLimit,
-                startBlock = startPath.block,
-                endBlock = endPath.block,
-                elementPath = NULL;
-            // Do nothing if the boundaries are in different block limits.
-            if (!startBlockLimit.equals(endBlockLimit))
-                return NULL;
-
-            // Get or fix current blocks.
-            if (blockTag != 'br') {
-                if (!startBlock) {
-                    startBlock = self.fixBlock(TRUE, blockTag);
-                    endBlock = new ElementPath(self.endContainer).block;
+                // If the starting node is a text node, and non-empty before the offset,
+                // then we're surely not at the start of block.
+                if (startOffset && startContainer[0].nodeType == KEN.NODE_TEXT) {
+                    var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
+                    if (textBefore.length)
+                        return FALSE;
                 }
 
-                if (!endBlock)
-                    endBlock = self.fixBlock(FALSE, blockTag);
-            }
+                // Antecipate the trim() call here, so the walker will not make
+                // changes to the DOM, which would not get reflected into this
+                // range otherwise.
+                self.trim();
 
-            // Get the range position.
-            var isStartOfBlock = startBlock && self.checkStartOfBlock(),
-                isEndOfBlock = endBlock && self.checkEndOfBlock();
+                // We need to grab the block element holding the start boundary, so
+                // let's use an element path for it.
+                var path = new ElementPath(self.startContainer);
 
-            // Delete the current contents.
-            // Why is 2.x doing CheckIsEmpty()?
-            self.deleteContents();
+                // Creates a range starting at the block start until the range start.
+                var walkerRange = self.clone();
+                walkerRange.collapse(TRUE);
+                walkerRange.setStartAt(path.block || path.blockLimit, KER.POSITION_AFTER_START);
 
-            if (startBlock && DOM.equals(startBlock, endBlock)) {
-                if (isEndOfBlock) {
-                    elementPath = new ElementPath(self.startContainer);
-                    self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
-                    endBlock = NULL;
-                }
-                else if (isStartOfBlock) {
-                    elementPath = new ElementPath(self.startContainer);
-                    self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
-                    startBlock = NULL;
-                }
-                else {
-                    endBlock = self.splitElement(startBlock);
+                var walker = new Walker(walkerRange);
+                walker.evaluator = getCheckStartEndBlockEvalFunction(TRUE);
 
-                    // In Gecko, the last child node must be a bogus <br>.
-                    // Note: bogus <br> added under <ul> or <ol> would cause
-                    // lists to be incorrectly rendered.
-                    if (!UA['ie'] && !S.inArray(startBlock._4e_name(), ['ul', 'ol']))
-                        startBlock._4e_appendBogus();
-                }
-            }
+                return walker.checkBackward();
+            },
 
-            return {
-                previousBlock:startBlock,
-                nextBlock:endBlock,
-                wasStartOfBlock:isStartOfBlock,
-                wasEndOfBlock:isEndOfBlock,
-                elementPath:elementPath
-            };
-        },
-        splitElement:function (toSplit) {
-            var self = this;
-            if (!self.collapsed)
-                return NULL;
+            checkEndOfBlock:function () {
+                var self = this, endContainer = self.endContainer,
+                    endOffset = self.endOffset;
 
-            // Extract the contents of the block from the selection point to the end
-            // of its contents.
-            self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
-            var documentFragment = self.extractContents(),
-                // Duplicate the element after it.
-                clone = toSplit.clone(FALSE);
-
-            // Place the extracted contents into the duplicated element.
-            clone[0].appendChild(documentFragment);
-            clone.insertAfter(toSplit);
-            self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
-            return clone;
-        },
-        moveToElementEditablePosition:function (el, isMoveToEnd) {
-            var self = this, isEditable, xhtml_dtd = dtd;
-
-            // Empty elements are rejected.
-            if (xhtml_dtd.$empty[ el._4e_name() ])
-                return FALSE;
-
-            while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
-                isEditable = el._4e_isEditable();
-
-                // If an editable element is found, move inside it.
-                if (isEditable) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_BEFORE_END :
-                        KER.POSITION_AFTER_START);
-                    // 不要返回，继续找可能的文字位置
-                }
-                // Stop immediately if we've found a non editable inline element (e.g <img>).
-                else if (xhtml_dtd.$inline[ el._4e_name() ]) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_AFTER_END :
-                        KER.POSITION_BEFORE_START);
-                    return TRUE;
+                // If the ending node is a text node, and non-empty after the offset,
+                // then we're surely not at the end of block.
+                if (endContainer[0].nodeType == KEN.NODE_TEXT) {
+                    var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
+                    if (textAfter.length)
+                        return FALSE;
                 }
 
-                // Non-editable non-inline elements are to be bypassed, getting the next one.
-                if (xhtml_dtd.$empty[ el._4e_name() ])
-                    el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
-                else {
-                    if (isMoveToEnd) {
-                        el = el.last(nonWhitespaceOrIsBookmark);
-                    } else {
-                        el = el.first(nonWhitespaceOrIsBookmark);
+                // Antecipate the trim() call here, so the walker will not make
+                // changes to the DOM, which would not get reflected into this
+                // range otherwise.
+                self.trim();
+
+                // We need to grab the block element holding the start boundary, so
+                // let's use an element path for it.
+                var path = new ElementPath(self.endContainer);
+
+                // Creates a range starting at the block start until the range start.
+                var walkerRange = self.clone();
+                walkerRange.collapse(FALSE);
+                walkerRange.setEndAt(path.block || path.blockLimit, KER.POSITION_BEFORE_END);
+
+                var walker = new Walker(walkerRange);
+                walker.evaluator = getCheckStartEndBlockEvalFunction(FALSE);
+
+                return walker.checkForward();
+            },
+            /**
+             * Check whether current range is on the inner edge of the specified element.
+             * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
+             * @param {Node} element The target element to check.
+             */
+            checkBoundaryOfElement:function (element, checkType) {
+                var walkerRange = this.clone();
+                // Expand the range to element boundary.
+                walkerRange[ checkType == KER.START ?
+                    'setStartAt' : 'setEndAt' ]
+                    (element, checkType == KER.START ?
+                        KER.POSITION_AFTER_START
+                        : KER.POSITION_BEFORE_END);
+
+                var walker = new Walker(walkerRange);
+
+                walker.evaluator = elementBoundaryEval;
+                return walker[ checkType == KER.START ?
+                    'checkBackward' : 'checkForward' ]();
+            },
+
+            getBoundaryNodes:function () {
+                var self = this, startNode = self.startContainer,
+                    endNode = self.endContainer,
+                    startOffset = self.startOffset,
+                    endOffset = self.endOffset,
+                    childCount;
+
+                if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
+                    childCount = startNode[0].childNodes.length;
+                    if (childCount > startOffset)
+                        startNode = new Node(startNode[0].childNodes[startOffset]);
+                    else if (childCount < 1)
+                        startNode = startNode._4e_previousSourceNode();
+                    else        // startOffset > childCount but childCount is not 0
+                    {
+                        // Try to take the node just after the current position.
+                        startNode = startNode[0];
+                        while (startNode.lastChild)
+                            startNode = startNode.lastChild;
+                        startNode = new Node(startNode);
+
+                        // Normally we should take the next node in DFS order. But it
+                        // is also possible that we've already reached the end of
+                        // document.
+                        startNode = startNode._4e_nextSourceNode() || startNode;
                     }
                 }
-                // Stop immediately if we've found a text node.
-                if (el && el[0].nodeType == KEN.NODE_TEXT) {
-                    self.moveToPosition(el, isMoveToEnd ?
-                        KER.POSITION_AFTER_END :
-                        KER.POSITION_BEFORE_START);
-                    return TRUE;
+
+                if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
+                    childCount = endNode[0].childNodes.length;
+                    if (childCount > endOffset)
+                        endNode = new Node(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
+                    else if (childCount < 1)
+                        endNode = endNode._4e_previousSourceNode();
+                    else        // endOffset > childCount but childCount is not 0
+                    {
+                        // Try to take the node just before the current position.
+                        endNode = endNode[0];
+                        while (endNode.lastChild)
+                            endNode = endNode.lastChild;
+                        endNode = new Node(endNode);
+                    }
                 }
+
+                // Sometimes the endNode will come right before startNode for collapsed
+                // ranges. Fix it. (#3780)
+                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
+                    startNode = endNode;
+
+                return { startNode:startNode, endNode:endNode };
+            },
+            fixBlock:function (isStart, blockTag) {
+                var self = this,
+                    bookmark = self.createBookmark(),
+                    fixedBlock = new Node(self.document.createElement(blockTag));
+                self.collapse(isStart);
+                self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
+                fixedBlock[0].appendChild(self.extractContents());
+                fixedBlock._4e_trim();
+                if (!UA['ie']) {
+                    fixedBlock._4e_appendBogus();
+                }
+                self.insertNode(fixedBlock);
+                self.moveToBookmark(bookmark);
+                return fixedBlock;
+            },
+            splitBlock:function (blockTag) {
+                var self = this, startPath = new ElementPath(self.startContainer),
+                    endPath = new ElementPath(self.endContainer),
+                    startBlockLimit = startPath.blockLimit,
+                    endBlockLimit = endPath.blockLimit,
+                    startBlock = startPath.block,
+                    endBlock = endPath.block,
+                    elementPath = NULL;
+                // Do nothing if the boundaries are in different block limits.
+                if (!startBlockLimit.equals(endBlockLimit))
+                    return NULL;
+
+                // Get or fix current blocks.
+                if (blockTag != 'br') {
+                    if (!startBlock) {
+                        startBlock = self.fixBlock(TRUE, blockTag);
+                        endBlock = new ElementPath(self.endContainer).block;
+                    }
+
+                    if (!endBlock)
+                        endBlock = self.fixBlock(FALSE, blockTag);
+                }
+
+                // Get the range position.
+                var isStartOfBlock = startBlock && self.checkStartOfBlock(),
+                    isEndOfBlock = endBlock && self.checkEndOfBlock();
+
+                // Delete the current contents.
+                // Why is 2.x doing CheckIsEmpty()?
+                self.deleteContents();
+
+                if (startBlock && DOM.equals(startBlock, endBlock)) {
+                    if (isEndOfBlock) {
+                        elementPath = new ElementPath(self.startContainer);
+                        self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
+                        endBlock = NULL;
+                    }
+                    else if (isStartOfBlock) {
+                        elementPath = new ElementPath(self.startContainer);
+                        self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
+                        startBlock = NULL;
+                    }
+                    else {
+                        endBlock = self.splitElement(startBlock);
+
+                        // In Gecko, the last child node must be a bogus <br>.
+                        // Note: bogus <br> added under <ul> or <ol> would cause
+                        // lists to be incorrectly rendered.
+                        if (!UA['ie'] && !S.inArray(startBlock._4e_name(), ['ul', 'ol']))
+                            startBlock._4e_appendBogus();
+                    }
+                }
+
+                return {
+                    previousBlock:startBlock,
+                    nextBlock:endBlock,
+                    wasStartOfBlock:isStartOfBlock,
+                    wasEndOfBlock:isEndOfBlock,
+                    elementPath:elementPath
+                };
+            },
+            splitElement:function (toSplit) {
+                var self = this;
+                if (!self.collapsed)
+                    return NULL;
+
+                // Extract the contents of the block from the selection point to the end
+                // of its contents.
+                self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
+                var documentFragment = self.extractContents(),
+                    // Duplicate the element after it.
+                    clone = toSplit.clone(FALSE);
+
+                // Place the extracted contents into the duplicated element.
+                clone[0].appendChild(documentFragment);
+                clone.insertAfter(toSplit);
+                self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
+                return clone;
+            },
+            moveToElementEditablePosition:function (el, isMoveToEnd) {
+                var self = this, isEditable, xhtml_dtd = dtd;
+
+                // Empty elements are rejected.
+                if (xhtml_dtd.$empty[ el._4e_name() ])
+                    return FALSE;
+
+                while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
+                    isEditable = el._4e_isEditable();
+
+                    // If an editable element is found, move inside it.
+                    if (isEditable) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_BEFORE_END :
+                            KER.POSITION_AFTER_START);
+                        // 不要返回，继续找可能的文字位置
+                    }
+                    // Stop immediately if we've found a non editable inline element (e.g <img>).
+                    else if (xhtml_dtd.$inline[ el._4e_name() ]) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_AFTER_END :
+                            KER.POSITION_BEFORE_START);
+                        return TRUE;
+                    }
+
+                    // Non-editable non-inline elements are to be bypassed, getting the next one.
+                    if (xhtml_dtd.$empty[ el._4e_name() ])
+                        el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
+                    else {
+                        if (isMoveToEnd) {
+                            el = el.last(nonWhitespaceOrIsBookmark);
+                        } else {
+                            el = el.first(nonWhitespaceOrIsBookmark);
+                        }
+                    }
+                    // Stop immediately if we've found a text node.
+                    if (el && el[0].nodeType == KEN.NODE_TEXT) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_AFTER_END :
+                            KER.POSITION_BEFORE_START);
+                        return TRUE;
+                    }
+                }
+
+                return isEditable;
+            },
+
+            selectNodeContents:function (node) {
+                this.setStart(node, 0);
+                this.setEnd(node, node[0].nodeType == KEN.NODE_TEXT ?
+                    node[0].nodeValue.length :
+                    node[0].childNodes.length);
             }
-
-            return isEditable;
-        },
-
-        selectNodeContents:function (node) {
-            this.setStart(node, 0);
-            this.setEnd(node, node[0].nodeType == KEN.NODE_TEXT ?
-                node[0].nodeValue.length :
-                node[0].childNodes.length);
-        }
-    });
+        });
     var inlineChildReqElements = { "abbr":1, "acronym":1, "b":1, "bdo":1,
         "big":1, "cite":1, "code":1, "del":1, "dfn":1,
         "em":1, "font":1, "i":1, "ins":1, "label":1,
@@ -4470,35 +4611,9 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         };
     }
 
-    function bookmark(contentOnly, isReject) {
-        function isBookmarkNode(node) {
-            return ( node && node.nodeName == 'span'
-                && node.getAttribute('_ke_bookmark') );
-        }
-
-        return function (node) {
-            var isBookmark, parent;
-            // Is bookmark inner text node?
-            isBookmark = ( node && !node.nodeName && ( parent = node.parentNode )
-                && isBookmarkNode(parent) );
-            // Is bookmark node?
-            isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-            return isReject ^ isBookmark;
-        };
-    }
-
-    function whitespaces(isReject) {
-        return function (node) {
-            node = node[0] || node;
-            var isWhitespace = node && ( node.nodeType == KEN.NODE_TEXT )
-                && !S.trim(node.nodeValue);
-            return isReject ^ isWhitespace;
-        };
-    }
-
     var editorDom = {
         _4e_breakParent:function (el, parent) {
-            var KERange = KE.Range;
+            var KERange = Editor.Range;
             parent = new Node(parent);
             var range = new KERange(el.ownerDocument);
 
@@ -4518,10 +4633,10 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
         }
     };
 
-    KE.Utils.injectDom(editorDom);
+    Editor.Utils.injectDom(editorDom);
 
 
-    KE.Range = KERange;
+    Editor.Range = KERange;
 }, {
     requires:['./base', './utils', './walker', './elementPath', './dom']
 });
@@ -4535,13 +4650,13 @@ KISSY.add("editor/core/range", function (S, KE, Utils, Walker, ElementPath) {
  */
 KISSY.add("editor/core/selection", function (S) {
 
-    var KE = S.Editor;
+    var Editor = S.Editor;
 
     /**
      * selection type enum
      * @enum {number}
      */
-    KE.SELECTION = {
+    Editor.SELECTION = {
         SELECTION_NONE:1,
         SELECTION_TEXT:2,
         SELECTION_ELEMENT:3
@@ -4552,17 +4667,17 @@ KISSY.add("editor/core/selection", function (S) {
         NULL = null,
         UA = S.UA,
         DOM = S.DOM,
-        //tryThese = KE.Utils.tryThese,
+        //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
-        KES = KE.SELECTION,
-        KER = KE.RANGE,
-        KEN = KE.NODE,
+        KES = Editor.SELECTION,
+        KER = Editor.RANGE,
+        KEN = Editor.NODE,
         // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
         //EventTarget = S.EventTarget,
-        Walker = KE.Walker,
-        //ElementPath = KE.ElementPath,
-        KERange = KE.Range;
+        Walker = Editor.Walker,
+        //ElementPath = Editor.ElementPath,
+        KERange = Editor.Range;
 
     /**
      * @constructor
@@ -4698,7 +4813,7 @@ KISSY.add("editor/core/selection", function (S) {
                 /**
                  *
                  * @param {TextRange} range
-                 * @param {boolean=} start
+                 * @param {Boolean=} start
                  */
                 var getBoundaryInformation = function (range, start) {
                     // Creates a collapsed range at the requested boundary.
@@ -4976,7 +5091,7 @@ KISSY.add("editor/core/selection", function (S) {
                                      && ( selected = enclosed )
                                  ); i--) {
                         // Then check any deep wrapped element, e.g. [<b><i><img /></i></b>]
-                        //一下子退到底  ^<a><span><span><img/></span></span></a>^
+                        // 一下子退到底  ^<a><span><span><img/></span></span></a>^
                         // ->
                         //<a><span><span>^<img/>^</span></span></a>
                         range.shrink(KER.SHRINK_ELEMENT);
@@ -5312,7 +5427,7 @@ KISSY.add("editor/core/selection", function (S) {
 
     KESelection.getSelection = getSelection;
 
-    KE.Selection = KESelection;
+    Editor.Selection = KESelection;
 
     return KESelection;
 }, {
@@ -5327,7 +5442,7 @@ KISSY.add("editor/core/selection", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/selection/index", function (S, KE) {
+KISSY.add("editor/plugin/selection/index", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
@@ -5335,8 +5450,8 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
         UA = S.UA,
         Event = S.Event,
         Node = S.Node,
-        KES = KE.SELECTION,
-        KEN = KE.NODE;
+        KES = Editor.SELECTION,
+        KEN = Editor.NODE;
 
     /**
      * 2012-01-11 借鉴 tinymce
@@ -5439,7 +5554,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
         // not editable. (#5634)
         // 终于和ck同步了，我也发现了这个bug，ck3.3.2解决
         if (//ie8 的 7 兼容模式
-            KE.Utils.ieEngine < 8) {
+            Editor.Utils.ieEngine < 8) {
             // The 'click' event is not fired when clicking the
             // scrollbars, so we can use it to check whether
             // the empty space following <body> has been clicked.
@@ -5574,7 +5689,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
 
         /**
          *
-         * @param {boolean=} testIt
+         * @param {Boolean=} testIt
          */
         function saveSelection(testIt) {
             // S.log("saveSelection");
@@ -5663,8 +5778,8 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
             return block._4e_outerHtml().match(emptyParagraphRegexp);
         }
 
-        var isNotWhitespace = KE.Walker.whitespaces(TRUE),
-            isNotBookmark = KE.Walker.bookmark(FALSE, TRUE);
+        var isNotWhitespace = Editor.Walker.whitespaces(TRUE),
+            isNotBookmark = Editor.Walker.bookmark(FALSE, TRUE);
         //除去注释和空格的下一个有效元素
         var nextValidEl = function (node) {
             return isNotWhitespace(node) && node.nodeType != 8
@@ -5672,7 +5787,7 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
 
         // 光标可以不能放在里面
         function cannotCursorPlaced(element) {
-            var dtd = KE.XHTML_DTD;
+            var dtd = Editor.XHTML_DTD;
             return element._4e_isBlockBoundary() && dtd.$empty[ element._4e_name() ];
         }
 
@@ -5756,13 +5871,13 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
              *  当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              *  解决：增加新的 p
              */
-            var lastRange = new KE.Range(doc),
+            var lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方
             lastRange
                 .moveToElementEditablePosition(body,
                 TRUE);
-            lastPath = new KE.ElementPath(lastRange.startContainer);
+            lastPath = new Editor.ElementPath(lastRange.startContainer);
             // 不位于 <body><p>^</p></body>
             if (lastPath.blockLimit._4e_name() !== 'body') {
                 editBlock = new Node(doc.createElement('p')).appendTo(body);
@@ -5802,11 +5917,11 @@ KISSY.add("editor/plugin/selection/index", function (S, KE) {
  */
 KISSY.add("editor/core/styles", function (S) {
 
-    var KE = S.Editor,
+    var Editor = S.Editor,
         TRUE = true,
         FALSE = false,
         NULL = null,
-        Utils = KE.Utils,
+        Utils = Editor.Utils,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -5817,15 +5932,15 @@ KISSY.add("editor/core/styles", function (S) {
             STYLE_INLINE:2,
             STYLE_OBJECT:3
         },
-        KER = KE.RANGE,
-        KESelection = KE.Selection,
-        KEN = KE.NODE,
-        KEP = KE.POSITION,
-        KERange = KE.Range,
-        //Walker = KE.Walker,
+        KER = Editor.RANGE,
+        KESelection = Editor.Selection,
+        KEN = Editor.NODE,
+        KEP = Editor.POSITION,
+        KERange = Editor.Range,
+        //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
-        ElementPath = KE.ElementPath,
+        ElementPath = Editor.ElementPath,
         blockElements = {
             "address":1,
             "div":1,
@@ -5838,7 +5953,7 @@ KISSY.add("editor/core/styles", function (S) {
             "p":1,
             "pre":1
         },
-        DTD = KE.XHTML_DTD,
+        DTD = Editor.XHTML_DTD,
         objectElements = {
             //why? a should be same to inline? 但是不能互相嵌套
             //a:1,
@@ -5861,7 +5976,7 @@ KISSY.add("editor/core/styles", function (S) {
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
 
-    KE.STYLE = KEST;
+    Editor.STYLE = KEST;
 
     function notBookmark(node) {
         //only get attributes on element nodes by kissy
@@ -5908,7 +6023,7 @@ KISSY.add("editor/core/styles", function (S) {
     /**
      *
      * @param {Document} document
-     * @param {boolean=} remove
+     * @param {Boolean=} remove
      */
     function applyStyle(document, remove) {
         // Get all ranges from the selection.
@@ -6390,9 +6505,9 @@ KISSY.add("editor/core/styles", function (S) {
         var bookmark = range.createBookmark();
 
         // Expand the range.
-
         range.enlarge(KER.ENLARGE_ELEMENT);
         range.trim();
+
         // Get the first node to be processed and the last, which concludes the
         // processing.
         var boundaryNodes = range.createBookmark(),
@@ -6859,7 +6974,7 @@ KISSY.add("editor/core/styles", function (S) {
     /**
      *
      * @param {string} unparsedCssText
-     * @param {boolean=} nativeNormalize
+     * @param {Boolean=} nativeNormalize
      */
     function normalizeCssText(unparsedCssText, nativeNormalize) {
         var styleText = "";
@@ -7055,7 +7170,7 @@ KISSY.add("editor/core/styles", function (S) {
      *
      * @param {string} name
      * @param {string} value
-     * @param {boolean=} isStyle
+     * @param {Boolean=} isStyle
      */
     function normalizeProperty(name, value, isStyle) {
         var temp = new Node('<span>');
@@ -7167,7 +7282,7 @@ KISSY.add("editor/core/styles", function (S) {
         }
     }
 
-    KE.Style = KEStyle;
+    Editor.Style = KEStyle;
 }, {
     requires:['./range', './selection', './domIterator', './elementPath']
 });
@@ -7180,7 +7295,7 @@ KISSY.add("editor/core/styles", function (S) {
  */
 KISSY.add("editor/core/utils", function (S) {
 
-    var KE = S.Editor,
+    var Editor = S.Editor,
         TRUE = true,
         FALSE = false,
         NULL = null,
@@ -7188,7 +7303,12 @@ KISSY.add("editor/core/utils", function (S) {
         DOM = S.DOM,
         UA = S.UA,
         Event = S.Event,
-        Utils = {
+        /**
+         * Utilities for Editor.
+         * @namespace
+         * @memberOf Editor
+         */
+            Utils = {
             debugUrl:function (url) {
                 url = url.replace(/-min\.(js|css)/i, ".$1");
                 if (!S["Config"]['debug']) {
@@ -7200,12 +7320,12 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120510202538");
+                    url += "t=" + encodeURIComponent("20120515193540");
                 }
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);
                 }
-                return KE["Config"].base + url;
+                return Editor["Config"].base + url;
             },
             /**
              * 懒惰一下
@@ -7270,7 +7390,7 @@ KISSY.add("editor/core/utils", function (S) {
              * 是否两个数组完全相同
              * @param arrayA {Array}
              * @param arrayB {Array}
-             * @return {boolean}
+             * @return {Boolean}
              */
             arrayCompare:function (arrayA, arrayB) {
                 if (!arrayA && !arrayB)
@@ -7291,7 +7411,7 @@ KISSY.add("editor/core/utils", function (S) {
              * 根据dom路径得到某个节点
              * @param doc {Document}
              * @param address {Array.<number>}
-             * @param normalized {boolean}
+             * @param normalized {Boolean}
              * @return {Node}
              */
             getByAddress:function (doc, address, normalized) {
@@ -7386,7 +7506,7 @@ KISSY.add("editor/core/utils", function (S) {
              *
              * @param inputs {Array.<Node>}
              * @param [warn] {string}
-             * @return {boolean} 是否验证成功
+             * @return {Boolean} 是否验证成功
              */
             verifyInputs:function (inputs, warn) {
                 for (var i = 0; i < inputs.length; i++) {
@@ -7521,7 +7641,7 @@ KISSY.add("editor/core/utils", function (S) {
                     document['frames'][id].name = id;
                 }
 
-                var form =o.form,
+                var form = o.form,
                     buf = {
                         target:DOM.attr(form, "target"),
                         method:DOM.attr(form, "method"),
@@ -7541,7 +7661,7 @@ KISSY.add("editor/core/utils", function (S) {
                 var hiddens, hd;
                 if (ps) { // add dynamic params
                     hiddens = [];
-                    ps = KE.Utils.normParams(ps);
+                    ps = Editor.Utils.normParams(ps);
                     for (var k in ps) {
                         if (ps.hasOwnProperty(k)) {
                             hd = document.createElement('input');
@@ -7688,7 +7808,7 @@ KISSY.add("editor/core/utils", function (S) {
             }
         };
 
-    KE.Utils = Utils;
+    Editor.Utils = Utils;
 
     return Utils;
 }, {
@@ -7703,19 +7823,19 @@ KISSY.add("editor/core/utils", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/walker", function (S, KE) {
+KISSY.add("editor/core/walker", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        KEN = KE.NODE,
+        KEN = Editor.NODE,
         DOM = S.DOM,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node;
 
 
-    function iterate(rtl, breakOnFalse) {
+    function iterate(rtl, breakOnFalseRetFalse) {
         var self = this;
         // Return NULL if we have reached the end.
         if (self._.end) {
@@ -7831,10 +7951,10 @@ KISSY.add("editor/core/walker", function (S, KE) {
         while (node && !self._.end) {
             self.current = node;
             if (!self.evaluator || self.evaluator(node[0]) !== FALSE) {
-                if (!breakOnFalse) {
+                if (!breakOnFalseRetFalse) {
                     return node;
                 }
-            } else if (breakOnFalse && self.evaluator) {
+            } else if (breakOnFalseRetFalse && self.evaluator) {
                 return FALSE;
             }
             node = node[ getSourceNodeFn ](FALSE, type, guard);
@@ -7853,6 +7973,12 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return last;
     }
 
+    /**
+     * Walker for DOM.
+     * @param {Editor.Range} range
+     * @class
+     * @memberOf Editor
+     */
     function Walker(range) {
         this.range = range;
 
@@ -7882,81 +8008,85 @@ KISSY.add("editor/core/walker", function (S, KE) {
     }
 
 
-    S.augment(Walker, {
+    S.augment(Walker,
         /**
-         * Stop walking. No more nodes are retrieved if this function gets
-         * called.
+         * @lends Editor.Walker
          */
-        end:function () {
-            this._.end = 1;
-        },
+        {
+            /**
+             * Stop walking. No more nodes are retrieved if this function gets
+             * called.
+             */
+            end:function () {
+                this._.end = 1;
+            },
 
-        /**
-         * Retrieves the next node (at right).
-         * @returns {(boolean)} The next node or NULL if no more
-         *        nodes are available.
-         */
-        next:function () {
-            return iterate.call(this);
-        },
+            /**
+             * Retrieves the next node (at right).
+             * @returns {Boolean} The next node or NULL if no more
+             *        nodes are available.
+             */
+            next:function () {
+                return iterate.call(this);
+            },
 
-        /**
-         * Retrieves the previous node (at left).
-         * @returns {(boolean)} The previous node or NULL if no more
-         *        nodes are available.
-         */
-        previous:function () {
-            return iterate.call(this, TRUE);
-        },
+            /**
+             * Retrieves the previous node (at left).
+             * @returns {Boolean} The previous node or NULL if no more
+             *        nodes are available.
+             */
+            previous:function () {
+                return iterate.call(this, TRUE);
+            },
 
-        /**
-         * Check all nodes at right, executing the evaluation function.
-         * @returns {boolean} "FALSE" if the evaluator function returned
-         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-         */
-        checkForward:function () {
-            return iterate.call(this, FALSE, TRUE) !== FALSE;
-        },
+            /**
+             * Check all nodes at right, executing the evaluation function.
+             * @returns {Boolean} "FALSE" if the evaluator function returned
+             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+             */
+            checkForward:function () {
+                return iterate.call(this, FALSE, TRUE) !== FALSE;
+            },
 
-        /**
-         * Check all nodes at left, executing the evaluation function.
-         * 是不是 (不能后退了)
-         * @returns {boolean} "FALSE" if the evaluator function returned
-         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-         */
-        checkBackward:function () {
-            return iterate.call(this, TRUE, TRUE) !== FALSE;
-        },
+            /**
+             * Check all nodes at left, executing the evaluation function.
+             * 是不是 (不能后退了)
+             * @returns {Boolean} "FALSE" if the evaluator function returned
+             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+             */
+            checkBackward:function () {
+                return iterate.call(this, TRUE, TRUE) !== FALSE;
+            },
 
-        /**
-         * Executes a full walk forward (to the right), until no more nodes
-         * are available, returning the last valid node.
-         * @returns {(boolean)} The last node at the right or NULL
-         *        if no valid nodes are available.
-         */
-        lastForward:function () {
-            return iterateToLast.call(this);
-        },
+            /**
+             * Executes a full walk forward (to the right), until no more nodes
+             * are available, returning the last valid node.
+             * @returns {Boolean} The last node at the right or NULL
+             *        if no valid nodes are available.
+             */
+            lastForward:function () {
+                return iterateToLast.call(this);
+            },
 
-        /**
-         * Executes a full walk backwards (to the left), until no more nodes
-         * are available, returning the last valid node.
-         * @returns {(boolean)} The last node at the left or NULL
-         *        if no valid nodes are available.
-         */
-        lastBackward:function () {
-            return iterateToLast.call(this, TRUE);
-        },
+            /**
+             * Executes a full walk backwards (to the left), until no more nodes
+             * are available, returning the last valid node.
+             * @returns {Boolean} The last node at the left or NULL
+             *        if no valid nodes are available.
+             */
+            lastBackward:function () {
+                return iterateToLast.call(this, TRUE);
+            },
 
-        reset:function () {
-            delete this.current;
-            this._ = {};
-        },
+            reset:function () {
+                delete this.current;
+                this._ = {};
+            },
 
-        // for unit test
-        _iterator:iterate
+            // for unit test
+            _iterator:iterate
 
-    });
+        });
 
 
     Walker.blockBoundary = function (customNodeNames) {
@@ -7969,9 +8099,9 @@ KISSY.add("editor/core/walker", function (S, KE) {
     /**
      * Whether the to-be-evaluated node is a bookmark node OR bookmark node
      * inner contents.
-     * @param {boolean} [contentOnly] Whether only test againt the text content of
+     * @param {Boolean} [contentOnly] Whether only test againt the text content of
      * bookmark node instead of the element itself(default).
-     * @param {boolean} [isReject] Whether should return 'FALSE' for the bookmark
+     * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
      * node instead of 'TRUE'(default).
      */
     Walker.bookmark = function (contentOnly, isReject) {
@@ -7988,19 +8118,21 @@ KISSY.add("editor/core/walker", function (S, KE) {
                 isBookmarkNode(parent) );
             // Is bookmark node?
             isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-            return isReject ^ isBookmark;
+            // !! 2012-05-15
+            // evaluator check ===false, must turn it to boolean false
+            return !!(isReject ^ isBookmark);
         };
     };
 
     /**
      * Whether the node is a text node containing only whitespaces characters.
-     * @param {boolean} [isReject]
+     * @param {Boolean} [isReject]
      */
     Walker.whitespaces = function (isReject) {
         return function (node) {
             var isWhitespace = node.nodeType == KEN.NODE_TEXT &&
                 !S.trim(node.nodeValue);
-            return isReject ^ isWhitespace;
+            return !!(isReject ^ isWhitespace);
         };
     };
 
@@ -8018,7 +8150,7 @@ KISSY.add("editor/core/walker", function (S, KE) {
             // all sorts of empty paragraph, e.g. <br />.
             var isInvisible = whitespace(node) ||
                 node.nodeType == KEN.NODE_ELEMENT && !node.offsetHeight;
-            return isReject ^ isInvisible;
+            return !!(isReject ^ isInvisible);
         };
     };
 
@@ -8048,13 +8180,13 @@ KISSY.add("editor/core/walker", function (S, KE) {
         return false;
     }
 
-    KE.Utils.injectDom({
+    Editor.Utils.injectDom({
         _4e_getBogus:function (el) {
             return getBogus(new Node(el));
         }
     });
 
-    KE.Walker = Walker;
+    Editor.Walker = Walker;
 
     return Walker;
 }, {
@@ -8065,13 +8197,13 @@ KISSY.add("editor/core/walker", function (S, KE) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/zIndexManager", function (S) {
-    var KE = S.Editor;
+    var Editor = S.Editor;
 
     /**
      * z-index manager
      *@enum {number}
      */
-    KE.zIndexManager = {
+    Editor.zIndexManager = {
         BUBBLE_VIEW:(1100),
         POPUP_MENU:(1200),
         // flash 存储设置最高
@@ -8086,8 +8218,8 @@ KISSY.add("editor/core/zIndexManager", function (S) {
     /**
      * 获得全局最大值
      */
-    KE.baseZIndex = function (z) {
-        return (KE['Config'].baseZIndex || 10000) + z;
+    Editor.baseZIndex = function (z) {
+        return (Editor['Config'].baseZIndex || 10000) + z;
     };
 }, {
     requires:['./base']
@@ -8096,69 +8228,43 @@ KISSY.add("editor/core/zIndexManager", function (S) {
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, KE, Utils, focusManager) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     var TRUE = true,
         $ = S.all,
         FALSE = false,
         NULL = null,
         DOC = document,
 
-        /**
-         * @const
-         */
-            UA = S.UA,
+
+        UA = S.UA,
         IS_IE = UA['ie'],
-        /**
-         * @const
-         */
-            DOM = S.DOM,
-        /**
-         * @const
-         */
-            Node = S.Node,
-        //OLD_IE = !window.getSelection,
-        /**
-         * @const
-         */
-            Event = S.Event,
-        /**
-         * @const
-         */
-            DISPLAY = "display",
-        /**
-         * @const
-         */
-            WIDTH = "width",
-        /**
-         * @const
-         */
-            HEIGHT = "height",
-        /**
-         * @const
-         */
-            NONE = "none",
+
+        DOM = S.DOM,
+
+        Node = S.Node,
+
+
+        Event = S.Event,
+
+        DISPLAY = "display",
+
+        WIDTH = "width",
+
+        HEIGHT = "height",
+
+        NONE = "none",
         tryThese = Utils.tryThese,
-        /**
-         * @const
-         */
-            HTML5_DTD = '<!doctype html>',
-        /**
-         * @const
-         */
-            DTD = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ' +
+
+        HTML5_DTD = '<!doctype html>',
+
+        DTD = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ' +
             '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-        /**
-         * @const
-         */
-            KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
-        /**
-         * @const
-         */
-            KE_TOOLBAR_CLASS = ".ke-editor-tools",
-        /**
-         * @const
-         */
-            KE_STATUSBAR_CLASS = ".ke-editor-status";
+
+        KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
+
+        KE_TOOLBAR_CLASS = ".ke-editor-tools",
+
+        KE_STATUSBAR_CLASS = ".ke-editor-status";
 
     /**
      *
@@ -8167,7 +8273,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
      */
     function prepareIFrameHtml(id, customStyle, customLink, data) {
         var links = "",
-            CSS_FILE = KE.Utils.debugUrl("/theme/editor-iframe.css");
+            CSS_FILE = Editor.Utils.debugUrl("/theme/editor-iframe.css");
         if (customLink) {
             for (var i = 0; i < customLink.length; i++) {
                 links += '<link ' +
@@ -8236,799 +8342,857 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
 
-    S.mix(KE, {
-        SOURCE_MODE:0,
-        WYSIWYG_MODE:1
-    });
+    S.mix(Editor,
+        /**
+         * @lends Editor
+         */
+        {
+            SOURCE_MODE:0,
+            WYSIWYG_MODE:1
+        });
 
-    var WYSIWYG_MODE = KE.WYSIWYG_MODE;
+    var WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
-    S.augment(KE, {
-        createDom:function () {
-            var self = this,
-                textarea = self.get("textarea"),
-                editorEl;
-
-            if (!textarea) {
-                self.set("textarea", textarea = $("<textarea></textarea>"));
-            }
-
-            editorEl = self.get("el");
-
-            editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
-
-            editorEl.html(editorHtml);
-
-            self._UUID = S.guid();
-
-            var wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
-            self.__set("iframeWrapEl", wrap);
-            var toolBarEl = editorEl.one(KE_TOOLBAR_CLASS);
-            self.__set("toolBarEl", toolBarEl);
-            var statusBarEl = editorEl.one(KE_STATUSBAR_CLASS);
-            self.__set("statusBarEl", statusBarEl);
-
-            // 标准浏览器编辑器内焦点不失去,firefox?
-            // 标准浏览器实际上不需要！range在iframe内保存着呢，选择高亮变灰而已
-            // 2011-11-19 启用封装 preventFocus
-            // 点击工具栏内任何东西都不会使得焦点转移
-            // 支持 select 键盘 : 2012-03-16
-            // Utils.preventFocus(self.toolBarEl);
-
-            var tw = self.get(WIDTH),
-                th = self.get(HEIGHT);
-            editorEl.css(WIDTH, tw);
-            textarea.css(WIDTH, "100%");
-            textarea.css(DISPLAY, NONE);
-            wrap.append(textarea);
-
-            wrap.css(HEIGHT, th);
-            // ie textarea 100% 不起作用
-            textarea.css(HEIGHT, th);
-
-            // 高度由内层决定，工具条会变化
-            editorEl.css(HEIGHT, "");
-        },
+    S.augment(Editor,
 
         /**
-         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-         * width 依然在 el 上设置
+         * @lends Editor#
          */
-        _uiSetHeight:function (v) {
-            // S.log("_uiSetHeight : " + v);
-            var self = this;
-            self.get("iframeWrapEl").css(HEIGHT, v);
-            self.get("textarea").css(HEIGHT, v);
-        },
+        {
+            createDom:function () {
+                var self = this,
+                    textarea = self.get("textarea"),
+                    editorEl;
 
-        _uiSetMode:function (v) {
-            var self = this,
-                textarea = self.get("textarea");
-            if (v) {
-                self.execCommand("save");
-                self._setData(textarea.val());
-                self.execCommand("save");
-            } else {
-                textarea.val(self._getData(1, WYSIWYG_MODE));
-                textarea[0].focus();
-            }
-            textarea[v ? "hide" : "show"]();
-            self.get("iframe")[v ? "show" : "hide"]();
-            self.fire((v ? "wysiwyg" : "source") + "Mode")
-        },
-
-        renderUI:function () {
-            var self = this,
-                textarea = self.get("textarea");
-
-            // 实例集中管理
-            focusManager.register(self);
-
-            if (self.get("attachForm") && textarea[0].form) {
-                self._attachForm();
-            }
-
-            // self._setData(textarea.val());
-
-            function docReady() {
-                self.detach("docReady", docReady);
-                //是否自动focus
-                if (self.get("focus")) {
-                    self.focus();
+                if (!textarea) {
+                    self.set("textarea", textarea = $("<textarea></textarea>"));
                 }
-                //否则清空选择区域
-                else {
-                    var sel = self.getSelection();
-                    sel && sel.removeAllRanges();
-                }
-            }
 
-            self.on("docReady", docReady);
-        },
+                editorEl = self.get("el");
 
+                editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
 
-        _createIframe:function (afterData) {
-            var self = this,
-                iframe = new Node(iframeHtml),
-                textarea = self.get("textarea");
-            if (textarea.hasAttr("tabindex")) {
-                iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
-            }
-            self.get("iframeWrapEl").prepend(iframe);
-            self.set("iframe", iframe);
-            self.__docReady = 0;
-            // With FF, it's better to load the data on iframe.load. (#3894,#4058)
-            if (UA['gecko'] && !iframe.__loaded) {
-                iframe.on('load', function () {
-                    self._setUpIFrame(afterData);
-                }, self);
-            } else {
-                // webkit(chrome) load等不来！
-                self._setUpIFrame(afterData);
-            }
-        },
+                editorEl.html(editorHtml);
 
+                self._UUID = S.guid();
 
-        destructor:function () {
-            var self = this,
-                editorEl = self.get("el"),
-                textarea = self.get("textarea"),
-                doc = self.get("document")[0],
-                win = self.get("iframe")[0].contentWindow;
-            self.sync();
-            KE.focusManager.remove(self);
-            Event.remove([doc, doc.documentElement, doc.body, win]);
-            S.each(self.__dialogs, function (d) {
-                if (d.destroy) {
-                    d.destroy();
-                }
-            });
-            self.__commands = 0;
-            if (!self.__editor_created_new) {
-                textarea.insertBefore(editorEl, undefined);
-                textarea.css({
-                    width:self.get(WIDTH),
-                    height:self.get(HEIGHT)
-                });
-                textarea.show();
-            }
-        },
-        /**
-         *
-         */
-        _attachForm:function () {
-            var self = this,
-                textarea = self.get("textarea"),
-                form = new Node(textarea[0].form);
-            form.on("submit", self.sync, self);
-            self.on("destroy", function () {
-                form.detach("submit", self.sync, self);
-            });
-        },
-        addDialog:function (name, d) {
-            this.__dialogs[name] = d;
-        },
-        showDialog:function (name, args) {
-            var self = this,
-                d = self.__dialogs[name];
-            d.show(args);
-            self.fire("dialogShow", {
-                dialog:d.dialog,
-                "pluginDialog":d,
-                "dialogName":name
-            });
-        },
-        hasDialog:function (name) {
-            return !!this.__dialogs[name];
-        },
-        /**
-         *
-         * @param name {string}
-         * @param obj {Object}
-         */
-        addCommand:function (name, obj) {
-            this.__commands[name] = obj;
-        },
-        /**
-         *
-         * @param name {string}
-         */
-        hasCommand:function (name) {
-            return this.__commands[name];
-        },
-        /**
-         * @param name {string}
-         * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
-         */
-        execCommand:function (name) {
-            var self = this,
-                cmd = self.__commands[name],
-                args = S.makeArray(arguments);
-            args.shift();
-            args.unshift(self);
-            if (cmd) {
-                return cmd.exec.apply(cmd, args);
-            } else {
-                S.log(name + ": command not found");
-            }
-        },
+                var wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+                self.__set("iframeWrapEl", wrap);
+                var toolBarEl = editorEl.one(KE_TOOLBAR_CLASS);
+                self.__set("toolBarEl", toolBarEl);
+                var statusBarEl = editorEl.one(KE_STATUSBAR_CLASS);
+                self.__set("statusBarEl", statusBarEl);
 
-        _clearIframeDocContent:function () {
-            if (!this.get("iframe")) {
-                return;
-            }
-            var self = this,
-                iframe = self.get("iframe"),
-                win = iframe[0].contentWindow,
-                doc = self.get("document")[0],
-                documentElement = doc.documentElement,
-                body = doc.body;
-            Event.remove([doc, documentElement, body, win]);
-            iframe.remove();
-        },
+                // 标准浏览器编辑器内焦点不失去,firefox?
+                // 标准浏览器实际上不需要！range在iframe内保存着呢，选择高亮变灰而已
+                // 2011-11-19 启用封装 preventFocus
+                // 点击工具栏内任何东西都不会使得焦点转移
+                // 支持 select 键盘 : 2012-03-16
+                // Utils.preventFocus(self.toolBarEl);
 
+                var tw = self.get(WIDTH),
+                    th = self.get(HEIGHT);
+                editorEl.css(WIDTH, tw);
+                textarea.css(WIDTH, "100%");
+                textarea.css(DISPLAY, NONE);
+                wrap.append(textarea);
 
-        _getData:function (format, mode) {
-            var self = this,
-                htmlDataProcessor = self.htmlDataProcessor,
-                html;
-            if (mode == undefined) {
-                mode = self.get("mode");
-            }
-            if (mode == WYSIWYG_MODE) {
-                html = self.get("document")[0].body.innerHTML;
-            } else {
-                html = htmlDataProcessor.toDataFormat(self.get("textarea").val());
-            }
-            //如果不需要要格式化，例如提交数据给服务器          
-            if (format) {
-                html = htmlDataProcessor.toHtml(html);
-            } else {
-                html = htmlDataProcessor.toServer(html);
-            }
-            html = S.trim(html);
-            /*
-             如果内容为空，对 parser 自动加的空行滤掉
+                wrap.css(HEIGHT, th);
+                // ie textarea 100% 不起作用
+                textarea.css(HEIGHT, th);
+
+                // 高度由内层决定，工具条会变化
+                editorEl.css(HEIGHT, "");
+            },
+
+            /**
+             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+             * width 依然在 el 上设置
              */
-            if (/^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/.test(html)) {
-                html = "";
-            }
-            return html;
-        },
+            _uiSetHeight:function (v) {
+                // S.log("_uiSetHeight : " + v);
+                var self = this;
+                self.get("iframeWrapEl").css(HEIGHT, v);
+                self.get("textarea").css(HEIGHT, v);
+            },
 
-        _setData:function (data) {
-            var self = this,
-                htmlDataProcessor,
-                afterData = data;
-            if (self.get("mode") != WYSIWYG_MODE) {
-                // 代码模式下不需过滤
-                self.get("textarea").val(data);
-                return;
-            }
-            if (htmlDataProcessor = self.htmlDataProcessor) {
-                afterData = htmlDataProcessor.toDataFormat(data, "p");
-            }
-            // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
-            self._clearIframeDocContent();
-            self._createIframe(afterData);
-        },
-
-        sync:function () {
-            var self = this;
-            self.get("textarea").val(self._getData());
-        },
-
-        /**
-         * 撤销重做时，不需要格式化代码，直接取自身
-         */
-        _getRawData:function () {
-            return this.get("document")[0].body.innerHTML;
-        },
-
-        /**
-         * 撤销重做时，不需要格式化代码，直接取自身
-         *
-         * @param data {string}
-         */
-        _setRawData:function (data) {
-            this.get("document")[0].body.innerHTML = data;
-        },
-
-        _prepareIFrameHtml:function (id, data) {
-            var self = this;
-            return prepareIFrameHtml(id, self.get('customStyle'), self.get('customLink'), data);
-        },
-
-        getSelection:function () {
-            return KE.Selection.getSelection(this.get("document")[0]);
-        },
-
-        focus:function () {
-            var self = this,
-                doc = self.get("document")[0],
-                win = DOM._4e_getWin(doc);
-            // firefox7 need this
-            if (!UA['ie']) {
-                // note : 2011-11-17 report by 石霸
-                // ie 的 parent 不能 focus ，否则会使得 iframe 内的编辑器光标回到开头
-                win && win.parent && win.parent.focus();
-            }
-            // yiminghe note:webkit need win.focus
-            // firefox 7 needs also?
-            win && win.focus();
-            //ie and firefox need body focus
-            doc.body.focus();
-            self.notifySelectionChange();
-        },
-
-        blur:function () {
-            var self = this,
-                win = DOM._4e_getWin(self.get("document")[0]);
-            win.blur();
-            self.get("document")[0].body.blur();
-        },
-
-        /**
-         * @param cssText {string}
-         */
-        addCustomStyle:function (cssText) {
-            var self = this,
-                customStyle = self.get("customStyle") || "";
-            customStyle += "\n" + cssText;
-            self.set("customStyle", customStyle);
-            DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle);
-        },
-
-        addCustomLink:function (link) {
-            var self = this,
-                customLink = self.get('customLink') || [],
-                doc = self.get("document")[0];
-            customLink.push(link);
-            self.set("customLink", customLink);
-            var elem = doc.createElement("link");
-            elem.rel = "stylesheet";
-            doc.getElementsByTagName("head")[0].appendChild(elem);
-            elem.href = link;
-        },
-
-        removeCustomLink:function (link) {
-            var self = this,
-                doc = self.get("document")[0],
-                links = DOM.query("link", doc);
-            for (var i = 0; i < links.length; i++) {
-                if (links[i].href == link) {
-                    DOM.remove(links[i]);
+            _uiSetMode:function (v) {
+                var self = this,
+                    textarea = self.get("textarea");
+                if (v) {
+                    self.execCommand("save");
+                    self._setData(textarea.val());
+                    self.execCommand("save");
+                } else {
+                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    textarea[0].focus();
                 }
-            }
-            var cls = self.get('customLink') || [],
-                ind = S.indexOf(link, cls);
-            if (ind != -1) {
-                cls.splice(ind, 1);
-            }
-        },
+                textarea[v ? "hide" : "show"]();
+                self.get("iframe")[v ? "show" : "hide"]();
+                self.fire((v ? "wysiwyg" : "source") + "Mode")
+            },
 
-        _setUpIFrame:function (data) {
-            var self = this,
-                iframe = self.get("iframe"),
-                html = self._prepareIFrameHtml(self._UUID, data),
-                win = iframe[0].contentWindow,
-                doc;
+            renderUI:function () {
+                var self = this,
+                    textarea = self.get("textarea");
 
-            iframe.__loaded = 1;
+                // 实例集中管理
+                focusManager.register(self);
 
-            try {
-                // In IE, with custom document.domain, it may happen that
-                // the iframe is not yet available, resulting in "Access
-                // Denied" for the following property access.
-                //ie 设置domain 有问题：yui也有
-                //http://yuilibrary.com/projects/yui2/ticket/2052000
-                //http://waelchatila.com/2007/10/31/1193851500000.html
-                //http://nagoon97.wordpress.com/tag/designmode/
-                doc = win.document;
-            } catch (e) {
-                // Trick to solve this issue, forcing the iframe to get ready
-                // by simply setting its "src" property.
-                //noinspection SillyAssignmentJS
-                iframe[0].src = iframe[0].src;
-                // In IE6 though, the above is not enough, so we must pause the
-                // execution for a while, giving it time to think.
-                if (IS_IE < 7) {
-                    setTimeout(run, 10);
+                if (self.get("attachForm") && textarea[0].form) {
+                    self._attachForm();
+                }
+
+                // self._setData(textarea.val());
+
+                function docReady() {
+                    self.detach("docReady", docReady);
+                    //是否自动focus
+                    if (self.get("focus")) {
+                        self.focus();
+                    }
+                    //否则清空选择区域
+                    else {
+                        var sel = self.getSelection();
+                        sel && sel.removeAllRanges();
+                    }
+                }
+
+                self.on("docReady", docReady);
+            },
+
+
+            _createIframe:function (afterData) {
+                var self = this,
+                    iframe = new Node(iframeHtml),
+                    textarea = self.get("textarea");
+                if (textarea.hasAttr("tabindex")) {
+                    iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
+                }
+                self.get("iframeWrapEl").prepend(iframe);
+                self.set("iframe", iframe);
+                self.__docReady = 0;
+                // With FF, it's better to load the data on iframe.load. (#3894,#4058)
+                if (UA['gecko'] && !iframe.__loaded) {
+                    iframe.on('load', function () {
+                        self._setUpIFrame(afterData);
+                    }, self);
+                } else {
+                    // webkit(chrome) load等不来！
+                    self._setUpIFrame(afterData);
+                }
+            },
+
+
+            destructor:function () {
+                var self = this,
+                    editorEl = self.get("el"),
+                    textarea = self.get("textarea"),
+                    doc = self.get("document")[0],
+                    win = self.get("iframe")[0].contentWindow;
+                self.sync();
+                Editor.focusManager.remove(self);
+                Event.remove([doc, doc.documentElement, doc.body, win]);
+                S.each(self.__dialogs, function (d) {
+                    if (d.destroy) {
+                        d.destroy();
+                    }
+                });
+                self.__commands = 0;
+                if (!self.__editor_created_new) {
+                    textarea.insertBefore(editorEl, undefined);
+                    textarea.css({
+                        width:self.get(WIDTH),
+                        height:self.get(HEIGHT)
+                    });
+                    textarea.show();
+                }
+            },
+
+            _attachForm:function () {
+                var self = this,
+                    textarea = self.get("textarea"),
+                    form = new Node(textarea[0].form);
+                form.on("submit", self.sync, self);
+                self.on("destroy", function () {
+                    form.detach("submit", self.sync, self);
+                });
+            },
+
+            /**
+             * Add a kind of dialog instance to editor.
+             * @param {String} name Dialog name
+             * @param {Overlay} d Dialog instance
+             */
+            addDialog:function (name, d) {
+                this.__dialogs[name] = d;
+            },
+
+            /**
+             * Show dialog
+             * @param {String} name Dialog name
+             * @param args Arguments passed to show
+             */
+            showDialog:function (name, args) {
+                var self = this,
+                    d = self.__dialogs[name];
+                d.show(args);
+                self.fire("dialogShow", {
+                    dialog:d.dialog,
+                    "pluginDialog":d,
+                    "dialogName":name
+                });
+            },
+
+            /**
+             * Whether current editor has specified dialog instance.
+             * @param {String} name Dialog name.
+             */
+            hasDialog:function (name) {
+                return !!this.__dialogs[name];
+            },
+
+            /**
+             * Add a command object to current editor.
+             * @param name {string} Command name.
+             * @param obj {Object} Command object.
+             */
+            addCommand:function (name, obj) {
+                this.__commands[name] = obj;
+            },
+
+            /**
+             * Whether current editor has specified command instance.
+             * @param name {string}
+             */
+            hasCommand:function (name) {
+                return this.__commands[name];
+            },
+            /**
+             * Whether current editor has specified command.
+             * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
+             * @param name {string} Command name.
+             */
+            execCommand:function (name) {
+                var self = this,
+                    cmd = self.__commands[name],
+                    args = S.makeArray(arguments);
+                args.shift();
+                args.unshift(self);
+                if (cmd) {
+                    return cmd.exec.apply(cmd, args);
+                } else {
+                    S.log(name + ": command not found");
+                }
+            },
+
+            _clearIframeDocContent:function () {
+                if (!this.get("iframe")) {
                     return;
                 }
-            }
-            run();
-            function run() {
-                doc = win.document;
-                self.__set("document", new Node(doc));
-                self.__set("window", new Node(win));
-                iframe.detach();
-                // Don't leave any history log in IE. (#5657)
-                doc['open']("text/html", "replace");
-                doc.write(html);
-                doc.close();
-            }
-        },
-        docReady:function (func) {
-            var self = this;
-            self.on("docReady", func);
-            if (self.__docReady) {
-                func.call(self);
-            }
-        },
-        /**
-         *
-         */
-        _monitor:function () {
-            var self = this;
-            if (self._monitorId) {
-                clearTimeout(self._monitorId);
-            }
+                var self = this,
+                    iframe = self.get("iframe"),
+                    win = iframe[0].contentWindow,
+                    doc = self.get("document")[0],
+                    documentElement = doc.documentElement,
+                    body = doc.body;
+                Event.remove([doc, documentElement, body, win]);
+                iframe.remove();
+            },
 
-            self._monitorId = setTimeout(function () {
-                var selection = self.getSelection();
-                if (selection && !selection.isInvalid) {
-                    var startElement = selection.getStartElement(),
-                        currentPath = new KE.ElementPath(startElement);
-                    if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
-                        self.__previousPath = currentPath;
-                        self.fire("selectionChange",
-                            {
-                                selection:selection,
-                                path:currentPath,
-                                element:startElement
-                            });
-                    }
+
+            _getData:function (format, mode) {
+                var self = this,
+                    htmlDataProcessor = self.htmlDataProcessor,
+                    html;
+                if (mode == undefined) {
+                    mode = self.get("mode");
                 }
-            }, 100);
-        },
-        /**
-         * 强制通知插件更新状态，防止插件修改编辑器内容，自己反而得不到通知
-         */
-        notifySelectionChange:function () {
-            var self = this;
-            self.__previousPath = NULL;
-            self._monitor();
-        },
-        insertElement:function (element, init, callback) {
-
-            var self = this;
-
-            if (self.get("mode") !== WYSIWYG_MODE) {
-                return;
-            }
-
-            self.focus();
-
-            var clone,
-                elementName = element._4e_name(),
-                xhtml_dtd = KE.XHTML_DTD,
-                KER = KE.RANGE,
-                KEN = KE.NODE,
-                isBlock = xhtml_dtd['$block'][ elementName ],
-                selection = self.getSelection(),
-                ranges = selection && selection.getRanges(),
-                range,
-                lastElement,
-                current, dtd;
-            //give sometime to breath
-            if (!ranges || ranges.length == 0) {
-                var args = arguments, fn = args.callee;
-                setTimeout(function () {
-                    fn.apply(self, args);
-                }, 30);
-                return;
-            }
-
-            self.execCommand("save");
-
-            for (var i = ranges.length - 1; i >= 0; i--) {
-                range = ranges[ i ];
-                // Remove the original contents.
-                range.deleteContents();
-                clone = !i && element || element.clone(TRUE);
-                init && init(clone);
-                // If we're inserting a block at dtd-violated position, split
-                // the parent blocks until we reach blockLimit.
-                if (isBlock) {
-                    while (( current = range.getCommonAncestor(FALSE, TRUE) )
-                        && ( dtd = xhtml_dtd[ current._4e_name() ] )
-                        && !( dtd && dtd [ elementName ] )) {
-                        // Split up inline elements.
-                        if (current._4e_name() in xhtml_dtd["span"])
-                            range.splitElement(current);
-                        // If we're in an empty block which indicate a new paragraph,
-                        // simply replace it with the inserting block.(#3664)
-                        else if (range.checkStartOfBlock()
-                            && range.checkEndOfBlock()) {
-                            range.setStartBefore(current);
-                            range.collapse(TRUE);
-                            current.remove();
-                        }
-                        else {
-                            range.splitBlock();
-                        }
-                    }
+                if (mode == WYSIWYG_MODE) {
+                    html = self.get("document")[0].body.innerHTML;
+                } else {
+                    html = htmlDataProcessor.toDataFormat(self.get("textarea").val());
                 }
-
-                // Insert the new node.
-                range.insertNode(clone);
-                // Save the last element reference so we can make the
-                // selection later.
-                if (!lastElement)
-                    lastElement = clone;
-            }
-            if (!lastElement) {
-                return;
-            }
-
-            var next = lastElement._4e_nextSourceNode(TRUE), p,
-                doc = self.get("document")[0];
-            dtd = KE.XHTML_DTD;
-
-            //行内元素不用加换行
-            if (!dtd['$inline'][clone._4e_name()]) {
-                //末尾时 ie 不会自动产生br，手动产生
-                if (!next) {
-                    p = new Node("<p>&nbsp;</p>", NULL, doc);
-                    p.insertAfter(lastElement);
-                    next = p;
+                //如果不需要要格式化，例如提交数据给服务器
+                if (format) {
+                    html = htmlDataProcessor.toHtml(html);
+                } else {
+                    html = htmlDataProcessor.toServer(html);
                 }
-                //firefox,replace br with p，和编辑器整体换行保持一致
-                else if (next._4e_name() == "br"
-                    &&
-                    //必须符合嵌套规则
-                    dtd[next.parent()._4e_name()]["p"]
-                    ) {
-                    p = new Node("<p>&nbsp;</p>", NULL, doc);
-                    next[0].parentNode.replaceChild(p[0], next[0]);
-                    next = p;
-                }
-            } else {
-                //qc #3803 ，插入行内后给个位置放置光标
-                next = new Node(doc.createTextNode(" "));
-                next.insertAfter(lastElement);
-            }
-            range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
-            if (next && next[0].nodeType == KEN.NODE_ELEMENT)
-                range.moveToElementEditablePosition(next);
-
-            selection.selectRanges([ range ]);
-            self.focus();
-            //http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
-            clone && clone.scrollIntoView(undefined,false);
-            self._saveLater();
-            callback && callback(clone);
-        },
-
-        /**
-         *
-         * @param data {string}
-         * @param dataFilter 是否采用特定的 dataFilter
-         */
-        insertHtml:function (data, dataFilter) {
-            var self = this, htmlDataProcessor;
-
-            if (self.get("mode") !== WYSIWYG_MODE) {
-                return;
-            }
-
-            if (htmlDataProcessor = self.htmlDataProcessor) {
-                data = htmlDataProcessor.toDataFormat(data, null, dataFilter);
-            }
-
-            self.focus();
-            self.execCommand("save");
-
-            var editorDoc = self.get("document")[0],
-                saveInterval = 0;
-            // ie9 仍然需要这样！
-            // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
-            if (IS_IE) {
-                var $sel = editorDoc.selection;
-                if ($sel.type == 'Control') {
-                    $sel.clear();
-                }
-                try {
-                    $sel.createRange().pasteHTML(data);
-                } catch (e) {
-                    S.log("insertHtml error in ie");
-                }
-            } else {
-                // ie9 仍然没有
-                // 1.webkit insert html 有问题！会把标签去掉，算了直接用 insertElement.
-                // 10.0 修复？？
-                // firefox 初始编辑器无焦点报异常
-                try {
-                    editorDoc.execCommand('inserthtml', FALSE, data);
-                } catch (e) {
-                    setTimeout(function () {
-                        // still not ok in ff!
-                        // 手动选择 body 的第一个节点
-                        if (self.getSelection().getRanges().length == 0) {
-                            var r = new KE.Range(editorDoc);
-                            var node = DOM.first(editorDoc.body, function (el) {
-                                return el.nodeType == 1 && DOM._4e_name(el) != "br";
-                            });
-                            if (!node) {
-                                node = new Node(editorDoc.createElement("p"));
-                                editorDoc.body.appendChild(node[0]);
-                            }
-                            r.setStartAt(node, KE.RANGE.POSITION_AFTER_START);
-                            r.select();
-                        }
-                        editorDoc.execCommand('inserthtml', FALSE, data);
-                    }, saveInterval = 100);
-                }
-            }
-            // bug by zjw2004112@163.com :
-            // 有的浏览器 ： chrome , ie67 貌似不会自动滚动到粘贴后的位置
-            setTimeout(function () {
-                self.getSelection().scrollIntoView();
-            }, saveInterval);
-            self._saveLater(saveInterval);
-        },
-
-        _saveLater:function (saveInterval) {
-            var self = this;
-            if (self.__saveTimer) {
-                clearTimeout(self.__saveTimer);
-                self.__saveTimer = null;
-            }
-            self.__saveTimer = setTimeout(function () {
-                self.execCommand("save");
-            }, saveInterval || 0);
-        },
-
-        _fixByBindIframeDoc:function () {
-            var self = this,
-                iframe = self.get("iframe"),
-                textarea = self.get("textarea")[0],
-                win = iframe[0].contentWindow,
-                doc = self.get("document")[0];
-
-            // Gecko need a key event to 'wake up' the editing
-            // ability when document is empty.(#3864)
-            // activateEditing 删掉，初始引起屏幕滚动了
-            // Webkit: avoid from editing form control elements content.
-            if (UA['webkit']) {
-                Event.on(doc, "click", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['input', 'select'])) {
-                        ev.preventDefault();
-                    }
-                });
-                // Prevent from editig textfield/textarea value.
-                Event.on(doc, "mouseup", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['input', 'textarea'])) {
-                        ev.preventDefault();
-                    }
-                });
-            }
-
-
-            // Create an invisible element to grab focus.
-            if (UA['gecko'] || IS_IE || UA['opera']) {
-                var focusGrabber;
-                focusGrabber = new Node(
-                    // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
-                    '<span ' +
-                        'tabindex="-1" ' +
-                        'style="position:absolute; left:-10000"' +
-                        ' role="presentation"' +
-                        '></span>').insertAfter(textarea);
-                focusGrabber.on('focus', function () {
-                    self.focus();
-                });
-                self.activateGecko = function () {
-                    if (UA['gecko'] && self.__iframeFocus)
-                        focusGrabber[0].focus();
-                };
-                self.on('destroy', function () {
-                    focusGrabber.detach();
-                    focusGrabber.remove();
-                });
-            }
-
-
-            Event.on(win, 'focus', function () {
-                /**
-                 * yiminghe特别注意：firefox光标丢失bug
-                 * blink后光标出现在最后，这就需要实现保存range
-                 * focus后再恢复range
+                html = S.trim(html);
+                /*
+                 如果内容为空，对 parser 自动加的空行滤掉
                  */
-                if (UA['gecko']) {
-                    blinkCursor(doc, FALSE);
+                if (/^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/.test(html)) {
+                    html = "";
                 }
-                else if (UA['opera']) {
-                    doc.body.focus();
+                return html;
+            },
+
+            _setData:function (data) {
+                var self = this,
+                    htmlDataProcessor,
+                    afterData = data;
+                if (self.get("mode") != WYSIWYG_MODE) {
+                    // 代码模式下不需过滤
+                    self.get("textarea").val(data);
+                    return;
                 }
-                // focus 后强制刷新自己状态
+                if (htmlDataProcessor = self.htmlDataProcessor) {
+                    afterData = htmlDataProcessor.toDataFormat(data, "p");
+                }
+                // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
+                self._clearIframeDocContent();
+                self._createIframe(afterData);
+            },
+
+            /**
+             * Synchronize textarea value with editor data.
+             */
+            sync:function () {
+                var self = this;
+                self.get("textarea").val(self._getData());
+            },
+
+            /**
+             * 撤销重做时，不需要格式化代码，直接取自身
+             */
+            _getRawData:function () {
+                return this.get("document")[0].body.innerHTML;
+            },
+
+            /**
+             * 撤销重做时，不需要格式化代码，直接取自身
+             *
+             * @param data {string}
+             */
+            _setRawData:function (data) {
+                this.get("document")[0].body.innerHTML = data;
+            },
+
+            _prepareIFrameHtml:function (id, data) {
+                var self = this;
+                return prepareIFrameHtml(id, self.get('customStyle'), self.get('customLink'), data);
+            },
+
+            /**
+             * Get selection instance of current editor.
+             */
+            getSelection:function () {
+                return Editor.Selection.getSelection(this.get("document")[0]);
+            },
+
+            /**
+             * Make current editor has focus
+             */
+            focus:function () {
+                var self = this,
+                    doc = self.get("document")[0],
+                    win = DOM._4e_getWin(doc);
+                // firefox7 need this
+                if (!UA['ie']) {
+                    // note : 2011-11-17 report by 石霸
+                    // ie 的 parent 不能 focus ，否则会使得 iframe 内的编辑器光标回到开头
+                    win && win.parent && win.parent.focus();
+                }
+                // yiminghe note:webkit need win.focus
+                // firefox 7 needs also?
+                win && win.focus();
+                // ie and firefox need body focus
+                doc.body.focus();
                 self.notifySelectionChange();
-            });
+            },
 
+            /**
+             * Make current editor lose focus
+             */
+            blur:function () {
+                var self = this,
+                    win = DOM._4e_getWin(self.get("document")[0]);
+                win.blur();
+                self.get("document")[0].body.blur();
+            },
 
-            if (UA['gecko']) {
-                /**
-                 * firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
-                 */
-                Event.on(doc, "mousedown", function () {
-                    if (!self.__iframeFocus) {
-                        blinkCursor(doc, FALSE);
+            /**
+             * Add style text to current editor
+             * @param cssText {string}
+             */
+            addCustomStyle:function (cssText) {
+                var self = this,
+                    customStyle = self.get("customStyle") || "";
+                customStyle += "\n" + cssText;
+                self.set("customStyle", customStyle);
+                DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle);
+            },
+
+            /**
+             * Add css link to current editor
+             * @param {String} link
+             */
+            addCustomLink:function (link) {
+                var self = this,
+                    customLink = self.get('customLink') || [],
+                    doc = self.get("document")[0];
+                customLink.push(link);
+                self.set("customLink", customLink);
+                var elem = doc.createElement("link");
+                elem.rel = "stylesheet";
+                doc.getElementsByTagName("head")[0].appendChild(elem);
+                elem.href = link;
+            },
+
+            /**
+             * Remove css link from current editor.
+             * @param {String} link
+             */
+            removeCustomLink:function (link) {
+                var self = this,
+                    doc = self.get("document")[0],
+                    links = DOM.query("link", doc);
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href == link) {
+                        DOM.remove(links[i]);
                     }
-                });
-            }
+                }
+                var cls = self.get('customLink') || [],
+                    ind = S.indexOf(link, cls);
+                if (ind != -1) {
+                    cls.splice(ind, 1);
+                }
+            },
 
-            if (IS_IE) {
-                // Override keystrokes which should have deletion behavior
-                // on control types in IE . (#4047)
-                /**
-                 * 选择img，出现缩放框后不能直接删除
-                 */
-                Event.on(doc, 'keydown', function (evt) {
-                    var keyCode = evt.keyCode;
-                    // Backspace OR Delete.
-                    if (keyCode in { 8:1, 46:1 }) {
-                        //debugger
-                        var sel = self.getSelection(),
-                            control = sel.getSelectedElement();
-                        if (control) {
-                            // Make undo snapshot.
-                            self.fire('save');
-                            // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
-                            // break up the selection, safely manage it here. (#4795)
-                            var bookmark = sel.getRanges()[ 0 ].createBookmark();
-                            // Remove the control manually.
-                            control.remove();
-                            sel.selectBookmarks([ bookmark ]);
-                            self.fire('save');
-                            evt.preventDefault();
+            _setUpIFrame:function (data) {
+                var self = this,
+                    iframe = self.get("iframe"),
+                    html = self._prepareIFrameHtml(self._UUID, data),
+                    win = iframe[0].contentWindow,
+                    doc;
+
+                iframe.__loaded = 1;
+
+                try {
+                    // In IE, with custom document.domain, it may happen that
+                    // the iframe is not yet available, resulting in "Access
+                    // Denied" for the following property access.
+                    //ie 设置domain 有问题：yui也有
+                    //http://yuilibrary.com/projects/yui2/ticket/2052000
+                    //http://waelchatila.com/2007/10/31/1193851500000.html
+                    //http://nagoon97.wordpress.com/tag/designmode/
+                    doc = win.document;
+                } catch (e) {
+                    // Trick to solve this issue, forcing the iframe to get ready
+                    // by simply setting its "src" property.
+                    //noinspection SillyAssignmentJS
+                    iframe[0].src = iframe[0].src;
+                    // In IE6 though, the above is not enough, so we must pause the
+                    // execution for a while, giving it time to think.
+                    if (IS_IE < 7) {
+                        setTimeout(run, 10);
+                        return;
+                    }
+                }
+                run();
+                function run() {
+                    doc = win.document;
+                    self.__set("document", new Node(doc));
+                    self.__set("window", new Node(win));
+                    iframe.detach();
+                    // Don't leave any history log in IE. (#5657)
+                    doc['open']("text/html", "replace");
+                    doc.write(html);
+                    doc.close();
+                }
+            },
+
+            /**
+             * Add callback which will called when editor document is ready
+             * (fire when editor is renderer from textarea/source)
+             * @param {Function} func
+             */
+            docReady:function (func) {
+                var self = this;
+                self.on("docReady", func);
+                if (self.__docReady) {
+                    func.call(self);
+                }
+            },
+
+            _monitor:function () {
+                var self = this;
+                if (self._monitorId) {
+                    clearTimeout(self._monitorId);
+                }
+
+                self._monitorId = setTimeout(function () {
+                    var selection = self.getSelection();
+                    if (selection && !selection.isInvalid) {
+                        var startElement = selection.getStartElement(),
+                            currentPath = new Editor.ElementPath(startElement);
+                        if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
+                            self.__previousPath = currentPath;
+                            self.fire("selectionChange",
+                                {
+                                    selection:selection,
+                                    path:currentPath,
+                                    element:startElement
+                                });
                         }
                     }
-                });
+                }, 100);
+            },
 
-                // PageUp/PageDown scrolling is broken in document
-                // with standard doctype, manually fix it. (#4736)
-                // ie8 主窗口滚动？？
-                if (doc.compatMode == 'CSS1Compat') {
-                    var pageUpDownKeys = { 33:1, 34:1 };
-                    Event.on(doc, 'keydown', function (evt) {
-                        if (evt.keyCode in pageUpDownKeys) {
-                            setTimeout(function () {
-                                self.getSelection().scrollIntoView();
-                            }, 0);
+            notifySelectionChange:function () {
+                var self = this;
+                self.__previousPath = NULL;
+                self._monitor();
+            },
+
+            /**
+             * Insert a element into current editor.
+             * @param {Node} element
+             */
+            insertElement:function (element, init, callback) {
+
+                var self = this;
+
+                if (self.get("mode") !== WYSIWYG_MODE) {
+                    return;
+                }
+
+                self.focus();
+
+                var clone,
+                    elementName = element._4e_name(),
+                    xhtml_dtd = Editor.XHTML_DTD,
+                    KER = Editor.RANGE,
+                    KEN = Editor.NODE,
+                    isBlock = xhtml_dtd['$block'][ elementName ],
+                    selection = self.getSelection(),
+                    ranges = selection && selection.getRanges(),
+                    range,
+                    lastElement,
+                    current, dtd;
+
+                //give sometime to breath
+                if (!ranges || ranges.length == 0) {
+                    var args = arguments, fn = args.callee;
+                    setTimeout(function () {
+                        fn.apply(self, args);
+                    }, 30);
+                    return;
+                }
+
+                self.execCommand("save");
+
+                for (var i = ranges.length - 1; i >= 0; i--) {
+                    range = ranges[ i ];
+                    // Remove the original contents.
+                    range.deleteContents();
+                    clone = !i && element || element.clone(TRUE);
+                    init && init(clone);
+                    // If we're inserting a block at dtd-violated position, split
+                    // the parent blocks until we reach blockLimit.
+                    if (isBlock) {
+                        while (( current = range.getCommonAncestor(FALSE, TRUE) )
+                            && ( dtd = xhtml_dtd[ current._4e_name() ] )
+                            && !( dtd && dtd [ elementName ] )) {
+                            // Split up inline elements.
+                            if (current._4e_name() in xhtml_dtd["span"])
+                                range.splitElement(current);
+                            // If we're in an empty block which indicate a new paragraph,
+                            // simply replace it with the inserting block.(#3664)
+                            else if (range.checkStartOfBlock()
+                                && range.checkEndOfBlock()) {
+                                range.setStartBefore(current);
+                                range.collapse(TRUE);
+                                current.remove();
+                            }
+                            else {
+                                range.splitBlock();
+                            }
+                        }
+                    }
+
+                    // Insert the new node.
+                    range.insertNode(clone);
+                    // Save the last element reference so we can make the
+                    // selection later.
+                    if (!lastElement)
+                        lastElement = clone;
+                }
+
+                if (!lastElement) {
+                    return;
+                }
+
+                var next = lastElement._4e_nextSourceNode(TRUE), p,
+                    doc = self.get("document")[0];
+
+                dtd = Editor.XHTML_DTD;
+
+                //行内元素不用加换行
+                if (!dtd['$inline'][clone._4e_name()]) {
+                    //末尾时 ie 不会自动产生br，手动产生
+                    if (!next) {
+                        p = new Node("<p>&nbsp;</p>", NULL, doc);
+                        p.insertAfter(lastElement);
+                        next = p;
+                    }
+                    //firefox,replace br with p，和编辑器整体换行保持一致
+                    else if (next._4e_name() == "br"
+                        &&
+                        //必须符合嵌套规则
+                        dtd[next.parent()._4e_name()]["p"]
+                        ) {
+                        p = new Node("<p>&nbsp;</p>", NULL, doc);
+                        next[0].parentNode.replaceChild(p[0], next[0]);
+                        next = p;
+                    }
+                } else {
+                    //qc #3803 ，插入行内后给个位置放置光标
+                    next = new Node(doc.createTextNode(" "));
+                    next.insertAfter(lastElement);
+                }
+
+                range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
+                if (next && next[0].nodeType == KEN.NODE_ELEMENT) {
+                    range.moveToElementEditablePosition(next);
+                }
+                selection.selectRanges([ range ]);
+                self.focus();
+                // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
+                clone && clone.scrollIntoView(undefined, false);
+                self._saveLater();
+                callback && callback(clone);
+            },
+
+            /**
+             * Insert html string into current editor.
+             * @param data {string}
+             */
+            insertHtml:function (data, dataFilter) {
+                var self = this, htmlDataProcessor;
+
+                if (self.get("mode") !== WYSIWYG_MODE) {
+                    return;
+                }
+
+                if (htmlDataProcessor = self.htmlDataProcessor) {
+                    data = htmlDataProcessor.toDataFormat(data, null, dataFilter);
+                }
+
+                self.focus();
+                self.execCommand("save");
+
+                var editorDoc = self.get("document")[0],
+                    saveInterval = 0;
+                // ie9 仍然需要这样！
+                // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
+                if (IS_IE) {
+                    var $sel = editorDoc.selection;
+                    if ($sel.type == 'Control') {
+                        $sel.clear();
+                    }
+                    try {
+                        $sel.createRange().pasteHTML(data);
+                    } catch (e) {
+                        S.log("insertHtml error in ie");
+                    }
+                } else {
+                    // ie9 仍然没有
+                    // 1.webkit insert html 有问题！会把标签去掉，算了直接用 insertElement.
+                    // 10.0 修复？？
+                    // firefox 初始编辑器无焦点报异常
+                    try {
+                        editorDoc.execCommand('inserthtml', FALSE, data);
+                    } catch (e) {
+                        setTimeout(function () {
+                            // still not ok in ff!
+                            // 手动选择 body 的第一个节点
+                            if (self.getSelection().getRanges().length == 0) {
+                                var r = new Editor.Range(editorDoc);
+                                var node = DOM.first(editorDoc.body, function (el) {
+                                    return el.nodeType == 1 && DOM._4e_name(el) != "br";
+                                });
+                                if (!node) {
+                                    node = new Node(editorDoc.createElement("p"));
+                                    editorDoc.body.appendChild(node[0]);
+                                }
+                                r.setStartAt(node, Editor.RANGE.POSITION_AFTER_START);
+                                r.select();
+                            }
+                            editorDoc.execCommand('inserthtml', FALSE, data);
+                        }, saveInterval = 100);
+                    }
+                }
+                // bug by zjw2004112@163.com :
+                // 有的浏览器 ： chrome , ie67 貌似不会自动滚动到粘贴后的位置
+                setTimeout(function () {
+                    self.getSelection().scrollIntoView();
+                }, saveInterval);
+                self._saveLater(saveInterval);
+            },
+
+            _saveLater:function (saveInterval) {
+                var self = this;
+                if (self.__saveTimer) {
+                    clearTimeout(self.__saveTimer);
+                    self.__saveTimer = null;
+                }
+                self.__saveTimer = setTimeout(function () {
+                    self.execCommand("save");
+                }, saveInterval || 0);
+            },
+
+            _fixByBindIframeDoc:function () {
+                var self = this,
+                    iframe = self.get("iframe"),
+                    textarea = self.get("textarea")[0],
+                    win = iframe[0].contentWindow,
+                    doc = self.get("document")[0];
+
+                // Gecko need a key event to 'wake up' the editing
+                // ability when document is empty.(#3864)
+                // activateEditing 删掉，初始引起屏幕滚动了
+                // Webkit: avoid from editing form control elements content.
+                if (UA['webkit']) {
+                    Event.on(doc, "click", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['input', 'select'])) {
+                            ev.preventDefault();
+                        }
+                    });
+                    // Prevent from editig textfield/textarea value.
+                    Event.on(doc, "mouseup", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['input', 'textarea'])) {
+                            ev.preventDefault();
                         }
                     });
                 }
-            }
 
-            // Gecko/Webkit need some help when selecting control type elements. (#3448)       
-            if (UA['webkit']) {
-                Event.on(doc, "mousedown", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['img', 'hr', 'input', 'textarea', 'select'])) {
-                        self.getSelection().selectElement(control);
+
+                // Create an invisible element to grab focus.
+                if (UA['gecko'] || IS_IE || UA['opera']) {
+                    var focusGrabber;
+                    focusGrabber = new Node(
+                        // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
+                        '<span ' +
+                            'tabindex="-1" ' +
+                            'style="position:absolute; left:-10000"' +
+                            ' role="presentation"' +
+                            '></span>').insertAfter(textarea);
+                    focusGrabber.on('focus', function () {
+                        self.focus();
+                    });
+                    self.activateGecko = function () {
+                        if (UA['gecko'] && self.__iframeFocus)
+                            focusGrabber[0].focus();
+                    };
+                    self.on('destroy', function () {
+                        focusGrabber.detach();
+                        focusGrabber.remove();
+                    });
+                }
+
+
+                Event.on(win, 'focus', function () {
+                    /**
+                     * yiminghe特别注意：firefox光标丢失bug
+                     * blink后光标出现在最后，这就需要实现保存range
+                     * focus后再恢复range
+                     */
+                    if (UA['gecko']) {
+                        blinkCursor(doc, FALSE);
                     }
-                });
-            }
-
-
-            if (UA['gecko']) {
-                Event.on(doc, "dragstart", function (ev) {
-                    var control = new Node(ev.target);
-                    if (control._4e_name() === 'img' && /ke_/.test(control[0].className)) {
-                        // firefox禁止拖放
-                        ev.preventDefault();
+                    else if (UA['opera']) {
+                        doc.body.focus();
                     }
+                    // focus 后强制刷新自己状态
+                    self.notifySelectionChange();
                 });
-            }
-            //注意：必须放在这个位置，等iframe加载好再开始运行
-            //加入焦点管理，和其他实例联系起来
-            focusManager.add(self);
 
-        }
-    });
+
+                if (UA['gecko']) {
+                    /**
+                     * firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
+                     */
+                    Event.on(doc, "mousedown", function () {
+                        if (!self.__iframeFocus) {
+                            blinkCursor(doc, FALSE);
+                        }
+                    });
+                }
+
+                if (IS_IE) {
+                    // Override keystrokes which should have deletion behavior
+                    // on control types in IE . (#4047)
+                    /**
+                     * 选择img，出现缩放框后不能直接删除
+                     */
+                    Event.on(doc, 'keydown', function (evt) {
+                        var keyCode = evt.keyCode;
+                        // Backspace OR Delete.
+                        if (keyCode in { 8:1, 46:1 }) {
+                            //debugger
+                            var sel = self.getSelection(),
+                                control = sel.getSelectedElement();
+                            if (control) {
+                                // Make undo snapshot.
+                                self.fire('save');
+                                // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
+                                // break up the selection, safely manage it here. (#4795)
+                                var bookmark = sel.getRanges()[ 0 ].createBookmark();
+                                // Remove the control manually.
+                                control.remove();
+                                sel.selectBookmarks([ bookmark ]);
+                                self.fire('save');
+                                evt.preventDefault();
+                            }
+                        }
+                    });
+
+                    // PageUp/PageDown scrolling is broken in document
+                    // with standard doctype, manually fix it. (#4736)
+                    // ie8 主窗口滚动？？
+                    if (doc.compatMode == 'CSS1Compat') {
+                        var pageUpDownKeys = { 33:1, 34:1 };
+                        Event.on(doc, 'keydown', function (evt) {
+                            if (evt.keyCode in pageUpDownKeys) {
+                                setTimeout(function () {
+                                    self.getSelection().scrollIntoView();
+                                }, 0);
+                            }
+                        });
+                    }
+                }
+
+                // Gecko/Webkit need some help when selecting control type elements. (#3448)
+                if (UA['webkit']) {
+                    Event.on(doc, "mousedown", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['img', 'hr', 'input', 'textarea', 'select'])) {
+                            self.getSelection().selectElement(control);
+                        }
+                    });
+                }
+
+
+                if (UA['gecko']) {
+                    Event.on(doc, "dragstart", function (ev) {
+                        var control = new Node(ev.target);
+                        if (control._4e_name() === 'img' && /ke_/.test(control[0].className)) {
+                            // firefox禁止拖放
+                            ev.preventDefault();
+                        }
+                    });
+                }
+                //注意：必须放在这个位置，等iframe加载好再开始运行
+                //加入焦点管理，和其他实例联系起来
+                focusManager.add(self);
+
+            }
+        });
 
 
     function blinkCursor(doc, retry) {
@@ -9066,7 +9230,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
      *
      * @param id {string}
      */
-    KE["_initIFrame"] = function (id) {
+    Editor["_initIFrame"] = function (id) {
 
         var self = focusManager.getInstance(id),
             doc = self.get("document")[0],
@@ -9217,11 +9381,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             }
         }, 10);
     };
-
-    if (1 > 2) {
-        KE._uiSetMode().addCustomLink().removeCustomLink();
-    }
-    return KE;
+    return Editor;
 }, {
     requires:[
         'editor/core/base',

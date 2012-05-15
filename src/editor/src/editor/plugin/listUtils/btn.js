@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/listUtils/btn", function (S, KE, TripleButton) {
+KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, TripleButton) {
     function ListButton() {
         ListButton.superclass.constructor.apply(this, arguments);
     }
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, KE, TripleButton) {
         selectionChange:function (e) {
             var self = this,
                 editor = self.get("editor"),
-                cmd = KE.Utils.getQueryCmd(self.get("cmdType"));
+                cmd = Editor.Utils.getQueryCmd(self.get("cmdType"));
             if (editor.execCommand(cmd, e.path)) {
                 self.bon();
             } else {

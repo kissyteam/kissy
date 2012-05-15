@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/backColor/index", function (S, KE, Button, cmd) {
+KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
     return {
         init:function (editor) {

@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/fontFamily/cmd", function (S, KE, Cmd) {
+KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
     var fontFamilyStyle = {
         element:'span',
         styles:{

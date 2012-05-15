@@ -5,7 +5,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/focusManager", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         DOM = S.DOM,
         Event = S.Event,
         INSTANCES = {},
@@ -88,8 +88,8 @@ KISSY.add("editor/core/focusManager", function (S) {
     }
 
     focusManager['refreshAll'] = focusManager.refreshAll;
-    KE.focusManager = focusManager;
-    KE.getInstances = function () {
+    Editor.focusManager = focusManager;
+    Editor.getInstances = function () {
         return INSTANCES;
     };
 

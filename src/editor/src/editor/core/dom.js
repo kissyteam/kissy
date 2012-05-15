@@ -12,11 +12,11 @@ KISSY.add("editor/core/dom", function (S) {
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        KE = S.Editor,
+        Editor = S.Editor,
         DOM = S.DOM,
         UA = S.UA,
         Node = S.Node,
-        Utils = KE.Utils,
+        Utils = Editor.Utils,
         REMOVE_EMPTY = {
             "a":1,
             "abbr":1,
@@ -52,7 +52,7 @@ KISSY.add("editor/core/dom", function (S) {
      * Enum for node type
      * @enum {number}
      */
-    KE.NODE = {
+    Editor.NODE = {
         NODE_ELEMENT:1,
         NODE_TEXT:3,
         "NODE_COMMENT":8,
@@ -62,7 +62,7 @@ KISSY.add("editor/core/dom", function (S) {
      * Enum for node position
      * @enum {number}
      */
-    KE.POSITION = {
+    Editor.POSITION = {
         POSITION_IDENTICAL:0,
         POSITION_DISCONNECTED:1,
         POSITION_FOLLOWING:2,
@@ -70,7 +70,7 @@ KISSY.add("editor/core/dom", function (S) {
         POSITION_IS_CONTAINED:8,
         POSITION_CONTAINS:16
     };
-    var KEN = KE.NODE, KEP = KE.POSITION;
+    var KEN = Editor.NODE, KEP = Editor.POSITION;
 
     /*
      * Anything whose display computed style is block, list-item, table,
@@ -358,9 +358,9 @@ KISSY.add("editor/core/dom", function (S) {
             /**
              * 得到该节点在前序遍历下的下一个节点
              * @param el
-             * @param startFromSibling
-             * @param nodeType
-             * @param guard
+             * @param [startFromSibling]
+             * @param [nodeType]
+             * @param [guard]
              */
             _4e_nextSourceNode:function (el, startFromSibling, nodeType, guard) {
                 // If "guard" is a node, transform it in a function.
@@ -821,7 +821,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM._4e_name(el),
-                    xhtml_dtd = KE.XHTML_DTD,
+                    xhtml_dtd = Editor.XHTML_DTD,
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.

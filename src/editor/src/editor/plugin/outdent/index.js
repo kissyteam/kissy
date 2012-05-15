@@ -2,18 +2,18 @@
  * Add indent button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/outdent/index", function (S, KE, indexCmd) {
+KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
     return {
         init:function (editor) {
 
             indexCmd.init(editor);
 
-            var queryOutdent = KE.Utils.getQueryCmd("outdent");
+            var queryOutdent = Editor.Utils.getQueryCmd("outdent");
 
             editor.addButton({
                 title:"减少缩进量 ",
-                mode:KE.WYSIWYG_MODE,
+                mode:Editor.WYSIWYG_MODE,
                 contentCls:"ke-toolbar-outdent"
             }, {
                 offClick:function () {

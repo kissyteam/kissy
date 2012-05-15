@@ -3,69 +3,43 @@
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, KE, Utils, focusManager) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     var TRUE = true,
         $ = S.all,
         FALSE = false,
         NULL = null,
         DOC = document,
 
-        /**
-         * @const
-         */
-            UA = S.UA,
+
+        UA = S.UA,
         IS_IE = UA['ie'],
-        /**
-         * @const
-         */
-            DOM = S.DOM,
-        /**
-         * @const
-         */
-            Node = S.Node,
-        //OLD_IE = !window.getSelection,
-        /**
-         * @const
-         */
-            Event = S.Event,
-        /**
-         * @const
-         */
-            DISPLAY = "display",
-        /**
-         * @const
-         */
-            WIDTH = "width",
-        /**
-         * @const
-         */
-            HEIGHT = "height",
-        /**
-         * @const
-         */
-            NONE = "none",
+
+        DOM = S.DOM,
+
+        Node = S.Node,
+
+
+        Event = S.Event,
+
+        DISPLAY = "display",
+
+        WIDTH = "width",
+
+        HEIGHT = "height",
+
+        NONE = "none",
         tryThese = Utils.tryThese,
-        /**
-         * @const
-         */
-            HTML5_DTD = '<!doctype html>',
-        /**
-         * @const
-         */
-            DTD = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ' +
+
+        HTML5_DTD = '<!doctype html>',
+
+        DTD = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ' +
             '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-        /**
-         * @const
-         */
-            KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
-        /**
-         * @const
-         */
-            KE_TOOLBAR_CLASS = ".ke-editor-tools",
-        /**
-         * @const
-         */
-            KE_STATUSBAR_CLASS = ".ke-editor-status";
+
+        KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
+
+        KE_TOOLBAR_CLASS = ".ke-editor-tools",
+
+        KE_STATUSBAR_CLASS = ".ke-editor-status";
 
     /**
      *
@@ -74,7 +48,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
      */
     function prepareIFrameHtml(id, customStyle, customLink, data) {
         var links = "",
-            CSS_FILE = KE.Utils.debugUrl("/theme/editor-iframe.css");
+            CSS_FILE = Editor.Utils.debugUrl("/theme/editor-iframe.css");
         if (customLink) {
             for (var i = 0; i < customLink.length; i++) {
                 links += '<link ' +
@@ -143,799 +117,857 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
 
-    S.mix(KE, {
-        SOURCE_MODE:0,
-        WYSIWYG_MODE:1
-    });
+    S.mix(Editor,
+        /**
+         * @lends Editor
+         */
+        {
+            SOURCE_MODE:0,
+            WYSIWYG_MODE:1
+        });
 
-    var WYSIWYG_MODE = KE.WYSIWYG_MODE;
+    var WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
-    S.augment(KE, {
-        createDom:function () {
-            var self = this,
-                textarea = self.get("textarea"),
-                editorEl;
-
-            if (!textarea) {
-                self.set("textarea", textarea = $("<textarea></textarea>"));
-            }
-
-            editorEl = self.get("el");
-
-            editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
-
-            editorEl.html(editorHtml);
-
-            self._UUID = S.guid();
-
-            var wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
-            self.__set("iframeWrapEl", wrap);
-            var toolBarEl = editorEl.one(KE_TOOLBAR_CLASS);
-            self.__set("toolBarEl", toolBarEl);
-            var statusBarEl = editorEl.one(KE_STATUSBAR_CLASS);
-            self.__set("statusBarEl", statusBarEl);
-
-            // 标准浏览器编辑器内焦点不失去,firefox?
-            // 标准浏览器实际上不需要！range在iframe内保存着呢，选择高亮变灰而已
-            // 2011-11-19 启用封装 preventFocus
-            // 点击工具栏内任何东西都不会使得焦点转移
-            // 支持 select 键盘 : 2012-03-16
-            // Utils.preventFocus(self.toolBarEl);
-
-            var tw = self.get(WIDTH),
-                th = self.get(HEIGHT);
-            editorEl.css(WIDTH, tw);
-            textarea.css(WIDTH, "100%");
-            textarea.css(DISPLAY, NONE);
-            wrap.append(textarea);
-
-            wrap.css(HEIGHT, th);
-            // ie textarea 100% 不起作用
-            textarea.css(HEIGHT, th);
-
-            // 高度由内层决定，工具条会变化
-            editorEl.css(HEIGHT, "");
-        },
+    S.augment(Editor,
 
         /**
-         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-         * width 依然在 el 上设置
+         * @lends Editor#
          */
-        _uiSetHeight:function (v) {
-            // S.log("_uiSetHeight : " + v);
-            var self = this;
-            self.get("iframeWrapEl").css(HEIGHT, v);
-            self.get("textarea").css(HEIGHT, v);
-        },
+        {
+            createDom:function () {
+                var self = this,
+                    textarea = self.get("textarea"),
+                    editorEl;
 
-        _uiSetMode:function (v) {
-            var self = this,
-                textarea = self.get("textarea");
-            if (v) {
-                self.execCommand("save");
-                self._setData(textarea.val());
-                self.execCommand("save");
-            } else {
-                textarea.val(self._getData(1, WYSIWYG_MODE));
-                textarea[0].focus();
-            }
-            textarea[v ? "hide" : "show"]();
-            self.get("iframe")[v ? "show" : "hide"]();
-            self.fire((v ? "wysiwyg" : "source") + "Mode")
-        },
-
-        renderUI:function () {
-            var self = this,
-                textarea = self.get("textarea");
-
-            // 实例集中管理
-            focusManager.register(self);
-
-            if (self.get("attachForm") && textarea[0].form) {
-                self._attachForm();
-            }
-
-            // self._setData(textarea.val());
-
-            function docReady() {
-                self.detach("docReady", docReady);
-                //是否自动focus
-                if (self.get("focus")) {
-                    self.focus();
+                if (!textarea) {
+                    self.set("textarea", textarea = $("<textarea></textarea>"));
                 }
-                //否则清空选择区域
-                else {
-                    var sel = self.getSelection();
-                    sel && sel.removeAllRanges();
-                }
-            }
 
-            self.on("docReady", docReady);
-        },
+                editorEl = self.get("el");
 
+                editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
 
-        _createIframe:function (afterData) {
-            var self = this,
-                iframe = new Node(iframeHtml),
-                textarea = self.get("textarea");
-            if (textarea.hasAttr("tabindex")) {
-                iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
-            }
-            self.get("iframeWrapEl").prepend(iframe);
-            self.set("iframe", iframe);
-            self.__docReady = 0;
-            // With FF, it's better to load the data on iframe.load. (#3894,#4058)
-            if (UA['gecko'] && !iframe.__loaded) {
-                iframe.on('load', function () {
-                    self._setUpIFrame(afterData);
-                }, self);
-            } else {
-                // webkit(chrome) load等不来！
-                self._setUpIFrame(afterData);
-            }
-        },
+                editorEl.html(editorHtml);
 
+                self._UUID = S.guid();
 
-        destructor:function () {
-            var self = this,
-                editorEl = self.get("el"),
-                textarea = self.get("textarea"),
-                doc = self.get("document")[0],
-                win = self.get("iframe")[0].contentWindow;
-            self.sync();
-            KE.focusManager.remove(self);
-            Event.remove([doc, doc.documentElement, doc.body, win]);
-            S.each(self.__dialogs, function (d) {
-                if (d.destroy) {
-                    d.destroy();
-                }
-            });
-            self.__commands = 0;
-            if (!self.__editor_created_new) {
-                textarea.insertBefore(editorEl, undefined);
-                textarea.css({
-                    width:self.get(WIDTH),
-                    height:self.get(HEIGHT)
-                });
-                textarea.show();
-            }
-        },
-        /**
-         *
-         */
-        _attachForm:function () {
-            var self = this,
-                textarea = self.get("textarea"),
-                form = new Node(textarea[0].form);
-            form.on("submit", self.sync, self);
-            self.on("destroy", function () {
-                form.detach("submit", self.sync, self);
-            });
-        },
-        addDialog:function (name, d) {
-            this.__dialogs[name] = d;
-        },
-        showDialog:function (name, args) {
-            var self = this,
-                d = self.__dialogs[name];
-            d.show(args);
-            self.fire("dialogShow", {
-                dialog:d.dialog,
-                "pluginDialog":d,
-                "dialogName":name
-            });
-        },
-        hasDialog:function (name) {
-            return !!this.__dialogs[name];
-        },
-        /**
-         *
-         * @param name {string}
-         * @param obj {Object}
-         */
-        addCommand:function (name, obj) {
-            this.__commands[name] = obj;
-        },
-        /**
-         *
-         * @param name {string}
-         */
-        hasCommand:function (name) {
-            return this.__commands[name];
-        },
-        /**
-         * @param name {string}
-         * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
-         */
-        execCommand:function (name) {
-            var self = this,
-                cmd = self.__commands[name],
-                args = S.makeArray(arguments);
-            args.shift();
-            args.unshift(self);
-            if (cmd) {
-                return cmd.exec.apply(cmd, args);
-            } else {
-                S.log(name + ": command not found");
-            }
-        },
+                var wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+                self.__set("iframeWrapEl", wrap);
+                var toolBarEl = editorEl.one(KE_TOOLBAR_CLASS);
+                self.__set("toolBarEl", toolBarEl);
+                var statusBarEl = editorEl.one(KE_STATUSBAR_CLASS);
+                self.__set("statusBarEl", statusBarEl);
 
-        _clearIframeDocContent:function () {
-            if (!this.get("iframe")) {
-                return;
-            }
-            var self = this,
-                iframe = self.get("iframe"),
-                win = iframe[0].contentWindow,
-                doc = self.get("document")[0],
-                documentElement = doc.documentElement,
-                body = doc.body;
-            Event.remove([doc, documentElement, body, win]);
-            iframe.remove();
-        },
+                // 标准浏览器编辑器内焦点不失去,firefox?
+                // 标准浏览器实际上不需要！range在iframe内保存着呢，选择高亮变灰而已
+                // 2011-11-19 启用封装 preventFocus
+                // 点击工具栏内任何东西都不会使得焦点转移
+                // 支持 select 键盘 : 2012-03-16
+                // Utils.preventFocus(self.toolBarEl);
 
+                var tw = self.get(WIDTH),
+                    th = self.get(HEIGHT);
+                editorEl.css(WIDTH, tw);
+                textarea.css(WIDTH, "100%");
+                textarea.css(DISPLAY, NONE);
+                wrap.append(textarea);
 
-        _getData:function (format, mode) {
-            var self = this,
-                htmlDataProcessor = self.htmlDataProcessor,
-                html;
-            if (mode == undefined) {
-                mode = self.get("mode");
-            }
-            if (mode == WYSIWYG_MODE) {
-                html = self.get("document")[0].body.innerHTML;
-            } else {
-                html = htmlDataProcessor.toDataFormat(self.get("textarea").val());
-            }
-            //如果不需要要格式化，例如提交数据给服务器          
-            if (format) {
-                html = htmlDataProcessor.toHtml(html);
-            } else {
-                html = htmlDataProcessor.toServer(html);
-            }
-            html = S.trim(html);
-            /*
-             如果内容为空，对 parser 自动加的空行滤掉
+                wrap.css(HEIGHT, th);
+                // ie textarea 100% 不起作用
+                textarea.css(HEIGHT, th);
+
+                // 高度由内层决定，工具条会变化
+                editorEl.css(HEIGHT, "");
+            },
+
+            /**
+             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+             * width 依然在 el 上设置
              */
-            if (/^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/.test(html)) {
-                html = "";
-            }
-            return html;
-        },
+            _uiSetHeight:function (v) {
+                // S.log("_uiSetHeight : " + v);
+                var self = this;
+                self.get("iframeWrapEl").css(HEIGHT, v);
+                self.get("textarea").css(HEIGHT, v);
+            },
 
-        _setData:function (data) {
-            var self = this,
-                htmlDataProcessor,
-                afterData = data;
-            if (self.get("mode") != WYSIWYG_MODE) {
-                // 代码模式下不需过滤
-                self.get("textarea").val(data);
-                return;
-            }
-            if (htmlDataProcessor = self.htmlDataProcessor) {
-                afterData = htmlDataProcessor.toDataFormat(data, "p");
-            }
-            // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
-            self._clearIframeDocContent();
-            self._createIframe(afterData);
-        },
-
-        sync:function () {
-            var self = this;
-            self.get("textarea").val(self._getData());
-        },
-
-        /**
-         * 撤销重做时，不需要格式化代码，直接取自身
-         */
-        _getRawData:function () {
-            return this.get("document")[0].body.innerHTML;
-        },
-
-        /**
-         * 撤销重做时，不需要格式化代码，直接取自身
-         *
-         * @param data {string}
-         */
-        _setRawData:function (data) {
-            this.get("document")[0].body.innerHTML = data;
-        },
-
-        _prepareIFrameHtml:function (id, data) {
-            var self = this;
-            return prepareIFrameHtml(id, self.get('customStyle'), self.get('customLink'), data);
-        },
-
-        getSelection:function () {
-            return KE.Selection.getSelection(this.get("document")[0]);
-        },
-
-        focus:function () {
-            var self = this,
-                doc = self.get("document")[0],
-                win = DOM._4e_getWin(doc);
-            // firefox7 need this
-            if (!UA['ie']) {
-                // note : 2011-11-17 report by 石霸
-                // ie 的 parent 不能 focus ，否则会使得 iframe 内的编辑器光标回到开头
-                win && win.parent && win.parent.focus();
-            }
-            // yiminghe note:webkit need win.focus
-            // firefox 7 needs also?
-            win && win.focus();
-            //ie and firefox need body focus
-            doc.body.focus();
-            self.notifySelectionChange();
-        },
-
-        blur:function () {
-            var self = this,
-                win = DOM._4e_getWin(self.get("document")[0]);
-            win.blur();
-            self.get("document")[0].body.blur();
-        },
-
-        /**
-         * @param cssText {string}
-         */
-        addCustomStyle:function (cssText) {
-            var self = this,
-                customStyle = self.get("customStyle") || "";
-            customStyle += "\n" + cssText;
-            self.set("customStyle", customStyle);
-            DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle);
-        },
-
-        addCustomLink:function (link) {
-            var self = this,
-                customLink = self.get('customLink') || [],
-                doc = self.get("document")[0];
-            customLink.push(link);
-            self.set("customLink", customLink);
-            var elem = doc.createElement("link");
-            elem.rel = "stylesheet";
-            doc.getElementsByTagName("head")[0].appendChild(elem);
-            elem.href = link;
-        },
-
-        removeCustomLink:function (link) {
-            var self = this,
-                doc = self.get("document")[0],
-                links = DOM.query("link", doc);
-            for (var i = 0; i < links.length; i++) {
-                if (links[i].href == link) {
-                    DOM.remove(links[i]);
+            _uiSetMode:function (v) {
+                var self = this,
+                    textarea = self.get("textarea");
+                if (v) {
+                    self.execCommand("save");
+                    self._setData(textarea.val());
+                    self.execCommand("save");
+                } else {
+                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    textarea[0].focus();
                 }
-            }
-            var cls = self.get('customLink') || [],
-                ind = S.indexOf(link, cls);
-            if (ind != -1) {
-                cls.splice(ind, 1);
-            }
-        },
+                textarea[v ? "hide" : "show"]();
+                self.get("iframe")[v ? "show" : "hide"]();
+                self.fire((v ? "wysiwyg" : "source") + "Mode")
+            },
 
-        _setUpIFrame:function (data) {
-            var self = this,
-                iframe = self.get("iframe"),
-                html = self._prepareIFrameHtml(self._UUID, data),
-                win = iframe[0].contentWindow,
-                doc;
+            renderUI:function () {
+                var self = this,
+                    textarea = self.get("textarea");
 
-            iframe.__loaded = 1;
+                // 实例集中管理
+                focusManager.register(self);
 
-            try {
-                // In IE, with custom document.domain, it may happen that
-                // the iframe is not yet available, resulting in "Access
-                // Denied" for the following property access.
-                //ie 设置domain 有问题：yui也有
-                //http://yuilibrary.com/projects/yui2/ticket/2052000
-                //http://waelchatila.com/2007/10/31/1193851500000.html
-                //http://nagoon97.wordpress.com/tag/designmode/
-                doc = win.document;
-            } catch (e) {
-                // Trick to solve this issue, forcing the iframe to get ready
-                // by simply setting its "src" property.
-                //noinspection SillyAssignmentJS
-                iframe[0].src = iframe[0].src;
-                // In IE6 though, the above is not enough, so we must pause the
-                // execution for a while, giving it time to think.
-                if (IS_IE < 7) {
-                    setTimeout(run, 10);
+                if (self.get("attachForm") && textarea[0].form) {
+                    self._attachForm();
+                }
+
+                // self._setData(textarea.val());
+
+                function docReady() {
+                    self.detach("docReady", docReady);
+                    //是否自动focus
+                    if (self.get("focus")) {
+                        self.focus();
+                    }
+                    //否则清空选择区域
+                    else {
+                        var sel = self.getSelection();
+                        sel && sel.removeAllRanges();
+                    }
+                }
+
+                self.on("docReady", docReady);
+            },
+
+
+            _createIframe:function (afterData) {
+                var self = this,
+                    iframe = new Node(iframeHtml),
+                    textarea = self.get("textarea");
+                if (textarea.hasAttr("tabindex")) {
+                    iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
+                }
+                self.get("iframeWrapEl").prepend(iframe);
+                self.set("iframe", iframe);
+                self.__docReady = 0;
+                // With FF, it's better to load the data on iframe.load. (#3894,#4058)
+                if (UA['gecko'] && !iframe.__loaded) {
+                    iframe.on('load', function () {
+                        self._setUpIFrame(afterData);
+                    }, self);
+                } else {
+                    // webkit(chrome) load等不来！
+                    self._setUpIFrame(afterData);
+                }
+            },
+
+
+            destructor:function () {
+                var self = this,
+                    editorEl = self.get("el"),
+                    textarea = self.get("textarea"),
+                    doc = self.get("document")[0],
+                    win = self.get("iframe")[0].contentWindow;
+                self.sync();
+                Editor.focusManager.remove(self);
+                Event.remove([doc, doc.documentElement, doc.body, win]);
+                S.each(self.__dialogs, function (d) {
+                    if (d.destroy) {
+                        d.destroy();
+                    }
+                });
+                self.__commands = 0;
+                if (!self.__editor_created_new) {
+                    textarea.insertBefore(editorEl, undefined);
+                    textarea.css({
+                        width:self.get(WIDTH),
+                        height:self.get(HEIGHT)
+                    });
+                    textarea.show();
+                }
+            },
+
+            _attachForm:function () {
+                var self = this,
+                    textarea = self.get("textarea"),
+                    form = new Node(textarea[0].form);
+                form.on("submit", self.sync, self);
+                self.on("destroy", function () {
+                    form.detach("submit", self.sync, self);
+                });
+            },
+
+            /**
+             * Add a kind of dialog instance to editor.
+             * @param {String} name Dialog name
+             * @param {Overlay} d Dialog instance
+             */
+            addDialog:function (name, d) {
+                this.__dialogs[name] = d;
+            },
+
+            /**
+             * Show dialog
+             * @param {String} name Dialog name
+             * @param args Arguments passed to show
+             */
+            showDialog:function (name, args) {
+                var self = this,
+                    d = self.__dialogs[name];
+                d.show(args);
+                self.fire("dialogShow", {
+                    dialog:d.dialog,
+                    "pluginDialog":d,
+                    "dialogName":name
+                });
+            },
+
+            /**
+             * Whether current editor has specified dialog instance.
+             * @param {String} name Dialog name.
+             */
+            hasDialog:function (name) {
+                return !!this.__dialogs[name];
+            },
+
+            /**
+             * Add a command object to current editor.
+             * @param name {string} Command name.
+             * @param obj {Object} Command object.
+             */
+            addCommand:function (name, obj) {
+                this.__commands[name] = obj;
+            },
+
+            /**
+             * Whether current editor has specified command instance.
+             * @param name {string}
+             */
+            hasCommand:function (name) {
+                return this.__commands[name];
+            },
+            /**
+             * Whether current editor has specified command.
+             * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
+             * @param name {string} Command name.
+             */
+            execCommand:function (name) {
+                var self = this,
+                    cmd = self.__commands[name],
+                    args = S.makeArray(arguments);
+                args.shift();
+                args.unshift(self);
+                if (cmd) {
+                    return cmd.exec.apply(cmd, args);
+                } else {
+                    S.log(name + ": command not found");
+                }
+            },
+
+            _clearIframeDocContent:function () {
+                if (!this.get("iframe")) {
                     return;
                 }
-            }
-            run();
-            function run() {
-                doc = win.document;
-                self.__set("document", new Node(doc));
-                self.__set("window", new Node(win));
-                iframe.detach();
-                // Don't leave any history log in IE. (#5657)
-                doc['open']("text/html", "replace");
-                doc.write(html);
-                doc.close();
-            }
-        },
-        docReady:function (func) {
-            var self = this;
-            self.on("docReady", func);
-            if (self.__docReady) {
-                func.call(self);
-            }
-        },
-        /**
-         *
-         */
-        _monitor:function () {
-            var self = this;
-            if (self._monitorId) {
-                clearTimeout(self._monitorId);
-            }
+                var self = this,
+                    iframe = self.get("iframe"),
+                    win = iframe[0].contentWindow,
+                    doc = self.get("document")[0],
+                    documentElement = doc.documentElement,
+                    body = doc.body;
+                Event.remove([doc, documentElement, body, win]);
+                iframe.remove();
+            },
 
-            self._monitorId = setTimeout(function () {
-                var selection = self.getSelection();
-                if (selection && !selection.isInvalid) {
-                    var startElement = selection.getStartElement(),
-                        currentPath = new KE.ElementPath(startElement);
-                    if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
-                        self.__previousPath = currentPath;
-                        self.fire("selectionChange",
-                            {
-                                selection:selection,
-                                path:currentPath,
-                                element:startElement
-                            });
-                    }
+
+            _getData:function (format, mode) {
+                var self = this,
+                    htmlDataProcessor = self.htmlDataProcessor,
+                    html;
+                if (mode == undefined) {
+                    mode = self.get("mode");
                 }
-            }, 100);
-        },
-        /**
-         * 强制通知插件更新状态，防止插件修改编辑器内容，自己反而得不到通知
-         */
-        notifySelectionChange:function () {
-            var self = this;
-            self.__previousPath = NULL;
-            self._monitor();
-        },
-        insertElement:function (element, init, callback) {
-
-            var self = this;
-
-            if (self.get("mode") !== WYSIWYG_MODE) {
-                return;
-            }
-
-            self.focus();
-
-            var clone,
-                elementName = element._4e_name(),
-                xhtml_dtd = KE.XHTML_DTD,
-                KER = KE.RANGE,
-                KEN = KE.NODE,
-                isBlock = xhtml_dtd['$block'][ elementName ],
-                selection = self.getSelection(),
-                ranges = selection && selection.getRanges(),
-                range,
-                lastElement,
-                current, dtd;
-            //give sometime to breath
-            if (!ranges || ranges.length == 0) {
-                var args = arguments, fn = args.callee;
-                setTimeout(function () {
-                    fn.apply(self, args);
-                }, 30);
-                return;
-            }
-
-            self.execCommand("save");
-
-            for (var i = ranges.length - 1; i >= 0; i--) {
-                range = ranges[ i ];
-                // Remove the original contents.
-                range.deleteContents();
-                clone = !i && element || element.clone(TRUE);
-                init && init(clone);
-                // If we're inserting a block at dtd-violated position, split
-                // the parent blocks until we reach blockLimit.
-                if (isBlock) {
-                    while (( current = range.getCommonAncestor(FALSE, TRUE) )
-                        && ( dtd = xhtml_dtd[ current._4e_name() ] )
-                        && !( dtd && dtd [ elementName ] )) {
-                        // Split up inline elements.
-                        if (current._4e_name() in xhtml_dtd["span"])
-                            range.splitElement(current);
-                        // If we're in an empty block which indicate a new paragraph,
-                        // simply replace it with the inserting block.(#3664)
-                        else if (range.checkStartOfBlock()
-                            && range.checkEndOfBlock()) {
-                            range.setStartBefore(current);
-                            range.collapse(TRUE);
-                            current.remove();
-                        }
-                        else {
-                            range.splitBlock();
-                        }
-                    }
+                if (mode == WYSIWYG_MODE) {
+                    html = self.get("document")[0].body.innerHTML;
+                } else {
+                    html = htmlDataProcessor.toDataFormat(self.get("textarea").val());
                 }
-
-                // Insert the new node.
-                range.insertNode(clone);
-                // Save the last element reference so we can make the
-                // selection later.
-                if (!lastElement)
-                    lastElement = clone;
-            }
-            if (!lastElement) {
-                return;
-            }
-
-            var next = lastElement._4e_nextSourceNode(TRUE), p,
-                doc = self.get("document")[0];
-            dtd = KE.XHTML_DTD;
-
-            //行内元素不用加换行
-            if (!dtd['$inline'][clone._4e_name()]) {
-                //末尾时 ie 不会自动产生br，手动产生
-                if (!next) {
-                    p = new Node("<p>&nbsp;</p>", NULL, doc);
-                    p.insertAfter(lastElement);
-                    next = p;
+                //如果不需要要格式化，例如提交数据给服务器
+                if (format) {
+                    html = htmlDataProcessor.toHtml(html);
+                } else {
+                    html = htmlDataProcessor.toServer(html);
                 }
-                //firefox,replace br with p，和编辑器整体换行保持一致
-                else if (next._4e_name() == "br"
-                    &&
-                    //必须符合嵌套规则
-                    dtd[next.parent()._4e_name()]["p"]
-                    ) {
-                    p = new Node("<p>&nbsp;</p>", NULL, doc);
-                    next[0].parentNode.replaceChild(p[0], next[0]);
-                    next = p;
-                }
-            } else {
-                //qc #3803 ，插入行内后给个位置放置光标
-                next = new Node(doc.createTextNode(" "));
-                next.insertAfter(lastElement);
-            }
-            range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
-            if (next && next[0].nodeType == KEN.NODE_ELEMENT)
-                range.moveToElementEditablePosition(next);
-
-            selection.selectRanges([ range ]);
-            self.focus();
-            //http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
-            clone && clone.scrollIntoView(undefined,false);
-            self._saveLater();
-            callback && callback(clone);
-        },
-
-        /**
-         *
-         * @param data {string}
-         * @param dataFilter 是否采用特定的 dataFilter
-         */
-        insertHtml:function (data, dataFilter) {
-            var self = this, htmlDataProcessor;
-
-            if (self.get("mode") !== WYSIWYG_MODE) {
-                return;
-            }
-
-            if (htmlDataProcessor = self.htmlDataProcessor) {
-                data = htmlDataProcessor.toDataFormat(data, null, dataFilter);
-            }
-
-            self.focus();
-            self.execCommand("save");
-
-            var editorDoc = self.get("document")[0],
-                saveInterval = 0;
-            // ie9 仍然需要这样！
-            // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
-            if (IS_IE) {
-                var $sel = editorDoc.selection;
-                if ($sel.type == 'Control') {
-                    $sel.clear();
-                }
-                try {
-                    $sel.createRange().pasteHTML(data);
-                } catch (e) {
-                    S.log("insertHtml error in ie");
-                }
-            } else {
-                // ie9 仍然没有
-                // 1.webkit insert html 有问题！会把标签去掉，算了直接用 insertElement.
-                // 10.0 修复？？
-                // firefox 初始编辑器无焦点报异常
-                try {
-                    editorDoc.execCommand('inserthtml', FALSE, data);
-                } catch (e) {
-                    setTimeout(function () {
-                        // still not ok in ff!
-                        // 手动选择 body 的第一个节点
-                        if (self.getSelection().getRanges().length == 0) {
-                            var r = new KE.Range(editorDoc);
-                            var node = DOM.first(editorDoc.body, function (el) {
-                                return el.nodeType == 1 && DOM._4e_name(el) != "br";
-                            });
-                            if (!node) {
-                                node = new Node(editorDoc.createElement("p"));
-                                editorDoc.body.appendChild(node[0]);
-                            }
-                            r.setStartAt(node, KE.RANGE.POSITION_AFTER_START);
-                            r.select();
-                        }
-                        editorDoc.execCommand('inserthtml', FALSE, data);
-                    }, saveInterval = 100);
-                }
-            }
-            // bug by zjw2004112@163.com :
-            // 有的浏览器 ： chrome , ie67 貌似不会自动滚动到粘贴后的位置
-            setTimeout(function () {
-                self.getSelection().scrollIntoView();
-            }, saveInterval);
-            self._saveLater(saveInterval);
-        },
-
-        _saveLater:function (saveInterval) {
-            var self = this;
-            if (self.__saveTimer) {
-                clearTimeout(self.__saveTimer);
-                self.__saveTimer = null;
-            }
-            self.__saveTimer = setTimeout(function () {
-                self.execCommand("save");
-            }, saveInterval || 0);
-        },
-
-        _fixByBindIframeDoc:function () {
-            var self = this,
-                iframe = self.get("iframe"),
-                textarea = self.get("textarea")[0],
-                win = iframe[0].contentWindow,
-                doc = self.get("document")[0];
-
-            // Gecko need a key event to 'wake up' the editing
-            // ability when document is empty.(#3864)
-            // activateEditing 删掉，初始引起屏幕滚动了
-            // Webkit: avoid from editing form control elements content.
-            if (UA['webkit']) {
-                Event.on(doc, "click", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['input', 'select'])) {
-                        ev.preventDefault();
-                    }
-                });
-                // Prevent from editig textfield/textarea value.
-                Event.on(doc, "mouseup", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['input', 'textarea'])) {
-                        ev.preventDefault();
-                    }
-                });
-            }
-
-
-            // Create an invisible element to grab focus.
-            if (UA['gecko'] || IS_IE || UA['opera']) {
-                var focusGrabber;
-                focusGrabber = new Node(
-                    // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
-                    '<span ' +
-                        'tabindex="-1" ' +
-                        'style="position:absolute; left:-10000"' +
-                        ' role="presentation"' +
-                        '></span>').insertAfter(textarea);
-                focusGrabber.on('focus', function () {
-                    self.focus();
-                });
-                self.activateGecko = function () {
-                    if (UA['gecko'] && self.__iframeFocus)
-                        focusGrabber[0].focus();
-                };
-                self.on('destroy', function () {
-                    focusGrabber.detach();
-                    focusGrabber.remove();
-                });
-            }
-
-
-            Event.on(win, 'focus', function () {
-                /**
-                 * yiminghe特别注意：firefox光标丢失bug
-                 * blink后光标出现在最后，这就需要实现保存range
-                 * focus后再恢复range
+                html = S.trim(html);
+                /*
+                 如果内容为空，对 parser 自动加的空行滤掉
                  */
-                if (UA['gecko']) {
-                    blinkCursor(doc, FALSE);
+                if (/^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/.test(html)) {
+                    html = "";
                 }
-                else if (UA['opera']) {
-                    doc.body.focus();
+                return html;
+            },
+
+            _setData:function (data) {
+                var self = this,
+                    htmlDataProcessor,
+                    afterData = data;
+                if (self.get("mode") != WYSIWYG_MODE) {
+                    // 代码模式下不需过滤
+                    self.get("textarea").val(data);
+                    return;
                 }
-                // focus 后强制刷新自己状态
+                if (htmlDataProcessor = self.htmlDataProcessor) {
+                    afterData = htmlDataProcessor.toDataFormat(data, "p");
+                }
+                // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
+                self._clearIframeDocContent();
+                self._createIframe(afterData);
+            },
+
+            /**
+             * Synchronize textarea value with editor data.
+             */
+            sync:function () {
+                var self = this;
+                self.get("textarea").val(self._getData());
+            },
+
+            /**
+             * 撤销重做时，不需要格式化代码，直接取自身
+             */
+            _getRawData:function () {
+                return this.get("document")[0].body.innerHTML;
+            },
+
+            /**
+             * 撤销重做时，不需要格式化代码，直接取自身
+             *
+             * @param data {string}
+             */
+            _setRawData:function (data) {
+                this.get("document")[0].body.innerHTML = data;
+            },
+
+            _prepareIFrameHtml:function (id, data) {
+                var self = this;
+                return prepareIFrameHtml(id, self.get('customStyle'), self.get('customLink'), data);
+            },
+
+            /**
+             * Get selection instance of current editor.
+             */
+            getSelection:function () {
+                return Editor.Selection.getSelection(this.get("document")[0]);
+            },
+
+            /**
+             * Make current editor has focus
+             */
+            focus:function () {
+                var self = this,
+                    doc = self.get("document")[0],
+                    win = DOM._4e_getWin(doc);
+                // firefox7 need this
+                if (!UA['ie']) {
+                    // note : 2011-11-17 report by 石霸
+                    // ie 的 parent 不能 focus ，否则会使得 iframe 内的编辑器光标回到开头
+                    win && win.parent && win.parent.focus();
+                }
+                // yiminghe note:webkit need win.focus
+                // firefox 7 needs also?
+                win && win.focus();
+                // ie and firefox need body focus
+                doc.body.focus();
                 self.notifySelectionChange();
-            });
+            },
 
+            /**
+             * Make current editor lose focus
+             */
+            blur:function () {
+                var self = this,
+                    win = DOM._4e_getWin(self.get("document")[0]);
+                win.blur();
+                self.get("document")[0].body.blur();
+            },
 
-            if (UA['gecko']) {
-                /**
-                 * firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
-                 */
-                Event.on(doc, "mousedown", function () {
-                    if (!self.__iframeFocus) {
-                        blinkCursor(doc, FALSE);
+            /**
+             * Add style text to current editor
+             * @param cssText {string}
+             */
+            addCustomStyle:function (cssText) {
+                var self = this,
+                    customStyle = self.get("customStyle") || "";
+                customStyle += "\n" + cssText;
+                self.set("customStyle", customStyle);
+                DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle);
+            },
+
+            /**
+             * Add css link to current editor
+             * @param {String} link
+             */
+            addCustomLink:function (link) {
+                var self = this,
+                    customLink = self.get('customLink') || [],
+                    doc = self.get("document")[0];
+                customLink.push(link);
+                self.set("customLink", customLink);
+                var elem = doc.createElement("link");
+                elem.rel = "stylesheet";
+                doc.getElementsByTagName("head")[0].appendChild(elem);
+                elem.href = link;
+            },
+
+            /**
+             * Remove css link from current editor.
+             * @param {String} link
+             */
+            removeCustomLink:function (link) {
+                var self = this,
+                    doc = self.get("document")[0],
+                    links = DOM.query("link", doc);
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href == link) {
+                        DOM.remove(links[i]);
                     }
-                });
-            }
+                }
+                var cls = self.get('customLink') || [],
+                    ind = S.indexOf(link, cls);
+                if (ind != -1) {
+                    cls.splice(ind, 1);
+                }
+            },
 
-            if (IS_IE) {
-                // Override keystrokes which should have deletion behavior
-                // on control types in IE . (#4047)
-                /**
-                 * 选择img，出现缩放框后不能直接删除
-                 */
-                Event.on(doc, 'keydown', function (evt) {
-                    var keyCode = evt.keyCode;
-                    // Backspace OR Delete.
-                    if (keyCode in { 8:1, 46:1 }) {
-                        //debugger
-                        var sel = self.getSelection(),
-                            control = sel.getSelectedElement();
-                        if (control) {
-                            // Make undo snapshot.
-                            self.fire('save');
-                            // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
-                            // break up the selection, safely manage it here. (#4795)
-                            var bookmark = sel.getRanges()[ 0 ].createBookmark();
-                            // Remove the control manually.
-                            control.remove();
-                            sel.selectBookmarks([ bookmark ]);
-                            self.fire('save');
-                            evt.preventDefault();
+            _setUpIFrame:function (data) {
+                var self = this,
+                    iframe = self.get("iframe"),
+                    html = self._prepareIFrameHtml(self._UUID, data),
+                    win = iframe[0].contentWindow,
+                    doc;
+
+                iframe.__loaded = 1;
+
+                try {
+                    // In IE, with custom document.domain, it may happen that
+                    // the iframe is not yet available, resulting in "Access
+                    // Denied" for the following property access.
+                    //ie 设置domain 有问题：yui也有
+                    //http://yuilibrary.com/projects/yui2/ticket/2052000
+                    //http://waelchatila.com/2007/10/31/1193851500000.html
+                    //http://nagoon97.wordpress.com/tag/designmode/
+                    doc = win.document;
+                } catch (e) {
+                    // Trick to solve this issue, forcing the iframe to get ready
+                    // by simply setting its "src" property.
+                    //noinspection SillyAssignmentJS
+                    iframe[0].src = iframe[0].src;
+                    // In IE6 though, the above is not enough, so we must pause the
+                    // execution for a while, giving it time to think.
+                    if (IS_IE < 7) {
+                        setTimeout(run, 10);
+                        return;
+                    }
+                }
+                run();
+                function run() {
+                    doc = win.document;
+                    self.__set("document", new Node(doc));
+                    self.__set("window", new Node(win));
+                    iframe.detach();
+                    // Don't leave any history log in IE. (#5657)
+                    doc['open']("text/html", "replace");
+                    doc.write(html);
+                    doc.close();
+                }
+            },
+
+            /**
+             * Add callback which will called when editor document is ready
+             * (fire when editor is renderer from textarea/source)
+             * @param {Function} func
+             */
+            docReady:function (func) {
+                var self = this;
+                self.on("docReady", func);
+                if (self.__docReady) {
+                    func.call(self);
+                }
+            },
+
+            _monitor:function () {
+                var self = this;
+                if (self._monitorId) {
+                    clearTimeout(self._monitorId);
+                }
+
+                self._monitorId = setTimeout(function () {
+                    var selection = self.getSelection();
+                    if (selection && !selection.isInvalid) {
+                        var startElement = selection.getStartElement(),
+                            currentPath = new Editor.ElementPath(startElement);
+                        if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
+                            self.__previousPath = currentPath;
+                            self.fire("selectionChange",
+                                {
+                                    selection:selection,
+                                    path:currentPath,
+                                    element:startElement
+                                });
                         }
                     }
-                });
+                }, 100);
+            },
 
-                // PageUp/PageDown scrolling is broken in document
-                // with standard doctype, manually fix it. (#4736)
-                // ie8 主窗口滚动？？
-                if (doc.compatMode == 'CSS1Compat') {
-                    var pageUpDownKeys = { 33:1, 34:1 };
-                    Event.on(doc, 'keydown', function (evt) {
-                        if (evt.keyCode in pageUpDownKeys) {
-                            setTimeout(function () {
-                                self.getSelection().scrollIntoView();
-                            }, 0);
+            notifySelectionChange:function () {
+                var self = this;
+                self.__previousPath = NULL;
+                self._monitor();
+            },
+
+            /**
+             * Insert a element into current editor.
+             * @param {Node} element
+             */
+            insertElement:function (element, init, callback) {
+
+                var self = this;
+
+                if (self.get("mode") !== WYSIWYG_MODE) {
+                    return;
+                }
+
+                self.focus();
+
+                var clone,
+                    elementName = element._4e_name(),
+                    xhtml_dtd = Editor.XHTML_DTD,
+                    KER = Editor.RANGE,
+                    KEN = Editor.NODE,
+                    isBlock = xhtml_dtd['$block'][ elementName ],
+                    selection = self.getSelection(),
+                    ranges = selection && selection.getRanges(),
+                    range,
+                    lastElement,
+                    current, dtd;
+
+                //give sometime to breath
+                if (!ranges || ranges.length == 0) {
+                    var args = arguments, fn = args.callee;
+                    setTimeout(function () {
+                        fn.apply(self, args);
+                    }, 30);
+                    return;
+                }
+
+                self.execCommand("save");
+
+                for (var i = ranges.length - 1; i >= 0; i--) {
+                    range = ranges[ i ];
+                    // Remove the original contents.
+                    range.deleteContents();
+                    clone = !i && element || element.clone(TRUE);
+                    init && init(clone);
+                    // If we're inserting a block at dtd-violated position, split
+                    // the parent blocks until we reach blockLimit.
+                    if (isBlock) {
+                        while (( current = range.getCommonAncestor(FALSE, TRUE) )
+                            && ( dtd = xhtml_dtd[ current._4e_name() ] )
+                            && !( dtd && dtd [ elementName ] )) {
+                            // Split up inline elements.
+                            if (current._4e_name() in xhtml_dtd["span"])
+                                range.splitElement(current);
+                            // If we're in an empty block which indicate a new paragraph,
+                            // simply replace it with the inserting block.(#3664)
+                            else if (range.checkStartOfBlock()
+                                && range.checkEndOfBlock()) {
+                                range.setStartBefore(current);
+                                range.collapse(TRUE);
+                                current.remove();
+                            }
+                            else {
+                                range.splitBlock();
+                            }
+                        }
+                    }
+
+                    // Insert the new node.
+                    range.insertNode(clone);
+                    // Save the last element reference so we can make the
+                    // selection later.
+                    if (!lastElement)
+                        lastElement = clone;
+                }
+
+                if (!lastElement) {
+                    return;
+                }
+
+                var next = lastElement._4e_nextSourceNode(TRUE), p,
+                    doc = self.get("document")[0];
+
+                dtd = Editor.XHTML_DTD;
+
+                //行内元素不用加换行
+                if (!dtd['$inline'][clone._4e_name()]) {
+                    //末尾时 ie 不会自动产生br，手动产生
+                    if (!next) {
+                        p = new Node("<p>&nbsp;</p>", NULL, doc);
+                        p.insertAfter(lastElement);
+                        next = p;
+                    }
+                    //firefox,replace br with p，和编辑器整体换行保持一致
+                    else if (next._4e_name() == "br"
+                        &&
+                        //必须符合嵌套规则
+                        dtd[next.parent()._4e_name()]["p"]
+                        ) {
+                        p = new Node("<p>&nbsp;</p>", NULL, doc);
+                        next[0].parentNode.replaceChild(p[0], next[0]);
+                        next = p;
+                    }
+                } else {
+                    //qc #3803 ，插入行内后给个位置放置光标
+                    next = new Node(doc.createTextNode(" "));
+                    next.insertAfter(lastElement);
+                }
+
+                range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
+                if (next && next[0].nodeType == KEN.NODE_ELEMENT) {
+                    range.moveToElementEditablePosition(next);
+                }
+                selection.selectRanges([ range ]);
+                self.focus();
+                // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
+                clone && clone.scrollIntoView(undefined, false);
+                self._saveLater();
+                callback && callback(clone);
+            },
+
+            /**
+             * Insert html string into current editor.
+             * @param data {string}
+             */
+            insertHtml:function (data, dataFilter) {
+                var self = this, htmlDataProcessor;
+
+                if (self.get("mode") !== WYSIWYG_MODE) {
+                    return;
+                }
+
+                if (htmlDataProcessor = self.htmlDataProcessor) {
+                    data = htmlDataProcessor.toDataFormat(data, null, dataFilter);
+                }
+
+                self.focus();
+                self.execCommand("save");
+
+                var editorDoc = self.get("document")[0],
+                    saveInterval = 0;
+                // ie9 仍然需要这样！
+                // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
+                if (IS_IE) {
+                    var $sel = editorDoc.selection;
+                    if ($sel.type == 'Control') {
+                        $sel.clear();
+                    }
+                    try {
+                        $sel.createRange().pasteHTML(data);
+                    } catch (e) {
+                        S.log("insertHtml error in ie");
+                    }
+                } else {
+                    // ie9 仍然没有
+                    // 1.webkit insert html 有问题！会把标签去掉，算了直接用 insertElement.
+                    // 10.0 修复？？
+                    // firefox 初始编辑器无焦点报异常
+                    try {
+                        editorDoc.execCommand('inserthtml', FALSE, data);
+                    } catch (e) {
+                        setTimeout(function () {
+                            // still not ok in ff!
+                            // 手动选择 body 的第一个节点
+                            if (self.getSelection().getRanges().length == 0) {
+                                var r = new Editor.Range(editorDoc);
+                                var node = DOM.first(editorDoc.body, function (el) {
+                                    return el.nodeType == 1 && DOM._4e_name(el) != "br";
+                                });
+                                if (!node) {
+                                    node = new Node(editorDoc.createElement("p"));
+                                    editorDoc.body.appendChild(node[0]);
+                                }
+                                r.setStartAt(node, Editor.RANGE.POSITION_AFTER_START);
+                                r.select();
+                            }
+                            editorDoc.execCommand('inserthtml', FALSE, data);
+                        }, saveInterval = 100);
+                    }
+                }
+                // bug by zjw2004112@163.com :
+                // 有的浏览器 ： chrome , ie67 貌似不会自动滚动到粘贴后的位置
+                setTimeout(function () {
+                    self.getSelection().scrollIntoView();
+                }, saveInterval);
+                self._saveLater(saveInterval);
+            },
+
+            _saveLater:function (saveInterval) {
+                var self = this;
+                if (self.__saveTimer) {
+                    clearTimeout(self.__saveTimer);
+                    self.__saveTimer = null;
+                }
+                self.__saveTimer = setTimeout(function () {
+                    self.execCommand("save");
+                }, saveInterval || 0);
+            },
+
+            _fixByBindIframeDoc:function () {
+                var self = this,
+                    iframe = self.get("iframe"),
+                    textarea = self.get("textarea")[0],
+                    win = iframe[0].contentWindow,
+                    doc = self.get("document")[0];
+
+                // Gecko need a key event to 'wake up' the editing
+                // ability when document is empty.(#3864)
+                // activateEditing 删掉，初始引起屏幕滚动了
+                // Webkit: avoid from editing form control elements content.
+                if (UA['webkit']) {
+                    Event.on(doc, "click", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['input', 'select'])) {
+                            ev.preventDefault();
+                        }
+                    });
+                    // Prevent from editig textfield/textarea value.
+                    Event.on(doc, "mouseup", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['input', 'textarea'])) {
+                            ev.preventDefault();
                         }
                     });
                 }
-            }
 
-            // Gecko/Webkit need some help when selecting control type elements. (#3448)       
-            if (UA['webkit']) {
-                Event.on(doc, "mousedown", function (ev) {
-                    var control = new Node(ev.target);
-                    if (S.inArray(control._4e_name(), ['img', 'hr', 'input', 'textarea', 'select'])) {
-                        self.getSelection().selectElement(control);
+
+                // Create an invisible element to grab focus.
+                if (UA['gecko'] || IS_IE || UA['opera']) {
+                    var focusGrabber;
+                    focusGrabber = new Node(
+                        // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
+                        '<span ' +
+                            'tabindex="-1" ' +
+                            'style="position:absolute; left:-10000"' +
+                            ' role="presentation"' +
+                            '></span>').insertAfter(textarea);
+                    focusGrabber.on('focus', function () {
+                        self.focus();
+                    });
+                    self.activateGecko = function () {
+                        if (UA['gecko'] && self.__iframeFocus)
+                            focusGrabber[0].focus();
+                    };
+                    self.on('destroy', function () {
+                        focusGrabber.detach();
+                        focusGrabber.remove();
+                    });
+                }
+
+
+                Event.on(win, 'focus', function () {
+                    /**
+                     * yiminghe特别注意：firefox光标丢失bug
+                     * blink后光标出现在最后，这就需要实现保存range
+                     * focus后再恢复range
+                     */
+                    if (UA['gecko']) {
+                        blinkCursor(doc, FALSE);
                     }
-                });
-            }
-
-
-            if (UA['gecko']) {
-                Event.on(doc, "dragstart", function (ev) {
-                    var control = new Node(ev.target);
-                    if (control._4e_name() === 'img' && /ke_/.test(control[0].className)) {
-                        // firefox禁止拖放
-                        ev.preventDefault();
+                    else if (UA['opera']) {
+                        doc.body.focus();
                     }
+                    // focus 后强制刷新自己状态
+                    self.notifySelectionChange();
                 });
-            }
-            //注意：必须放在这个位置，等iframe加载好再开始运行
-            //加入焦点管理，和其他实例联系起来
-            focusManager.add(self);
 
-        }
-    });
+
+                if (UA['gecko']) {
+                    /**
+                     * firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
+                     */
+                    Event.on(doc, "mousedown", function () {
+                        if (!self.__iframeFocus) {
+                            blinkCursor(doc, FALSE);
+                        }
+                    });
+                }
+
+                if (IS_IE) {
+                    // Override keystrokes which should have deletion behavior
+                    // on control types in IE . (#4047)
+                    /**
+                     * 选择img，出现缩放框后不能直接删除
+                     */
+                    Event.on(doc, 'keydown', function (evt) {
+                        var keyCode = evt.keyCode;
+                        // Backspace OR Delete.
+                        if (keyCode in { 8:1, 46:1 }) {
+                            //debugger
+                            var sel = self.getSelection(),
+                                control = sel.getSelectedElement();
+                            if (control) {
+                                // Make undo snapshot.
+                                self.fire('save');
+                                // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
+                                // break up the selection, safely manage it here. (#4795)
+                                var bookmark = sel.getRanges()[ 0 ].createBookmark();
+                                // Remove the control manually.
+                                control.remove();
+                                sel.selectBookmarks([ bookmark ]);
+                                self.fire('save');
+                                evt.preventDefault();
+                            }
+                        }
+                    });
+
+                    // PageUp/PageDown scrolling is broken in document
+                    // with standard doctype, manually fix it. (#4736)
+                    // ie8 主窗口滚动？？
+                    if (doc.compatMode == 'CSS1Compat') {
+                        var pageUpDownKeys = { 33:1, 34:1 };
+                        Event.on(doc, 'keydown', function (evt) {
+                            if (evt.keyCode in pageUpDownKeys) {
+                                setTimeout(function () {
+                                    self.getSelection().scrollIntoView();
+                                }, 0);
+                            }
+                        });
+                    }
+                }
+
+                // Gecko/Webkit need some help when selecting control type elements. (#3448)
+                if (UA['webkit']) {
+                    Event.on(doc, "mousedown", function (ev) {
+                        var control = new Node(ev.target);
+                        if (S.inArray(control._4e_name(), ['img', 'hr', 'input', 'textarea', 'select'])) {
+                            self.getSelection().selectElement(control);
+                        }
+                    });
+                }
+
+
+                if (UA['gecko']) {
+                    Event.on(doc, "dragstart", function (ev) {
+                        var control = new Node(ev.target);
+                        if (control._4e_name() === 'img' && /ke_/.test(control[0].className)) {
+                            // firefox禁止拖放
+                            ev.preventDefault();
+                        }
+                    });
+                }
+                //注意：必须放在这个位置，等iframe加载好再开始运行
+                //加入焦点管理，和其他实例联系起来
+                focusManager.add(self);
+
+            }
+        });
 
 
     function blinkCursor(doc, retry) {
@@ -973,7 +1005,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
      *
      * @param id {string}
      */
-    KE["_initIFrame"] = function (id) {
+    Editor["_initIFrame"] = function (id) {
 
         var self = focusManager.getInstance(id),
             doc = self.get("document")[0],
@@ -1124,11 +1156,7 @@ KISSY.add("editor", function (S, KE, Utils, focusManager) {
             }
         }, 10);
     };
-
-    if (1 > 2) {
-        KE._uiSetMode().addCustomLink().removeCustomLink();
-    }
-    return KE;
+    return Editor;
 }, {
     requires:[
         'editor/core/base',

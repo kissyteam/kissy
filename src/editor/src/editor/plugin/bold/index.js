@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/bold/index", function (S, KE, ui,cmd) {
+KISSY.add("editor/plugin/bold/index", function (S, Editor, ui,cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);

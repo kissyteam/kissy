@@ -1,6 +1,6 @@
-KISSY.add("editor/plugin/italic/cmd", function (S, KE, Cmd) {
+KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
 
-    var ITALIC_STYLE = new KE.Style({
+    var ITALIC_STYLE = new Editor.Style({
         element:'em',
         overrides:[
             {

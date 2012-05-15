@@ -1,8 +1,8 @@
-KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, KE, FlashDialog, Select) {
+KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, Select) {
     var UA = S.UA,
         DOM = S.DOM,
         Node = S.Node,
-        loading = KE['Config'].base + "theme/tao-loading.gif",
+        loading = Editor['Config'].base + "theme/tao-loading.gif",
         XIAMI_URL = "http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}",
         CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic",
@@ -148,7 +148,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, KE, FlashDialog, Selec
             self.dAlign = Select.decorate(del.one(".ke-xiami-align"));
             self.addRes(self.dAlign);
             self._xiami_input = input;
-            KE.Utils.placeholder(input, TIP);
+            Editor.Utils.placeholder(input, TIP);
             self.addRes(input);
             self._xiamia_list = del.one(".ke-xiami-list");
             self._xiami_submit = del.one(".ke-xiami-submit");
@@ -358,7 +358,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, KE, FlashDialog, Selec
                 self.dialog.get("footer").show();
                 self._xiamia_title.show();
             } else {
-                KE.Utils.resetInput(self._xiami_input);
+                Editor.Utils.resetInput(self._xiami_input);
                 self.dAlign.val("none");
                 self.dMargin.val(MARGIN_DEFAULT);
                 self._xiami_url_wrap.show();

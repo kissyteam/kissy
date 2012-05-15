@@ -2,7 +2,7 @@
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft/index", function (S, KE, localStorage, Overlay, Select) {
+KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overlay, Select) {
     var Node = S.Node,
         LIMIT = 5,
         Event = S.Event,
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/draft/index", function (S, KE, localStorage, Overlay, S
         this._init();
     }
 
-    var addRes = KE.Utils.addRes, destroyRes = KE.Utils.destroyRes;
+    var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
     S.augment(Draft, {
 
         _getSaveKey:function () {
@@ -193,7 +193,7 @@ KISSY.add("editor/plugin/draft/index", function (S, KE, localStorage, Overlay, S
                 });
                 self.helpBtn = help;
                 addRes.call(self, help);
-                KE.Utils.lazyRun(self, "_prepareHelp", "_realHelp");
+                Editor.Utils.lazyRun(self, "_prepareHelp", "_realHelp");
             }
             addRes.call(self, holder);
         },

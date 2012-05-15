@@ -1,5 +1,5 @@
-KISSY.add("editor/plugin/bold/cmd", function (S, KE, Cmd) {
-    var BOLD_STYLE = new KE.Style({
+KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
+    var BOLD_STYLE = new Editor.Style({
         element:'strong',
         overrides:[
             {

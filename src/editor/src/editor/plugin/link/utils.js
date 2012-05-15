@@ -1,7 +1,7 @@
-KISSY.add("editor/plugin/link/utils", function (S, KE) {
+KISSY.add("editor/plugin/link/utils", function (S, Editor) {
 
     var Node = S.Node,
-        KEStyle = KE.Style,
+        KEStyle = Editor.Style,
         _ke_saved_href = "_ke_saved_href",
         link_Style = {
             element:'a',

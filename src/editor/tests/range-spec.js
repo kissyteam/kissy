@@ -3,8 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("editor", function (S, Editor) {
-    var DOM = S.DOM, $ = S.all, Node = S.Node;
-    var Walker = Editor.Walker;
+    var $ = S.all, Node = S.Node;
     var Range = Editor.Range;
 
     describe("range", function () {
@@ -189,6 +188,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 div.remove();
                 newDiv.remove();
+
             });
 
         });
@@ -317,7 +317,6 @@ KISSY.use("editor", function (S, Editor) {
 
 
                 range.setStart(div, 0);
-
 
 
                 f = range.extractContents();
@@ -589,6 +588,401 @@ KISSY.use("editor", function (S, Editor) {
                 expect(range.startOffset).toBe(2);
 
                 div.remove();
+
+            });
+
+        });
+
+
+        it("optimize change range from text to node", function () {
+            var div = $("<div><span>123456</span></div>");
+            div.appendTo("body");
+            var range = new Range(document);
+            var text = $(div[0].firstChild.firstChild);
+            var span = div.first();
+            range.setStart(text, 0);
+            range.setEnd(text, text[0].nodeValue.length);
+
+            range.optimize();
+
+            expect(range.startContainer[0]).toBe(span[0]);
+            expect(range.endContainer[0]).toBe(span[0]);
+            expect(range.startOffset).toBe(0);
+            expect(range.endOffset).toBe(1);
+
+            div.remove();
+        });
+
+
+        it("optimizeBookmark exclude bookmark from start/endContainer", function () {
+            var div = $("<div>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "</div>");
+            div.appendTo("body");
+
+            var bookmarks = div.all(".bookmark");
+
+            var bookmarkParent = bookmarks.item(0).parent();
+
+            var range = new Range(document);
+            range.setStart(bookmarks.item(0), 0);
+            range.setEnd(bookmarks.item(1), 1);
+
+            range.optimizeBookmark();
+
+            expect(range.startContainer[0]).toBe(bookmarkParent[0]);
+            expect(range.startOffset).toBe(1);
+            expect(range.endContainer[0]).toBe(bookmarkParent[0]);
+            expect(range.endOffset).toBe(4);
+
+            div.remove();
+        });
+
+
+        it("getEnclosedNode works", function () {
+            var div = $("<div>" +
+                "<span _ke_bookmark=1 class='bookmark'>x0</span>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "<span _ke_bookmark=1 class='bookmark'>y0</span>" +
+                "</div>");
+            div.appendTo("body");
+
+            var range = new Range(document);
+            range.setStartBefore(div);
+            range.setEndAfter(div);
+
+            var n = range.getEnclosedNode();
+            expect(n[0]).toBe(div[0]);
+
+            range.setStart(div, 0);
+            range.setEnd(div, 3);
+
+            n = range.getEnclosedNode();
+            expect(n[0]).toBe(div.first().next()[0]);
+
+            var span = div.first();
+
+            range.setStart(span, 0);
+            range.setEnd(span, span[0].childNodes.length);
+
+            expect(range.getEnclosedNode()).toBe(null);
+
+            div.remove();
+        });
+
+        it("shrink works", function () {
+            var SHRINK_ELEMENT = 1,
+                SHRINK_TEXT = 2;
+
+            var div = $("<div>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "</div>");
+            div.appendTo("body");
+
+            var span = div.first();
+
+
+            var range = new Range(document);
+            range.setStartBefore(div);
+            range.setEndAfter(div);
+
+            range.shrink(SHRINK_ELEMENT);
+
+            expect(range.startContainer[0]).toBe(div[0]);
+            expect(range.endContainer[0]).toBe(div[0]);
+            expect(range.startOffset).toBe(0);
+            expect(range.endOffset).toBe(1);
+
+            range.setStartBefore(div);
+            range.setEndAfter(div);
+
+            range.shrink(SHRINK_ELEMENT, 1);
+
+            expect(range.startContainer[0]).toBe(span[0]);
+            expect(range.endContainer[0]).toBe(span[0]);
+            expect(range.startOffset).toBe(0);
+            expect(range.endOffset).toBe(span[0].childNodes.length);
+
+
+            var textStart = $(span[0].firstChild),
+                textEnd = $(span[0].lastChild);
+
+            range.setStartBefore(div);
+            range.setEndAfter(div);
+
+            range.shrink(SHRINK_TEXT);
+
+            expect(range.startContainer[0]).toBe(span[0]);
+            expect(range.endContainer[0]).toBe(span[0]);
+            expect(range.startOffset).toBe(0);
+            expect(range.endOffset).toBe(span[0].childNodes.length);
+
+
+            range.shrink(SHRINK_TEXT, 1);
+
+            expect(range.startContainer[0]).toBe(textStart[0]);
+            expect(range.endContainer[0]).toBe(textEnd[0]);
+            expect(range.startOffset).toBe(0);
+            expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+
+            div.remove();
+        });
+
+        it("createBookmarks2 works", function () {
+            var div = $("<div>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "</div>");
+            div.prependTo("body");
+
+            var span = div.first();
+
+            var range = new Range(document);
+            range.setStartBefore(span);
+            range.setEndAfter(span);
+
+            var bookmark2 = range.createBookmark2();
+
+            expect(bookmark2.is2).toBe(true);
+            expect(bookmark2.startOffset).toBe(0);
+            expect(bookmark2.endOffset).toBe(1);
+            expect(bookmark2.start).toEqual(div._4e_address());
+            expect(bookmark2.end).toEqual(div._4e_address());
+
+            div.remove();
+        });
+
+        it("createBookmark works", function () {
+
+            var div = $("<div>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "</div>");
+            div.prependTo("body");
+
+            var span = div.first();
+
+            var range = new Range(document);
+            range.setStartBefore(span);
+            range.setEndAfter(span);
+
+            var bookmark = range.createBookmark();
+            var bookS = div.first();
+            var bookE = div.last();
+
+            expect(bookmark.startNode[0]).toBe(bookS[0]);
+            expect(bookmark.endNode[0]).toBe(bookE[0]);
+
+            expect(div[0].childNodes.length).toBe(3);
+            expect(div[0].childNodes[1]).toBe(span[0]);
+
+            div.remove();
+
+        });
+
+
+        it("insertNode works", function () {
+
+            var div = $("<div>" +
+                "<span>1" +
+                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                "2345" +
+                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                "6</span>" +
+                "</div>");
+            div.prependTo("body");
+
+            var books = div.all(".bookmark");
+            var range = new Range();
+            range.setStartBefore(books.item(0));
+            range.setEndAfter(books.item(1));
+
+            expect(range.endContainer[0].childNodes[range.endOffset].nodeValue).toBe('6');
+
+            var n;
+            range.insertNode(n = $("<div id='one'>one</div>"));
+            var start = range.startContainer[0].childNodes[range.startOffset];
+            expect(start).toBe(n[0]);
+
+            expect(range.endContainer[0].childNodes[range.endOffset].nodeValue).toBe('6');
+
+            div.remove();
+
+        });
+
+        describe("moveToBookmark", function () {
+            it("v2 works", function () {
+                var div = $("<div>" +
+                    "<span>1" +
+                    "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                    "2345" +
+                    "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                    "6</span>" +
+                    "</div>");
+                div.prependTo("body");
+
+                var span = div.first();
+
+                var range = new Range(document);
+                range.setStartBefore(span);
+                range.setEndAfter(span);
+
+                var bookmark2 = range.createBookmark2();
+
+                var range2 = new Range(document);
+                range2.moveToBookmark(bookmark2);
+
+                expect(range.startContainer[0]).toBe(range2.startContainer[0]);
+                expect(range.startOffset).toBe(range2.startOffset);
+                expect(range.endContainer[0]).toBe(range2.endContainer[0]);
+                expect(range.endOffset).toBe(range2.endOffset);
+
+                div.remove();
+            });
+
+
+            it("v1 works", function () {
+                var div = $("<div>" +
+                    "<span>1" +
+                    "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                    "2345" +
+                    "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                    "6</span>" +
+                    "</div>");
+                div.prependTo("body");
+
+                var span = div.first();
+
+                var range = new Range(document);
+                range.setStartBefore(span);
+                range.setEndAfter(span);
+
+                var originalRange = range.clone();
+
+                var bookmark2 = range.createBookmark();
+
+                var range2 = new Range(document);
+                range2.moveToBookmark(bookmark2);
+
+                expect(originalRange.startContainer[0]).toBe(range2.startContainer[0]);
+                expect(originalRange.startOffset)
+                    .toBe(range2.startOffset);
+                expect(originalRange.endContainer[0]).toBe(range2.endContainer[0]);
+                expect(originalRange.endOffset)
+                    .toBe(range2.endOffset);
+
+                div.remove();
+            });
+
+            it("getCommonAncestor works", function () {
+                var div = $("<div>" +
+                    "<span>1" +
+                    "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                    "2345" +
+                    "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                    "6</span>" +
+                    "</div>");
+                div.prependTo("body");
+
+                var span = div.first();
+
+                var range = new Range(document);
+                range.setStartBefore(span);
+                range.setEndAfter(span);
+
+                expect(range.getCommonAncestor()[0]).toBe(div[0]);
+
+                var bookmarks = div.all(".bookmark");
+
+                var textNode = $(bookmarks[0].nextSibling);
+
+                range.setStart(span, 0);
+
+                range.setEnd(textNode, 2);
+
+                expect(range.getCommonAncestor()[0]).toBe(span[0]);
+
+                div.remove();
+            });
+
+
+            describe("enlarge", function () {
+
+                it("enlarge element works", function () {
+
+                    var div = $("<div><strong><span>123</span>abc</strong>def</div>")
+                        .prependTo("body");
+
+                    var span = div.first().first();
+
+                    var textNode1 = $(span[0].firstChild);
+
+                    var textNode2 = $(span[0].nextSibling);
+
+                    var textNode3 = $(span.parent()[0].nextSibling);
+
+                    var range = new Range(document);
+
+                    range.setStart(textNode1, 0);
+                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
+
+                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                    expect(range.startContainer[0]).toBe(div[0]);
+                    expect(range.endContainer[0]).toBe(div[0]);
+                    expect(range.startOffset).toBe(0);
+                    expect(range.endOffset).toBe(1);
+
+                    div.remove();
+                });
+
+
+                it("enlarge element works with preceding whitespace", function () {
+
+                    var div = $("<div><strong><span>  123</span>abc</strong>def</div>")
+                        .prependTo("body");
+
+                    var span = div.first().first();
+
+                    var textNode1 = $(span[0].firstChild);
+
+                    var textNode2 = $(span[0].nextSibling);
+
+                    var textNode3 = $(span.parent()[0].nextSibling);
+
+                    var range = new Range(document);
+
+                    range.setStart(textNode1, 1);
+                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
+
+
+                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                    expect(range.startContainer[0]).toBe(div[0]);
+                    expect(range.endContainer[0]).toBe(div[0]);
+                    expect(range.startOffset).toBe(0);
+                    expect(range.endOffset).toBe(1);
+
+                    div.remove();
+                });
 
             });
 

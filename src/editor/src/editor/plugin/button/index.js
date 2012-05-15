@@ -2,7 +2,7 @@
  * triple state button for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/button/index", function (S, KE, UIBase) {
+KISSY.add("editor/plugin/button/index", function (S, Editor, UIBase) {
     var ON = "on",
         OFF = "off",
         DISABLED = "disabled",
@@ -146,11 +146,11 @@ KISSY.add("editor/plugin/button/index", function (S, KE, UIBase) {
     TripleButton.DISABLED_CLASS = DISABLED_CLASS;
 
 
-    KE.TripleButton = TripleButton;
+    Editor.TripleButton = TripleButton;
     /**
      * 将 button ui 和点击功能分离
      */
-    KE.prototype.addButton = function (cfg, methods, ButtonType) {
+    Editor.prototype.addButton = function (cfg, methods, ButtonType) {
         ButtonType = ButtonType || TripleButton;
         var self = this,
             b = new ButtonType(S.mix({
@@ -166,7 +166,7 @@ KISSY.add("editor/plugin/button/index", function (S, KE, UIBase) {
         }
 
         self.on("selectionChange", function () {
-            if (self.get("mode") == KE.SOURCE_MODE) {
+            if (self.get("mode") == Editor.SOURCE_MODE) {
                 return;
             }
             b.selectionChange && b.selectionChange.apply(b, arguments);
@@ -179,7 +179,7 @@ KISSY.add("editor/plugin/button/index", function (S, KE, UIBase) {
             }
         });
 
-        if (b.get("mode") == KE.WYSIWYG_MODE) {
+        if (b.get("mode") == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", b.enable, b);
             self.on("sourceMode", b.disable, b);
         }

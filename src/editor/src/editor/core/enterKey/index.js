@@ -3,14 +3,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/enterKey/index", function (S) {
-    var KE = S.Editor,
+    var Editor = S.Editor,
         UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
-        dtd = KE.XHTML_DTD,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node,
         Event = S.Event,
-        Walker = KE.Walker,
-        ElementPath = KE.ElementPath;
+        Walker = Editor.Walker,
+        ElementPath = Editor.ElementPath;
 
 
     function getRange(editor) {

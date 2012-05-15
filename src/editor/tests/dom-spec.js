@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("editor", function (S, Editor) {
-    var DOM = S.DOM;
+    var DOM = S.DOM,
+        $ = S.all;
 
     describe("dom", function () {
         it("_4e_isBlockBoundary works", function () {
-
             var div = DOM.create("<div>");
             var span = DOM.create("<span>");
             DOM.append(div, "body");
@@ -127,6 +127,17 @@ KISSY.use("editor", function (S, Editor) {
 
             DOM.remove(div);
         });
+
+
+        it("_4e_address works", function () {
+            var div = $("<div><span>1<span></span></span></div>");
+            div.prependTo("body");
+            var span = div.first().last();
+            var bodyIndex = S.one("body")._4e_index();
+            expect(span._4e_address()).toEqual([bodyIndex, 0, 0, 1]);
+            div.remove();
+        });
+
     });
 
 });

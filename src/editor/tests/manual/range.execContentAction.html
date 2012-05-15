@@ -110,8 +110,8 @@ other plugins
     KISSY.ready(function(S) {
 
         S.one("#t").on("click", function() {
-            var KE = S.Editor;
-            var range = new KE.Range(document);
+            var Editor = S.Editor;
+            var range = new Editor.Range(document);
             range.setStartBefore(S.one("#d1_1_1_2_2"));
 
             range.setEndAfter(S.one("#d1_1_3_1_2_3"));

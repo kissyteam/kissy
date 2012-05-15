@@ -2,7 +2,7 @@
  * localStorage support for ie<8
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/localStorage/index", function (S, KE, Overlay, FlashBridge) {
+KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, FlashBridge) {
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行
@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, KE, Overlay, FlashBri
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var movie = KE.Utils.debugUrl("/plugin/localStorage/swfstore.swf?t=" + (+new Date()));
+    var movie = Editor.Utils.debugUrl("/plugin/localStorage/swfstore.swf?t=" + (+new Date()));
 
     var store = new FlashBridge({
         movie:movie,
@@ -34,7 +34,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, KE, Overlay, FlashBri
             "border-bottom:none;" +
             "background:white;" +
             "text-align:center;'>请点击允许</h1>",
-        zIndex:KE.baseZIndex(KE.zIndexManager.STORE_FLASH_SHOW)
+        zIndex:Editor.baseZIndex(Editor.zIndexManager.STORE_FLASH_SHOW)
     });
     o.render();
     o.get("contentEl").append(store.swf);

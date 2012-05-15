@@ -2,15 +2,15 @@
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) {
+KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefined) {
 
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
         listNodeNames = {"ol":insertOrderedList, "ul":insertUnorderedList},
-        KER = KE.RANGE,
-        ElementPath = KE.ElementPath,
-        Walker = KE.Walker,
-        KEN = KE.NODE,
+        KER = Editor.RANGE,
+        ElementPath = Editor.ElementPath,
+        Walker = Editor.Walker,
+        KEN = Editor.NODE,
         UA = S.UA,
         Node = S.Node,
         DOM = S.DOM,
@@ -207,7 +207,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
 
 
             var startElement = selection.getStartElement(),
-                currentPath = new KE.ElementPath(startElement);
+                currentPath = new Editor.ElementPath(startElement);
 
             var state = queryActive(this.type, currentPath);
 
@@ -309,7 +309,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                         //2010-11-17
                         //先将之前原来元素的 expando 去除，
                         //防止 ie li 复制原来标签属性带来的输出代码多余
-                        KE.Utils.clearAllMarkers(database);
+                        Editor.Utils.clearAllMarkers(database);
                         this.createList(editor, groupObj, listsCreated);
                     }
                 } else if (listNodeNames[ groupObj.root._4e_name() ]) {
@@ -341,7 +341,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
             }
 
             // Clean up, restore selection and update toolbar button states.
-            KE.Utils.clearAllMarkers(database);
+            Editor.Utils.clearAllMarkers(database);
             selection.selectBookmarks(bookmarks);
         }
     };
@@ -397,7 +397,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                 });
             }
 
-            var queryUl = KE.Utils.getQueryCmd(insertUnorderedList);
+            var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
 
             if (!editor.hasCommand(queryUl)) {
                 editor.addCommand(queryUl, {
@@ -407,7 +407,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, KE, ListUtils, undefined) 
                 });
             }
 
-            var queryOl = KE.Utils.getQueryCmd(insertOrderedList);
+            var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
 
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {

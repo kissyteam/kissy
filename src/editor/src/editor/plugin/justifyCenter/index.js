@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/justifyCenter/index", function (S, KE, justifyCenterCmd) {
+KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
         this.get("editor").execCommand("justifyCenter");
     }
@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, KE, justifyCenterCmd
                 onClick:exec,
                 offClick:exec,
                 selectionChange:function (e) {
-                    var queryCmd = KE.Utils.getQueryCmd("justifyCenter");
+                    var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
                     if (editor.execCommand(queryCmd, e.path)) {
                         this.bon();
                     } else {

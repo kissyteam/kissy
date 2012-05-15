@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/core/utils", function (S) {
 
-    var KE = S.Editor,
+    var Editor = S.Editor,
         TRUE = true,
         FALSE = false,
         NULL = null,
@@ -12,7 +12,12 @@ KISSY.add("editor/core/utils", function (S) {
         DOM = S.DOM,
         UA = S.UA,
         Event = S.Event,
-        Utils = {
+        /**
+         * Utilities for Editor.
+         * @namespace
+         * @memberOf Editor
+         */
+            Utils = {
             debugUrl:function (url) {
                 url = url.replace(/-min\.(js|css)/i, ".$1");
                 if (!S["Config"]['debug']) {
@@ -29,7 +34,7 @@ KISSY.add("editor/core/utils", function (S) {
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);
                 }
-                return KE["Config"].base + url;
+                return Editor["Config"].base + url;
             },
             /**
              * 懒惰一下
@@ -345,7 +350,7 @@ KISSY.add("editor/core/utils", function (S) {
                     document['frames'][id].name = id;
                 }
 
-                var form =o.form,
+                var form = o.form,
                     buf = {
                         target:DOM.attr(form, "target"),
                         method:DOM.attr(form, "method"),
@@ -365,7 +370,7 @@ KISSY.add("editor/core/utils", function (S) {
                 var hiddens, hd;
                 if (ps) { // add dynamic params
                     hiddens = [];
-                    ps = KE.Utils.normParams(ps);
+                    ps = Editor.Utils.normParams(ps);
                     for (var k in ps) {
                         if (ps.hasOwnProperty(k)) {
                             hd = document.createElement('input');
@@ -512,7 +517,7 @@ KISSY.add("editor/core/utils", function (S) {
             }
         };
 
-    KE.Utils = Utils;
+    Editor.Utils = Utils;
 
     return Utils;
 }, {

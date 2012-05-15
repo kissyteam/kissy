@@ -2,7 +2,7 @@
  * insert image for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/index", function (S, KE, Button, BubbleView, ContextMenu, DialogLoader) {
+KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, ContextMenu, DialogLoader) {
 
     var UA = S.UA,
         Node = S.Node,
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/image/index", function (S, KE, Button, BubbleView, Cont
             editor.addButton({
                 contentCls:"ke-toolbar-image",
                 title:"插入图片",
-                mode:KE.WYSIWYG_MODE
+                mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {
                     showImageEditor(null);
@@ -51,7 +51,7 @@ KISSY.add("editor/plugin/image/index", function (S, KE, Button, BubbleView, Cont
                     if (!UA['ie']) {
                         p._4e_appendBogus(undefined);
                     }
-                    var r = new KE.Range(doc);
+                    var r = new Editor.Range(doc);
                     r.setStartAfter(this.selectedEl);
                     r.select();
                     editor.insertElement(p);
@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/image/index", function (S, KE, Button, BubbleView, Cont
                     var tipUrlEl = el.one(".ke-bubbleview-url"),
                         tipChangeEl = el.one(".ke-bubbleview-change"),
                         tipRemoveEl = el.one(".ke-bubbleview-remove");
-                    KE.Utils.preventFocus(el);
+                    Editor.Utils.preventFocus(el);
                     tipChangeEl.on("click", function (ev) {
                         showImageEditor(bubble.selectedEl);
                         ev.halt();
