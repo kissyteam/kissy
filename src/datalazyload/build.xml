@@ -4,7 +4,7 @@
     <property name="component.name" value="datalazyload"/>
     <property name="src.dir" location="./src/"/>
 
-    <import file="../../tools/common.xml"/>
+    <import file="../../tools/build-xml/common.xml"/>
 
 
     <target name="concat">

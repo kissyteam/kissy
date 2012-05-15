@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+    构建 core kissy
+-->
+<project name="core.build" default="build" basedir=".">
+    <description>KISSY Core Build File</description>
+
+    <property name="copyright.files" value="*-min.css, *-min.js"/>
+    <property name="component.name" value="core"/>
+    <property name="bom" value="&#xFEFF;"/>
+
+    <import file="../common.xml"/>
+
+    <target name="build-seed">
+        <!--
+        build seed first，刷新 seed 前的时间戳到最新
+        seed 的时间戳也代表 kissy 的时间戳
+        -->
+        <delete>
+            <!--每次都要重新 build seed-->
+            <fileset dir="../" includes="seed*.js"/>
+        </delete>
+        <ant dir="${kissy.src.dir}/seed/" inheritall="false"/>
+    </target>
+
+    <target name="combine-core" depends="build-seed">
+        <!-- kissy: seed + core, 独立单文件 -->
+        <concat destfile="${component.src.dir.tmp}/kissy-pkg.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
+            <path path="${kissy.build.dir}/seed.js"/>
+            <path path="${kissy.build.dir}/ua.js"/>
+            <path path="${kissy.build.dir}/dom.js"/>
+            <path path="${kissy.build.dir}/event.js"/>
+            <path path="${kissy.build.dir}/json.js"/>
+            <path path="${kissy.build.dir}/ajax.js"/>
+            <path path="${kissy.build.dir}/cookie.js"/>
+            <path path="${kissy.build.dir}/base.js"/>
+            <path path="${kissy.build.dir}/anim.js"/>
+            <path path="${kissy.build.dir}/node.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
+            </footer>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="combine-core,common.build">
+    </target>
+</project>

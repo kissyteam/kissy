@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+    构建 nodejs kissy
+-->
+<project name="nodejs.build" default="build" basedir=".">
+    <description>KISSY nodejs Build File</description>
+
+    <property name="copyright.files" value="*-min.css, *-min.js"/>
+    <property name="component.name" value="nodejs"/>
+    <property name="bom" value="&#xFEFF;"/>
+
+    <import file="../common.xml"/>
+
+    <property name="nodejs.patch.file" location="${kissy.dir}/tools/nodejs-patch/patch.js"/>
+
+    <!--
+    apply nodejs patch to kissy.js
+    -->
+    <target name="nodejs-patch">
+        <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js"
+                encoding="${charset}"
+                outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
+            <path location="${nodejs.patch.file}"/>
+            <path location="${kissy.build.dir}/kissy.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="nodejs-patch,common.build">
+    </target>
+</project>

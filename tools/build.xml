@@ -3,8 +3,7 @@
   kissy 构建文件，开启每个组件的构建
   @author lifesinger@gmail.com , yiminghe@gmail.com
 -->
-<project name="kissy-project-build"
-         default="build-packages" xmlns:ac="antlib:net.sf.antcontrib">
+<project name="kissy-project-build" xmlns:ac="antlib:net.sf.antcontrib">
     <description>KISSY Project Build File</description>
 
     <!-- kissy 主目录 -->
@@ -26,11 +25,17 @@
 
 
     <!--
-        打包 core kissy kissy-aio
+        打包 core kissy
     -->
-    <target name="build-packages">
+    <target name="combine-core">
         <subant target="" failonerror="false" inheritall="false">
-            <fileset dir="./build-xml/" includes="**/build.xml"/>
+            <fileset dir="./build-xml/core/" includes="**/build.xml"/>
+        </subant>
+    </target>
+
+    <target name="combine-nodejs">
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="./build-xml/nodejs/" includes="**/build.xml"/>
         </subant>
     </target>
 
@@ -44,7 +49,7 @@
         <subant target="" failonerror="false" inheritall="false">
             <fileset dir="${kissy.src.dir}" includes="**/build.xml"/>
         </subant>
-        <subant target="build-packages"
+        <subant target="combine-core"
                 buildpath="."
                 inheritall="false" inheritrefs="false"/>
     </target>

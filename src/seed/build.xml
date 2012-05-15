@@ -5,7 +5,7 @@
     <property name="component.name" value="seed"/>
     <property name="src.dir" location="./src/"/>
 
-    <import file="../../tools/common.xml"/>
+    <import file="../../tools/build-xml/common.xml"/>
 
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
