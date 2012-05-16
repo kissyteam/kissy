@@ -41,6 +41,8 @@ KISSY.use("dom", function(S, DOM) {
             expect(parseInt(DOM.css(a, "top"))).toBe(0);
 
             document.documentElement.style.borderTop = "";
+
+            DOM.remove(a);
         });
 
 

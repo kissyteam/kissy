@@ -126,6 +126,7 @@ KISSY.use("dom", function (S, DOM) {
             //!!! ie<9 : foo.parentNode == fragment && DOM.contains(document,foo)==true
             expect(foo.parentNode).not.toBe(document.body);
             DOM.remove(fc);
+            DOM.remove(foo);
         });
 
     });

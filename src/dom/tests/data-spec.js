@@ -46,6 +46,7 @@ KISSY.use("ua,dom", function (S, UA, DOM) {
             expect(foo[__EXPANDO]).toBeUndefined();
             DOM.removeData(foo);
             expect(foo[__EXPANDO]).toBeUndefined();
+            DOM.remove(foo);
         });
 
         it("custom data should not add unnecessary EXPANDO", function () {

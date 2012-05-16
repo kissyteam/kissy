@@ -38,6 +38,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
                 expect(DOM.attr(el.firstChild, "value")).toBe("movie_name.swf");
                 var cloned = DOM.clone(el);
                 expect(DOM.attr(cloned.firstChild, "value")).toBe("movie_name.swf");
+                DOM.remove(el);
             });
         }
 
@@ -83,6 +84,9 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
             runs(function() {
                 expect(d).toBe(4);
+
+                DOM.remove(cloned);
+                DOM.remove(div);
             });
 
         });
@@ -133,6 +137,8 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
             runs(function() {
                 expect(d).toBe(4);
+                DOM.remove(cloned);
+                DOM.remove(div);
             });
 
         });

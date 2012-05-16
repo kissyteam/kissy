@@ -253,6 +253,8 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
             expect(DOM.css(d, "float")).toBe("left");
             expect(DOM.style(d, "float")).toBe("");
+
+            DOM.remove(d);
         });
 
 
@@ -326,6 +328,7 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
             DOM.css(div, "font-family", "");
             expect(div.style.cssText).toBe("");
             div.removeAttribute("style");
+            DOM.remove(div);
         });
 
         // #119 : https://github.com/kissyteam/kissy/issues/119

@@ -100,16 +100,19 @@ KISSY.use("dom", function (S, DOM) {
 
             waits(500);
 
-
             runs(function () {
                 expect(window.g_sethtml2).toBeUndefined();
 
                 // src js
                 DOM.html(t, '<script src="test-dom-create.js"><\/script>we', true);
+            });
 
-                waitsFor(function () {
-                    return window.g_testLoadScriptViaInnerHTML;
-                }, "external script in dom.html should run", 5000);
+            waitsFor(function () {
+                return window.g_testLoadScriptViaInnerHTML;
+            }, "external script in dom.html should run", 5000);
+
+            runs(function () {
+                DOM.remove(t);
             });
 
         });
@@ -134,6 +137,8 @@ KISSY.use("dom", function (S, DOM) {
             for (i = 0; i < multiple.length; i++) {
                 expect(multiple[i].innerHTML.toLowerCase()).toBe("<span>2</span>");
             }
+
+            DOM.remove(multiple);
 
         });
 

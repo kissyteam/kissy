@@ -351,6 +351,7 @@ KISSY.use("dom", function (S, DOM) {
                 ret.push(DOM.attr(o, "value"));
             });
             expect(ret).toEqual(["1", "", undefined]);
+            DOM.remove(s);
         });
 
         runs(function () {

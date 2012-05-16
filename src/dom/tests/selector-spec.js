@@ -77,6 +77,8 @@ KISSY.use("dom", function (S, DOM) {
 
             expect(DOM.get("#" + id).nodeName.toLowerCase()).toBe("div");
 
+            DOM.remove([input,div]);
+
         });
     });
 
