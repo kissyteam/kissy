@@ -195,6 +195,10 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     
+                                    <p>parents：
+                                        <a href="../symbols/Base.html">Base</a>
+                                    </p>                                                
+                                    
 
                                     
                                     
@@ -223,7 +227,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">Router used to route url to responding action callbacks.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -232,6 +236,37 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Router.html#routes">routes</a></b>
+                                                <span class="type">{Object}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Route and action config.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -253,7 +288,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Add config to current router.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                MVC.Router.
+                                                <b class="name"><a href="../symbols/MVC.Router.html#.navigate">navigate</a></b>
+                                                <span class="param">(path, opts)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Navigate to specified path.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -263,9 +308,14 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Start router (url monitor).</span>                                                
                                             </li>
                                             
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
                                         </ul>
                                         
                                     </div>
@@ -321,6 +371,58 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="routes"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">routes</b>
+                                                <span>{Object}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Route and action config.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code"><code>  {    "/search/:param":"callback"    // or    "search":{      reg:/xx/,      callback:fn    }  }</code></pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -341,11 +443,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_router.js.html#line349">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_router.js.html#line364">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Add config to current router.
                                                 
                                                 
                                             </div>
@@ -362,8 +464,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">routes</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Route config.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -399,6 +501,79 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name=".navigate"> </a>
+                                            <div class="title">
+                                                <span>MVC.Router.</span>
+                                                <b class="name">navigate</b>
+                                                <span class="param">(path, opts)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_router.js.html#line383">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Navigate to specified path.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">path</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Destination path.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">opts</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Config for current navigation.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts.triggerRoute</b>
+                                                            
+                                                            
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">Whether to trigger responding action                 even current path is same as parameter</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name=".start"> </a>
                                             <div class="title">
                                                 <span>MVC.Router.</span>
@@ -407,11 +582,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_router.js.html#line383">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_router.js.html#line405">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Start router (url monitor).
                                                 
                                                 
                                             </div>
@@ -438,25 +613,25 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback function to be called after router is started.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts.error</b>
+                                                            <b class="name">opts.urlRoot</b>
                                                             
                                                             
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Specify url root for html5 history management.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts.complete</b>
+                                                            <b class="name">opts.nativeHistory</b>
                                                             
                                                             
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">Whether enable html5 history management.</span>
                                                         </li>
                                                     
                                                     </ul>

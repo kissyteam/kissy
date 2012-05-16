@@ -195,6 +195,10 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     
+                                    <p>parents：
+                                        <a href="../symbols/Base.html">Base</a>
+                                    </p>                                                
+                                    
 
                                     
                                     
@@ -223,7 +227,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">Model represent a data record.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -232,6 +236,92 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#clientId">clientId</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Generated client id.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#idAttribute">idAttribute</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Attribute name used to store id from server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#parse">parse</a></b>
+                                                <span class="type">{function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">parse json from server to get attr/value pairs.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#sync">sync</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Sync model data with server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#url">url</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Called to get url for delete/edit/new current model.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#urlRoot">urlRoot</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">If current model does not belong to any collection.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -248,12 +338,32 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
+                                                <b class="name"><a href="../symbols/MVC.Model.html#addToCollection">addToCollection</a></b>
+                                                <span class="param">(c)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Add current model instance to a specified collection.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
                                                 <b class="name"><a href="../symbols/MVC.Model.html#destroy">destroy</a></b>
-                                                <span class="param">(opts, opts)</span>
+                                                <span class="param">(opts)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">destroy this model</span>                                                
+                                                <span class="desc">destroy this model and sync with server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#getId">getId</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get current model 's id.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -263,7 +373,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">whether has been modified since last save</span>                                                
+                                                <span class="desc">whether has been modified since last save.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -273,17 +383,27 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">whether it is newly created</span>                                                
+                                                <span class="desc">whether it is newly created.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/MVC.Model.html#load">load</a></b>
-                                                <span class="param">(opts, opts)</span>
+                                                <span class="param">(opts)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">call sycn to load</span>                                                
+                                                <span class="desc">Load model data from server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#removeFromCollection">removeFromCollection</a></b>
+                                                <span class="param">(c)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Remove current model instance from a specified collection.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -293,9 +413,34 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Save current model 's data to server using sync.</span>                                                
                                             </li>
                                             
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#setId">setId</a></b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Set current model 's id.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Model.html#toJSON">toJSON</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get json representation for current model.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
                                         </ul>
                                         
                                     </div>
@@ -351,6 +496,197 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="clientId"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">clientId</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Generated client id.Default call S.guid()
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="idAttribute"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">idAttribute</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Attribute name used to store id from server.Default: "id".
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="parse"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">parse</b>
+                                                <span>{function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    parse json from server to get attr/value pairs.Default to return raw data from server.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="sync"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">sync</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Sync model data with server.Default to call <a href="../symbols/MVC.html#.sync">MVC.sync</a>
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="url"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">url</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Called to get url for delete/edit/new current model.Default: collection.url+"/"+mode.id
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="urlRoot"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">urlRoot</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    If current model does not belong to any collection.Use this attribute value as collection.url in <a href="../symbols/MVC.Model.html#url">MVC.Model#url</a>
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -363,19 +699,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="destroy"> </a>
+                                            <a name="addToCollection"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">destroy</b>
-                                                <span class="param">(opts, opts)</span>
+                                                <b class="name">addToCollection</b>
+                                                <span class="param">(c)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line83">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line44">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                destroy this model
+                                                Add current model instance to a specified collection.
                                                 
                                                 
                                             </div>
@@ -389,20 +725,66 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts</b>
+                                                            <b class="name">c</b>
                                                             
                                                             
-                                                            
+                                                            <span class="type">{<a href="../symbols/MVC.Collection.html">MVC.Collection</a>}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="destroy"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">destroy</b>
+                                                <span class="param">(opts)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line100">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                destroy this model and sync with server.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">opts</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">destroy config.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -411,7 +793,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">callback when action is done successfully</span>
+                                                            <span class="desc">callback when action is done successfully.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -420,7 +802,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">callback when error occurs at action.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -429,11 +811,50 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">callback when action is complete.</span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getId"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getId</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line60">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get current model 's id.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
                                                 
                                                 
                                                 
@@ -462,11 +883,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line71">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line89">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                whether has been modified since last save
+                                                whether has been modified since last save.
                                                 
                                                 
                                             </div>
@@ -481,6 +902,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -501,17 +934,111 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line64">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line81">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                whether it is newly created
+                                                whether it is newly created.
                                                 
                                                 
                                             </div>
                                             
                                             <dl>                                            
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="load"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">load</b>
+                                                <span class="param">(opts)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line141">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Load model data from server.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Load config.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts.success</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">callback when action is done successfully.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts.error</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">callback when error occurs at action.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts.complete</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">callback when action is complete.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -532,19 +1059,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="load"> </a>
+                                            <a name="removeFromCollection"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">load</b>
-                                                <span class="param">(opts, opts)</span>
+                                                <b class="name">removeFromCollection</b>
+                                                <span class="param">(c)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line125">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line52">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                call sycn to load
+                                                Remove current model instance from a specified collection.
                                                 
                                                 
                                             </div>
@@ -558,46 +1085,10 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts</b>
+                                                            <b class="name">c</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts</b>
-                                                            
-                                                            
-                                                            <span class="type">{Object}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.success</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc">callback when action is done successfully</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.error</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.complete</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
+                                                            <span class="type">{<a href="../symbols/MVC.Collection.html">MVC.Collection</a>}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -631,11 +1122,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line153">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line169">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Save current model 's data to server using sync.
                                                 
                                                 
                                             </div>
@@ -653,7 +1144,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Save config.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -662,7 +1153,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">callback when action is done successfully</span>
+                                                            <span class="desc">callback when action is done successfully.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -671,7 +1162,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">callback when error occurs at action.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -680,6 +1171,61 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
+                                                            <span class="desc">callback when action is complete.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="setId"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">setId</b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line68">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Set current model 's id.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">id</b>
+                                                            
+                                                            
+                                                            
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -693,6 +1239,57 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="toJSON"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">toJSON</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_model.js.html#line194">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get json representation for current model.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Object}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 

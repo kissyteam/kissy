@@ -195,6 +195,10 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     
+                                    <p>parents：
+                                        <a href="../symbols/Base.html">Base</a>
+                                    </p>                                                
+                                    
 
                                     
                                     
@@ -223,7 +227,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">Collection.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -232,6 +236,92 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#comparator">comparator</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Comparator function for index getter when adding model.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#model">model</a></b>
+                                                <span class="type">{MVC.Model}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Model constructor with in current collection.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#models">models</a></b>
+                                                <span class="type">{MVC.Model[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Model list.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#parse">parse</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Get structured data from raw data returned from server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#sync">sync</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Sync function to sync data with server.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#url">url</a></b>
+                                                <span class="type">{String|Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Get url for sending data to server.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -253,7 +343,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Add a model to current collection.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#at">at</a></b>
+                                                <span class="param">(i)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get model at specified index.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -263,7 +363,27 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Add a model to current collection by provide json data.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#getByCid">getByCid</a></b>
+                                                <span class="param">(cid)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get model instance by client id.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#getById">getById</a></b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get model instance by id.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -273,7 +393,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Initialize model list by loading data using sync mechanism.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -283,9 +403,34 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">Remove an existing model from current collection.</span>                                                
                                             </li>
                                             
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#sort">sort</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Sort model list according <a href="../symbols/MVC.Collection.html#comparator">MVC.Collection#comparator</a>.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MVC.Collection.html#toJSON">toJSON</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get json representation of this collection.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
                                         </ul>
                                         
                                     </div>
@@ -341,6 +486,197 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="comparator"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">comparator</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Comparator function for index getter when adding model.default to append to last of current model list.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="model"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">model</b>
+                                                <span>{<a href="../symbols/MVC.Model.html">MVC.Model</a>}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Model constructor with in current collection.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="models"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">models</b>
+                                                <span>{<a href="../symbols/MVC.Model.html">MVC.Model</a>[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Model list.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="parse"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">parse</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Get structured data from raw data returned from server.default to return raw data from server.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="sync"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">sync</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Sync function to sync data with server.Default to call <a href="../symbols/MVC.html#.sync">MVC.sync</a>
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="url"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">url</b>
+                                                <span>{String|Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Get url for sending data to server.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -361,11 +697,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line95">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line128">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Add a model to current collection.
                                                 
                                                 
                                             </div>
@@ -382,44 +718,26 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">model</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Object|<a href="../symbols/MVC.Model.html">MVC.Model</a>}</span> 
+                                                            <span class="desc">Model or json data to be added.</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">opts</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Add config</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts.success</b>
+                                                            <b class="name">opts.silent</b>
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.error</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.complete</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Whether to fire add event.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -433,17 +751,60 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <dt>Returns</dt>
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="at"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">at</b>
+                                                <span class="param">(i)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line165">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get model at specified index.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
                                                 <dd>
-                                                    <ul class="list">
+                                                    <ul class="list param-list">
                                                     
                                                         <li class="li">
-                                                            <span class="type">{Boolean}</span> 
-                                                            <span>flag         true:add success         false:validate error</span>
+                                                            &nbsp;
+                                                            <b class="name">i</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">Specified index.</span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 
                                                 
                                                 
@@ -464,11 +825,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line182">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line222">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Add a model to current collection by provide json data.
                                                 
                                                 
                                             </div>
@@ -485,8 +846,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">model</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Json data represent model data.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -495,7 +856,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Create config.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -504,7 +865,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback when create is successful.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -513,7 +874,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback when error occurs on creating.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -522,6 +883,125 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
+                                                            <span class="desc">Callback when create is complete.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">opts.silent</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">Whether to fire add event.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getByCid"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getByCid</b>
+                                                <span class="param">(cid)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line291">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get model instance by client id.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cid</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Client id auto generated by model.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getById"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getById</b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line276">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get model instance by id.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">id</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -555,11 +1035,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line154">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line189">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Initialize model list by loading data using sync mechanism.
                                                 
                                                 
                                             </div>
@@ -577,7 +1057,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Load config.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -586,7 +1066,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback when load is successful.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -595,7 +1075,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback when error occurs on loading.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -604,7 +1084,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Callback when load is complete.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -637,11 +1117,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line118">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line149">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
+                                                Remove an existing model from current collection.
                                                 
                                                 
                                             </div>
@@ -658,44 +1138,26 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">model</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{<a href="../symbols/MVC.Model.html">MVC.Model</a>}</span> 
+                                                            <span class="desc">Model to be removed.</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">opts</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{object}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Remove config.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">opts.success</b>
+                                                            <b class="name">opts.silent</b>
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.error</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">opts.complete</b>
-                                                            
-                                                            
-                                                            <span class="type">{Function}</span> 
-                                                            <span class="desc"></span>
+                                                            <span class="desc">Whether to fire remove event.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -708,6 +1170,96 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="sort"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">sort</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line103">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Sort model list according <a href="../symbols/MVC.Collection.html#comparator">MVC.Collection#comparator</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="toJSON"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">toJSON</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_collection.js.html#line116">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get json representation of this collection.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            
+                                                            <span>Object[]</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 

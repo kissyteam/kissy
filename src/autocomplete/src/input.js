@@ -165,8 +165,13 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                     }
                 }
                 // Whether or not the first row should be highlighted by default.
-                if (self.get("autoHighlight") && children.length) {
-                    menu.set("highlightedItem", children[0]);
+                if (self.get("autoHighlightFirst")) {
+                    for (i = 0; i < children.length; i++) {
+                        if (!children[i].get("disabled")) {
+                            menu.set("highlightedItem", children[i]);
+                            break;
+                        }
+                    }
                 }
             },
 
@@ -241,7 +246,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                 var self = this;
                 if (item) {
                     var textContent = item.get("textContent");
-                    self._setValue(textContent);
+                    self._setValue(textContent + self.get("strAppendedOnComplete"));
                     self._savedInputValue = textContent;
                     /**
                      * @name AutoComplete#select
@@ -571,7 +576,15 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  * Default : false
                  * @type Boolean
                  */
-                autoHighlight:{
+                autoHighlightFirst:{
+                },
+
+                /**
+                 * String appended to selected value after click autocomplete item.
+                 * @type String
+                 */
+                strAppendedOnComplete:{
+                    value:""
                 }
             },
             DefaultRender:AutoCompleteRender

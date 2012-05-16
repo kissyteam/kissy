@@ -218,6 +218,9 @@ KISSY.add('template', function (S) {
 
 });
 /**
+ * TODO: check spec
+ *  - http://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html
+ *
  * 2012-04-24 yiminghe@gmail.com
  *      - support {{@if test}}t{{/if}} to prevent collision with velocity template engine
  *
