@@ -59,7 +59,7 @@
             updateInputOnDownUp:false,
             format:function (query, data) {
                 var ret = [];
-                for (var i = 0; i < data.length; i++) {
+                for (var i = 1; i < data.length; i++) {
                     var v = data[i] + "";
                     if (query) {
                         ret[i] = {
@@ -73,9 +73,9 @@
                         };
                     }
                 }
-                ret.unshift({
+                ret[0]={
                     disabled:true
-                });
+                };
                 if (!query) {
                     ret[0].content = "选择 kissyteam 成员或直接输入";
                 } else {
@@ -95,7 +95,7 @@
                     // 也可以返回全部数据
                     if (!query) {
                         //return ret;
-                        return data
+                        return ret.concat(data);
                     }
                     S.each(data, function (d) {
                         if (d.indexOf(query) != -1) {
