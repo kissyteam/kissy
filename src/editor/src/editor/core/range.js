@@ -40,8 +40,11 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
 
 
-    var isNotWhitespaces = Walker.whitespaces(TRUE),
-        isWhitespaces = Walker.whitespaces();
+    var isWhitespace = new Walker.whitespaces(),
+        isBookmark = new Walker.bookmark(),
+        isNotWhitespaces = Walker.whitespaces(TRUE),
+        isNotBookmarks = Walker.bookmark(false, true);
+
 
     /**
      * Extract html content within range.
@@ -662,7 +665,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 }
 
                 var walker = new Walker(walkerRange),
-                    isNotBookmarks = Walker.bookmark(false, true),
                     node, pre;
 
                 walker.evaluator = function (node) {
@@ -1147,7 +1149,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     while (enlarge) {
                         // 兄弟节点是否都是空节点？
                         while (sibling) {
-                            if (isWhitespace(sibling)) {
+                            if (isWhitespace(sibling) || isBookmark(sibling)) {
                                 sibling = sibling[direction];
                             } else {
                                 break;
@@ -1597,9 +1599,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
     }
-
-    var isWhitespace = new Walker.whitespaces(),
-        isBookmark = new Walker.bookmark();
 
     function nonWhitespaceOrIsBookmark(node) {
         // Whitespaces and bookmark nodes are to be ignored.

@@ -947,91 +947,123 @@ KISSY.use("editor", function (S, Editor) {
 
             describe("enlarge", function () {
 
-                it("enlarge element within same element", function () {
 
-                    var div = $("<div><strong><span>123</span>abc</strong>def</div>")
-                        .prependTo("body");
+                describe("enlarge element", function () {
+                    it("enlarge element within same element", function () {
 
-                    var span = div.first().first();
+                        var div = $("<div><strong><span>123</span>abc</strong>def</div>")
+                            .prependTo("body");
 
-                    var textNode1 = $(span[0].firstChild);
+                        var span = div.first().first();
 
-                    var textNode2 = $(span[0].nextSibling);
+                        var textNode1 = $(span[0].firstChild);
 
-                    var range = new Range(document);
+                        var textNode2 = $(span[0].nextSibling);
 
-                    range.setStart(textNode1, 0);
-                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
+                        var range = new Range(document);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+                        range.setStart(textNode1, 0);
+                        range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
-                    expect(range.startContainer[0]).toBe(div[0]);
-                    expect(range.endContainer[0]).toBe(div[0]);
-                    expect(range.startOffset).toBe(0);
-                    expect(range.endOffset).toBe(1);
+                        range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
 
-                    div.remove();
+                        expect(range.startContainer[0]).toBe(div[0]);
+                        expect(range.endContainer[0]).toBe(div[0]);
+                        expect(range.startOffset).toBe(0);
+                        expect(range.endOffset).toBe(1);
+
+                        div.remove();
+                    });
+
+
+                    it("enlarge element within same element 2", function () {
+
+                        var div = $("<div><strong>x<span>123</span>abc</strong>def</div>")
+                            .prependTo("body");
+
+                        var span = div.first("strong").first("span");
+
+                        var textNode1 = $(span[0].firstChild);
+
+                        var textNode2 = $(span[0].nextSibling);
+
+                        var strong = div.first("strong");
+
+                        var range = new Range(document);
+
+                        range.setStart(textNode1, 0);
+                        range.setEnd(textNode2, textNode2[0].nodeValue.length);
+
+                        range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                        expect(range.startContainer[0]).toBe(strong[0]);
+                        expect(range.endContainer[0]).toBe(textNode2[0]);
+                        expect(range.startOffset).toBe(1);
+                        expect(range.endOffset).toBe(textNode2[0].nodeValue.length);
+
+                        div.remove();
+                    });
+
+
+                    it("enlarge element within same element 3", function () {
+
+                        var div = $("<div><strong>x<span>123</span><span>abc</span></strong>def</div>")
+                            .prependTo("body");
+
+                        var span = div.first("strong").first("span");
+
+                        var span2 = span.next();
+
+                        var textNode1 = $(span[0].firstChild);
+
+                        var textNode2 = $(span2[0].firstChild);
+
+                        var strong = div.first("strong");
+
+                        var range = new Range(document);
+
+                        range.setStart(textNode1, 0);
+                        range.setEnd(textNode2, textNode2[0].nodeValue.length);
+
+                        range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                        expect(range.startContainer[0]).toBe(strong[0]);
+                        expect(range.endContainer[0]).toBe(strong[0]);
+                        expect(range.startOffset).toBe(1);
+                        expect(range.endOffset).toBe(3);
+
+                        div.remove();
+                    });
+
+
+                    it("enlarge element even bookmark", function () {
+                        var div = $("<div>" +
+                            "<strong>" +
+                            "<span _ke_bookmark='1'></span>" +
+                            "<span>123</span><span>abc</span>" +
+                            "<span _ke_bookmark='1'></span>" +
+                            "</strong>" +
+                            "def" +
+                            "</div>")
+                            .prependTo("body");
+
+                        var span = div.one("span").next();
+                        var span2 = span.next();
+                        var range = new Range(document);
+                        range.setStart(span, 0);
+                        range.setEnd(span2, 1);
+
+                        range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+
+                        expect(range.startContainer[0]).toBe(div[0]);
+                        expect(range.endContainer[0]).toBe(div[0]);
+                        expect(range.startOffset).toBe(0);
+                        expect(range.endOffset).toBe(1);
+
+                    });
                 });
 
 
-                it("enlarge element within same element 2", function () {
-
-                    var div = $("<div><strong>x<span>123</span>abc</strong>def</div>")
-                        .prependTo("body");
-
-                    var span = div.first("strong").first("span");
-
-                    var textNode1 = $(span[0].firstChild);
-
-                    var textNode2 = $(span[0].nextSibling);
-
-                    var strong = div.first("strong");
-
-                    var range = new Range(document);
-
-                    range.setStart(textNode1, 0);
-                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
-
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
-
-                    expect(range.startContainer[0]).toBe(strong[0]);
-                    expect(range.endContainer[0]).toBe(textNode2[0]);
-                    expect(range.startOffset).toBe(1);
-                    expect(range.endOffset).toBe(textNode2[0].nodeValue.length);
-
-                    div.remove();
-                });
-
-
-                it("enlarge element within same element 3", function () {
-
-                    var div = $("<div><strong>x<span>123</span><span>abc</span></strong>def</div>")
-                        .prependTo("body");
-
-                    var span = div.first("strong").first("span");
-
-                    var span2 = span.next();
-
-                    var textNode1 = $(span[0].firstChild);
-
-                    var textNode2 = $(span2[0].firstChild);
-
-                    var strong = div.first("strong");
-
-                    var range = new Range(document);
-
-                    range.setStart(textNode1, 0);
-                    range.setEnd(textNode2, textNode2[0].nodeValue.length);
-
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
-
-                    expect(range.startContainer[0]).toBe(strong[0]);
-                    expect(range.endContainer[0]).toBe(strong[0]);
-                    expect(range.startOffset).toBe(1);
-                    expect(range.endOffset).toBe(3);
-
-                    div.remove();
-                });
             });
 
         });
