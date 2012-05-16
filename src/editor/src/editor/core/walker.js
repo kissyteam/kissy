@@ -174,6 +174,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * @property
          * @type Function
          */
+        // 当前 range 范围内深度遍历的元素调用
         // this.evaluator = NULL;
 
         /**
@@ -185,6 +186,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * @property
          * @type Function
          */
+        // 人为缩小当前 range 范围
         // this.guard = NULL;
 
         /** @private */
@@ -239,6 +241,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkBackward:function () {
+                // 在当前 range 范围内不会出现 evaluator 返回 false 的情况
                 return iterate.call(this, TRUE, TRUE) !== FALSE;
             },
 
