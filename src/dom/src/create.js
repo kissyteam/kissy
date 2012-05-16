@@ -18,6 +18,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             rleadingWhitespace = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
             rhtml = /<|&#?\w+;/,
+            supportOuterHTML = "outerHTML" in doc.documentElement,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
@@ -110,7 +111,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
-                            ret = nl2frag(nodes, context);
+                            ret = nl2frag(nodes);
                         } else {
                             S.error(html + " : create node error");
                         }
@@ -147,7 +148,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
                         if (isElementNode(el)) {
-                            return el['innerHTML'];
+                            return el.innerHTML;
                         } else {
                             return null;
                         }
@@ -191,6 +192,57 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                             }
                         }
                         callback && callback();
+                    }
+                },
+
+                /**
+                 * Get the outerHTML of the first element in the set of matched elements.
+                 * or
+                 * Set the outerHTML of each element in the set of matched elements.
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
+                 * @param {Boolean} [loadScripts=false] True to look for and process scripts
+                 */
+                outerHTML:function (selector, htmlString, loadScripts) {
+                    var els = DOM.query(selector),
+                        holder,
+                        i,
+                        valNode,
+                        length = els.length,
+                        el = els[0];
+                    if (!el) {
+                        return
+                    }
+                    // getter
+                    if (htmlString === undefined) {
+                        if (supportOuterHTML) {
+                            return el.outerHTML
+                        } else {
+                            holder = el.ownerDocument.createElement("div");
+                            holder.appendChild(DOM.clone(el, true));
+                            return holder.innerHTML;
+                        }
+                    } else {
+                        htmlString += "";
+                        if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
+                            for (i = length - 1; i >= 0; i--) {
+                                el = els[i];
+                                if (isElementNode(el)) {
+                                    cleanData(el);
+                                    cleanData(getElementsByTagName(el, "*"));
+                                    el.outerHTML = htmlString;
+                                }
+                            }
+                        } else {
+                            valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
+                            for (i = length - 1; i >= 0; i--) {
+                                el = els[i];
+                                if (isElementNode(el)) {
+                                    DOM.insertBefore(valNode, el, loadScripts);
+                                    DOM.remove(el);
+                                }
+                            }
+                        }
                     }
                 },
 
@@ -401,20 +453,19 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         // 将 nodeList 转换为 fragment
-        function nl2frag(nodes, ownerDoc) {
-            var ret = null, i, len;
-
-            if (nodes
-                && (nodes.push || nodes.item)
-                && nodes[0]) {
-                ownerDoc = ownerDoc || nodes[0].ownerDocument;
+        function nl2frag(nodes) {
+            var ret = null,
+                i,
+                ownerDoc,
+                len;
+            if (nodes && (nodes.push || nodes.item) && nodes[0]) {
+                ownerDoc = nodes[0].ownerDocument;
                 ret = ownerDoc.createDocumentFragment();
                 nodes = S.makeArray(nodes);
                 for (i = 0, len = nodes.length; i < len; i++) {
                     ret.appendChild(nodes[i]);
                 }
-            }
-            else {
+            } else {
                 S.log('Unable to convert ' + nodes + ' to fragment.');
             }
             return ret;

@@ -150,5 +150,31 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.create(str2).innerHTML.toLowerCase().replace(/\s/g, "")).toBe('<tr><th>1</th></tr>');
         });
 
+
+        it("outerHTML works", function () {
+            var div = DOM.create("<div></div>");
+            var div2 = DOM.create("<span>1</span>");
+            DOM.append(div2, div);
+            DOM.append(div, "body");
+            DOM.outerHTML(div2, "5<span>3</span>");
+            expect(DOM.html(div).toLowerCase()).toBe("5<span>3</span>");
+
+            DOM.html(div, "<span></span>");
+
+            div2 = DOM.get("span", div);
+            DOM.outerHTML(div2, "5<span>4</span><script>window.outerHTML_test=1;</script>");
+            expect(DOM.html(div).toLowerCase()).toBe("5<span>4</span>");
+            expect(window.outerHTML_test).toBeUndefined();
+
+            DOM.html(div, "<span></span>");
+
+            div2 = DOM.get("span", div);
+            DOM.outerHTML(div2, "6<span>5</span><script>window.outerHTML_test=1;</script>", true);
+            expect(DOM.html(div).toLowerCase()).toBe("6<span>5</span>");
+            expect(window.outerHTML_test).toBe(1);
+
+            DOM.remove(div);
+        });
+
     });
 });

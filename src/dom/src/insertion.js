@@ -25,7 +25,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             var el = ret[i];
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
-            } else if (getNodeName(el)=="input") {
+            } else if (getNodeName(el) == "input") {
                 fixCheckedInternal(el);
             } else if (_isElementNode(el)) {
                 var cs = el.getElementsByTagName("input");
@@ -118,9 +118,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         refNodes = DOM.query(refNodes);
         var newNodesLength = newNodes.length,
             refNodesLength = refNodes.length;
-        if ((!newNodesLength &&
-            (!scripts || !scripts.length)) ||
-            !refNodesLength) {
+        if ((!newNodesLength && (!scripts || !scripts.length)) || !refNodesLength) {
             return;
         }
         // fragment 插入速度快点
@@ -135,7 +133,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         }
         for (var i = 0; i < refNodesLength; i++) {
             var refNode = refNodes[i];
-            if (newNodesLength) {
+            if (newNode) {
                 //refNodes 超过一个，clone
                 var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
                 fn(node, refNode);

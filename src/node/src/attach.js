@@ -80,6 +80,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "prop":1,
             "offset":0,
             "html":0,
+            "outerHTML":0,
             "data":1
         },
         // Event 添加到 NP 上的方法
