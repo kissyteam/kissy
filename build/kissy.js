@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 12:00
+build time: May 16 12:16
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 16 12:00
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120516120025';
+        S.__BUILD_TIME = '20120516121631';
     })();
 
     return S;
@@ -3976,7 +3976,7 @@ build time: May 16 12:00
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120516120025'
+        tag:'20120516121631'
     }, getBaseInfo()));
 
     /**
@@ -4621,7 +4621,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 11:58
+build time: May 16 12:16
 */
 /**
  * @fileOverview dom-attr
@@ -5760,13 +5760,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                         if (!success) {
                             var valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                            for (i = els.length - 1; i >= 0; i--) {
-                                elem = els[i];
-                                if (isElementNode(elem)) {
-                                    DOM.empty(elem);
-                                    DOM.append(valNode, elem, loadScripts);
-                                }
-                            }
+                            DOM.empty(els);
+                            DOM.append(valNode, els, loadScripts);
                         }
                         callback && callback();
                     }
@@ -5812,13 +5807,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                             }
                         } else {
                             valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                            for (i = length - 1; i >= 0; i--) {
-                                el = els[i];
-                                if (isElementNode(el)) {
-                                    DOM.insertBefore(valNode, el, loadScripts);
-                                    DOM.remove(el);
-                                }
-                            }
+                            DOM.insertBefore(valNode, els, loadScripts);
+                            DOM.remove(els);
                         }
                     }
                 },

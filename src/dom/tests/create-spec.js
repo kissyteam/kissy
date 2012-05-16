@@ -114,6 +114,29 @@ KISSY.use("dom", function (S, DOM) {
 
         });
 
+        it("html works for multiple elements", function () {
+            document.body.appendChild(DOM.create("<div class='multiple-html'></div>" +
+                "<div class='multiple-html'></div>"));
+
+            var multiple = DOM.query(".multiple-html");
+
+            DOM.html(multiple, "<span>1</span>");
+
+
+            for (var i = 0; i < multiple.length; i++) {
+                expect(multiple[i].innerHTML.toLowerCase()).toBe("<span>1</span>");
+            }
+
+
+            DOM.html(multiple, "<span>2</span><script></script>");
+
+
+            for (i = 0; i < multiple.length; i++) {
+                expect(multiple[i].innerHTML.toLowerCase()).toBe("<span>2</span>");
+            }
+
+        });
+
 
         it("remove should works", function () {
             var n;
@@ -153,27 +176,35 @@ KISSY.use("dom", function (S, DOM) {
 
         it("outerHTML works", function () {
             var div = DOM.create("<div></div>");
-            var div2 = DOM.create("<span>1</span>");
-            DOM.append(div2, div);
+            var div2 = DOM.create("<div></div>");
+            var span = DOM.create("<span></span>");
+            var span2 = DOM.create("<span></span>");
+            DOM.append(span, div);
+            DOM.append(span2, div2);
             DOM.append(div, "body");
-            DOM.outerHTML(div2, "5<span>3</span>");
+            DOM.append(div2, "body");
+
+
+            DOM.outerHTML(span, "5<span>3</span>");
             expect(DOM.html(div).toLowerCase()).toBe("5<span>3</span>");
 
             DOM.html(div, "<span></span>");
 
-            div2 = DOM.get("span", div);
-            DOM.outerHTML(div2, "5<span>4</span><script>window.outerHTML_test=1;</script>");
+            span = DOM.get("span", div);
+            DOM.outerHTML([span, span2], "5<span>4</span><script>window.outerHTML_test=1;</script>");
             expect(DOM.html(div).toLowerCase()).toBe("5<span>4</span>");
+            expect(DOM.html(div2).toLowerCase()).toBe("5<span>4</span>");
             expect(window.outerHTML_test).toBeUndefined();
 
             DOM.html(div, "<span></span>");
 
-            div2 = DOM.get("span", div);
-            DOM.outerHTML(div2, "6<span>5</span><script>window.outerHTML_test=1;</script>", true);
+            span = DOM.get("span", div);
+            DOM.outerHTML(span, "6<span>5</span><script>window.outerHTML_test=1;</script>", true);
             expect(DOM.html(div).toLowerCase()).toBe("6<span>5</span>");
             expect(window.outerHTML_test).toBe(1);
 
             DOM.remove(div);
+            DOM.remove(div2);
         });
 
     });

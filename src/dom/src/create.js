@@ -183,13 +183,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                         if (!success) {
                             var valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                            for (i = els.length - 1; i >= 0; i--) {
-                                elem = els[i];
-                                if (isElementNode(elem)) {
-                                    DOM.empty(elem);
-                                    DOM.append(valNode, elem, loadScripts);
-                                }
-                            }
+                            DOM.empty(els);
+                            DOM.append(valNode, els, loadScripts);
                         }
                         callback && callback();
                     }
@@ -235,13 +230,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                             }
                         } else {
                             valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                            for (i = length - 1; i >= 0; i--) {
-                                el = els[i];
-                                if (isElementNode(el)) {
-                                    DOM.insertBefore(valNode, el, loadScripts);
-                                    DOM.remove(el);
-                                }
-                            }
+                            DOM.insertBefore(valNode, els, loadScripts);
+                            DOM.remove(els);
                         }
                     }
                 },
