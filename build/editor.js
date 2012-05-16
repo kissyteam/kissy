@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 22:12
+build time: May 16 15:20
 */
 /**
  * Set up editor constructor
@@ -2770,8 +2770,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
+        $ = Node.all,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
 
+
+    var isNotWhitespaces = Walker.whitespaces(TRUE),
+        isWhitespaces = Walker.whitespaces();
 
     /**
      * Extract html content within range.
@@ -3393,7 +3397,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 var walker = new Walker(walkerRange),
                     isNotBookmarks = Walker.bookmark(false, true),
-                    isNotWhitespaces = Walker.whitespaces(TRUE), node, pre;
+                    node, pre;
 
                 walker.evaluator = function (node) {
                     return isNotWhitespaces(node) && isNotBookmarks(node);
@@ -3830,433 +3834,200 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 return ignoreTextNode && ancestor[0].nodeType == KEN.NODE_TEXT
                     ? ancestor.parent() : ancestor;
             },
-            enlarge:function (unit) {
-                var self = this;
-                switch (unit) {
-                    case KER.ENLARGE_ELEMENT :
+            /**
+             * Enlarge the range as mush as possible
+             * @param {Number} unit
+             * @example
+             * <code>
+             *      &lt;div&gt;&lt;span&gt;&lt;span&gt;^1&lt;/span&gt;2^&lt;/span&gt;x&lt;/div&gt;
+             *      =>
+             *      &lt;div&gt;^&lt;span&gt;&lt;span&gt;1&lt;/span&gt;2&lt;/span&gt;^x&lt;/div&gt;
+             * </code>
+             */
+            enlarge:(function () {
 
-                        if (self.collapsed) {
+                function enlargeElement(self, left, stop, commonAncestor) {
+                    var container = self[left ? 'startContainer' : 'endContainer'],
+                        enlarge,
+                        sibling,
+                        index = left ? 0 : 1,
+                        commonReached = 0,
+                        direction = left ? "previousSibling" : "nextSibling",
+                        offset = self[left ? 'startOffset' : 'endOffset'];
+
+                    if (container[0].nodeType == DOM.TEXT_NODE) {
+                        if (left) {
+                            // 不在字的开头，立即结束
+                            if (offset) {
+                                return;
+                            }
+                        } else {
+                            if (offset < container[0].nodeValue.length) {
+                                return
+                            }
+                        }
+
+                        // 文字节点的兄弟
+                        sibling = container[0][direction];
+                        // 可能会扩展到到的容器节点
+                        enlarge = container[0].parentNode;
+                    } else {
+                        // 开始节点的兄弟节点
+                        sibling = container[0].childNodes[offset + (left ? -1 : 1)] || null;
+                        // 可能会扩展到到的容器节点
+                        enlarge = container[0];
+                    }
+
+                    while (enlarge) {
+                        // 兄弟节点是否都是空节点？
+                        while (sibling) {
+                            if (isWhitespace(sibling)) {
+                                sibling = sibling[direction];
+                            } else {
+                                break;
+                            }
+                        }
+
+                        // 一个兄弟节点阻止了扩展
+                        if (sibling) {
+                            // 如果没有超过公共祖先
+                            if (!commonReached) {
+                                // 仅仅扩展到兄弟
+                                self[left ? 'setStartAfter' : 'setEndBefore']($(sibling));
+                            }
                             return;
                         }
 
-                        // Get the common ancestor.
-                        var commonAncestor = self.getCommonAncestor(),
-                            body = new Node(self.document.body),
-                            // For each boundary
-                            // a. Depending on its position,
-                            // find out the first node to be checked (a sibling) or,
-                            // if not available, to be enlarge.
+                        // 没有兄弟节点阻止
 
-                            // b. Go ahead checking siblings and
-                            // enlarging the boundary as much as possible
-                            // until the common ancestor is not reached.
-                            // After reaching the common ancestor,
-                            // just save the enlargeable node to be used later.
+                        // 超过了公共祖先，先记下来，最终不能 partly 选择某个节点，要完全选中
 
-                            startTop, endTop,
-                            enlargeable, sibling,
-                            commonReached,
+                        enlarge = $(enlarge);
 
-                            // Indicates that the node can be added only if whitespace
-                            // is available before it.
-                            needsWhiteSpace = FALSE, isWhiteSpace, siblingText,
+                        if (enlarge.nodeName() == "body") {
+                            return;
+                        }
 
-                            // Process the start boundary.
-                            container = self.startContainer,
-                            offset = self.startOffset;
-
-                        if (container[0].nodeType == KEN.NODE_TEXT) {
-                            if (offset) {
-                                // Check if there is any non-space text before the
-                                // offset. Otherwise, container is NULL.
-                                container = !S.trim(container[0].nodeValue.substring(0, offset)).length &&
-                                    container;
-
-                                // If we found only whitespace in the node, it
-                                // means that we'll need more whitespace to be able
-                                // to expand. For example, <i> can be expanded in
-                                // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                                if (container) {
-                                    needsWhiteSpace = !container[0].nodeValue.length;
-                                }
-                            }
-
-                            if (container) {
-                                if (!( sibling = container[0].previousSibling )) {
-                                    enlargeable = container.parent();
-                                }
-                            }
+                        if (commonReached || enlarge.equals(commonAncestor)) {
+                            stop[index] = enlarge;
+                            commonReached = 1;
                         } else {
-                            // If we have offset, get the node preceeding it as the
-                            // first sibling to be checked.
-                            if (offset) {
-                                sibling = container[0].childNodes[offset - 1] || container[0].lastChild;
-                            }
-
-                            // If there is no sibling, mark the container to be
-                            // enlarged.
-                            if (!sibling) {
-                                enlargeable = container;
-                            }
+                            // 扩展到容器外边
+                            self[left ? 'setStartBefore' : 'setEndAfter'](enlarge);
                         }
 
-                        while (enlargeable || sibling) {
-                            if (enlargeable && !sibling) {
-                                // If we reached the common ancestor, mark the flag
-                                // for it.
-                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
-                                    commonReached = TRUE;
-                                }
-                                if (!body.contains(enlargeable)) {
-                                    break;
-                                }
-                                // If we don't need space or this element breaks
-                                // the line, then enlarge it.
-                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                    needsWhiteSpace = FALSE;
+                        sibling = enlarge[0][direction];
+                        enlarge = enlarge[0].parentNode;
+                    }
 
-                                    // If the common ancestor has been reached,
-                                    // we'll not enlarge it immediately, but just
-                                    // mark it to be enlarged later if the end
-                                    // boundary also enlarges it.
-                                    if (commonReached) {
-                                        startTop = enlargeable;
-                                    } else {
-                                        self.setStartBefore(enlargeable);
-                                    }
-                                }
-
-                                sibling = enlargeable[0].previousSibling;
-                            }
-
-                            // Check all sibling nodes preceding the enlargeable
-                            // node. The node will be enlarged only if none of them
-                            // blocks it.
-                            while (sibling) {
-                                // This flag indicates that this node has
-                                // whitespaces at the end.
-                                isWhiteSpace = FALSE;
-
-                                if (sibling.nodeType == KEN.NODE_TEXT) {
-                                    siblingText = sibling.nodeValue;
-
-                                    if (/[^\s\ufeff]/.test(siblingText)) {
-                                        sibling = NULL;
-                                    }
-
-                                    isWhiteSpace = /[\s\ufeff]$/.test(siblingText);
-                                } else {
-                                    // If this is a visible element.
-                                    // We need to check for the bookmark attribute because IE insists on
-                                    // rendering the display:none nodes we use for bookmarks. (#3363)
-                                    if ((sibling.offsetWidth > 0
-                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                        // bug report@2012-05-08
-                                        || DOM.nodeName(sibling) == "br")
-                                        && !sibling.getAttribute('_ke_bookmark')) {
-                                        // We'll accept it only if we need
-                                        // whitespace, and this is an inline
-                                        // element with whitespace only.
-                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                            // It must contains spaces and inline elements only.
-
-                                            siblingText = DOM.text(sibling);
-
-                                            if ((/[^\s\ufeff]/).test(siblingText)) {    // Spaces + Zero Width No-Break Space (U+FEFF)
-                                                sibling = NULL;
-                                            } else {
-                                                var allChildren = sibling.getElementsByTagName('*');
-                                                for (var i = 0, child; child = allChildren[ i++ ];) {
-                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                        sibling = NULL;
-                                                        break;
-                                                    }
-                                                }
-                                            }
-
-                                            if (sibling) {
-                                                isWhiteSpace = !!siblingText.length;
-                                            }
-                                        }
-                                        else {
-                                            sibling = NULL;
-                                        }
-                                    }
-                                }
-
-                                // A node with whitespaces has been found.
-                                if (isWhiteSpace) {
-                                    // Enlarge the last enlargeable node, if we
-                                    // were waiting for spaces.
-                                    if (needsWhiteSpace) {
-                                        if (commonReached) {
-                                            startTop = enlargeable;
-                                        } else if (enlargeable) {
-                                            self.setStartBefore(enlargeable);
-                                        }
-                                    } else {
-                                        needsWhiteSpace = TRUE;
-                                    }
-                                }
-
-                                if (sibling) {
-                                    var next = sibling.previousSibling;
-
-                                    if (!enlargeable && !next) {
-                                        // Set the sibling as enlargeable, so it's
-                                        // parent will be get later outside this while.
-                                        enlargeable = new Node(sibling);
-                                        sibling = NULL;
-                                        break;
-                                    }
-
-                                    sibling = next;
-                                }
-                                else {
-                                    // If sibling has been set to NULL, then we
-                                    // need to stop enlarging.
-                                    enlargeable = NULL;
-                                }
-                            }
-
-                            if (enlargeable) {
-                                enlargeable = enlargeable.parent();
-                            }
-                        }
-
-                        // Process the end boundary. This is basically the same
-                        // code used for the start boundary, with small changes to
-                        // make it work in the opposite side (to the right). This
-                        // makes it difficult to reuse the code here. So, fixes to
-                        // the above code are likely to be replicated here.
-                        container = self.endContainer;
-                        offset = self.endOffset;
-
-                        // Reset the common variables.
-                        enlargeable = sibling = NULL;
-                        commonReached = needsWhiteSpace = FALSE;
-
-                        if (container[0].nodeType == KEN.NODE_TEXT) {
-                            // Check if there is any non-space text after the
-                            // offset. Otherwise, container is NULL.
-                            container = !S.trim(container[0].nodeValue.substring(offset)).length && container;
-
-                            // If we found only whitespace in the node, it
-                            // means that we'll need more whitespace to be able
-                            // to expand. For example, <i> can be expanded in
-                            // "A <i> [B]</i>", but not in "A<i> [B]</i>".
-                            if (container) {
-                                needsWhiteSpace = !container[0].nodeValue.length;
-                            }
-
-                            if (container) {
-                                if (!( sibling = container[0].nextSibling )) {
-                                    enlargeable = container.parent();
-                                }
-                            }
-                        }
-                        else {
-                            // Get the node right after the boudary to be checked
-                            // first.
-                            sibling = container[0].childNodes[offset];
-
-                            if (!sibling) {
-                                enlargeable = container;
-                            }
-                        }
-
-                        while (enlargeable || sibling) {
-                            if (enlargeable && !sibling) {
-                                if (!commonReached && DOM.equals(enlargeable, commonAncestor)) {
-                                    commonReached = TRUE;
-                                }
-                                if (!body.contains(enlargeable)) {
-                                    break;
-                                }
-                                if (!needsWhiteSpace || enlargeable.css('display') != 'inline') {
-                                    needsWhiteSpace = FALSE;
-
-                                    if (commonReached) {
-                                        endTop = enlargeable;
-                                    } else if (enlargeable) {
-                                        self.setEndAfter(enlargeable);
-                                    }
-                                }
-
-                                sibling = enlargeable[0].nextSibling;
-                            }
-
-                            while (sibling) {
-                                isWhiteSpace = FALSE;
-
-                                if (sibling.nodeType == KEN.NODE_TEXT) {
-                                    siblingText = sibling.nodeValue;
-
-                                    if (/[^\s\ufeff]/.test(siblingText)) {
-                                        sibling = NULL;
-                                    }
-                                    isWhiteSpace = /^[\s\ufeff]/.test(siblingText);
-                                } else {
-                                    // If this is a visible element.
-                                    // We need to check for the bookmark attribute because IE insists on
-                                    // rendering the display:none nodes we use for bookmarks. (#3363)
-                                    if ((sibling.offsetWidth > 0
-                                        // <p>^xx^<br/></p> -> ^<p>xx<br/></p> : wrong
-                                        // bug report@2012-05-08
-                                        || DOM.nodeName(sibling) == "br") && !sibling.getAttribute('_ke_bookmark')) {
-                                        // We'll accept it only if we need
-                                        // whitespace, and this is an inline
-                                        // element with whitespace only.
-                                        if (needsWhiteSpace && dtd.$removeEmpty[ sibling.nodeName.toLowerCase() ]) {
-                                            // It must contains spaces and inline elements only.
-
-                                            siblingText = DOM.text(sibling);
-
-                                            if ((/[^\s\ufeff]/).test(siblingText)) {
-                                                sibling = NULL;
-                                            } else {
-                                                allChildren = sibling.getElementsByTagName('*');
-                                                for (i = 0; child = allChildren[ i++ ];) {
-                                                    if (!dtd.$removeEmpty[ child.nodeName.toLowerCase() ]) {
-                                                        sibling = NULL;
-                                                        break;
-                                                    }
-                                                }
-                                            }
-
-                                            if (sibling) {
-                                                isWhiteSpace = !!siblingText.length;
-                                            }
-                                        }
-                                        else {
-                                            sibling = NULL;
-                                        }
-                                    }
-                                }
-
-                                if (isWhiteSpace) {
-                                    if (needsWhiteSpace) {
-                                        if (commonReached) {
-                                            endTop = enlargeable;
-                                        } else {
-                                            self.setEndAfter(enlargeable);
-                                        }
-                                    }
-                                }
-
-                                if (sibling) {
-                                    next = sibling.nextSibling;
-
-                                    if (!enlargeable && !next) {
-                                        enlargeable = new Node(sibling);
-                                        sibling = NULL;
-                                        break;
-                                    }
-
-                                    sibling = next;
-                                }
-                                else {
-                                    // If sibling has been set to NULL, then we
-                                    // need to stop enlarging.
-                                    enlargeable = NULL;
-                                }
-                            }
-
-                            if (enlargeable) {
-                                enlargeable = enlargeable.parent();
-                            }
-                        }
-
-                        // If the common ancestor can be enlarged by both boundaries, then include it also.
-                        if (startTop && endTop) {
-                            commonAncestor = startTop.contains(endTop) ? endTop : startTop;
-                            self.setStartBefore(commonAncestor);
-                            self.setEndAfter(commonAncestor);
-                        }
-                        break;
-
-                    case KER.ENLARGE_BLOCK_CONTENTS:
-                    case KER.ENLARGE_LIST_ITEM_CONTENTS:
-
-                        // Enlarging the start boundary.
-                        var walkerRange = new KERange(self.document);
-                        body = new Node(self.document.body);
-
-                        walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
-                        walkerRange.setEnd(self.startContainer, self.startOffset);
-
-                        var walker = new Walker(walkerRange),
-                            blockBoundary, // The node on which the enlarging should stop.
-                            tailBr, //
-                            defaultGuard = Walker.blockBoundary(
-                                ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                                { br:1 } : NULL),
-                            // Record the encountered 'blockBoundary' for later use.
-                            boundaryGuard = function (node) {
-                                var retval = defaultGuard(node);
-                                if (!retval) {
-                                    blockBoundary = new Node(node);
-                                }
-                                return retval;
-                            },
-                            // Record the encounted 'tailBr' for later use.
-                            tailBrGuard = function (node) {
-                                var retval = boundaryGuard(node);
-                                if (!retval && DOM.nodeName(node) == 'br') {
-                                    tailBr = new Node(node);
-                                }
-                                return retval;
-                            };
-
-                        walker.guard = boundaryGuard;
-
-                        enlargeable = walker.lastBackward();
-
-                        // It's the body which stop the enlarging if no block boundary found.
-                        blockBoundary = blockBoundary || body;
-
-                        // Start the range at different position by comparing
-                        // the document position of it with 'enlargeable' node.
-                        self.setStartAt(
-                            blockBoundary,
-                            blockBoundary.nodeName() != 'br' &&
-                                ( !enlargeable && self.checkStartOfBlock()
-                                    || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                                KER.POSITION_AFTER_START :
-                                KER.POSITION_AFTER_END);
-
-                        // Enlarging the end boundary.
-                        walkerRange = self.clone();
-                        walkerRange.collapse();
-                        walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
-                        walker = new Walker(walkerRange);
-
-                        // tailBrGuard only used for on range end.
-                        walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
-                            tailBrGuard : boundaryGuard;
-                        blockBoundary = NULL;
-                        // End the range right before the block boundary node.
-
-                        enlargeable = walker.lastForward();
-
-                        // It's the body which stop the enlarging if no block boundary found.
-                        blockBoundary = blockBoundary || body;
-
-                        // Start the range at different position by comparing
-                        // the document position of it with 'enlargeable' node.
-                        self.setEndAt(
-                            blockBoundary,
-                            ( !enlargeable && self.checkEndOfBlock()
-                                || enlargeable && blockBoundary.contains(enlargeable) ) ?
-                                KER.POSITION_BEFORE_END :
-                                KER.POSITION_BEFORE_START);
-                        // We must include the <br> at the end of range if there's
-                        // one and we're expanding list item contents
-                        if (tailBr) {
-                            self.setEndAfter(tailBr);
-                        }
                 }
-            },
+
+                return function (unit) {
+                    var self = this;
+                    switch (unit) {
+                        case KER.ENLARGE_ELEMENT :
+
+                            if (self.collapsed) {
+                                return;
+                            }
+
+                            var commonAncestor = self.getCommonAncestor(),
+                                stop = [];
+
+                            enlargeElement(self, 1, stop, commonAncestor);
+                            enlargeElement(self, 0, stop, commonAncestor);
+
+                            if (stop[0] && stop[1]) {
+                                var commonStop = stop[0].contains(stop[1]) ? stop[1] : stop[0];
+                                self.setStartBefore(commonStop);
+                                self.setEndAfter(commonStop);
+                            }
+
+                            break;
+
+                        case KER.ENLARGE_BLOCK_CONTENTS:
+                        case KER.ENLARGE_LIST_ITEM_CONTENTS:
+
+                            // Enlarging the start boundary.
+                            var walkerRange = new KERange(self.document);
+                            var body = new Node(self.document.body);
+
+                            walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
+                            walkerRange.setEnd(self.startContainer, self.startOffset);
+
+                            var walker = new Walker(walkerRange),
+                                blockBoundary, // The node on which the enlarging should stop.
+                                tailBr, //
+                                defaultGuard = Walker.blockBoundary(
+                                    ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                                    { br:1 } : NULL),
+                                // Record the encountered 'blockBoundary' for later use.
+                                boundaryGuard = function (node) {
+                                    var retval = defaultGuard(node);
+                                    if (!retval) {
+                                        blockBoundary = new Node(node);
+                                    }
+                                    return retval;
+                                },
+                                // Record the encounted 'tailBr' for later use.
+                                tailBrGuard = function (node) {
+                                    var retval = boundaryGuard(node);
+                                    if (!retval && DOM.nodeName(node) == 'br') {
+                                        tailBr = new Node(node);
+                                    }
+                                    return retval;
+                                };
+
+                            walker.guard = boundaryGuard;
+
+                            enlargeable = walker.lastBackward();
+
+                            // It's the body which stop the enlarging if no block boundary found.
+                            blockBoundary = blockBoundary || body;
+
+                            // Start the range at different position by comparing
+                            // the document position of it with 'enlargeable' node.
+                            self.setStartAt(
+                                blockBoundary,
+                                blockBoundary.nodeName() != 'br' &&
+                                    ( !enlargeable && self.checkStartOfBlock()
+                                        || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                    KER.POSITION_AFTER_START :
+                                    KER.POSITION_AFTER_END);
+
+                            // Enlarging the end boundary.
+                            walkerRange = self.clone();
+                            walkerRange.collapse();
+                            walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
+                            walker = new Walker(walkerRange);
+
+                            // tailBrGuard only used for on range end.
+                            walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                                tailBrGuard : boundaryGuard;
+                            blockBoundary = NULL;
+                            // End the range right before the block boundary node.
+
+                            var enlargeable = walker.lastForward();
+
+                            // It's the body which stop the enlarging if no block boundary found.
+                            blockBoundary = blockBoundary || body;
+
+                            // Start the range at different position by comparing
+                            // the document position of it with 'enlargeable' node.
+                            self.setEndAt(
+                                blockBoundary,
+                                ( !enlargeable && self.checkEndOfBlock()
+                                    || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                    KER.POSITION_BEFORE_END :
+                                    KER.POSITION_BEFORE_START);
+                            // We must include the <br> at the end of range if there's
+                            // one and we're expanding list item contents
+                            if (tailBr) {
+                                self.setEndAfter(tailBr);
+                            }
+                    }
+                }
+            })(),
             checkStartOfBlock:function () {
                 var self = this, startContainer = self.startContainer,
                     startOffset = self.startOffset;
@@ -7308,7 +7079,7 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120515221224");
+                    url += "t=" + encodeURIComponent("20120516152023");
                 }
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);

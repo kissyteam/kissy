@@ -683,6 +683,7 @@ KISSY.use("editor", function (S, Editor) {
                 SHRINK_TEXT = 2;
 
             var div = $("<div>" +
+                "<b></b>" +
                 "<span>1" +
                 "<span _ke_bookmark=1 class='bookmark'>x</span>" +
                 "2345" +
@@ -691,8 +692,9 @@ KISSY.use("editor", function (S, Editor) {
                 "</div>");
             div.appendTo("body");
 
-            var span = div.first();
+            var span = div.first("span");
 
+            var b = div.first("b");
 
             var range = new Range(document);
             range.setStartBefore(div);
@@ -703,14 +705,14 @@ KISSY.use("editor", function (S, Editor) {
             expect(range.startContainer[0]).toBe(div[0]);
             expect(range.endContainer[0]).toBe(div[0]);
             expect(range.startOffset).toBe(0);
-            expect(range.endOffset).toBe(1);
+            expect(range.endOffset).toBe(2);
 
             range.setStartBefore(div);
             range.setEndAfter(div);
 
             range.shrink(SHRINK_ELEMENT, 1);
 
-            expect(range.startContainer[0]).toBe(span[0]);
+            expect(range.startContainer[0]).toBe(b[0]);
             expect(range.endContainer[0]).toBe(span[0]);
             expect(range.startOffset).toBe(0);
             expect(range.endOffset).toBe(span[0].childNodes.length);
@@ -720,6 +722,25 @@ KISSY.use("editor", function (S, Editor) {
                 textEnd = $(span[0].lastChild);
 
             range.setStartBefore(div);
+            range.setEndAfter(div);
+
+            range.shrink(SHRINK_TEXT);
+
+            expect(range.startContainer[0]).toBe(document.body);
+            expect(range.endContainer[0]).toBe(span[0]);
+            expect(range.startOffset).toBe(div._4e_index());
+            expect(range.endOffset).toBe(span[0].childNodes.length);
+
+
+            range.shrink(SHRINK_TEXT, 1);
+
+            expect(range.startContainer[0]).toBe(document.body);
+            expect(range.endContainer[0]).toBe(textEnd[0]);
+            expect(range.startOffset).toBe(div._4e_index());
+            expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+
+
+            range.setStartAfter(b);
             range.setEndAfter(div);
 
             range.shrink(SHRINK_TEXT);
@@ -926,7 +947,7 @@ KISSY.use("editor", function (S, Editor) {
 
             describe("enlarge", function () {
 
-                it("enlarge element works", function () {
+                it("enlarge element within same element", function () {
 
                     var div = $("<div><strong><span>123</span>abc</strong>def</div>")
                         .prependTo("body");
@@ -936,8 +957,6 @@ KISSY.use("editor", function (S, Editor) {
                     var textNode1 = $(span[0].firstChild);
 
                     var textNode2 = $(span[0].nextSibling);
-
-                    var textNode3 = $(span.parent()[0].nextSibling);
 
                     var range = new Range(document);
 
@@ -955,65 +974,64 @@ KISSY.use("editor", function (S, Editor) {
                 });
 
 
-                it("enlarge element works with preceding whitespace", function () {
+                it("enlarge element within same element 2", function () {
 
-                    var div = $("<div><strong><span>  123</span>abc</strong>def</div>")
+                    var div = $("<div><strong>x<span>123</span>abc</strong>def</div>")
                         .prependTo("body");
 
-                    var span = div.first().first("span");
+                    var span = div.first("strong").first("span");
 
                     var textNode1 = $(span[0].firstChild);
 
                     var textNode2 = $(span[0].nextSibling);
 
-                    var textNode3 = $(span.parent()[0].nextSibling);
+                    var strong = div.first("strong");
 
                     var range = new Range(document);
 
-                    range.setStart(textNode1, 1);
+                    range.setStart(textNode1, 0);
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
-
 
                     range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
 
-                    expect(range.startContainer[0]).toBe(div[0]);
-                    expect(range.endContainer[0]).toBe(div[0]);
-                    expect(range.startOffset).toBe(0);
-                    expect(range.endOffset).toBe(1);
+                    expect(range.startContainer[0]).toBe(strong[0]);
+                    expect(range.endContainer[0]).toBe(textNode2[0]);
+                    expect(range.startOffset).toBe(1);
+                    expect(range.endOffset).toBe(textNode2[0].nodeValue.length);
 
                     div.remove();
                 });
 
 
-                it("enlarge element works with whole whitespace node", function () {
+                it("enlarge element within same element 3", function () {
 
-                    var div = $("<div><strong><span> </span>abc</strong>def</div>")
+                    var div = $("<div><strong>x<span>123</span><span>abc</span></strong>def</div>")
                         .prependTo("body");
 
-                    var span = div.first().first("span");
+                    var span = div.first("strong").first("span");
+
+                    var span2 = span.next();
 
                     var textNode1 = $(span[0].firstChild);
 
-                    var textNode2 = $(span[0].nextSibling);
+                    var textNode2 = $(span2[0].firstChild);
 
-                    var textNode3 = $(span.parent()[0].nextSibling);
+                    var strong = div.first("strong");
 
                     var range = new Range(document);
 
-                    range.setStart(textNode1, 1);
+                    range.setStart(textNode1, 0);
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
-                    debugger
                     range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
 
-                    expect(range.startContainer[0]).toBe(div[0]);
-                    expect(range.endContainer[0]).toBe(div[0]);
-                    expect(range.startOffset).toBe(0);
-                    expect(range.endOffset).toBe(1);
+                    expect(range.startContainer[0]).toBe(strong[0]);
+                    expect(range.endContainer[0]).toBe(strong[0]);
+                    expect(range.startOffset).toBe(1);
+                    expect(range.endOffset).toBe(3);
 
                     div.remove();
                 });
-
             });
 
         });
