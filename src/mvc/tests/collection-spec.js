@@ -1,16 +1,15 @@
-KISSY.use("mvc", function(S, MVC) {
+KISSY.use("mvc", function (S, MVC) {
 
     var Model = MVC.Model,
         Collection = MVC.Collection,
         View = MVC.View,
         Router = MVC.Router;
 
+    describe("collection", function () {
 
-    describe("collection", function() {
-
-        it("create works", function() {
+        it("create works", function () {
             var c = new Collection({
-                url: "./collection/"
+                url:"./collection/"
             }),
                 ok = 0;
 
@@ -18,19 +17,21 @@ KISSY.use("mvc", function(S, MVC) {
                 x:11,
                 y:22
             }, {
-                success:function() {
+                success:function () {
                     expect(c.get("models").length).toBe(1);
                     var model = c.get("models")[0];
                     expect(model.get("x")).toBe(11);
                     expect(model.isNew()).toBe(false);
+                    expect(model.isModified()).toBe(false);
                     model.set("x", 1);
                     expect(model.isModified()).toBe(true);
+                    expect(model.isNew()).toBe(false);
                     expect(c.getById(9)).toBe(model);
                     expect(c.getByCid(model.get("clientId"))).toBe(model);
                     ok = 1;
                 }
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return ok;
             });
 
@@ -38,83 +39,74 @@ KISSY.use("mvc", function(S, MVC) {
         });
 
 
-        it("load works", function() {
+        it("load works", function () {
             var c = new Collection({
-                url: "./collection/"
+                url:"./collection/"
             }),
                 ok = 0;
 
             c.load({
-                success:function() {
+                success:function () {
                     expect(c.get("models").length).toBe(1);
                     var model = c.get("models")[0];
                     expect(model.get("x")).toBe(11);
                     expect(model.isNew()).toBe(false);
+                    expect(model.isModified()).toBe(false);
                     model.set("x", 1);
                     expect(model.isModified()).toBe(true);
+                    expect(model.isNew()).toBe(false);
                     expect(c.getById(9)).toBe(model);
                     expect(c.getByCid(model.get("clientId"))).toBe(model);
                     ok = 1;
                 }
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return ok;
             });
 
-
         });
 
-        it("model destroy works", function() {
+        it("model destroy works", function () {
             var c = new Collection({
-                url: "./collection/"
+                url:"./collection/"
             }),
                 ok = 0;
 
             c.load({
-                success:function() {
-                    expect(c.get("models").length).toBe(1);
+                success:function () {
                     var model = c.get("models")[0];
-                    expect(model.get("x")).toBe(11);
-                    expect(model.isNew()).toBe(false);
-                    model.set("x", 1);
-                    expect(model.isModified()).toBe(true);
-                    expect(c.getById(9)).toBe(model);
-                    expect(c.getByCid(model.get("clientId"))).toBe(model);
-
                     model.destroy({
                         "delete":true,
-                        success:function() {
+                        success:function () {
                             expect(c.get("models").length).toBe(0);
                             ok = 1;
                         }
                     });
-
-
                 }
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return ok;
             });
         });
 
 
-        describe("events", function() {
+        describe("events", function () {
 
 
-            it("fire add/remove", function() {
+            it("fire add/remove", function () {
 
-                var c = new Collection(),add = 0,remove = 0,newModel,removeModel;
+                var c = new Collection(), add = 0, remove = 0, newModel, removeModel;
 
-                c.on("add", function(e) {
+                c.on("add", function (e) {
                     add = 1;
-                    newModel = (e.model);
+                    newModel = e.model;
                 });
 
-                var model = c.add({x:1,y:1});
+                var model = c.add({x:1, y:1});
 
-                c.on("remove", function(e) {
+                c.on("remove", function (e) {
                     remove = 1;
-                    removeModel = (e.model);
+                    removeModel = e.model;
                 });
 
                 c.remove(model);
@@ -140,22 +132,27 @@ KISSY.use("mvc", function(S, MVC) {
                 expect(remove).toBe(0);
             });
 
-            it("can capture change from its model", function() {
-                var c = new Collection(),called = 0;
-                var m = c.add({
-                    "x":1,
-                    "y":1
-                });
+            it("can capture change from its model", function () {
+                var c = new Collection(),
+                    called = 0,
+                    m = c.add({
+                        "x":1,
+                        "y":1
+                    });
 
-                c.on("*Change", function(e) {
+                c.on("*Change", function (e) {
                     expect(e.target).toBe(m);
                     expect(e.prevVal).toEqual([1]);
                     expect(e.attrName).toEqual(["x"]);
+                    expect(e.newVal).toEqual([2]);
                     called = 1;
                 });
 
                 m.set("x", 2);
 
+                waitsFor(function () {
+                    return called;
+                });
             });
 
         });

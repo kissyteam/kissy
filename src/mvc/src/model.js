@@ -2,7 +2,7 @@
  * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function (S, Base, mvc) {
+KISSY.add("mvc/model", function (S, Base, mvcSync) {
 
     var blacklist = [
         "idAttribute",
@@ -14,8 +14,10 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
     ];
 
     /**
+     * Model represent a data record.
      * @class
      * @memberOf MVC
+     * @extends Base
      */
     function Model() {
         var self = this;
@@ -35,20 +37,34 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
          */
         {
 
+            /**
+             * Add current model instance to a specified collection.
+             * @param {MVC.Collection} c
+             */
             addToCollection:function (c) {
                 this.collections[S.stamp(c)] = c;
                 this.addTarget(c);
             },
-
+            /**
+             * Remove current model instance from a specified collection.
+             * @param {MVC.Collection} c
+             */
             removeFromCollection:function (c) {
                 delete this.collections[S.stamp(c)];
                 this.removeTarget(c);
             },
 
+            /**
+             * Get current model 's id.
+             */
             getId:function () {
                 return this.get(this.get("idAttribute"));
             },
 
+            /**
+             * Set current model 's id.
+             * @param id
+             */
             setId:function (id) {
                 return this.set(this.get("idAttribute"), id);
             },
@@ -59,26 +75,27 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
             },
 
             /**
-             * whether it is newly created
+             * whether it is newly created.
+             * @return {Boolean}
              */
             isNew:function () {
                 return !this.getId();
             },
 
             /**
-             * whether has been modified since last save
+             * whether has been modified since last save.
+             * @return {Boolean}
              */
             isModified:function () {
                 return !!(this.isNew() || this.__isModified);
             },
 
             /**
-             * destroy this model
-             * @param opts
-             * @param {Object} opts
-             * @param {Function} opts.success callback when action is done successfully
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * destroy this model and sync with server.
+             * @param {Object} [opts] destroy config.
+             * @param {Function} opts.success callback when action is done successfully.
+             * @param {Function} opts.error callback when error occurs at action.
+             * @param {Function} opts.complete callback when action is complete.
              */
             destroy:function (opts) {
                 var self = this;
@@ -115,12 +132,11 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
             },
 
             /**
-             * call sycn to load
-             * @param opts
-             * @param {Object} opts
-             * @param {Function} opts.success callback when action is done successfully
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * Load model data from server.
+             * @param {Object} opts Load config.
+             * @param {Function} opts.success callback when action is done successfully.
+             * @param {Function} opts.error callback when error occurs at action.
+             * @param {Function} opts.complete callback when action is complete.
              */
             load:function (opts) {
                 var self = this;
@@ -144,11 +160,11 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
             },
 
             /**
-             *
-             * @param {Object} opts
-             * @param {Function} opts.success callback when action is done successfully
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * Save current model 's data to server using sync.
+             * @param {Object} opts Save config.
+             * @param {Function} opts.success callback when action is done successfully.
+             * @param {Function} opts.error callback when error occurs at action.
+             * @param {Function} opts.complete callback when action is complete.
              */
             save:function (opts) {
                 var self = this;
@@ -171,6 +187,10 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
                 return self;
             },
 
+            /**
+             * Get json representation for current model.
+             * @return {Object}
+             */
             toJSON:function () {
                 var ret = this.getAttrVals();
                 S.each(blacklist, function (b) {
@@ -180,28 +200,61 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
             }
 
         }, {
-            ATTRS:{
+            ATTRS:/**
+             * @lends MVC.Model#
+             */
+            {
+                /**
+                 * Attribute name used to store id from server.
+                 * Default: "id".
+                 * @type String
+                 */
                 idAttribute:{
                     value:'id'
                 },
+
+                /**
+                 * Generated client id.
+                 * Default call S.guid()
+                 * @type Function
+                 */
                 clientId:{
                     valueFn:function () {
                         return S.guid("mvc-client");
                     }
                 },
+                /**
+                 * Called to get url for delete/edit/new current model.
+                 * Default: collection.url+"/"+mode.id
+                 * @type Function
+                 */
                 url:{
                     value:url
                 },
+                /**
+                 * If current model does not belong to any collection.
+                 * Use this attribute value as collection.url in {@link MVC.Model#url}
+                 * @type String
+                 */
                 urlRoot:{
                     value:""
                 },
+                /**
+                 * Sync model data with server.
+                 * Default to call {@link MVC.sync}
+                 * @type Function
+                 */
                 sync:{
-                    value:sync
+                    value:function () {
+                        mvcSync.apply(this, arguments);
+                    }
                 },
+                /**
+                 * parse json from server to get attr/value pairs.
+                 * Default to return raw data from server.
+                 * @type function
+                 */
                 parse:{
-                    /*
-                     parse json from server to get attr/value pairs
-                     */
                     value:function (resp) {
                         return resp;
                     }
@@ -218,11 +271,6 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
             return u.call(o);
         }
         return u;
-    }
-
-
-    function sync() {
-        mvc.sync.apply(this, arguments);
     }
 
     function url() {
@@ -248,5 +296,5 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
     return Model;
 
 }, {
-    requires:['base', './base']
+    requires:['base', './sync']
 });

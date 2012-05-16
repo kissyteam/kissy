@@ -2,7 +2,7 @@
  * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
+KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -19,8 +19,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
     }
 
     /**
+     * Collection. A list of model.
      * @class
      * @memberOf MVC
+     * @extends Base
      */
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
@@ -31,9 +33,17 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
      * @lends MVC.Collection#
      */
     {
+        /**
+         * Model constructor with in current collection.
+         * @type MVC.Model
+         */
         model:{
             value:Model
         },
+        /**
+         * Model list.
+         * @type MVC.Model[]
+         */
         models:{
             /*
              normalize model list
@@ -47,13 +57,34 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
             },
             value:[]
         },
-        url:{value:S.noop},
+        /**
+         * Get url for sending data to server.
+         * @type String|Function
+         */
+        url:{
+            value:""
+        },
+        /**
+         * Comparator function for index getter when adding model.
+         * default to append to last of current model list.
+         * @type Function
+         */
         comparator:{},
+        /**
+         * Sync function to sync data with server.
+         * Default to call {@link MVC.sync}
+         * @type Function
+         */
         sync:{
             value:function () {
-                mvc.sync.apply(this, arguments);
+                sync.apply(this, arguments);
             }
         },
+        /**
+         * Get structured data from raw data returned from server.
+         * default to return raw data from server.
+         * @type Function
+         */
         parse:{
             value:function (resp) {
                 return resp;
@@ -66,6 +97,9 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
          * @lends MVC.Collection#
          */
         {
+            /**
+             * Sort model list according {@link MVC.Collection#comparator}.
+             */
             sort:function () {
                 var comparator = this.get("comparator");
                 if (comparator) {
@@ -75,6 +109,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
                 }
             },
 
+            /**
+             * Get json representation of this collection.
+             * @return Object[]
+             */
             toJSON:function () {
                 return S.map(this.get("models"), function (m) {
                     return m.toJSON();
@@ -82,15 +120,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
             },
 
             /**
-             *
-             * @param model
-             * @param {object} opts
-             * @param {Function} opts.success
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
-             * @return {Boolean} flag
-             *          true:add success
-             *          false:validate error
+             * Add a model to current collection.
+             * @param {Object|MVC.Model} model Model or json data to be added.
+             * @param {object} [opts] Add config
+             * @param {Function} opts.silent Whether to fire add event.
              */
             add:function (model, opts) {
                 var self = this,
@@ -108,12 +141,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
             },
 
             /**
-             *
-             * @param model
-             * @param {object} opts
-             * @param {Function} opts.success
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * Remove an existing model from current collection.
+             * @param {MVC.Model} model Model to be removed.
+             * @param {object} [opts] Remove config.
+             * @param {Function} opts.silent Whether to fire remove event.
              */
             remove:function (model, opts) {
                 var self = this;
@@ -127,6 +158,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
                 }
             },
 
+            /**
+             * Get model at specified index.
+             * @param {Number} i Specified index.
+             */
             at:function (i) {
                 return this.get("models")[i];
             },
@@ -145,11 +180,11 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
             },
 
             /**
-             *
-             * @param {object} opts
-             * @param {Function} opts.success
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * Initialize model list by loading data using sync mechanism.
+             * @param {object} opts Load config.
+             * @param {Function} opts.success Callback when load is successful.
+             * @param {Function} opts.error Callback when error occurs on loading.
+             * @param {Function} opts.complete Callback when load is complete.
              */
             load:function (opts) {
                 var self = this;
@@ -165,6 +200,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
                             self.set("models", v, opts);
                         }
                     }
+                    // https://github.com/kissyteam/kissy/issues/138
+                    S.each(self.get("models"), function (m) {
+                        m.__isModified = 0;
+                    });
                     success && success.apply(this, arguments);
                 };
                 self.get("sync").call(self, self, 'read', opts);
@@ -172,12 +211,13 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
             },
 
             /**
-             *
-             * @param model
-             * @param {object} opts
-             * @param {Function} opts.success
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * Add a model to current collection by provide json data.
+             * @param {Object} model Json data represent model data.
+             * @param {object} opts Create config.
+             * @param {Function} opts.success Callback when create is successful.
+             * @param {Function} opts.error Callback when error occurs on creating.
+             * @param {Function} opts.complete Callback when create is complete.
+             * @param {Function} opts.silent Whether to fire add event.
              */
             create:function (model, opts) {
                 var self = this;
@@ -229,6 +269,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
                 }
             },
 
+            /**
+             * Get model instance by id.
+             * @param {String} id
+             */
             getById:function (id) {
                 var models = this.get("models");
                 for (var i = 0; i < models.length; i++) {
@@ -240,6 +284,10 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
                 return null;
             },
 
+            /**
+             * Get model instance by client id.
+             * @param {String} cid Client id auto generated by model.
+             */
             getByCid:function (cid) {
                 var models = this.get("models");
                 for (var i = 0; i < models.length; i++) {
@@ -256,5 +304,5 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
     return Collection;
 
 }, {
-    requires:['event', './model', './base', 'base']
+    requires:['event', './model', './sync', 'base']
 });

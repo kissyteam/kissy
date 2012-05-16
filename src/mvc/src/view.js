@@ -14,8 +14,10 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     }
 
     /**
+     * View for delegating event on root element.
      * @class
      * @memberOf MVC
+     * @extends Base
      */
     function View() {
         View.superclass.constructor.apply(this, arguments);
@@ -32,6 +34,17 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @lends MVC.View#
      */
     {
+        /**
+         * Get root element for current view instance.
+         * @type String
+         * @example
+         * <code>
+         * //  selector :
+         * .xx
+         * // or html string
+         * <div>my</div>
+         * </code>
+         */
         el:{
             value:"<div />",
             getter:function (s) {
@@ -44,11 +57,16 @@ KISSY.add("mvc/view", function (S, Node, Base) {
         },
 
         /**
+         * Delegate event on root element.
+         * @type Object
+         * @example
+         * <code>
          * events:{
          *   selector:{
          *     eventType:callback
          *   }
          * }
+         * </code>
          */
         events:{
 
@@ -91,13 +109,14 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                     }
                 }
             },
-            /**
-             * user need to override
-             */
+
             render:function () {
                 return this;
             },
 
+            /**
+             * Remove root element.
+             */
             destroy:function () {
                 this.get("el").remove();
             }

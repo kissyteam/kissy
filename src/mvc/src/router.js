@@ -14,13 +14,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
-        __routerMap = "__routerMap";
+        ROUTER_MAP = "__routerMap";
 
     function findFirstCaptureGroupIndex(regStr) {
         var r, i;
-        for (i = 0;
-             i < regStr.length;
-             i++) {
+        for (i = 0; i < regStr.length; i++) {
             r = regStr.charAt(i);
             // skip escaped reg meta char
             if (r == "\\") {
@@ -140,7 +138,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         path = fullPath.replace(queryReg, "");
         // user input : /xx/yy/zz
         each(allRoutes, function (route) {
-            var routeRegs = route[__routerMap],
+            var routeRegs = route[ROUTER_MAP],
                 // match exactly
                 exactlyMatch = 0;
             each(routeRegs, function (desc) {
@@ -184,7 +182,8 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                             upToFinal();
                             exactlyMatch = 1;
                             return false;
-                        } else if (regStr) {
+                        }
+                        else if (regStr) {
 
                             firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
 
@@ -194,12 +193,12 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                                 upToFinal();
                             }
 
-                            // final route : /xx/:id/:id
-                            // now route :  /xx/:id/zz
                             else if (
                                 firstCaptureGroupIndex == finalFirstCaptureGroupIndex &&
                                     finalMatchLength >= m.length
                                 ) {
+                                // final route : /xx/:id/:id
+                                // now route :  /xx/:id/zz
                                 if (m.length < finalMatchLength) {
                                     upToFinal()
                                 } else if (regStr.length > finalRegStr.length) {
@@ -213,8 +212,12 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                             }
                         }
                         // if exists user-given reg router rule then update value directly
+                        // first route has priority
+                        // 用户设置的正则表达式具备高优先级
                         else {
                             upToFinal();
+                            exactlyMatch=1;
+                            return false;
                         }
                     }
                 }
@@ -230,11 +233,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             query = getQuery(fullPath);
             finalCallback.apply(finalRoute, [finalParam, query]);
             arg = {
-                name:name,
-                paths:finalParam,
+                name:finalRouteName,
+                "paths":finalParam,
                 query:query
             };
-            finalRoute.fire('route:' + name, arg);
+            finalRoute.fire('route:' + finalRouteName, arg);
             finalRoute.fire('route', arg);
         }
     }
@@ -297,13 +300,15 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
     function _afterRoutesChange(e) {
         var self = this;
-        self[__routerMap] = {};
+        self[ROUTER_MAP] = {};
         self.addRoutes(e.newVal);
     }
 
     /**
+     * Router used to route url to responding action callbacks.
      * @class
      * @memberOf MVC
+     * @extends Base
      */
     function Router() {
         var self = this;
@@ -318,10 +323,20 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @lends MVC.Router#
      */
     {
-        /*
-         {
-         path:callback
-         }
+        /**
+         * Route and action config.
+         * @type Object
+         * @example
+         * <code>
+         *   {
+         *     "/search/:param":"callback"
+         *     // or
+         *     "search":{
+         *       reg:/xx/,
+         *       callback:fn
+         *     }
+         *   }
+         * </code>
          */
         routes:{}
     };
@@ -332,8 +347,8 @@ KISSY.add('mvc/router', function (S, Event, Base) {
          */
         {
             /**
-             *
-             * @param routes
+             * Add config to current router.
+             * @param {Object} routes Route config.
              * @example
              * <code>
              *   {
@@ -349,7 +364,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             addRoutes:function (routes) {
                 var self = this;
                 each(routes, function (callback, name) {
-                    self[__routerMap][name] = transformRouterReg(self, name, normFn(self, callback));
+                    self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
                 });
             }
         },
@@ -358,6 +373,13 @@ KISSY.add('mvc/router', function (S, Event, Base) {
          */
         {
 
+            /**
+             * Navigate to specified path.
+             * @param {String} path Destination path.
+             * @param {Object} [opts] Config for current navigation.
+             * @param {Boolean} opts.triggerRoute Whether to trigger responding action
+             *                  even current path is same as parameter
+             */
             navigate:function (path, opts) {
                 if (getFragment() !== path) {
                     if (Router.nativeHistory && supportNativeHistory) {
@@ -374,13 +396,18 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                 }
             },
             /**
-             *
+             * Start router (url monitor).
              * @param {object} opts
-             * @param {Function} opts.success
-             * @param {Function} opts.error
-             * @param {Function} opts.complete
+             * @param {Function} opts.success Callback function to be called after router is started.
+             * @param {String} opts.urlRoot Specify url root for html5 history management.
+             * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
              */
             start:function (opts) {
+
+                if (Router.__started) {
+                    return;
+                }
+
                 opts = opts || {};
 
                 opts.urlRoot = opts.urlRoot || "";
@@ -442,6 +469,8 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                     opts.success && opts.success();
 
                 }, BREATH_INTERVAL);
+
+                Router.__started = 1;
             }
         });
 
