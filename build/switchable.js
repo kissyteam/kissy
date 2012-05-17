@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 16:44
+build time: May 17 17:42
 */
 /**
  * @fileOverview accordion aria support
@@ -1093,7 +1093,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         /**
          * 添加一项
          * @param {Object} cfg 添加项的配置
-         * @param {String|Object} cfg.Trigger 导航的Trigger
+         * @param {String|Object} cfg.trigger 导航的Trigger
          * @param {String|Object} cfg.panel 内容
          * @param {Number} cfg.index 添加到得位置
          */
@@ -1242,7 +1242,14 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 var n = activeIndex > 0 ?
                     activeIndex - 1 :
                     activeIndex + 1;
-                self.switchTo(n, undefined, undefined, deletePanel);
+                self.switchTo(n, undefined, undefined, function () {
+                    deletePanel();
+                    // 0 是当前项且被删除
+                    // 移到 1 删除 0，并设置当前 activeIndex 为 0
+                    if (activeIndex == 0) {
+                        self.activeIndex = 0;
+                    }
+                });
             } else {
                 // 要删除的在前面，activeIndex -1
                 if (activeIndex > index) {
@@ -1393,7 +1400,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 FORWARD, ev);
         },
 
-        destroy:function () {
+        destroy:function (keepNode) {
             var self = this,
                 pluginHost = self.constructor;
 
@@ -1410,7 +1417,11 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             }
 
             // 释放DOM,已经绑定的事件
-            DOM.remove(self.container);
+            if (keepNode) {
+                Event.remove(self.container);
+            } else {
+                DOM.remove(self.container);
+            }
             self.nav = null;
             self.content = null;
             self.container = null;
