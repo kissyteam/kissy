@@ -1,0 +1,66 @@
+body{
+    padding:5px;
+}
+.scrollable {
+    position: relative;
+    width: 820px;
+
+}
+
+.scrollable .prev, .scrollable .next {
+    position: absolute;
+    top: 50px;
+    color: #666;
+    cursor: pointer;
+}
+
+.scrollable .prev {
+    left: 10px;
+}
+
+.scrollable .next {
+    right: 10px;
+}
+
+.scrollable .disable {
+    color: #ddd;
+    cursor: default;
+}
+
+.scrollable .ks-switchable-nav {
+    position: absolute;
+    right: 30px;
+    top: -10px;
+}
+
+.scrollable .ks-switchable-nav li {
+    float: left;
+    padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.scrollable .ks-switchable-nav li.ks-active {
+    color: #C8282B;
+}
+
+.scroller {
+    position: relative;
+    width: 680px;
+    height: 120px;
+    border: 1px solid #ccc;
+    background-color: #F9F9F9;
+    margin: auto;
+    overflow: hidden;
+}
+
+.scroller .ks-switchable-content img {
+    float: left;
+    width: 100px;
+    height: 75px;
+    padding: 2px;
+    margin: 20px 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: inline !important; /* fix ie6 双边距 bug */
+}
