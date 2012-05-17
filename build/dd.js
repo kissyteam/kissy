@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:44
+build time: May 17 11:29
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -1830,8 +1830,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 KISSY.add("dd/proxy", function (S, Node, Base) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
-        MARKER = S.guid("__dd_proxy"),
-        PROXY_ATTR = "__proxy";
+        MARKER = S.guid("__dd_proxy");
 
     /**
      * provide abilities for draggable tp create a proxy drag node,
@@ -1873,6 +1872,14 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
          */
         moveOnEnd:{
             value:true
+        },
+
+        /**
+         * Current proxy node.
+         * @type {NodeList}
+         */
+        proxyNode:{
+
         }
     };
 
@@ -1898,32 +1905,31 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     var node = self.get("node"),
                         dragNode = drag.get("node");
                     // cache proxy node
-                    if (!self[PROXY_ATTR]) {
+                    if (!self.get("proxyNode")) {
                         if (S.isFunction(node)) {
                             node = node(drag);
                             node.addClass("ks-dd-proxy");
                             node.css("position", "absolute");
-                            self[PROXY_ATTR] = node;
+                            self.set("proxyNode", node);
                         }
                     } else {
-                        node = self[PROXY_ATTR];
+                        node = self.get("proxyNode");
                     }
-                    dragNode.parent()
-                        .append(node);
                     node.show();
+                    dragNode.parent().append(node);
                     node.offset(dragNode.offset());
                     drag.__set("dragNode", dragNode);
                     drag.__set("node", node);
                 }
 
                 function end() {
-                    var node = self[PROXY_ATTR];
+                    var node = self.get("proxyNode");
                     if (self.get("moveOnEnd")) {
                         drag.get("dragNode").offset(node.offset());
                     }
                     if (self.get("destroyOnEnd")) {
                         node.remove();
-                        self[PROXY_ATTR] = 0;
+                        self.set("proxyNode", 0);
                     } else {
                         node.hide();
                     }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:45
+build time: May 17 11:29
 */
 /**
  * @fileOverview UIBase.Align
@@ -1725,15 +1725,40 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         __bindUI:function () {
-            var Draggable = S.require("dd/draggable"),
+            var DD = S.require("dd"),
+                Draggable = DD.Draggable,
                 d,
                 self = this,
+                dragCfg = self.get("draggable"),
                 el = self.get("el");
-            if (self.get("draggable") && Draggable) {
+            if (dragCfg && Draggable) {
+                if (dragCfg === true) {
+                    dragCfg = {};
+                }
                 d = self.__drag = new Draggable({
-                    node:el
+                    node:el,
+                    move:dragCfg.proxy
                 });
-                d.on("drag", dragExtAction, self);
+
+                if (dragCfg.proxy) {
+                    dragCfg.proxy.moveOnEnd = false;
+                    d.on("dragend", function () {
+                        var proxyOffset = p.get("proxyNode").offset();
+                        el.css("visibility", "");
+                        self.set("x", proxyOffset.left);
+                        self.set("y", proxyOffset.top);
+                    });
+                    var p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+                    p.attachDrag(d);
+                } else {
+                    d.on("drag", dragExtAction, self);
+                }
+
+                if (dragCfg.scroll) {
+                    var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
+                    s.attachDrag(d);
+                }
+
             }
         },
 
@@ -1747,8 +1772,13 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         __destructor:function () {
-            var d = this.__drag;
+            var self = this,
+                p = self.__proxy,
+                s = self.__scroll,
+                d = self.__drag;
             d && d.destroy();
+            s && s.destroy();
+            p && p.destroy();
         }
 
     };
