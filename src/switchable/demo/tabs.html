@@ -49,7 +49,7 @@
 
     <pre class="s-section">
 功能：标签页
-源码：<a href="../tabs/base.js">../tabs/base.js</a></pre>
+    </pre>
 
     <h3 class="s-title" id="tabs_aria">Tabs - 普通标签页</h3>
     <div class="s-section">
@@ -168,10 +168,10 @@
                             var index = txtAdd.val(),
                                     t = S.DOM.create('<li>自定义添加</li>'),
                                     p = S.DOM.create('<div style="display: none"><a href="#">内容 添加</a></div>');
-                            debugger
+
                             tabs.add({
                                 index:parseInt(index),
-                                activated:true,
+                                active:true,
                                 trigger:t,
                                 panel:p
                             });
