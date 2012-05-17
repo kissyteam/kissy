@@ -108,7 +108,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 水平/垂直滚动效果
-        scroll:function (callback, forceAnimation) {
+        scroll:function (callback, direction, forceAnimation) {
             var self = this,
                 fromIndex = self.fromIndex,
                 cfg = self.config,
