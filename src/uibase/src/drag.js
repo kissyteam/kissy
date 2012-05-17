@@ -85,12 +85,8 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         _uiSetDraggable:function (v) {
-            var self = this,
-                d = self.__drag;
-            if (!d) {
-                return;
-            }
-            d.set("disabled", !v);
+            var d = this.__drag;
+            d && d.set("disabled", !v);
         },
 
         __destructor:function () {
