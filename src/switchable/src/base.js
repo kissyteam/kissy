@@ -429,7 +429,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             return Math.ceil(panelCount / cfg.steps);
         },
         // 添加完成后，重置长度，和跳转到新添加项
-        _afterAdd:function (index, active) {
+        _afterAdd:function (index, active, callback) {
             var self = this;
 
             // 重新计算 trigger 的数目
@@ -460,7 +460,9 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             // 需要的话，从当前视图滚动到新的视图
             if (active) {
                 // 放到 index 位置
-                self.switchTo(page);
+                self.switchTo(page, undefined, undefined, callback);
+            } else {
+                callback();
             }
         },
         /**
@@ -471,7 +473,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
          * @param {Number} cfg.index 添加到得位置
          */
         add:function (cfg) {
-            var self = this,
+            var callback = cfg.callback || S.noop,
+                self = this,
                 navContainer = self.nav,
                 contentContainer = self.content,
                 triggerDom = cfg.trigger, //trigger 的Dom节点
@@ -513,29 +516,35 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             self._initPanel(panelDom);
             self._initTrigger(triggerDom);
 
+            self._afterAdd(index, active, callback);
             // 触发添加事件
             self.fire(EVENT_ADDED, {
                 index:index,
                 trigger:triggerDom,
                 panel:panelDom
             });
-            self._afterAdd(index, active);
         },
 
         /**
          * 移除一项
-         * @param {Number|HTMLElement} index 移除项的索引值或者DOM对象
          */
-        remove:function (index) {
-            var self = this,
+        remove:function (cfg) {
+
+            var callback = cfg.callback || S.noop,
+                self = this,
                 steps = self.config.steps,
                 beforeLen = self.length,
                 panels = self.panels,
+                index = cfg.index || cfg.panel,
                 // 删除panel后的 trigger 个数
                 afterLen = self._getLength(panels.length - 1),
                 triggers = self.triggers,
                 trigger = null,
                 panel = null;
+
+            if (!panels.length) {
+                return;
+            }
 
             // 传入Dom对象时转换成index
             index = S.isNumber(index) ?
@@ -548,6 +557,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 (afterLen !== beforeLen ? triggers[beforeLen - 1] : null);
 
             panel = panels[index];
+
 
             // 触发删除前事件,可以阻止删除
             if (self.fire(EVENT_BEFORE_REMOVE, {
@@ -590,6 +600,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             // 完了
             if (afterLen == 0) {
                 deletePanel();
+                callback();
                 return;
             }
 
@@ -598,13 +609,18 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             if (steps > 1) {
                 if (activeIndex == afterLen) {
                     // 当前屏幕的元素将要空了，先滚到前一个屏幕，然后删除当前屏幕的元素
-                    self.switchTo(activeIndex - 1, undefined, undefined, deletePanel);
+                    self.switchTo(activeIndex - 1, undefined, undefined, function () {
+                        deletePanel();
+                        callback();
+                    });
                 } else {
                     // 不滚屏，其他元素顶上来即可
                     deletePanel();
                     self.activeIndex = -1;
                     // notify datalazyload
-                    self.switchTo(activeIndex);
+                    self.switchTo(activeIndex, undefined, undefined, function () {
+                        callback();
+                    });
                 }
                 return;
             }
@@ -622,6 +638,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                     if (activeIndex == 0) {
                         self.activeIndex = 0;
                     }
+                    callback();
                 });
             } else {
                 // 要删除的在前面，activeIndex -1
@@ -630,6 +647,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                     self.activeIndex = activeIndex;
                 }
                 deletePanel();
+                callback();
             }
         },
 
