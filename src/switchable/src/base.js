@@ -534,10 +534,15 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 self = this,
                 steps = self.config.steps,
                 beforeLen = self.length,
-                panels = self.panels,
-                index = cfg.index || cfg.panel,
-                // 删除panel后的 trigger 个数
-                afterLen = self._getLength(panels.length - 1),
+                index,
+                panels = self.panels;
+            if ("index" in cfg) {
+                index = cfg.index;
+            } else {
+                index = cfg.panel;
+            }
+            // 删除panel后的 trigger 个数
+            var afterLen = self._getLength(panels.length - 1),
                 triggers = self.triggers,
                 trigger = null,
                 panel = null;
