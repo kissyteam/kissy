@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 11:29
+build time: May 17 11:36
 */
 /**
  * @fileOverview UIBase.Align
@@ -1725,7 +1725,7 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         __bindUI:function () {
-            var DD = S.require("dd"),
+            var DD = S.require("dd") || {},
                 Draggable = DD.Draggable,
                 d,
                 self = this,

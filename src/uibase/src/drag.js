@@ -47,7 +47,7 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         __bindUI:function () {
-            var DD = S.require("dd"),
+            var DD = S.require("dd") || {},
                 Draggable = DD.Draggable,
                 d,
                 self = this,
