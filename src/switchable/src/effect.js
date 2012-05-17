@@ -40,7 +40,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         // 最朴素的显示/隐藏效果
         none:function (callback) {
             var self = this,
-                fromIndex = self.fromIndex,
                 panelInfo = self._getFromToPanels(),
                 fromPanels = panelInfo.fromPanels,
                 toPanels = panelInfo.toPanels;
@@ -56,7 +55,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         fade:function (callback) {
 
             var self = this,
-                fromIndex = self.fromIndex,
                 panelInfo = self._getFromToPanels(),
                 fromPanels = panelInfo.fromPanels,
                 toPanels = panelInfo.toPanels;

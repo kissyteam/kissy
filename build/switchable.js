@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 18:43
+build time: May 17 18:44
 */
 /**
  * @fileOverview accordion aria support
@@ -2212,7 +2212,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         // 最朴素的显示/隐藏效果
         none:function (callback) {
             var self = this,
-                fromIndex = self.fromIndex,
                 panelInfo = self._getFromToPanels(),
                 fromPanels = panelInfo.fromPanels,
                 toPanels = panelInfo.toPanels;
@@ -2228,7 +2227,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         fade:function (callback) {
 
             var self = this,
-                fromIndex = self.fromIndex,
                 panelInfo = self._getFromToPanels(),
                 fromPanels = panelInfo.fromPanels,
                 toPanels = panelInfo.toPanels;
@@ -3050,7 +3048,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         if (diff < 0 && activeIndex == lastIndex ||
                             diff > 0 && activeIndex == 0) {
                             // 强制动画恢复到初始位置
-                            Switchable.Effects[effect].call(self, undefined, true);
+                            Switchable.Effects[effect].call(self, undefined, undefined,true);
                             return;
                         }
                     }

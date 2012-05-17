@@ -173,7 +173,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         if (diff < 0 && activeIndex == lastIndex ||
                             diff > 0 && activeIndex == 0) {
                             // 强制动画恢复到初始位置
-                            Switchable.Effects[effect].call(self, undefined, true);
+                            Switchable.Effects[effect].call(self, undefined, undefined,true);
                             return;
                         }
                     }
