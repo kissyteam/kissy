@@ -34,7 +34,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         DOM = S.DOM,
         getByAddress = Utils.getByAddress,
         UA = S.UA,
-        dtd = Editor.dtd,
+        dtd = Editor.XHTML_DTD,
         Node = S.Node,
         $ = Node.all,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
