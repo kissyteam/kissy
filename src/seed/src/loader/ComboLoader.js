@@ -132,6 +132,9 @@
                 }
 
                 if (!countJss) {
+                    // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
+                    var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                    self.attachMods(unaliasModNames);
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
@@ -212,8 +215,8 @@
             calculate:function (modNames) {
                 var ret = {},
                     SS = this.SS,
-                    // 提高性能，不用每个模块都再次提柜计算
-                    // 做个缓存，每个模块对应的待动态加载模块
+                // 提高性能，不用每个模块都再次提柜计算
+                // 做个缓存，每个模块对应的待动态加载模块
                     cache = {};
                 for (var i = 0; i < modNames.length; i++) {
                     var m = modNames[i];
@@ -250,9 +253,9 @@
                 });
 
                 var res = {
-                    js:{},
-                    css:{}
-                },
+                        js:{},
+                        css:{}
+                    },
                     t,
                     comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
@@ -310,7 +313,7 @@
                 var self = this,
                     SS = self.SS,
                     mod = self.getModInfo(modName),
-                    // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+                // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
                     ret = cache[modName];
                 if (ret) {
                     return ret;

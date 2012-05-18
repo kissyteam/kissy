@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 12:16
+build time: May 18 12:02
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 16 12:16
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120516121631';
+        S.__BUILD_TIME = '20120518120257';
     })();
 
     return S;
@@ -3591,6 +3591,9 @@ build time: May 16 12:16
                 }
 
                 if (!countJss) {
+                    // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
+                    var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                    self.attachMods(unaliasModNames);
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
@@ -3671,8 +3674,8 @@ build time: May 16 12:16
             calculate:function (modNames) {
                 var ret = {},
                     SS = this.SS,
-                    // 提高性能，不用每个模块都再次提柜计算
-                    // 做个缓存，每个模块对应的待动态加载模块
+                // 提高性能，不用每个模块都再次提柜计算
+                // 做个缓存，每个模块对应的待动态加载模块
                     cache = {};
                 for (var i = 0; i < modNames.length; i++) {
                     var m = modNames[i];
@@ -3709,9 +3712,9 @@ build time: May 16 12:16
                 });
 
                 var res = {
-                    js:{},
-                    css:{}
-                },
+                        js:{},
+                        css:{}
+                    },
                     t,
                     comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
@@ -3769,7 +3772,7 @@ build time: May 16 12:16
                 var self = this,
                     SS = self.SS,
                     mod = self.getModInfo(modName),
-                    // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+                // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
                     ret = cache[modName];
                 if (ret) {
                     return ret;
@@ -3976,7 +3979,7 @@ build time: May 16 12:16
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120516121631'
+        tag:'20120518120257'
     }, getBaseInfo()));
 
     /**

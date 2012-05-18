@@ -260,6 +260,37 @@ describe("KISSY ComboLoader", function () {
         });
     });
 
+    it("can use after another use", function () {
+
+        S.config({
+            packages:[
+                {
+                    name:'test5',
+                    path:'/kissy_git/kissy/src/seed/tests/loader/combo/'
+                }
+            ]
+        });
+
+        S.add({
+            "test5/a":{
+                requires:["test5/b"]
+            }
+        });
+
+        var ok = 0;
+        S.use("test5/a", function (S, A) {
+            expect(A).toBe("test5/a");
+            S.use("test5/b", function (S, B) {
+                expect(B).toBe("test5/b");
+                ok = 1;
+            });
+        });
+
+        waitsFor(function () {
+            return ok;
+        }, "too long!");
+    });
+
     it("clean", function () {
         S.config({
             combine:false
