@@ -8,9 +8,9 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         doc = win.document,
         ie6 = UA['ie'] === 6,
 
-        // prevent collision with click , only start when move
+    // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
-        // or start when mousedown for 1 second
+    // or start when mousedown for 1 second
         BUFFER_TIME = 1000,
 
         MOVE_DELAY = 30,
@@ -98,22 +98,22 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      */
     function move(ev) {
         var self = this,
-            __activeToDrag = self.__activeToDrag,
-            activeDrag = self.get('activeDrag');
-
-        if (activeDrag || __activeToDrag) {
+            __activeToDrag ,
+            activeDrag;
+        // 先处理预备役，效率!
+        if (__activeToDrag = self.__activeToDrag) {
             //防止 ie 选择到字
             ev.preventDefault();
-        }
-        // 优先处理激活的
-        if (activeDrag) {
+            __activeToDrag._move(ev);
+
+        } else if (activeDrag = self.get('activeDrag')) {
+            //防止 ie 选择到字
+            ev.preventDefault();
             activeDrag._move(ev);
             /**
              * 获得当前的激活drop
              */
             notifyDropsMove(self, ev, activeDrag);
-        } else if (__activeToDrag) {
-            __activeToDrag._move(ev);
         }
     }
 
@@ -344,7 +344,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             var self = this,
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
-
             self.__set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
@@ -352,6 +351,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             if (drag.get("shim")) {
                 activeShim(self);
             }
+            cacheWH(drag.get("node"));
             _activeDrops(self);
         },
 
@@ -390,11 +390,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function region(node) {
         var offset = node.offset();
+        if (!node.__dd_cached_width) {
+            S.log("no cache in dd!");
+            S.log(node[0]);
+        }
         return {
             left:offset.left,
-            right:offset.left + node.outerWidth(),
+            right:offset.left + (node.__dd_cached_width || node.outerWidth()),
             top:offset.top,
-            bottom:offset.top + node.outerHeight()
+            bottom:offset.top + (node.__dd_cached_height || node.outerHeight())
         };
     }
 
@@ -429,10 +433,19 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         return inRegion(region(node), point);
     }
 
+    function cacheWH(node) {
+        if (node) {
+            node.__dd_cached_width = node.outerWidth();
+            node.__dd_cached_height = node.outerHeight();
+        }
+    }
+
     var ddm = new DDM();
     ddm.inRegion = inRegion;
     ddm.region = region;
     ddm.area = area;
+    ddm.cacheWH = cacheWH;
+
     return ddm;
 }, {
     requires:["ua", "dom", "event", "node", "base"]

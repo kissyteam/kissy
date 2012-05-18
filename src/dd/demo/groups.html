@@ -85,6 +85,10 @@
 
         var ddm = DD.DDM, xy;
 
+        ddm.on("dragover", function (e) {
+            S.log(e.drag.get("node")[0].id + " dragover " + e.drop.get("node")[0].id);
+        });
+
         ddm.on("dragstart", function (e) {
             var drag = e.drag;
             xy = drag.get("node").offset();

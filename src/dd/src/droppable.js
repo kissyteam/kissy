@@ -171,6 +171,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     // 委托时取不到节点
                     if (node) {
                         node.addClass(prefixCls + "drop-active-valid");
+                        DDM.cacheWH(node);
                     }
                 } else if (node) {
                     node.addClass(prefixCls + "drop-active-invalid");

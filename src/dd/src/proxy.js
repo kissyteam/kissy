@@ -2,7 +2,7 @@
  * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function (S, Node, Base) {
+KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
         MARKER = S.guid("__dd_proxy");
@@ -11,6 +11,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
      * provide abilities for draggable tp create a proxy drag node,
      * instead of dragging the original node.
      * @memberOf DD
+     * @extends Base
      * @class
      */
     function Proxy() {
@@ -92,6 +93,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     }
                     node.show();
                     dragNode.parent().append(node);
+                    DDM.cacheWH(node);
                     node.offset(dragNode.offset());
                     drag.__set("dragNode", dragNode);
                     drag.__set("node", node);
@@ -161,5 +163,5 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
 
     return Proxy;
 }, {
-    requires:['node', 'base']
+    requires:['node', 'base', './ddm']
 });

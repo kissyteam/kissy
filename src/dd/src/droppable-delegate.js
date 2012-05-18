@@ -8,8 +8,14 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     function dragStart() {
         var self = this,
             container = self.get("container"),
+            allNodes = [],
             selector = self.get("selector");
-        self.__allNodes = container.all(selector);
+        container.all(selector).each(function (n) {
+            // 2012-05-18: 缓存高宽，提高性能
+            DDM.cacheWH(n);
+            allNodes.push(n);
+        })
+        self.__allNodes = allNodes;
     }
 
     /**
@@ -34,9 +40,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var pointer = {
-                    left:ev.pageX,
-                    top:ev.pageY
-                },
+                        left:ev.pageX,
+                        top:ev.pageY
+                    },
                     self = this,
                     allNodes = self.__allNodes,
                     ret = 0,
@@ -44,15 +50,17 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
 
 
                 if (allNodes) {
-                    allNodes.each(function (n) {
+
+                    S.each(allNodes, function (n) {
                         var domNode = n[0];
                         // 排除当前拖放的元素以及代理节点
                         if (domNode === proxyNode || domNode === dragNode) {
                             return;
                         }
-                        if (DDM.inRegion(DDM.region(n), pointer)) {
+                        var r = DDM.region(n);
+                        if (DDM.inRegion(r, pointer)) {
                             // 找到面积最小的那个
-                            var a = DDM.area(DDM.region(n));
+                            var a = DDM.area(r);
                             if (a < vArea) {
                                 vArea = a;
                                 ret = n;

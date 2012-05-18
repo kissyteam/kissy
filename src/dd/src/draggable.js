@@ -219,7 +219,9 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          */
         node:{
             setter:function (v) {
-                return Node.one(v);
+                if (!(v instanceof Node)) {
+                    return Node.one(v);
+                }
             }
         },
 
@@ -613,7 +615,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 }
                 // 如果已经开始，收尾工作
                 if (self.get("dragging")) {
-                    self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+                    self.get("node")
+                        .removeClass(DDM.get("prefixCls") + "drag-over");
                     if (activeDrop = DDM.get("activeDrop")) {
                         self.fire('dragdrophit', {
                             drag:self,

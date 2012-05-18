@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 11:29
+build time: May 18 16:54
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -159,9 +159,9 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         doc = win.document,
         ie6 = UA['ie'] === 6,
 
-        // prevent collision with click , only start when move
+    // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
-        // or start when mousedown for 1 second
+    // or start when mousedown for 1 second
         BUFFER_TIME = 1000,
 
         MOVE_DELAY = 30,
@@ -249,22 +249,22 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      */
     function move(ev) {
         var self = this,
-            __activeToDrag = self.__activeToDrag,
-            activeDrag = self.get('activeDrag');
-
-        if (activeDrag || __activeToDrag) {
+            __activeToDrag ,
+            activeDrag;
+        // 先处理预备役，效率!
+        if (__activeToDrag = self.__activeToDrag) {
             //防止 ie 选择到字
             ev.preventDefault();
-        }
-        // 优先处理激活的
-        if (activeDrag) {
+            __activeToDrag._move(ev);
+
+        } else if (activeDrag = self.get('activeDrag')) {
+            //防止 ie 选择到字
+            ev.preventDefault();
             activeDrag._move(ev);
             /**
              * 获得当前的激活drop
              */
             notifyDropsMove(self, ev, activeDrag);
-        } else if (__activeToDrag) {
-            __activeToDrag._move(ev);
         }
     }
 
@@ -495,7 +495,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             var self = this,
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
-
             self.__set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
@@ -503,6 +502,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             if (drag.get("shim")) {
                 activeShim(self);
             }
+            cacheWH(drag.get("node"));
             _activeDrops(self);
         },
 
@@ -541,11 +541,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function region(node) {
         var offset = node.offset();
+        if (!node.__dd_cached_width) {
+            S.log("no cache in dd!");
+            S.log(node[0]);
+        }
         return {
             left:offset.left,
-            right:offset.left + node.outerWidth(),
+            right:offset.left + (node.__dd_cached_width || node.outerWidth()),
             top:offset.top,
-            bottom:offset.top + node.outerHeight()
+            bottom:offset.top + (node.__dd_cached_height || node.outerHeight())
         };
     }
 
@@ -580,10 +584,19 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         return inRegion(region(node), point);
     }
 
+    function cacheWH(node) {
+        if (node) {
+            node.__dd_cached_width = node.outerWidth();
+            node.__dd_cached_height = node.outerHeight();
+        }
+    }
+
     var ddm = new DDM();
     ddm.inRegion = inRegion;
     ddm.region = region;
     ddm.area = area;
+    ddm.cacheWH = cacheWH;
+
     return ddm;
 }, {
     requires:["ua", "dom", "event", "node", "base"]
@@ -969,7 +982,9 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          */
         node:{
             setter:function (v) {
-                return Node.one(v);
+                if (!(v instanceof Node)) {
+                    return Node.one(v);
+                }
             }
         },
 
@@ -1363,7 +1378,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 }
                 // 如果已经开始，收尾工作
                 if (self.get("dragging")) {
-                    self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+                    self.get("node")
+                        .removeClass(DDM.get("prefixCls") + "drag-over");
                     if (activeDrop = DDM.get("activeDrop")) {
                         self.fire('dragdrophit', {
                             drag:self,
@@ -1446,8 +1462,14 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     function dragStart() {
         var self = this,
             container = self.get("container"),
+            allNodes = [],
             selector = self.get("selector");
-        self.__allNodes = container.all(selector);
+        container.all(selector).each(function (n) {
+            // 2012-05-18: 缓存高宽，提高性能
+            DDM.cacheWH(n);
+            allNodes.push(n);
+        })
+        self.__allNodes = allNodes;
     }
 
     /**
@@ -1472,9 +1494,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var pointer = {
-                    left:ev.pageX,
-                    top:ev.pageY
-                },
+                        left:ev.pageX,
+                        top:ev.pageY
+                    },
                     self = this,
                     allNodes = self.__allNodes,
                     ret = 0,
@@ -1482,15 +1504,17 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
 
 
                 if (allNodes) {
-                    allNodes.each(function (n) {
+
+                    S.each(allNodes, function (n) {
                         var domNode = n[0];
                         // 排除当前拖放的元素以及代理节点
                         if (domNode === proxyNode || domNode === dragNode) {
                             return;
                         }
-                        if (DDM.inRegion(DDM.region(n), pointer)) {
+                        var r = DDM.region(n);
+                        if (DDM.inRegion(r, pointer)) {
                             // 找到面积最小的那个
-                            var a = DDM.area(DDM.region(n));
+                            var a = DDM.area(r);
                             if (a < vArea) {
                                 vArea = a;
                                 ret = n;
@@ -1758,6 +1782,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     // 委托时取不到节点
                     if (node) {
                         node.addClass(prefixCls + "drop-active-valid");
+                        DDM.cacheWH(node);
                     }
                 } else if (node) {
                     node.addClass(prefixCls + "drop-active-invalid");
@@ -1827,7 +1852,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
  * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function (S, Node, Base) {
+KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
         MARKER = S.guid("__dd_proxy");
@@ -1836,6 +1861,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
      * provide abilities for draggable tp create a proxy drag node,
      * instead of dragging the original node.
      * @memberOf DD
+     * @extends Base
      * @class
      */
     function Proxy() {
@@ -1917,6 +1943,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     }
                     node.show();
                     dragNode.parent().append(node);
+                    DDM.cacheWH(node);
                     node.offset(dragNode.offset());
                     drag.__set("dragNode", dragNode);
                     drag.__set("node", node);
@@ -1986,7 +2013,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
 
     return Proxy;
 }, {
-    requires:['node', 'base']
+    requires:['node', 'base', './ddm']
 });/**
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
@@ -2152,9 +2179,9 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 var rate = self.get("rate"),
                     diff = self.get('diff'),
                     event,
-                    /*
-                     目前相对 container 的偏移，container 为 window 时，相对于 viewport
-                     */
+                /*
+                 目前相对 container 的偏移，container 为 window 时，相对于 viewport
+                 */
                     dxy,
                     timer = null;
 
@@ -2205,6 +2232,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 }
 
                 drag.on("drag", dragging);
+
+                drag.on("dragstart", function () {
+                    DDM.cacheWH(node);
+                });
 
                 drag.on("dragend", dragEnd);
 

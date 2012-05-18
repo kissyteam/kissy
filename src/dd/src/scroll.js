@@ -163,9 +163,9 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 var rate = self.get("rate"),
                     diff = self.get('diff'),
                     event,
-                    /*
-                     目前相对 container 的偏移，container 为 window 时，相对于 viewport
-                     */
+                /*
+                 目前相对 container 的偏移，container 为 window 时，相对于 viewport
+                 */
                     dxy,
                     timer = null;
 
@@ -216,6 +216,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 }
 
                 drag.on("drag", dragging);
+
+                drag.on("dragstart", function () {
+                    DDM.cacheWH(node);
+                });
 
                 drag.on("dragend", dragEnd);
 
