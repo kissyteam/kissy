@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 18:36
+build time: May 22 14:18
 */
 /**
  * Switchable
@@ -1798,7 +1798,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
  * Switchable Circular Plugin
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
+KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
     var POSITION = 'position',
         RELATIVE = 'relative',
@@ -1815,8 +1815,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            circular: false
-        });
+        circular:false
+    });
 
     /**
      * 循环滚动效果函数
@@ -1847,6 +1847,12 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
 
         if (self.anim) {
             self.anim.stop();
+            // 快速的话会有点问题
+            // 上一个 relative 没清掉：上一个还没有移到该移的位置
+            if (self.panels[activeIndex * cfg.steps].style.position == "relative") {
+                // 快速移到 reset 后的结束位置，用户不会察觉到的！
+                resetPosition.call(self, self.panels, activeIndex, activeIndex, prop, viewDiff);
+            }
         }
 
         if (fromEls) {
@@ -1854,7 +1860,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
                 props,
                 cfg.duration,
                 cfg.easing,
-                function() {
+                function () {
                     if (isCritical) {
                         // 复原位置
                         resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
@@ -1919,24 +1925,24 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      */
     Switchable.Plugins.push({
 
-            name: 'circular',
+        name:'circular',
 
-            /**
-             * 根据 effect, 调整初始状态
-             */
-            init: function(host) {
-                var cfg = host.config;
+        /**
+         * 根据 effect, 调整初始状态
+         */
+        init:function (host) {
+            var cfg = host.config;
 
-                // 仅有滚动效果需要下面的调整
-                if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                    // 覆盖滚动效果函数
-                    cfg.scrollType = cfg.effect; // 保存到 scrollType 中
-                    cfg.effect = circularScroll;
-                }
+            // 仅有滚动效果需要下面的调整
+            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
+                // 覆盖滚动效果函数
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
+                cfg.effect = circularScroll;
             }
-        });
+        }
+    });
 
-}, { requires:["dom","anim","./base","./effect"]});
+}, { requires:["dom", "anim", "./base", "./effect"]});
 
 /**
  * 承玉：2011.06.02 review switchable
