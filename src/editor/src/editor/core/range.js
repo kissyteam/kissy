@@ -60,7 +60,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         var c1 = node.nodeType != KEN.NODE_TEXT &&
                 DOM.nodeName(node) in dtd.$removeEmpty,
         // 文本为空，可以继续取下一个判断边界
-            c2 = !S.trim(node.nodeValue),
+            c2 = node.nodeType == KEN.NODE_TEXT && !S.trim(node.nodeValue),
         // 恩，进去了书签，可以继续取下一个判断边界
             c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
@@ -244,7 +244,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             var endParentJ = endParents[ j ],
                 domEndNode = endNode[0],
-                domEndParentJ = endParentJ[0];
+                domEndParentJ = endParentJ && endParentJ[0];
 
             while (currentNode) {
                 // Stop processing when the current node matches a node in the
@@ -375,7 +375,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // index to reflect the removal.
                 if (removeStartNode &&
                     // startNode 和 topStart 同级
-                    topStart.parent().equals(removeStartNode.parent())) {
+                    (topStart.parent().equals(startNode.parent()))) {
                     startIndex--;
                 }
 
@@ -1315,6 +1315,13 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                             self.setStartAt(
                                 blockBoundary,
                                 blockBoundary.nodeName() != 'br' &&
+                                    // <table></table> <span>1234^56</span> <table></table>
+                                    // =>
+                                    // <table></table> ^<span>123456</span>$ <table></table>
+
+                                    // <p> <span>123^456</span> </p>
+                                    // =>
+                                    // <p> ^<span>123456</span>$ </p>
                                     ( !enlargeable && self.checkStartOfBlock()
                                         || enlargeable && blockBoundary.contains(enlargeable) ) ?
                                     KER.POSITION_AFTER_START :
@@ -1450,6 +1457,10 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     'checkBackward' : 'checkForward' ]();
             },
 
+            /**
+             * Get two node which are at the edge of current range.
+             * @return {Object} Map with startNode and endNode as key/value.
+             */
             getBoundaryNodes:function () {
                 var self = this,
                     startNode = self.startContainer,
@@ -1460,16 +1471,19 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
                     childCount = startNode[0].childNodes.length;
-                    if (childCount > startOffset)
+                    if (childCount > startOffset) {
                         startNode = $(startNode[0].childNodes[startOffset]);
-                    else if (childCount < 1)
+                    } else if (childCount == 0) {
+                        // ?? startNode
                         startNode = startNode._4e_previousSourceNode();
-                    else        // startOffset > childCount but childCount is not 0
-                    {
+                    } else {
+                        // startOffset >= childCount but childCount is not 0
                         // Try to take the node just after the current position.
                         startNode = startNode[0];
-                        while (startNode.lastChild)
+                        while (startNode.lastChild) {
                             startNode = startNode.lastChild;
+                        }
+
                         startNode = $(startNode);
 
                         // Normally we should take the next node in DFS order. But it
@@ -1481,12 +1495,14 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
                     childCount = endNode[0].childNodes.length;
-                    if (childCount > endOffset)
-                        endNode = $(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
-                    else if (childCount < 1)
+                    if (childCount > endOffset) {
+                        endNode = $(endNode[0].childNodes[endOffset])
+                            // in case endOffset == 0
+                            ._4e_previousSourceNode(TRUE);
+                    } else if (childCount == 0) {
                         endNode = endNode._4e_previousSourceNode();
-                    else        // endOffset > childCount but childCount is not 0
-                    {
+                    } else {
+                        // endOffset > childCount but childCount is not 0
                         // Try to take the node just before the current position.
                         endNode = endNode[0];
                         while (endNode.lastChild)
@@ -1497,11 +1513,20 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Sometimes the endNode will come right before startNode for collapsed
                 // ranges. Fix it. (#3780)
-                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
+                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING) {
                     startNode = endNode;
+                }
 
                 return { startNode:startNode, endNode:endNode };
             },
+
+            /**
+             * Wrap the content in range which is block-enlarged
+             * at the start or end of current range into a block element.
+             * @param {Boolean} isStart Start or end of current range tobe enlarged.
+             * @param {String} blockTag Block element's tag name.
+             * @return {NodeList} Newly generated block element.
+             */
             fixBlock:function (isStart, blockTag) {
                 var self = this,
                     bookmark = self.createBookmark(),
@@ -1517,17 +1542,21 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 self.moveToBookmark(bookmark);
                 return fixedBlock;
             },
+
             splitBlock:function (blockTag) {
-                var self = this, startPath = new ElementPath(self.startContainer),
+                var self = this,
+                    startPath = new ElementPath(self.startContainer),
                     endPath = new ElementPath(self.endContainer),
                     startBlockLimit = startPath.blockLimit,
                     endBlockLimit = endPath.blockLimit,
                     startBlock = startPath.block,
                     endBlock = endPath.block,
                     elementPath = NULL;
+
                 // Do nothing if the boundaries are in different block limits.
-                if (!startBlockLimit.equals(endBlockLimit))
+                if (!startBlockLimit.equals(endBlockLimit)) {
                     return NULL;
+                }
 
                 // Get or fix current blocks.
                 if (blockTag != 'br') {
@@ -1536,8 +1565,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         endBlock = new ElementPath(self.endContainer).block;
                     }
 
-                    if (!endBlock)
+                    if (!endBlock) {
                         endBlock = self.fixBlock(FALSE, blockTag);
+                    }
                 }
 
                 // Get the range position.
@@ -1547,7 +1577,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // Delete the current contents.
                 self.deleteContents();
 
-                if (startBlock && DOM.equals(startBlock, endBlock)) {
+                if (startBlock && startBlock[0] == endBlock[0]) {
                     if (isEndOfBlock) {
                         elementPath = new ElementPath(self.startContainer);
                         self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
@@ -1560,12 +1590,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
                     else {
                         endBlock = self.splitElement(startBlock);
-
                         // In Gecko, the last child node must be a bogus <br>.
                         // Note: bogus <br> added under <ul> or <ol> would cause
                         // lists to be incorrectly rendered.
-                        if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))
+                        if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
                             startBlock._4e_appendBogus();
+                        }
                     }
                 }
 
@@ -1577,6 +1607,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     elementPath:elementPath
                 };
             },
+
             splitElement:function (toSplit) {
                 var self = this;
                 if (!self.collapsed)
@@ -1595,6 +1626,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
                 return clone;
             },
+
             moveToElementEditablePosition:function (el, isMoveToEnd) {
                 var self = this, isEditable;
 

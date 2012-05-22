@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 15:20
+build time: May 22 20:39
 */
 /**
  * Set up editor constructor
@@ -2774,8 +2774,67 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
 
 
-    var isNotWhitespaces = Walker.whitespaces(TRUE),
-        isWhitespaces = Walker.whitespaces();
+    var isWhitespace = new Walker.whitespaces(),
+        isBookmark = new Walker.bookmark(),
+        isNotWhitespaces = Walker.whitespaces(TRUE),
+        isNotBookmarks = Walker.bookmark(false, true);
+
+    var inlineChildReqElements = { "abbr":1, "acronym":1, "b":1, "bdo":1,
+        "big":1, "cite":1, "code":1, "del":1, "dfn":1,
+        "em":1, "font":1, "i":1, "ins":1, "label":1,
+        "kbd":1, "q":1, "samp":1, "small":1, "span":1,
+        "strike":1, "strong":1, "sub":1, "sup":1, "tt":1, "u":1, 'var':1 };
+
+    // Evaluator for checkBoundaryOfElement, reject any
+    // text node and non-empty elements unless it's being bookmark text.
+    function elementBoundaryEval(node) {
+        // Reject any text node unless it's being bookmark
+        // OR it's spaces. (#3883)
+        // 如果不是文本节点并且是空的，可以继续取下一个判断边界
+        var c1 = node.nodeType != KEN.NODE_TEXT &&
+                DOM.nodeName(node) in dtd.$removeEmpty,
+        // 文本为空，可以继续取下一个判断边界
+            c2 = node.nodeType == KEN.NODE_TEXT && !S.trim(node.nodeValue),
+        // 恩，进去了书签，可以继续取下一个判断边界
+            c3 = !!node.parentNode.getAttribute('_ke_bookmark');
+        return c1 || c2 || c3;
+    }
+
+    function nonWhitespaceOrIsBookmark(node) {
+        // Whitespaces and bookmark nodes are to be ignored.
+        return !isWhitespace(node) && !isBookmark(node);
+    }
+
+    function getCheckStartEndBlockEvalFunction(isStart) {
+        var hadBr = FALSE;
+        return function (node) {
+            // First ignore bookmark nodes.
+            if (isBookmark(node))
+                return TRUE;
+
+            if (node.nodeType == KEN.NODE_TEXT) {
+                // If there's any visible text, then we're not at the start.
+                if (S.trim(node.nodeValue).length) {
+                    return FALSE;
+                }
+            } else if (node.nodeType == KEN.NODE_ELEMENT) {
+                var nodeName = DOM.nodeName(node);
+                // If there are non-empty inline elements (e.g. <img />), then we're not
+                // at the start.
+                if (!inlineChildReqElements[ nodeName ]) {
+                    // If we're working at the end-of-block, forgive the first <br /> in non-IE
+                    // browsers.
+                    if (!isStart && !UA['ie'] && nodeName == 'br' && !hadBr) {
+                        hadBr = TRUE;
+                    } else {
+                        return FALSE;
+                    }
+                }
+            }
+            return TRUE;
+        };
+    }
+
 
     /**
      * Extract html content within range.
@@ -2919,7 +2978,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             var endParentJ = endParents[ j ],
                 domEndNode = endNode[0],
-                domEndParentJ = endParentJ[0];
+                domEndParentJ = endParentJ && endParentJ[0];
 
             while (currentNode) {
                 // Stop processing when the current node matches a node in the
@@ -3050,7 +3109,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // index to reflect the removal.
                 if (removeStartNode &&
                     // startNode 和 topStart 同级
-                    topStart.parent().equals(removeStartNode.parent())) {
+                    (topStart.parent().equals(startNode.parent()))) {
                     startIndex--;
                 }
 
@@ -3396,7 +3455,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 }
 
                 var walker = new Walker(walkerRange),
-                    isNotBookmarks = Walker.bookmark(false, true),
                     node, pre;
 
                 walker.evaluator = function (node) {
@@ -3430,7 +3488,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         endContainer = self.endContainer,
                         startOffset = self.startOffset,
                         endOffset = self.endOffset,
-                        // Whether the start/end boundary is movable.
+                    // Whether the start/end boundary is movable.
                         moveStart = TRUE,
                         currentElement,
                         walker,
@@ -3721,7 +3779,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
                     // If the offset is at the end, we'll insert it after the text
                     // node.
-                    else if (endOffset >= endContainer.nodeValue.length) {
+                    else if (endOffset >= endContainer[0].nodeValue.length) {
                         endOffset = endContainer._4e_index() + 1;
                         endContainer = endContainer.parent();
                     }
@@ -3768,7 +3826,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 if (bookmark.is2) {
                     // Get the start information.
                     var startContainer = getByAddress(doc,
-                        bookmark.start, bookmark.normalized),
+                            bookmark.start, bookmark.normalized),
                         startOffset = bookmark.startOffset,
                         endContainer = bookmark.end && getByAddress(doc,
                             bookmark.end, bookmark.normalized),
@@ -3837,6 +3895,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Enlarge the range as mush as possible
              * @param {Number} unit
+             * @function
              * @example
              * <code>
              *      &lt;div&gt;&lt;span&gt;&lt;span&gt;^1&lt;/span&gt;2^&lt;/span&gt;x&lt;/div&gt;
@@ -3881,7 +3940,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     while (enlarge) {
                         // 兄弟节点是否都是空节点？
                         while (sibling) {
-                            if (isWhitespace(sibling)) {
+                            if (isWhitespace(sibling) || isBookmark(sibling)) {
                                 sibling = sibling[direction];
                             } else {
                                 break;
@@ -3961,21 +4020,21 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                 defaultGuard = Walker.blockBoundary(
                                     ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
                                     { br:1 } : NULL),
-                                // Record the encountered 'blockBoundary' for later use.
+                            // Record the encountered 'blockBoundary' for later use.
                                 boundaryGuard = function (node) {
-                                    var retval = defaultGuard(node);
-                                    if (!retval) {
-                                        blockBoundary = new Node(node);
+                                    var retVal = defaultGuard(node);
+                                    if (!retVal) {
+                                        blockBoundary = $(node);
                                     }
-                                    return retval;
+                                    return retVal;
                                 },
-                                // Record the encounted 'tailBr' for later use.
+                            // Record the encountered 'tailBr' for later use.
                                 tailBrGuard = function (node) {
-                                    var retval = boundaryGuard(node);
-                                    if (!retval && DOM.nodeName(node) == 'br') {
-                                        tailBr = new Node(node);
+                                    var retVal = boundaryGuard(node);
+                                    if (!retVal && DOM.nodeName(node) == 'br') {
+                                        tailBr = $(node);
                                     }
-                                    return retval;
+                                    return retVal;
                                 };
 
                             walker.guard = boundaryGuard;
@@ -3990,6 +4049,13 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                             self.setStartAt(
                                 blockBoundary,
                                 blockBoundary.nodeName() != 'br' &&
+                                    // <table></table> <span>1234^56</span> <table></table>
+                                    // =>
+                                    // <table></table> ^<span>123456</span>$ <table></table>
+
+                                    // <p> <span>123^456</span> </p>
+                                    // =>
+                                    // <p> ^<span>123456</span>$ </p>
                                     ( !enlargeable && self.checkStartOfBlock()
                                         || enlargeable && blockBoundary.contains(enlargeable) ) ?
                                     KER.POSITION_AFTER_START :
@@ -4028,19 +4094,26 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
                 }
             })(),
+
+            /**
+             * Check whether current range 's start position is at the start of a block (visible)
+             * @return Boolean
+             */
             checkStartOfBlock:function () {
-                var self = this, startContainer = self.startContainer,
+                var self = this,
+                    startContainer = self.startContainer,
                     startOffset = self.startOffset;
 
                 // If the starting node is a text node, and non-empty before the offset,
                 // then we're surely not at the start of block.
                 if (startOffset && startContainer[0].nodeType == KEN.NODE_TEXT) {
                     var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
-                    if (textBefore.length)
+                    if (textBefore.length) {
                         return FALSE;
+                    }
                 }
 
-                // Antecipate the trim() call here, so the walker will not make
+                // Anticipate the trim() call here, so the walker will not make
                 // changes to the DOM, which would not get reflected into this
                 // range otherwise.
                 self.trim();
@@ -4060,6 +4133,10 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 return walker.checkBackward();
             },
 
+            /**
+             * Check whether current range 's end position is at the end of a block (visible)
+             * @return Boolean
+             */
             checkEndOfBlock:function () {
                 var self = this, endContainer = self.endContainer,
                     endOffset = self.endOffset;
@@ -4068,11 +4145,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // then we're surely not at the end of block.
                 if (endContainer[0].nodeType == KEN.NODE_TEXT) {
                     var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
-                    if (textAfter.length)
+                    if (textAfter.length) {
                         return FALSE;
+                    }
                 }
 
-                // Antecipate the trim() call here, so the walker will not make
+                // Anticipate the trim() call here, so the walker will not make
                 // changes to the DOM, which would not get reflected into this
                 // range otherwise.
                 self.trim();
@@ -4091,9 +4169,10 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 return walker.checkForward();
             },
+
             /**
              * Check whether current range is on the inner edge of the specified element.
-             * @param {Number} checkType ( CKEDITOR.START | CKEDITOR.END ) The checking side.
+             * @param {Number} checkType The checking side.
              * @param {Node} element The target element to check.
              */
             checkBoundaryOfElement:function (element, checkType) {
@@ -4112,8 +4191,13 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     'checkBackward' : 'checkForward' ]();
             },
 
+            /**
+             * Get two node which are at the edge of current range.
+             * @return {Object} Map with startNode and endNode as key/value.
+             */
             getBoundaryNodes:function () {
-                var self = this, startNode = self.startContainer,
+                var self = this,
+                    startNode = self.startContainer,
                     endNode = self.endContainer,
                     startOffset = self.startOffset,
                     endOffset = self.endOffset,
@@ -4121,17 +4205,20 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 if (startNode[0].nodeType == KEN.NODE_ELEMENT) {
                     childCount = startNode[0].childNodes.length;
-                    if (childCount > startOffset)
-                        startNode = new Node(startNode[0].childNodes[startOffset]);
-                    else if (childCount < 1)
+                    if (childCount > startOffset) {
+                        startNode = $(startNode[0].childNodes[startOffset]);
+                    } else if (childCount == 0) {
+                        // ?? startNode
                         startNode = startNode._4e_previousSourceNode();
-                    else        // startOffset > childCount but childCount is not 0
-                    {
+                    } else {
+                        // startOffset >= childCount but childCount is not 0
                         // Try to take the node just after the current position.
                         startNode = startNode[0];
-                        while (startNode.lastChild)
+                        while (startNode.lastChild) {
                             startNode = startNode.lastChild;
-                        startNode = new Node(startNode);
+                        }
+
+                        startNode = $(startNode);
 
                         // Normally we should take the next node in DFS order. But it
                         // is also possible that we've already reached the end of
@@ -4142,31 +4229,42 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 if (endNode[0].nodeType == KEN.NODE_ELEMENT) {
                     childCount = endNode[0].childNodes.length;
-                    if (childCount > endOffset)
-                        endNode = new Node(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
-                    else if (childCount < 1)
+                    if (childCount > endOffset) {
+                        endNode = $(endNode[0].childNodes[endOffset])
+                            // in case endOffset == 0
+                            ._4e_previousSourceNode(TRUE);
+                    } else if (childCount == 0) {
                         endNode = endNode._4e_previousSourceNode();
-                    else        // endOffset > childCount but childCount is not 0
-                    {
+                    } else {
+                        // endOffset > childCount but childCount is not 0
                         // Try to take the node just before the current position.
                         endNode = endNode[0];
                         while (endNode.lastChild)
                             endNode = endNode.lastChild;
-                        endNode = new Node(endNode);
+                        endNode = $(endNode);
                     }
                 }
 
                 // Sometimes the endNode will come right before startNode for collapsed
                 // ranges. Fix it. (#3780)
-                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)
+                if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING) {
                     startNode = endNode;
+                }
 
                 return { startNode:startNode, endNode:endNode };
             },
+
+            /**
+             * Wrap the content in range which is block-enlarged
+             * at the start or end of current range into a block element.
+             * @param {Boolean} isStart Start or end of current range tobe enlarged.
+             * @param {String} blockTag Block element's tag name.
+             * @return {NodeList} Newly generated block element.
+             */
             fixBlock:function (isStart, blockTag) {
                 var self = this,
                     bookmark = self.createBookmark(),
-                    fixedBlock = new Node(self.document.createElement(blockTag));
+                    fixedBlock = $(self.document.createElement(blockTag));
                 self.collapse(isStart);
                 self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
                 fixedBlock[0].appendChild(self.extractContents());
@@ -4178,17 +4276,21 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 self.moveToBookmark(bookmark);
                 return fixedBlock;
             },
+
             splitBlock:function (blockTag) {
-                var self = this, startPath = new ElementPath(self.startContainer),
+                var self = this,
+                    startPath = new ElementPath(self.startContainer),
                     endPath = new ElementPath(self.endContainer),
                     startBlockLimit = startPath.blockLimit,
                     endBlockLimit = endPath.blockLimit,
                     startBlock = startPath.block,
                     endBlock = endPath.block,
                     elementPath = NULL;
+
                 // Do nothing if the boundaries are in different block limits.
-                if (!startBlockLimit.equals(endBlockLimit))
+                if (!startBlockLimit.equals(endBlockLimit)) {
                     return NULL;
+                }
 
                 // Get or fix current blocks.
                 if (blockTag != 'br') {
@@ -4197,8 +4299,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         endBlock = new ElementPath(self.endContainer).block;
                     }
 
-                    if (!endBlock)
+                    if (!endBlock) {
                         endBlock = self.fixBlock(FALSE, blockTag);
+                    }
                 }
 
                 // Get the range position.
@@ -4206,10 +4309,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     isEndOfBlock = endBlock && self.checkEndOfBlock();
 
                 // Delete the current contents.
-                // Why is 2.x doing CheckIsEmpty()?
                 self.deleteContents();
 
-                if (startBlock && DOM.equals(startBlock, endBlock)) {
+                if (startBlock && startBlock[0] == endBlock[0]) {
                     if (isEndOfBlock) {
                         elementPath = new ElementPath(self.startContainer);
                         self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
@@ -4222,12 +4324,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
                     else {
                         endBlock = self.splitElement(startBlock);
-
                         // In Gecko, the last child node must be a bogus <br>.
                         // Note: bogus <br> added under <ul> or <ol> would cause
                         // lists to be incorrectly rendered.
-                        if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))
+                        if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
                             startBlock._4e_appendBogus();
+                        }
                     }
                 }
 
@@ -4239,6 +4341,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     elementPath:elementPath
                 };
             },
+
             splitElement:function (toSplit) {
                 var self = this;
                 if (!self.collapsed)
@@ -4248,7 +4351,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // of its contents.
                 self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
                 var documentFragment = self.extractContents(),
-                    // Duplicate the element after it.
+                // Duplicate the element after it.
                     clone = toSplit.clone(FALSE);
 
                 // Place the extracted contents into the duplicated element.
@@ -4257,11 +4360,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
                 return clone;
             },
+
             moveToElementEditablePosition:function (el, isMoveToEnd) {
-                var self = this, isEditable, xhtml_dtd = dtd;
+                var self = this, isEditable;
 
                 // Empty elements are rejected.
-                if (xhtml_dtd.$empty[ el.nodeName() ])
+                if (dtd.$empty[ el.nodeName() ])
                     return FALSE;
 
                 while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
@@ -4275,7 +4379,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         // 不要返回，继续找可能的文字位置
                     }
                     // Stop immediately if we've found a non editable inline element (e.g <img>).
-                    else if (xhtml_dtd.$inline[ el.nodeName() ]) {
+                    else if (dtd.$inline[ el.nodeName() ]) {
                         self.moveToPosition(el, isMoveToEnd ?
                             KER.POSITION_AFTER_END :
                             KER.POSITION_BEFORE_START);
@@ -4283,7 +4387,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     }
 
                     // Non-editable non-inline elements are to be bypassed, getting the next one.
-                    if (xhtml_dtd.$empty[ el.nodeName() ])
+                    if (dtd.$empty[ el.nodeName() ])
                         el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
                     else {
                         if (isMoveToEnd) {
@@ -4311,89 +4415,28 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     node[0].childNodes.length);
             }
         });
-    var inlineChildReqElements = { "abbr":1, "acronym":1, "b":1, "bdo":1,
-        "big":1, "cite":1, "code":1, "del":1, "dfn":1,
-        "em":1, "font":1, "i":1, "ins":1, "label":1,
-        "kbd":1, "q":1, "samp":1, "small":1, "span":1,
-        "strike":1, "strong":1, "sub":1, "sup":1, "tt":1, "u":1, 'var':1 };
 
-    // Evaluator for CKEDITOR.dom.element::checkBoundaryOfElement, reject any
-    // text node and non-empty elements unless it's being bookmark text.
-    function elementBoundaryEval(node) {
-        // Reject any text node unless it's being bookmark
-        // OR it's spaces. (#3883)
-        //如果不是文本节点并且是空的，可以继续取下一个判断边界
-        var c1 = node.nodeType != KEN.NODE_TEXT
-            && DOM.nodeName(node) in dtd.$removeEmpty,
-            //文本为空，可以继续取下一个判断边界
-            c2 = !S.trim(node.nodeValue),
-            //恩，进去了书签，可以继续取下一个判断边界
-            c3 = !!node.parentNode.getAttribute('_ke_bookmark');
-        return c1 || c2 || c3;
-    }
-
-    var isWhitespace = new Walker.whitespaces(),
-        isBookmark = new Walker.bookmark();
-
-    function nonWhitespaceOrIsBookmark(node) {
-        // Whitespaces and bookmark nodes are to be ignored.
-        return !isWhitespace(node) && !isBookmark(node);
-    }
-
-    function getCheckStartEndBlockEvalFunction(isStart) {
-        var hadBr = FALSE, isBookmark = Walker.bookmark(TRUE);
-        return function (node) {
-            // First ignore bookmark nodes.
-            if (isBookmark(node))
-                return TRUE;
-
-            if (node.nodeType == KEN.NODE_TEXT) {
-                // If there's any visible text, then we're not at the start.
-                if (S.trim(node.nodeValue).length)
-                    return FALSE;
-            }
-            else if (node.nodeType == KEN.NODE_ELEMENT) {
-                var nodeName = DOM.nodeName(node);
-                // If there are non-empty inline elements (e.g. <img />), then we're not
-                // at the start.
-                if (!inlineChildReqElements[ nodeName ]) {
-                    // If we're working at the end-of-block, forgive the first <br /> in non-IE
-                    // browsers.
-                    if (!isStart && !UA['ie'] && nodeName == 'br' && !hadBr)
-                        hadBr = TRUE;
-                    else {
-                        return FALSE;
-                    }
-                }
-            }
-            return TRUE;
-        };
-    }
-
-    var editorDom = {
+    Utils.injectDom({
         _4e_breakParent:function (el, parent) {
             var KERange = Editor.Range;
-            parent = new Node(parent);
+            parent = $(parent);
             var range = new KERange(el.ownerDocument);
 
             // We'll be extracting part of this element, so let's use our
             // range to get the correct piece.
-            range.setStartAfter(new Node(el));
+            range.setStartAfter($(el));
             range.setEndAfter(parent);
 
             // Extract it.
             var docFrag = range.extractContents();
 
             // Move the element outside the broken element.
-            range.insertNode(new Node(DOM._4e_remove(el)));
+            range.insertNode($(DOM._4e_remove(el)));
 
             // Re-insert the extracted piece after the element.
             el.parentNode.insertBefore(docFrag, el.nextSibling);
         }
-    };
-
-    Editor.Utils.injectDom(editorDom);
-
+    });
 
     Editor.Range = KERange;
 }, {
@@ -4426,16 +4469,16 @@ KISSY.add("editor/core/selection", function (S) {
         NULL = null,
         UA = S.UA,
         DOM = S.DOM,
-        //tryThese = Editor.Utils.tryThese,
+    //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
         KES = Editor.SELECTION,
         KER = Editor.RANGE,
         KEN = Editor.NODE,
-        // ie9 仍然采用老的 range api，发现新的不稳定
+    // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
-        //EventTarget = S.EventTarget,
+    //EventTarget = S.EventTarget,
         Walker = Editor.Walker,
-        //ElementPath = Editor.ElementPath,
+    //ElementPath = Editor.ElementPath,
         KERange = Editor.Range;
 
     /**
@@ -4566,7 +4609,7 @@ KISSY.add("editor/core/selection", function (S) {
             },
 
         getRanges:OLD_IE ?
-            ( function () {
+            (function () {
                 // Finds the container and offset for a specific boundary
                 // of an IE range.
                 /**
@@ -4657,7 +4700,7 @@ KISSY.add("editor/core/selection", function (S) {
 
                     // IE doesn't have range support (in the W3C way), so we
                     // need to do some magic to transform selections into
-                    // CKEDITOR.dom.range instances.
+                    // Range instances.
 
                     var sel = self.getNative(),
                         nativeRange = sel && sel.createRange(),
@@ -4705,7 +4748,7 @@ KISSY.add("editor/core/selection", function (S) {
                     return cache.ranges;
 
                 // On browsers implementing the W3C range, we simply
-                // tranform the native ranges in CKEDITOR.dom.range
+                // tranform the native ranges in Range
                 // instances.
 
                 var ranges = [], sel = self.getNative();
@@ -5089,7 +5132,7 @@ KISSY.add("editor/core/selection", function (S) {
                     }
 
                     var bookmark = self.createBookmark(),
-                        // Create marker tags for the start and end boundaries.
+                    // Create marker tags for the start and end boundaries.
                         startNode = bookmark.startNode,
                         endNode;
                     if (!collapsed)
@@ -6061,7 +6104,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         // make recognize <br /> tag as a separator in ENTER_BR mode (#5121)
         //if (this._.enterMode)
-        iterator.enlargeBr = TRUE;//( this._.enterMode != CKEDITOR.ENTER_BR );
+        iterator.enlargeBr = TRUE;
 
         var block, doc = range.document;
         // Only one =
@@ -7079,7 +7122,7 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120516152023");
+                    url += "t=" + encodeURIComponent("20120522203859");
                 }
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);
@@ -7746,9 +7789,9 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * it's to be considered into the walk or not. If not provided, all
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
-         * @property
          * @type Function
          */
+        // 当前 range 范围内深度遍历的元素调用
         // this.evaluator = NULL;
 
         /**
@@ -7757,9 +7800,9 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * entering and exiting nodes, as well as for the matched nodes.
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
-         * @property
          * @type Function
          */
+        // 人为缩小当前 range 范围
         // this.guard = NULL;
 
         /** @private */
@@ -7814,6 +7857,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkBackward:function () {
+                // 在当前 range 范围内不会出现 evaluator 返回 false 的情况
                 return iterate.call(this, TRUE, TRUE) !== FALSE;
             },
 
@@ -8076,10 +8120,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     }
 
     var srcScript = 'document.open();' +
-        // The document domain must be set any time we
-        // call document.open().
-        ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
-        'document.close();',
+            // The document domain must be set any time we
+            // call document.open().
+            ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
+            'document.close();',
 
         iframeHtml = '<iframe' +
             ' style="' + WIDTH + ':100%;' + HEIGHT + ':100%;border:none;" ' +
@@ -8177,11 +8221,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
             _uiSetMode:function (v) {
                 var self = this,
+                    save,
                     textarea = self.get("textarea");
                 if (v) {
                     self.execCommand("save");
+                    // recreate iframe need load time
+                    self.on("docReady", save = function () {
+                        self.execCommand("save");
+                        self.detach("docReady", save);
+                    });
                     self._setData(textarea.val());
-                    self.execCommand("save");
                 } else {
                     textarea.val(self._getData(1, WYSIWYG_MODE));
                     textarea[0].focus();
@@ -8698,11 +8747,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         next = p;
                     }
                     //firefox,replace br with p，和编辑器整体换行保持一致
-                    else if (next.nodeName() == "br"
-                        &&
+                    else if (next.nodeName() == "br" &&
                         //必须符合嵌套规则
-                        dtd[next.parent().nodeName()]["p"]
-                        ) {
+                        dtd[next.parent().nodeName()]["p"]) {
                         p = new Node("<p>&nbsp;</p>", NULL, doc);
                         next[0].parentNode.replaceChild(p[0], next[0]);
                         next = p;
@@ -8993,7 +9040,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
         var self = focusManager.getInstance(id),
             doc = self.get("document")[0],
-            // Remove bootstrap script from the DOM.
+        // Remove bootstrap script from the DOM.
             script = doc.getElementById("ke_actscript");
 
         DOM.remove(script);

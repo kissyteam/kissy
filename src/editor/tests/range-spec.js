@@ -3,7 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("editor", function (S, Editor) {
-    var $ = S.all, Node = S.Node;
+    var $ = S.all,
+        UA = S.UA,
+        RANGE = Editor.RANGE,
+        Node = S.Node;
     var Range = Editor.Range;
 
     describe("range", function () {
@@ -1190,9 +1193,160 @@ KISSY.use("editor", function (S, Editor) {
 
             it("check start correctly", function () {
 
+                var div = $("<div><span></span>" +
+                    "<span>2</span></div>").appendTo("body");
+
+                var span = div.all("span").item(1);
+
+                var range = new Range();
+                range.setStart(span, 0);
+                range.setEnd(span, 0);
+
+                expect(range.checkBoundaryOfElement(div, RANGE.START))
+                    .toBe(true);
+
+                div.remove();
+
+                div = $("<div><img />" +
+                    "<span>2</span></div>").appendTo("body");
+
+                span = div.all("span").item(0);
+
+                range = new Range();
+                range.setStart(span, 0);
+                range.setEnd(span, 0);
+
+                expect(range.checkBoundaryOfElement(div, RANGE.START))
+                    .toBe(false);
+
+                div.remove();
+            });
+
+
+            it("check end correctly", function () {
+
+                var div = $("<div>" +
+                    "<span>2</span><span></span></div>").appendTo("body");
+
+                var span = div.all("span").item(0);
+
+                var range = new Range();
+                range.setStart(span, 1);
+                range.setEnd(span, 1);
+
+                expect(range.checkBoundaryOfElement(div, RANGE.END))
+                    .toBe(true);
+
+                div.remove();
+
+                div = $("<div><img />" +
+                    "<span>2</span><img /></div>").appendTo("body");
+
+                span = div.all("span").item(0);
+
+                range = new Range();
+                range.setStart(span, 1);
+                range.setEnd(span, 1);
+
+                expect(range.checkBoundaryOfElement(div, RANGE.END))
+                    .toBe(false);
+
+                div.remove();
             });
 
         });
 
+        it("getBoundaryNodes works", function () {
+            var div = $("<div>" +
+                    "<span>1<span>4</span></span>" +
+                    "<span>2<span>3</span>4</span><span>2</span>" +
+                    "</div>").appendTo("body"),
+                span = div.all("span");
+            var range = new Range();
+            range.setStart(span.item(0), 2);
+            range.setEnd(span.item(4), 0);
+
+            var bound = range.getBoundaryNodes();
+
+            expect(bound.startNode[0]).toBe(span[2]);
+
+            expect(bound.endNode[0]).toBe(span[2]);
+
+            div.remove();
+
+        });
+
+        it("fixBlock works", function () {
+            var div = $("<div>" +
+                    "<span>1<span>4</span></span>" +
+                    "<span>2<span>3</span>4</span><span>2</span>" +
+                    "</div>").appendTo("body"),
+                span = div.all("span");
+
+            var range = new Range(document);
+            range.setStart(span.item(0), 2);
+            range.setEnd(span.item(4), 0);
+
+            range.fixBlock(true, "p");
+
+            expect(div.html().toLowerCase()).toBe("<p>" +
+                "<span>1<span>4</span></span>" +
+                "<span>2<span>3</span>4</span><span>2</span>" +
+                (UA.ie ? "" : "<br>") +
+                "</p>");
+
+            div.remove();
+
+
+            div = $("<div>" +
+                "<span>1<span>4</span></span>" +
+                "<span>2<span>3</span>4</span><span>2</span>" +
+                "</div>").appendTo("body");
+            span = div.all("span");
+
+            range = new Range(document);
+            range.setStart(span.item(0), 2);
+            range.setEnd(span.item(4), 0);
+
+            range.fixBlock(false, "p");
+
+            expect(div.html().toLowerCase()).toBe("<p>" +
+                "<span>1<span>4</span></span>" +
+                "<span>2<span>3</span>4</span><span>2</span>" +
+                (UA.ie ? "" : "<br>") +
+                "</p>");
+
+            div.remove();
+
+        });
+
+
+        it("splitElement works", function () {
+
+            var div = $("<div>" +
+                    "<div>" +
+                    "<span>1<span>4</span></span>" +
+                    "<span>2<span>3</span>4</span><span>2</span>" +
+                    "</div>" +
+                    "</div>").appendTo("body"),
+                span = div.all("span");
+
+            var range = new Range(document);
+            range.setStart(span.item(2), 3);
+
+            range.splitElement(div.first());
+
+            expect(div.html().toLowerCase())
+                .toBe("<div><span>1<span>4</span></span><span>2<span>3</span>4</span></div>" +
+                "<div><span></span><span>2</span></div>");
+
+            expect(range.startContainer[0]).toBe(div[0]);
+            expect(range.endContainer[0]).toBe(div[0]);
+            expect(range.startOffset).toBe(1);
+            expect(range.endOffset).toBe(1);
+            expect(range.collapsed).toBe(true);
+
+            div.remove();
+        });
     });
 });

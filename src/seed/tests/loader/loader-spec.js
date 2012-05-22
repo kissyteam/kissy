@@ -13,21 +13,17 @@
         }
     }
 
-    function $(n) {
-        return document.getElementById(n);
-    }
-
     describe("getStyle", function () {
 
         it("should callback after css onload", function () {
 
             var state = 0;
 
-            expect(getStyle($("special"), "fontSize")).not.toBe("33px");
+            expect(getStyle(document.getElementById("special"), "fontSize")).not.toBe("33px");
 
             S.getScript(d + "getStyle/fp2011.css", function () {
                 setTimeout(function () {
-                    expect(getStyle($("special"), "fontSize")).toBe("33px");
+                    expect(getStyle(document.getElementById("special"), "fontSize")).toBe("33px");
                     state++;
                     // breath
                 }, 10);
@@ -39,7 +35,7 @@
             var d2 = d.replace("localhost", "chengyu.taobao.ali.com");
             S.getScript(d2 + "getStyle/fp2011b.css", function () {
                 setTimeout(function () {
-                    expect(getStyle($("special2"), "fontSize")).toBe("44px");
+                    expect(getStyle(document.getElementById("special2"), "fontSize")).toBe("44px");
                     state++;
                     // breath
                 }, 10);
