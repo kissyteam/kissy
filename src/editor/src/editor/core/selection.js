@@ -25,16 +25,16 @@ KISSY.add("editor/core/selection", function (S) {
         NULL = null,
         UA = S.UA,
         DOM = S.DOM,
-        //tryThese = Editor.Utils.tryThese,
+    //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
         KES = Editor.SELECTION,
         KER = Editor.RANGE,
         KEN = Editor.NODE,
-        // ie9 仍然采用老的 range api，发现新的不稳定
+    // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
-        //EventTarget = S.EventTarget,
+    //EventTarget = S.EventTarget,
         Walker = Editor.Walker,
-        //ElementPath = Editor.ElementPath,
+    //ElementPath = Editor.ElementPath,
         KERange = Editor.Range;
 
     /**
@@ -165,7 +165,7 @@ KISSY.add("editor/core/selection", function (S) {
             },
 
         getRanges:OLD_IE ?
-            ( function () {
+            (function () {
                 // Finds the container and offset for a specific boundary
                 // of an IE range.
                 /**
@@ -688,7 +688,7 @@ KISSY.add("editor/core/selection", function (S) {
                     }
 
                     var bookmark = self.createBookmark(),
-                        // Create marker tags for the start and end boundaries.
+                    // Create marker tags for the start and end boundaries.
                         startNode = bookmark.startNode,
                         endNode;
                     if (!collapsed)

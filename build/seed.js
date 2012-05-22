@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 18 12:02
+build time: May 22 15:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 18 12:02
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120518120257';
+        S.__BUILD_TIME = '20120522153848';
     })();
 
     return S;
@@ -2604,6 +2604,7 @@ build time: May 18 12:02
         for (var url in monitors) {
             var callbackObj = monitors[url],
                 node = callbackObj.node,
+                exName,
                 loaded = 0;
             if (utils.isWebKit) {
                 if (node['sheet']) {
@@ -2614,14 +2615,15 @@ build time: May 18 12:02
                 try {
                     var cssRules;
                     if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 } catch (ex) {
-                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
-                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                    if (ex.code === 1000) {
-                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
+                        exName == 'SecurityError') {
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
@@ -3979,7 +3981,7 @@ build time: May 18 12:02
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120518120257'
+        tag:'20120522153848'
     }, getBaseInfo()));
 
     /**

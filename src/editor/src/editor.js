@@ -92,10 +92,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     }
 
     var srcScript = 'document.open();' +
-        // The document domain must be set any time we
-        // call document.open().
-        ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
-        'document.close();',
+            // The document domain must be set any time we
+            // call document.open().
+            ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
+            'document.close();',
 
         iframeHtml = '<iframe' +
             ' style="' + WIDTH + ':100%;' + HEIGHT + ':100%;border:none;" ' +
@@ -193,11 +193,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
             _uiSetMode:function (v) {
                 var self = this,
+                    save,
                     textarea = self.get("textarea");
                 if (v) {
                     self.execCommand("save");
+                    // recreate iframe need load time
+                    self.on("docReady", save = function () {
+                        self.execCommand("save");
+                        self.detach("docReady", save);
+                    });
                     self._setData(textarea.val());
-                    self.execCommand("save");
                 } else {
                     textarea.val(self._getData(1, WYSIWYG_MODE));
                     textarea[0].focus();
@@ -714,11 +719,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         next = p;
                     }
                     //firefox,replace br with p，和编辑器整体换行保持一致
-                    else if (next.nodeName() == "br"
-                        &&
+                    else if (next.nodeName() == "br" &&
                         //必须符合嵌套规则
-                        dtd[next.parent().nodeName()]["p"]
-                        ) {
+                        dtd[next.parent().nodeName()]["p"]) {
                         p = new Node("<p>&nbsp;</p>", NULL, doc);
                         next[0].parentNode.replaceChild(p[0], next[0]);
                         next = p;
@@ -1009,7 +1012,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
         var self = focusManager.getInstance(id),
             doc = self.get("document")[0],
-            // Remove bootstrap script from the DOM.
+        // Remove bootstrap script from the DOM.
             script = doc.getElementById("ke_actscript");
 
         DOM.remove(script);

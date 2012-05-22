@@ -33,6 +33,7 @@
         for (var url in monitors) {
             var callbackObj = monitors[url],
                 node = callbackObj.node,
+                exName,
                 loaded = 0;
             if (utils.isWebKit) {
                 if (node['sheet']) {
@@ -43,14 +44,15 @@
                 try {
                     var cssRules;
                     if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 } catch (ex) {
-                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
-                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                    if (ex.code === 1000) {
-                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
+                        exName == 'SecurityError') {
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
