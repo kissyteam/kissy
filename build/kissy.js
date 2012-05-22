@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 8 19:42
+build time: May 22 15:41
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: May 8 19:42
          */
         version:'1.20',
 
-        buildTime:'20120508194223',
+        buildTime:'20120522154133',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1474,7 +1474,7 @@ build time: May 8 19:42
  * script/css load across browser
  * @author  yiminghe@gmail.com
  */
-(function(S, utils) {
+(function (S, utils) {
     if ("require" in this) {
         return;
     }
@@ -1512,14 +1512,15 @@ build time: May 8 19:42
                 try {
                     var cssRules;
                     if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
-                } catch(ex) {
-                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
-                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                    if (ex.code === 1000) {
-                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                } catch (ex) {
+                    var exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
+                        exName == 'SecurityError') {
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
@@ -1542,18 +1543,18 @@ build time: May 8 19:42
 
     S.mix(utils, {
         scriptOnload:document.addEventListener ?
-            function(node, callback) {
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
                 node.addEventListener('load', callback, false);
             } :
-            function(node, callback) {
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
                 var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
+                node.onreadystatechange = function () {
                     var rs = node.readyState;
                     if (/loaded|complete/i.test(rs)) {
                         node.onreadystatechange = null;
@@ -1576,7 +1577,7 @@ build time: May 8 19:42
          */
         styleOnload:window.attachEvent ?
             // ie/opera
-            function(node, callback) {
+            function (node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
                     node.detachEvent('onload', t);
@@ -1588,8 +1589,8 @@ build time: May 8 19:42
             } :
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
-            function(node, callback) {
-                var href = node.href,arr;
+            function (node, callback) {
+                var href = node.href, arr;
                 arr = monitors[href] = monitors[href] || [];
                 arr.node = node;
                 arr.push(callback);

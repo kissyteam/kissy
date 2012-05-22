@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 8 19:42
+build time: May 22 15:41
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: May 8 19:42
          */
         version:'1.20',
 
-        buildTime:'20120508194223',
+        buildTime:'20120522154133',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1474,7 +1474,7 @@ build time: May 8 19:42
  * script/css load across browser
  * @author  yiminghe@gmail.com
  */
-(function(S, utils) {
+(function (S, utils) {
     if ("require" in this) {
         return;
     }
@@ -1512,14 +1512,15 @@ build time: May 8 19:42
                 try {
                     var cssRules;
                     if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
-                } catch(ex) {
-                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
-                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                    if (ex.code === 1000) {
-                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                } catch (ex) {
+                    var exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
+                        exName == 'SecurityError') {
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
@@ -1542,18 +1543,18 @@ build time: May 8 19:42
 
     S.mix(utils, {
         scriptOnload:document.addEventListener ?
-            function(node, callback) {
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
                 node.addEventListener('load', callback, false);
             } :
-            function(node, callback) {
+            function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
                 var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
+                node.onreadystatechange = function () {
                     var rs = node.readyState;
                     if (/loaded|complete/i.test(rs)) {
                         node.onreadystatechange = null;
@@ -1576,7 +1577,7 @@ build time: May 8 19:42
          */
         styleOnload:window.attachEvent ?
             // ie/opera
-            function(node, callback) {
+            function (node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
                     node.detachEvent('onload', t);
@@ -1588,8 +1589,8 @@ build time: May 8 19:42
             } :
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
-            function(node, callback) {
-                var href = node.href,arr;
+            function (node, callback) {
+                var href = node.href, arr;
                 arr = monitors[href] = monitors[href] || [];
                 arr.node = node;
                 arr.push(callback);
@@ -21068,9 +21069,9 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         'component/decoratechild']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 18:36
+build time: May 22 14:18
 */
 /**
  * Switchable
@@ -22867,7 +22868,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
  * Switchable Circular Plugin
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
+KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
     var POSITION = 'position',
         RELATIVE = 'relative',
@@ -22884,8 +22885,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            circular: false
-        });
+        circular:false
+    });
 
     /**
      * 循环滚动效果函数
@@ -22916,6 +22917,12 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
 
         if (self.anim) {
             self.anim.stop();
+            // 快速的话会有点问题
+            // 上一个 relative 没清掉：上一个还没有移到该移的位置
+            if (self.panels[activeIndex * cfg.steps].style.position == "relative") {
+                // 快速移到 reset 后的结束位置，用户不会察觉到的！
+                resetPosition.call(self, self.panels, activeIndex, activeIndex, prop, viewDiff);
+            }
         }
 
         if (fromEls) {
@@ -22923,7 +22930,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
                 props,
                 cfg.duration,
                 cfg.easing,
-                function() {
+                function () {
                     if (isCritical) {
                         // 复原位置
                         resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
@@ -22988,24 +22995,24 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      */
     Switchable.Plugins.push({
 
-            name: 'circular',
+        name:'circular',
 
-            /**
-             * 根据 effect, 调整初始状态
-             */
-            init: function(host) {
-                var cfg = host.config;
+        /**
+         * 根据 effect, 调整初始状态
+         */
+        init:function (host) {
+            var cfg = host.config;
 
-                // 仅有滚动效果需要下面的调整
-                if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                    // 覆盖滚动效果函数
-                    cfg.scrollType = cfg.effect; // 保存到 scrollType 中
-                    cfg.effect = circularScroll;
-                }
+            // 仅有滚动效果需要下面的调整
+            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
+                // 覆盖滚动效果函数
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
+                cfg.effect = circularScroll;
             }
-        });
+        }
+    });
 
-}, { requires:["dom","anim","./base","./effect"]});
+}, { requires:["dom", "anim", "./base", "./effect"]});
 
 /**
  * 承玉：2011.06.02 review switchable
