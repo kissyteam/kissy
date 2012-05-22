@@ -136,16 +136,16 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                             if (!realStarted) {
                                 realStarted = 1;
                                 if (cfg.circular) {
-                                    var activeIndex = self.activeIndex;
+                                    var activeIndex = self.activeIndex, threshold = self.length - 1;
                                     /*
                                      circular logic : only run once after mousedown/touchstart
                                      */
-                                    if (activeIndex == self.length - 1) {
+                                    if (activeIndex == threshold) {
                                         Switchable.adjustPosition
-                                            .call(self, self.panels, false, prop, viewSize);
+                                            .call(self, self.panels, 0, prop, viewSize);
                                     } else if (activeIndex == 0) {
                                         Switchable.adjustPosition
-                                            .call(self, self.panels, true, prop, viewSize);
+                                            .call(self, self.panels, threshold, prop, viewSize);
                                     }
                                 }
                             }
@@ -188,7 +188,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         // 否则的话恢复位置
                         Switchable.resetPosition.call(self,
                             self.panels,
-                            activeIndex == 0,
+                            activeIndex == 0 ? lastIndex : 0,
                             prop,
                             viewSize);
                     }
