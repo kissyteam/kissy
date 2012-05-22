@@ -17,10 +17,10 @@
         win = host,
         doc = host.document,
         loc = host.location,
-        // 当前页面所在的目录
-        // http://xx.com/y/z.htm#!/f/g
-        // ->
-        // http://xx.com/y/
+    // 当前页面所在的目录
+    // http://xx.com/y/z.htm#!/f/g
+    // ->
+    // http://xx.com/y/
         __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -90,6 +90,7 @@
         };
 
         S.mix(packageDesc, {
+            name:pName,
             tag:encodeURIComponent(Config.tag),
             path:Config.base,
             debug:Config.debug,
@@ -221,6 +222,8 @@
             return getPackageInfo(self, mod).path;
         },
 
+        getPackageInfo:getPackageInfo,
+
         createModuleInfo:function (self, modName) {
             var info = removeSuffixAndTagFromModName(modName);
 
@@ -323,7 +326,7 @@
          */
         normalizeModNames:function (self, modNames, refModName, keepAlias) {
             var ret = [],
-                mods = self.Env.mods;
+                mods = self['Env'].mods;
             S.each(modNames, function (name) {
                 var alias, m;
                 // 1. index map
@@ -444,7 +447,27 @@
                 }
             }
             return path;
-        }
+        },
+
+        /**
+         * test3,test3/a/b => a/b
+         */
+        removePackageNameFromModName:function () {
+            var cache = {};
+            return function (packageName, modName) {
+                if (!packageName) {
+                    return modName;
+                }
+                if (!S.endsWith(packageName, "/")) {
+                    packageName += "/";
+                }
+                var reg;
+                if (!(reg = cache[packageName])) {
+                    reg = cache[packageName] = new RegExp("^" + S.escapeRegExp(packageName));
+                }
+                return modName.replace(reg, "");
+            }
+        }()
 
     });
 

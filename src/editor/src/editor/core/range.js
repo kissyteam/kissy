@@ -51,17 +51,17 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         "kbd":1, "q":1, "samp":1, "small":1, "span":1,
         "strike":1, "strong":1, "sub":1, "sup":1, "tt":1, "u":1, 'var':1 };
 
-    // Evaluator for CKEDITOR.dom.element::checkBoundaryOfElement, reject any
+    // Evaluator for checkBoundaryOfElement, reject any
     // text node and non-empty elements unless it's being bookmark text.
     function elementBoundaryEval(node) {
         // Reject any text node unless it's being bookmark
         // OR it's spaces. (#3883)
-        //如果不是文本节点并且是空的，可以继续取下一个判断边界
-        var c1 = node.nodeType != KEN.NODE_TEXT
-            && DOM.nodeName(node) in dtd.$removeEmpty,
-            //文本为空，可以继续取下一个判断边界
+        // 如果不是文本节点并且是空的，可以继续取下一个判断边界
+        var c1 = node.nodeType != KEN.NODE_TEXT &&
+                DOM.nodeName(node) in dtd.$removeEmpty,
+        // 文本为空，可以继续取下一个判断边界
             c2 = !S.trim(node.nodeValue),
-            //恩，进去了书签，可以继续取下一个判断边界
+        // 恩，进去了书签，可以继续取下一个判断边界
             c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
     }
@@ -754,7 +754,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         endContainer = self.endContainer,
                         startOffset = self.startOffset,
                         endOffset = self.endOffset,
-                        // Whether the start/end boundary is movable.
+                    // Whether the start/end boundary is movable.
                         moveStart = TRUE,
                         currentElement,
                         walker,
@@ -1092,7 +1092,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 if (bookmark.is2) {
                     // Get the start information.
                     var startContainer = getByAddress(doc,
-                        bookmark.start, bookmark.normalized),
+                            bookmark.start, bookmark.normalized),
                         startOffset = bookmark.startOffset,
                         endContainer = bookmark.end && getByAddress(doc,
                             bookmark.end, bookmark.normalized),
@@ -1286,7 +1286,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                 defaultGuard = Walker.blockBoundary(
                                     ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
                                     { br:1 } : NULL),
-                                // Record the encountered 'blockBoundary' for later use.
+                            // Record the encountered 'blockBoundary' for later use.
                                 boundaryGuard = function (node) {
                                     var retVal = defaultGuard(node);
                                     if (!retVal) {
@@ -1294,7 +1294,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                                     }
                                     return retVal;
                                 },
-                                // Record the encountered 'tailBr' for later use.
+                            // Record the encountered 'tailBr' for later use.
                                 tailBrGuard = function (node) {
                                     var retVal = boundaryGuard(node);
                                     if (!retVal && DOM.nodeName(node) == 'br') {
@@ -1451,7 +1451,8 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             },
 
             getBoundaryNodes:function () {
-                var self = this, startNode = self.startContainer,
+                var self = this,
+                    startNode = self.startContainer,
                     endNode = self.endContainer,
                     startOffset = self.startOffset,
                     endOffset = self.endOffset,
@@ -1585,7 +1586,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 // of its contents.
                 self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
                 var documentFragment = self.extractContents(),
-                    // Duplicate the element after it.
+                // Duplicate the element after it.
                     clone = toSplit.clone(FALSE);
 
                 // Place the extracted contents into the duplicated element.

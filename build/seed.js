@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 22 15:38
+build time: May 22 17:16
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 22 15:38
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120522153848';
+        S.__BUILD_TIME = '20120522171635';
     })();
 
     return S;
@@ -2107,10 +2107,10 @@ build time: May 22 15:38
         win = host,
         doc = host.document,
         loc = host.location,
-        // 当前页面所在的目录
-        // http://xx.com/y/z.htm#!/f/g
-        // ->
-        // http://xx.com/y/
+    // 当前页面所在的目录
+    // http://xx.com/y/z.htm#!/f/g
+    // ->
+    // http://xx.com/y/
         __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -2180,6 +2180,7 @@ build time: May 22 15:38
         };
 
         S.mix(packageDesc, {
+            name:pName,
             tag:encodeURIComponent(Config.tag),
             path:Config.base,
             debug:Config.debug,
@@ -2311,6 +2312,8 @@ build time: May 22 15:38
             return getPackageInfo(self, mod).path;
         },
 
+        getPackageInfo:getPackageInfo,
+
         createModuleInfo:function (self, modName) {
             var info = removeSuffixAndTagFromModName(modName);
 
@@ -2413,7 +2416,7 @@ build time: May 22 15:38
          */
         normalizeModNames:function (self, modNames, refModName, keepAlias) {
             var ret = [],
-                mods = self.Env.mods;
+                mods = self['Env'].mods;
             S.each(modNames, function (name) {
                 var alias, m;
                 // 1. index map
@@ -2534,7 +2537,27 @@ build time: May 22 15:38
                 }
             }
             return path;
-        }
+        },
+
+        /**
+         * test3,test3/a/b => a/b
+         */
+        removePackageNameFromModName:function () {
+            var cache = {};
+            return function (packageName, modName) {
+                if (!packageName) {
+                    return modName;
+                }
+                if (!S.endsWith(packageName, "/")) {
+                    packageName += "/";
+                }
+                var reg;
+                if (!(reg = cache[packageName])) {
+                    reg = cache[packageName] = new RegExp("^" + S.escapeRegExp(packageName));
+                }
+                return modName.replace(reg, "");
+            }
+        }()
 
     });
 
@@ -3698,19 +3721,23 @@ build time: May 22 15:38
             getComboUrls:function (modNames) {
                 var self = this,
                     i,
-                    mod,
+                    SS = self.SS,
+                    Config = S.Config,
                     packagePath,
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    mod = self.getModInfo(modName);
-                    packagePath = utils.getPackagePath(self.SS, mod);
-                    var type = utils.isCss(mod.path) ? "css" : "js";
+                    var mod = self.getModInfo(modName);
+                    var packageInfo = utils.getPackageInfo(SS, mod);
+                    var packagePath = packageInfo.path;
+                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
+                    var packageName = packageInfo.name;
                     combos[packagePath] = combos[packagePath] || {};
-                    combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = mod.getTag();
-                    combos[packagePath][type].charset = mod.getCharset();
-                    combos[packagePath][type].push(mod);
+                    mods = combos[packagePath][type] = combos[packagePath][type] || [];
+                    mods.tag = mod.getTag();
+                    mods.charset = mod.getCharset();
+                    mods.name = packageName;
+                    mods.push(mod);
                 });
 
                 var res = {
@@ -3718,28 +3745,42 @@ build time: May 22 15:38
                         css:{}
                     },
                     t,
-                    comboPrefix = S.Config.comboPrefix,
-                    comboSep = S.Config.comboSep,
-                    maxUrlLength = S.Config.comboMaxUrlLength;
+                    comboPrefix = Config.comboPrefix,
+                    comboSep = Config.comboSep,
+                    maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
                         t = [];
-                        var jss = combos[packagePath][type];
+                        var jss = combos[packagePath][type],
+                            packageName = jss.name,
+                            packageNamePath = packageName + "/";
                         res[type][packagePath] = [];
                         res[type][packagePath].charset = jss.charset;
                         // current package's mods
                         res[type][packagePath].mods = [];
-                        var prefix = packagePath + comboPrefix,
+                        // add packageName to common prefix
+                        // combo grouped by package
+                        var prefix = packagePath +
+                                (packageName ? packageNamePath : "") +
+                                comboPrefix,
+                            path,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
-                            t.push(jss[i].path);
+                            // remove packageName prefix from mod path
+                            path = jss[i].path;
+                            if (packageName) {
+                                path = utils.removePackageNameFromModName(packageName, path);
+                            }
+                            t.push(path);
                             res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
                                 res[type][packagePath].push(self.getComboUrl(
-                                    t.length > 1 ? prefix : packagePath,
-                                    t, comboSep, jss.tag
+                                    prefix,
+                                    t,
+                                    comboSep,
+                                    jss.tag
                                 ));
                                 t = [];
                                 i--;
@@ -3747,8 +3788,10 @@ build time: May 22 15:38
                         }
                         if (t.length) {
                             res[type][packagePath].push(self.getComboUrl(
-                                t.length > 1 ? prefix : packagePath,
-                                t, comboSep, jss.tag
+                                prefix,
+                                t,
+                                comboSep,
+                                jss.tag
                             ));
                         }
                     }
@@ -3981,7 +4024,7 @@ build time: May 22 15:38
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120522153848'
+        tag:'20120522171635'
     }, getBaseInfo()));
 
     /**

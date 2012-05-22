@@ -393,7 +393,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         // make recognize <br /> tag as a separator in ENTER_BR mode (#5121)
         //if (this._.enterMode)
-        iterator.enlargeBr = TRUE;//( this._.enterMode != CKEDITOR.ENTER_BR );
+        iterator.enlargeBr = TRUE;
 
         var block, doc = range.document;
         // Only one =

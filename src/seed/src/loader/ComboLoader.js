@@ -237,19 +237,23 @@
             getComboUrls:function (modNames) {
                 var self = this,
                     i,
-                    mod,
+                    SS = self.SS,
+                    Config = S.Config,
                     packagePath,
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    mod = self.getModInfo(modName);
-                    packagePath = utils.getPackagePath(self.SS, mod);
-                    var type = utils.isCss(mod.path) ? "css" : "js";
+                    var mod = self.getModInfo(modName);
+                    var packageInfo = utils.getPackageInfo(SS, mod);
+                    var packagePath = packageInfo.path;
+                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
+                    var packageName = packageInfo.name;
                     combos[packagePath] = combos[packagePath] || {};
-                    combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = mod.getTag();
-                    combos[packagePath][type].charset = mod.getCharset();
-                    combos[packagePath][type].push(mod);
+                    mods = combos[packagePath][type] = combos[packagePath][type] || [];
+                    mods.tag = mod.getTag();
+                    mods.charset = mod.getCharset();
+                    mods.name = packageName;
+                    mods.push(mod);
                 });
 
                 var res = {
@@ -257,28 +261,42 @@
                         css:{}
                     },
                     t,
-                    comboPrefix = S.Config.comboPrefix,
-                    comboSep = S.Config.comboSep,
-                    maxUrlLength = S.Config.comboMaxUrlLength;
+                    comboPrefix = Config.comboPrefix,
+                    comboSep = Config.comboSep,
+                    maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
                         t = [];
-                        var jss = combos[packagePath][type];
+                        var jss = combos[packagePath][type],
+                            packageName = jss.name,
+                            packageNamePath = packageName + "/";
                         res[type][packagePath] = [];
                         res[type][packagePath].charset = jss.charset;
                         // current package's mods
                         res[type][packagePath].mods = [];
-                        var prefix = packagePath + comboPrefix,
+                        // add packageName to common prefix
+                        // combo grouped by package
+                        var prefix = packagePath +
+                                (packageName ? packageNamePath : "") +
+                                comboPrefix,
+                            path,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
-                            t.push(jss[i].path);
+                            // remove packageName prefix from mod path
+                            path = jss[i].path;
+                            if (packageName) {
+                                path = utils.removePackageNameFromModName(packageName, path);
+                            }
+                            t.push(path);
                             res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
                                 res[type][packagePath].push(self.getComboUrl(
-                                    t.length > 1 ? prefix : packagePath,
-                                    t, comboSep, jss.tag
+                                    prefix,
+                                    t,
+                                    comboSep,
+                                    jss.tag
                                 ));
                                 t = [];
                                 i--;
@@ -286,8 +304,10 @@
                         }
                         if (t.length) {
                             res[type][packagePath].push(self.getComboUrl(
-                                t.length > 1 ? prefix : packagePath,
-                                t, comboSep, jss.tag
+                                prefix,
+                                t,
+                                comboSep,
+                                jss.tag
                             ));
                         }
                     }

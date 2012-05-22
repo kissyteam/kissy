@@ -171,7 +171,6 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * it's to be considered into the walk or not. If not provided, all
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
-         * @property
          * @type Function
          */
         // 当前 range 范围内深度遍历的元素调用
@@ -183,7 +182,6 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * entering and exiting nodes, as well as for the matched nodes.
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
-         * @property
          * @type Function
          */
         // 人为缩小当前 range 范围

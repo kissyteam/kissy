@@ -1145,44 +1145,50 @@ KISSY.use("editor", function (S, Editor) {
                 });
 
             });
+        });
+
+        it("checkStartOfBlock/checkEndOfBlock works", function () {
+            var div = $("<div>" +
+                "<span><b><i>123456789</i></b></span>" +
+                "</div>").appendTo("body");
+
+            var range = new Range(document);
+            var textNode = $(div.one("i")[0].firstChild);
+            var i = textNode.parent();
+            range.setStart(textNode, 1);
+            range.setEnd(textNode, 1);
+
+            var ret = range.checkStartOfBlock();
+
+            expect(ret).toBe(false);
+
+            expect(range.checkEndOfBlock()).toBe(false);
 
 
-            it("checkStartOfBlock/checkEndOfBlock works", function () {
-                var div = $("<div>" +
-                    "<span><b><i>123456789</i></b></span>" +
-                    "</div>").appendTo("body");
+            range.setStartAfter(i)
+            range.setEndAfter(i);
 
-                var range = new Range(document);
-                var textNode = $(div.one("i")[0].firstChild);
-                var i = textNode.parent();
-                range.setStart(textNode, 1);
-                range.setEnd(textNode, 1);
+            ret = range.checkStartOfBlock();
 
-                var ret = range.checkStartOfBlock();
-
-                expect(ret).toBe(false);
-
-                expect(range.checkEndOfBlock()).toBe(false);
+            expect(ret).toBe(false);
+            expect(range.checkEndOfBlock()).toBe(true);
 
 
-                range.setStartAfter(i)
-                range.setEndAfter(i);
+            range.setStart(i, 0);
+            range.setEndAfter(i);
 
-                ret = range.checkStartOfBlock();
+            ret = range.checkStartOfBlock();
 
-                expect(ret).toBe(false);
-                expect(range.checkEndOfBlock()).toBe(true);
+            expect(ret).toBe(true);
+            expect(range.checkEndOfBlock()).toBe(true);
 
+            div.remove();
 
-                range.setStart(i, 0);
-                range.setEndAfter(i);
+        });
 
-                ret = range.checkStartOfBlock();
+        describe("checkBoundaryOfElement", function () {
 
-                expect(ret).toBe(true);
-                expect(range.checkEndOfBlock()).toBe(true);
-
-                div.remove();
+            it("check start correctly", function () {
 
             });
 

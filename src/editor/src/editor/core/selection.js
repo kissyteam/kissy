@@ -256,7 +256,7 @@ KISSY.add("editor/core/selection", function (S) {
 
                     // IE doesn't have range support (in the W3C way), so we
                     // need to do some magic to transform selections into
-                    // CKEDITOR.dom.range instances.
+                    // Range instances.
 
                     var sel = self.getNative(),
                         nativeRange = sel && sel.createRange(),
@@ -304,7 +304,7 @@ KISSY.add("editor/core/selection", function (S) {
                     return cache.ranges;
 
                 // On browsers implementing the W3C range, we simply
-                // tranform the native ranges in CKEDITOR.dom.range
+                // tranform the native ranges in Range
                 // instances.
 
                 var ranges = [], sel = self.getNative();

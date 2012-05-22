@@ -159,6 +159,14 @@ describe("KISSY ComboLoader", function () {
             }
         });
 
+        var mods = S.getLoader().calculate(["tests/a"]);
+        var urls = S.getLoader().getComboUrls(mods);
+        var host = location.hostname;
+
+        expect(urls['js']['http://' + host + '/kissy_git/kissy/src/seed/tests/loader/combo/'][0])
+            .toBe("http://" + host + "/kissy_git/kissy/src/seed/tests/loader/combo/" +
+            "tests/??a.js,b.js,c.js");
+
         S.DOM = null;
 
         S.use('tests/a', function (S, a) {
