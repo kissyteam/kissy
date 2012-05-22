@@ -143,7 +143,9 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      * attached members:
      *   - this.viewSize
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
+
+        priority:10,
 
         name:'effect',
 

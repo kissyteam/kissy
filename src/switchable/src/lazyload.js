@@ -24,7 +24,7 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
     /**
      * 织入初始化函数
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'lazyload',
 

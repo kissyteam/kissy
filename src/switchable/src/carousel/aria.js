@@ -2,7 +2,7 @@
  * @fileOverview aria support for carousel
  * @author yiminghe@gmail.com
  */
-KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
+KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, Switchable) {
 
 //    var KEY_PAGEUP = 33;
 //    var KEY_PAGEDOWN = 34;
@@ -247,7 +247,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
         aria:false
     });
 
-    Carousel.Plugins.push({
+    Switchable.addPlugin({
         name:"aria",
         init:function (self) {
             if (!self.config.aria) {
@@ -311,10 +311,10 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             }
 
         }
-    });
+    }, Carousel);
 
 }, {
-    requires:["dom", "event", "../aria", "./base"]
+    requires:["dom", "event", "../aria", "./base", '../base']
 });
 
 /**

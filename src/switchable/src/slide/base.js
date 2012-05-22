@@ -27,8 +27,6 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         circular: true
     };
 
-    Slide.Plugins=[];
-
     S.extend(Slide, Switchable);
 
     return Slide;

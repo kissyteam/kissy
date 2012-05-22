@@ -58,8 +58,6 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
             }
         }
     });
-
-    Accordion.Plugins = [];
     Accordion.Config = {
         markupType:1,
         triggerType:'click',

@@ -18,7 +18,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     S.extend(Tabs, Switchable);
 
     Tabs.Config = {};
-    Tabs.Plugins = [];
+
     return Tabs;
 }, {
     requires:["../base"]

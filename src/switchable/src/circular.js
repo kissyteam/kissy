@@ -134,7 +134,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
     /**
      * 添加插件
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'circular',
 

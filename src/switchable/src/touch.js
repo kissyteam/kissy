@@ -25,14 +25,16 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
         return touch;
     }
 
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
+
+        priority:5,
 
         name:'touch',
 
         init:function (self) {
 
             var cfg = self.config,
-                // circular 会修改 cfg.effect
+            // circular 会修改 cfg.effect
                 effect = cfg.scrollType || cfg.effect;
 
             if (effect == 'scrolly' ||
@@ -173,7 +175,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         if (diff < 0 && activeIndex == lastIndex ||
                             diff > 0 && activeIndex == 0) {
                             // 强制动画恢复到初始位置
-                            Switchable.Effects[effect].call(self, undefined, undefined,true);
+                            Switchable.Effects[effect].call(self, undefined, undefined, true);
                             return;
                         }
                     }

@@ -4,16 +4,16 @@
  */
 KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tabs) {
 
-        var KEY_PAGEUP = 33;
-        var KEY_PAGEDOWN = 34;
-        //var KEY_END = 35;
-        //var KEY_HOME = 36;
-        var EVENT_ADDED = 'added';
-        var KEY_LEFT = 37;
-        var KEY_UP = 38;
-        var KEY_RIGHT = 39;
-        var KEY_DOWN = 40;
-        var KEY_TAB = 9;
+    var KEY_PAGEUP = 33;
+    var KEY_PAGEDOWN = 34;
+    //var KEY_END = 35;
+    //var KEY_HOME = 36;
+    var EVENT_ADDED = 'added';
+    var KEY_LEFT = 37;
+    var KEY_UP = 38;
+    var KEY_RIGHT = 39;
+    var KEY_DOWN = 40;
+    var KEY_TAB = 9;
 
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
@@ -22,157 +22,157 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
-        S.mix(Tabs.Config, {
-            aria:true
-        });
+    S.mix(Tabs.Config, {
+        aria:true
+    });
 
-        Tabs.Plugins.push({
-            name:"aria",
-            init:function (self) {
-                if (!self.config.aria) return;
-                var triggers = self.triggers,
-                    activeIndex = self.activeIndex,
-                    panels = self.panels;
-                var container = self.container;
-                if (self.nav) {
-                    DOM.attr(self.nav, "role", "tablist");
-                }
-                var i = 0;
-
-                function initTrigger(trigger) {
-                    trigger.setAttribute("role", "tab");
-                    setTabIndex(trigger, "-1");
-                    if (!trigger.id) {
-                        trigger.id = S.guid("ks-switchable");
-                    }
-                }
-
-
-                function initPanel(panel, trigger) {
-                    panel.setAttribute("role", "tabpanel");
-                    panel.setAttribute("aria-hidden", "true");
-                    panel.setAttribute("aria-labelledby", trigger.id);
-                }
-
-                S.each(triggers, initTrigger);
-
-
-                self.on(EVENT_ADDED, function (e) {
-                    var t;
-                    initTrigger(t = e.trigger);
-                    initPanel(e.panel, t);
-                });
-
-                i = 0;
-
-                S.each(panels, function (panel) {
-                    var t = triggers[i];
-                    initPanel(panel, t);
-                    i++;
-                });
-
-                if (activeIndex > -1) {
-                    setTabIndex(triggers[activeIndex], "0");
-                    panels[activeIndex].setAttribute("aria-hidden", "false");
-                }
-
-
-                self.on("switch", _tabSwitch, self);
-
-
-                Event.on(container, "keydown", _tabKeydown, self);
-                /**
-                 * prevent firefox native tab switch
-                 */
-                Event.on(container, "keypress", _tabKeypress, self);
-
+    Switchable.addPlugin({
+        name:"aria",
+        init:function (self) {
+            if (!self.config.aria) return;
+            var triggers = self.triggers,
+                activeIndex = self.activeIndex,
+                panels = self.panels;
+            var container = self.container;
+            if (self.nav) {
+                DOM.attr(self.nav, "role", "tablist");
             }
-        });
+            var i = 0;
 
-        var setTabIndex = Aria.setTabIndex;
-
-
-        function _currentTabFromEvent(t) {
-            var triggers = this.triggers,
-                trigger = null;
-            S.each(triggers, function (ct) {
-                if (ct == t || DOM.contains(ct, t)) {
-                    trigger = ct;
+            function initTrigger(trigger) {
+                trigger.setAttribute("role", "tab");
+                setTabIndex(trigger, "-1");
+                if (!trigger.id) {
+                    trigger.id = S.guid("ks-switchable");
                 }
+            }
+
+
+            function initPanel(panel, trigger) {
+                panel.setAttribute("role", "tabpanel");
+                panel.setAttribute("aria-hidden", "true");
+                panel.setAttribute("aria-labelledby", trigger.id);
+            }
+
+            S.each(triggers, initTrigger);
+
+
+            self.on(EVENT_ADDED, function (e) {
+                var t;
+                initTrigger(t = e.trigger);
+                initPanel(e.panel, t);
             });
-            return trigger;
-        }
 
-        function _tabKeypress(e) {
+            i = 0;
 
-            switch (e.keyCode) {
+            S.each(panels, function (panel) {
+                var t = triggers[i];
+                initPanel(panel, t);
+                i++;
+            });
 
-                case KEY_PAGEUP:
-                case KEY_PAGEDOWN:
-                    if (e.ctrlKey && !e.altKey && !e.shiftKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
+            if (activeIndex > -1) {
+                setTabIndex(triggers[activeIndex], "0");
+                panels[activeIndex].setAttribute("aria-hidden", "false");
             }
+
+
+            self.on("switch", _tabSwitch, self);
+
+
+            Event.on(container, "keydown", _tabKeydown, self);
+            /**
+             * prevent firefox native tab switch
+             */
+            Event.on(container, "keypress", _tabKeypress, self);
+
         }
+    }, Tabs);
 
-        var getDomEvent = Switchable.getDomEvent;
+    var setTabIndex = Aria.setTabIndex;
 
-        /**
-         * Keyboard commands for the Tab Panel
-         * @param e
-         */
-        function _tabKeydown(e) {
-            var t = e.target, self = this;
-            // Save information about a modifier key being pressed
-            // May want to ignore keyboard events that include modifier keys
-            // var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
-            var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
 
-            switch (e.keyCode) {
+    function _currentTabFromEvent(t) {
+        var triggers = this.triggers,
+            trigger = null;
+        S.each(triggers, function (ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                trigger = ct;
+            }
+        });
+        return trigger;
+    }
 
-                case KEY_LEFT:
-                case KEY_UP:
-                    if (_currentTabFromEvent.call(self, t)
-                    // 争渡读屏器阻止了上下左右键
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.prev(getDomEvent(e));
-                        e.halt();
-                    } // endif
-                    break;
+    function _tabKeypress(e) {
 
-                case KEY_RIGHT:
-                case KEY_DOWN:
-                    if (_currentTabFromEvent.call(self, t)
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.next(getDomEvent(e));
-                        e.halt();
-                    } // endif
-                    break;
+        switch (e.keyCode) {
 
-                case KEY_PAGEDOWN:
+            case KEY_PAGEUP:
+            case KEY_PAGEDOWN:
+                if (e.ctrlKey && !e.altKey && !e.shiftKey) {
+                    e.halt();
+                } // endif
+                break;
 
-                    if (control_modifier_pressed_flag) {
-                        e.halt();
-                        self.next(getDomEvent(e));
-                    }
-                    break;
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                } // endif
+                break;
 
-                case KEY_PAGEUP:
-                    if (control_modifier_pressed_flag) {
-                        e.halt();
-                        self.prev(getDomEvent(e));
-                    }
-                    break;
+        }
+    }
+
+    var getDomEvent = Switchable.getDomEvent;
+
+    /**
+     * Keyboard commands for the Tab Panel
+     * @param e
+     */
+    function _tabKeydown(e) {
+        var t = e.target, self = this;
+        // Save information about a modifier key being pressed
+        // May want to ignore keyboard events that include modifier keys
+        // var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+        var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
+
+        switch (e.keyCode) {
+
+            case KEY_LEFT:
+            case KEY_UP:
+                if (_currentTabFromEvent.call(self, t)
+                // 争渡读屏器阻止了上下左右键
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.prev(getDomEvent(e));
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_RIGHT:
+            case KEY_DOWN:
+                if (_currentTabFromEvent.call(self, t)
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.next(getDomEvent(e));
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_PAGEDOWN:
+
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    self.next(getDomEvent(e));
+                }
+                break;
+
+            case KEY_PAGEUP:
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    self.prev(getDomEvent(e));
+                }
+                break;
 
 //            case KEY_HOME:
 //                if (no_modifier_pressed_flag) {
@@ -188,54 +188,53 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //
 //                break;
 
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                        if (e.shiftKey)
-                            self.prev(getDomEvent(e));
-                        else
-                            self.next(getDomEvent(e));
-                    }
-                    break;
-            }
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                    if (e.shiftKey)
+                        self.prev(getDomEvent(e));
+                    else
+                        self.next(getDomEvent(e));
+                }
+                break;
         }
+    }
 
-        function _tabSwitch(ev) {
-            var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+    function _tabSwitch(ev) {
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
-            var self = this;
-            // 上一个激活 tab
-            var lastActiveIndex = ev.fromIndex;
+        var self = this;
+        // 上一个激活 tab
+        var lastActiveIndex = ev.fromIndex;
 
-            // 当前激活 tab
-            var activeIndex = ev.currentIndex;
+        // 当前激活 tab
+        var activeIndex = ev.currentIndex;
 
-            if (lastActiveIndex == activeIndex) return;
+        if (lastActiveIndex == activeIndex) return;
 
-            var lastTrigger = self.triggers[lastActiveIndex];
-            var trigger = self.triggers[activeIndex];
-            var lastPanel = self.panels[lastActiveIndex];
-            var panel = self.panels[activeIndex];
-            if (lastTrigger) {
-                setTabIndex(lastTrigger, "-1");
-            }
-            setTabIndex(trigger, "0");
-
-            // move focus to current trigger if invoked by dom event
-            if (domEvent) {
-                trigger.focus();
-            }
-            if (lastPanel) {
-                lastPanel.setAttribute("aria-hidden", "true");
-            }
-            panel.setAttribute("aria-hidden", "false");
+        var lastTrigger = self.triggers[lastActiveIndex];
+        var trigger = self.triggers[activeIndex];
+        var lastPanel = self.panels[lastActiveIndex];
+        var panel = self.panels[activeIndex];
+        if (lastTrigger) {
+            setTabIndex(lastTrigger, "-1");
         }
+        setTabIndex(trigger, "0");
+
+        // move focus to current trigger if invoked by dom event
+        if (domEvent) {
+            trigger.focus();
+        }
+        if (lastPanel) {
+            lastPanel.setAttribute("aria-hidden", "true");
+        }
+        panel.setAttribute("aria-hidden", "false");
+    }
 
 
-    },
-    {
-        requires:["dom", "event", "../base", "../aria", "./base"]
-    });
+}, {
+    requires:["dom", "event", "../base", "../aria", "./base"]
+});
 
 /**
  * 2011-05-08 承玉：add support for aria & keydown

@@ -5,7 +5,7 @@
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
 
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
         name:'aria',
         init:function(self) {
             if (!self.config.aria) return;

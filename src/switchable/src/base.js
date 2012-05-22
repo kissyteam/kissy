@@ -132,6 +132,20 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
     Switchable.getDomEvent = getDomEvent;
 
+    Switchable.addPlugin = function (cfg, Type) {
+
+        Type = Type || Switchable;
+        var priority = cfg.priority = cfg.priority || 0,
+            i = 0,
+            plugins = Type.Plugins = Type.Plugins || [];
+        for (; i < plugins.length; i++) {
+            if (plugins[i].priority < priority) {
+                break;
+            }
+        }
+        plugins.splice(i, 0, cfg);
+    };
+
     // 默认配置
     Switchable.Config = {
         markupType:0, // markup 的类型，取值如下：
@@ -179,9 +193,6 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         viewSize:[]
     };
 
-    // 插件
-    Switchable.Plugins = [];
-
     S.augment(Switchable, EventTarget, {
 
         _initPlugins:function () {
@@ -191,7 +202,9 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 pluginHost = self.constructor;
 
             while (pluginHost) {
-                plugins.push.apply(plugins, pluginHost.Plugins.reverse())
+                if (pluginHost.Plugins) {
+                    plugins.push.apply(plugins, ([].concat(pluginHost.Plugins)).reverse())
+                }
                 pluginHost = pluginHost.superclass ?
                     pluginHost.superclass.constructor :
                     null;
@@ -486,7 +499,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 panels = self.panels,
                 beforeLen = self.length, //添加节点之前的 trigger个数，如果step>1时，trigger 的个数不等于panel的个数
                 currentLen = null,
-                //原先在此位置的元素
+            //原先在此位置的元素
                 nextTrigger = null;
 
             // 如果 index 大于集合的总数，添加到最后
@@ -834,6 +847,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 }, { requires:['dom', "event"] });
 
 /**
+ * yiminghe@gmail.com : 2012.05.22
+ *  - 增加 priority 插件初始化优先级
  *
  * yiminghe@gmail.com : 2012.05.03
  *  - 支持 touch 设备，完善 touch 边界情况

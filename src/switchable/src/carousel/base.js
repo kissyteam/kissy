@@ -38,8 +38,6 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
 
     };
 
-    Carousel.Plugins = [];
-
     S.extend(Carousel, Switchable, {
         /**
          * 插入 carousel 的初始化逻辑

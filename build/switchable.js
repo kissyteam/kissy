@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 18:44
+build time: May 22 13:28
 */
 /**
  * @fileOverview accordion aria support
  * @author yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) {
+KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion, Switchable) {
 
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
@@ -30,68 +30,68 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-            aria:true
-        });
+        aria:true
+    });
 
-    Accordion.Plugins.push({
-            name:"aria",
-            init:function(self) {
-                if (!self.config.aria) return;
-                var container = self.container,
-                    activeIndex = self.activeIndex;
-                DOM.attr(container, "aria-multiselectable",
-                    self.config.multiple ? "true" : "false");
-                if (self.nav) {
-                    DOM.attr(self.nav, "role", "tablist");
-                }
-                var triggers = self.triggers,
-                    panels = self.panels;
-                var i = 0;
-                S.each(panels, function(panel) {
-                    if (!panel.id) {
-                        panel.id = S.guid("ks-accordion-tab-panel");
-                    }
-                });
-                S.each(triggers, function(trigger) {
-                    if (!trigger.id) {
-                        trigger.id = S.guid("ks-accordion-tab");
-                    }
-                });
-
-                S.each(triggers, function(trigger) {
-                    trigger.setAttribute("role", "tab");
-                    trigger.setAttribute("aria-expanded", activeIndex == i ? "true" : "false");
-                    trigger.setAttribute("aria-selected", activeIndex == i ? "true" : "false");
-                    trigger.setAttribute("aria-controls", panels[i].id);
-                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
-                    i++;
-                });
-                i = 0;
-                S.each(panels, function(panel) {
-                    var t = triggers[i];
-                    panel.setAttribute("role", "tabpanel");
-                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
-                    panel.setAttribute("aria-labelledby", t.id);
-                    i++;
-                });
-
-                self.on("switch", _tabSwitch, self);
-
-                Event.on(container, "keydown", _tabKeydown, self);
-                /**
-                 * prevent firefox native tab switch
-                 */
-                Event.on(container, "keypress", _tabKeypress, self);
-
+    Switchable.addPlugin({
+        name:"aria",
+        init:function (self) {
+            if (!self.config.aria) return;
+            var container = self.container,
+                activeIndex = self.activeIndex;
+            DOM.attr(container, "aria-multiselectable",
+                self.config.multiple ? "true" : "false");
+            if (self.nav) {
+                DOM.attr(self.nav, "role", "tablist");
             }
-        });
+            var triggers = self.triggers,
+                panels = self.panels;
+            var i = 0;
+            S.each(panels, function (panel) {
+                if (!panel.id) {
+                    panel.id = S.guid("ks-accordion-tab-panel");
+                }
+            });
+            S.each(triggers, function (trigger) {
+                if (!trigger.id) {
+                    trigger.id = S.guid("ks-accordion-tab");
+                }
+            });
+
+            S.each(triggers, function (trigger) {
+                trigger.setAttribute("role", "tab");
+                trigger.setAttribute("aria-expanded", activeIndex == i ? "true" : "false");
+                trigger.setAttribute("aria-selected", activeIndex == i ? "true" : "false");
+                trigger.setAttribute("aria-controls", panels[i].id);
+                setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                i++;
+            });
+            i = 0;
+            S.each(panels, function (panel) {
+                var t = triggers[i];
+                panel.setAttribute("role", "tabpanel");
+                panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+                panel.setAttribute("aria-labelledby", t.id);
+                i++;
+            });
+
+            self.on("switch", _tabSwitch, self);
+
+            Event.on(container, "keydown", _tabKeydown, self);
+            /**
+             * prevent firefox native tab switch
+             */
+            Event.on(container, "keypress", _tabKeypress, self);
+
+        }
+    }, Accordion);
 
     var setTabIndex = Aria.setTabIndex;
 
     function _currentTabFromEvent(t) {
         var triggers = this.triggers,
-            trigger=null;
-        S.each(triggers, function(ct) {
+            trigger = null;
+        S.each(triggers, function (ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
             }
@@ -102,8 +102,8 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
 
     function _currentPanelFromEvent(t) {
         var panels = this.panels,
-            panel;
-        S.each(panels, function(ct) {
+            panel = null;
+        S.each(panels, function (ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 panel = ct;
             }
@@ -112,7 +112,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
     }
 
     function getTabFromPanel(panel) {
-        var self=this,
+        var self = this,
             triggers = self.triggers,
             panels = self.panels;
         return triggers[S.indexOf(panel, panels)];
@@ -246,7 +246,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
         var self = this,
             triggers = self.triggers,
             next = triggers[nextIndex];
-        S.each(triggers, function(cur) {
+        S.each(triggers, function (cur) {
             if (cur === next) return;
             setTabIndex(cur, "-1");
             DOM.removeClass(cur, "ks-switchable-select");
@@ -286,7 +286,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
     }
 
     function enter(trigger) {
-        var self=this;
+        var self = this;
         self.switchTo(S.indexOf(trigger, self.triggers));
     }
 
@@ -304,12 +304,12 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
             panel = panels[activeIndex];
 
         if (!multiple) {
-            S.each(panels, function(p) {
+            S.each(panels, function (p) {
                 if (p !== panel) {
                     p.setAttribute("aria-hidden", "true");
                 }
             });
-            S.each(triggers, function(t) {
+            S.each(triggers, function (t) {
                 if (t !== trigger) {
                     t.setAttribute("aria-hidden", "true");
                 }
@@ -321,10 +321,9 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
         trigger.setAttribute("aria-expanded", o == "false" ? "false" : "true");
         focusTo.call(self, activeIndex, domEvent);
     }
-},
-    {
-        requires:["dom","event","../aria","./base"]
-    });
+}, {
+    requires:["dom", "event", "../aria", "./base", "../base"]
+});
 
 /**
 
@@ -402,8 +401,6 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
             }
         }
     });
-
-    Accordion.Plugins = [];
     Accordion.Config = {
         markupType:1,
         triggerType:'click',
@@ -431,7 +428,7 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
 
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
         name:'aria',
         init:function(self) {
             if (!self.config.aria) return;
@@ -517,7 +514,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
      * attached members:
      *   - this.paused
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'autoplay',
 
@@ -596,37 +593,6 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
  *
  * - 承玉：2011.06.02 review switchable
  */
-/**
- * @fileOverview Switchable autorender Plugin
- * @author lifesinger@gmail.com
- */
-KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {
-
-    /**
-     * 自动渲染 container 元素内的所有 Switchable 组件
-     * 默认钩子：<div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
-     */
-    Switchable.autoRender = function (hook, container) {
-        hook = '.' + (hook || 'KS_Widget');
-
-        S.each(DOM.query(hook, container), function (elem) {
-            var type = elem.getAttribute('data-widget-type'),
-                config;
-            if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
-                try {
-                    config = elem.getAttribute('data-widget-config');
-                    if (config) {
-                        config = config.replace(/'/g, '"');
-                    }
-                    new (type == "Switchable" ? Switchable : Switchable[type])(elem, JSON.parse(config));
-                } catch (ex) {
-                    S.log('Switchable.autoRender: ' + ex, 'warn');
-                }
-            }
-        });
-    }
-
-}, { requires:["dom", "json", "./base"]});
 /**
  * @fileOverview Switchable
  */
@@ -761,6 +727,20 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
     Switchable.getDomEvent = getDomEvent;
 
+    Switchable.addPlugin = function (cfg, Type) {
+
+        Type = Type || Switchable;
+        var priority = cfg.priority = cfg.priority || 0,
+            i = 0,
+            plugins = Type.Plugins = Type.Plugins || [];
+        for (; i < plugins.length; i++) {
+            if (plugins[i].priority < priority) {
+                break;
+            }
+        }
+        plugins.splice(i, 0, cfg);
+    };
+
     // 默认配置
     Switchable.Config = {
         markupType:0, // markup 的类型，取值如下：
@@ -808,9 +788,6 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         viewSize:[]
     };
 
-    // 插件
-    Switchable.Plugins = [];
-
     S.augment(Switchable, EventTarget, {
 
         _initPlugins:function () {
@@ -820,7 +797,9 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 pluginHost = self.constructor;
 
             while (pluginHost) {
-                plugins.push.apply(plugins, pluginHost.Plugins.reverse())
+                if (pluginHost.Plugins) {
+                    plugins.push.apply(plugins, ([].concat(pluginHost.Plugins)).reverse())
+                }
                 pluginHost = pluginHost.superclass ?
                     pluginHost.superclass.constructor :
                     null;
@@ -1115,7 +1094,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 panels = self.panels,
                 beforeLen = self.length, //添加节点之前的 trigger个数，如果step>1时，trigger 的个数不等于panel的个数
                 currentLen = null,
-                //原先在此位置的元素
+            //原先在此位置的元素
                 nextTrigger = null;
 
             // 如果 index 大于集合的总数，添加到最后
@@ -1463,6 +1442,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 }, { requires:['dom', "event"] });
 
 /**
+ * yiminghe@gmail.com : 2012.05.22
+ *  - 增加 priority 插件初始化优先级
  *
  * yiminghe@gmail.com : 2012.05.03
  *  - 支持 touch 设备，完善 touch 边界情况
@@ -1506,7 +1487,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  * @fileOverview aria support for carousel
  * @author yiminghe@gmail.com
  */
-KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
+KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, Switchable) {
 
 //    var KEY_PAGEUP = 33;
 //    var KEY_PAGEDOWN = 34;
@@ -1751,7 +1732,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
         aria:false
     });
 
-    Carousel.Plugins.push({
+    Switchable.addPlugin({
         name:"aria",
         init:function (self) {
             if (!self.config.aria) {
@@ -1815,10 +1796,10 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
             }
 
         }
-    });
+    }, Carousel);
 
 }, {
-    requires:["dom", "event", "../aria", "./base"]
+    requires:["dom", "event", "../aria", "./base", '../base']
 });
 
 /**
@@ -1907,8 +1888,6 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
         disableBtnCls:CLS_PREFIX + 'disable-btn'
 
     };
-
-    Carousel.Plugins = [];
 
     S.extend(Carousel, Switchable, {
         /**
@@ -2139,7 +2118,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
     /**
      * 添加插件
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'circular',
 
@@ -2315,7 +2294,9 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      * attached members:
      *   - this.viewSize
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
+
+        priority:10,
 
         name:'effect',
 
@@ -2448,7 +2429,7 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
     /**
      * 织入初始化函数
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'lazyload',
 
@@ -2551,8 +2532,6 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         circular: true
     };
 
-    Slide.Plugins=[];
-
     S.extend(Slide, Switchable);
 
     return Slide;
@@ -2565,7 +2544,7 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, AutoRender, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
+KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
@@ -2582,7 +2561,6 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "switchable/accordion/base",
         "switchable/accordion/aria",
         "switchable/autoplay",
-        "switchable/autorender",
         "switchable/carousel/base",
         "switchable/carousel/aria",
         "switchable/circular",
@@ -2599,16 +2577,16 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
  */
 KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tabs) {
 
-        var KEY_PAGEUP = 33;
-        var KEY_PAGEDOWN = 34;
-        //var KEY_END = 35;
-        //var KEY_HOME = 36;
-        var EVENT_ADDED = 'added';
-        var KEY_LEFT = 37;
-        var KEY_UP = 38;
-        var KEY_RIGHT = 39;
-        var KEY_DOWN = 40;
-        var KEY_TAB = 9;
+    var KEY_PAGEUP = 33;
+    var KEY_PAGEDOWN = 34;
+    //var KEY_END = 35;
+    //var KEY_HOME = 36;
+    var EVENT_ADDED = 'added';
+    var KEY_LEFT = 37;
+    var KEY_UP = 38;
+    var KEY_RIGHT = 39;
+    var KEY_DOWN = 40;
+    var KEY_TAB = 9;
 
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
@@ -2617,157 +2595,157 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
-        S.mix(Tabs.Config, {
-            aria:true
-        });
+    S.mix(Tabs.Config, {
+        aria:true
+    });
 
-        Tabs.Plugins.push({
-            name:"aria",
-            init:function (self) {
-                if (!self.config.aria) return;
-                var triggers = self.triggers,
-                    activeIndex = self.activeIndex,
-                    panels = self.panels;
-                var container = self.container;
-                if (self.nav) {
-                    DOM.attr(self.nav, "role", "tablist");
-                }
-                var i = 0;
-
-                function initTrigger(trigger) {
-                    trigger.setAttribute("role", "tab");
-                    setTabIndex(trigger, "-1");
-                    if (!trigger.id) {
-                        trigger.id = S.guid("ks-switchable");
-                    }
-                }
-
-
-                function initPanel(panel, trigger) {
-                    panel.setAttribute("role", "tabpanel");
-                    panel.setAttribute("aria-hidden", "true");
-                    panel.setAttribute("aria-labelledby", trigger.id);
-                }
-
-                S.each(triggers, initTrigger);
-
-
-                self.on(EVENT_ADDED, function (e) {
-                    var t;
-                    initTrigger(t = e.trigger);
-                    initPanel(e.panel, t);
-                });
-
-                i = 0;
-
-                S.each(panels, function (panel) {
-                    var t = triggers[i];
-                    initPanel(panel, t);
-                    i++;
-                });
-
-                if (activeIndex > -1) {
-                    setTabIndex(triggers[activeIndex], "0");
-                    panels[activeIndex].setAttribute("aria-hidden", "false");
-                }
-
-
-                self.on("switch", _tabSwitch, self);
-
-
-                Event.on(container, "keydown", _tabKeydown, self);
-                /**
-                 * prevent firefox native tab switch
-                 */
-                Event.on(container, "keypress", _tabKeypress, self);
-
+    Switchable.addPlugin({
+        name:"aria",
+        init:function (self) {
+            if (!self.config.aria) return;
+            var triggers = self.triggers,
+                activeIndex = self.activeIndex,
+                panels = self.panels;
+            var container = self.container;
+            if (self.nav) {
+                DOM.attr(self.nav, "role", "tablist");
             }
-        });
+            var i = 0;
 
-        var setTabIndex = Aria.setTabIndex;
-
-
-        function _currentTabFromEvent(t) {
-            var triggers = this.triggers,
-                trigger = null;
-            S.each(triggers, function (ct) {
-                if (ct == t || DOM.contains(ct, t)) {
-                    trigger = ct;
+            function initTrigger(trigger) {
+                trigger.setAttribute("role", "tab");
+                setTabIndex(trigger, "-1");
+                if (!trigger.id) {
+                    trigger.id = S.guid("ks-switchable");
                 }
+            }
+
+
+            function initPanel(panel, trigger) {
+                panel.setAttribute("role", "tabpanel");
+                panel.setAttribute("aria-hidden", "true");
+                panel.setAttribute("aria-labelledby", trigger.id);
+            }
+
+            S.each(triggers, initTrigger);
+
+
+            self.on(EVENT_ADDED, function (e) {
+                var t;
+                initTrigger(t = e.trigger);
+                initPanel(e.panel, t);
             });
-            return trigger;
-        }
 
-        function _tabKeypress(e) {
+            i = 0;
 
-            switch (e.keyCode) {
+            S.each(panels, function (panel) {
+                var t = triggers[i];
+                initPanel(panel, t);
+                i++;
+            });
 
-                case KEY_PAGEUP:
-                case KEY_PAGEDOWN:
-                    if (e.ctrlKey && !e.altKey && !e.shiftKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
+            if (activeIndex > -1) {
+                setTabIndex(triggers[activeIndex], "0");
+                panels[activeIndex].setAttribute("aria-hidden", "false");
             }
+
+
+            self.on("switch", _tabSwitch, self);
+
+
+            Event.on(container, "keydown", _tabKeydown, self);
+            /**
+             * prevent firefox native tab switch
+             */
+            Event.on(container, "keypress", _tabKeypress, self);
+
         }
+    }, Tabs);
 
-        var getDomEvent = Switchable.getDomEvent;
+    var setTabIndex = Aria.setTabIndex;
 
-        /**
-         * Keyboard commands for the Tab Panel
-         * @param e
-         */
-        function _tabKeydown(e) {
-            var t = e.target, self = this;
-            // Save information about a modifier key being pressed
-            // May want to ignore keyboard events that include modifier keys
-            // var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
-            var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
 
-            switch (e.keyCode) {
+    function _currentTabFromEvent(t) {
+        var triggers = this.triggers,
+            trigger = null;
+        S.each(triggers, function (ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                trigger = ct;
+            }
+        });
+        return trigger;
+    }
 
-                case KEY_LEFT:
-                case KEY_UP:
-                    if (_currentTabFromEvent.call(self, t)
-                    // 争渡读屏器阻止了上下左右键
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.prev(getDomEvent(e));
-                        e.halt();
-                    } // endif
-                    break;
+    function _tabKeypress(e) {
 
-                case KEY_RIGHT:
-                case KEY_DOWN:
-                    if (_currentTabFromEvent.call(self, t)
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.next(getDomEvent(e));
-                        e.halt();
-                    } // endif
-                    break;
+        switch (e.keyCode) {
 
-                case KEY_PAGEDOWN:
+            case KEY_PAGEUP:
+            case KEY_PAGEDOWN:
+                if (e.ctrlKey && !e.altKey && !e.shiftKey) {
+                    e.halt();
+                } // endif
+                break;
 
-                    if (control_modifier_pressed_flag) {
-                        e.halt();
-                        self.next(getDomEvent(e));
-                    }
-                    break;
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                } // endif
+                break;
 
-                case KEY_PAGEUP:
-                    if (control_modifier_pressed_flag) {
-                        e.halt();
-                        self.prev(getDomEvent(e));
-                    }
-                    break;
+        }
+    }
+
+    var getDomEvent = Switchable.getDomEvent;
+
+    /**
+     * Keyboard commands for the Tab Panel
+     * @param e
+     */
+    function _tabKeydown(e) {
+        var t = e.target, self = this;
+        // Save information about a modifier key being pressed
+        // May want to ignore keyboard events that include modifier keys
+        // var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+        var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
+
+        switch (e.keyCode) {
+
+            case KEY_LEFT:
+            case KEY_UP:
+                if (_currentTabFromEvent.call(self, t)
+                // 争渡读屏器阻止了上下左右键
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.prev(getDomEvent(e));
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_RIGHT:
+            case KEY_DOWN:
+                if (_currentTabFromEvent.call(self, t)
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.next(getDomEvent(e));
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_PAGEDOWN:
+
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    self.next(getDomEvent(e));
+                }
+                break;
+
+            case KEY_PAGEUP:
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    self.prev(getDomEvent(e));
+                }
+                break;
 
 //            case KEY_HOME:
 //                if (no_modifier_pressed_flag) {
@@ -2783,54 +2761,53 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //
 //                break;
 
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                        if (e.shiftKey)
-                            self.prev(getDomEvent(e));
-                        else
-                            self.next(getDomEvent(e));
-                    }
-                    break;
-            }
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                    if (e.shiftKey)
+                        self.prev(getDomEvent(e));
+                    else
+                        self.next(getDomEvent(e));
+                }
+                break;
         }
+    }
 
-        function _tabSwitch(ev) {
-            var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+    function _tabSwitch(ev) {
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
-            var self = this;
-            // 上一个激活 tab
-            var lastActiveIndex = ev.fromIndex;
+        var self = this;
+        // 上一个激活 tab
+        var lastActiveIndex = ev.fromIndex;
 
-            // 当前激活 tab
-            var activeIndex = ev.currentIndex;
+        // 当前激活 tab
+        var activeIndex = ev.currentIndex;
 
-            if (lastActiveIndex == activeIndex) return;
+        if (lastActiveIndex == activeIndex) return;
 
-            var lastTrigger = self.triggers[lastActiveIndex];
-            var trigger = self.triggers[activeIndex];
-            var lastPanel = self.panels[lastActiveIndex];
-            var panel = self.panels[activeIndex];
-            if (lastTrigger) {
-                setTabIndex(lastTrigger, "-1");
-            }
-            setTabIndex(trigger, "0");
-
-            // move focus to current trigger if invoked by dom event
-            if (domEvent) {
-                trigger.focus();
-            }
-            if (lastPanel) {
-                lastPanel.setAttribute("aria-hidden", "true");
-            }
-            panel.setAttribute("aria-hidden", "false");
+        var lastTrigger = self.triggers[lastActiveIndex];
+        var trigger = self.triggers[activeIndex];
+        var lastPanel = self.panels[lastActiveIndex];
+        var panel = self.panels[activeIndex];
+        if (lastTrigger) {
+            setTabIndex(lastTrigger, "-1");
         }
+        setTabIndex(trigger, "0");
+
+        // move focus to current trigger if invoked by dom event
+        if (domEvent) {
+            trigger.focus();
+        }
+        if (lastPanel) {
+            lastPanel.setAttribute("aria-hidden", "true");
+        }
+        panel.setAttribute("aria-hidden", "false");
+    }
 
 
-    },
-    {
-        requires:["dom", "event", "../base", "../aria", "./base"]
-    });
+}, {
+    requires:["dom", "event", "../base", "../aria", "./base"]
+});
 
 /**
  * 2011-05-08 承玉：add support for aria & keydown
@@ -2868,7 +2845,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     S.extend(Tabs, Switchable);
 
     Tabs.Config = {};
-    Tabs.Plugins = [];
+
     return Tabs;
 }, {
     requires:["../base"]
@@ -2900,14 +2877,16 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
         return touch;
     }
 
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
+
+        priority:5,
 
         name:'touch',
 
         init:function (self) {
 
             var cfg = self.config,
-                // circular 会修改 cfg.effect
+            // circular 会修改 cfg.effect
                 effect = cfg.scrollType || cfg.effect;
 
             if (effect == 'scrolly' ||
@@ -3048,7 +3027,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         if (diff < 0 && activeIndex == lastIndex ||
                             diff > 0 && activeIndex == 0) {
                             // 强制动画恢复到初始位置
-                            Switchable.Effects[effect].call(self, undefined, undefined,true);
+                            Switchable.Effects[effect].call(self, undefined, undefined, true);
                             return;
                         }
                     }

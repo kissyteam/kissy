@@ -17,7 +17,7 @@
 <script src="../src/accordion/base.js"></script>
 <script src="../src/accordion/aria.js"></script>
 <script src="../src/autoplay.js"></script>
-<script src="../src/autorender.js"></script>
+
 <script src="../src/carousel/base.js"></script>
 <script src="../src/carousel/aria.js"></script>
 <script src="../src/circular.js"></script>
@@ -139,10 +139,9 @@
                     <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1g25rXaV6XXXXXXXX-490-170.png"/></a></li>
             </ol>
         </div>
-        <button id="demo2-btn">stop autoplay</button>
-        <button id="demo2-add-btn">动态添加</button>
         <script>
             KISSY.use("event,switchable", function (S, Event, Switchable) {
+                
                 var Slide = Switchable.Slide;
 
                 var DOM = S.DOM;
@@ -167,24 +166,6 @@
                     s.on("switch", function () {
                         //S.log("switch");
                     });
-
-//                    S.one("#demo2").delegate("click", "li", function (e) {
-//                        s.remove(e.currentTarget);
-//                    });
-                    var i = 7;
-                    Event.on("#demo2-add-btn", 'click', function () {
-                        s.add({
-                            trigger:DOM.create("<li>" + i + "</li>"),
-                            panel:DOM.create("<li>" + i + "</li>"),
-                            index:s.activeIndex,
-                            active:1
-                        });
-                        i++;
-                    });
-
-                    Event.on('#demo2-btn', 'click', function () {
-                        s.stop();
-                    })
                 });
             });
         </script>
@@ -330,6 +311,7 @@
                 S.ready(function (S) {
 
                     //var slide =
+
                     new Slide('#slideFocus', {
                         contentCls:'pic-list',
                         navCls:'thumbs-list',
@@ -340,6 +322,7 @@
 
                     // window.slide = slide;
                     // 两个拼起来
+                    //if(0)
                     new Slide('#slideFocus', {
                         contentCls:'desc-list',
                         navCls:'thumbs-list',
@@ -432,6 +415,7 @@
 
         <script>
             KISSY.use("event,switchable", function (S, Event, Switchable) {
+                
                 var Slide = Switchable.Slide;
                 S.ready(function (S) {
                     Slide('#demo3', {
@@ -477,6 +461,7 @@
         </div>
         <script>
             KISSY.use("event,switchable", function (S, Event, Switchable) {
+                
                 var Slide = Switchable.Slide;
                 S.ready(function (S) {
                     Slide('#demo5', {

@@ -32,7 +32,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
      * attached members:
      *   - this.paused
      */
-    Switchable.Plugins.push({
+    Switchable.addPlugin({
 
         name:'autoplay',
 

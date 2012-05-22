@@ -1,7 +1,7 @@
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, AutoRender, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
+KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
@@ -18,7 +18,6 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "switchable/accordion/base",
         "switchable/accordion/aria",
         "switchable/autoplay",
-        "switchable/autorender",
         "switchable/carousel/base",
         "switchable/carousel/aria",
         "switchable/circular",
