@@ -45,6 +45,7 @@
                 }
             });
         },
+        // align:'left', // center (default), right
         minColCount:2,
         colWidth:228
     });
