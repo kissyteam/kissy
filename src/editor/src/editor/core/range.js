@@ -973,7 +973,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Set the start posititon and then collapse range.
-             * @param {Node} node
+             * @param {NodeList} node
              * @param {Number} position
              */
             moveToPosition:function (node, position) {
@@ -1543,6 +1543,11 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 return fixedBlock;
             },
 
+            /**
+             * Split current block which current range into two if current range is in the same block.
+             * Fix block at the start and end position of range if necessary.
+             * @param {String} blockTag Block tag if need fixBlock
+             */
             splitBlock:function (blockTag) {
                 var self = this,
                     startPath = new ElementPath(self.startContainer),
@@ -1608,6 +1613,11 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 };
             },
 
+            /**
+             * Split toSplit element into two parts at current range's start position.
+             * @param {NodeList} toSplit Element to split.
+             * @return {NodeList} The second newly generated element.
+             */
             splitElement:function (toSplit) {
                 var self = this;
                 if (!self.collapsed)
@@ -1627,80 +1637,86 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 return clone;
             },
 
+            /**
+             * Move the range to the depth-first start/end editing point inside
+             * an element.
+             * @param {NodeList} el The element to find edit point into.
+             * @param {Boolean} [isMoveToEnd] Find start or end editing point.
+             * Set true to find end editing point.
+             * @return {Boolean} Whether find edit point
+             */
             moveToElementEditablePosition:function (el, isMoveToEnd) {
-                var self = this, isEditable;
+                function nextDFS(node, childOnly) {
+                    var next;
 
-                // Empty elements are rejected.
-                if (dtd.$empty[ el.nodeName() ])
-                    return FALSE;
+                    if (node[0].nodeType == DOM.ELEMENT_NODE && node._4e_isEditable()) {
+                        next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark);
+                    }
 
-                while (el && el[0].nodeType == KEN.NODE_ELEMENT) {
-                    isEditable = el._4e_isEditable();
+                    if (!childOnly && !next) {
+                        next = node[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
+                    }
 
-                    // If an editable element is found, move inside it.
-                    if (isEditable) {
+                    return next;
+                }
+
+                var found = 0, self = this;
+
+                while (el) {
+                    // Stop immediately if we've found a text node.
+                    if (el[0].nodeType == DOM.TEXT_NODE) {
+                        self.moveToPosition(el, isMoveToEnd ?
+                            KER.POSITION_AFTER_END :
+                            KER.POSITION_BEFORE_START);
+                        found = 1;
+                        break;
+                    }
+
+                    // If an editable element is found, move inside it, but not stop the searching.
+                    if (el[0].nodeType == DOM.ELEMENT_NODE && el._4e_isEditable()) {
                         self.moveToPosition(el, isMoveToEnd ?
                             KER.POSITION_BEFORE_END :
                             KER.POSITION_AFTER_START);
-                        // 不要返回，继续找可能的文字位置
-                    }
-                    // Stop immediately if we've found a non editable inline element (e.g <img>).
-                    else if (dtd.$inline[ el.nodeName() ]) {
-                        self.moveToPosition(el, isMoveToEnd ?
-                            KER.POSITION_AFTER_END :
-                            KER.POSITION_BEFORE_START);
-                        return TRUE;
+                        found = 1;
                     }
 
-                    // Non-editable non-inline elements are to be bypassed, getting the next one.
-                    if (dtd.$empty[ el.nodeName() ])
-                        el = el[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
-                    else {
-                        if (isMoveToEnd) {
-                            el = el.last(nonWhitespaceOrIsBookmark);
-                        } else {
-                            el = el.first(nonWhitespaceOrIsBookmark);
-                        }
-                    }
-                    // Stop immediately if we've found a text node.
-                    if (el && el[0].nodeType == KEN.NODE_TEXT) {
-                        self.moveToPosition(el, isMoveToEnd ?
-                            KER.POSITION_AFTER_END :
-                            KER.POSITION_BEFORE_START);
-                        return TRUE;
-                    }
+                    el = nextDFS(el, found);
                 }
 
-                return isEditable;
+                return !!found;
             },
 
             selectNodeContents:function (node) {
-                this.setStart(node, 0);
-                this.setEnd(node, node[0].nodeType == KEN.NODE_TEXT ?
-                    node[0].nodeValue.length :
-                    node[0].childNodes.length);
+                var self = this, domNode = node[0];
+                self.setStart(node, 0);
+                self.setEnd(node, domNode.nodeType == KEN.NODE_TEXT ?
+                    domNode.nodeValue.length :
+                    domNode.childNodes.length);
             }
         });
 
     Utils.injectDom({
         _4e_breakParent:function (el, parent) {
-            var KERange = Editor.Range;
             parent = $(parent);
-            var range = new KERange(el.ownerDocument);
+            el = $(el);
+
+            var KERange = Editor.Range,
+                docFrag,
+                range = new KERange(el[0].ownerDocument);
 
             // We'll be extracting part of this element, so let's use our
             // range to get the correct piece.
-            range.setStartAfter($(el));
+            range.setStartAfter(el);
             range.setEndAfter(parent);
 
             // Extract it.
-            var docFrag = range.extractContents();
+            docFrag = range.extractContents();
 
             // Move the element outside the broken element.
-            range.insertNode($(DOM._4e_remove(el)));
+            range.insertNode(el.remove());
 
             // Re-insert the extracted piece after the element.
-            el.parentNode.insertBefore(docFrag, el.nextSibling);
+            el.after(docFrag);
         }
     });
 

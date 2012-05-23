@@ -1348,5 +1348,146 @@ KISSY.use("editor", function (S, Editor) {
 
             div.remove();
         });
+
+
+        describe("splitBlock", function () {
+            it("splitBlock in the same block works", function () {
+                var div = $("<div><p>1</p>2345<p>6</p>" +
+                    "7890<p>ok</p></div>").appendTo("body");
+
+                var firstText = $(div[0].childNodes[1]);
+
+                var secondText = $(div[0].childNodes[3]);
+
+                var range = new Range(document);
+                range.setStart(firstText, 1);
+                range.setEnd(firstText, 2);
+
+                range.splitBlock("p");
+
+                var fake = UA.ie ? "" : "<br>";
+
+                expect(div.html().toLowerCase()).toBe("<p>1</p><p>2" +
+                    fake +
+                    "</p><p>45" +
+                    fake +
+                    "</p><p>6</p>" +
+                    "7890<p>ok</p>");
+
+                expect(range.startContainer[0]).toBe(div[0]);
+                expect(range.endContainer[0]).toBe(div[0]);
+                expect(range.startOffset).toBe(2);
+                expect(range.endOffset).toBe(2);
+
+                div.remove();
+            });
+
+            it("splitBlock across block works", function () {
+                var div = $("<div><p>1</p>2345<p>6</p>" +
+                    "7890<p>ok</p></div>").appendTo("body");
+
+                var firstText = $(div[0].childNodes[1]);
+
+                var secondText = $(div[0].childNodes[3]);
+
+                var range = new Range(document);
+                range.setStart(firstText, 1);
+                range.setEnd(secondText, 1);
+
+                range.splitBlock("p");
+
+                var fake = UA.ie ? "" : "<br>";
+
+                expect(div.html().toLowerCase()).toBe("<p>1</p><p>2" +
+                    // fake +
+                    "</p>" +
+                    "<p>" +
+                    "890" +
+                    fake +
+                    "</p>" +
+                    "<p>ok</p>");
+
+                expect(range.startContainer[0]).toBe(div[0]);
+                expect(range.endContainer[0]).toBe(div[0]);
+                expect(range.startOffset).toBe(2);
+                expect(range.endOffset).toBe(2);
+
+                div.remove();
+            });
+
+
+            it("splitBlock at the start position of block works", function () {
+                var div = $("<div><p>1</p>2345<p>6</p>" +
+                    "7890<p>ok</p></div>").appendTo("body");
+
+                var firstText = $(div[0].childNodes[1]);
+
+                var secondText = $(div[0].childNodes[3]);
+
+                var range = new Range(document);
+                range.setStart(firstText, 0);
+                range.setEnd(firstText, 4);
+
+                range.splitBlock("p");
+
+                var fake = UA.ie ? "" : "<br>";
+
+                expect(div.html().toLowerCase()).toBe("<p>1</p><p>" +
+                    fake +
+                    "</p><p>6" +
+                    // fake +
+                    "</p>" +
+                    "7890" +
+                    //fake +
+                    "<p>ok</p>");
+
+                expect(range.startContainer[0]).toBe(div[0]);
+                expect(range.endContainer[0]).toBe(div[0]);
+                expect(range.startOffset).toBe(2);
+                expect(range.endOffset).toBe(2);
+
+                div.remove();
+            });
+
+            it("moveToElementEditablePosition works", function () {
+                var div = $("<div><span><i></i></span><span><i>5678</i></span></div>")
+                    .appendTo("body");
+                var range = new Range(document);
+                var is = div.all("i");
+                range.moveToElementEditablePosition(div);
+                expect(range.startContainer[0]).toBe(is[0]);
+                expect(range.endContainer[0]).toBe(is[0]);
+                expect(range.collapsed).toBe(true);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(0);
+
+                range.moveToElementEditablePosition(div, true);
+                expect(range.startContainer[0]).toBe(is[1]);
+                expect(range.endContainer[0]).toBe(is[1]);
+                expect(range.collapsed).toBe(true);
+                expect(range.startOffset).toBe(1);
+                expect(range.endOffset).toBe(1);
+                div.remove();
+            });
+
+            it("_4e_breakParent works", function () {
+                var div = $("<div><div><span>12<i></i>34</span><span><i>5678</i></span></div></div>")
+                        .appendTo("body"),
+                    range = new Range(document),
+                    is = div.all("i");
+
+                is.item(0)._4e_breakParent(div.first());
+                expect(div.html().toLowerCase()).toBe("<div><span>12" +
+                    "</span>" +
+                    "</div>" +
+                    "<i></i>" +
+                    "<div>" +
+                    "<span>" +
+                    "34</span><span><i>5678</i></span></div>")
+                div.remove();
+            });
+        });
+
+
     });
 });
