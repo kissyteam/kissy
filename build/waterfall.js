@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 19:41
+build time: May 23 21:24
 */
 /**
  * intervein elements dynamically
@@ -81,6 +81,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
         },
 
+        /**
+         * Horizontal alignment of waterfall items with container.
+         * Enum: 'left','center','right'.
+         * @type String
+         */
+        align:{
+            value:'center'
+        },
+
         colWidth:{}
     };
 
@@ -112,6 +121,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     function adjustItem(itemRaw) {
         var self = this,
             effect = self.get("effect"),
+            align = self.get("align"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -119,6 +129,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             dest = 0,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
+
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
                 guard = curColHeights[i];
@@ -129,7 +140,13 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             guard = 0;
         }
         // 元素保持间隔不变，居中
-        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
+        // 元素保持间隔不变，居中
+        var margin = align === 'left' ? 0 :
+            Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0);
+
+        if (align === 'center') {
+            margin /= 2;
+        }
         item.css({
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
