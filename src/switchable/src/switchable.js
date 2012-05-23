@@ -10,6 +10,9 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "Aria":Aria
     };
     S.mix(Switchable, re);
+
+    S.Switchable = Switchable;
+
     return Switchable;
 }, {
     requires:[

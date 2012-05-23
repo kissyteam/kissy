@@ -4,11 +4,8 @@
  */
 KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Switchable, Select) {
     var dtd = Editor.XHTML_DTD,
-        DOM = S.DOM,
         UA = S.UA,
-        JSON = S.JSON,
         Node = S.Node,
-        Event = S.Event,
         HTTP_TIP = "http://",
         AUTOMATIC_TIP = "自动",
         MARGIN_DEFAULT = 10,
@@ -251,7 +248,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     !self.imgRatioValue) {
                     return;
                 }
-                valInput(self.imgHeight, Math.floor(v / self.iimgRatioValue));
+                valInput(self.imgHeight, Math.floor(v / self.imgRatioValue));
             });
 
             cancel.on("click", function (ev) {
@@ -317,12 +314,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                      */
                     loadingCancel.on("click", function (ev) {
                         ev.halt();
-                        self.d.unloading();
                         uploadIO.abort();
-                        loadingCancel.css({
-                            left:-9999,
-                            top:-9999
-                        });
                     });
 
                     var uploadIO = IO({
@@ -331,12 +323,15 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                         form:self.uploadForm[0],
                         dataType:'json',
                         type:'post',
-                        complete:function (data) {
+                        complete:function (data, status) {
                             loadingCancel.css({
                                 left:-9999,
                                 top:-9999
                             });
                             self.d.unloading();
+                            if (status == "abort") {
+                                return;
+                            }
                             if (!data) {
                                 data = {error:"服务器出错，请重试"};
                             }

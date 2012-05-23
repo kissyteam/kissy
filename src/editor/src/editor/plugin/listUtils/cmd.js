@@ -10,7 +10,6 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Walker = Editor.Walker,
-        KEN = Editor.NODE,
         UA = S.UA,
         Node = S.Node,
         DOM = S.DOM,
@@ -69,7 +68,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
             if (contents.length == 1
                 && contents[0][0] === groupObj.root[0]) {
                 var divBlock = new Node(doc.createElement('div'));
-                contents[0][0].nodeType != KEN.NODE_TEXT &&
+                contents[0][0].nodeType != DOM.TEXT_NODE &&
                 contents[0]._4e_moveChildren(divBlock, undefined, undefined);
                 contents[0][0].appendChild(divBlock[0]);
                 contents[0] = divBlock;
@@ -181,11 +180,11 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
 
             function compensateBrs(isStart) {
                 if (( boundaryNode = new Node(docFragment[ isStart ? 'firstChild' : 'lastChild' ]) )
-                    && !( boundaryNode[0].nodeType == KEN.NODE_ELEMENT &&
+                    && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true)) )
-                    && !( boundaryNode[0].nodeType == KEN.NODE_ELEMENT &&
+                    && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
                 }
@@ -224,10 +223,10 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     startNode = boundaryNodes.startNode,
                     endNode = boundaryNodes.endNode;
 
-                if (startNode[0].nodeType == KEN.NODE_ELEMENT && startNode.nodeName() == 'td')
+                if (startNode[0].nodeType == DOM.ELEMENT_NODE && startNode.nodeName() == 'td')
                     range.setStartAt(boundaryNodes.startNode, KER.POSITION_AFTER_START);
 
-                if (endNode[0].nodeType == KEN.NODE_ELEMENT && endNode.nodeName() == 'td')
+                if (endNode[0].nodeType == DOM.ELEMENT_NODE && endNode.nodeName() == 'td')
                     range.setEndAt(boundaryNodes.endNode, KER.POSITION_BEFORE_END);
 
                 var iterator = range.createIterator(),

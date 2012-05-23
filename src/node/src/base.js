@@ -191,7 +191,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         }
     });
 
-    S.mix(NodeList, DOM._NODE_TYPE);
+    S.mix(NodeList, DOM.NodeTypes);
 
     return NodeList;
 }, {

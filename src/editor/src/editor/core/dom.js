@@ -49,16 +49,6 @@ KISSY.add("editor/core/dom", function (S) {
             'var':1
         };
     /**
-     * Enum for node type
-     * @enum {number}
-     */
-    Editor.NODE = {
-        NODE_ELEMENT:1,
-        NODE_TEXT:3,
-        "NODE_COMMENT":8,
-        NODE_DOCUMENT_FRAGMENT:11
-    };
-    /**
      * Enum for node position
      * @enum {number}
      */
@@ -70,7 +60,7 @@ KISSY.add("editor/core/dom", function (S) {
         POSITION_IS_CONTAINED:8,
         POSITION_CONTAINS:16
     };
-    var KEN = Editor.NODE, KEP = Editor.POSITION;
+    var KEP = Editor.POSITION;
 
     /*
      * Anything whose display computed style is block, list-item, table,
@@ -79,18 +69,18 @@ KISSY.add("editor/core/dom", function (S) {
      * name is hr, br (when enterMode is br only) is a block boundary.
      */
     var blockBoundaryDisplayMatch = {
-        "block":1,
-        'list-item':1,
-        "table":1,
-        'table-row-group':1,
-        'table-header-group':1,
-        'table-footer-group':1,
-        'table-row':1,
-        'table-column-group':1,
-        'table-column':1,
-        'table-cell':1,
-        'table-caption':1
-    },
+            "block":1,
+            'list-item':1,
+            "table":1,
+            'table-row-group':1,
+            'table-header-group':1,
+            'table-footer-group':1,
+            'table-row':1,
+            'table-column-group':1,
+            'table-column':1,
+            'table-cell':1,
+            'table-caption':1
+        },
         blockBoundaryNodeNameMatch = { "hr":1 },
         /**
          * @param el {(Node)}
@@ -105,6 +95,19 @@ KISSY.add("editor/core/dom", function (S) {
             return new Node(el);
         },
         editorDom = {
+
+            /**
+             * Whether two nodes are on the same level.
+             * @param el1
+             * @param [el2]
+             * @return {Boolean}
+             * @private
+             */
+            _4e_sameLevel:function (el1, el2) {
+                el2 = normalElDom(el2);
+                var e1p = el1.parentNode;
+                return e1p && e1p == el2.parentNode;
+            },
 
             /**
              * 是否是块状元素或块状元素边界
@@ -229,13 +232,13 @@ KISSY.add("editor/core/dom", function (S) {
                     var child = children[i],
                         nodeType = child.nodeType;
 
-                    if (nodeType == KEN.NODE_ELEMENT &&
+                    if (nodeType == DOM.ELEMENT_NODE &&
                         child.getAttribute('_ke_bookmark')) {
                         continue;
                     }
 
-                    if (nodeType == KEN.NODE_ELEMENT && !DOM._4e_isEmptyInlineRemovable(child) ||
-                        nodeType == KEN.NODE_TEXT && S.trim(child.nodeValue)) {
+                    if (nodeType == DOM.ELEMENT_NODE && !DOM._4e_isEmptyInlineRemovable(child) ||
+                        nodeType == DOM.TEXT_NODE && S.trim(child.nodeValue)) {
                         return FALSE;
                     }
                 }
@@ -295,7 +298,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_splitText:function (el, offset) {
                 var doc = el.ownerDocument;
 
-                if (el.nodeType != KEN.NODE_TEXT) {
+                if (el.nodeType != DOM.TEXT_NODE) {
                     return;
                 }
                 // If the offset is after the last char, IE creates the text node
@@ -361,7 +364,7 @@ KISSY.add("editor/core/dom", function (S) {
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
                 // send the 'moving out' signal even we don't actually dive into.
                 if (!node) {
-                    if (el.nodeType == KEN.NODE_ELEMENT &&
+                    if (el.nodeType == DOM.ELEMENT_NODE &&
                         guard && guard(el, TRUE) === FALSE) {
                         return NULL;
                     }
@@ -413,7 +416,7 @@ KISSY.add("editor/core/dom", function (S) {
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
                 // send the 'moving out' signal even we don't actually dive into.
                 if (!node) {
-                    if (el.nodeType == KEN.NODE_ELEMENT &&
+                    if (el.nodeType == DOM.ELEMENT_NODE &&
                         guard && guard(el, TRUE) === FALSE) {
                         return NULL;
                     }
@@ -529,8 +532,8 @@ KISSY.add("editor/core/dom", function (S) {
                 }
 
                 // Only element nodes support contains and sourceIndex.
-                if (el.nodeType == KEN.NODE_ELEMENT &&
-                    $other.nodeType == KEN.NODE_ELEMENT) {
+                if (el.nodeType == DOM.ELEMENT_NODE &&
+                    $other.nodeType == DOM.ELEMENT_NODE) {
                     if (DOM.contains(el, $other)) {
                         return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING;
                     }
@@ -621,7 +624,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_ltrim:function (el) {
                 var child;
                 while (child = el.firstChild) {
-                    if (child.nodeType == KEN.NODE_TEXT) {
+                    if (child.nodeType == DOM.TEXT_NODE) {
                         var trimmed = Utils.ltrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
 
@@ -646,7 +649,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_rtrim:function (el) {
                 var child;
                 while (child = el.lastChild) {
-                    if (child.type == KEN.NODE_TEXT) {
+                    if (child.type == DOM.TEXT_NODE) {
                         var trimmed = Utils.rtrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
                         if (!trimmed) {
@@ -681,13 +684,13 @@ KISSY.add("editor/core/dom", function (S) {
 
                 // Ignore empty/spaces text.
                 while (lastChild &&
-                    lastChild.nodeType == KEN.NODE_TEXT &&
+                    lastChild.nodeType == DOM.TEXT_NODE &&
                     !S.trim(lastChild.nodeValue)) {
                     lastChild = lastChild.previousSibling;
                 }
 
                 if (!lastChild ||
-                    lastChild.nodeType == KEN.NODE_TEXT ||
+                    lastChild.nodeType == DOM.TEXT_NODE ||
                     DOM.nodeName(lastChild) !== 'br') {
                     bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
@@ -725,7 +728,7 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_setMarker:function (element, database, name, value) {
                 element = normalEl(element);
                 var id = element.data('list_marker_id') ||
-                    ( element.data('list_marker_id', S.guid()).data('list_marker_id')),
+                        ( element.data('list_marker_id', S.guid()).data('list_marker_id')),
                     markerNames = element.data('list_marker_names') ||
                         ( element.data('list_marker_names', {}).data('list_marker_names'));
                 database[id] = element;
@@ -818,7 +821,7 @@ KISSY.add("editor/core/dom", function (S) {
         var sibling = element[isNext ? "next" : "prev"]();
 
         if (sibling &&
-            sibling[0].nodeType == KEN.NODE_ELEMENT) {
+            sibling[0].nodeType == DOM.ELEMENT_NODE) {
 
             // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
             // queuing them to be moved later. (#5567)
@@ -847,7 +850,7 @@ KISSY.add("editor/core/dom", function (S) {
                 sibling.remove();
 
                 // Now check the last inner child (see two comments above).
-                if (innerSibling[0] && innerSibling[0].nodeType == KEN.NODE_ELEMENT) {
+                if (innerSibling[0] && innerSibling[0].nodeType == DOM.ELEMENT_NODE) {
                     innerSibling._4e_mergeSiblings();
                 }
             }

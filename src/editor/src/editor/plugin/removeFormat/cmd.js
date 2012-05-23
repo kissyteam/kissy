@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
     var KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
-        KEN = Editor.NODE,
+        DOM = S.DOM,
         /**
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.
@@ -95,7 +95,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
                             // Navigate through all nodes between the bookmarks.
                             var currentNode = startNode
                                 // start from sibling , because obvious bookmark has no children
-                                ._4e_nextSourceNode(true, KEN.NODE_ELEMENT, undefined, undefined);
+                                ._4e_nextSourceNode(true, DOM.ELEMENT_NODE, undefined, undefined);
 
                             while (currentNode) {
                                 // If we have reached the end of the selection, stop looping.
@@ -106,7 +106,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
                                 // Cache the next node to be processed. Do it now, because
                                 // currentNode may be removed.
                                 var nextNode = currentNode.
-                                    _4e_nextSourceNode(false, KEN.NODE_ELEMENT, undefined, undefined);
+                                    _4e_nextSourceNode(false, DOM.ELEMENT_NODE, undefined, undefined);
 
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() == 'img' &&

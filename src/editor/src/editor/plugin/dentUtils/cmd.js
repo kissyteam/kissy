@@ -13,7 +13,6 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         DOM = S.DOM,
         Node = S.Node,
         UA = S.UA,
-        KEN = Editor.NODE,
         isNotWhitespaces = Walker.whitespaces(true),
         INDENT_CSS_PROPERTY = "margin-left",
         INDENT_OFFSET = 40,
@@ -21,7 +20,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         isNotBookmark = Walker.bookmark(false, true);
 
     function isListItem(node) {
-        return node.nodeType == KEN.NODE_ELEMENT && DOM.nodeName(node) == 'li';
+        return node.nodeType == DOM.ELEMENT_NODE && DOM.nodeName(node) == 'li';
     }
 
     function indentList(range, listNode, type) {
@@ -203,7 +202,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
             nearestListBlock = rangeRoot;
 
         while (nearestListBlock &&
-            !( nearestListBlock[0].nodeType == KEN.NODE_ELEMENT &&
+            !( nearestListBlock[0].nodeType == DOM.ELEMENT_NODE &&
                 listNodeNames[ nearestListBlock.nodeName() ] )) {
             nearestListBlock = nearestListBlock.parent();
         }
@@ -213,7 +212,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         //注：firefox 永远不会出现
         //注2：哪种情况会出现？
         if (nearestListBlock
-            && startContainer[0].nodeType == KEN.NODE_ELEMENT
+            && startContainer[0].nodeType == DOM.ELEMENT_NODE
             && startContainer.nodeName() in listNodeNames) {
             //S.log("indent from ul/ol");
             var walker = new Walker(range);
@@ -222,7 +221,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
         }
 
         if (nearestListBlock
-            && endContainer[0].nodeType == KEN.NODE_ELEMENT
+            && endContainer[0].nodeType == DOM.ELEMENT_NODE
             && endContainer.nodeName() in listNodeNames) {
             walker = new Walker(range);
             walker.evaluator = isListItem;

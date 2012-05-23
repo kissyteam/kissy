@@ -29,7 +29,6 @@ KISSY.add("editor/core/selection", function (S) {
         Node = S.Node,
         KES = Editor.SELECTION,
         KER = Editor.RANGE,
-        KEN = Editor.NODE,
     // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
     //EventTarget = S.EventTarget,
@@ -124,7 +123,7 @@ KISSY.add("editor/core/selection", function (S) {
                         startContainer = range.startContainer;
 
                     if (startContainer == range.endContainer
-                        && startContainer.nodeType == KEN.NODE_ELEMENT
+                        && startContainer.nodeType == DOM.ELEMENT_NODE
                         && Number(range.endOffset - range.startOffset) == 1
                         && styleObjectElements[ startContainer.childNodes[ range.startOffset ].nodeName.toLowerCase() ]) {
                         type = KES.SELECTION_ELEMENT;
@@ -185,7 +184,7 @@ KISSY.add("editor/core/selection", function (S) {
                     for (var i = 0; i < siblings.length; i++) {
                         var child = siblings[ i ];
 
-                        if (child.nodeType == KEN.NODE_ELEMENT) {
+                        if (child.nodeType == DOM.ELEMENT_NODE) {
                             testRange = range.duplicate();
 
                             testRange.moveToElementText(child);
@@ -358,7 +357,7 @@ KISSY.add("editor/core/selection", function (S) {
                                 var startContainer = range.startContainer,
                                     startOffset = range.startOffset;
                                 // Limit the fix only to non-block elements.(#3950)
-                                if (startOffset == ( startContainer[0].nodeType === KEN.NODE_ELEMENT ?
+                                if (startOffset == ( startContainer[0].nodeType === DOM.ELEMENT_NODE ?
                                     startContainer[0].childNodes.length : startContainer[0].nodeValue.length )
                                     && !startContainer._4e_isBlockBoundary()) {
                                     range.setStartAfter(startContainer);
@@ -369,18 +368,18 @@ KISSY.add("editor/core/selection", function (S) {
 
                             node = range.startContainer;
 
-                            if (node[0].nodeType != KEN.NODE_ELEMENT) {
+                            if (node[0].nodeType != DOM.ELEMENT_NODE) {
                                 return node.parent();
                             }
 
                             node = new Node(node[0].childNodes[range.startOffset]);
 
-                            if (!node[0] || node[0].nodeType != KEN.NODE_ELEMENT) {
+                            if (!node[0] || node[0].nodeType != DOM.ELEMENT_NODE) {
                                 return range.startContainer;
                             }
 
                             var child = node[0].firstChild;
-                            while (child && child.nodeType == KEN.NODE_ELEMENT) {
+                            while (child && child.nodeType == DOM.ELEMENT_NODE) {
                                 node = new Node(child);
                                 child = child.firstChild;
                             }
@@ -395,7 +394,7 @@ KISSY.add("editor/core/selection", function (S) {
                     }
                     else {
                         node = sel.anchorNode;
-                        if (node && node.nodeType != KEN.NODE_ELEMENT) {
+                        if (node && node.nodeType != DOM.ELEMENT_NODE) {
                             node = node.parentNode;
                         }
                         if (node) {
@@ -443,7 +442,7 @@ KISSY.add("editor/core/selection", function (S) {
                          i && !
                              (
                                  ( enclosed = range.getEnclosedNode() )
-                                     && ( enclosed[0].nodeType == KEN.NODE_ELEMENT )
+                                     && ( enclosed[0].nodeType == DOM.ELEMENT_NODE )
                                      //某些值得这么多的元素？？
                                      && styleObjectElements[ enclosed.nodeName() ]
                                      && ( selected = enclosed )
@@ -535,7 +534,7 @@ KISSY.add("editor/core/selection", function (S) {
                     // opera move out of this element
                     if (range.collapsed &&
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
-                        startContainer[0].nodeType == KEN.NODE_ELEMENT &&
+                        startContainer[0].nodeType == DOM.ELEMENT_NODE &&
                         !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fillchar 之后
                         startContainer[0].appendChild(self.document.createTextNode(UA['webkit'] ? "\u200b" : ""));
@@ -635,7 +634,7 @@ KISSY.add("editor/core/selection", function (S) {
 
                 // If we have a collapsed range, inside an empty element, we must add
                 // something to it, otherwise the caret will not be visible.
-                if (self.collapsed && startContainer[0].nodeType == KEN.NODE_ELEMENT && !startContainer[0].childNodes.length)
+                if (self.collapsed && startContainer[0].nodeType == DOM.ELEMENT_NODE && !startContainer[0].childNodes.length)
                     startContainer[0].appendChild(self.document.createTextNode(""));
 
                 var nativeRange = self.document.createRange();
@@ -673,16 +672,16 @@ KISSY.add("editor/core/selection", function (S) {
                         self.startContainer[0] === self.endContainer[0]
                             && self.endOffset - self.startOffset == 1) {
                         var selEl = self.startContainer[0].childNodes[self.startOffset];
-                        if (selEl.nodeType == KEN.NODE_ELEMENT) {
+                        if (selEl.nodeType == DOM.ELEMENT_NODE) {
                             new KESelection(self.document).selectElement(new Node(selEl));
                             return;
                         }
                     }
                     // IE doesn't support selecting the entire table row/cell, move the selection into cells, e.g.
                     // <table><tbody><tr>[<td>cell</b></td>... => <table><tbody><tr><td>[cell</td>...
-                    if (self.startContainer[0].nodeType == KEN.NODE_ELEMENT &&
+                    if (self.startContainer[0].nodeType == DOM.ELEMENT_NODE &&
                         self.startContainer.nodeName() in nonCells
-                        || self.endContainer[0].nodeType == KEN.NODE_ELEMENT &&
+                        || self.endContainer[0].nodeType == DOM.ELEMENT_NODE &&
                         self.endContainer.nodeName() in nonCells) {
                         self.shrink(KER.SHRINK_ELEMENT, TRUE);
                     }

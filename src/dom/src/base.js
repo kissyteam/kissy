@@ -51,7 +51,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
             }
         },
 
-        _NODE_TYPE:NODE_TYPE,
+        NodeTypes:NODE_TYPE,
 
 
         /**

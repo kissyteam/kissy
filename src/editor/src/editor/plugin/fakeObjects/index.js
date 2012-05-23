@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
     var Node = S.Node,
-        KEN = Editor.NODE,
+        DOM = S.DOM,
         SPACER_GIF = Editor['Config'].base + 'theme/spacer.gif',
         HtmlParser = S.require("htmlparser");
 
@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
         },
 
         restoreRealElement:function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') != KEN.NODE_ELEMENT) {
+            if (fakeElement.attr('_ke_real_node_type') != DOM.ELEMENT_NODE) {
                 return null;
             }
 
@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
             // When returning the node, remove it from its parent to detach it.
             return temp.first(
                 function (n) {
-                    return n.nodeType == KEN.NODE_ELEMENT;
+                    return n.nodeType == DOM.ELEMENT_NODE;
                 }).remove();
         }
     });

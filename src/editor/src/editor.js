@@ -645,7 +645,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     elementName = element.nodeName(),
                     xhtml_dtd = Editor.XHTML_DTD,
                     KER = Editor.RANGE,
-                    KEN = Editor.NODE,
                     isBlock = xhtml_dtd['$block'][ elementName ],
                     selection = self.getSelection(),
                     ranges = selection && selection.getRanges(),
@@ -733,7 +732,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 }
 
                 range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
-                if (next && next[0].nodeType == KEN.NODE_ELEMENT) {
+                if (next && next[0].nodeType == DOM.ELEMENT_NODE) {
                     range.moveToElementEditablePosition(next);
                 }
                 selection.selectRanges([ range ]);

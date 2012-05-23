@@ -14,9 +14,9 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         NULL = null,
         UA = S.UA,
         Event = S.Event,
+        DOM= S.DOM,
         Node = S.Node,
-        KES = Editor.SELECTION,
-        KEN = Editor.NODE;
+        KES = Editor.SELECTION;
 
     /**
      * 2012-01-11 借鉴 tinymce
@@ -408,14 +408,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl);
                         if (element &&
-                            element[0].nodeType == KEN.NODE_ELEMENT &&
+                            element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
                             element = fixedBlock.prev(nextValidEl);
                             if (element &&
-                                element[0].nodeType == KEN.NODE_ELEMENT &&
+                                element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的

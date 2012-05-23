@@ -3,7 +3,6 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
         Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
-        KEN = Editor.NODE,
         list = {
             /*
              * Convert a DOM list tree into a data structure that is easier to
@@ -49,7 +48,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                     for (var j = 0, itemChildCount = listItem[0].childNodes.length, child;
                          j < itemChildCount; j++) {
                         child = new Node(listItem[0].childNodes[j]);
-                        if (child[0].nodeType == KEN.NODE_ELEMENT &&
+                        if (child[0].nodeType == DOM.ELEMENT_NODE &&
                             listNodeNames[ child.nodeName() ]) {
                             // Note the recursion here, it pushes inner list items with
                             // +1 indentation in the correct order.
@@ -120,28 +119,28 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                         for (i = 0; i < item.contents.length; i++) {
                             var ic = item.contents[i].clone(true);
                             //如果是list中，应该只退出ul，保留margin-left
-                            if (currentListItem.nodeType == KEN.NODE_DOCUMENT_FRAGMENT) {
+                            if (currentListItem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                                 item.element._4e_copyAttributes(new Node(ic));
                             }
                             currentListItem.appendChild(ic[0]);
                         }
 
-                        if (currentListItem.nodeType == KEN.NODE_DOCUMENT_FRAGMENT
+                        if (currentListItem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE
                             && currentIndex != listArray.length - 1) {
                             if (currentListItem.lastChild
-                                && currentListItem.lastChild.nodeType == KEN.NODE_ELEMENT
+                                && currentListItem.lastChild.nodeType == DOM.ELEMENT_NODE
                                 && currentListItem.lastChild.getAttribute('type') == '_moz') {
                                 DOM._4e_remove(currentListItem.lastChild);
                             }
                             DOM._4e_appendBogus(currentListItem);
                         }
 
-                        if (currentListItem.nodeType == KEN.NODE_ELEMENT &&
+                        if (currentListItem.nodeType == DOM.ELEMENT_NODE &&
                             DOM.nodeName(currentListItem) == paragraphMode &&
                             currentListItem.firstChild) {
                             DOM._4e_trim(currentListItem);
                             var firstChild = currentListItem.firstChild;
-                            if (firstChild.nodeType == KEN.NODE_ELEMENT &&
+                            if (firstChild.nodeType == DOM.ELEMENT_NODE &&
                                 DOM._4e_isBlockBoundary(firstChild)) {
                                 var tmp = doc.createDocumentFragment();
                                 DOM._4e_moveChildren(currentListItem, tmp);
@@ -170,7 +169,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
                 if (database) {
                     var currentNode = new Node(retval.firstChild);
                     while (currentNode && currentNode[0]) {
-                        if (currentNode[0].nodeType == KEN.NODE_ELEMENT) {
+                        if (currentNode[0].nodeType == DOM.ELEMENT_NODE) {
                             currentNode._4e_clearMarkers(database, true);
                         }
                         currentNode = currentNode._4e_nextSourceNode();

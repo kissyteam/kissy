@@ -7,7 +7,6 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
     var UA = S.UA,
         DOM = S.DOM,
         Node = S.Node,
-        KEN = Editor.NODE,
         tableRules = ["tr", "th", "td", "tbody", "table"],
         cellNodeRegex = /^(?:td|th)$/;
 
@@ -26,7 +25,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             }
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
-            if (node[0].nodeType == KEN.NODE_ELEMENT &&
+            if (node[0].nodeType == DOM.ELEMENT_NODE &&
                 cellNodeRegex.test(node.nodeName()) &&
                 !node.data('selected_cell')) {
                 node._4e_setMarker(database, 'selected_cell', true, undefined);
