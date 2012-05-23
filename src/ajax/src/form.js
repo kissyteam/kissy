@@ -2,20 +2,23 @@
  * @fileOverview process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
+KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
 
-    io.on("start", function(e) {
+    io.on("start", function (e) {
         var xhrObject = e.xhr,
+            form,
+            d,
+            enctype,
+            formParam,
             c = xhrObject.config;
         // serialize form if needed
         if (c.form) {
-            var form = DOM.get(c.form),
-                enctype = form['encoding'] || form.enctype;
+            form = DOM.get(c.form);
+            enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
-                var formParam = FormSerializer.serialize(form);
-
+                formParam = FormSerializer.serialize(form);
                 if (formParam) {
                     if (c.hasContent) {
                         // post 加到 data 中
@@ -30,7 +33,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
                     }
                 }
             } else {
-                var d = c.dataType[0];
+                d = c.dataType[0];
                 if (d == "*") {
                     d = "text";
                 }
@@ -44,5 +47,5 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-        requires:['./base',"dom","./FormSerializer"]
-    });
+    requires:['./base', "dom", "./FormSerializer"]
+});

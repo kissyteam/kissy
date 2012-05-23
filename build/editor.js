@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 22 20:39
+build time: May 23 14:35
 */
 /**
  * Set up editor constructor
@@ -7122,7 +7122,7 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120522203859");
+                    url += "t=" + encodeURIComponent("20120523143504");
                 }
                 if (S.startsWith(url, "/")) {
                     url = url.substring(1);
@@ -7413,123 +7413,6 @@ KISSY.add("editor/core/utils", function (S) {
                     }
                 }
                 return params;
-            },
-
-            /**
-             *
-             * @param o {Object} 提交 form 配置
-             * @param ps {Object} 动态参数
-             * @param url {string} 目的地 url
-             */
-            doFormUpload:function (o, ps, url) {
-                var id = S.guid("form-upload-");
-                var frame = document.createElement('iframe');
-                frame.id = id;
-                frame.name = id;
-                frame.className = 'ke-hidden';
-
-                var srcScript = 'document.open();' +
-                    // The document domain must be set any time we
-                    // call document.open().
-                    ( Utils.isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
-                    'document.close();';
-                if (UA['ie']) {
-                    frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
-                }
-                S.log("doFormUpload : " + frame.src);
-                document.body.appendChild(frame);
-
-                if (UA['ie']) {
-                    document['frames'][id].name = id;
-                }
-
-                var form = o.form,
-                    buf = {
-                        target:DOM.attr(form, "target"),
-                        method:DOM.attr(form, "method"),
-                        encoding:DOM.attr(form, "encoding"),
-                        enctype:DOM.attr(form, "enctype"),
-                        "action":DOM.attr(form, "action")
-                    };
-                DOM.attr(form, {
-                    target:id,
-                    "method":"post",
-                    enctype:'multipart/form-data',
-                    encoding:'multipart/form-data'
-                });
-                if (url) {
-                    DOM.attr(form, "action", url);
-                }
-                var hiddens, hd;
-                if (ps) { // add dynamic params
-                    hiddens = [];
-                    ps = Editor.Utils.normParams(ps);
-                    for (var k in ps) {
-                        if (ps.hasOwnProperty(k)) {
-                            hd = document.createElement('input');
-                            hd.type = 'hidden';
-                            hd.name = k;
-                            hd.value = ps[k];
-                            form.appendChild(hd);
-                            hiddens.push(hd);
-                        }
-                    }
-                }
-
-                function cb() {
-                    var r = {  // bogus response object
-                        responseText:'',
-                        responseXML:NULL
-                    };
-
-                    r.argument = o ? o.argument : NULL;
-
-                    try { //
-                        var doc;
-                        if (UA['ie']) {
-                            doc = frame.contentWindow.document;
-                        } else {
-                            doc = (frame.contentDocument || window.frames[id].document);
-                        }
-
-                        if (doc && doc.body) {
-                            r.responseText = S.trim(DOM.text(doc.body));
-                        }
-                        if (doc && doc['XMLDocument']) {
-                            r.responseXML = doc['XMLDocument'];
-                        } else {
-                            r.responseXML = doc;
-                        }
-
-                    }
-                    catch (e) {
-                        // ignore
-                        // 2010-11-15 由于外边设置了document.domain导致读不到数据抛异常
-                        S.log("after data returns error ,maybe domain problem:");
-                        S.log(e, "error");
-                    }
-
-                    Event.remove(frame, 'load', cb);
-                    o.callback && o.callback(r);
-
-                    setTimeout(function () {
-                        DOM._4e_remove(frame);
-                    }, 100);
-
-                }
-
-                Event.on(frame, 'load', cb);
-
-                form.submit();
-
-                DOM.attr(form, buf);
-
-                if (hiddens) { // remove dynamic params
-                    for (var i = 0, len = hiddens.length; i < len; i++) {
-                        DOM._4e_remove(hiddens[i]);
-                    }
-                }
-                return frame;
             },
 
             map:function (arr, callback) {

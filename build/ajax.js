@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:44
+build time: May 23 14:32
 */
 /**
  * @fileOverview form data  serialization util
@@ -74,33 +74,46 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             // iframe 到其他类型的转化和 text 一样
             iframe:io.getConfig().converters.text,
             text:{
+                // fake type, just mirror
                 iframe:function (text) {
                     return text;
+                }
+            },
+            xml:{
+                // fake type, just mirror
+                iframe:function (xml) {
+                    return xml;
                 }
             }
         }
     });
 
     function createIframe(xhr) {
-        var id = S.guid("ajax-iframe");
-        xhr.iframe = DOM.create("<iframe " +
+        var id = S.guid("ajax-iframe"),
+            iframe,
+            src = DOM._genEmptyIframeSrc();
+
+        iframe = xhr.iframe = DOM.create("<iframe " +
+            // ie6 need this when cross domain
+            (src ? (" src=\"" + src + "\" ") : "") +
             " id='" + id + "'" +
             // need name for target of form
             " name='" + id + "'" +
             " style='position:absolute;left:-9999px;top:-9999px;'/>");
-        xhr.iframeId = id;
-        DOM.prepend(xhr.iframe, doc.body || doc.documentElement);
+
+        DOM.prepend(iframe, doc.body || doc.documentElement);
+        return iframe;
     }
 
     function addDataToForm(data, form, serializeArray) {
         data = S.unparam(data);
-        var ret = [];
-        for (var d in data) {
-            var isArray = S.isArray(data[d]),
-                vs = S.makeArray(data[d]);
+        var ret = [], d, isArray, vs, i, e;
+        for (d in data) {
+            isArray = S.isArray(data[d]);
+            vs = S.makeArray(data[d]);
             // 数组和原生一样对待，创建多个同名输入域
-            for (var i = 0; i < vs.length; i++) {
-                var e = doc.createElement("input");
+            for (i = 0; i < vs.length; i++) {
+                e = doc.createElement("input");
                 e.type = 'hidden';
                 e.name = d + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
@@ -110,7 +123,6 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         }
         return ret;
     }
-
 
     function removeFieldsFromData(fields) {
         DOM.remove(fields);
@@ -127,20 +139,28 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 xhrObject = self.xhrObject,
                 c = xhrObject.config,
                 fields,
+                iframe,
                 form = DOM.get(c.form);
 
             self.attrs = {
                 target:DOM.attr(form, "target") || "",
-                action:DOM.attr(form, "action") || ""
+                action:DOM.attr(form, "action") || "",
+                // enctype 区分 iframe 与 serialize
+                //encoding:DOM.attr(form, "encoding"),
+                //enctype:DOM.attr(form, "enctype"),
+                method:DOM.attr(form, "method")
             };
             self.form = form;
 
-            createIframe(xhrObject);
+            iframe = createIframe(xhrObject);
 
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
-                "target":xhrObject.iframeId,
-                "action":c.url
+                target:iframe.id,
+                action:c.url,
+                method:"post"
+                //enctype:'multipart/form-data',
+                //encoding:'multipart/form-data'
             });
 
             if (c.data) {
@@ -148,21 +168,20 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             }
 
             self.fields = fields;
-
-            var iframe = xhrObject.iframe;
-
-            Event.on(iframe, "load error", self._callback, self);
-
-            form.submit();
+            // ie6 need a setTimeout to avoid handling load triggered if set iframe src
+            setTimeout(function () {
+                Event.on(iframe, "load error", self._callback, self);
+                form.submit();
+            }, 10);
 
         },
 
-        _callback:function (event, abort) {
-            //debugger
-            var self=this,
+        _callback:function (event/*, abort*/) {
+            var self = this,
                 form = self.form,
                 xhrObject = self.xhrObject,
                 eventType = event.type,
+                iframeDoc,
                 iframe = xhrObject.iframe;
 
             // 防止重复调用 , 成功后 abort
@@ -172,30 +191,53 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
             DOM.attr(form, self.attrs);
 
-            if (eventType == "load") {
-                var iframeDoc = iframe.contentWindow.document;
-                xhrObject.responseXML = iframeDoc;
-                xhrObject.responseText = DOM.text(iframeDoc.body);
-                xhrObject._xhrReady(OK_CODE, "success");
-            } else if (eventType == 'error') {
-                xhrObject._xhrReady(ERROR_CODE, "error");
-            }
-
             removeFieldsFromData(this.fields);
 
             Event.detach(iframe);
 
             setTimeout(function () {
-                // firefox will keep loading if not settimeout
+                // firefox will keep loading if not set timeout
                 DOM.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
             xhrObject.iframe = null;
+
+            if (eventType == "load") {
+                iframeDoc = iframe.contentWindow.document;
+                // ie<9
+                if (iframeDoc && iframeDoc.body) {
+                    xhrObject.responseText = S.trim(DOM.text(iframeDoc.body));
+                    // ie still can retrieve xml 's responseText
+                    if (S.startsWith(xhrObject.responseText, "<?xml")) {
+                        xhrObject.responseText = undefined;
+                    }
+                }
+                // ie<9
+                // http://help.dottoro.com/ljbcjfot.php
+                // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
+                /*
+                 In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
+                 To get an XMLDocument object that represents the embedded XML data island,
+                 use the XMLDocument property of the xml element.
+                 Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
+                 */
+                if (iframeDoc && iframeDoc['XMLDocument']) {
+                    xhrObject.responseXML = iframeDoc['XMLDocument'];
+                }
+                // ie9 firefox chrome
+                else {
+                    xhrObject.responseXML = iframeDoc;
+                }
+
+                xhrObject._xhrReady(OK_CODE, "success");
+            } else if (eventType == 'error') {
+                xhrObject._xhrReady(ERROR_CODE, "error");
+            }
         },
 
         abort:function () {
-            this._callback({}, 1);
+            this._callback({});
         }
     });
 
@@ -561,7 +603,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
-        // get individual response header from responseheader str
+    // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhrObject) {
@@ -599,7 +641,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                     }
                 }
             }
-            // 服务器端没有告知（并且客户端没有mimetype）默认 text 类型
+            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
             dataType[0] = dataType[0] || "text";
 
             //获得合适的初始数据
@@ -610,12 +652,13 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
+                var rawData = {text:text, xml:xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
                         converter = xConverts[prevType] && xConverts[prevType][type] ||
                             cConverts[prevType] && cConverts[prevType][type];
-                    if (converter) {
+                    if (converter && rawData[prevType]) {
                         dataType.unshift(prevType);
                         responseData = prevType == "text" ? text : xml;
                         return false;
@@ -1740,20 +1783,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
  * @fileOverview process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
+KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
 
-    io.on("start", function(e) {
+    io.on("start", function (e) {
         var xhrObject = e.xhr,
+            form,
+            d,
+            enctype,
+            formParam,
             c = xhrObject.config;
         // serialize form if needed
         if (c.form) {
-            var form = DOM.get(c.form),
-                enctype = form['encoding'] || form.enctype;
+            form = DOM.get(c.form);
+            enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
-                var formParam = FormSerializer.serialize(form);
-
+                formParam = FormSerializer.serialize(form);
                 if (formParam) {
                     if (c.hasContent) {
                         // post 加到 data 中
@@ -1768,7 +1814,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
                     }
                 }
             } else {
-                var d = c.dataType[0];
+                d = c.dataType[0];
                 if (d == "*") {
                     d = "text";
                 }
@@ -1782,8 +1828,8 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-        requires:['./base',"dom","./FormSerializer"]
-    });/**
+    requires:['./base', "dom", "./FormSerializer"]
+});/**
  * @fileOverview jsonp transport based on script transport
  * @author  yiminghe@gmail.com
  */

@@ -30,15 +30,15 @@
 <script type="text/javascript" src=".././src/ajax.js"></script>
 <script src="serialize-spec.js"></script>
 <script src="ajax-spec.js"></script>
-<script src="1.2-spec.js"></script>
-<script src="xdr-spec.js"></script>
 <script src="promise/io-promise-spec.js"></script>
+<script src="advanced-spec.js"></script>
+<script src="xdr-spec.js"></script>
 </head>
 <body>
 <h1>KISSY.Ajax Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
+    jasmine.getEnv().execute(function () {
         if (parent && parent.jasmine.kissyNext) {
             parent.jasmine.kissyNext(this.results().failedCount);
         }

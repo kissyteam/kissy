@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 22 17:16
+build time: May 23 14:33
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 22 17:16
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120522171635';
+        S.__BUILD_TIME = '20120523143300';
     })();
 
     return S;
@@ -4024,7 +4024,7 @@ build time: May 22 17:16
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120522171635'
+        tag:'20120523143300'
     }, getBaseInfo()));
 
     /**
@@ -4060,13 +4060,13 @@ build time: May 22 17:16
 
         readyPromise = readyDefer.promise,
 
-        // The number of poll times.
+    // The number of poll times.
         POLL_RETRYS = 500,
 
-        // The poll interval in milliseconds.
+    // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
 
-        // #id or id
+    // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
@@ -4094,10 +4094,14 @@ build time: May 22 17:16
              * @param {String} data
              */
             parseXML:function (data) {
+                // already a xml
+                if (data.documentElement) {
+                    return data;
+                }
                 var xml;
                 try {
                     // Standard
-                    if (win.DOMParser) {
+                    if (win['DOMParser']) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");

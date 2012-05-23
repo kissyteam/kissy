@@ -2,7 +2,7 @@
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchable, Select) {
+KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Switchable, Select) {
     var dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
         UA = S.UA,
@@ -51,7 +51,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
             "</label>" +
             "</div>" +
             "<div style='position:relative;display: none'>" +
-            "<form class='ke-img-upload-form' method='post'>" +
+            "<form class='ke-img-upload-form' enctype='multipart/form-data'>" +
             "<p style='zoom:1;'>" +
             "<input class='ke-input ke-img-local-url' " +
             "readonly='readonly' " +
@@ -231,6 +231,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
             placeholder(self.imgHeight, AUTOMATIC_TIP);
             placeholder(self.imgWidth, AUTOMATIC_TIP);
             placeholder(self.imgLink, "http://");
+
             self.imgHeight.on("keyup", function () {
                 var v = parseInt(valInput(self.imgHeight));
                 if (!v ||
@@ -241,6 +242,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
                 }
                 valInput(self.imgWidth, Math.floor(v * self.imgRatioValue));
             });
+
             self.imgWidth.on("keyup", function () {
                 var v = parseInt(valInput(self.imgWidth));
                 if (!v ||
@@ -263,24 +265,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
                 "left:-9999px;" +
                 "top:-9999px;" +
                 "'>取消上传</a>").appendTo(document.body, undefined);
-
-            /**
-             * 取消当前iframe的上传
-             */
-            var uploadIframe = null;
-            loadingCancel.on("click", function (ev) {
-                ev && ev.halt();
-                self.d.unloading();
-                if (uploadIframe) {
-                    Event.remove(uploadIframe, "load");
-                    DOM.remove(uploadIframe);
-                }
-                loadingCancel.css({
-                    left:-9999,
-                    top:-9999
-                });
-                uploadIframe = null;
-            });
 
             function getFileSize(file) {
                 if (file['files']) {
@@ -328,25 +312,34 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
 
                     self.d.loading();
 
-                    uploadIframe = Editor.Utils.doFormUpload({
-                        form:self.uploadForm,
-                        callback:function (r) {
-                            uploadIframe = null;
+                    /**
+                     * 取消当前iframe的上传
+                     */
+                    loadingCancel.on("click", function (ev) {
+                        ev.halt();
+                        self.d.unloading();
+                        uploadIO.abort();
+                        loadingCancel.css({
+                            left:-9999,
+                            top:-9999
+                        });
+                    });
+
+                    var uploadIO = IO({
+                        data:Editor.Utils.normParams(self.cfg['serverParams']),
+                        url:self.cfg['serverUrl'],
+                        form:self.uploadForm[0],
+                        dataType:'json',
+                        type:'post',
+                        complete:function (data) {
                             loadingCancel.css({
                                 left:-9999,
                                 top:-9999
                             });
-                            var data = S.trim(r.responseText)
-                                .replace(/\r|\n/g, "");
                             self.d.unloading();
-                            try {
-                                //ie parse error,不抛异常
-                                data = JSON.parse(data);
-                            } catch (e) {
-                                S.log(data);
-                                data = null;
+                            if (!data) {
+                                data = {error:"服务器出错，请重试"};
                             }
-                            if (!data) data = {error:"服务器出错，请重试"};
                             if (data.error) {
                                 alert(data.error);
                                 return;
@@ -357,7 +350,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
                             new Image().src = data['imgUrl'];
                             self._insert();
                         }
-                    }, self.cfg['serverParams'], self.cfg['serverUrl']);
+                    });
 
                     var loadingMaskEl = self.d.get("el"),
                         offset = loadingMaskEl.offset(),
@@ -573,5 +566,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, Editor, Overlay4E, Switchab
 
     return ImageDialog;
 }, {
-    requires:['editor', '../overlay/', 'switchable', '../select/']
+    requires:['ajax', 'editor', '../overlay/', 'switchable', '../select/']
 });

@@ -85,7 +85,7 @@ KISSY.use('editor', function (S, Editor) {
             "image":{
                 // remote:false,
                 upload:{
-                    serverUrl:"/kissy_git/kissy-demo/upload.php",
+                    serverUrl:"upload.php",
                     serverParams:{
                         waterMark:function () {
                             return S.one("#ke_img_up_watermark_1")[0].checked;
@@ -158,7 +158,7 @@ KISSY.use('editor', function (S, Editor) {
                 defaultValue:"SimSun"
             },
             "multipleUpload":{
-                serverUrl:"/kissy_git/kissy-demo/upload.php",
+                serverUrl:"upload.php",
                 serverParams:{
                     waterMark:function () {
                         return S.one("#ke_img_up_watermark_2")[0].checked;
@@ -259,7 +259,7 @@ KISSY.use('editor', function (S, Editor) {
                 suffix:"png,jpg,jpeg,gif",
                 fileInput:"Filedata",
                 sizeLimit:1000,
-                serverUrl:"/kissy_git/kissy-demo/upload.php",
+                serverUrl:"upload.php",
                 serverParams:{
                     waterMark:function () {
                         return true;

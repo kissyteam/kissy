@@ -8,7 +8,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
-        // get individual response header from responseheader str
+    // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhrObject) {
@@ -46,7 +46,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                     }
                 }
             }
-            // 服务器端没有告知（并且客户端没有mimetype）默认 text 类型
+            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
             dataType[0] = dataType[0] || "text";
 
             //获得合适的初始数据
@@ -57,12 +57,13 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
+                var rawData = {text:text, xml:xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
                         converter = xConverts[prevType] && xConverts[prevType][type] ||
                             cConverts[prevType] && cConverts[prevType][type];
-                    if (converter) {
+                    if (converter && rawData[prevType]) {
                         dataType.unshift(prevType);
                         responseData = prevType == "text" ? text : xml;
                         return false;

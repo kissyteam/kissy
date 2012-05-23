@@ -1,10 +1,10 @@
 /**
- * 1.2 new testcases
+ * advanced ajax tc
  * @author  yiminghe@gmail.com
  **/
 KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;
-    describe("ajax@1.2", function () {
+    describe("advanced ajax", function () {
 
         it("should jsonp with array arguments", function () {
             var re = false, data;
@@ -373,6 +373,34 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             });
         });
 
+        it("fileupload support xml return data", function () {
+            var form = $('<form enctype="multipart/form-data">' +
+                '<input name="test" value=\'1\'/>' +
+                '<input name="test2" value=\'2\'/>' +
+                '</form>').appendTo("body");
+
+            var ok = 0;
+
+            io({
+                form:form[0],
+                dataType:'xml',
+                url:'form/ret.php',
+                success:function (data) {
+                    expect(data.nodeType).toBe(9);
+                    expect(data.documentElement.nodeType).toBe(1);
+                    ok = 1;
+                }
+            });
+
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            runs(function () {
+                form.remove();
+            });
+        });
 
     });
 });

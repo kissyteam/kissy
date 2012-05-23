@@ -3,6 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
+    var $ = Node.all;
+
     describe("xdr", function () {
 
         it("should works for any domain", function () {
@@ -16,7 +18,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     // yiminghe:1
                 },
                 dataType:'json',
-                url:'http://yiminghe.daily.taobao.net/' +
+                url:'http://yiminghe.taobao.com/' +
                     'kissy_git/kissy/src/ajax/tests/xdr/xdr.php',
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
@@ -44,7 +46,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                         // yiminghe:1
                     },
                     dataType:'json',
-                    url:'http://yiminghe.daily.taobao.net/' +
+                    url:'http://yiminghe.taobao.com/' +
                         'kissy_git/kissy/src/ajax/tests/xdr/xdr.php',
                     xhrFields:{
                         // Cannot use wildcard in Access-Control-Allow-Origin
@@ -103,6 +105,37 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 expect(ret).toEqual(['s', 'c']);
             });
 
+        });
+
+
+        it("should support cross subdomain fileupload", function () {
+            var form = $('<form enctype="multipart/form-data">' +
+                '<input name="test" value=\'1\'/>' +
+                '<input name="test2" value=\'2\'/>' +
+                '</form>').appendTo("body");
+
+            var ok = 0;
+
+            document.domain = 'ali.com';
+
+            io({
+                form:form[0],
+                dataType:'json',
+                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy/src/ajax/tests/subdomain/upload.php',
+                success:function (data) {
+                    expect(data.test).toBe('1');
+                    expect(data.test2).toBe('2');
+                    ok = 1;
+                }
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            runs(function () {
+                form.remove();
+            });
         });
 
     });

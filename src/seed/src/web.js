@@ -21,13 +21,13 @@
 
         readyPromise = readyDefer.promise,
 
-        // The number of poll times.
+    // The number of poll times.
         POLL_RETRYS = 500,
 
-        // The poll interval in milliseconds.
+    // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
 
-        // #id or id
+    // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
@@ -55,10 +55,14 @@
              * @param {String} data
              */
             parseXML:function (data) {
+                // already a xml
+                if (data.documentElement) {
+                    return data;
+                }
                 var xml;
                 try {
                     // Standard
-                    if (win.DOMParser) {
+                    if (win['DOMParser']) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");
