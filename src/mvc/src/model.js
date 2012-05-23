@@ -2,7 +2,7 @@
  * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function (S, Base, mvcSync) {
+KISSY.add("mvc/model", function (S, Base) {
 
     var blacklist = [
         "idAttribute",
@@ -246,7 +246,7 @@ KISSY.add("mvc/model", function (S, Base, mvcSync) {
                  */
                 sync:{
                     value:function () {
-                        mvcSync.apply(this, arguments);
+                        S.require("mvc").sync.apply(this, arguments);
                     }
                 },
                 /**
@@ -296,5 +296,5 @@ KISSY.add("mvc/model", function (S, Base, mvcSync) {
     return Model;
 
 }, {
-    requires:['base', './sync']
+    requires:['base']
 });

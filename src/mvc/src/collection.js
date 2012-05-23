@@ -2,7 +2,7 @@
  * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
+KISSY.add("mvc/collection", function (S, Event, Model, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -77,7 +77,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
          */
         sync:{
             value:function () {
-                sync.apply(this, arguments);
+                S.require("mvc").sync.apply(this, arguments);
             }
         },
         /**
@@ -304,5 +304,5 @@ KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
     return Collection;
 
 }, {
-    requires:['event', './model', './sync', 'base']
+    requires:['event', './model', 'base']
 });

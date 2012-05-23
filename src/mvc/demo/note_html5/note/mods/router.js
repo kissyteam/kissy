@@ -2,7 +2,7 @@
  * 应用路由规则
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
+KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
 
     var $ = S.Node.all;
 
@@ -27,14 +27,14 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
 
     S.extend(NoteRouter, mvc.Router, {
 
-        _onEditSubmit:function(e) {
+        _onEditSubmit:function (e) {
             var note = e.note,
                 self = this,
                 notes = self.notesView.get("notes");
             if (note.isNew()) {
                 // 新建
                 notes.create(note, {
-                    success:function() {
+                    success:function () {
                         mvc.Router.navigate("");
                     }
                 });
@@ -43,7 +43,7 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
                 exits.set(note.toJSON());
                 // 修改
                 exits.save({
-                    success:function() {
+                    success:function () {
                         mvc.Router.navigate("");
                     }
                 });
@@ -53,7 +53,7 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
         /**
          * 展示笔记列表
          */
-        index:function() {
+        index:function () {
             var self = this;
             $(".page").hide();
             self.notesView.get("el").show();
@@ -62,7 +62,7 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
         /**
          * 编辑笔记动作，弹出编辑界面
          */
-        editNote:function(paths) {
+        editNote:function (paths) {
             var self = this,
                 id = paths.id,
                 note = new NoteModel({
@@ -72,7 +72,7 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
             // 载入笔记的其他信息
             // 没的话可以直接 note=notes.getById(id)
             note.load({
-                success:function() {
+                success:function () {
                     $(".page").hide();
                     editView.set("note", note);
                     /*根据note模型，重新渲染编辑界面*/
@@ -86,7 +86,7 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
         /**
          * 新键笔记，弹出编辑界面
          */
-        newNote:function() {
+        newNote:function () {
             var self = this,
                 editView = self.editView;
             $(".page").hide();
@@ -95,14 +95,14 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
             editView.render().get("el").show();
         },
 
-        search:function(path, query) {
-            var q = decodeURIComponent(query.q),self = this;
+        search:function (path, query) {
+            var q = decodeURIComponent(query.q), self = this;
             self.searchView.searchInput.val(q);
             self.searchView.get("notes").load({
                 data:{
                     q:q
                 },
-                success:function() {
+                success:function () {
                     $(".page").hide();
                     self.searchView.get("el").show();
                 }
@@ -128,5 +128,5 @@ KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel
 
     return NoteRouter;
 }, {
-    requires:['node','mvc','./NotesView','./EditView','./NotesCollection','./NoteModel','./SearchView']
+    requires:['node', 'mvc', './NotesView', './EditView', './NotesCollection', './NoteModel', './SearchView']
 });

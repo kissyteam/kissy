@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 20:51
+build time: May 23 18:29
 */
 /**
  * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
+KISSY.add("mvc/collection", function (S, Event, Model, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -82,7 +82,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
          */
         sync:{
             value:function () {
-                sync.apply(this, arguments);
+                S.require("mvc").sync.apply(this, arguments);
             }
         },
         /**
@@ -309,12 +309,12 @@ KISSY.add("mvc/collection", function (S, Event, Model, sync, Base) {
     return Collection;
 
 }, {
-    requires:['event', './model', './sync', 'base']
+    requires:['event', './model', 'base']
 });/**
  * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function (S, Base, mvcSync) {
+KISSY.add("mvc/model", function (S, Base) {
 
     var blacklist = [
         "idAttribute",
@@ -558,7 +558,7 @@ KISSY.add("mvc/model", function (S, Base, mvcSync) {
                  */
                 sync:{
                     value:function () {
-                        mvcSync.apply(this, arguments);
+                        S.require("mvc").sync.apply(this, arguments);
                     }
                 },
                 /**
@@ -608,7 +608,7 @@ KISSY.add("mvc/model", function (S, Base, mvcSync) {
     return Model;
 
 }, {
-    requires:['base', './sync']
+    requires:['base']
 });/**
  * @fileOverview KISSY's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
