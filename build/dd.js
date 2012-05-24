@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 18 16:54
+build time: May 24 11:31
 */
 /**
  * @fileOverview Config constrain region for drag and drop

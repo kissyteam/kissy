@@ -30,9 +30,9 @@
 
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
-
-        <delete dir="${component.build.dir}"/>
-
+        <!--
+            <delete dir="${component.build.dir}"/>
+        -->
         <mkdir dir="${component.build.dir}"/>
 
         <copy todir="${component.build.dir}">
@@ -55,6 +55,7 @@
         <apply executable="java" verbose="true"
                dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
+                     excludes="**/*-min.css"
                      includes="**/*.css"/>
             <arg line="-jar"/>
             <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
@@ -69,6 +70,7 @@
         <apply executable="java" verbose="true"
                dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
+                     excludes="**/*-min.js"
                      includes="**/*.js"
                     />
             <arg line="-jar"/>

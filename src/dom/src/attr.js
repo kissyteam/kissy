@@ -11,7 +11,6 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 'innerText' : 'textContent',
             EMPTY = '',
             nodeName = DOM.nodeName,
-            isElementNode = DOM._isElementNode,
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
             rclickable = /^a(?:rea)?$/i,
@@ -152,10 +151,6 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         return values;
                     }
                 }};
-
-        function isTextNode(elem) {
-            return DOM._nodeTypeIs(elem, DOM.TEXT_NODE);
-        }
 
         if (oldIE) {
 
@@ -464,7 +459,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var els = DOM.query(selector), el, i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (isElementNode(el)) {
+                        if (el.nodeType==DOM.ELEMENT_NODE) {
                             var propName;
                             el.removeAttribute(name);
                             // Set corresponding property to false for boolean attributes
@@ -593,10 +588,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         var el = DOM.get(selector);
 
                         // only gets value on supported nodes
-                        if (isElementNode(el)) {
+                        if (el.nodeType==DOM.ELEMENT_NODE) {
                             return el[TEXT] || EMPTY;
                         }
-                        else if (isTextNode(el)) {
+                        else if (el.nodeType==DOM.TEXT_NODE) {
                             return el.nodeValue;
                         }
                         return undefined;
@@ -606,10 +601,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         var els = DOM.query(selector), i;
                         for (i = els.length - 1; i >= 0; i--) {
                             el = els[i];
-                            if (isElementNode(el)) {
+                            if (el.nodeType==DOM.ELEMENT_NODE) {
                                 el[TEXT] = val;
                             }
-                            else if (isTextNode(el)) {
+                            else if (el.nodeType==DOM.TEXT_NODE) {
                                 el.nodeValue = val;
                             }
                         }

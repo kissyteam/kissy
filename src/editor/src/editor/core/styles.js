@@ -27,7 +27,7 @@ KISSY.add("editor/core/styles", function (S) {
         KESelection = Editor.Selection,
         KEP = Editor.POSITION,
         KERange = Editor.Range,
-        //Walker = Editor.Walker,
+    //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
         ElementPath = Editor.ElementPath,
@@ -310,7 +310,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         // Builds the StyleText.
         var stylesText = ( styleDefinition["attributes"]
-            && styleDefinition["attributes"][ 'style' ] ) || '',
+                && styleDefinition["attributes"][ 'style' ] ) || '',
             specialStylesText = '';
 
         if (stylesText.length)
@@ -344,7 +344,7 @@ KISSY.add("editor/core/styles", function (S) {
 
     function getElement(style, targetDocument, element) {
         var el,
-            //def = style._.definition,
+        //def = style._.definition,
             elementName = style["element"];
 
         // The "*" element name will always be a span for this function.
@@ -459,7 +459,7 @@ KISSY.add("editor/core/styles", function (S) {
         // Exclude the ones at header OR at tail,
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
-            //blockName = preBlock.nodeName(),
+        //blockName = preBlock.nodeName(),
             splittedHtml = replace(preBlock._4e_outerHtml(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
@@ -584,7 +584,7 @@ KISSY.add("editor/core/styles", function (S) {
         var elementName = this["element"],
             def = this._["definition"],
             isUnknownElement,
-            // Get the DTD definition for the element. Defaults to "span".
+        // Get the DTD definition for the element. Defaults to "span".
             dtd = DTD[ elementName ];
         if (!dtd) {
             isUnknownElement = TRUE;
@@ -732,7 +732,7 @@ KISSY.add("editor/core/styles", function (S) {
                 // Build the style element, based on the style object definition.
                 var styleNode = getElement(self, document, undefined),
 
-                    // Get the element that holds the entire range.
+                // Get the element that holds the entire range.
                     parent = styleRange.getCommonAncestor();
 
 
@@ -873,7 +873,7 @@ KISSY.add("editor/core/styles", function (S) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-                // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elementspatch which we should jump out of.
                 boundaryElement;
 
 
@@ -887,8 +887,9 @@ KISSY.add("editor/core/styles", function (S) {
                  *  also make sure other inner styles were well preserverd.(#3309)
                  */
                 if (element == startPath.block ||
-                    element == startPath.blockLimit)
+                    element == startPath.blockLimit) {
                     break;
+                }
                 if (this.checkElementRemovable(element)) {
                     var endOfElement = range.checkBoundaryOfElement(element, KER.END),
                         startOfElement = !endOfElement &&
@@ -922,7 +923,7 @@ KISSY.add("editor/core/styles", function (S) {
             // Re-create the style tree after/before the boundary element,
             // the replication start from bookmark start node to define the
             // new range.
-            if (boundaryElement.length) {
+            if (boundaryElement) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
                     var newElement = startPath.elements[ i ];
@@ -1102,7 +1103,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         var length = 0,
 
-            // Loop through all defined attributes.
+        // Loop through all defined attributes.
             styleAttribs = styleDefinition["attributes"];
         if (styleAttribs) {
             for (var styleAtt in styleAttribs) {
@@ -1220,7 +1221,7 @@ KISSY.add("editor/core/styles", function (S) {
                 (overrides[ element.nodeName()] || overrides["*"] || {})["attributes"]),
             styles = Utils.mix(def["styles"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["styles"]),
-            // If the style is only about the element itself, we have to remove the element.
+        // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&
                 S.isEmptyObject(styles);
 
@@ -1272,8 +1273,8 @@ KISSY.add("editor/core/styles", function (S) {
     // Removes a style from inside an element.
     function removeFromInsideElement(style, element) {
         var //def = style._.definition,
-            //attribs = def.attributes,
-            //styles = def.styles,
+        //attribs = def.attributes,
+        //styles = def.styles,
             overrides = getOverrides(style),
             innerElements = element.all(style["element"]);
 

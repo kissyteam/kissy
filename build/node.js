@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 11:58
+build time: May 24 11:31
 */
 /**
  * @fileOverview anim-node-plugin
@@ -466,7 +466,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         }
     });
 
-    S.mix(NodeList, DOM._NODE_TYPE);
+    S.mix(NodeList, DOM.NodeTypes);
 
     return NodeList;
 }, {
@@ -507,7 +507,8 @@ KISSY.add("node", function (S, Event, Node) {
         "node/base",
         "node/attach",
         "node/override",
-        "node/anim"]
+        "node/anim"
+    ]
 });/**
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com

@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var movie = Editor.Utils.debugUrl("/plugin/localStorage/swfstore.swf?t=" + (+new Date()));
+    var movie = Editor.Utils.debugUrl("plugin/localStorage/swfstore.swf?t=" + (+new Date()));
 
     var store = new FlashBridge({
         movie:movie,

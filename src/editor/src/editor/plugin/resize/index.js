@@ -36,14 +36,12 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 resizer.css("display", "");
             });
 
-            resizer.unselectable();
-
             var d = new Draggable({
-                node:resizer
-            }),
+                    node:resizer
+                }),
                 height = 0,
                 width = 0,
-                heightEl = editor.get("iframeWrapEl"),
+                heightEl = editor.get("el"),
                 widthEl = editor.get("el");
 
             d.on("dragstart", function () {

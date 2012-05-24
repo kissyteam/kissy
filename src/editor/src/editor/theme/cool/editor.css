@@ -84,23 +84,23 @@ ke-toolbar-padding {
 }
 
 .ke-toolbar-source {
-    background-image: url("sourceArea.png"); /** sprite-ref: mysprite; */
+    background-image: url("sourceArea.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-preview {
-    background-image: url("preview.png"); /** sprite-ref: mysprite; */
+    background-image: url("preview.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-bold {
-    background-image: url("bold.png"); /** sprite-ref: mysprite; */
+    background-image: url("bold.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-italic {
-    background-image: url("italic.png"); /** sprite-ref: mysprite; */
+    background-image: url("italic.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-underline {
-    background-image: url("underline.png"); /** sprite-ref: mysprite; */
+    background-image: url("underline.png"); /** sprite-ref: cool; */
     height: 11px;
     margin-top: 5px;
     margin-bottom: 4px;
@@ -110,57 +110,57 @@ ke-toolbar-padding {
 }
 
 .ke-toolbar-strikeThrough {
-    background-image: url("strike.png"); /** sprite-ref: mysprite; */
+    background-image: url("strike.png"); /** sprite-ref: cool; */
     height: 11px;
     margin-top: 4px;
     margin-bottom: 5px;
 }
 
 .ke-toolbar-ol {
-    background-image: url("ol.png"); /** sprite-ref: mysprite; */
+    background-image: url("ol.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-ul {
-    background-image: url("ul.png"); /** sprite-ref: mysprite; */
+    background-image: url("ul.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-outdent {
-    background-image: url("outdent.png"); /** sprite-ref: mysprite; */
+    background-image: url("outdent.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-indent {
-    background-image: url("indent.png"); /** sprite-ref: mysprite; */
+    background-image: url("indent.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-justifyLeft {
-    background-image: url("justify-left.png"); /** sprite-ref: mysprite; */
+    background-image: url("justify-left.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-justifyCenter {
-    background-image: url("justify-center.png"); /** sprite-ref: mysprite; */
+    background-image: url("justify-center.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-justifyRight {
-    background-image: url("justify-right.png"); /** sprite-ref: mysprite; */
+    background-image: url("justify-right.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-image {
-    background-image: url("image.png"); /** sprite-ref: mysprite; */
+    background-image: url("image.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-mul-image {
-    background-image: url("mul-image.png"); /** sprite-ref: mysprite; */
+    background-image: url("mul-image.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-back-color {
-    background-image: url("bgcolor.png"); /** sprite-ref: mysprite; */
+    background-image: url("bgcolor.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 15px;
     margin-top: 3px;
 }
 
 .ke-toolbar-fore-color {
-    background-image: url("color.png"); /** sprite-ref: mysprite; */
+    background-image: url("color.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 14px;
     margin-top: 3px;
@@ -168,60 +168,60 @@ ke-toolbar-padding {
 }
 
 .ke-toolbar-undo {
-    background-image: url("undo.png"); /** sprite-ref: mysprite; */
+    background-image: url("undo.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-redo {
-    background-image: url("redo.png"); /** sprite-ref: mysprite; */
+    background-image: url("redo.png"); /** sprite-ref: cool; */
     height: 15px;
     margin: 3px 4px;
 }
 
 .ke-toolbar-table {
-    background-image: url("table.png"); /** sprite-ref: mysprite; */
+    background-image: url("table.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-template {
-    background-image: url("templates.png"); /** sprite-ref: mysprite; */
+    background-image: url("templates.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-maximize {
-    background-image: url("maximize.png"); /** sprite-ref: mysprite; */
+    background-image: url("maximize.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-flash {
-    background-image: url("flash.png"); /** sprite-ref: mysprite; */
+    background-image: url("flash.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-link {
-    background-image: url("link.png"); /** sprite-ref: mysprite; */
+    background-image: url("link.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-music {
-    background-image: url("music.png"); /** sprite-ref: mysprite; */
+    background-image: url("music.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-video {
-    background-image: url("video.png"); /** sprite-ref: mysprite; */
+    background-image: url("video.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-smiley {
-    background-image: url("smiley.png"); /** sprite-ref: mysprite; */
+    background-image: url("smiley.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-removeformat {
-    background-image: url("removeformat.png"); /** sprite-ref: mysprite; */
+    background-image: url("removeformat.png"); /** sprite-ref: cool; */
 }
 
 .ke-toolbar-pagebreak {
-    background-image: url("pagebreak.png"); /** sprite-ref: mysprite; */
+    background-image: url("pagebreak.png"); /** sprite-ref: cool; */
     height: 12px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
 .ke-toolbar-restore {
-    background-image: url("restore.png"); /** sprite-ref: mysprite; */
+    background-image: url("restore.png"); /** sprite-ref: cool; */
 }
 
 .ke-input {

@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         Node = S.Node,
         Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
-        movie = Editor.Utils.debugUrl("/plugin/uploader/uploader.longzang.swf"),
+        movie = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
         name = "ke-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 

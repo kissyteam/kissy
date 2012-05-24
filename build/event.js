@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:44
+build time: May 24 11:31
 */
 /**
  * @fileOverview responsible for registering event
@@ -884,7 +884,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
             timer,
 
-            // 用于定时器检测，上次定时器记录的 hash 值
+        // 用于定时器检测，上次定时器记录的 hash 值
             lastHash,
 
             poll = function () {
@@ -903,14 +903,14 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // S.log("set iframe html :" + hash);
 
                 var html = S.substitute(IFRAME_TEMPLATE, {
-                    // 防止 hash 里有代码造成 xss
-                    // 后面通过 innerText，相当于 unEscapeHTML
-                    hash:S.escapeHTML(hash),
-                    // 一定要加哦
-                    head:DOM._isCustomDomain() ? "<script>document.domain = '" +
-                        doc.domain
-                        + "';</script>" : ""
-                }),
+                        // 防止 hash 里有代码造成 xss
+                        // 后面通过 innerText，相当于 unEscapeHTML
+                        hash:S.escapeHTML(hash),
+                        // 一定要加哦
+                        head:DOM.isCustomDomain() ? ("<script>document.domain = '" +
+                            doc.domain
+                            + "';</script>") : ""
+                    }),
                     iframeDoc = getIframeDoc(iframe);
                 try {
                     // 写入历史 hash
@@ -953,7 +953,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
              */
             setup = function () {
                 if (!iframe) {
-                    var iframeSrc = DOM._genEmptyIframeSrc();
+                    var iframeSrc = DOM.getEmptyIframeSrc();
                     //http://www.paciellogroup.com/blog/?p=604
                     iframe = DOM.create('<iframe ' +
                         (iframeSrc ? 'src="' + iframeSrc + '"' : '') +

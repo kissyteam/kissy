@@ -32,7 +32,7 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe"),
             iframe,
-            src = DOM._genEmptyIframeSrc();
+            src = DOM.getEmptyIframeSrc();
 
         iframe = xhr.iframe = DOM.create("<iframe " +
             // ie6 need this when cross domain

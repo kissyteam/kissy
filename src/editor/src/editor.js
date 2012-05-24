@@ -48,7 +48,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
      */
     function prepareIFrameHtml(id, customStyle, customLink, data) {
         var links = "",
-            CSS_FILE = Editor.Utils.debugUrl("/theme/editor-iframe.css");
+            CSS_FILE = Editor.Utils.debugUrl("theme/editor-iframe.css");
         if (customLink) {
             for (var i = 0; i < customLink.length; i++) {
                 links += '<link ' +
@@ -175,9 +175,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 wrap.css(HEIGHT, th);
                 // ie textarea 100% 不起作用
                 textarea.css(HEIGHT, th);
-
-                // 高度由内层决定，工具条会变化
-                editorEl.css(HEIGHT, "");
             },
 
             /**
@@ -185,8 +182,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * width 依然在 el 上设置
              */
             _uiSetHeight:function (v) {
-                // S.log("_uiSetHeight : " + v);
-                var self = this;
+                var self = this,
+                    toolBarEl = self.get("toolBarEl"),
+                    statusBarEl = self.get("statusBarEl");
+                v = parseInt(v,10);
+                // 减去顶部和底部工具条高度
+                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+                    (statusBarEl && statusBarEl.outerHeight() || 0);
                 self.get("iframeWrapEl").css(HEIGHT, v);
                 self.get("textarea").css(HEIGHT, v);
             },

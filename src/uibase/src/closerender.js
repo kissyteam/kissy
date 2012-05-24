@@ -4,7 +4,7 @@
  */
 KISSY.add("uibase/closerender", function (S, Node) {
 
-    var CLS_PREFIX = 'ext-';
+    var CLS_PREFIX = 'ks-ext-';
 
     function Close() {
     }
@@ -18,7 +18,7 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.HTML_PARSER = {
         closeBtn:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
+            return el.one("."+ CLS_PREFIX + 'close');
         }
     };
 
@@ -37,9 +37,9 @@ KISSY.add("uibase/closerender", function (S, Node) {
                     (closable ? "" : "style='display:none'") +
                     "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
-                    "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
+                    "class='" + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    self.get("prefixCls") + CLS_PREFIX + "close-x" +
+                    CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);

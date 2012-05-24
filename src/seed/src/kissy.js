@@ -135,8 +135,8 @@
             }
         },
 
-        // If KISSY is already defined, the existing KISSY object will not
-        // be overwritten so that defined namespaces are preserved.
+    // If KISSY is already defined, the existing KISSY object will not
+    // be overwritten so that defined namespaces are preserved.
         seed = (host && host[S]) || {},
 
         guid = 0,
@@ -231,23 +231,23 @@
                 }
 
                 var create = Object.create ?
-                    function (proto, c) {
-                        return Object.create(proto, {
-                            constructor:{
-                                value:c
+                        function (proto, c) {
+                            return Object.create(proto, {
+                                constructor:{
+                                    value:c
+                                }
+                            });
+                        } :
+                        function (proto, c) {
+                            function F() {
                             }
-                        });
-                    } :
-                    function (proto, c) {
-                        function F() {
-                        }
 
-                        F.prototype = proto;
+                            F.prototype = proto;
 
-                        var o = new F();
-                        o.constructor = c;
-                        return o;
-                    },
+                            var o = new F();
+                            o.constructor = c;
+                            return o;
+                        },
                     sp = s.prototype,
                     rp;
 
@@ -377,7 +377,7 @@
              * @param {String} [src] the source of the the message (opt)
              */
             log:function (msg, cat, src) {
-                if (S.Config.debug) {
+                if (S.Config.debug && msg) {
                     if (src) {
                         msg = src + ': ' + msg;
                     }

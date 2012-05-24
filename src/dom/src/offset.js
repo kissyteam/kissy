@@ -7,8 +7,6 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     var win = S.Env.host,
         doc = win.document,
         docElem = doc.documentElement,
-        isElementNode = DOM._isElementNode,
-        nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
         CSS1Compat = "CSS1Compat",
         compatMode = "compatMode",
@@ -100,7 +98,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 }
 
                 // document 归一化到 window
-                if (nodeTypeIs(container, DOM.DOCUMENT_NODE)) {
+                if (container.nodeType == DOM.DOCUMENT_NODE) {
                     container = getWin(container);
                 }
 
@@ -278,7 +276,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            } else if (isElementNode(elem)) {
+            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
                 if (v !== undefined) {
                     elem[method] = parseFloat(v)
                 } else {

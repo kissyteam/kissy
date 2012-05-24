@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:45
+build time: May 24 11:31
 */
 /**
  * patch for nodejs
@@ -202,7 +202,7 @@ build time: May 15 20:45
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:36
+build time: May 23 14:33
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -652,7 +652,7 @@ build time: May 15 20:36
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120515203646';
+        S.__BUILD_TIME = '20120523143300';
     })();
 
     return S;
@@ -2308,10 +2308,10 @@ build time: May 15 20:36
         win = host,
         doc = host.document,
         loc = host.location,
-        // 当前页面所在的目录
-        // http://xx.com/y/z.htm#!/f/g
-        // ->
-        // http://xx.com/y/
+    // 当前页面所在的目录
+    // http://xx.com/y/z.htm#!/f/g
+    // ->
+    // http://xx.com/y/
         __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -2381,6 +2381,7 @@ build time: May 15 20:36
         };
 
         S.mix(packageDesc, {
+            name:pName,
             tag:encodeURIComponent(Config.tag),
             path:Config.base,
             debug:Config.debug,
@@ -2512,6 +2513,8 @@ build time: May 15 20:36
             return getPackageInfo(self, mod).path;
         },
 
+        getPackageInfo:getPackageInfo,
+
         createModuleInfo:function (self, modName) {
             var info = removeSuffixAndTagFromModName(modName);
 
@@ -2614,7 +2617,7 @@ build time: May 15 20:36
          */
         normalizeModNames:function (self, modNames, refModName, keepAlias) {
             var ret = [],
-                mods = self.Env.mods;
+                mods = self['Env'].mods;
             S.each(modNames, function (name) {
                 var alias, m;
                 // 1. index map
@@ -2735,7 +2738,27 @@ build time: May 15 20:36
                 }
             }
             return path;
-        }
+        },
+
+        /**
+         * test3,test3/a/b => a/b
+         */
+        removePackageNameFromModName:function () {
+            var cache = {};
+            return function (packageName, modName) {
+                if (!packageName) {
+                    return modName;
+                }
+                if (!S.endsWith(packageName, "/")) {
+                    packageName += "/";
+                }
+                var reg;
+                if (!(reg = cache[packageName])) {
+                    reg = cache[packageName] = new RegExp("^" + S.escapeRegExp(packageName));
+                }
+                return modName.replace(reg, "");
+            }
+        }()
 
     });
 
@@ -2805,6 +2828,7 @@ build time: May 15 20:36
         for (var url in monitors) {
             var callbackObj = monitors[url],
                 node = callbackObj.node,
+                exName,
                 loaded = 0;
             if (utils.isWebKit) {
                 if (node['sheet']) {
@@ -2815,14 +2839,15 @@ build time: May 15 20:36
                 try {
                     var cssRules;
                     if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 } catch (ex) {
-                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
-                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                    if (ex.code === 1000) {
-                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
+                        exName == 'SecurityError') {
+                        S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
@@ -3792,6 +3817,9 @@ build time: May 15 20:36
                 }
 
                 if (!countJss) {
+                    // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
+                    var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                    self.attachMods(unaliasModNames);
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
@@ -3872,8 +3900,8 @@ build time: May 15 20:36
             calculate:function (modNames) {
                 var ret = {},
                     SS = this.SS,
-                    // 提高性能，不用每个模块都再次提柜计算
-                    // 做个缓存，每个模块对应的待动态加载模块
+                // 提高性能，不用每个模块都再次提柜计算
+                // 做个缓存，每个模块对应的待动态加载模块
                     cache = {};
                 for (var i = 0; i < modNames.length; i++) {
                     var m = modNames[i];
@@ -3894,48 +3922,66 @@ build time: May 15 20:36
             getComboUrls:function (modNames) {
                 var self = this,
                     i,
-                    mod,
+                    SS = self.SS,
+                    Config = S.Config,
                     packagePath,
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    mod = self.getModInfo(modName);
-                    packagePath = utils.getPackagePath(self.SS, mod);
-                    var type = utils.isCss(mod.path) ? "css" : "js";
+                    var mod = self.getModInfo(modName);
+                    var packageInfo = utils.getPackageInfo(SS, mod);
+                    var packagePath = packageInfo.path;
+                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
+                    var packageName = packageInfo.name;
                     combos[packagePath] = combos[packagePath] || {};
-                    combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = mod.getTag();
-                    combos[packagePath][type].charset = mod.getCharset();
-                    combos[packagePath][type].push(mod);
+                    mods = combos[packagePath][type] = combos[packagePath][type] || [];
+                    mods.tag = mod.getTag();
+                    mods.charset = mod.getCharset();
+                    mods.name = packageName;
+                    mods.push(mod);
                 });
 
                 var res = {
-                    js:{},
-                    css:{}
-                },
+                        js:{},
+                        css:{}
+                    },
                     t,
-                    comboPrefix = S.Config.comboPrefix,
-                    comboSep = S.Config.comboSep,
-                    maxUrlLength = S.Config.comboMaxUrlLength;
+                    comboPrefix = Config.comboPrefix,
+                    comboSep = Config.comboSep,
+                    maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
                         t = [];
-                        var jss = combos[packagePath][type];
+                        var jss = combos[packagePath][type],
+                            packageName = jss.name,
+                            packageNamePath = packageName + "/";
                         res[type][packagePath] = [];
                         res[type][packagePath].charset = jss.charset;
                         // current package's mods
                         res[type][packagePath].mods = [];
-                        var prefix = packagePath + comboPrefix,
+                        // add packageName to common prefix
+                        // combo grouped by package
+                        var prefix = packagePath +
+                                (packageName ? packageNamePath : "") +
+                                comboPrefix,
+                            path,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
-                            t.push(jss[i].path);
+                            // remove packageName prefix from mod path
+                            path = jss[i].path;
+                            if (packageName) {
+                                path = utils.removePackageNameFromModName(packageName, path);
+                            }
+                            t.push(path);
                             res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
                                 res[type][packagePath].push(self.getComboUrl(
-                                    t.length > 1 ? prefix : packagePath,
-                                    t, comboSep, jss.tag
+                                    prefix,
+                                    t,
+                                    comboSep,
+                                    jss.tag
                                 ));
                                 t = [];
                                 i--;
@@ -3943,8 +3989,10 @@ build time: May 15 20:36
                         }
                         if (t.length) {
                             res[type][packagePath].push(self.getComboUrl(
-                                t.length > 1 ? prefix : packagePath,
-                                t, comboSep, jss.tag
+                                prefix,
+                                t,
+                                comboSep,
+                                jss.tag
                             ));
                         }
                     }
@@ -3970,7 +4018,7 @@ build time: May 15 20:36
                 var self = this,
                     SS = self.SS,
                     mod = self.getModInfo(modName),
-                    // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+                // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
                     ret = cache[modName];
                 if (ret) {
                     return ret;
@@ -4177,7 +4225,7 @@ build time: May 15 20:36
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120515203646'
+        tag:'20120523143300'
     }, getBaseInfo()));
 
     /**
@@ -4213,13 +4261,13 @@ build time: May 15 20:36
 
         readyPromise = readyDefer.promise,
 
-        // The number of poll times.
+    // The number of poll times.
         POLL_RETRYS = 500,
 
-        // The poll interval in milliseconds.
+    // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
 
-        // #id or id
+    // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
@@ -4247,10 +4295,14 @@ build time: May 15 20:36
              * @param {String} data
              */
             parseXML:function (data) {
+                // already a xml
+                if (data.documentElement) {
+                    return data;
+                }
                 var xml;
                 try {
                     // Standard
-                    if (win.DOMParser) {
+                    if (win['DOMParser']) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");
@@ -4534,7 +4586,7 @@ build time: May 15 20:36
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:31
+build time: May 15 20:45
 */
 /**
  * @fileOverview ua
@@ -4822,7 +4874,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:36
+build time: May 16 12:16
 */
 /**
  * @fileOverview dom-attr
@@ -5473,7 +5525,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
  */
 /**
  * @fileOverview dom
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 
@@ -5796,6 +5848,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             rleadingWhitespace = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
             rhtml = /<|&#?\w+;/,
+            supportOuterHTML = "outerHTML" in doc.documentElement,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
@@ -5888,7 +5941,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
-                            ret = nl2frag(nodes, context);
+                            ret = nl2frag(nodes);
                         } else {
                             S.error(html + " : create node error");
                         }
@@ -5925,7 +5978,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
                         if (isElementNode(el)) {
-                            return el['innerHTML'];
+                            return el.innerHTML;
                         } else {
                             return null;
                         }
@@ -5960,15 +6013,56 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                         if (!success) {
                             var valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                            for (i = els.length - 1; i >= 0; i--) {
-                                elem = els[i];
-                                if (isElementNode(elem)) {
-                                    DOM.empty(elem);
-                                    DOM.append(valNode, elem, loadScripts);
-                                }
-                            }
+                            DOM.empty(els);
+                            DOM.append(valNode, els, loadScripts);
                         }
                         callback && callback();
+                    }
+                },
+
+                /**
+                 * Get the outerHTML of the first element in the set of matched elements.
+                 * or
+                 * Set the outerHTML of each element in the set of matched elements.
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
+                 * @param {Boolean} [loadScripts=false] True to look for and process scripts
+                 */
+                outerHTML:function (selector, htmlString, loadScripts) {
+                    var els = DOM.query(selector),
+                        holder,
+                        i,
+                        valNode,
+                        length = els.length,
+                        el = els[0];
+                    if (!el) {
+                        return
+                    }
+                    // getter
+                    if (htmlString === undefined) {
+                        if (supportOuterHTML) {
+                            return el.outerHTML
+                        } else {
+                            holder = el.ownerDocument.createElement("div");
+                            holder.appendChild(DOM.clone(el, true));
+                            return holder.innerHTML;
+                        }
+                    } else {
+                        htmlString += "";
+                        if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
+                            for (i = length - 1; i >= 0; i--) {
+                                el = els[i];
+                                if (isElementNode(el)) {
+                                    cleanData(el);
+                                    cleanData(getElementsByTagName(el, "*"));
+                                    el.outerHTML = htmlString;
+                                }
+                            }
+                        } else {
+                            valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
+                            DOM.insertBefore(valNode, els, loadScripts);
+                            DOM.remove(els);
+                        }
                     }
                 },
 
@@ -6179,20 +6273,19 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         // 将 nodeList 转换为 fragment
-        function nl2frag(nodes, ownerDoc) {
-            var ret = null, i, len;
-
-            if (nodes
-                && (nodes.push || nodes.item)
-                && nodes[0]) {
-                ownerDoc = ownerDoc || nodes[0].ownerDocument;
+        function nl2frag(nodes) {
+            var ret = null,
+                i,
+                ownerDoc,
+                len;
+            if (nodes && (nodes.push || nodes.item) && nodes[0]) {
+                ownerDoc = nodes[0].ownerDocument;
                 ret = ownerDoc.createDocumentFragment();
                 nodes = S.makeArray(nodes);
                 for (i = 0, len = nodes.length; i < len; i++) {
                     ret.appendChild(nodes[i]);
                 }
-            }
-            else {
+            } else {
                 S.log('Unable to convert ' + nodes + ' to fragment.');
             }
             return ret;
@@ -6591,7 +6684,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             var el = ret[i];
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
-            } else if (getNodeName(el)=="input") {
+            } else if (getNodeName(el) == "input") {
                 fixCheckedInternal(el);
             } else if (_isElementNode(el)) {
                 var cs = el.getElementsByTagName("input");
@@ -6684,9 +6777,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         refNodes = DOM.query(refNodes);
         var newNodesLength = newNodes.length,
             refNodesLength = refNodes.length;
-        if ((!newNodesLength &&
-            (!scripts || !scripts.length)) ||
-            !refNodesLength) {
+        if ((!newNodesLength && (!scripts || !scripts.length)) || !refNodesLength) {
             return;
         }
         // fragment 插入速度快点
@@ -6701,7 +6792,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         }
         for (var i = 0; i < refNodesLength; i++) {
             var refNode = refNodes[i];
-            if (newNodesLength) {
+            if (newNode) {
                 //refNodes 超过一个，clone
                 var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
                 fn(node, refNode);
@@ -9151,7 +9242,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:31
+build time: May 15 20:44
 */
 /**
  * @fileOverview responsible for registering event
@@ -11464,7 +11555,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:31
+build time: May 15 20:45
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11974,7 +12065,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:30
+build time: May 23 14:32
 */
 /**
  * @fileOverview form data  serialization util
@@ -11987,7 +12078,7 @@ KISSY.add("ajax/FormSerializer", function(S, DOM) {
     return {
         /**
          * 序列化表单元素
-         * @param {String|HTMLElement[]|HTMLElement|Node} forms
+         * @param {String|HTMLElement[]|HTMLElement|NodeList} forms
          */
         serialize:function(forms) {
             var elements = [],data = {};
@@ -12047,33 +12138,46 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             // iframe 到其他类型的转化和 text 一样
             iframe:io.getConfig().converters.text,
             text:{
+                // fake type, just mirror
                 iframe:function (text) {
                     return text;
+                }
+            },
+            xml:{
+                // fake type, just mirror
+                iframe:function (xml) {
+                    return xml;
                 }
             }
         }
     });
 
     function createIframe(xhr) {
-        var id = S.guid("ajax-iframe");
-        xhr.iframe = DOM.create("<iframe " +
+        var id = S.guid("ajax-iframe"),
+            iframe,
+            src = DOM._genEmptyIframeSrc();
+
+        iframe = xhr.iframe = DOM.create("<iframe " +
+            // ie6 need this when cross domain
+            (src ? (" src=\"" + src + "\" ") : "") +
             " id='" + id + "'" +
             // need name for target of form
             " name='" + id + "'" +
             " style='position:absolute;left:-9999px;top:-9999px;'/>");
-        xhr.iframeId = id;
-        DOM.prepend(xhr.iframe, doc.body || doc.documentElement);
+
+        DOM.prepend(iframe, doc.body || doc.documentElement);
+        return iframe;
     }
 
     function addDataToForm(data, form, serializeArray) {
         data = S.unparam(data);
-        var ret = [];
-        for (var d in data) {
-            var isArray = S.isArray(data[d]),
-                vs = S.makeArray(data[d]);
+        var ret = [], d, isArray, vs, i, e;
+        for (d in data) {
+            isArray = S.isArray(data[d]);
+            vs = S.makeArray(data[d]);
             // 数组和原生一样对待，创建多个同名输入域
-            for (var i = 0; i < vs.length; i++) {
-                var e = doc.createElement("input");
+            for (i = 0; i < vs.length; i++) {
+                e = doc.createElement("input");
                 e.type = 'hidden';
                 e.name = d + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
@@ -12083,7 +12187,6 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         }
         return ret;
     }
-
 
     function removeFieldsFromData(fields) {
         DOM.remove(fields);
@@ -12100,20 +12203,28 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 xhrObject = self.xhrObject,
                 c = xhrObject.config,
                 fields,
+                iframe,
                 form = DOM.get(c.form);
 
             self.attrs = {
                 target:DOM.attr(form, "target") || "",
-                action:DOM.attr(form, "action") || ""
+                action:DOM.attr(form, "action") || "",
+                // enctype 区分 iframe 与 serialize
+                //encoding:DOM.attr(form, "encoding"),
+                //enctype:DOM.attr(form, "enctype"),
+                method:DOM.attr(form, "method")
             };
             self.form = form;
 
-            createIframe(xhrObject);
+            iframe = createIframe(xhrObject);
 
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
-                "target":xhrObject.iframeId,
-                "action":c.url
+                target:iframe.id,
+                action:c.url,
+                method:"post"
+                //enctype:'multipart/form-data',
+                //encoding:'multipart/form-data'
             });
 
             if (c.data) {
@@ -12121,21 +12232,20 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             }
 
             self.fields = fields;
-
-            var iframe = xhrObject.iframe;
-
-            Event.on(iframe, "load error", self._callback, self);
-
-            form.submit();
+            // ie6 need a setTimeout to avoid handling load triggered if set iframe src
+            setTimeout(function () {
+                Event.on(iframe, "load error", self._callback, self);
+                form.submit();
+            }, 10);
 
         },
 
-        _callback:function (event, abort) {
-            //debugger
-            var self=this,
+        _callback:function (event/*, abort*/) {
+            var self = this,
                 form = self.form,
                 xhrObject = self.xhrObject,
                 eventType = event.type,
+                iframeDoc,
                 iframe = xhrObject.iframe;
 
             // 防止重复调用 , 成功后 abort
@@ -12145,30 +12255,53 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
             DOM.attr(form, self.attrs);
 
-            if (eventType == "load") {
-                var iframeDoc = iframe.contentWindow.document;
-                xhrObject.responseXML = iframeDoc;
-                xhrObject.responseText = DOM.text(iframeDoc.body);
-                xhrObject._xhrReady(OK_CODE, "success");
-            } else if (eventType == 'error') {
-                xhrObject._xhrReady(ERROR_CODE, "error");
-            }
-
             removeFieldsFromData(this.fields);
 
             Event.detach(iframe);
 
             setTimeout(function () {
-                // firefox will keep loading if not settimeout
+                // firefox will keep loading if not set timeout
                 DOM.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
             xhrObject.iframe = null;
+
+            if (eventType == "load") {
+                iframeDoc = iframe.contentWindow.document;
+                // ie<9
+                if (iframeDoc && iframeDoc.body) {
+                    xhrObject.responseText = S.trim(DOM.text(iframeDoc.body));
+                    // ie still can retrieve xml 's responseText
+                    if (S.startsWith(xhrObject.responseText, "<?xml")) {
+                        xhrObject.responseText = undefined;
+                    }
+                }
+                // ie<9
+                // http://help.dottoro.com/ljbcjfot.php
+                // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
+                /*
+                 In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
+                 To get an XMLDocument object that represents the embedded XML data island,
+                 use the XMLDocument property of the xml element.
+                 Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
+                 */
+                if (iframeDoc && iframeDoc['XMLDocument']) {
+                    xhrObject.responseXML = iframeDoc['XMLDocument'];
+                }
+                // ie9 firefox chrome
+                else {
+                    xhrObject.responseXML = iframeDoc;
+                }
+
+                xhrObject._xhrReady(OK_CODE, "success");
+            } else if (eventType == 'error') {
+                xhrObject._xhrReady(ERROR_CODE, "error");
+            }
         },
 
         abort:function () {
-            this._callback({}, 1);
+            this._callback({});
         }
     });
 
@@ -12534,7 +12667,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
-        // get individual response header from responseheader str
+    // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhrObject) {
@@ -12572,7 +12705,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                     }
                 }
             }
-            // 服务器端没有告知（并且客户端没有mimetype）默认 text 类型
+            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
             dataType[0] = dataType[0] || "text";
 
             //获得合适的初始数据
@@ -12583,12 +12716,13 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
+                var rawData = {text:text, xml:xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
                         converter = xConverts[prevType] && xConverts[prevType][type] ||
                             cConverts[prevType] && cConverts[prevType][type];
-                    if (converter) {
+                    if (converter && rawData[prevType]) {
                         dataType.unshift(prevType);
                         responseData = prevType == "text" ? text : xml;
                         return false;
@@ -13713,20 +13847,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
  * @fileOverview process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
+KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
 
-    io.on("start", function(e) {
+    io.on("start", function (e) {
         var xhrObject = e.xhr,
+            form,
+            d,
+            enctype,
+            formParam,
             c = xhrObject.config;
         // serialize form if needed
         if (c.form) {
-            var form = DOM.get(c.form),
-                enctype = form['encoding'] || form.enctype;
+            form = DOM.get(c.form);
+            enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
-                var formParam = FormSerializer.serialize(form);
-
+                formParam = FormSerializer.serialize(form);
                 if (formParam) {
                     if (c.hasContent) {
                         // post 加到 data 中
@@ -13741,7 +13878,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
                     }
                 }
             } else {
-                var d = c.dataType[0];
+                d = c.dataType[0];
                 if (d == "*") {
                     d = "text";
                 }
@@ -13755,8 +13892,8 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-        requires:['./base',"dom","./FormSerializer"]
-    });/**
+    requires:['./base', "dom", "./FormSerializer"]
+});/**
  * @fileOverview jsonp transport based on script transport
  * @author  yiminghe@gmail.com
  */
@@ -13840,7 +13977,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:30
+build time: May 15 20:44
 */
 /**
  * @fileOverview cookie
@@ -13954,7 +14091,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:30
+build time: May 15 20:44
 */
 /**
  * @fileOverview attribute management
@@ -14575,7 +14712,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:30
+build time: May 15 20:44
 */
 /**
  * @fileOverview anim
@@ -15935,7 +16072,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:31
+build time: May 16 11:58
 */
 /**
  * @fileOverview anim-node-plugin
@@ -16115,6 +16252,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             "prop":1,
             "offset":0,
             "html":0,
+            "outerHTML":0,
             "data":1
         },
         // Event 添加到 NP 上的方法

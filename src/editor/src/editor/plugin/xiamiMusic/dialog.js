@@ -2,7 +2,8 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
     var UA = S.UA,
         DOM = S.DOM,
         Node = S.Node,
-        loading = Editor['Config'].base + "theme/tao-loading.gif",
+        Utils = Editor.Utils,
+        loading = Utils.debugUrl("theme/tao-loading.gif"),
         XIAMI_URL = "http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}",
         CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic",
@@ -238,11 +239,11 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 var t = new Node(ev.target),
                     add = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node,"ke-xiami-add");
+                            DOM.hasClass(node, "ke-xiami-add");
                     }, undefined),
                     paging = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node,"ke-xiami-page-item");
+                            DOM.hasClass(node, "ke-xiami-page-item");
                     }, undefined);
                 if (add) {
                     self._dinfo = {

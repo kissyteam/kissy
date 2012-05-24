@@ -83,7 +83,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                     DOM.prepend(defaultDisplayDetectIframe, body);
                     var iframeSrc;
-                    if (iframeSrc = DOM._genEmptyIframeSrc()) {
+                    if (iframeSrc = DOM.getEmptyIframeSrc()) {
                         defaultDisplayDetectIframe.src = iframeSrc;
                     }
                 } else {
@@ -99,7 +99,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
                         defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
                             + "<html><head>" +
-                            (UA['ie'] && DOM._isCustomDomain() ?
+                            (UA['ie'] && DOM.isCustomDomain() ?
                                 "<script>document.domain = '" +
                                     doc.domain
                                     + "';</script>" : "")

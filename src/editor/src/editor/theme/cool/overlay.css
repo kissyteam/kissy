@@ -11,9 +11,9 @@
     border: 1px solid #ACB4BE;
 }
 
-.ke-dialog .ke-stdmod-header {
+.ke-dialog .ks-stdmod-header {
     background: repeat-x scroll 0 0 #D6DBE2;
-    background-image: url("overlay-hd.png"); /** sprite-ref: mysprite; sprite-alignment: repeat; */
+    background-image: url("overlay-hd.png"); /** sprite-ref: cool; sprite-alignment: repeat; */
     border-bottom: 1px solid #ACB4BE;
     font-size: 14px;
     font-weight: bold;
@@ -22,7 +22,7 @@
     padding: 0 0 0 18px;
 }
 
-.ke-ext-close {
+.ke-dialog .ks-ext-close {
     height: 18px;
     width: 18px;
     border: 1px solid transparent;
@@ -38,17 +38,17 @@
     cursor: pointer;
 }
 
-.ke-ext-close .ke-ext-close-x {
+.ke-dialog .ks-ext-close .ks-ext-close-x {
     display: block;
     background: no-repeat;
-    background-image: url("close.png"); /** sprite-ref: mysprite; */
+    background-image: url("close.png"); /** sprite-ref: cool; */
     height: 13px;
     text-indent: -9999px;
     width: 13px;
     margin: 2.5px;
 }
 
-.ke-ext-close:hover {
+.ke-dialog .ks-ext-close:hover {
     border: 1px solid #CED5E0;
     background: white;
 }
@@ -59,13 +59,13 @@
     filter: alpha(opacity = 15);
 }
 
-.ke-ext-loading {
+.ke-overlay .ks-ext-loading {
     opacity: 0.3;
     filter: alpha(opacity = 15);
     background: #000 center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
-.ke-global-loading .ke-ext-loading {
+.ke-global-loading .ks-ext-loading {
     background-attachment: fixed;
 }

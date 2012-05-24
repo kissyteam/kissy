@@ -402,6 +402,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
                 points:["cc", "cc"],
                 offset:[0, 0]
             });
+            return this;
         }
     };
 

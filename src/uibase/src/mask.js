@@ -19,26 +19,40 @@ KISSY.add("uibase/mask", function () {
      */
     {
         /**
-         * whether show mask layer when component shows
+         * Whether show mask layer when component shows
          * @type Boolean
          */
         mask:{
             value:false
+        },
+        /**
+         * Mask node for current overlay 's mask.
+         * @type {NodeList}
+         */
+        maskNode:{
+            view:true
+        },
+        /**
+         * Whether to share mask with other overlays.
+         * Default: true.
+         * @type {Boolean}
+         */
+        maskShared:{
+            value:true,
+            view:true
         }
     };
 
     Mask.prototype = {
-        _uiSetMask:function (v) {
+
+        __bindUI:function () {
             var self = this,
                 view = self.get("view"),
                 _maskExtShow = view._maskExtShow,
                 _maskExtHide = view._maskExtHide;
-            if (v) {
+            if (self.get("mask")) {
                 self.on("show", _maskExtShow, view);
                 self.on("hide", _maskExtHide, view);
-            } else {
-                self.detach("show", _maskExtShow, view);
-                self.detach("hide", _maskExtHide, view);
             }
         }
     };

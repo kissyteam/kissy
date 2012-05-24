@@ -11,16 +11,26 @@ KISSY.add("editor/core/utils", function (S) {
         Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
-        Event = S.Event,
+
         /**
          * Utilities for Editor.
          * @namespace
+         * @name Utils
          * @memberOf Editor
          */
-            Utils = {
+            Utils =
+        /**
+         * @lends Editor.Utils
+         */
+        {
+            /**
+             *
+             * @param url
+             * @return {String}
+             */
             debugUrl:function (url) {
-                url = url.replace(/-min\.(js|css)/i, ".$1");
-                if (!S["Config"]['debug']) {
+                var Config = S.Config;
+                if (!Config.debug) {
                     url = url.replace(/\.(js|css)/i, "-min.$1");
                 }
                 if (url.indexOf("?t") == -1) {
@@ -29,13 +39,11 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("@TIMESTAMP@");
+                    url += "t=" + encodeURIComponent(Config.tag);
                 }
-                if (S.startsWith(url, "/")) {
-                    url = url.substring(1);
-                }
-                return Editor["Config"].base + url;
+                return Config.base + "editor/" + url;
             },
+
             /**
              * 懒惰一下
              * @param obj {Object} 包含方法的对象
@@ -76,6 +84,7 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return {left:x, top:y};
             },
+
             /**
              * 执行一系列函数
              * @param var_args {...function()}
@@ -117,56 +126,16 @@ KISSY.add("editor/core/utils", function (S) {
             },
 
             /**
-             * 根据dom路径得到某个节点
-             * @param doc {Document}
-             * @param address {Array.<number>}
-             * @param normalized {Boolean}
-             * @return {NodeList}
-             */
-            getByAddress:function (doc, address, normalized) {
-                var $ = doc.documentElement;
-
-                for (var i = 0; $ && i < address.length; i++) {
-                    var target = address[ i ];
-
-                    if (!normalized) {
-                        $ = $.childNodes[ target ];
-                        continue;
-                    }
-
-                    var currentIndex = -1;
-
-                    for (var j = 0; j < $.childNodes.length; j++) {
-                        var candidate = $.childNodes[ j ];
-
-                        if (normalized === TRUE &&
-                            candidate.nodeType == 3 &&
-                            candidate.previousSibling &&
-                            candidate.previousSibling.nodeType == 3) {
-                            continue;
-                        }
-
-                        currentIndex++;
-
-                        if (currentIndex == target) {
-                            $ = candidate;
-                            break;
-                        }
-                    }
-                }
-
-                return $ ? new Node($) : NULL;
-            },
-            /**
              * @param database {Object}
              */
             clearAllMarkers:function (database) {
                 for (var i in database) {
                     if (database.hasOwnProperty(i)) {
-                        database[i]._4e_clearMarkers(database, TRUE);
+                        database[i]._4e_clearMarkers(database, TRUE, undefined);
                     }
                 }
             },
+
             /**
              *
              * @param str {string}
@@ -175,6 +144,7 @@ KISSY.add("editor/core/utils", function (S) {
             ltrim:function (str) {
                 return str.replace(/^\s+/, "");
             },
+
             /**
              *
              * @param str {string}
@@ -183,6 +153,7 @@ KISSY.add("editor/core/utils", function (S) {
             rtrim:function (str) {
                 return str.replace(/\s+$/, "");
             },
+
             /**
              *
              * @param var_args {...Object}
@@ -196,6 +167,10 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return r;
             },
+
+            /**
+             *
+             */
             isCustomDomain:function () {
                 if (!UA['ie'])
                     return FALSE;
@@ -207,6 +182,9 @@ KISSY.add("editor/core/utils", function (S) {
                     domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
             },
 
+            /**
+             *
+             */
             isNumber:function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));
             },
@@ -214,10 +192,9 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              * @param inputs {Array.<Node>}
-             * @param [warn] {string}
              * @return {Boolean} 是否验证成功
              */
-            verifyInputs:function (inputs, warn) {
+            verifyInputs:function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
                         v = S.trim(Utils.valInput(input)),
@@ -230,6 +207,7 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return TRUE;
             },
+
             /**
              *
              * @param editor {KISSY.Editor}
@@ -295,6 +273,7 @@ KISSY.add("editor/core/utils", function (S) {
                     }
                 });
             },
+
             /**
              * Convert certain characters (&, <, >, and ') to their HTML character equivalents
              *  for literal display in web pages.
@@ -304,6 +283,7 @@ KISSY.add("editor/core/utils", function (S) {
             htmlEncode:function (value) {
                 return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
             },
+
             /**
              *
              * @param params {Object}
@@ -322,6 +302,9 @@ KISSY.add("editor/core/utils", function (S) {
                 return params;
             },
 
+            /**
+             *
+             */
             map:function (arr, callback) {
                 for (var i = 0; i < arr.length; i++) {
                     arr[i] = callback(arr[i]);
@@ -339,12 +322,15 @@ KISSY.add("editor/core/utils", function (S) {
             preventFocus:function (el) {
                 if (UA['ie']) {
                     //ie 点击按钮不丢失焦点
-                    el.unselectable();
+                    el.unselectable(undefined);
                 } else {
                     el.attr("onmousedown", "return false;");
                 }
             },
 
+            /**
+             *
+             */
             injectDom:function (editorDom) {
                 S.mix(DOM, editorDom);
                 for (var dm in editorDom) {
@@ -369,12 +355,18 @@ KISSY.add("editor/core/utils", function (S) {
                 }
             },
 
+            /**
+             *
+             */
             addRes:function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
                 res.push.apply(res, S.makeArray(arguments));
             },
 
+            /**
+             *
+             */
             destroyRes:function () {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
@@ -393,6 +385,9 @@ KISSY.add("editor/core/utils", function (S) {
                 this.__res = [];
             },
 
+            /**
+             *
+             */
             getQueryCmd:function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()

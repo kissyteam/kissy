@@ -31,7 +31,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         KER = Editor.RANGE,
         KEP = Editor.POSITION,
         DOM = S.DOM,
-        getByAddress = Utils.getByAddress,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
@@ -1087,14 +1086,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
              */
             moveToBookmark:function (bookmark) {
                 var self = this,
-                    doc = self.document;
+                    doc = $(self.document);
                 if (bookmark.is2) {
                     // Get the start information.
-                    var startContainer = getByAddress(doc,
-                            bookmark.start, bookmark.normalized),
+                    var startContainer = doc._4e_getByAddress(bookmark.start, bookmark.normalized),
                         startOffset = bookmark.startOffset,
-                        endContainer = bookmark.end && getByAddress(doc,
-                            bookmark.end, bookmark.normalized),
+                        endContainer = bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized),
                         endOffset = bookmark.endOffset;
 
                     // Set the start boundary.

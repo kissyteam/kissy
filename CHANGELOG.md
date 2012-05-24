@@ -69,6 +69,7 @@ History:
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
  - [!] popup 构造器参数和 overlay 一致，第一个参数为 object!
  - [+] Dialog draggable 扩展配置支持 dd proxy 以及 dd scroll.
+ - [+] Overlay 增加 maskShared 配置以及 maskNode 属性，可以控制是否共享以及操纵 mask 层.
 
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件

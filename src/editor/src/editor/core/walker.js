@@ -171,9 +171,9 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
          * @type Function
+         * @memberOf Editor.Walker#
          */
-        // 当前 range 范围内深度遍历的元素调用
-        // this.evaluator = NULL;
+        this.evaluator = NULL;// 当前 range 范围内深度遍历的元素调用
 
         /**
          * A function executed for every node the walk pass by to check
@@ -182,9 +182,10 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
          * @type Function
+         * @memberOf Editor.Walker#
          */
-        // 人为缩小当前 range 范围
-        // this.guard = NULL;
+        this.guard = NULL;// 人为缩小当前 range 范围
+
 
         /** @private */
         this._ = {};
@@ -193,7 +194,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
     S.augment(Walker,
         /**
-         * @lends Editor.Walker
+         * @lends Editor.Walker#
          */
         {
             /**
@@ -273,70 +274,81 @@ KISSY.add("editor/core/walker", function (S, Editor) {
         });
 
 
-    Walker.blockBoundary = function (customNodeNames) {
-        return function (node) {
-            return !(node.nodeType == DOM.ELEMENT_NODE &&
-                DOM._4e_isBlockBoundary(node, customNodeNames) );
-        };
-    };
+    S.mix(Walker,
+        /**
+         * @lends Editor.Walker
+         */
+        {
+            /**
+             * Whether the to-be-evaluated node is not a block node and does not match given node name map.
+             * @param {Object} customNodeNames Given node name map.
+             * @return {Function} Function for evaluation.
+             */
+            blockBoundary:function (customNodeNames) {
+                return function (node) {
+                    return !(node.nodeType == DOM.ELEMENT_NODE &&
+                        DOM._4e_isBlockBoundary(node, customNodeNames) );
+                };
+            },
 
-    /**
-     * Whether the to-be-evaluated node is a bookmark node OR bookmark node
-     * inner contents.
-     * @param {Boolean} [contentOnly] Whether only test againt the text content of
-     * bookmark node instead of the element itself(default).
-     * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
-     * node instead of 'TRUE'(default).
-     */
-    Walker.bookmark = function (contentOnly, isReject) {
-        function isBookmarkNode(node) {
-            return  DOM.nodeName(node) == 'span' &&
-                DOM.attr(node, '_ke_bookmark');
-        }
+            /**
+             * Whether the to-be-evaluated node is a bookmark node OR bookmark node
+             * inner contents.
+             * @param {Boolean} [contentOnly] Whether only test againt the text content of
+             * bookmark node instead of the element itself(default).
+             * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
+             * node instead of 'TRUE'(default).
+             * @return {Function} Function for evaluation.
+             */
+            bookmark:function (contentOnly, isReject) {
+                function isBookmarkNode(node) {
+                    return  DOM.nodeName(node) == 'span' &&
+                        DOM.attr(node, '_ke_bookmark');
+                }
 
-        return function (node) {
-            var isBookmark, parent;
-            // Is bookmark inner text node?
-            isBookmark = ( node.nodeType == DOM.TEXT_NODE &&
-                ( parent = node.parentNode ) &&
-                isBookmarkNode(parent) );
-            // Is bookmark node?
-            isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-            // !! 2012-05-15
-            // evaluator check ===false, must turn it to boolean false
-            return !!(isReject ^ isBookmark);
-        };
-    };
+                return function (node) {
+                    var isBookmark, parent;
+                    // Is bookmark inner text node?
+                    isBookmark = ( node.nodeType == DOM.TEXT_NODE &&
+                        ( parent = node.parentNode ) &&
+                        isBookmarkNode(parent) );
+                    // Is bookmark node?
+                    isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
+                    // !! 2012-05-15
+                    // evaluator check ===false, must turn it to boolean false
+                    return !!(isReject ^ isBookmark);
+                };
+            },
 
-    /**
-     * Whether the node is a text node containing only whitespaces characters.
-     * @param {Boolean} [isReject]
-     */
-    Walker.whitespaces = function (isReject) {
-        return function (node) {
-            var isWhitespace = node.nodeType == DOM.TEXT_NODE &&
-                !S.trim(node.nodeValue);
-            return !!(isReject ^ isWhitespace);
-        };
-    };
-
-    /**
-     * Whether the node is invisible in wysiwyg mode.
-     * @param isReject
-     */
-    Walker.invisible = function (isReject) {
-        var whitespace = Walker.whitespaces();
-        return function (node) {
-            // Nodes that take no spaces in wysiwyg:
-            // 1. White-spaces but not including NBSP;
-            // 2. Empty inline elements, e.g. <b></b> we're checking here
-            // 'offsetHeight' instead of 'offsetWidth' for properly excluding
-            // all sorts of empty paragraph, e.g. <br />.
-            var isInvisible = whitespace(node) ||
-                node.nodeType == DOM.ELEMENT_NODE && !node.offsetHeight;
-            return !!(isReject ^ isInvisible);
-        };
-    };
+            /**
+             * Whether the node is a text node containing only whitespaces characters.
+             * @param {Boolean} [isReject]
+             */
+            whitespaces:function (isReject) {
+                return function (node) {
+                    var isWhitespace = node.nodeType == DOM.TEXT_NODE &&
+                        !S.trim(node.nodeValue);
+                    return !!(isReject ^ isWhitespace);
+                };
+            },
+            /**
+             * Whether the node is invisible in wysiwyg mode.
+             * @param isReject
+             */
+            invisible:function (isReject) {
+                var whitespace = Walker.whitespaces();
+                return function (node) {
+                    // Nodes that take no spaces in wysiwyg:
+                    // 1. White-spaces but not including NBSP;
+                    // 2. Empty inline elements, e.g. <b></b> we're checking here
+                    // 'offsetHeight' instead of 'offsetWidth' for properly excluding
+                    // all sorts of empty paragraph, e.g. <br />.
+                    var isInvisible = whitespace(node) ||
+                        node.nodeType == DOM.ELEMENT_NODE && !node.offsetHeight;
+                    return !!(isReject ^ isInvisible);
+                };
+            }
+        });
 
     var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/,
         isWhitespaces = Walker.whitespaces(),

@@ -9,7 +9,6 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
-        _isElementNode = DOM._isElementNode,
         NEXT_SIBLING = 'nextSibling';
 
     /**
@@ -27,7 +26,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 fixChecked(el.childNodes);
             } else if (getNodeName(el) == "input") {
                 fixCheckedInternal(el);
-            } else if (_isElementNode(el)) {
+            } else if (el.nodeType==DOM.ELEMENT_NODE) {
                 var cs = el.getElementsByTagName("input");
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
@@ -66,7 +65,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                     scripts.push(el);
                 }
             } else {
-                if (_isElementNode(el) &&
+                if (el.nodeType==DOM.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !rformEls.test(nodeName)) {
                     var tmp = [],

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 22 14:46
+build time: May 24 11:31
 */
 /**
  * @fileOverview accordion aria support
@@ -2545,6 +2545,9 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "Aria":Aria
     };
     S.mix(Switchable, re);
+
+    S.Switchable = Switchable;
+
     return Switchable;
 }, {
     requires:[

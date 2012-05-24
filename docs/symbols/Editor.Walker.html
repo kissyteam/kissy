@@ -233,6 +233,43 @@ a.go-top:active{text-decoration:none;}
                             
                             <!-- properties START -->
                             
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#evaluator">evaluator</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">A function executed for every matched node, to check whetherit's to be considered into the walk or not.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#guard">guard</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">A function executed for every node the walk pass by to checkwhether the walk is to be finished.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
+                            
                             <!-- properties END -->
                             
                             <!-- methods START -->
@@ -248,72 +285,112 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.checkBackward">checkBackward</a></b>
-                                                <span class="param">()</span>
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#.blockBoundary">blockBoundary</a></b>
+                                                <span class="param">(customNodeNames)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether the to-be-evaluated node is not a block node and does not match given node name map.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Editor.Walker.
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#.bookmark">bookmark</a></b>
+                                                <span class="param">(contentOnly, isReject)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether the to-be-evaluated node is a bookmark node OR bookmark nodeinner contents.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#checkBackward">checkBackward</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
                                                 <span class="desc">Check all nodes at left, executing the evaluation function.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.checkForward">checkForward</a></b>
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#checkForward">checkForward</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
+                                                
                                                 <span class="desc">Check all nodes at right, executing the evaluation function.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.end">end</a></b>
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#end">end</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
+                                                
                                                 <span class="desc">Stop walking.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.lastBackward">lastBackward</a></b>
-                                                <span class="param">()</span>
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#.invisible">invisible</a></b>
+                                                <span class="param">(isReject)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether the node is invisible in wysiwyg mode.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#lastBackward">lastBackward</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
                                                 <span class="desc">Executes a full walk backwards (to the left), until no more nodesare available, returning the last valid node.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.lastForward">lastForward</a></b>
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#lastForward">lastForward</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
+                                                
                                                 <span class="desc">Executes a full walk forward (to the right), until no more nodesare available, returning the last valid node.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.next">next</a></b>
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#next">next</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
+                                                
                                                 <span class="desc">Retrieves the next node (at right).</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Editor.Walker.
-                                                <b class="name"><a href="../symbols/Editor.Walker.html#.previous">previous</a></b>
+                                                
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#previous">previous</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
+                                                
                                                 <span class="desc">Retrieves the previous node (at left).</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Editor.Walker.
+                                                <b class="name"><a href="../symbols/Editor.Walker.html#.whitespaces">whitespaces</a></b>
+                                                <span class="param">(isReject)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Whether the node is a text node containing only whitespaces characters.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -387,6 +464,77 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="evaluator"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">evaluator</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    A function executed for every matched node, to check whetherit's to be considered into the walk or not. If not provided, allmatched nodes are considered good.If the function returns "FALSE" the node is ignored.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="guard"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">guard</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    A function executed for every node the walk pass by to checkwhether the walk is to be finished. It's called when bothentering and exiting nodes, as well as for the matched nodes.If this function returns "FALSE", the walking ends and no morenodes are evaluated.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -399,15 +547,158 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name=".checkBackward"> </a>
+                                            <a name=".blockBoundary"> </a>
                                             <div class="title">
                                                 <span>Editor.Walker.</span>
+                                                <b class="name">blockBoundary</b>
+                                                <span class="param">(customNodeNames)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line287">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether the to-be-evaluated node is not a block node and does not match given node name map.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">customNodeNames</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Given node name map.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Function}</span> 
+                                                            <span>Function for evaluation.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".bookmark"> </a>
+                                            <div class="title">
+                                                <span>Editor.Walker.</span>
+                                                <b class="name">bookmark</b>
+                                                <span class="param">(contentOnly, isReject)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line303">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether the to-be-evaluated node is a bookmark node OR bookmark nodeinner contents.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">contentOnly</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">Whether only test againt the text content ofbookmark node instead of the element itself(default).</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">isReject</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">Whether should return 'FALSE' for the bookmarknode instead of 'TRUE'(default).</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Function}</span> 
+                                                            <span>Function for evaluation.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="checkBackward"> </a>
+                                            <div class="title">
+                                                
                                                 <b class="name">checkBackward</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line243">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line241">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -450,15 +741,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".checkForward"> </a>
+                                            <a name="checkForward"> </a>
                                             <div class="title">
-                                                <span>Editor.Walker.</span>
+                                                
                                                 <b class="name">checkForward</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line233">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line231">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -501,15 +792,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".end"> </a>
+                                            <a name="end"> </a>
                                             <div class="title">
-                                                <span>Editor.Walker.</span>
+                                                
                                                 <b class="name">end</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line206">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line204">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -540,15 +831,70 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".lastBackward"> </a>
+                                            <a name=".invisible"> </a>
                                             <div class="title">
                                                 <span>Editor.Walker.</span>
+                                                <b class="name">invisible</b>
+                                                <span class="param">(isReject)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line338">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether the node is invisible in wysiwyg mode.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">isReject</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="lastBackward"> </a>
+                                            <div class="title">
+                                                
                                                 <b class="name">lastBackward</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line264">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line262">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -591,15 +937,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".lastForward"> </a>
+                                            <a name="lastForward"> </a>
                                             <div class="title">
-                                                <span>Editor.Walker.</span>
+                                                
                                                 <b class="name">lastForward</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line254">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line252">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -642,15 +988,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".next"> </a>
+                                            <a name="next"> </a>
                                             <div class="title">
-                                                <span>Editor.Walker.</span>
+                                                
                                                 <b class="name">next</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line215">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line213">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -693,15 +1039,15 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".previous"> </a>
+                                            <a name="previous"> </a>
                                             <div class="title">
-                                                <span>Editor.Walker.</span>
+                                                
                                                 <b class="name">previous</b>
                                                 <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line224">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line222">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -732,6 +1078,61 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                     </ul>
                                                 </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".whitespaces"> </a>
+                                            <div class="title">
+                                                <span>Editor.Walker.</span>
+                                                <b class="name">whitespaces</b>
+                                                <span class="param">(isReject)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_walker.js.html#line327">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Whether the node is a text node containing only whitespaces characters.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">isReject</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 
                                                 
                                                 

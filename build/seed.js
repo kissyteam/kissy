@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 23 14:33
+build time: May 24 18:34
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -140,8 +140,8 @@ build time: May 23 14:33
             }
         },
 
-        // If KISSY is already defined, the existing KISSY object will not
-        // be overwritten so that defined namespaces are preserved.
+    // If KISSY is already defined, the existing KISSY object will not
+    // be overwritten so that defined namespaces are preserved.
         seed = (host && host[S]) || {},
 
         guid = 0,
@@ -236,23 +236,23 @@ build time: May 23 14:33
                 }
 
                 var create = Object.create ?
-                    function (proto, c) {
-                        return Object.create(proto, {
-                            constructor:{
-                                value:c
+                        function (proto, c) {
+                            return Object.create(proto, {
+                                constructor:{
+                                    value:c
+                                }
+                            });
+                        } :
+                        function (proto, c) {
+                            function F() {
                             }
-                        });
-                    } :
-                    function (proto, c) {
-                        function F() {
-                        }
 
-                        F.prototype = proto;
+                            F.prototype = proto;
 
-                        var o = new F();
-                        o.constructor = c;
-                        return o;
-                    },
+                            var o = new F();
+                            o.constructor = c;
+                            return o;
+                        },
                     sp = s.prototype,
                     rp;
 
@@ -382,7 +382,7 @@ build time: May 23 14:33
              * @param {String} [src] the source of the the message (opt)
              */
             log:function (msg, cat, src) {
-                if (S.Config.debug) {
+                if (S.Config.debug && msg) {
                     if (src) {
                         msg = src + ': ' + msg;
                     }
@@ -451,7 +451,7 @@ build time: May 23 14:33
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120523143300';
+        S.__BUILD_TIME = '20120524183454';
     })();
 
     return S;
@@ -1971,32 +1971,55 @@ build time: May 23 14:33
          */
         {
             /**
-             * set the value of current module
+             * Set the value of current module
              * @param v value to be set
              */
             setValue:function (v) {
                 this.value = v;
             },
+
             /**
-             * get the value of current module
+             * Get the fullpath of current module if load dynamically
+             */
+            getFullPath:function () {
+                return this.fullpath;
+            },
+
+            /**
+             * Get the value of current module
              */
             getValue:function () {
                 return this.value;
             },
+
             /**
-             * get the name of current module
+             * Get the name of current module
              * @returns {String}
              */
             getName:function () {
                 return this.name;
             },
+
             /**
-             * @private
+             * Get the packageInfo of current module
+             * @return {Object}
+             */
+            getPackageInfo:function () {
+                return this.packageInfo;
+            },
+
+            /**
+             * Get the tag of current module
+             * @return {String}
              */
             getTag:function () {
                 return this.tag || this.packageInfo.tag;
             },
 
+            /**
+             * Get the charset of current module
+             * @return {String}
+             */
             getCharset:function () {
                 return this.charset || this.packageInfo.charset;
             }
@@ -2004,13 +2027,12 @@ build time: May 23 14:33
 
     Loader.Module = Module;
 
-    // 脚本(loadQueue)/模块(mod) 公用状态
+    // 模块(mod)状态
     Loader.STATUS = {
         "INIT":0,
         "LOADING":1,
         "LOADED":2,
         "ERROR":3,
-        // 模块特有
         "ATTACHED":4
     };
 })(KISSY);/**
@@ -2308,10 +2330,6 @@ build time: May 23 14:33
             return path.substring(0, path.length - 1);
         },
 
-        getPackagePath:function (self, mod) {
-            return getPackageInfo(self, mod).path;
-        },
-
         getPackageInfo:getPackageInfo,
 
         createModuleInfo:function (self, modName) {
@@ -2320,6 +2338,7 @@ build time: May 23 14:33
             modName = info.modName;
 
             var mods = self.Env.mods,
+                t,
                 mod = mods[modName];
 
             if (mod) {
@@ -2340,8 +2359,12 @@ build time: May 23 14:33
 
             // 用户配置的 path优先
             S.mix(mod, {
-                path:path
+                path:path,
+                packageInfo:packageInfo
             }, false);
+
+            mod.fullpath = utils.getMappedPath(self, packageInfo.path +
+                mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
         },
@@ -2505,9 +2528,9 @@ build time: May 23 14:33
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name)
-                && !config
-                && S.isPlainObject(fn)) {
+            if (S.isString(name) &&
+                !config &&
+                S.isPlainObject(fn)) {
                 o = {};
                 o[name] = fn;
                 name = o;
@@ -3241,37 +3264,6 @@ build time: May 23 14:33
         }
     });
 
-
-    function buildModPath(self, mod, base) {
-        var SS = self.SS,
-            Config = SS.Config;
-
-        base = base || Config.base;
-
-        build("fullpath", "path");
-
-        function build(fullpath, path) {
-            var flag = "__" + fullpath + "Ready",
-                t,
-                p = mod[fullpath],
-                sp = mod[path];
-            if (mod[flag]) {
-                return;
-            }
-            if (!p && sp) {
-                //如果是 ./ 或 ../ 则相对当前模块路径
-                sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
-                p = base + sp;
-            }
-            // debug 模式下，加载非 min 版
-            if (p) {
-                mod[fullpath] = utils.getMappedPath(SS, p +
-                    ((t = mod.getTag()) ? ("?t=" + t) : ""));
-                mod[flag] = 1;
-            }
-        }
-    }
-
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
         var SS = self.SS,
@@ -3293,7 +3285,7 @@ build time: May 23 14:33
             rMod,
             i,
             callbackBeCalled = 0,
-            // 最终有效的 require ，add 处声明为准
+        // 最终有效的 require ，add 处声明为准
             newRequires,
             mods = SS.Env.mods;
 
@@ -3328,13 +3320,10 @@ build time: May 23 14:33
                     error = JSON.stringify(__allRequires);
                 }
                 S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
-
             }
         }
 
-        if (S.Config.debug) {
-            cyclicCheck();
-        }
+        S.log(cyclicCheck());
 
         // attach all required modules
         for (i = 0; i < requires.length; i++) {
@@ -3348,8 +3337,6 @@ build time: May 23 14:33
         }
 
         // load and attach this module
-        buildModPath(self, mod, utils.getPackagePath(SS, mod));
-
         loadModByScript(self, mod, function () {
 
             // KISSY.add 可能改了 config，这里重新取下
@@ -3493,13 +3480,15 @@ build time: May 23 14:33
     }
 
     function loadScripts(urls, callback, charset) {
-        var count = urls && urls.length;
+        var count = urls && urls.length,
+            i,
+            url;
         if (!count) {
             callback();
             return;
         }
-        for (var i = 0; i < urls.length; i++) {
-            var url = urls[i];
+        for (i = 0; i < urls.length; i++) {
+            url = urls[i];
             S.getScript(url, function () {
                 if (!(--count)) {
                     callback();
@@ -4024,7 +4013,7 @@ build time: May 23 14:33
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120523143300'
+        tag:'20120524183454'
     }, getBaseInfo()));
 
     /**
@@ -4364,7 +4353,7 @@ build time: May 23 14:33
             requires:["node", "uibase"]
         },
         "editor":{
-            requires:['htmlparser', 'core']
+            requires:['htmlparser', 'core','overlay']
         }
     });
     if (S.Loader) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:45
+build time: May 24 11:31
 */
 /**
  * @fileOverview KISSY Template Engine
@@ -223,6 +223,9 @@ KISSY.add('template', function (S) {
 
 });
 /**
+ * TODO: check spec
+ *  - http://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html
+ *
  * 2012-04-24 yiminghe@gmail.com
  *      - support {{@if test}}t{{/if}} to prevent collision with velocity template engine
  *

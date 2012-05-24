@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 17 11:36
+build time: May 24 18:34
 */
 /**
  * @fileOverview UIBase.Align
@@ -407,6 +407,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
                 points:["cc", "cc"],
                 offset:[0, 0]
             });
+            return this;
         }
     };
 
@@ -1033,6 +1034,7 @@ KISSY.add('uibase/box', function (S) {
             } else {
                 self.set("visible", true);
             }
+            return self;
         },
 
         /**
@@ -1040,6 +1042,7 @@ KISSY.add('uibase/box', function (S) {
          */
         hide:function () {
             this.set("visible", false);
+            return this;
         }
     };
 
@@ -1338,7 +1341,7 @@ KISSY.add("uibase/close", function () {
  */
 KISSY.add("uibase/closerender", function (S, Node) {
 
-    var CLS_PREFIX = 'ext-';
+    var CLS_PREFIX = 'ks-ext-';
 
     function Close() {
     }
@@ -1352,7 +1355,7 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.HTML_PARSER = {
         closeBtn:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
+            return el.one("."+ CLS_PREFIX + 'close');
         }
     };
 
@@ -1371,9 +1374,9 @@ KISSY.add("uibase/closerender", function (S, Node) {
                     (closable ? "" : "style='display:none'") +
                     "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
-                    "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
+                    "class='" + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    self.get("prefixCls") + CLS_PREFIX + "close-x" +
+                    CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
@@ -1763,12 +1766,8 @@ KISSY.add("uibase/drag", function (S) {
         },
 
         _uiSetDraggable:function (v) {
-            var self = this,
-                d = self.__drag;
-            if (!d) {
-                return;
-            }
-            d.set("disabled", !v);
+            var d = this.__drag;
+            d && d.set("disabled", !v);
         },
 
         __destructor:function () {
@@ -1836,8 +1835,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    this.get("prefixCls") +
-                    "ext-loading'" +
+                    "ks-ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -1887,21 +1885,26 @@ KISSY.add("uibase/mask", function () {
          */
         mask:{
             value:false
+        },
+        maskNode:{
+            view:true
+        },
+        maskShared:{
+            value:true,
+            view:true
         }
     };
 
     Mask.prototype = {
-        _uiSetMask:function (v) {
+
+        __bindUI:function () {
             var self = this,
                 view = self.get("view"),
                 _maskExtShow = view._maskExtShow,
                 _maskExtHide = view._maskExtHide;
-            if (v) {
+            if (self.get("mask")) {
                 self.on("show", _maskExtShow, view);
                 self.on("hide", _maskExtHide, view);
-            } else {
-                self.detach("show", _maskExtShow, view);
-                self.detach("hide", _maskExtHide, view);
             }
         }
     };
@@ -1915,16 +1918,23 @@ KISSY.add("uibase/mask", function () {
 KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
-     * 多 position 共享一个遮罩
+     * 每组相同 prefixCls 的 position 共享一个遮罩
      */
-    var mask,
+    var maskMap = {
+            /**
+             * {
+             *  node:
+             *  num:
+             * }
+             */
+
+        },
         ie6 = (UA['ie'] === 6),
-        px = "px",
-        $ = Node.all,
-        WINDOW = S.Env.host,
-        doc = $(WINDOW.document),
-        iframe,
-        num = 0;
+        $ = Node.all;
+
+    function getMaskCls(self) {
+        return self.get("prefixCls") + "ext-mask";
+    }
 
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
@@ -1934,31 +1944,27 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask() {
-        mask = $("<div " +
-            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
-            "class='" +
-            this.get("prefixCls") + "ext-mask'/>")
-            .prependTo(WINDOW.document.body);
-        mask.css({
-            "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
-            left:0,
-            top:0
-        });
-        if (ie6) {
-            //ie6 下最好和 mask 平行
-            iframe = $("<" + "iframe " +
-                //"tabindex='-1' " +
+    function initMask(maskCls) {
+        var mask = $("<div " +
+            " style='width:" + docWidth() + ";" +
+            "left:0;" +
+            "top:0;" +
+            "height:" + docHeight() + ";" +
+            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+            " class='" +
+            maskCls +
+            "'>" +
+            (ie6 ? "<" + "iframe " +
                 "style='position:absolute;" +
-                "left:" + "0px" + ";" +
-                "top:" + "0px" + ";" +
+                "left:" + "0" + ";" +
+                "top:" + "0" + ";" +
                 "background:red;" +
-                "width:" + docWidth() + ";" +
-                "height:" + docHeight() + ";" +
+                "width: expression(this.parentNode.offsetWidth);" +
+                "height: expression(this.parentNode.offsetHeight);" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'/>").insertBefore(mask)
-        }
-
+                "z-index:-1;'></iframe>" : "") +
+            "</div>")
+            .prependTo("body");
         /**
          * 点 mask 焦点不转移
          */
@@ -1966,50 +1972,70 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
         mask.on("mousedown click", function (e) {
             e.halt();
         });
+        return mask;
     }
 
     function Mask() {
     }
 
-
     Mask.prototype = {
 
         _maskExtShow:function () {
-            var self = this;
+            var self = this,
+                maskCls = getMaskCls(self),
+                maskDesc = maskMap[maskCls],
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
             if (!mask) {
-                initMask.call(self);
+                if (maskShared) {
+                    if (maskDesc) {
+                        mask = maskDesc.node;
+                    } else {
+                        mask = initMask(maskCls);
+                        maskDesc = maskMap[maskCls] = {
+                            num:0,
+                            node:mask
+                        };
+                    }
+                } else {
+                    mask = initMask(maskCls);
+                }
+                self.__set("maskNode", mask);
             }
-            var zIndex = {
-                "z-index":self.get("zIndex") - 1
-            },
-                display = {
-                    "display":""
-                };
-            mask.css(zIndex);
-            iframe && iframe.css(zIndex);
-            num++;
-            if (num == 1) {
-                mask.css(display);
-                iframe && iframe.css(display);
+            mask.css("z-index", self.get("zIndex") - 1);
+            if (maskShared) {
+                maskDesc.num++;
+            }
+            if (!maskShared || maskDesc.num == 1) {
+                mask.show();
             }
         },
 
         _maskExtHide:function () {
-            num--;
-            if (num <= 0) {
-                num = 0;
-            }
-            if (!num) {
-                var display = {
-                    "display":"none"
-                };
-                mask && mask.css(display);
-                iframe && iframe.css(display);
+            var self = this,
+                maskCls = getMaskCls(self),
+                maskDesc = maskMap[maskCls],
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
+            if (maskShared) {
+                maskDesc.num--;
+                if (maskDesc.num == 0) {
+                    mask.hide();
+                }
+            } else {
+                mask.hide();
             }
         },
 
         __destructor:function () {
-            this._maskExtHide();
+            var self = this,
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
+            if (maskShared) {
+                self._maskExtHide();
+            } else {
+                mask.remove();
+            }
         }
 
     };
@@ -2017,7 +2043,12 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
     return Mask;
 }, {
     requires:["ua", "node"]
-});/**
+});
+
+/**
+ * TODO
+ *  - mask index 隐藏时不会恢复 z-index，需要业务架构自己实现 DialogManager
+ **//**
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
@@ -2351,7 +2382,7 @@ KISSY.add("uibase/stdmod", function () {
 KISSY.add("uibase/stdmodrender", function (S, Node) {
 
 
-    var CLS_PREFIX = "stdmod-";
+    var CLS_PREFIX = "ks-stdmod-";
 
     function StdMod() {
     }
@@ -2397,13 +2428,13 @@ KISSY.add("uibase/stdmodrender", function (S, Node) {
 
     StdMod.HTML_PARSER = {
         header:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
+            return el.one("." + CLS_PREFIX + "header");
         },
         body:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
+            return el.one("." + CLS_PREFIX + "body");
         },
         footer:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
+            return el.one("." + CLS_PREFIX + "footer");
         }
     };
 
@@ -2415,7 +2446,7 @@ KISSY.add("uibase/stdmodrender", function (S, Node) {
             partEl = self.get(part);
         if (!partEl) {
             style = serialize(style);
-            partEl = new Node("<div class='" + self.get("prefixCls") +
+            partEl = new Node("<div class='" +
                 CLS_PREFIX + part + "'" +
                 " " +
                 (style ? ("style='" + style + "'") : "") +

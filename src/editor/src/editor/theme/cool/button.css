@@ -97,7 +97,7 @@ active
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
     border: 1px solid rgb(193, 200, 209);
     background: #e8ebee repeat-x left top;
-    background-image: url("ke-button-bg.png");/** sprite-ref: mysprite; sprite-alignment: repeat;*/
+    background-image: url("ke-button-bg.png");/** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image:none;
     padding: 3px 18px;
     _padding-bottom: 2px;
@@ -112,7 +112,7 @@ active
 .ke-button:hover ,.ke-button-hover{
     border-color: rgb(232, 204, 160);
     background: #f5e7ce repeat-x left top;
-    background-image: url("ke-button-bg-active.png");/** sprite-ref: mysprite; sprite-alignment: repeat;*/
+    background-image: url("ke-button-bg-active.png");/** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image:none;
     cursor: pointer;
     color: black;
@@ -123,7 +123,7 @@ active
     cursor: default;
 }
 .ke-triplebutton-disabled.ke-button:hover {
-    background-image: url("ke-button-bg.png");/** sprite-ref: mysprite; */
+    background-image: url("ke-button-bg.png");/** sprite-ref: cool; */
     -background-image:none;
     border-color:rgb(193, 200, 209);
 }

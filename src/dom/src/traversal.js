@@ -4,8 +4,7 @@
  */
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
-    var isElementNode = DOM._isElementNode,
-        doc = S.Env.host.document,
+    var doc = S.Env.host.document,
         CONTAIN_MASK = 16,
         __contains = doc.documentElement.contains ?
             function (a, b) {
@@ -224,9 +223,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
         while (elem && elem != context) {
-            if (isElementNode(elem)
-                && testFilter(elem, filter)
-                && (!extraFilter || extraFilter(elem))) {
+            if (elem.nodeType == DOM.ELEMENT_NODE &&
+                testFilter(elem, filter) &&
+                (!extraFilter || extraFilter(elem))) {
                 ret.push(elem);
                 if (!isArray) {
                     break;

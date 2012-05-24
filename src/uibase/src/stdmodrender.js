@@ -5,7 +5,7 @@
 KISSY.add("uibase/stdmodrender", function (S, Node) {
 
 
-    var CLS_PREFIX = "stdmod-";
+    var CLS_PREFIX = "ks-stdmod-";
 
     function StdMod() {
     }
@@ -51,13 +51,13 @@ KISSY.add("uibase/stdmodrender", function (S, Node) {
 
     StdMod.HTML_PARSER = {
         header:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
+            return el.one("." + CLS_PREFIX + "header");
         },
         body:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
+            return el.one("." + CLS_PREFIX + "body");
         },
         footer:function (el) {
-            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
+            return el.one("." + CLS_PREFIX + "footer");
         }
     };
 
@@ -69,7 +69,7 @@ KISSY.add("uibase/stdmodrender", function (S, Node) {
             partEl = self.get(part);
         if (!partEl) {
             style = serialize(style);
-            partEl = new Node("<div class='" + self.get("prefixCls") +
+            partEl = new Node("<div class='" +
                 CLS_PREFIX + part + "'" +
                 " " +
                 (style ? ("style='" + style + "'") : "") +

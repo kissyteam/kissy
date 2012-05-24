@@ -5,16 +5,23 @@
 KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
-     * 多 position 共享一个遮罩
+     * 每组相同 prefixCls 的 position 共享一个遮罩
      */
-    var mask,
+    var maskMap = {
+            /**
+             * {
+             *  node:
+             *  num:
+             * }
+             */
+
+        },
         ie6 = (UA['ie'] === 6),
-        px = "px",
-        $ = Node.all,
-        WINDOW = S.Env.host,
-        doc = $(WINDOW.document),
-        iframe,
-        num = 0;
+        $ = Node.all;
+
+    function getMaskCls(self) {
+        return self.get("prefixCls") + "ext-mask";
+    }
 
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
@@ -24,31 +31,27 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask() {
-        mask = $("<div " +
-            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
-            "class='" +
-            this.get("prefixCls") + "ext-mask'/>")
-            .prependTo(WINDOW.document.body);
-        mask.css({
-            "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
-            left:0,
-            top:0
-        });
-        if (ie6) {
-            //ie6 下最好和 mask 平行
-            iframe = $("<" + "iframe " +
-                //"tabindex='-1' " +
+    function initMask(maskCls) {
+        var mask = $("<div " +
+            " style='width:" + docWidth() + ";" +
+            "left:0;" +
+            "top:0;" +
+            "height:" + docHeight() + ";" +
+            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+            " class='" +
+            maskCls +
+            "'>" +
+            (ie6 ? "<" + "iframe " +
                 "style='position:absolute;" +
-                "left:" + "0px" + ";" +
-                "top:" + "0px" + ";" +
+                "left:" + "0" + ";" +
+                "top:" + "0" + ";" +
                 "background:red;" +
-                "width:" + docWidth() + ";" +
-                "height:" + docHeight() + ";" +
+                "width: expression(this.parentNode.offsetWidth);" +
+                "height: expression(this.parentNode.offsetHeight);" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'/>").insertBefore(mask)
-        }
-
+                "z-index:-1;'></iframe>" : "") +
+            "</div>")
+            .prependTo("body");
         /**
          * 点 mask 焦点不转移
          */
@@ -56,50 +59,70 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
         mask.on("mousedown click", function (e) {
             e.halt();
         });
+        return mask;
     }
 
     function Mask() {
     }
 
-
     Mask.prototype = {
 
         _maskExtShow:function () {
-            var self = this;
+            var self = this,
+                maskCls = getMaskCls(self),
+                maskDesc = maskMap[maskCls],
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
             if (!mask) {
-                initMask.call(self);
+                if (maskShared) {
+                    if (maskDesc) {
+                        mask = maskDesc.node;
+                    } else {
+                        mask = initMask(maskCls);
+                        maskDesc = maskMap[maskCls] = {
+                            num:0,
+                            node:mask
+                        };
+                    }
+                } else {
+                    mask = initMask(maskCls);
+                }
+                self.__set("maskNode", mask);
             }
-            var zIndex = {
-                "z-index":self.get("zIndex") - 1
-            },
-                display = {
-                    "display":""
-                };
-            mask.css(zIndex);
-            iframe && iframe.css(zIndex);
-            num++;
-            if (num == 1) {
-                mask.css(display);
-                iframe && iframe.css(display);
+            mask.css("z-index", self.get("zIndex") - 1);
+            if (maskShared) {
+                maskDesc.num++;
+            }
+            if (!maskShared || maskDesc.num == 1) {
+                mask.show();
             }
         },
 
         _maskExtHide:function () {
-            num--;
-            if (num <= 0) {
-                num = 0;
-            }
-            if (!num) {
-                var display = {
-                    "display":"none"
-                };
-                mask && mask.css(display);
-                iframe && iframe.css(display);
+            var self = this,
+                maskCls = getMaskCls(self),
+                maskDesc = maskMap[maskCls],
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
+            if (maskShared) {
+                maskDesc.num--;
+                if (maskDesc.num == 0) {
+                    mask.hide();
+                }
+            } else {
+                mask.hide();
             }
         },
 
         __destructor:function () {
-            this._maskExtHide();
+            var self = this,
+                maskShared = self.get("maskShared"),
+                mask = self.get("maskNode");
+            if (maskShared) {
+                self._maskExtHide();
+            } else {
+                mask.remove();
+            }
         }
 
     };
@@ -108,3 +131,8 @@ KISSY.add("uibase/maskrender", function (S, UA, Node) {
 }, {
     requires:["ua", "node"]
 });
+
+/**
+ * TODO
+ *  - mask index 隐藏时不会恢复 z-index，需要业务架构自己实现 DialogManager
+ **/

@@ -13,8 +13,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    this.get("prefixCls") +
-                    "ext-loading'" +
+                    "ks-ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +

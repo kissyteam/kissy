@@ -157,6 +157,7 @@ KISSY.add('uibase/box', function (S) {
             } else {
                 self.set("visible", true);
             }
+            return self;
         },
 
         /**
@@ -164,6 +165,7 @@ KISSY.add('uibase/box', function (S) {
          */
         hide:function () {
             this.set("visible", false);
+            return this;
         }
     };
 

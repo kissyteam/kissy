@@ -30,12 +30,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                             self.__set("render", textarea.parent());
                         }
                     }
-                    if (!self.get("width")) {
-                        self.__set("width", textarea.style("width") || textarea.css("width"));
-                    }
-                    if (!self.get("height")) {
-                        self.__set("height", textarea.style("height") || textarea.css("height"));
-                    }
                 } else {
                     self.__editor_created_new = 1;
                 }
@@ -80,9 +74,13 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
 
                 //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
                 S.use(mods.join(","), function () {
-                    var args = S.makeArray(arguments);
+                    var h, args = S.makeArray(arguments);
                     args.shift();
                     useMods(args);
+                    // 工具条出来后调整高度
+                    if (h = self.get("height")) {
+                        self._uiSetHeight(h);
+                    }
                 });
 
                 self.__CORE_PLUGINS = [];
@@ -92,9 +90,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
         },
 
         {
-            Config:{
-                base:S.Config.base + "editor/"
-            },
+            Config:{},
             XHTML_DTD:HtmlParser['DTD'],
             ATTRS:/**
              * @lends Editor#
@@ -177,15 +173,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                 }
             }
         }, "Editor");
-
-    Editor.DefaultRender = UIBase.create(Component.Render, [UIBase.Box.Render], {
-        /**
-         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）
-         * width 依然在 el 上设置
-         */
-        _uiSetHeight:function () {
-        }
-    });
 
     S.mix(Editor, S.EventTarget);
 

@@ -7,12 +7,30 @@
 <script src="../../../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../../../tools/jasmine/jasmine-html.js"></script>
 
-<script src="../../../../../build/kissy.js" charset="utf-8"></script>
+<script src="../../../../../build/seed.js" charset="utf-8"></script>
 </head>
 <body>
 <script>
-    KISSY.use("core", function (S, Core) {
-        S.log(Core);
+    var S = KISSY;
+    S.config({
+        "combine":true,
+        "packages":[
+            {
+                name:"p",
+                path:'./'
+            }
+        ],
+        map:[
+            [/\?t=\d+/, ""]
+        ]
+    });
+    S.add({
+        "p/a":{
+            requires:["./b","core"]
+        }
+    })
+    S.use("p/a", function (S, A) {
+        S.log(A);
     });
 </script>
 </body>

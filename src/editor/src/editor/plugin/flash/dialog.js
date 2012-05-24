@@ -199,7 +199,6 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
          */
         _gen:function (ev) {
             ev && ev.halt();
-            //debugger
             var self = this,
                 editor = self.editor,
                 dinfo = self._getDInfo(),

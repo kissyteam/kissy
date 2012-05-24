@@ -96,7 +96,7 @@
             requires:["node", "uibase"]
         },
         "editor":{
-            requires:['htmlparser', 'core']
+            requires:['htmlparser', 'core','overlay']
         }
     });
     if (S.Loader) {

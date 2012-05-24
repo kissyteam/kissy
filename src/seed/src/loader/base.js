@@ -40,32 +40,55 @@
          */
         {
             /**
-             * set the value of current module
+             * Set the value of current module
              * @param v value to be set
              */
             setValue:function (v) {
                 this.value = v;
             },
+
             /**
-             * get the value of current module
+             * Get the fullpath of current module if load dynamically
+             */
+            getFullPath:function () {
+                return this.fullpath;
+            },
+
+            /**
+             * Get the value of current module
              */
             getValue:function () {
                 return this.value;
             },
+
             /**
-             * get the name of current module
+             * Get the name of current module
              * @returns {String}
              */
             getName:function () {
                 return this.name;
             },
+
             /**
-             * @private
+             * Get the packageInfo of current module
+             * @return {Object}
+             */
+            getPackageInfo:function () {
+                return this.packageInfo;
+            },
+
+            /**
+             * Get the tag of current module
+             * @return {String}
              */
             getTag:function () {
                 return this.tag || this.packageInfo.tag;
             },
 
+            /**
+             * Get the charset of current module
+             * @return {String}
+             */
             getCharset:function () {
                 return this.charset || this.packageInfo.charset;
             }
@@ -73,13 +96,12 @@
 
     Loader.Module = Module;
 
-    // 脚本(loadQueue)/模块(mod) 公用状态
+    // 模块(mod)状态
     Loader.STATUS = {
         "INIT":0,
         "LOADING":1,
         "LOADED":2,
         "ERROR":3,
-        // 模块特有
         "ATTACHED":4
     };
 })(KISSY);

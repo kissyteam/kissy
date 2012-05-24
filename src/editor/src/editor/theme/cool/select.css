@@ -44,7 +44,7 @@ select style for kissy editor
 
 .ke-select-drop {
     background: no-repeat scroll center center transparent;
-    background-image: url("arrow.png"); /** sprite-ref: mysprite; */
+    background-image: url("arrow.png"); /** sprite-ref: cool; */
     width: 7px;
     height: 3px;
     vertical-align: middle;
@@ -136,7 +136,7 @@ select style for kissy editor
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
-    background-image: url("ke-button-bg.png"); /** sprite-ref: mysprite; sprite-alignment: repeat;*/
+    background-image: url("ke-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image: none;
     height: 24px;
     padding-top: 1px;

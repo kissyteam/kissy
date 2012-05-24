@@ -9,7 +9,7 @@
 <span id='line2' class='line'>  2</span>  * @fileOverview enhanced base for model with sync
 <span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
 <span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
-<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"mvc/model"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Base</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mvcSync</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"mvc/model"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Base</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line6' class='line'>  6</span> 
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">blacklist</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="WHIT">
 <span id='line8' class='line'>  8</span> </span><span class="WHIT">        </span><span class="STRN">"idAttribute"</span><span class="PUNC">,</span><span class="WHIT">
@@ -253,7 +253,7 @@
 <span id='line246' class='line'>246</span>                  */</span><span class="WHIT">
 <span id='line247' class='line'>247</span> </span><span class="WHIT">                </span><span class="NAME">sync</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line248' class='line'>248</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line249' class='line'>249</span> </span><span class="WHIT">                        </span><span class="NAME">mvcSync.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line249' class='line'>249</span> </span><span class="WHIT">                        </span><span class="NAME">S.require</span><span class="PUNC">(</span><span class="STRN">"mvc"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">sync.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line250' class='line'>250</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line251' class='line'>251</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line252' class='line'>252</span> </span><span class="WHIT">                </span><span class="COMM">/**
@@ -303,5 +303,5 @@
 <span id='line296' class='line'>296</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Model</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line297' class='line'>297</span> 
 <span id='line298' class='line'>298</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line299' class='line'>299</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./sync'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line299' class='line'>299</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'base'</span><span class="PUNC">]</span><span class="WHIT">
 <span id='line300' class='line'>300</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

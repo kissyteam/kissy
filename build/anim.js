@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 15 20:44
+build time: May 24 11:30
 */
 /**
  * @fileOverview anim
@@ -97,7 +97,6 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
 KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
-        _isElementNode = DOM._isElementNode,
         specialVals = ["hide", "show", "toggle"],
         // shorthand css properties
         SHORT_HANDS = {
@@ -260,7 +259,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return;
         }
 
-        if (_isElementNode(elem)) {
+        if (elem.nodeType==DOM.ELEMENT_NODE) {
             hidden = (DOM.css(elem, "display") === "none");
             for (prop in props) {
                 val = props[prop];
@@ -388,7 +387,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs[prop] = fx;
         }
 
-        if (_isElementNode(elem) &&
+        if (elem.nodeType==DOM.ELEMENT_NODE &&
             (props.width || props.height)) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE does not

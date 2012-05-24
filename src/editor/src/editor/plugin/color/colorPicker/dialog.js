@@ -2,7 +2,7 @@
  * color picker
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/colorpicker", function (S, Editor, Overlay4E) {
+KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay4E) {
     var map = S.map,
         DOM = S.DOM;
 

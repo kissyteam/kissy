@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, Editor) {
     var Event = S.Event,
-        undefined = ("a" in {}),
+        undefined = {}['a'],
         DOM = S.DOM,
         BubbleView = UIBase.create(Overlay, [], {}, {
             ATTRS:{
@@ -85,7 +85,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, Editor
             left = iframeXY.left,
             right = left + DOM.width(editorWin),
             bottom = top + DOM.height(editorWin),
-            elXY = el.offset(undefined,window),
+            elXY = el.offset(undefined, window),
             elTop = elXY.top,
             elLeft = elXY.left,
             elRight = elLeft + el.width(),
@@ -180,6 +180,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, UIBase, Overlay, Editor
         var editorWin = editor.get("iframe")[0].contentWindow;
 
         function showImmediately() {
+
             var xy = getXy(bubble);
             if (xy) {
                 bubble.set("xy", xy);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 16 12:16
+build time: May 24 13:58
 */
 /**
  * @fileOverview dom-attr
@@ -16,7 +16,6 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 'innerText' : 'textContent',
             EMPTY = '',
             nodeName = DOM.nodeName,
-            isElementNode = DOM._isElementNode,
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
             rclickable = /^a(?:rea)?$/i,
@@ -157,10 +156,6 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         return values;
                     }
                 }};
-
-        function isTextNode(elem) {
-            return DOM._nodeTypeIs(elem, DOM.TEXT_NODE);
-        }
 
         if (oldIE) {
 
@@ -469,7 +464,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var els = DOM.query(selector), el, i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (isElementNode(el)) {
+                        if (el.nodeType==DOM.ELEMENT_NODE) {
                             var propName;
                             el.removeAttribute(name);
                             // Set corresponding property to false for boolean attributes
@@ -598,10 +593,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         var el = DOM.get(selector);
 
                         // only gets value on supported nodes
-                        if (isElementNode(el)) {
+                        if (el.nodeType==DOM.ELEMENT_NODE) {
                             return el[TEXT] || EMPTY;
                         }
-                        else if (isTextNode(el)) {
+                        else if (el.nodeType==DOM.TEXT_NODE) {
                             return el.nodeValue;
                         }
                         return undefined;
@@ -611,10 +606,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         var els = DOM.query(selector), i;
                         for (i = els.length - 1; i >= 0; i--) {
                             el = els[i];
-                            if (isElementNode(el)) {
+                            if (el.nodeType==DOM.ELEMENT_NODE) {
                                 el[TEXT] = val;
                             }
-                            else if (isTextNode(el)) {
+                            else if (el.nodeType==DOM.TEXT_NODE) {
                                 el.nodeValue = val;
                             }
                         }
@@ -658,11 +653,6 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
-    function nodeTypeIs(node, val) {
-        return node && node.nodeType === val;
-    }
-
-
     var NODE_TYPE =
     /**
      * @lends DOM
@@ -683,7 +673,12 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     };
     var DOM = {
 
-        _isCustomDomain:function (win) {
+        /**
+         * Whether has been set a custom domain,
+         * @param {window} [win] Test window. Default current window.
+         * @return {Boolean}
+         */
+        isCustomDomain:function (win) {
             win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
@@ -691,9 +686,15 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 domain != ( '[' + hostname + ']' );	// IPv6 IP support
         },
 
-        _genEmptyIframeSrc:function (win) {
+        /**
+         * Get appropriate src for new empty iframe.
+         * Consider custom domain.
+         * @param {window} win Window new iframe will be inserted into.
+         * @return {String} Src for iframe.
+         */
+        getEmptyIframeSrc:function (win) {
             win = win || WINDOW;
-            if (UA['ie'] && DOM._isCustomDomain(win)) {
+            if (UA['ie'] && DOM.isCustomDomain(win)) {
                 return  'javascript:void(function(){' + encodeURIComponent("" +
                     "document.open();" +
                     "document.domain='" +
@@ -701,17 +702,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                     + "';" +
                     "document.close();") + "}())";
             }
+            return undefined;
         },
 
-        _NODE_TYPE:NODE_TYPE,
-
-
-        /**
-         * 是不是 element node
-         */
-        _isElementNode:function (elem) {
-            return nodeTypeIs(elem, DOM.ELEMENT_NODE);
-        },
+        NodeTypes:NODE_TYPE,
 
         /**
          * elem 为 window 时，直接返回
@@ -721,15 +715,14 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @return {window|Document|HTMLElement}
          */
         _getWin:function (elem) {
-            return (elem && ('scrollTo' in elem) && elem['document']) ?
-                elem :
-                nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
-                    elem.defaultView || elem.parentWindow :
-                    (elem === undefined || elem === null) ?
-                        WINDOW : false;
+            if (elem == null) {
+                return WINDOW;
+            }
+            return ('scrollTo' in elem && elem['document']) ?
+                elem : elem.nodeType == DOM.DOCUMENT_NODE ?
+                elem.defaultView || elem.parentWindow :
+                false;
         },
-
-        _nodeTypeIs:nodeTypeIs,
 
         // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
         _isNodeList:function (o) {
@@ -931,7 +924,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
         }
         for (i = 0; i < len; i++) {
             elem = elems[i];
-            if (DOM._isElementNode(elem)) {
+            if (elem.nodeType==DOM.ELEMENT_NODE) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) {
                     return ret;
@@ -963,8 +956,6 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = S.Env.host.document,
             ie = UA['ie'],
-            nodeTypeIs = DOM._nodeTypeIs,
-            isElementNode = DOM._isElementNode,
             isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
@@ -1104,7 +1095,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // getter
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
-                        if (isElementNode(el)) {
+                        if (el.nodeType == DOM.ELEMENT_NODE) {
                             return el.innerHTML;
                         } else {
                             return null;
@@ -1125,7 +1116,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                             try {
                                 for (i = els.length - 1; i >= 0; i--) {
                                     elem = els[i];
-                                    if (isElementNode(elem)) {
+                                    if (elem.nodeType == DOM.ELEMENT_NODE) {
                                         cleanData(getElementsByTagName(elem, "*"));
                                         elem.innerHTML = htmlString;
                                     }
@@ -1179,7 +1170,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
                             for (i = length - 1; i >= 0; i--) {
                                 el = els[i];
-                                if (isElementNode(el)) {
+                                if (el.nodeType == DOM.ELEMENT_NODE) {
                                     cleanData(el);
                                     cleanData(getElementsByTagName(el, "*"));
                                     el.outerHTML = htmlString;
@@ -1202,7 +1193,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     var el, els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (!keepData && isElementNode(el)) {
+                        if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
                             // 清理数据
                             var elChildren = getElementsByTagName(el, "*");
                             cleanData(elChildren);
@@ -1240,14 +1231,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // 2. ie will execute external script
                     var clone = elem.cloneNode(deep);
 
-                    if (isElementNode(elem) ||
-                        nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
+                    if (elem.nodeType == DOM.ELEMENT_NODE ||
+                        elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                         // IE copies events bound via attachEvent when using cloneNode.
                         // Calling detachEvent on the clone will also remove the events
                         // from the original. In order to get around this, we use some
                         // proprietary methods to clear the events. Thanks to MooTools
                         // guys for this hotness.
-                        if (isElementNode(elem)) {
+                        if (elem.nodeType == DOM.ELEMENT_NODE) {
                             fixAttributes(elem, clone);
                         }
 
@@ -1281,7 +1272,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             });
 
         function processAll(fn, elem, clone) {
-            if (nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
+            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 var eCs = elem.childNodes,
                     cloneCs = clone.childNodes,
                     fIndex = 0;
@@ -1291,7 +1282,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     fIndex++;
                 }
-            } else if (isElementNode(elem)) {
+            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
                 var elemChildren = getElementsByTagName(elem, "*"),
                     cloneChildren = getElementsByTagName(clone, "*"),
                     cIndex = 0;
@@ -1309,7 +1300,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         function cloneWidthDataAndEvent(src, dest) {
             var Event = S.require('event');
 
-            if (isElementNode(dest) && !DOM.hasData(src)) {
+            if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
                 return;
             }
 
@@ -1388,11 +1379,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         // 添加成员到元素中
         function attachProps(elem, props) {
             if (S.isPlainObject(props)) {
-                if (isElementNode(elem)) {
+                if (elem.nodeType == DOM.ELEMENT_NODE) {
                     DOM.attr(elem, props, true);
                 }
                 // document fragment
-                else if (nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
+                else if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                     DOM.attr(elem.childNodes, props, true);
                 }
             }
@@ -1795,7 +1786,6 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
-        _isElementNode = DOM._isElementNode,
         NEXT_SIBLING = 'nextSibling';
 
     /**
@@ -1813,7 +1803,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 fixChecked(el.childNodes);
             } else if (getNodeName(el) == "input") {
                 fixCheckedInternal(el);
-            } else if (_isElementNode(el)) {
+            } else if (el.nodeType==DOM.ELEMENT_NODE) {
                 var cs = el.getElementsByTagName("input");
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
@@ -1852,7 +1842,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                     scripts.push(el);
                 }
             } else {
-                if (_isElementNode(el) &&
+                if (el.nodeType==DOM.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !rformEls.test(nodeName)) {
                     var tmp = [],
@@ -2093,8 +2083,6 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     var win = S.Env.host,
         doc = win.document,
         docElem = doc.documentElement,
-        isElementNode = DOM._isElementNode,
-        nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
         CSS1Compat = "CSS1Compat",
         compatMode = "compatMode",
@@ -2186,7 +2174,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 }
 
                 // document 归一化到 window
-                if (nodeTypeIs(container, DOM.DOCUMENT_NODE)) {
+                if (container.nodeType == DOM.DOCUMENT_NODE) {
                     container = getWin(container);
                 }
 
@@ -2364,7 +2352,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            } else if (isElementNode(elem)) {
+            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
                 if (v !== undefined) {
                     elem[method] = parseFloat(v)
                 } else {
@@ -3460,7 +3448,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                     DOM.prepend(defaultDisplayDetectIframe, body);
                     var iframeSrc;
-                    if (iframeSrc = DOM._genEmptyIframeSrc()) {
+                    if (iframeSrc = DOM.getEmptyIframeSrc()) {
                         defaultDisplayDetectIframe.src = iframeSrc;
                     }
                 } else {
@@ -3476,7 +3464,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
                         defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
                             + "<html><head>" +
-                            (UA['ie'] && DOM._isCustomDomain() ?
+                            (UA['ie'] && DOM.isCustomDomain() ?
                                 "<script>document.domain = '" +
                                     doc.domain
                                     + "';</script>" : "")
@@ -4071,8 +4059,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
-    var isElementNode = DOM._isElementNode,
-        doc = S.Env.host.document,
+    var doc = S.Env.host.document,
         CONTAIN_MASK = 16,
         __contains = doc.documentElement.contains ?
             function (a, b) {
@@ -4291,9 +4278,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
         while (elem && elem != context) {
-            if (isElementNode(elem)
-                && testFilter(elem, filter)
-                && (!extraFilter || extraFilter(elem))) {
+            if (elem.nodeType == DOM.ELEMENT_NODE &&
+                testFilter(elem, filter) &&
+                (!extraFilter || extraFilter(elem))) {
                 ret.push(elem);
                 if (!isArray) {
                     break;

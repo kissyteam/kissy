@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 23 14:32
+build time: May 24 11:30
 */
 /**
  * @fileOverview form data  serialization util
@@ -91,7 +91,7 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe"),
             iframe,
-            src = DOM._genEmptyIframeSrc();
+            src = DOM.getEmptyIframeSrc();
 
         iframe = xhr.iframe = DOM.create("<iframe " +
             // ie6 need this when cross domain

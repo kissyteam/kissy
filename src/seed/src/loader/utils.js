@@ -218,10 +218,6 @@
             return path.substring(0, path.length - 1);
         },
 
-        getPackagePath:function (self, mod) {
-            return getPackageInfo(self, mod).path;
-        },
-
         getPackageInfo:getPackageInfo,
 
         createModuleInfo:function (self, modName) {
@@ -230,6 +226,7 @@
             modName = info.modName;
 
             var mods = self.Env.mods,
+                t,
                 mod = mods[modName];
 
             if (mod) {
@@ -250,8 +247,12 @@
 
             // 用户配置的 path优先
             S.mix(mod, {
-                path:path
+                path:path,
+                packageInfo:packageInfo
             }, false);
+
+            mod.fullpath = utils.getMappedPath(self, packageInfo.path +
+                mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
         },
@@ -415,9 +416,9 @@
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name)
-                && !config
-                && S.isPlainObject(fn)) {
+            if (S.isString(name) &&
+                !config &&
+                S.isPlainObject(fn)) {
                 o = {};
                 o[name] = fn;
                 name = o;

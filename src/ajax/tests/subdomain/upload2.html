@@ -25,7 +25,7 @@
                 var srcScript = 'document.open();' +
                     // The document domain must be set any time we
                     // call document.open().
-                        ( DOM._isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
+                        ( DOM.isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
                         'document.close();';
                 if (UA['ie']) {
                    frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';

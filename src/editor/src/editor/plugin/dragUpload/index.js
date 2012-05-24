@@ -8,6 +8,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
         UA = S.UA,
+        Utils = Editor.Utils,
         DOM = S.DOM;
 
     if (UA['ie']) {
@@ -57,7 +58,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                         if (DOM.nodeName(el) == "img") {
                             archor = el.nextSibling;
                             ap = el.parentNode;
-                            DOM._4e_remove(el);
+                            DOM.remove(el);
                         }
                     });
                     inserted = {};
@@ -81,10 +82,9 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                     if (size / 1000 > sizeLimit) {
                         continue;
                     }
-                    var img = new Node("<img " +
-                        "src='" +
-                        (Editor['Config'].base + "theme/tao-loading.gif") + "'" +
-                        "/>");
+                    var img = new Node("<img " + "src='" +
+                        Utils.debugUrl("theme/tao-loading.gif")
+                        + "'" + "/>");
                     var nakeImg = img[0];
                     ap.insertBefore(nakeImg, archor);
                     var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
@@ -99,13 +99,13 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
             });
 
             if (window['XMLHttpRequest'] && !XMLHttpRequest.prototype.sendAsBinary) {
-                XMLHttpRequest.prototype.sendAsBinary = function (datastr, contentType) {
+                XMLHttpRequest.prototype.sendAsBinary = function (dataStr, contentType) {
                     // chrome12 引入 WebKitBlobBuilder
                     var bb = new (window['BlobBuilder'] || window['WebKitBlobBuilder'])();
-                    var len = datastr.length;
+                    var len = dataStr.length;
                     var data = new window['Uint8Array'](len);
                     for (var i = 0; i < len; i++) {
-                        data[i] = datastr.charCodeAt(i);
+                        data[i] = dataStr['charCodeAt'](i);
                     }
                     bb.append(data.buffer);
                     this.send(bb['getBlob'](contentType));

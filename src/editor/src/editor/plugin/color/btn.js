@@ -141,7 +141,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorpicker", self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/colorPicker/dialog", self.get("cmdType"));
             });
             self._prepare = self._show;
             self._show();

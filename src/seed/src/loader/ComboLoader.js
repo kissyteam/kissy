@@ -9,13 +9,15 @@
     }
 
     function loadScripts(urls, callback, charset) {
-        var count = urls && urls.length;
+        var count = urls && urls.length,
+            i,
+            url;
         if (!count) {
             callback();
             return;
         }
-        for (var i = 0; i < urls.length; i++) {
-            var url = urls[i];
+        for (i = 0; i < urls.length; i++) {
+            url = urls[i];
             S.getScript(url, function () {
                 if (!(--count)) {
                     callback();

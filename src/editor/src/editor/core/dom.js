@@ -813,6 +813,48 @@ KISSY.add("editor/core/dom", function (S) {
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
                 return dtd && dtd['#'];
+            },
+
+            /**
+             * 根据dom路径得到某个节点
+             * @param doc
+             * @param address
+             * @param [normalized]
+             * @return {NodeList}
+             */
+            _4e_getByAddress:function (doc, address, normalized) {
+                var $ = doc.documentElement;
+
+                for (var i = 0; $ && i < address.length; i++) {
+                    var target = address[ i ];
+
+                    if (!normalized) {
+                        $ = $.childNodes[ target ];
+                        continue;
+                    }
+
+                    var currentIndex = -1;
+
+                    for (var j = 0; j < $.childNodes.length; j++) {
+                        var candidate = $.childNodes[ j ];
+
+                        if (normalized === TRUE &&
+                            candidate.nodeType == 3 &&
+                            candidate.previousSibling &&
+                            candidate.previousSibling.nodeType == 3) {
+                            continue;
+                        }
+
+                        currentIndex++;
+
+                        if (currentIndex == target) {
+                            $ = candidate;
+                            break;
+                        }
+                    }
+                }
+
+                return $;
             }
         };
 

@@ -6,11 +6,6 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
-    function nodeTypeIs(node, val) {
-        return node && node.nodeType === val;
-    }
-
-
     var NODE_TYPE =
     /**
      * @lends DOM
@@ -31,7 +26,12 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     };
     var DOM = {
 
-        _isCustomDomain:function (win) {
+        /**
+         * Whether has been set a custom domain,
+         * @param {window} [win] Test window. Default current window.
+         * @return {Boolean}
+         */
+        isCustomDomain:function (win) {
             win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
@@ -39,9 +39,15 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 domain != ( '[' + hostname + ']' );	// IPv6 IP support
         },
 
-        _genEmptyIframeSrc:function (win) {
+        /**
+         * Get appropriate src for new empty iframe.
+         * Consider custom domain.
+         * @param {window} win Window new iframe will be inserted into.
+         * @return {String} Src for iframe.
+         */
+        getEmptyIframeSrc:function (win) {
             win = win || WINDOW;
-            if (UA['ie'] && DOM._isCustomDomain(win)) {
+            if (UA['ie'] && DOM.isCustomDomain(win)) {
                 return  'javascript:void(function(){' + encodeURIComponent("" +
                     "document.open();" +
                     "document.domain='" +
@@ -49,17 +55,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                     + "';" +
                     "document.close();") + "}())";
             }
+            return undefined;
         },
 
         NodeTypes:NODE_TYPE,
-
-
-        /**
-         * 是不是 element node
-         */
-        _isElementNode:function (elem) {
-            return nodeTypeIs(elem, DOM.ELEMENT_NODE);
-        },
 
         /**
          * elem 为 window 时，直接返回
@@ -69,15 +68,14 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @return {window|Document|HTMLElement}
          */
         _getWin:function (elem) {
-            return (elem && ('scrollTo' in elem) && elem['document']) ?
-                elem :
-                nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
-                    elem.defaultView || elem.parentWindow :
-                    (elem === undefined || elem === null) ?
-                        WINDOW : false;
+            if (elem == null) {
+                return WINDOW;
+            }
+            return ('scrollTo' in elem && elem['document']) ?
+                elem : elem.nodeType == DOM.DOCUMENT_NODE ?
+                elem.defaultView || elem.parentWindow :
+                false;
         },
-
-        _nodeTypeIs:nodeTypeIs,
 
         // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
         _isNodeList:function (o) {

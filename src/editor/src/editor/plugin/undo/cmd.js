@@ -96,13 +96,13 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                 editor = self.editor;
 
             editor.get("document").on("keydown", function (ev) {
-                var keycode = ev.keyCode;
-                if (keycode in navigationKeyCodes
-                    || keycode in modifierKeyCodes) {
+                var keyCode = ev.keyCode;
+                if (keyCode in navigationKeyCodes
+                    || keyCode in modifierKeyCodes) {
                     return;
                 }
                 // ctrl+z，撤销
-                if (keycode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
                     if (false !== editor.fire("restore", {direction:-1})) {
                         self.restore(-1);
                     }
@@ -110,7 +110,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     return;
                 }
                 // ctrl+y，重做
-                if (keycode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
                     if (false !== editor.fire("restore", {direction:1})) {
                         self.restore(1);
                     }

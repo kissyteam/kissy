@@ -46,3 +46,9 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
 }, {
     requires:['uibase', './basic', './BasicComboBoxRender']
 });
+
+/**
+ * TODO
+ *  - 考虑是否 ComboBox 要继承于 AutoComplete，srcNode 有点怪
+ *  - 是否应该用组合实现？
+ **/

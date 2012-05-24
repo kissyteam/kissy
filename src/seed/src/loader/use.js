@@ -66,37 +66,6 @@
         }
     });
 
-
-    function buildModPath(self, mod, base) {
-        var SS = self.SS,
-            Config = SS.Config;
-
-        base = base || Config.base;
-
-        build("fullpath", "path");
-
-        function build(fullpath, path) {
-            var flag = "__" + fullpath + "Ready",
-                t,
-                p = mod[fullpath],
-                sp = mod[path];
-            if (mod[flag]) {
-                return;
-            }
-            if (!p && sp) {
-                //如果是 ./ 或 ../ 则相对当前模块路径
-                sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
-                p = base + sp;
-            }
-            // debug 模式下，加载非 min 版
-            if (p) {
-                mod[fullpath] = utils.getMappedPath(SS, p +
-                    ((t = mod.getTag()) ? ("?t=" + t) : ""));
-                mod[flag] = 1;
-            }
-        }
-    }
-
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
         var SS = self.SS,
@@ -118,7 +87,7 @@
             rMod,
             i,
             callbackBeCalled = 0,
-            // 最终有效的 require ，add 处声明为准
+        // 最终有效的 require ，add 处声明为准
             newRequires,
             mods = SS.Env.mods;
 
@@ -153,13 +122,10 @@
                     error = JSON.stringify(__allRequires);
                 }
                 S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
-
             }
         }
 
-        if (S.Config.debug) {
-            cyclicCheck();
-        }
+        S.log(cyclicCheck());
 
         // attach all required modules
         for (i = 0; i < requires.length; i++) {
@@ -173,8 +139,6 @@
         }
 
         // load and attach this module
-        buildModPath(self, mod, utils.getPackagePath(SS, mod));
-
         loadModByScript(self, mod, function () {
 
             // KISSY.add 可能改了 config，这里重新取下

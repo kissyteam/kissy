@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 23 21:27
+build time: May 24 18:37
 */
 /**
  * Set up editor constructor
@@ -34,12 +34,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                         } else {
                             self.__set("render", textarea.parent());
                         }
-                    }
-                    if (!self.get("width")) {
-                        self.__set("width", textarea.style("width") || textarea.css("width"));
-                    }
-                    if (!self.get("height")) {
-                        self.__set("height", textarea.style("height") || textarea.css("height"));
                     }
                 } else {
                     self.__editor_created_new = 1;
@@ -85,9 +79,13 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
 
                 //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
                 S.use(mods.join(","), function () {
-                    var args = S.makeArray(arguments);
+                    var h, args = S.makeArray(arguments);
                     args.shift();
                     useMods(args);
+                    // 工具条出来后调整高度
+                    if (h = self.get("height")) {
+                        self._uiSetHeight(h);
+                    }
                 });
 
                 self.__CORE_PLUGINS = [];
@@ -97,9 +95,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
         },
 
         {
-            Config:{
-                base:S.Config.base + "editor/"
-            },
+            Config:{},
             XHTML_DTD:HtmlParser['DTD'],
             ATTRS:/**
              * @lends Editor#
@@ -182,15 +178,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                 }
             }
         }, "Editor");
-
-    Editor.DefaultRender = UIBase.create(Component.Render, [UIBase.Box.Render], {
-        /**
-         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）
-         * width 依然在 el 上设置
-         */
-        _uiSetHeight:function () {
-        }
-    });
 
     S.mix(Editor, S.EventTarget);
 
@@ -1313,6 +1300,48 @@ KISSY.add("editor/core/dom", function (S) {
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
                 return dtd && dtd['#'];
+            },
+
+            /**
+             * 根据dom路径得到某个节点
+             * @param doc
+             * @param address
+             * @param [normalized]
+             * @return {NodeList}
+             */
+            _4e_getByAddress:function (doc, address, normalized) {
+                var $ = doc.documentElement;
+
+                for (var i = 0; $ && i < address.length; i++) {
+                    var target = address[ i ];
+
+                    if (!normalized) {
+                        $ = $.childNodes[ target ];
+                        continue;
+                    }
+
+                    var currentIndex = -1;
+
+                    for (var j = 0; j < $.childNodes.length; j++) {
+                        var candidate = $.childNodes[ j ];
+
+                        if (normalized === TRUE &&
+                            candidate.nodeType == 3 &&
+                            candidate.previousSibling &&
+                            candidate.previousSibling.nodeType == 3) {
+                            continue;
+                        }
+
+                        currentIndex++;
+
+                        if (currentIndex == target) {
+                            $ = candidate;
+                            break;
+                        }
+                    }
+                }
+
+                return $;
             }
         };
 
@@ -2720,19 +2749,93 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
     requires:['editor']
 });
 KISSY.add("editor/core/meta", function () {
-/*
-    KISSY.add({
-        "editor/plugin/button/index":{
-            requires:['uibase']
+
+    var map = {
+            "backColor":['../color/btn', './cmd'],
+            "localStorage":["../flashBridge/"],
+            "bold":['../font/ui', './cmd'],
+            "draft":["../localStorage/", '../select/'],
+            "flash":['../flashCommon/baseClass', '../flashCommon/utils'],
+            "fontFamily":['../font/ui', './cmd'],
+            "fontSize":['../font/ui', './cmd'],
+            "foreColor":['../color/btn', './cmd'],
+            "heading":['./cmd'],
+            "image":['../button/', '../bubbleview/', '../contextmenu/', '../dialogLoader/'],
+            "indent":['./cmd'],
+            "insertOrderedList":['../listUtils/btn', './cmd'],
+            "insertUnorderedList":['../listUtils/btn', './cmd'],
+            "italic":['../font/ui', './cmd'],
+            "justifyCenter":['./cmd'],
+            "justifyLeft":['./cmd'],
+            "justifyRight":['./cmd'],
+            "link":['../bubbleview/', './utils', '../dialogLoader/'],
+            "maximize":['./cmd'],
+            "multipleUpload":['../dialogLoader/'],
+            "outdent":['./cmd'],
+            "overlay":['./focus', 'dd'],
+            "pageBreak":["../fakeObjects/"],
+            "removeFormat":['./cmd', '../button/'],
+            "resize":['dd'],
+            "smiley":['../overlay/'],
+            "sourceArea":['../button/'],
+            "strikeThrough":['../font/ui', './cmd'],
+            "table":['../dialogLoader/', '../contextmenu/'],
+            "underline":['../font/ui', './cmd'],
+            "undo":['./btn', './cmd'],
+            "video":['../flashCommon/utils', '../flashCommon/baseClass'],
+            "xiamiMusic":['../flashCommon/baseClass', '../flashCommon/utils']
         },
-        "editor/plugin/sourceArea/index":{
-            requires:['../button/']
-        },
-        "editor/plugin/font/index":{
-            requires:['../button/', '../select/']
-        }
-    });
-*/
+        m,
+        m2,
+        map2 = {
+            "backColor/cmd":['../color/cmd'],
+            "bold/cmd":['../font/cmd'],
+            "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
+            "color/colorPicker/dialog":['../overlay/'],
+            "dentUtils/cmd":['../listUtils/'],
+            "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
+            "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],
+            "font/ui":['../button/', '../select/'],
+            "fontFamily/cmd":['../font/cmd'],
+            "fontSize/cmd":['../font/cmd'],
+            "foreColor/cmd":['../color/cmd'],
+            "image/dialog":['../overlay/', 'switchable', '../select/'],
+            "indent/cmd":['../dentUtils/cmd'],
+            "insertOrderedList/cmd":['../listUtils/cmd'],
+            "insertUnorderedList/cmd":['../listUtils/cmd.js'],
+            "italic/cmd":['../font/cmd'],
+            "justifyCenter/cmd":['../justifyUtils/cmd'],
+            "justifyLeft/cmd":['../justifyUtils/cmd'],
+            "justifyRight/cmd":['../justifyUtils/cmd'],
+            "link/dialog":['../overlay/', './utils'],
+            "listUtils/btn":['../button/'],
+            "listUtils/cmd":['../listUtils/'],
+            "multipleUpload/dialog":['../progressbar/', '../overlay/', '../flashBridge/', '../localStorage/'],
+            "outdent/cmd":['../dentUtils/cmd'],
+            "strikeThrough/cmd":['../font/cmd'],
+            "table/dialog":['../overlay/', '../select/'],
+            "underline/cmd":['../font/cmd'],
+            "undo/btn":['../button/'],
+            "video/dialog":['../flash/dialog', '../select/'],
+            "xiamiMusic/dialog":['../flash/dialog', '../select/']
+        }, newMap = {};
+
+    for (m in map) {
+        m2 = "editor/plugin/" + m + "/index";
+        newMap[m2] = {
+            requires:map[m]
+        };
+    }
+
+    for (m in map2) {
+        m2 = "editor/plugin/" + m;
+        newMap[m2] = {
+            requires:map2[m]
+        };
+    }
+
+    KISSY.add(newMap);
+
 });/**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
  * @author yiminghe@gmail.com
@@ -2766,7 +2869,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         KER = Editor.RANGE,
         KEP = Editor.POSITION,
         DOM = S.DOM,
-        getByAddress = Utils.getByAddress,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
@@ -3822,14 +3924,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
              */
             moveToBookmark:function (bookmark) {
                 var self = this,
-                    doc = self.document;
+                    doc = $(self.document);
                 if (bookmark.is2) {
                     // Get the start information.
-                    var startContainer = getByAddress(doc,
-                            bookmark.start, bookmark.normalized),
+                    var startContainer = doc._4e_getByAddress(bookmark.start, bookmark.normalized),
                         startOffset = bookmark.startOffset,
-                        endContainer = bookmark.end && getByAddress(doc,
-                            bookmark.end, bookmark.normalized),
+                        endContainer = bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized),
                         endOffset = bookmark.endOffset;
 
                     // Set the start boundary.
@@ -5753,7 +5853,7 @@ KISSY.add("editor/core/styles", function (S) {
         KESelection = Editor.Selection,
         KEP = Editor.POSITION,
         KERange = Editor.Range,
-        //Walker = Editor.Walker,
+    //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
         ElementPath = Editor.ElementPath,
@@ -6036,7 +6136,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         // Builds the StyleText.
         var stylesText = ( styleDefinition["attributes"]
-            && styleDefinition["attributes"][ 'style' ] ) || '',
+                && styleDefinition["attributes"][ 'style' ] ) || '',
             specialStylesText = '';
 
         if (stylesText.length)
@@ -6070,7 +6170,7 @@ KISSY.add("editor/core/styles", function (S) {
 
     function getElement(style, targetDocument, element) {
         var el,
-            //def = style._.definition,
+        //def = style._.definition,
             elementName = style["element"];
 
         // The "*" element name will always be a span for this function.
@@ -6185,7 +6285,7 @@ KISSY.add("editor/core/styles", function (S) {
         // Exclude the ones at header OR at tail,
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
-            //blockName = preBlock.nodeName(),
+        //blockName = preBlock.nodeName(),
             splittedHtml = replace(preBlock._4e_outerHtml(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
@@ -6310,7 +6410,7 @@ KISSY.add("editor/core/styles", function (S) {
         var elementName = this["element"],
             def = this._["definition"],
             isUnknownElement,
-            // Get the DTD definition for the element. Defaults to "span".
+        // Get the DTD definition for the element. Defaults to "span".
             dtd = DTD[ elementName ];
         if (!dtd) {
             isUnknownElement = TRUE;
@@ -6458,7 +6558,7 @@ KISSY.add("editor/core/styles", function (S) {
                 // Build the style element, based on the style object definition.
                 var styleNode = getElement(self, document, undefined),
 
-                    // Get the element that holds the entire range.
+                // Get the element that holds the entire range.
                     parent = styleRange.getCommonAncestor();
 
 
@@ -6599,7 +6699,7 @@ KISSY.add("editor/core/styles", function (S) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-                // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elementspatch which we should jump out of.
                 boundaryElement;
 
 
@@ -6613,8 +6713,9 @@ KISSY.add("editor/core/styles", function (S) {
                  *  also make sure other inner styles were well preserverd.(#3309)
                  */
                 if (element == startPath.block ||
-                    element == startPath.blockLimit)
+                    element == startPath.blockLimit) {
                     break;
+                }
                 if (this.checkElementRemovable(element)) {
                     var endOfElement = range.checkBoundaryOfElement(element, KER.END),
                         startOfElement = !endOfElement &&
@@ -6648,7 +6749,7 @@ KISSY.add("editor/core/styles", function (S) {
             // Re-create the style tree after/before the boundary element,
             // the replication start from bookmark start node to define the
             // new range.
-            if (boundaryElement.length) {
+            if (boundaryElement) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
                     var newElement = startPath.elements[ i ];
@@ -6828,7 +6929,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         var length = 0,
 
-            // Loop through all defined attributes.
+        // Loop through all defined attributes.
             styleAttribs = styleDefinition["attributes"];
         if (styleAttribs) {
             for (var styleAtt in styleAttribs) {
@@ -6946,7 +7047,7 @@ KISSY.add("editor/core/styles", function (S) {
                 (overrides[ element.nodeName()] || overrides["*"] || {})["attributes"]),
             styles = Utils.mix(def["styles"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["styles"]),
-            // If the style is only about the element itself, we have to remove the element.
+        // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&
                 S.isEmptyObject(styles);
 
@@ -6998,8 +7099,8 @@ KISSY.add("editor/core/styles", function (S) {
     // Removes a style from inside an element.
     function removeFromInsideElement(style, element) {
         var //def = style._.definition,
-            //attribs = def.attributes,
-            //styles = def.styles,
+        //attribs = def.attributes,
+        //styles = def.styles,
             overrides = getOverrides(style),
             innerElements = element.all(style["element"]);
 
@@ -7118,7 +7219,7 @@ KISSY.add("editor/core/utils", function (S) {
         Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
-        Event = S.Event,
+
         /**
          * Utilities for Editor.
          * @namespace
@@ -7126,8 +7227,8 @@ KISSY.add("editor/core/utils", function (S) {
          */
             Utils = {
             debugUrl:function (url) {
-                url = url.replace(/-min\.(js|css)/i, ".$1");
-                if (!S["Config"]['debug']) {
+                var Config = S.Config;
+                if (!Config.debug) {
                     url = url.replace(/\.(js|css)/i, "-min.$1");
                 }
                 if (url.indexOf("?t") == -1) {
@@ -7136,12 +7237,9 @@ KISSY.add("editor/core/utils", function (S) {
                     } else {
                         url += "?";
                     }
-                    url += "t=" + encodeURIComponent("20120523212713");
+                    url += "t=" + encodeURIComponent(Config.tag);
                 }
-                if (S.startsWith(url, "/")) {
-                    url = url.substring(1);
-                }
-                return Editor["Config"].base + url;
+                return Config.base + "editor/" + url;
             },
             /**
              * 懒惰一下
@@ -7224,53 +7322,12 @@ KISSY.add("editor/core/utils", function (S) {
             },
 
             /**
-             * 根据dom路径得到某个节点
-             * @param doc {Document}
-             * @param address {Array.<number>}
-             * @param normalized {Boolean}
-             * @return {NodeList}
-             */
-            getByAddress:function (doc, address, normalized) {
-                var $ = doc.documentElement;
-
-                for (var i = 0; $ && i < address.length; i++) {
-                    var target = address[ i ];
-
-                    if (!normalized) {
-                        $ = $.childNodes[ target ];
-                        continue;
-                    }
-
-                    var currentIndex = -1;
-
-                    for (var j = 0; j < $.childNodes.length; j++) {
-                        var candidate = $.childNodes[ j ];
-
-                        if (normalized === TRUE &&
-                            candidate.nodeType == 3 &&
-                            candidate.previousSibling &&
-                            candidate.previousSibling.nodeType == 3) {
-                            continue;
-                        }
-
-                        currentIndex++;
-
-                        if (currentIndex == target) {
-                            $ = candidate;
-                            break;
-                        }
-                    }
-                }
-
-                return $ ? new Node($) : NULL;
-            },
-            /**
              * @param database {Object}
              */
             clearAllMarkers:function (database) {
                 for (var i in database) {
                     if (database.hasOwnProperty(i)) {
-                        database[i]._4e_clearMarkers(database, TRUE);
+                        database[i]._4e_clearMarkers(database, TRUE, undefined);
                     }
                 }
             },
@@ -7321,10 +7378,9 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              * @param inputs {Array.<Node>}
-             * @param [warn] {string}
              * @return {Boolean} 是否验证成功
              */
-            verifyInputs:function (inputs, warn) {
+            verifyInputs:function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
                         v = S.trim(Utils.valInput(input)),
@@ -7446,7 +7502,7 @@ KISSY.add("editor/core/utils", function (S) {
             preventFocus:function (el) {
                 if (UA['ie']) {
                     //ie 点击按钮不丢失焦点
-                    el.unselectable();
+                    el.unselectable(undefined);
                 } else {
                     el.attr("onmousedown", "return false;");
                 }
@@ -7972,7 +8028,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
      */
     function prepareIFrameHtml(id, customStyle, customLink, data) {
         var links = "",
-            CSS_FILE = Editor.Utils.debugUrl("/theme/editor-iframe.css");
+            CSS_FILE = Editor.Utils.debugUrl("theme/editor-iframe.css");
         if (customLink) {
             for (var i = 0; i < customLink.length; i++) {
                 links += '<link ' +
@@ -8099,9 +8155,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 wrap.css(HEIGHT, th);
                 // ie textarea 100% 不起作用
                 textarea.css(HEIGHT, th);
-
-                // 高度由内层决定，工具条会变化
-                editorEl.css(HEIGHT, "");
             },
 
             /**
@@ -8109,8 +8162,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * width 依然在 el 上设置
              */
             _uiSetHeight:function (v) {
-                // S.log("_uiSetHeight : " + v);
-                var self = this;
+                var self = this,
+                    toolBarEl = self.get("toolBarEl"),
+                    statusBarEl = self.get("statusBarEl");
+                v = parseInt(v,10);
+                // 减去顶部和底部工具条高度
+                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+                    (statusBarEl && statusBarEl.outerHeight() || 0);
                 self.get("iframeWrapEl").css(HEIGHT, v);
                 self.get("textarea").css(HEIGHT, v);
             },

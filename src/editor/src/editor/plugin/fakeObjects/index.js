@@ -5,7 +5,8 @@
 KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
     var Node = S.Node,
         DOM = S.DOM,
-        SPACER_GIF = Editor['Config'].base + 'theme/spacer.gif',
+        Utils = Editor.Utils,
+        SPACER_GIF = Utils.debugUrl('theme/spacer.gif'),
         HtmlParser = S.require("htmlparser");
 
     S.augment(Editor, {
@@ -19,7 +20,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
                 style = "height:" + realElement.attr("height") + "px;" + style;
             }
             var self = this,
-                // add current class to fake element
+            // add current class to fake element
                 existClass = S.trim(realElement.attr('class')),
                 attributes = {
                     'class':className + " " + existClass,
