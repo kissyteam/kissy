@@ -102,6 +102,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             containers = [DOM.get(containers) || doc];
         }
 
+        config = config || {};
+
         config.containers = containers;
 
         DataLazyload.superclass.constructor.call(self, config);
@@ -228,7 +230,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _filterItems:function () {
                 var self = this,
                     containers = self.get("containers"),
-                    n, N, imgs, _areaes, i, img,
+                    n, N, imgs, _areaes, img,
                     lazyImgs = [], lazyAreas = [];
 
                 for (n = 0, N = containers.length; n < N; ++n) {
@@ -283,7 +285,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _initLoadEvent:function () {
                 var self = this,
                     autoDestroy = self.get("autoDestroy"),
-                    // 加载延迟项
+                // 加载延迟项
                     loadItems = function () {
                         self._loadItems();
                         if (autoDestroy &&
@@ -291,7 +293,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                             self.destroy();
                         }
                     },
-                    // 加载函数
+                // 加载函数
                     load = S.buffer(loadItems, DURATION, this);
 
                 // scroll 和 resize 时，加载图片
@@ -487,7 +489,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         areaes.push(area);
                     }
                 });
-                self._images = img;
+                self._images = imgs;
                 self._areaes = areaes;
             },
 
@@ -518,7 +520,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     diffX0 = 0,
                     diffX1 = diffX,
                     diffY = diff === DEFAULT ? vh : diff,
-                    // 兼容，默认只向下预读
+                // 兼容，默认只向下预读
                     diffY0 = 0,
                     diffY1 = diffY,
                     right = left + vw,
