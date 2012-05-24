@@ -156,34 +156,6 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param var_args {...Object}
-             * @return {Object}
-             */
-            mix:function (var_args) {
-                var r = {};
-                for (var i = 0; i < arguments.length; i++) {
-                    var ob = arguments[i];
-                    r = S.mix(r, ob);
-                }
-                return r;
-            },
-
-            /**
-             *
-             */
-            isCustomDomain:function () {
-                if (!UA['ie'])
-                    return FALSE;
-
-                var domain = document.domain,
-                    hostname = window.location.hostname;
-
-                return domain != hostname &&
-                    domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
-            },
-
-            /**
-             *
              */
             isNumber:function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));

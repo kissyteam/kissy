@@ -42,7 +42,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         /**
          * Get appropriate src for new empty iframe.
          * Consider custom domain.
-         * @param {window} win Window new iframe will be inserted into.
+         * @param {window} [win] Window new iframe will be inserted into.
          * @return {String} Src for iframe.
          */
         getEmptyIframeSrc:function (win) {

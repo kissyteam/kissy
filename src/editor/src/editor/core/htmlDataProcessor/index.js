@@ -400,7 +400,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
 
                 // Find out the list of block-like tags that can contain <br>.
                 var dtd = Editor.XHTML_DTD;
-                var blockLikeTags = Editor.Utils.mix({},
+                var blockLikeTags = S.merge(
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;

@@ -82,7 +82,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             // is fully editable even before the editing iframe is fully loaded (#4455).
             //确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
             '<script id="ke_actscript" type="text/javascript">' +
-                ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
+                ( DOM.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
                 'window.parent.KISSY.Editor._initIFrame("' + id + '");' +
                 '</script>' : ''
             )
@@ -91,12 +91,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
     }
 
-    var srcScript = 'document.open();' +
-            // The document domain must be set any time we
-            // call document.open().
-            ( Utils.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
-            'document.close();',
-
+    var srcScript = DOM.getEmptyIframeSrc(),
         iframeHtml = '<iframe' +
             ' style="' + WIDTH + ':100%;' + HEIGHT + ':100%;border:none;" ' +
             ' ' + WIDTH + '="100%" ' +
@@ -106,9 +101,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             // With IE, the custom domain has to be taken care at first,
             // for other browsers, the 'src' attribute should be left empty to
             // trigger iframe's 'load' event.
-            (IS_IE ?
-                (' src="' + 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())"') :
-                '') +
+            (srcScript ? (' src="' + srcScript + '"') : '') +
             ' allowTransparency="true">' +
             '</iframe>' ,
 
@@ -185,7 +178,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 var self = this,
                     toolBarEl = self.get("toolBarEl"),
                     statusBarEl = self.get("statusBarEl");
-                v = parseInt(v,10);
+                v = parseInt(v, 10);
                 // 减去顶部和底部工具条高度
                 v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
                     (statusBarEl && statusBarEl.outerHeight() || 0);

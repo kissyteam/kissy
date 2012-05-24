@@ -1217,9 +1217,9 @@ KISSY.add("editor/core/styles", function (S) {
     function removeFromElement(style, element) {
         var def = style._.definition,
             overrides = getOverrides(style),
-            attributes = Utils.mix(def["attributes"],
+            attributes = S.merge(def["attributes"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["attributes"]),
-            styles = Utils.mix(def["styles"],
+            styles = S.merge(def["styles"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["styles"]),
         // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&
