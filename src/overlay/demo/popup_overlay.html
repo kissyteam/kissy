@@ -21,6 +21,7 @@
 <script src="../src/ariarender.js"></script>
 <script src="../src/overlay.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+<link rel="stylesheet" href="../assets/cool.css"/>
 </head>
 <body>
 <div id="header">
@@ -37,14 +38,11 @@
     <span>当前位置：</span>
     <a href="http://docs.kissyui.com/">KISSY</a>
     <a href="http://docs.kissyui.com/docs/html/api/component/overlay/">Overlay</a>
-    <span>Popup</span>
+    <span>Overlay/Popup</span>
 </div>
         <pre class="s-section">
-
-功能：弹出层
-
-<link rel="stylesheet" href="../assets/cool.css"/>
-
+            功能：弹出层
+        </pre>
 <h3 class="s-title">Popup - 从 Markup 中构建</h3>
 <div class="s-section">
     <div class="s-demo">
@@ -246,7 +244,7 @@
     <a class="s-view-code" href="#">显示源码</a>
 </div>
 
-<h3 class="s-title">多个触发元素公用一个 Popup</h3>
+<h3 class="s-title">Overlay - 多个触发元素公用一个 Overlay</h3>
 <div class="s-section">
     <style>
         .shop-rank {
@@ -339,9 +337,9 @@
         </div>
         <script>
             KISSY.use("node, overlay", function (S, Node, O) {
-                var popup = new O.Popup({
-                    trigger:Node.all('#multi img'),
-                    triggerType:'mouse',
+                var $ = Node.all;
+
+                var popup = new O({
                     elStyle:{
                         border:"2px solid gray",
                         lineHeight:0
@@ -353,16 +351,19 @@
                         duration:0.5
                     }
                 });
-                popup.on('afterCurrentTriggerChange', function (e) {
-                    var t = e.newVal;
-                    if (!t) {
-                        return;
-                    }
+
+                $("#multi").delegate("mouseenter", "img", function (e) {
+                    var t = $(e.target);
                     popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                     popup.set('align', {
                         node:t,
                         points:["tr", "tl"]
                     });
+                    popup.show();
+                });
+
+                $("#multi").delegate("mouseleave", "img", function (e) {
+                    popup.hide();
                 });
             });
         </script>
@@ -370,7 +371,7 @@
     <a class="s-view-code" href="#">显示源码</a>
 </div>
 
-<h3 class="s-title">多个触发元素公用一个 Popup, 另一种方式, 查看源码看与上述方式的不同</h3>
+<h3 class="s-title">另一种方式（不推荐）, 查看源码看与上述方式的不同</h3>
 <div class="s-section">
     <div class="shop-rank" id="multi2">
         <ul>
