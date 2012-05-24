@@ -60,9 +60,9 @@
 }
 
 .ke-overlay .ks-ext-loading {
-    opacity: 0.3;
-    filter: alpha(opacity = 15);
-    background: #000 center center no-repeat scroll;
+    opacity: 0.6;
+    filter: alpha(opacity = 60);
+    background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
