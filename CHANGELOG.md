@@ -17,6 +17,7 @@ History:
 ### v1.2.0 -> v1.3.0
  - [*] 调整源码目录结构
  - [+] 增加 S.Defer/Promise ，支持 Promise 规范
+ - [!] 删除 kissy-aio
 
  - [+] S.config 增加 combine 配置，支持自动 combo
  - [+] 支持 <script src='seed|kissy.js' data-config="json"></script> data-config parse 为 json 传入 config
