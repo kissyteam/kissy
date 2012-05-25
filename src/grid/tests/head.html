@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>KISSY.Grid.Header Test Runner</title>
+
+<link href="http://localhost:8080/bootstrap/kissy-bootstrap/docs/assets/css/dpl.css" rel="stylesheet"/>
+<!-- <link href="../assets/grid.css" rel="stylesheet"/> -->
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<script>
+	
+</script>
+</head>
+<body>
+
+
+<div class="container">
+	<div class="page-header">
+		<h1>Grid Header 测试 </h1>
+	</div>
+	<div class="row">
+		<h3>Header 生成测试</h3>
+		<div id="J_Header"></div>
+	</div>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/column.js"></script>
+<script src="../src/header.js"></script>
+
+<script src="header-spec.js"></script>
+<script>
+    KISSY.use("grid/header", function () {
+			jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+			jasmine.getEnv().execute();
+    });/**/
+</script>
+
+</body>
+</html>
