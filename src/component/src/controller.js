@@ -21,17 +21,6 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
         };
     }
 
-    function create(c, self) {
-        if (!(c instanceof Controller )) {
-            if (self && !c.prefixCls) {
-                c.prefixCls = self.get("prefixCls");
-            }
-            var childConstructor = UIStore.getUIConstructorByCssClass(c['xclass']);
-            c = new childConstructor(c);
-        }
-        return c;
-    }
-
     function initChild(self, c, elBefore) {
         // 生成父组件的 dom 结构
         self.create();
@@ -220,8 +209,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             },
 
             /**
-             * 子组件将要渲染到的节点
-             * @protected
+             * 子组件将要渲染到的节点，在 render 类上覆盖对应方法
+             * @private
              */
             getContentElement:function () {
                 var view = this.get('view');
@@ -229,8 +218,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             },
 
             /**
-             * 焦点所在元素即键盘事件处理元素
-             * @protected
+             * 焦点所在元素即键盘事件处理元素，在 render 类上覆盖对应方法
+             * @private
              */
             getKeyEventTarget:function () {
                 var view = this.get('view');
@@ -606,26 +595,41 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                 }
             },
 
-            /**
-             * Create a component instance using json with xclass
-             * @function
-             * @example
-             * <code>
-             *  create({
-             *     xclass:'menu',
-             *     children:[{
-             *        xclass:'menuitem',
-             *        content:"1"
-             *     }]
-             *  })
-             * </code>
-             */
-            create:create,
-
             DefaultRender:Render
         },
         "Component_Controller"
     );
+
+    /**
+     * Create a component instance using json with xclass
+     * @param {Object} component Component's json notation with xclass attribute.
+     * @param {Controller} self Component From which new component generated will inherit prefixCls
+     * if component 's prefixCls is undefined.
+     * @memberOf Component.Controller
+     * @example
+     * <code>
+     *  create({
+     *     xclass:'menu',
+     *     children:[{
+     *        xclass:'menuitem',
+     *        content:"1"
+     *     }]
+     *  })
+     * </code>
+     */
+    function create(component, self) {
+        if (!(component instanceof Controller )) {
+            if (self && !component.prefixCls) {
+                component.prefixCls = self.get("prefixCls");
+            }
+            var childConstructor = UIStore.getUIConstructorByCssClass(component['xclass']);
+            component = new childConstructor(component);
+        }
+        return component;
+    }
+
+    Controller.create = create;
+
     return Controller;
 }, {
     requires:['event', 'uibase', './uistore', './render']

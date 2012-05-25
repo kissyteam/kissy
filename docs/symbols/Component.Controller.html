@@ -412,6 +412,16 @@ a.go-top:active{text-decoration:none;}
                                             </li>
                                             
                                             <li class="li">                                                
+                                                Component.Controller.
+                                                <b class="name"><a href="../symbols/Component.Controller.html#.create">create</a></b>
+                                                <span class="param">(component, self)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Create a component instance using json with xclass</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/Component.Controller.html#createDom">createDom</a></b>
                                                 <span class="param">()</span>
@@ -433,32 +443,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/Component.Controller.html#getContentElement">getContentElement</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">子组件将要渲染到的节点</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a></b>
                                                 <span class="param">(classes)</span>
                                                 
                                                 
                                                 
                                                 <span class="desc">Get full class name for current component</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/Component.Controller.html#getKeyEventTarget">getKeyEventTarget</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">焦点所在元素即键盘事件处理元素</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -605,7 +595,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#create">create</a>, <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#hide">hide</a>, <a href="../symbols/UIBase.Box.html#show">show</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#hide">hide</a>, <a href="../symbols/UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -1025,7 +1015,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line234">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line241">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1046,8 +1036,17 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">c</b>
                                                             
                                                             
-                                                            <span class="type">{<a href="../symbols/Component.Controller.html">Component.Controller</a>}</span> 
-                                                            <span class="desc">Child component to be added</span>
+                                                            <span class="type">{<a href="../symbols/Component.Controller.html">Component.Controller</a>|Object}</span> 
+                                                            <span class="desc">Child component instance to be addedorObject describe child component</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">c.xclass</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">When c is a object, specify its child class.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -1089,7 +1088,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line188">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line191">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1120,6 +1119,81 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name=".create"> </a>
+                                            <div class="title">
+                                                <span>Component.Controller.</span>
+                                                <b class="name">create</b>
+                                                <span class="param">(component, self)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line620">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Create a component instance using json with xclass
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">component</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Component's json notation with xclass attribute.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">self</b>
+                                                            
+                                                            
+                                                            <span class="type">{Controller}</span> 
+                                                            <span class="desc">Component From which new component generated will inherit prefixClsif component 's prefixCls is undefined.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul>
+                                                        
+                                                        <li>
+                                                            <pre class="code"><code> create({    xclass:'menu',    children:[{       xclass:'menuitem',       content:"1"    }] })</code></pre>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="createDom"> </a>
                                             <div class="title">
                                                 
@@ -1128,7 +1202,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line151">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line153">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1167,7 +1241,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line293">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line299">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1226,45 +1300,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="getContentElement"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">getContentElement</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line212">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                子组件将要渲染到的节点
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
                                             <a name="getCssClassWithPrefix"> </a>
                                             <div class="title">
                                                 
@@ -1273,7 +1308,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line118">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line120">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1332,45 +1367,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="getKeyEventTarget"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">getKeyEventTarget</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line221">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                焦点所在元素即键盘事件处理元素
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
                                             <a name="handleBlur"> </a>
                                             <div class="title">
                                                 
@@ -1379,7 +1375,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line439">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line445">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1434,7 +1430,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line304">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line310">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1489,7 +1485,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line430">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line436">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1544,7 +1540,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line460">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line466">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1599,7 +1595,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line448">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line454">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1654,7 +1650,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line379">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line385">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1709,7 +1705,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line349">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line355">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1764,7 +1760,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line362">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line368">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1819,7 +1815,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line413">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line419">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1874,7 +1870,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line125">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line127">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1913,7 +1909,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line475">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line481">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1968,7 +1964,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line260">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line266">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2044,7 +2040,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line278">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line284">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2108,7 +2104,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line170">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line172">view source</a>
                                             </div>
 
                                             <div class="desc">
