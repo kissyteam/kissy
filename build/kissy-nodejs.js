@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 22 15:41
+build time: May 25 11:22
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: May 22 15:41
          */
         version:'1.20',
 
-        buildTime:'20120522154133',
+        buildTime:'20120525112239',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1761,7 +1761,7 @@ build time: May 22 15:41
          *  - 其他
          *    - http://www.zachleat.com/web/load-css-dynamically/
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:window.attachEvent || window.opera ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?

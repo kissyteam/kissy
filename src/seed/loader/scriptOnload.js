@@ -103,7 +103,7 @@
          *  - 其他
          *    - http://www.zachleat.com/web/load-css-dynamically/
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:window.attachEvent || window.opera ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?

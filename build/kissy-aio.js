@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 22 15:41
+build time: May 25 11:22
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: May 22 15:41
          */
         version:'1.20',
 
-        buildTime:'20120522154133',
+        buildTime:'20120525112239',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1575,7 +1575,7 @@ build time: May 22 15:41
          *  - 其他
          *    - http://www.zachleat.com/web/load-css-dynamically/
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:window.attachEvent || window.opera ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?
@@ -30496,9 +30496,9 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
     requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 19:41
+build time: May 23 21:24
 */
 /**
  * intervein elements dynamically
@@ -30578,6 +30578,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
         },
 
+        /**
+         * Horizontal alignment of waterfall items with container.
+         * Enum: 'left','center','right'.
+         * @type String
+         */
+        align:{
+            value:'center'
+        },
+
         colWidth:{}
     };
 
@@ -30609,6 +30618,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     function adjustItem(itemRaw) {
         var self = this,
             effect = self.get("effect"),
+            align = self.get("align"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -30616,6 +30626,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             dest = 0,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
+
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
                 guard = curColHeights[i];
@@ -30626,7 +30637,13 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             guard = 0;
         }
         // 元素保持间隔不变，居中
-        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
+        // 元素保持间隔不变，居中
+        var margin = align === 'left' ? 0 :
+            Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0);
+
+        if (align === 'center') {
+            margin /= 2;
+        }
         item.css({
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
@@ -30857,9 +30874,9 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
     requires:['waterfall/base','waterfall/loader']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: May 22 16:11
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -31501,8 +31518,8 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
 	
 }, { requires: ['dom',"event","../utils"] });/**
- * 增加常用校验规则
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 增加常用校验规则
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
@@ -31650,11 +31667,48 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
 	
 	
+
+	Rule.add("mobile","手机号码不合法",function(value,text){
+		//规则取自淘宝注册登录模块 @author:yanmu.wj@taobao.com
+        var regex = {
+            //中国移动
+            cm:/^(?:0?1)((?:3[56789]|5[0124789]|8[278])\d|34[0-8]|47\d)\d{7}$/,
+            //中国联通
+            cu:/^(?:0?1)(?:3[012]|4[5]|5[356]|8[356]\d|349)\d{7}$/,
+            //中国电信
+            ce:/^(?:0?1)(?:33|53|8[079])\d{8}$/,
+            //中国大陆
+            cn:/^(?:0?1)[3458]\d{9}$/,
+            //中国香港
+            hk:/^(?:0?[1569])(?:\d{7}|\d{8}|\d{12})$/,
+            //澳门
+            macao:/^6\d{7}$/,
+            //台湾
+            tw:/^(?:0?[679])(?:\d{7}|\d{8}|\d{10})$//*,
+            //韩国
+            kr:/^(?:0?[17])(?:\d{9}|\d{8})$/,
+            //日本
+            jp:/^(?:0?[789])(?:\d{9}|\d{8})$/*/
+        },
+		flag = false;
+		S.each(regex,function(re){
+			if(value.match(re)){
+				flag = true;
+				return false;
+			}
+		});
+		if(!flag){
+			return text;
+		}
+	});
+	
+	
+	
 	S.each([["chinese",/^[\u0391-\uFFE5]+$/,"只能输入中文"],
 			["english",/^[A-Za-z]+$/,"只能输入英文字母"],
 			["currency",/^\d+(\.\d+)?$/,"金额格式不正确。"],
 			["phone",/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/,"电话号码格式不正确。"],
-			["mobile",/^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/,"手机号码格式不正确。"],
+			//["mobile",/^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/,"手机号码格式不正确。"],
 			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]':+!]*([^<>""])*$/,"url格式不正确。"],
 			["email",/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,"请输入正确的email格式"]
 		],function(item){
