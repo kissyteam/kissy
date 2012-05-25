@@ -59,6 +59,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             } else {
                 return null;
             }
+        } else {
+            m = Component.Controller.create(m,self);
+            self.__set("menu", m);
         }
         if (m && m.get("parent") !== self) {
             m.__set("parent", self);
@@ -323,7 +326,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
     return SubMenu;
 }, {
-    requires:['event', 'uibase', 'component', './menuitem', './submenurender']
+    requires:['event', 'uibase', 'component', './menuitem', './submenuRender']
 });
 
 /**

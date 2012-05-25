@@ -1,8 +1,8 @@
 /**
- * @fileOverview deletable menuitemrender
+ * @fileOverview deletable menuitemRender
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/delmenuitemrender", function (S, Node, UIBase, Component, Menu) {
+KISSY.add("menu/delmenuitemRender", function (S, Node, UIBase, Component, Menu) {
     var CLS = "menuitem-deletable",
         DEL_CLS = "menuitem-delete";
     var MenuItemRender = Menu.Item.Render;

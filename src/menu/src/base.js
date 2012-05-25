@@ -204,7 +204,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'uibase', 'component', './menurender', './submenu']
+    requires:['event', 'uibase', 'component', './menuRender', './submenu']
 });
 
 /**

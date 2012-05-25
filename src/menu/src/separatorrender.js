@@ -2,7 +2,7 @@
  * @fileOverview menu separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separatorrender", function (S, UIBase, Component) {
+KISSY.add("menu/separatorRender", function (S, UIBase, Component) {
 
     return UIBase.create(Component.Render, {
         createDom:function () {

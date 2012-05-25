@@ -29,5 +29,5 @@ KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase', 'component', './separatorrender']
+    requires:['uibase', 'component', './separatorRender']
 });

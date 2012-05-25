@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 25 12:28
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -209,7 +209,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'uibase', 'component', './menurender', './submenu']
+    requires:['event', 'uibase', 'component', './menuRender', './submenu']
 });
 
 /**
@@ -416,14 +416,14 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
 
     return FilterMenu;
 }, {
-    requires:['uibase', 'component', './base', './filtermenurender']
+    requires:['uibase', 'component', './base', './filtermenuRender']
 });/**
  * @fileOverview filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenurender", function (S, Node, UIBase, MenuRender) {
+KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
@@ -490,7 +490,7 @@ KISSY.add("menu/filtermenurender", function (S, Node, UIBase, MenuRender) {
     }, "Menu_FilterMenu_Render");
 
 }, {
-    requires:['node', 'uibase', './menurender']
+    requires:['node', 'uibase', './menuRender']
 });/**
  * @fileOverview menu
  * @author yiminghe@gmail.com
@@ -509,17 +509,59 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
 }, {
     requires:[
         'menu/base',
-        'menu/menurender',
+        'menu/menuRender',
         'menu/menuitem',
-        'menu/menuitemrender',
+        'menu/menuitemRender',
         'menu/submenu',
-        'menu/submenurender',
+        'menu/submenuRender',
         'menu/separator',
-        'menu/separatorrender',
+        'menu/separatorRender',
         'menu/popupmenu',
-        'menu/popupmenurender',
+        'menu/popupmenuRender',
         'menu/filtermenu'
     ]
+});/**
+ * @fileOverview render aria from menu according to current menuitem
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/menuRender", function(S, UA, UIBase, Component) {
+
+    return UIBase.create(Component.Render,{
+
+        renderUI:function() {
+            var el = this.get("el");
+            el .attr("role", "menu")
+                .attr("aria-haspopup", true);
+            if (!el.attr("id")) {
+                el.attr("id", S.guid("ks-menu"));
+            }
+        },
+
+        _uiSetActiveItem:function(v) {
+            var el = this.get("el");
+            if (v) {
+                var menuItemEl = v.get("el"),
+                    id = menuItemEl.attr("id");
+                el.attr("aria-activedescendant", id);
+                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
+                //S.log("menuRender :" + el.attr("id") + " _uiSetActiveItem : " + v.get("content"));
+            } else {
+                el.attr("aria-activedescendant", "");
+                //S.log("menuRender :" + el.attr("id") + " _uiSetActiveItem : " + "");
+            }
+        },
+
+        containsElement:function(element) {
+            var el = this.get("el");
+            return el[0] === element || el.contains(element);
+        }
+    }, {
+        ATTRS:{
+            activeItem:{}
+        }
+    },"Menu_Render");
+}, {
+    requires:['ua','uibase','component']
 });/**
  * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
@@ -706,12 +748,12 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires:['uibase', 'component', './menuitemrender']
+    requires:['uibase', 'component', './menuitemRender']
 });/**
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
+KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
 
     var CHECK_CLS = "menuitem-checkbox";
 
@@ -777,48 +819,6 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
     }, "Menu_Item_Render");
 }, {
     requires:['node', 'uibase', 'component']
-});/**
- * @fileOverview render aria from menu according to current menuitem
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
-
-    return UIBase.create(Component.Render,{
-
-        renderUI:function() {
-            var el = this.get("el");
-            el .attr("role", "menu")
-                .attr("aria-haspopup", true);
-            if (!el.attr("id")) {
-                el.attr("id", S.guid("ks-menu"));
-            }
-        },
-
-        _uiSetActiveItem:function(v) {
-            var el = this.get("el");
-            if (v) {
-                var menuItemEl = v.get("el"),
-                    id = menuItemEl.attr("id");
-                el.attr("aria-activedescendant", id);
-                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-                //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + v.get("content"));
-            } else {
-                el.attr("aria-activedescendant", "");
-                //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + "");
-            }
-        },
-
-        containsElement:function(element) {
-            var el = this.get("el");
-            return el[0] === element || el.contains(element);
-        }
-    }, {
-        ATTRS:{
-            activeItem:{}
-        }
-    },"Menu_Render");
-}, {
-    requires:['ua','uibase','component']
 });/**
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
@@ -1005,19 +1005,19 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     return PopupMenu;
 
 }, {
-    requires:['uibase', 'component', './base', './popupmenurender']
+    requires:['uibase', 'component', './base', './popupmenuRender']
 });/**
  * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenurender", function (S, UA, UIBase, MenuRender) {
+KISSY.add("menu/popupmenuRender", function (S, UA, UIBase, MenuRender) {
     return UIBase.create(MenuRender, [
         UIBase.ContentBox.Render,
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
     ], "Menu_PopupMenu_Render");
 }, {
-    requires:['ua', 'uibase', './menurender']
+    requires:['ua', 'uibase', './menuRender']
 });/**
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
@@ -1049,12 +1049,12 @@ KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase', 'component', './separatorrender']
+    requires:['uibase', 'component', './separatorRender']
 });/**
  * @fileOverview menu separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separatorrender", function (S, UIBase, Component) {
+KISSY.add("menu/separatorRender", function (S, UIBase, Component) {
 
     return UIBase.create(Component.Render, {
         createDom:function () {
@@ -1125,6 +1125,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
             } else {
                 return null;
             }
+        } else {
+            m = Component.Controller.create(m,self);
+            self.__set("menu", m);
         }
         if (m && m.get("parent") !== self) {
             m.__set("parent", self);
@@ -1389,7 +1392,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
     return SubMenu;
 }, {
-    requires:['event', 'uibase', 'component', './menuitem', './submenurender']
+    requires:['event', 'uibase', 'component', './menuitem', './submenuRender']
 });
 
 /**
@@ -1398,7 +1401,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
+KISSY.add("menu/submenuRender", function (S, UIBase, MenuItemRender) {
         var SubMenuRender;
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
@@ -1421,5 +1424,5 @@ KISSY.add("menu/submenurender", function (S, UIBase, MenuItemRender) {
         return SubMenuRender;
     },
     {
-        requires:['uibase', './menuitemrender']
+        requires:['uibase', './menuitemRender']
     });

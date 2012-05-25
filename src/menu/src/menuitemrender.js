@@ -2,7 +2,7 @@
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
+KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
 
     var CHECK_CLS = "menuitem-checkbox";
 

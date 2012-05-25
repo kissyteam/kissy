@@ -16,15 +16,15 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
 }, {
     requires:[
         'menu/base',
-        'menu/menurender',
+        'menu/menuRender',
         'menu/menuitem',
-        'menu/menuitemrender',
+        'menu/menuitemRender',
         'menu/submenu',
-        'menu/submenurender',
+        'menu/submenuRender',
         'menu/separator',
-        'menu/separatorrender',
+        'menu/separatorRender',
         'menu/popupmenu',
-        'menu/popupmenurender',
+        'menu/popupmenuRender',
         'menu/filtermenu'
     ]
 });

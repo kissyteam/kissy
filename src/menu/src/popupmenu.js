@@ -184,5 +184,5 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     return PopupMenu;
 
 }, {
-    requires:['uibase', 'component', './base', './popupmenurender']
+    requires:['uibase', 'component', './base', './popupmenuRender']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 25 12:28
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -95,10 +95,22 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
         };
     }
 
+    function create(c, self) {
+        if (!(c instanceof Controller )) {
+            if (self && !c.prefixCls) {
+                c.prefixCls = self.get("prefixCls");
+            }
+            var childConstructor = UIStore.getUIConstructorByCssClass(c['xclass']);
+            c = new childConstructor(c);
+        }
+        return c;
+    }
+
     function initChild(self, c, elBefore) {
         // 生成父组件的 dom 结构
         self.create();
-        var contentEl = self.getContentElement();
+        var contentEl = self.getContentElement(), childConstructor;
+        c = create(c, self);
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
@@ -113,6 +125,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
             c.create();
         }
+        return c;
     }
 
     /**
@@ -249,7 +262,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                 for (i = 0; i < children.length; i++) {
                     child = children[i];
                     // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
-                    initChild(self, child);
+                    child = initChild(self, child);
+                    children[i] = child;
                     child.render();
                 }
             },
@@ -300,7 +314,11 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             /**
              * Add the specified component as a child of current component
              * at the given 0-based index.
-             * @param {Component.Controller} c  Child component to be added
+             * @param {Component.Controller|Object} c
+             * Child component instance to be added
+             * or
+             * Object describe child component
+             * @param {String} [c.xclass] When c is a object, specify its child class.
              * @param {Number} [index]  0-based index at which
              * the new child component is to be inserted;
              * If not specified , the new child component will be inserted at last position.
@@ -308,14 +326,13 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             addChild:function (c, index) {
                 var self = this,
                     children = self.get("children"),
-                    elBefore = null;
-                if (index !== undefined) {
-                    elBefore = children[index].get("el") || null;
-                    children.splice(index, 0, c);
-                } else {
-                    children.push(c);
+                    elBefore;
+                if (index === undefined) {
+                    index = children.length;
                 }
-                initChild(self, c, elBefore);
+                elBefore = children[index] && children[index].get("el") || null;
+                c = initChild(self, c, elBefore);
+                children.splice(index, 0, c);
             },
 
             /**
@@ -662,6 +679,22 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                     view:true
                 }
             },
+
+            /**
+             * Create a component instance using json with xclass
+             * @function
+             * @example
+             * <code>
+             *  create({
+             *     xclass:'menu',
+             *     children:[{
+             *        xclass:'menuitem',
+             *        content:"1"
+             *     }]
+             *  })
+             * </code>
+             */
+            create:create,
 
             DefaultRender:Render
         },

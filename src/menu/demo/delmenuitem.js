@@ -55,5 +55,5 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
     });
     return DelMenuItem;
 }, {
-    requires:['node', 'uibase', 'component', 'menu', './delmenuitemrender']
+    requires:['node', 'uibase', 'component', 'menu', './delmenuitemRender']
 });

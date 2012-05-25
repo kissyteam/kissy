@@ -4,7 +4,7 @@
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenurender", function (S, Node, UIBase, MenuRender) {
+KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
@@ -71,5 +71,5 @@ KISSY.add("menu/filtermenurender", function (S, Node, UIBase, MenuRender) {
     }, "Menu_FilterMenu_Render");
 
 }, {
-    requires:['node', 'uibase', './menurender']
+    requires:['node', 'uibase', './menuRender']
 });
