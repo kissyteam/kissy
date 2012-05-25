@@ -80,7 +80,7 @@
                             content:(data[i] + "")
                                     .replace(new RegExp(S.escapeRegExp(query), "g"),
                                     "<b>$&</b>"),
-                            disabled:(i%2?true:false)
+                            disabled:(i % 2 ? true : false)
                         };
                     }
                     return ret;
@@ -90,7 +90,9 @@
             autoComplete2.render();
 
             autoComplete2.on("select", function (e) {
-                alert(e.value + "\n" + e.content + "\n" + e.textContent);
+                var item = e.target;
+                alert(item.get("value") + "\n" + item.get("content") +
+                        "\n" + item.get("textContent"));
             });
         })();
 

@@ -113,7 +113,9 @@
         var basicAutoCompleteEl = basicAutoComplete.get("el");
 
         basicAutoComplete.on("select", function (e) {
-            //S.log(e.value + "\n" + e.content + "\n" + e.textContent);
+            var item = e.target;
+            alert(item.get("value") + "\n" + item.get("content") +
+                    "\n" + item.get("textContent"));
         });
 
     });

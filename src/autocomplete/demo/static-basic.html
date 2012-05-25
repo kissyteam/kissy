@@ -80,7 +80,9 @@
             basicAutoComplete.render();
 
             basicAutoComplete.on("select", function (e) {
-                alert(e.value + "\n" + e.content + "\n" + e.textContent);
+                var item = e.target;
+                alert(item.get("value") + "\n" + item.get("content") +
+                        "\n" + item.get("textContent"));
             });
         })();
     });

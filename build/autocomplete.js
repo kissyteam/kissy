@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:30
+build time: May 25 11:48
 */
 /**
  * @fileOverview Combobox derived from Autocomplete.
@@ -50,7 +50,13 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
     });
 }, {
     requires:['uibase', './basic', './BasicComboBoxRender']
-});/**
+});
+
+/**
+ * TODO
+ *  - 考虑是否 ComboBox 要继承于 AutoComplete，srcNode 有点怪
+ *  - 是否应该用组合实现？
+ **//**
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
@@ -468,14 +474,10 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                      * @description fired when user select from suggestion list
                      * @event
                      * @param e
-                     * @param e.value value of selected menuItem
-                     * @param e.content content of selected menuItem
-                     * @param e.input current active input
+                     * @param e.target Selected menuItem
                      */
                     self.fire("select", {
-                        value:item.get("value"),
-                        content:item.get("content"),
-                        textContent:textContent
+                        target:item
                     });
                 }
             },
