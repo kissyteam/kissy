@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:34
+build time: May 25 11:20
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 24 18:34
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120524183454';
+        S.__BUILD_TIME = '20120525112007';
     })();
 
     return S;
@@ -2222,6 +2222,10 @@ build time: May 24 18:34
 
         isWebKit:!!ua.match(/AppleWebKit/),
 
+        isGecko:!!ua.match(/Gecko/),
+
+        isPresto:!!ua.match(/Presto/),
+
         IE:!!ua.match(/MSIE/),
 
         isCss:function (url) {
@@ -2652,7 +2656,7 @@ build time: May 24 18:34
                 node = callbackObj.node,
                 exName,
                 loaded = 0;
-            if (utils.isWebKit) {
+            if (!utils.isGecko) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
                     loaded = 1;
@@ -2667,8 +2671,9 @@ build time: May 24 18:34
                 } catch (ex) {
                     exName = ex.name;
                     S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
-                        exName == 'SecurityError') {
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (exName == 'SecurityError' ||
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
                         S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
@@ -2703,8 +2708,11 @@ build time: May 24 18:34
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnLoad:win.attachEvent ?
+        styleOnLoad:win.attachEvent || utils.isPresto ?
             // ie/opera
+            // try in opera
+            // alert(win.attachEvent);
+            // alert(!!win.attachEvent);
             function (node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
@@ -4013,7 +4021,7 @@ build time: May 24 18:34
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120524183454'
+        tag:'20120525112007'
     }, getBaseInfo()));
 
     /**

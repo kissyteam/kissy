@@ -35,7 +35,7 @@
                 node = callbackObj.node,
                 exName,
                 loaded = 0;
-            if (utils.isWebKit) {
+            if (!utils.isGecko) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
                     loaded = 1;
@@ -50,8 +50,9 @@
                 } catch (ex) {
                     exName = ex.name;
                     S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                    if (exName == 'NS_ERROR_DOM_SECURITY_ERR' ||
-                        exName == 'SecurityError') {
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (exName == 'SecurityError' ||
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
                         S.log('firefox loaded : ' + url);
                         loaded = 1;
                     }
@@ -86,8 +87,11 @@
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnLoad:win.attachEvent ?
+        styleOnLoad:win.attachEvent || utils.isPresto ?
             // ie/opera
+            // try in opera
+            // alert(win.attachEvent);
+            // alert(!!win.attachEvent);
             function (node, callback) {
                 // whether to detach using function wrapper?
                 function t() {

@@ -110,6 +110,10 @@
 
         isWebKit:!!ua.match(/AppleWebKit/),
 
+        isGecko:!!ua.match(/Gecko/),
+
+        isPresto:!!ua.match(/Presto/),
+
         IE:!!ua.match(/MSIE/),
 
         isCss:function (url) {
