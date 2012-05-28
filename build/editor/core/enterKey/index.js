@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * monitor user's enter and shift enter keydown,modified from ckeditor
@@ -30,7 +30,6 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
     }
 
     function enterBlock(editor) {
-        //debugger;
         // Get the range for the current selection.
         var range = getRange(editor);
         var doc = range.document;

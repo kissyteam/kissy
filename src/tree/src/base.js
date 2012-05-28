@@ -2,7 +2,7 @@
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function(S,  Component, BaseNode, TreeRender, TreeMgr) {
 
     var TREE_CLS = TreeRender.TREE_CLS;
 
@@ -11,7 +11,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
      *2. 继承 mixin 树管理功能
      *3. 继承 mixin 儿子事件代理功能
      */
-    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
+    var Tree = Component.define(BaseNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:TreeRender
     });
@@ -26,7 +26,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
     return Tree;
 
 }, {
-    requires:['uibase','component','./basenode','./treerender','./treemgr']
+    requires:['component','./basenode','./treerender','./treemgr']
 });
 
 /**

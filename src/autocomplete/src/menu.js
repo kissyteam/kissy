@@ -2,7 +2,7 @@
  * @fileOverview AutoComplete menu constroller.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
+KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoCompleteMenuRender) {
 
 
     var AutoCompleteMenu;
@@ -14,7 +14,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
      * @extends Menu.PopupMenu
      * @class
      */
-    AutoCompleteMenu = UIBase.create(Menu.PopupMenu,
+    AutoCompleteMenu = Component.define(Menu.PopupMenu,
         /**
          * @lends AutoComplete.Menu#
          */
@@ -167,7 +167,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
 
     return AutoCompleteMenu;
 }, {
-    requires:['event', 'uibase', 'component', 'menu', './menuRender']
+    requires:['event', 'component', 'menu', './menuRender']
 });
 /**
  * 2012-03-26 yiminghe@gmail.com

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * common utils for kissy editor
@@ -20,9 +20,19 @@ KISSY.add("editor/core/utils", function (S) {
         /**
          * Utilities for Editor.
          * @namespace
+         * @name Utils
          * @memberOf Editor
          */
-            Utils = {
+            Utils =
+        /**
+         * @lends Editor.Utils
+         */
+        {
+            /**
+             *
+             * @param url
+             * @return {String}
+             */
             debugUrl:function (url) {
                 var Config = S.Config;
                 if (!Config.debug) {
@@ -38,6 +48,7 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return Config.base + "editor/" + url;
             },
+
             /**
              * 懒惰一下
              * @param obj {Object} 包含方法的对象
@@ -78,6 +89,7 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return {left:x, top:y};
             },
+
             /**
              * 执行一系列函数
              * @param var_args {...function()}
@@ -128,6 +140,7 @@ KISSY.add("editor/core/utils", function (S) {
                     }
                 }
             },
+
             /**
              *
              * @param str {string}
@@ -136,6 +149,7 @@ KISSY.add("editor/core/utils", function (S) {
             ltrim:function (str) {
                 return str.replace(/^\s+/, "");
             },
+
             /**
              *
              * @param str {string}
@@ -144,30 +158,10 @@ KISSY.add("editor/core/utils", function (S) {
             rtrim:function (str) {
                 return str.replace(/\s+$/, "");
             },
+
             /**
              *
-             * @param var_args {...Object}
-             * @return {Object}
              */
-            mix:function (var_args) {
-                var r = {};
-                for (var i = 0; i < arguments.length; i++) {
-                    var ob = arguments[i];
-                    r = S.mix(r, ob);
-                }
-                return r;
-            },
-            isCustomDomain:function () {
-                if (!UA['ie'])
-                    return FALSE;
-
-                var domain = document.domain,
-                    hostname = window.location.hostname;
-
-                return domain != hostname &&
-                    domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
-            },
-
             isNumber:function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));
             },
@@ -190,6 +184,7 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 return TRUE;
             },
+
             /**
              *
              * @param editor {KISSY.Editor}
@@ -255,6 +250,7 @@ KISSY.add("editor/core/utils", function (S) {
                     }
                 });
             },
+
             /**
              * Convert certain characters (&, <, >, and ') to their HTML character equivalents
              *  for literal display in web pages.
@@ -264,6 +260,7 @@ KISSY.add("editor/core/utils", function (S) {
             htmlEncode:function (value) {
                 return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
             },
+
             /**
              *
              * @param params {Object}
@@ -282,6 +279,9 @@ KISSY.add("editor/core/utils", function (S) {
                 return params;
             },
 
+            /**
+             *
+             */
             map:function (arr, callback) {
                 for (var i = 0; i < arr.length; i++) {
                     arr[i] = callback(arr[i]);
@@ -305,6 +305,9 @@ KISSY.add("editor/core/utils", function (S) {
                 }
             },
 
+            /**
+             *
+             */
             injectDom:function (editorDom) {
                 S.mix(DOM, editorDom);
                 for (var dm in editorDom) {
@@ -329,12 +332,18 @@ KISSY.add("editor/core/utils", function (S) {
                 }
             },
 
+            /**
+             *
+             */
             addRes:function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
                 res.push.apply(res, S.makeArray(arguments));
             },
 
+            /**
+             *
+             */
             destroyRes:function () {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
@@ -353,6 +362,9 @@ KISSY.add("editor/core/utils", function (S) {
                 this.__res = [];
             },
 
+            /**
+             *
+             */
             getQueryCmd:function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()

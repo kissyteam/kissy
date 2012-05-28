@@ -2,7 +2,7 @@
  * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender, _, undefined) {
+KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoCompleteRender, _, undefined) {
     var AutoComplete,
         KeyCodes = Event.KeyCodes;
 
@@ -58,7 +58,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
      * @extends Component.Controller
      * @class
      */
-    AutoComplete = UIBase.create(Component.Controller, [],
+    AutoComplete = Component.define(Component.Controller, [],
         /**
          * @lends AutoComplete
          */
@@ -461,7 +461,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  * Default to current active input's width.<br/>
                  * {Object} menuCfg.align :
                  * Config autoComplete menu list's alignment.
-                 * Same with {@link UIBase.Align#align} .
+                 * Same with {@link Component.UIBase.Align#align} .
                  * Default : align current input's bottom left edge
                  * with autoComplete list's top left edge.
                  * @type Object
@@ -597,7 +597,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
 }, {
     requires:[
         'event',
-        'uibase',
         'component',
         'menu',
         './inputRender',

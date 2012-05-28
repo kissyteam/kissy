@@ -102,15 +102,19 @@
         return packageDesc;
     }
 
+
+    var isWebKit = !!ua.match(/AppleWebKit/);
+
     S.mix(utils, {
 
         docHead:function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
 
-        isWebKit:!!ua.match(/AppleWebKit/),
+        isWebKit:isWebKit,
 
-        isGecko:!!ua.match(/Gecko/),
+        // like Gecko ...
+        isGecko:!isWebKit && !!ua.match(/Gecko/),
 
         isPresto:!!ua.match(/Presto/),
 

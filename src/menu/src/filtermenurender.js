@@ -4,13 +4,13 @@
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
+KISSY.add("menu/filtermenuRender", function (S, Node, Component, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    return UIBase.create(MenuRender, {
+    return Component.define(MenuRender, {
         getContentElement:function () {
             return this.get("menuContent");
         },
@@ -71,5 +71,5 @@ KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
     }, "Menu_FilterMenu_Render");
 
 }, {
-    requires:['node', 'uibase', './menuRender']
+    requires:['node', 'component', './menuRender']
 });

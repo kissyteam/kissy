@@ -2,9 +2,9 @@
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonRender", function (S, UIBase, Component) {
+KISSY.add("button/buttonRender", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, [], {
+    return Component.define(Component.Render, [], {
         createDom:function () {
             // set wai-aria role
             this.get("el")
@@ -35,5 +35,5 @@ KISSY.add("button/buttonRender", function (S, UIBase, Component) {
         }
     });
 }, {
-    requires:['uibase', 'component']
+    requires:['component']
 });

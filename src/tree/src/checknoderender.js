@@ -2,13 +2,13 @@
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/checknoderender", function (S, Node,  Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = " ks-inline-block";
-    return UIBase.create(BaseNodeRender, {
+    return Component.define(BaseNodeRender, {
 
         createDom:function () {
             var self = this;
@@ -33,5 +33,5 @@ KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNode
         CHECK_CLS:CHECK_CLS
     });
 }, {
-    requires:['node', 'uibase', 'component', './basenoderender']
+    requires:['node', 'component', './basenoderender']
 });

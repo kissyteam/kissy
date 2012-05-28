@@ -10,7 +10,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @class
      * @memberOf Component
      * @name Render
-     * @extends UIBase
+     * @extends Component.UIBase
      */
     return UIBase.create([UIBase.Box.Render],
         /**
@@ -136,5 +136,5 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
             }
         }, "Component_Render");
 }, {
-    requires:['uibase', './uistore']
+    requires:['./uibase', './uistore']
 });

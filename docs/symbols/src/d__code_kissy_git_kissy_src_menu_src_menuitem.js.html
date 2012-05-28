@@ -9,7 +9,7 @@
 <span id='line2' class='line'>  2</span>  * @fileOverview menu item ,child component for menu
 <span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
 <span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
-<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"menu/menuitem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">MenuItemRender</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"menu/menuitem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">MenuItemRender</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line6' class='line'>  6</span> 
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.all</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line8' class='line'>  8</span> 
@@ -20,7 +20,7 @@
 <span id='line13' class='line'> 13</span>      * @memberOf Menu
 <span id='line14' class='line'> 14</span>      * @extends Component.Controller
 <span id='line15' class='line'> 15</span>      */</span><span class="WHIT">
-<span id='line16' class='line'> 16</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">UIBase.create</span><span class="PUNC">(</span><span class="NAME">Component.Controller</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">Component.Controller</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line17' class='line'> 17</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line18' class='line'> 18</span>          * @lends Menu.Item#
 <span id='line19' class='line'> 19</span>          */</span><span class="WHIT">
@@ -161,7 +161,7 @@
 <span id='line154' class='line'>154</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
 <span id='line155' class='line'>155</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line156' class='line'>156</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line157' class='line'>157</span>                  * Please use {@link UIBase.Box#html} attribute instead!
+<span id='line157' class='line'>157</span>                  * Please use {@link Component.UIBase.Box#html} attribute instead!
 <span id='line158' class='line'>158</span>                  * @deprecated 1.3
 <span id='line159' class='line'>159</span>                  */</span><span class="WHIT">
 <span id='line160' class='line'>160</span> </span><span class="WHIT">                </span><span class="NAME">content</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
@@ -191,5 +191,5 @@
 <span id='line184' class='line'>184</span> 
 <span id='line185' class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line186' class='line'>186</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line187' class='line'>187</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'uibase'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line187' class='line'>187</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
 <span id='line188' class='line'>188</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

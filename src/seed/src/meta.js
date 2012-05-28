@@ -33,14 +33,11 @@
         /******************************
          *  Infrastructure
          ******************************/
-        "uibase":{
-            requires:['base', 'node']
-        },
         "mvc":{
             requires:["base", "ajax"]
         },
         "component":{
-            requires:["uibase", "node"]
+            requires:["node"]
         },
 
         /****************************
@@ -93,7 +90,7 @@
             requires:["dom", "json"]
         },
         "imagezoom":{
-            requires:["node", "uibase"]
+            requires:["node", "component"]
         },
         "editor":{
             requires:['htmlparser', 'core','overlay']

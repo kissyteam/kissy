@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * 多实例的管理，主要是焦点控制，主要是为了
@@ -15,7 +15,7 @@ KISSY.add("editor/core/focusManager", function (S) {
         Event = S.Event,
         INSTANCES = {},
         timer,
-        //当前焦点所在处
+    //当前焦点所在处
         currentInstance,
         focusManager = {
             /**
@@ -72,7 +72,6 @@ KISSY.add("editor/core/focusManager", function (S) {
         timer = setTimeout(function () {
             editor.fire("focus");
         }, 100);
-        //S.log(editor._UUID + " focus");
     }
 
     function blur() {
@@ -89,7 +88,6 @@ KISSY.add("editor/core/focusManager", function (S) {
         timer = setTimeout(function () {
             editor.fire("blur");
         }, 100);
-        //S.log(editor._UUID + " blur");
     }
 
     focusManager['refreshAll'] = focusManager.refreshAll;

@@ -2,7 +2,7 @@
  * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
     var $ = S.all;
 
@@ -13,7 +13,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
      * @memberOf Menu
      * @extends Component.Controller
      */
-    var MenuItem = UIBase.create(Component.Controller,
+    var MenuItem = Component.define(Component.Controller,
         /**
          * @lends Menu.Item#
          */
@@ -154,7 +154,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                     view:true
                 },
                 /**
-                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * Please use {@link Component.UIBase.Box#html} attribute instead!
                  * @deprecated 1.3
                  */
                 content:{
@@ -184,5 +184,5 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires:['uibase', 'component', './menuitemRender']
+    requires:['component', './menuitemRender']
 });

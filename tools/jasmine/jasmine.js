@@ -967,7 +967,6 @@ jasmine.Block.prototype.execute = function(onComplete) {
     try {
         this.func.apply(this.spec);
     } catch (e) {
-        debugger
         if(window.console){
             console.error(e.stack);
         }

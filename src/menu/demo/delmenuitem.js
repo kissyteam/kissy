@@ -2,7 +2,7 @@
  * @fileOverview deletable menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMenuItemRender) {
+KISSY.add("menu/delmenuitem", function (S, Node, Component, Menu, DelMenuItemRender) {
     var $ = Node.all;
     var MenuItem = Menu.Item;
     var CLS = DelMenuItemRender.CLS,
@@ -22,7 +22,7 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
         });
     }
 
-    var DelMenuItem = UIBase.create(MenuItem, {
+    var DelMenuItem = Component.define(MenuItem, {
         performActionInternal:function (e) {
             var target = $(e.target);
             // 点击了删除
@@ -55,5 +55,5 @@ KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMen
     });
     return DelMenuItem;
 }, {
-    requires:['node', 'uibase', 'component', 'menu', './delmenuitemRender']
+    requires:['node', 'component', 'menu', './delmenuitemRender']
 });

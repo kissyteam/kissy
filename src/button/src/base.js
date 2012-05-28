@@ -2,7 +2,7 @@
  * @fileOverview Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
+KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
     var KeyCodes = Event.KeyCodes;
     /**
@@ -10,7 +10,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
      * @constructor
      * @extends Component.Controller
      */
-    var Button = UIBase.create(Component.Controller, [],
+    var Button = Component.define(Component.Controller, [],
         /**@lends Button.prototype */
         {
             bindUI:function () {
@@ -65,7 +65,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
                     view:true
                 },
                 /**
-                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * Please use {@link Component.UIBase.Box#html} attribute instead!
                  * @deprecated 1.3
                  */
                 content:{
@@ -89,5 +89,5 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, ButtonRender) {
     return Button;
 
 }, {
-    requires:['event', 'uibase', 'component', './buttonRender']
+    requires:['event','component', './buttonRender']
 });

@@ -2,10 +2,10 @@
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
 
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
     /**
@@ -14,15 +14,15 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @namespace
      * @name Overlay
      * @extends Component.Controller
-     * @extends UIBase.ContentBox
-     * @extends UIBase.Position
-     * @extends UIBase.Loading
-     * @extends UIBase.Align
-     * @extends UIBase.Close
-     * @extends UIBase.Resize
-     * @extends UIBase.Mask
+     * @extends Component.UIBase.ContentBox
+     * @extends Component.UIBase.Position
+     * @extends Component.UIBase.Loading
+     * @extends Component.UIBase.Align
+     * @extends Component.UIBase.Close
+     * @extends Component.UIBase.Resize
+     * @extends Component.UIBase.Mask
      */
-    var Overlay = UIBase.create(Component.Controller, [
+    var Overlay = Component.define(Component.Controller, [
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -37,7 +37,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
          */
         {
             /**
-             * see {@link UIBase.Box#show}
+             * see {@link Component.UIBase.Box#show}
              * @function
              * @name Overlay#show
              */
@@ -71,7 +71,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * see {@link UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link Component.UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
                     value:"visibility"
@@ -88,5 +88,5 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
 
     return Overlay;
 }, {
-    requires:['uibase', 'component', './overlayrender', './effect']
+    requires:['component', './overlayrender', './effect']
 });

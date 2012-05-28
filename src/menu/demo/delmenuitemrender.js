@@ -2,7 +2,7 @@
  * @fileOverview deletable menuitemRender
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/delmenuitemRender", function (S, Node, UIBase, Component, Menu) {
+KISSY.add("menu/delmenuitemRender", function (S, Node, Component, Menu) {
     var CLS = "menuitem-deletable",
         DEL_CLS = "menuitem-delete";
     var MenuItemRender = Menu.Item.Render;
@@ -15,7 +15,7 @@ KISSY.add("menu/delmenuitemRender", function (S, Node, UIBase, Component, Menu) 
         }));
     }
 
-    return UIBase.create(MenuItemRender, {
+    return Component.define(MenuItemRender, {
         createDom:function () {
             addDel(this);
         },
@@ -41,5 +41,5 @@ KISSY.add("menu/delmenuitemRender", function (S, Node, UIBase, Component, Menu) 
         DEL_CLS:DEL_CLS
     });
 }, {
-    requires:['node', 'uibase', 'component', 'menu']
+    requires:['node', 'component', 'menu']
 });

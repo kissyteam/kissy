@@ -2,7 +2,7 @@
  * @fileOverview combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
     var win = S.Env.host;
 
@@ -77,7 +77,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
      * @name MenuButton
      * @extends Button
      */
-    var MenuButton = UIBase.create(Button, [Component.DecorateChild],
+    var MenuButton = Component.define(Button, [Component.DecorateChild],
         /**
          * @lends MenuButton.prototype
          */
@@ -318,7 +318,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     view:true
                 },
                 /**
-                 * Menu align configuration.See {@link UIBase.Align#align}.
+                 * Menu align configuration.See {@link Component.UIBase.Align#align}.
                  * Default node is menubutton 's root element.
                  * @type Object
                  */
@@ -360,5 +360,5 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
 
     return MenuButton;
 }, {
-    requires:["uibase", "node", "button", "./menubuttonRender", "menu", "component"]
+    requires:[ "node", "button", "./menubuttonRender", "menu", "component"]
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -1222,9 +1222,9 @@ KISSY.add("editor/core/styles", function (S) {
     function removeFromElement(style, element) {
         var def = style._.definition,
             overrides = getOverrides(style),
-            attributes = Utils.mix(def["attributes"],
+            attributes = S.merge(def["attributes"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["attributes"]),
-            styles = Utils.mix(def["styles"],
+            styles = S.merge(def["styles"],
                 (overrides[ element.nodeName()] || overrides["*"] || {})["styles"]),
         // If the style is only about the element itself, we have to remove the element.
             removeEmpty = S.isEmptyObject(attributes) &&

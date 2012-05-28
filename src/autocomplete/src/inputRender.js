@@ -2,8 +2,8 @@
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
-    return UIBase.create(Component.Render, [], {
+KISSY.add("autocomplete/inputRender", function (S, Component) {
+    return Component.define(Component.Render, [], {
         renderUI:function () {
             var el = this.get("el");
             el.attr({
@@ -33,5 +33,5 @@ KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
         }
     });
 }, {
-    requires:['uibase', 'component']
+    requires:['component']
 });

@@ -37,7 +37,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
         $ = Node.all,
         EMPTY = {"area":1, "base":1, "br":1, "col":1, "hr":1, "img":1, "input":1, "link":1, "meta":1, "param":1};
 
-
     var isWhitespace = new Walker.whitespaces(),
         isBookmark = new Walker.bookmark(),
         isNotWhitespaces = Walker.whitespaces(TRUE),
@@ -475,28 +474,28 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Set range start after node
-             * @param {Node} node
+             * @param {NodeList} node
              */
             setStartAfter:function (node) {
                 this.setStart(node.parent(), node._4e_index() + 1);
             },
             /**
              * Set range start before node
-             * @param {Node} node
+             * @param {NodeList} node
              */
             setStartBefore:function (node) {
                 this.setStart(node.parent(), node._4e_index());
             },
             /**
              * Set range end after node
-             * @param {Node} node
+             * @param {NodeList} node
              */
             setEndAfter:function (node) {
                 this.setEnd(node.parent(), node._4e_index() + 1);
             },
             /**
              * Set range end before node
-             * @param {Node} node
+             * @param {NodeList} node
              */
             setEndBefore:function (node) {
                 this.setEnd(node.parent(), node._4e_index());
@@ -524,7 +523,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the start position of a Range.
-             * @param {Node} startNode The node to start the range.
+             * @param {NodeList} startNode The node to start the range.
              * @param {Number} startOffset An integer greater than or equal to zero
              *        representing the offset for the start of the range from the start
              *        of startNode.
@@ -555,7 +554,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the end position of a Range.
-             * @param {Node} endNode The node to end the range.
+             * @param {NodeList} endNode The node to end the range.
              * @param {Number} endOffset An integer greater than or equal to zero
              *        representing the offset for the end of the range from the start
              *        of endNode.
@@ -586,7 +585,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the start position of a Range by specified rules.
-             * @param {Node} node
+             * @param {NodeList} node
              * @param {Number} position
              */
             setStartAt:function (node, position) {
@@ -617,7 +616,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the end position of a Range by specified rules.
-             * @param {Node} node
+             * @param {NodeList} node
              * @param {Number} position
              */
             setEndAt:function (node, position) {
@@ -711,8 +710,10 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
              */
             getEnclosedNode:function () {
                 var walkerRange = this.clone();
+
                 // Optimize and analyze the range to avoid DOM destructive nature of walker.
                 walkerRange.optimize();
+
                 if (walkerRange.startContainer[0].nodeType != DOM.ELEMENT_NODE ||
                     walkerRange.endContainer[0].nodeType != DOM.ELEMENT_NODE) {
                     return NULL;
@@ -739,7 +740,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Shrink range to its innermost element.(make sure text content is unchanged)
              * @param mode
-             * @param {Boolean} selectContents
+             * @param {Boolean} [selectContents]
              */
             shrink:function (mode, selectContents) {
                 // Unable to shrink a collapsed range.
@@ -758,7 +759,8 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         walker,
                         moveEnd = TRUE;
 
-                    if (startContainer && startContainer[0].nodeType == DOM.TEXT_NODE) {
+                    if (startContainer &&
+                        startContainer[0].nodeType == DOM.TEXT_NODE) {
                         if (!startOffset) {
                             walkerRange.setStartBefore(startContainer);
                         } else if (startOffset >= startContainer[0].nodeValue.length) {
@@ -771,7 +773,8 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         }
                     }
 
-                    if (endContainer && endContainer[0].nodeType == DOM.TEXT_NODE) {
+                    if (endContainer &&
+                        endContainer[0].nodeType == DOM.TEXT_NODE) {
                         if (!endOffset) {
                             walkerRange.setEndBefore(endContainer);
                         } else if (endOffset >= endContainer[0].nodeValue.length) {
@@ -792,9 +795,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                         };
 
                         walker.guard = function (node, movingOut) {
-                            node = node[0] || node;
                             // Stop when we're shrink in element mode while encountering a text node.
-                            if (mode == KER.SHRINK_ELEMENT && node.nodeType == DOM.TEXT_NODE) {
+                            if (mode == KER.SHRINK_ELEMENT &&
+                                node.nodeType == DOM.TEXT_NODE) {
                                 return FALSE;
                             }
                             // Stop when we've already walked "through" an element.
@@ -1061,7 +1064,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             },
             /**
              * Insert a new node at start position of current range
-             * @param {Node} node
+             * @param {NodeList} node
              */
             insertNode:function (node) {
                 var self = this;
@@ -1435,7 +1438,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Check whether current range is on the inner edge of the specified element.
              * @param {Number} checkType The checking side.
-             * @param {Node} element The target element to check.
+             * @param {NodeList} element The target element to check.
              */
             checkBoundaryOfElement:function (element, checkType) {
                 var walkerRange = this.clone();
@@ -1682,12 +1685,85 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 return !!found;
             },
 
+            /**
+             * Set range surround current node 's content.
+             * @param {NodeList} node
+             */
             selectNodeContents:function (node) {
                 var self = this, domNode = node[0];
                 self.setStart(node, 0);
                 self.setEnd(node, domNode.nodeType == DOM.TEXT_NODE ?
                     domNode.nodeValue.length :
                     domNode.childNodes.length);
+            },
+
+            /*
+             insertNodeByDtd:function (element) {
+             var current,
+             self = this,
+             tmpDtd,
+             elementName = element['nodeName'](),
+             isBlock = dtd['$block'][ elementName ];
+             self.deleteContents();
+             if (isBlock) {
+             while (( current = self.getCommonAncestor(FALSE, TRUE) ) &&
+             ( tmpDtd = dtd[ current.nodeName() ] ) &&
+             !( tmpDtd && tmpDtd [ elementName ] )) {
+             // Split up inline elements.
+             if (current.nodeName() in dtd["span"]) {
+             self.splitElement(current);
+             }
+             // If we're in an empty block which indicate a new paragraph,
+             // simply replace it with the inserting block.(#3664)
+             else if (self.checkStartOfBlock() && self.checkEndOfBlock()) {
+             self.setStartBefore(current);
+             self.collapse(TRUE);
+             current.remove();
+             }
+             else {
+             self.splitBlock(undefined);
+             }
+             }
+             }
+             // Insert the new node.
+             self.insertNode(element);
+             },*/
+
+            /**
+             * Insert node by dtd.(not invalidate dtd convention)
+             * @param {NodeList} element
+             */
+            insertNodeByDtd:function (element) {
+                var current,
+                    self = this,
+                    tmpDtd,
+                    last,
+                    elementName = element['nodeName'](),
+                    isBlock = dtd['$block'][ elementName ];
+                self.deleteContents();
+                if (isBlock) {
+                    current = self.getCommonAncestor(FALSE, TRUE);
+                    while (( tmpDtd = dtd[ current.nodeName() ] ) &&
+                        !( tmpDtd && tmpDtd [ elementName ] )) {
+                        var parent = current.parent();
+                        // If we're in an empty block which indicate a new paragraph,
+                        // simply replace it with the inserting block.(#3664)
+                        if (self.checkStartOfBlock() && self.checkEndOfBlock()) {
+                            self.setStartBefore(current);
+                            self.collapse(TRUE);
+                            current.remove();
+                        } else {
+                            last = current;
+                        }
+                        current = parent;
+
+                    }
+                    if (last) {
+                        self.splitElement(last);
+                    }
+                }
+                // Insert the new node.
+                self.insertNode(element);
             }
         });
 

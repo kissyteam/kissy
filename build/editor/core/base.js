@@ -1,29 +1,30 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
+KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     var PREFIX = "editor/plugin/", SUFFIX = "/";
 
     /**
      * KISSY Editor
      * @class
      * @extends Component.Controller
-     * @extends UIBase.Box
+     * @extends Component.UIBase.Box
      * @name Editor
      */
-    var Editor = UIBase.create(Component.Controller, [UIBase.Box],
+    var Editor = Component.define(Component.Controller, [Component.UIBase.Box],
         /**
          * @lends Editor#
          */
         {
             initializer:function () {
-                var self = this, textarea;
+                var self = this,
+                    textarea;
                 self.__commands = {};
                 self.__dialogs = {};
                 if (textarea = self.get("textarea")) {
@@ -39,6 +40,13 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                     self.__editor_created_new = 1;
                 }
             },
+
+            /**
+             * Use editor plugins.
+             * @param {Array<String>|String} mods Editor plugin names.
+             * @param callback
+             * @return {Editor} Current instance.
+             */
             use:function (mods, callback) {
                 var self = this,
                     BASIC = self.__CORE_PLUGINS || [
@@ -48,7 +56,9 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                         "selection"
                     ];
 
-                mods = mods.split(",");
+                if (S.isString(mods)) {
+                    mods = mods.split(",");
+                }
 
                 for (var l = mods.length - 1; l >= 0; l--) {
                     if (!mods[l]) {
@@ -72,13 +82,15 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
                 function useMods(modFns) {
                     // 载入了插件的attach功能，现在按照顺序一个个attach
                     for (var i = 0; i < modFns.length; i++) {
-                        modFns[i].init(self);
+                        if (modFns[i]) {
+                            modFns[i].init(self);
+                        }
                     }
                     callback && callback.call(self);
                 }
 
                 //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
-                S.use(mods.join(","), function () {
+                S.use(mods, function () {
                     var h, args = S.makeArray(arguments);
                     args.shift();
                     useMods(args);
@@ -185,5 +197,5 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component, UIBase) {
 
     return Editor;
 }, {
-    requires:['htmlparser', 'component', 'uibase', 'core']
+    requires:['htmlparser', 'component', 'core']
 });

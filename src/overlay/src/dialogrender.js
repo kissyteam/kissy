@@ -2,15 +2,15 @@
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+KISSY.add("overlay/dialogrender", function(S, Component, OverlayRender, AriaRender) {
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
-    return UIBase.create(OverlayRender, [
+    return Component.define(OverlayRender, [
         require("stdmodrender"),
         AriaRender
     ]);
 }, {
-    requires:['uibase','./overlayrender','./ariarender']
+    requires:['component','./overlayrender','./ariarender']
 });

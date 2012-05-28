@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * triple state button for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/button/index", function (S, Editor, UIBase) {
+KISSY.add("editor/plugin/button/index", function (S, Editor, Component) {
     var ON = "on",
         OFF = "off",
         DISABLED = "disabled",
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, UIBase) {
         return 0;
     }
 
-    var TripleButton = UIBase.create([UIBase['Box']['Render']], {
+    var TripleButton = Component.define([Component.UIBase['Box']['Render']], {
         _updateHref:function () {
             var self = this;
             self.get("el").attr("href", "javascript:void('" +
@@ -198,5 +198,5 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, UIBase) {
 
     return TripleButton;
 }, {
-    requires:['editor', 'uibase']
+    requires:['editor', 'component']
 });

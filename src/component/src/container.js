@@ -39,5 +39,5 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
         });
 
 }, {
-    requires:['uibase', './controller', './uistore', './delegateChildren', './decorateChildren']
+    requires:['./uibase', './controller', './uistore', './delegateChildren', './decorateChildren']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
 ke-post ，编辑器内容外部包装容器
@@ -949,9 +949,9 @@ menu style for kissy editor ,include contextmenu and select menu
 }
 
 .ke-overlay .ks-ext-loading {
-    opacity: 0.3;
-    filter: alpha(opacity = 15);
-    background: #000 center center no-repeat scroll;
+    opacity: 0.6;
+    filter: alpha(opacity = 60);
+    background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
