@@ -190,6 +190,9 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
              */
             bindUI:function () {
                 var self = this,
+                    n,
+                    listener,
+                    listeners = self.get("listeners"),
                     focusable = self.get("focusable"),
                     handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
@@ -205,6 +208,10 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
+                }
+                for (n in listeners) {
+                    listener = listeners[n];
+                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -599,6 +606,24 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                  */
                 disabled:{
                     view:true
+                },
+
+                /**
+                 * Config listener on created.
+                 * @example
+                 * <code>
+                 * {
+                 *  click:{
+                 *      scope:{x:1},
+                 *      fn:function(){
+                 *          alert(this.x);
+                 *      }
+                 *  }
+                 * }
+                 * </code>
+                 */
+                listeners:{
+                    value:{}
                 }
             },
 

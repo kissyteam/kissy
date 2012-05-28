@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 28 20:19
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -14,7 +14,7 @@ KISSY.add("component", function (KISSY, UIBase, Controller, Render, Container, U
      */
     var Component = {
         UIBase:UIBase,
-        define:UIBase.create,
+        Controller:Controller,
         "Render":Render,
         "Container":Container,
         "UIStore":UIStore,
@@ -22,7 +22,11 @@ KISSY.add("component", function (KISSY, UIBase, Controller, Render, Container, U
         "DecorateChild":DecorateChild,
         "DecorateChildren":DecorateChildren
     };
-    Component["Controller"] = Controller;
+    /**
+     * Shortcut for {@link Component.UIBase.create}.
+     * @function
+     */
+    Component.define = UIBase.create;
     return Component;
 }, {
     requires:[
@@ -268,6 +272,9 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
              */
             bindUI:function () {
                 var self = this,
+                    n,
+                    listener,
+                    listeners = self.get("listeners"),
                     focusable = self.get("focusable"),
                     handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
@@ -283,6 +290,10 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
+                }
+                for (n in listeners) {
+                    listener = listeners[n];
+                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -677,6 +688,24 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                  */
                 disabled:{
                     view:true
+                },
+
+                /**
+                 * Config listener on created.
+                 * @example
+                 * <code>
+                 * {
+                 *  click:{
+                 *      scope:{x:1},
+                 *      fn:function(){
+                 *          alert(this.x);
+                 *      }
+                 *  }
+                 * }
+                 * </code>
+                 */
+                listeners:{
+                    value:{}
                 }
             },
 
@@ -1531,8 +1560,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     /**
      * UIBase for class-based component.
      * @class
-     * @namespace
-     * @name UIBase
+     * @memberOf Component
      * @extends Base
      */
     function UIBase(config) {
@@ -1545,8 +1573,16 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         config && config.autoRender && this.render();
 
         /**
-         * @name UIBase#afterRenderUI
+         * @name Component.UIBase#afterRenderUI
          * @description fired when root node is ready
+         * @event
+         * @param e
+         */
+
+
+        /**
+         * @name Component.UIBase#afterBindUI
+         * @description fired when component 's internal event is binded.
          * @event
          * @param e
          */
@@ -1687,7 +1723,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * @type Object
      * @memberOf Component.UIBase
      * @example
-     * HTML_PARSER={
+     * Overlay.HTML_PARSER={
      *    // el: root element of current component.
      *    "isRed":function(el){
      *       return el.hasClass("ks-red");
