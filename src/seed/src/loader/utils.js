@@ -421,6 +421,7 @@
          */
         normAdd:function (self, name, fn, config) {
             var mods = self.Env.mods,
+                t,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
@@ -436,11 +437,14 @@
             if (S.isPlainObject(name)) {
                 S.each(name, function (modCfg, modName) {
                     modName = utils.indexMapStr(modName);
-                    if (modCfg.requires) {
-                        modCfg.requires =
-                            utils.normalizeModNames(self, modCfg.requires, modName);
-                    }
                     utils.createModuleInfo(self, modName);
+                    // 模块代码已经加载过了
+                    if (mods[modName].fn) {
+                        return;
+                    }
+                    if (t = modCfg.requires) {
+                        modCfg.requires = utils.normalizeModNames(self, t, modName);
+                    }
                     S.mix(mods[modName], modCfg);
                 });
                 return true;

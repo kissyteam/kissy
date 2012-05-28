@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 28 20:42
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 28 19:45
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120528194538';
+        S.__BUILD_TIME = '20120528204213';
     })();
 
     return S;
@@ -2533,6 +2533,7 @@ build time: May 28 19:45
          */
         normAdd:function (self, name, fn, config) {
             var mods = self.Env.mods,
+                t,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
@@ -2548,11 +2549,14 @@ build time: May 28 19:45
             if (S.isPlainObject(name)) {
                 S.each(name, function (modCfg, modName) {
                     modName = utils.indexMapStr(modName);
-                    if (modCfg.requires) {
-                        modCfg.requires =
-                            utils.normalizeModNames(self, modCfg.requires, modName);
-                    }
                     utils.createModuleInfo(self, modName);
+                    // 模块代码已经加载过了
+                    if (mods[modName].fn) {
+                        return;
+                    }
+                    if (t = modCfg.requires) {
+                        modCfg.requires = utils.normalizeModNames(self, t, modName);
+                    }
                     S.mix(mods[modName], modCfg);
                 });
                 return true;
@@ -4025,7 +4029,7 @@ build time: May 28 19:45
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120528194538'
+        tag:'20120528204213'
     }, getBaseInfo()));
 
     /**
