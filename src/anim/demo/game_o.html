@@ -10,22 +10,12 @@
 </div>
 <button id="start">start</button>
 <button id="stop">stop</button>
-<script src="../../../build/seed.js"></script>
-<script src="../../../build/ua.js"></script>
-<script src="../../../build/event.js"></script>
-<script src="../../../build/dom.js"></script>
-
-<script src="../easing.js"></script>
-<script src="../base.js"></script>
-<script src="../manager.js"></script>
-<script src="../color.js"></script>
-<script src="../fx.js"></script>
-<script src="../queue.js"></script>
-<script src="../backgroundPosition.js"></script>
-<script src="../../anim.js"></script>
-<script src="../../../build/node.js"></script>
+<button id="start2">star2</button>
+<button id="stop2">stop2</button>
+<script src="../../../build/kissy.js"></script>
+<script src="slot.js"></script>
 <script type="text/javascript">
-    KISSY.use("node,event", function (S, Node, Event) {
+    KISSY.use("node", function (S, Node) {
         var $ = Node.all,
                 height = 270,
                 num = 11,
@@ -51,16 +41,14 @@
                 }, {
                     duration:nextDuration,
                     complete:function () {
-                        elem.css("backgroundPosition",
-                                "0px " + (-(height * (num - 1))) + "px");
+                        elem.css("backgroundPosition", "0px " + (-(height * (num - 1))) + "px");
                         if (next !== undefined) {
                             // 比平时慢 multiple 倍
                             var nextDuration2 = ((duration / (num - 1))) *
                                     (num - next - 1) *
                                     multiple * 2;
                             elem.animate({
-                                backgroundPosition:"0px " +
-                                        (-height * next + "px") + "px"
+                                backgroundPosition:"0px " + (-height * next + "px") + "px"
                             }, {
                                 easing:"easeBoth",
                                 duration:nextDuration2,
@@ -85,15 +73,28 @@
                 stop:function (next) {
                     anim(next);
                 }
-            }, Event.Target);
+            }, S.EventTarget);
         }
 
-        $("#start").attr("disabled", false);
-        $("#stop").attr("disabled", false);
+
+        var s = new S.Slot("#t");
+        s.set("count", num);
+        $("#start2").on("click", function () {
+            t.css("backgroundPosition", "0 0");
+            s.start();
+            $("#start2").attr("disabled", true);
+        });
+
+        $("#stop2").on("click", function () {
+            var next = Math.floor(Math.random() * num);
+            s.stop([next]);
+            $("#stop2").attr("disabled", true);
+        });
+
 
         var s2 = Slot("#t", multiple, num, duration);
         $("#start").on("click", function () {
-            t.css("backgroundPosition", "0px " + (-(num - 1) * height + "px"));
+            t.css("backgroundPosition", "0 " + (-(num - 1) * height));
             s2.start();
             $("#start").attr("disabled", true);
         });

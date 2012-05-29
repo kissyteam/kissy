@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 17:44
+build time: May 29 23:17
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 29 17:44
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120529174443';
+        S.__BUILD_TIME = '20120529231727';
     })();
 
     return S;
@@ -4029,7 +4029,7 @@ build time: May 29 17:44
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120529174443'
+        tag:'20120529231727'
     }, getBaseInfo()));
 
     /**
@@ -14504,7 +14504,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:49
+build time: May 29 23:17
 */
 /**
  * @fileOverview anim
@@ -14601,7 +14601,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         specialVals = ["hide", "show", "toggle"],
-        // shorthand css properties
+    // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
@@ -14762,7 +14762,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return;
         }
 
-        if (elem.nodeType==DOM.ELEMENT_NODE) {
+        if (elem.nodeType == DOM.ELEMENT_NODE) {
             hidden = (DOM.css(elem, "display") === "none");
             for (prop in props) {
                 val = props[prop];
@@ -14890,7 +14890,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs[prop] = fx;
         }
 
-        if (elem.nodeType==DOM.ELEMENT_NODE &&
+        if (elem.nodeType == DOM.ELEMENT_NODE &&
             (props.width || props.height)) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE does not
@@ -14973,15 +14973,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                             c == 0) {
                             fx.finished = c;
                             end &= c;
-                        }
-                        else {
+                        } else {
                             end &= fx.frame();
+                            // 最后通知下
+                            if (end && config.frame) {
+                                config.frame(fx);
+                            }
                         }
                     }
                 }
 
-                if ((self.fire("step") === false) ||
-                    end) {
+                if ((self.fire("step") === false) || end) {
                     // complete 事件只在动画到达最后一帧时才触发
                     self.stop(end);
                 }
@@ -15092,7 +15094,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             Q.removeQueues(elem);
         }
         var allRunning = DOM.data(elem, runningKey),
-            // can not stop in for/in , stop will modified allRunning too
+        // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allRunning);
         for (var k in anims) {
             anims[k].stop(end);
