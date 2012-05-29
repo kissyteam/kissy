@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	<style>
+		.doc dl {
+			margin-bottom:10px;
+			border:1px solid #ccc;
+			padding:10px;
+			margin:10px 0;
+			border-radius: 3px;
+		}
+		.doc dt {
+			font-weight:bold;
+			margin:10px 0;
+		}
+		.doc dd.t {
+			padding:0 0 0 20px;
+		}
+		
+	</style>
+	
+</head>
+<body>
+ 
+
+<div  class="doc">
+
+
+
+
+	<dl>
+		<dt>这个验证组件会不会太大？</dt>
+		<dd>
+			Auth功能虽全，但是体积并不大，压缩后也不过10KB。验证大量字段的表单使用Auth准没错，类似登录这样的小表单选择Auth也没问题，你可以完全把心思放在验证逻辑上，
+			而不用去写代码控制提示信息如何展现，能大大节省你的时间。
+		</dd>
+	</dl>
+	
+
+
+	<dl>
+		<dt>使用后没有任何反应</dt>
+		<dd>
+			通常下面三个方面会导致这个问题
+			<p>1.是否正确引用了Auth，请仔细阅读“如何引用”</p>
+			<p>2.实例化Auth的时候，是否传入了正确的form的id</p>
+			<p>3.使用伪属性配置规则的时候，该伪属性值是否为正则的json格式</p>
+		</dd>
+	</dl>
+	
+
+
+	<dl>
+		<dt>如何组合校验</dt>
+		<dd>
+			<p>实现组合校验，其实就是给字段添加多个校验规则，有两种方式：1.通过配置 2.通过addRule方法</p>
+			比如既要验证为email,又要验证长度不超过30个字符
+			<pre class='brush:javascript;'>
+				&lt;input class="text" type="text"  data-valid="{email:['必须为email'], maxLength:[30,true,'不能超过30个字符']}"/&gt;
+			</pre>
+		
+		</dd>
+	</dl>
+	
+	
+	
+	<dl>
+		<dt>如何自定义提示信息</dt>
+		<dd>
+			每一个验证规则都是一个function,你传入的function的最后一个参数就是提示信息，配置的时候传入改参数即可，否则将使用默认的提示信息。
+		</dd>
+	</dl>
+	
+
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

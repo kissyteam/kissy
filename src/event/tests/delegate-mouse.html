@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<div class='inner' id='i4' style='width:300px;height:300px;border:1px solid green;'>
+    i4
+    <div class='inner' id='i3' style='width:200px;height:200px;border:1px solid red;margin:50px;'>
+        #i3.inner
+        <div class='inner' id='i1' style='width:100px;height:100px;border:1px solid black;margin:50px;'>
+            #i1.inner : try mouse
+        </div>
+    </div>
+</div>
+<hr/>
+<div id='log'></div>
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/anim.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/object.js"></script>
+<script src="../src/target.js"></script>
+<script src="../src/focusin.js"></script>
+<script src="../src/mouseenter.js"></script>
+<script src="../src/add.js"></script>
+<script src="../src/remove.js"></script>
+<script src="../src/handle.js"></script>
+<script src="../src/data.js"></script>
+<script src="../src/valuechange.js"></script>
+<script src="../src/hashchange.js"></script>
+<script src="../src/keycodes.js"></script>
+<script src="../src/submit.js"></script>
+<script src="../src/change.js"></script>
+<script src="../src/mousewheel.js"></script>
+<script src="../src/utils.js"></script>
+<script src="../src/special.js"></script>
+<script src="../../event.js"></script>
+<script>
+    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+    KISSY.use("node", function(S, Node) {
+        var $ = Node.all;
+        $('#i4').delegate('mouseenter mouseleave click', '.inner', function(e) {
+            $('#log').append(e.type + " : " + e.currentTarget.id+"<br/>");
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>clone script in ie</title>
+<script src='../../../../build/kissy.js'></script>
+<script src='../../../../tools/third-party/jquery.js'></script>
+</head>
+<body>
+<h1>clone script test in ie</h1>
+<div id="cloneTest">
+    ---
+    <script id="haha">
+        if (!window.t) {
+            window.t = 1;
+        } else {
+            alert('bug inline');
+        }
+    </script>
+    <script src="./clone-ie.js"></script>
+    ---
+</div>
+<div id="holder">
+
+</div>
+
+
+<button id="clone">clone</button>
+<button id="cloneInsert">clone and insert</button>
+<button id="cloneKISSY">kissy clone</button>
+<button id="cloneInsertKISSY">kissy clone and insert</button>
+<button id="cloneInsertKISSYExec">kissy clone and insert and exec</button>
+<button id="cloneJQ">jquery clone</button>
+<button id="cloneInsertJQ">jquery clone and insert</button>
+
+<h2>结论</h2>
+<pre>
+    // ie bug :
+    // 1. ie<9 after clone : &lt;script>xx&lt;/script> => &lt;script>&lt;/script>
+    // 2. ie will execute external script after clone
+</pre>
+
+
+<script>
+    KISSY.ready(function(S) {
+
+        // S.one('#haha').text('alert(2)');
+        S.one('<div>3<script>alert("bug inline")<' + '/script>3</div>').clone(true).prependTo('body');
+
+        S.one('<div>3<script src="clone-ie.js"><' + '/script>3</div>').clone(true).prependTo('body');
+
+        var $k = S.all,
+                holder = $k('#holder'),
+                b = document.body,
+                cloneTest = $k('#cloneTest'),
+                clone = $k('#clone'),
+                cloneInsert = $k('#cloneInsert'),
+                cloneKISSY = $k('#cloneKISSY'),
+                cloneInsertKISSY = $k('#cloneInsertKISSY'),
+                cloneInsertKISSYExec = $k('#cloneInsertKISSYExec'),
+                cloneJQ = $k('#cloneJQ'),
+                cloneInsertJQ = $k('#cloneInsertJQ');
+
+        clone.on("click", function() {
+            // clone ie 会执行 external script
+            cloneTest[0].cloneNode(true);
+        });
+
+        cloneInsert.on("click", function() {
+            // insert 后 ie9 会执行 inline script
+            holder[0].appendChild(cloneTest[0].cloneNode(true));
+        });
+
+        cloneKISSY.on("click", function() {
+            cloneTest.clone(true);
+        });
+
+        cloneInsertKISSY.on("click", function() {
+            cloneTest.clone(true).appendTo(holder);
+        });
+
+        cloneInsertKISSYExec.on("click", function() {
+            cloneTest.clone(true).appendTo(holder, true);
+        });
+
+        cloneJQ.on("click", function() {
+            $(cloneTest[0]).clone(true);
+        });
+
+        cloneInsertJQ.on("click", function() {
+            $(cloneTest[0]).clone(true).appendTo(holder[0]);
+        });
+
+
+    });
+</script>
+</body>
+</html>

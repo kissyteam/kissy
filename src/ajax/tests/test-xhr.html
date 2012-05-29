@@ -1,0 +1,46 @@
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/anim.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/json.js"></script>
+<script type="text/javascript" src="../base.js"></script>
+<script type="text/javascript" src="../xhrobject.js"></script>
+<script type="text/javascript" src="../iframe-upload.js"></script>
+<script type="text/javascript" src="../form-serializer.js"></script>
+<script type="text/javascript" src="../form.js"></script>
+<script type="text/javascript" src="../jsonp.js"></script>
+<script type="text/javascript" src="../script.js"></script>
+<script type="text/javascript" src="../xhrbase.js"></script>
+<script type="text/javascript" src="../xhr.js"></script>
+<script type="text/javascript" src="../xdr.js"></script>
+<script type="text/javascript" src="../subdomain.js"></script>
+<script type="text/javascript" src="../../ajax.js"></script>
+
+<script type="text/javascript">
+    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+    KISSY.ready(function(S) {
+        S.use("ajax/xhr", function(S, io) {
+            if (true) {
+                io({
+                    url:"ajax.php",
+                    // dataType:'xml',
+                    // dataType:'json',
+                    success:function() {
+                        var args = S.makeArray(arguments);
+                        console.log(1);
+                    },
+                    error:function() {
+                        var args = S.makeArray(arguments);
+                        console.log(2);
+                    },
+                    complete:function() {
+                        var args = S.makeArray(arguments);
+                        console.log(3);
+                    }
+                });
+            }
+        });
+    });
+</script>

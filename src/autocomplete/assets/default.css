@@ -1,0 +1,80 @@
+.ks-autocomplete-menu {
+    background: #fff;
+    border-color: #999;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    margin: 0;
+    outline: none;
+    padding: 4px 0;
+    position: absolute;
+    z-index: 99999;
+}
+
+.ks-autocomplete-menuitem {
+    color: #404040;
+    list-style: none;
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 1px 0 2px;
+    white-space: nowrap;
+}
+
+.ks-autocomplete-menuitem-disabled .ks-autocomplete-menuitem-content {
+    color: #ccc !important;
+}
+
+.ks-autocomplete-menuitem-highlight,
+.ks-autocomplete-menuitem-hover {
+    background-color: #39F;
+    color: white;
+}
+
+.ks-combobox {
+    border: 1px solid #B5B6B5;
+    background-color: #ddd;
+    display: inline-block;
+    /*clear float*/
+    overflow: hidden;
+    zoom: 1;
+    *display: inline;
+    font-size: 12px;
+}
+
+.ks-combobox-button, .ks-combobox-button:hover {
+    text-decoration: none;
+    color: #000000;
+    display: inline-block;
+    text-align: center;
+    /*do not occupy inline space*/
+    float: left;
+    zoom: 1;
+    *display: inline;
+}
+
+.ks-autocomplete-input {
+    font-size: 12px;
+}
+
+.ks-combobox .ks-autocomplete-input {
+    /*do not occupy inline space*/
+    float: left;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 0;
+    border-right: 1px solid #b5b6b5;
+    color: #000;
+    margin: 0;
+    padding: 0 0 0 2px;
+}
+
+.ks-ie7 .ks-combobox .ks-autocomplete-input,
+.ks-ie8 .ks-combobox .ks-autocomplete-input,
+.ks-ie6 .ks-combobox .ks-autocomplete-input,
+.ks-gecko .ks-combobox .ks-autocomplete-input {
+    padding-top: 1px;
+    padding-bottom: 3px;
+}

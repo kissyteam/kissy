@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>valuechange test</title>
+</head>
+<body>
+
+<h1>see console please</h1>
+
+value ： <input id="test"/>
+
+<button id="action">random set value</button>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+
+<script src="../base.js"></script>
+<script src="../object.js"></script>
+<script src="../target.js"></script>
+<script src="../focusin.js"></script>
+<script src="../mouseenter.js"></script>
+
+<script src="../valuechange.js"></script>
+
+<script src="../../event.js"></script>
+
+<script src="../../../build/node.js"></script>
+
+<script>
+
+    KISSY.use("dom,event,node,event/valuechange", function(S, DOM, Event, Node) {
+
+        var test = Node.one("#test");
+        test.on("valueChange", function(ev) {
+            S.log("preval : " + ev.preVal
+                    + " . newVal : " + ev.newVal);
+        });
+
+        var action = Node.one("#action");
+        action.on("click", function(ev) {
+            test.val(+new Date());
+        });
+    });
+</script>
+</body>
+</html>

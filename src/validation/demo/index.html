@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title> 
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<style>
+		/* = index
+		----------------------------------------------------------------------------------*/
+
+		/* Modules:= 页面布局 {{{ */
+	
+			body {
+				font-family:'Microsoft YaHei';
+			}
+		
+
+			#page{
+				width:98%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+				
+			#header, #content, #footer {
+				margin:0 10px;
+			}
+
+
+
+			#footer {
+				margin:20px 0 50px 0;
+				padding-top:25px;10
+ 				text-align:center;
+				border-top:1px solid #DFDFDF;
+			}
+			
+			#header {height:100px;}
+			#header .logo{float:left;margin:20px 0 0 0;padding:0;border:none;}
+			#header .sub-title{float:left;margin:45px 5px 0 5px;font:25px "Microsoft YaHei";color:#aaa;}
+			#header .desc{float:left;margin-top:55px;margin-left:5px;font-size:15px;color:#80c269;font-weight:bold;font-family: "Microsoft YaHei";}
+			#header  .navigation {float:right;margin:55px 0 0 0;overflow:hidden;list-style:none;}
+			#header  .navigation li {float:left;margin-left:-1px;padding: 0 10px 0 25px;line-height:1em;border-left:1px solid #ddd;}
+						
+
+			
+			.grid-index .main-wrap { margin-left: 218px;}
+			.grid-index .col-sub { width: 198px; margin-left: -100%;}
+			
+			
+			.grid-index {
+				border-top:1px solid #A4D3F2;
+			}
+			.grid-index .col-sub{
+				border-width:0 1px 1px 1px;
+				border-color:#A4D3F2;
+				border-style:solid;
+				background-color:#F2F8FA;
+			}
+			
+			
+			a:link, a:visited{
+				color:#36c;
+			}
+			a:hover{
+				color:#36c;
+			}
+	
+		/* }}} */
+
+		
+		
+		/* Modules:= 页面布局 {{{ */
+
+			#nav{
+				margin:20px 10px;
+			}
+			#nav dl{
+				margin-bottom:20px;
+			}
+			#nav dl dt{
+				font-size:15px;
+				font-weight:bold;
+				color:#888;
+			}
+			#nav dl dd{
+				margin:7px 0 0px 20px;
+			}
+			#nav dl dd a{
+				color:#00A0E9;
+			}
+			
+	
+		/* }}} */
+		
+	</style>
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	<script>
+		KISSY.ready(function(S){
+			var frame = S.one("#mainframe");
+			S.all("#nav a").each(function(){
+				var url = this.attr("href");
+				this.attr("href","index.html#"+url.replace(".html",""));
+				this.on("click",function(ev){
+					//ev.halt();
+					frame.attr("src",url);
+				});
+			});
+			
+			if(window.location.hash){
+				frame.attr("src",window.location.hash.replace("#","")+".html");
+			}else{
+				frame.attr("src","home.html");
+			}
+			
+			
+			function reinitIframe(){
+				var iframe = document.getElementById("mainframe");
+				if(!iframe)return;
+				try{
+					var bHeight = iframe.contentWindow.document.body.scrollHeight;
+					var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+					var height = Math.max(bHeight, dHeight);
+					iframe.height =  height;
+				}catch (ex){}
+			}
+
+			window.setInterval(function(){
+				reinitIframe();
+			}, 1000);
+
+		});
+		
+
+		
+		
+		
+	</script>
+	
+
+	
+	
+</head>
+<body>
+
+<div id="page">
+
+
+	<div id="header">
+		<h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"><img src="http://docs.kissyui.com/docs/html/static/logo.png"/></a></h1>
+		<p class="sub-title">表单验证</p> 
+		<ul class="navigation"> 
+			<li><a href="https://groups.google.com/group/kissy-ui">讨论组</a></li>
+			<li><a href="http://github.com/kissyteam">源码</a></li> 
+		</ul> 
+	</div>
+	
+	
+	<div id="content">
+	
+		<div class="layout grid-index">
+			<div class="col-main">
+				<div class="main-wrap">
+
+				
+					<iframe src="about:blank" frameborder="no" scrolling="no" width="100%" height="100" id="mainframe"></iframe>
+					
+					
+				</div>
+			</div>
+			<div class="col-sub">
+				<div id="nav">
+				
+					<dl>
+						<dt>如何使用</dt>
+                        <dd><a href="home.html">首页</a></dd>
+						<dd><a href="use.html">如何引用</a></dd>
+					</dl>
+					
+					<dl>
+						<dt>如何配置字段</dt>
+						<dd><a href="field-config-attr.html">伪属性</a></dd>
+						<dd><a href="field-config-add.html">Validation.add方法</a></dd>
+					</dl>
+					
+					<dl>
+						<dt>规则</dt>
+						<dd><a href="rule-config-attr.html">配置规则-伪属性</a></dd>
+						<dd><a href="rule-config-config.html">配置规则-实例配置</a></dd>
+						<dd><a href="rule-config-addRule.html">配置规则-addRule方法</a></dd>
+						<dd><a href="rule-all.html">查看那全部内置规则</a></dd>
+						<dd><a href="rule-extend.html">如何扩展规则</a></dd>	
+						<dd><a href="rule-tostring.html">查看规则</a></dd>	
+					</dl>
+					
+					<dl>
+						<dt>提示类</dt>
+						<dd><a href="warn-config.html">如何配置</a></dd>
+						<dd><a href="warn-all.html">全部内置提示类</a></dd>
+						<dd><a href="warn-extend.html">如何扩展提示类</a></dd>
+						<dd><a href="warn-extend-eg1.html">扩展提示类-示例</a></dd>
+					</dl>
+					
+					<dl>
+						<dt>小功能</dt>
+						<dd><a href="rule-ajax.html">ajax校验</a></dd>
+						<dd><a href="fun-initerror.html">初始化错误</a></dd>
+						<dd><a href="fun-fireerrmsg.html">推送错误</a></dd>
+						<dd><a href="fun-depend.html">依赖校验</a></dd>
+						<dd><a href="fun-editor.html">编辑器验证</a></dd>
+					</dl>
+					
+					<dl>
+						<dt>其它</dt>
+                        <dd><a href="change.html">最近更新</a></dd>
+						<dd><a href="eg1.html">综合示例</a></dd>
+						<dd><a href="faq.html">FAQ</a></dd>
+						<dd><a href="qa.html">给我留言</a></dd>
+					</dl>
+					
+					
+				</div>
+
+				
+				
+			</div>
+		</div>
+		
+	</div>
+	<div id="footer"> &copy; Copyright 2010~2012, KISSY Team. author: 常胤</div>
+</div>
+
+</body>
+</html>
+
+

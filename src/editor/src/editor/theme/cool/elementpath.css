@@ -1,0 +1,9 @@
+.ke-element-path {
+    padding: 0 5px;
+    text-decoration: none;
+}
+
+.ke-element-path:hover {
+    background: #CCFFFF;
+    text-decoration: none;
+}

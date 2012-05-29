@@ -1,0 +1,24 @@
+<script type="text/javascript" src="../../../tools/third-party/jquery.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+                    url:"ajax-json.php",
+                    dataType:'xml',
+                    success:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(1);
+                    },
+                    error:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(2);
+                    },
+                    complete:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(3);
+                    }
+                });
+    });
+</script>

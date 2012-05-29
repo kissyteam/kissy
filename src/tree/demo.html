@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Tree</title>
+</head>
+<body>
+
+
+<h1>KISSY Tree</h1>
+
+<h2>设计说明</h2>
+<div style="height:200px;overflow: auto;border: 1px solid red;">
+    <ol>
+        <li>支持 <a href="http://www.w3.org/TR/wai-aria-practices/#TreeView" target="_blank">aria</a></li>
+        <li>重用组件框架</li>
+    </ol>
+
+    <h2>键盘操作指南</h2>
+    <h3>Preposition：tab 到树，自动选择根节点</h3>
+    <ol>
+        <li>
+            上下键在可视节点间深度遍历
+        </li>
+        <li>
+            左键
+            <ol>
+                <li>
+                    已展开节点：关闭节点
+                </li>
+                <li>
+                    已关闭节点: 移动到父亲节点
+                </li>
+            </ol>
+        </li>
+        <li>
+            右键
+            <ol>
+                <li>
+                    已展开节点：移动到该节点的第一个子节点
+                </li>
+                <li>
+                    已关闭节点: 无效
+                </li>
+            </ol>
+        </li>
+        <li>
+            enter : 触发 click 事件
+        </li>
+
+        <li>
+            home : 移动到根节点
+        </li>
+
+        <li>
+            end : 移动到前序遍历最后一个节点
+        </li>
+    </ol>
+
+</div>
+
+<h2>demo</h2>
+
+<a href="./demo/simple_tree.html">简单树</a>
+<br/>
+<a href="./demo/checked_tree.html">多选树</a>
+<br/>
+<a href="./demo/decorate_simple_tree.html">简单装饰树</a>
+<br/>
+<a href="./demo/decorate_checked_tree.html">简单装饰多选树</a>
+</body>
+</html>

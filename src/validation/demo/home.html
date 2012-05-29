@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>auth</title>
+
+<link rel="stylesheet" type="text/css" href="../../../../kissy-dpl/base/build/css/dpl-pkg.css"/>
+<script src="../../../build/kissy.js" charset="utf-8"></script>
+
+<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+</head>
+<body>
+
+
+<div class="intro">
+
+    <h2>基于KISSY的表单验证组件Authenticate</h2>
+    <div>
+        KISSY.Auth是一款基于KISSY的表单验证组件，相信Auth能彻底将你从客户端表单验证的工作中解放出来。除了传统表单验证组件的校验功能之外，Auth有还如下特点：
+    </div>
+    <ul>
+        <li>1. 配置简单（校验规则以json的格式配置，支持伪属性配置和配置属性来配置）。</li>
+        <li>2. 内置丰富的校验规则，并且每一项规则都能自定义提示信息。</li>
+        <li>3. 支持多重校验，还有依赖校验等使用的小功能。</li>
+        <li>4. 支持自定义校验规则（和对应的提示信息）。</li>
+        <li>5. 支持多种信息提示方式,这个也是Auth的最大特色。</li>
+        <li>6. 非常容易通过继承基类扩展信息提示方式。</li>
+    </ul>
+    <p><a href="auth.rar">下载Auth</a> | <a href="docs/">源码</a> | <a href="http://www.lzlu.com/">意见反馈</a></p>
+
+</div>
+
+
+<div class="eg">
+    <h3>示例 - 用户注册</h3>
+    <form method="post" id="J_form_eg1">
+        <ul class="form">
+
+            <li>
+                <label class="hd">用户名：</label>
+                <input class="text" type="text" value="test@tb.com" va data-valid="{email:['用户名字必须是email帐号']}"/>
+            </li>
+
+            <li>
+                <label class="hd">密码：</label>
+                <input class="text" type="text" name="password" id="password" data-valid="{length:[6,30,true]}"/>
+            </li>
+
+            <li>
+                <label class="hd">重复密码：</label>
+                <input class="text" type="text" data-valid="{equalTo:['#password','两次密码不一致了']}"/>
+            </li>
+
+            <li>
+                <label class="hd">真实姓名：</label>
+                <input class="text" type="text" data-valid="{label:'请输入你的中文名称',chinese:['姓名只能是中文']}"/>
+            </li>
+			
+            <li>
+                <label class="hd">身份证号码：</label>
+                <input class="text" type="text" data-valid="{card:['请输入准确的二代身份证号码']}"/>
+            </li>
+
+            <li>
+                <label class="hd">个人主页：</label>
+                <input class="text" type="text" data-valid="{required:false,url:['请输入正确的网址']}"/>
+            </li>
+
+            <li>
+                <button type="submit">提交</button>
+            </li>
+
+        </ul>
+    </form>
+    <script>
+		
+        KISSY.use("validation", function(S, Validation) {
+
+            var form = new Validation('#J_form_eg1', {
+                        anim:0.3,
+                        style:'under'
+                    });
+
+
+            KISSY.Event.on('#J_form_eg1', "submit", function() {
+                form.isValid();
+                return false;
+            });
+
+        });
+
+    </script>
+</div>
+
+
+
+</body>
+</html>

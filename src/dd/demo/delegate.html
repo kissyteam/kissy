@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>DD delegation demo</title>
+<style>
+
+    .container {
+        border: 1px solid red;
+        height: 200px;
+        padding: 10px;
+        position: relative;
+        overflow: auto;
+    }
+
+    .component {
+        margin: 50px 10px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border: 1px solid black;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        overflow: hidden;
+    }
+
+    .cheader {
+        cursor: move;
+        border: 1px solid black;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .component .cheader {
+        cursor: move;
+    }
+
+    .ks-dd-dragging * {
+        visibility: hidden;
+    }
+
+    .ks-dd-dragging {
+        border: 2px blue dashed;
+    }
+</style>
+</head>
+<body>
+
+<h1> see console </h1>
+
+
+<h2>基于委托 + 容器自动滚动的拖放排序</h2>
+
+<button id="add"> add module</button>
+<br/><br/>
+<div id="container2" class="container">
+
+    <div class="component">
+        <div class="cheader">
+            拖动头
+        </div>
+        <span>
+        drag proxy1
+            </span>
+    </div>
+
+    <div class="component">
+        <div class="cheader">
+            拖动头
+        </div>
+         <span>
+        drag proxy2
+        </span>
+    </div>
+
+    <div class="component">
+        <div class="cheader">
+            拖动头
+        </div>
+         <span>
+        drag proxy3
+        </span>
+    </div>
+</div>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ddm.js"></script>
+<script src="../src/draggable-delegate.js"></script>
+<script src="../src/draggable.js"></script>
+<script src="../src/droppable-delegate.js"></script>
+<script src="../src/droppable.js"></script>
+<script src="../src/proxy.js"></script>
+<script src="../src/scroll.js"></script>
+<script src="../src/constrain.js"></script>
+<script src="../src/dd.js"></script>
+<script>
+
+    var S = KISSY;
+
+    KISSY.use("node,dd", function (S, Node, DD) {
+
+        var DDM = DD.DDM,
+                $ = Node.all,
+                DraggableDelegate = DD.DraggableDelegate,
+                DroppableDelegate = DD.DroppableDelegate,
+                Draggable = DD.Draggable,
+                Droppable = DD.Droppable,
+                Scroll = DD.Scroll,
+                Proxy = DD.Proxy;
+
+        /**
+         * 拖放排序
+         */
+
+        S.ready(function () {
+
+            var proxy = new Proxy({
+                /**
+                 * 如何产生替代节点
+                 * @param drag 当前拖对象
+                 */
+                node:function (drag) {
+                    var n = $(drag.get("dragNode").clone(true));
+                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.css("opacity", 0.2);
+                    return n;
+                },
+                destroyOnEnd:true,
+                moveOnEnd:0
+            });
+
+            var dragDelegate = new DraggableDelegate({
+                container:"#container2",
+                move:1,
+                handlers:['.cheader'],
+                selector:'.component',
+                // disabled:true,
+                "kk":0
+            });
+
+            // dragDelegate.set("disabled",true);
+
+            proxy.attachDrag(dragDelegate);
+
+            var dropDelegate = new DroppableDelegate({
+                container:"#container2",
+                selector:'.component'
+            });
+
+            dragDelegate.on("dragover", function (ev) {
+                var drag = ev.drag;
+                var drop = ev.drop;
+                var dragNode = drag.get("dragNode"),
+                        dropNode = drop.get("node");
+                var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
+                if (ev.pageX > middleDropX) {
+                    var next = dropNode.next();
+                    if (next && next[0] == dragNode[0]) {
+
+                    } else {
+                        dragNode.insertAfter(dropNode);
+                    }
+                } else {
+                    var prev = dropNode.prev();
+                    if (prev && prev[0] == dragNode[0]) {
+
+                    } else {
+                        dragNode.insertBefore(dropNode);
+                    }
+                }
+            });
+
+
+            var s = new Scroll({
+                node:"#container2"
+            });
+
+            s.attachDrag(dragDelegate);
+
+            var container = $("#container2");
+            var id = 4;
+            $("#add").on("click", function () {
+                new Node('<div class="component">' +
+                        '<div class="cheader">拖动头</div>' +
+                        '<span>drag proxy' + (id++) + '</span></div>').appendTo(container);
+            });
+        });
+    });
+
+
+</script>
+</body>
+</html>

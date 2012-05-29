@@ -1,0 +1,34 @@
+<script type="text/javascript" src="../../../build/seed.js"></script>
+<script type="text/javascript" src="../base.js"></script>
+<script type="text/javascript" src="../xhrobject.js"></script>
+<script type="text/javascript" src="../xhr.js"></script>
+<script type="text/javascript">
+    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+    KISSY.ready(function(S) {
+        S.use("ajax/xhr", function(S, io) {
+            if (true) {
+                debugger
+                io({
+                            url:"ajax-json.php",
+                            dataType:'xml',
+                            // dataType:'json',
+                            success:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(1);
+                            },
+                            error:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(2);
+                            },
+                            complete:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(3);
+                            }
+                        });
+            }
+        });
+    });
+</script>

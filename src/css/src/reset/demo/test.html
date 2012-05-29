@@ -1,0 +1,358 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>CSS Reset Test</title>
+<link rel="stylesheet" href="../../reset.css" />
+<script>
+    // html5 shiv
+    if (!+[1,]) {
+        (function() {
+            var tags = [
+                'article', 'aside', 'details', 'figcaption',
+                'figure', 'footer', 'header', 'hgroup',
+                'menu', 'nav', 'section', 'summary',
+                'time', 'mark', 'audio', 'video'],
+                    i = 0, len = tags.length;
+            for (; i < len; i++) document.createElement(tags[i]);
+        })();
+    }
+</script>
+</head>
+<body>
+<h1>CSS Reset Test</h1>
+<hr />
+
+<h2>推荐使用的元素</h2>
+<p>
+1. 结构元素：blockquote, body, br, div, h1 - h6, head, hr, html, p<br />
+2. 头部元素：base, link, meta, script, style, title<br />
+3. 列表元素：ul, ol, li, dl, dt, dd<br />
+4. 文本格式元素：a, abbr, acronym, address, bdo, cite, code, del, dfn, em, ins, kbd, noscript, pre, q, samp, small, span, strong, sub, sup, var<br />
+5. 表单元素：button, fieldset, legend, form, input, label, optgroup, option, select, textarea<br />
+6. 多媒体元素：area, img, map, object, param<br />
+7. 表格元素：caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr<br />
+8. 窗体元素：iframe
+</p>
+<br />
+
+<h2>不推荐使用的元素</h2>
+<p>
+1. 结构元素：无<br />
+2. 头部元素：无<br />
+3. 列表元素：dir, menu<br />
+4. 文本格式元素：b, basefont, big, blink, center, comment, font, i, marquee, nobr, plaintext, ruby, s, strike, u, wbr, xmp<br />
+5. 表单元素：isindex<br />
+6. 多媒体元素：applet, bgsound, embed, noembed<br />
+7. 表格元素：无<br />
+8. 窗体元素：frame, frameset, noframes
+</p>
+<br />
+
+<h2>转世重生的元素</h2>
+<p>
+1. s - 表示 sprite, 可以用 &lt;s&gt;&lt;/s&gt; 来做 icon 的占位元素<br />
+2. b - 表示 border, 可以用来作为圆角的占位元素<br />
+3. i - 预留，尚未想到合理的复活理由
+</p>
+
+<br />
+<hr />
+<h2>Structural Elements 结构元素：</h2>
+<br />
+<h1>h1: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h1>
+<h2>h2: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h2>
+<h3>h3: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h3>
+<h4>h4: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h4>
+<h5>h5: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h5>
+<h6>h6: The quick brown fox jumps over the lazy dog 那只敏捷的棕毛狐狸跃过那只懒狗</h6>
+<br />
+<p>p: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<br />
+<div>div: 原先大家以为这段拉丁文只是没有意义的组合，目的是让阅读者不要被文章内容所影响，而只专注于观察字型或版型，并借此填满空间。但根据美国拉丁学者 Richard McClintock 的研究，Lorem ipsum 原来起源于西赛罗的《善恶之尽》。中译：无人爱苦，亦无人寻之欲之，乃因其苦。为了减少 Lorem ipsum 的可读性，并且让字母出现的频率与现代英语接近，所以有些版本中部分字母被 K, W, Z 等拉丁文中没有的字母替换，或是加入 zzril, takimata 等字。除了原始的 Lorem ipsum 版本外，目前还有几套新的 Lorem ipsum.</div>
+<br />
+<blockquote>
+    blockquote: The quick brown fox jumps over the lazy dog. 那只敏捷的棕毛狐狸跃过那只懒狗。
+</blockquote>
+<br />
+
+<hr />
+<h2>List Elements 列表元素：</h2>
+<br />
+<ul>
+    <li>无序列表项 unordered list item 1</li>
+    <li>无序列表项 unordered list item 2</li>
+    <li>无序列表项 unordered list item 3</li>
+</ul>
+<br />
+<ol>
+    <li>有序列表项 ordered list item 1</li>
+    <li>有序列表项 ordered list item 2</li>
+    <li>有序列表项 ordered list item 3</li>
+</ol>
+<br />
+<dl>
+    <dt>定义项 definition term</dt>
+    <dd>定义描述 definition description</dd>
+</dl>
+<br />
+
+<hr />
+<h2>Text Formatting Elements 文本格式元素：</h2>
+<br />
+<p>a: <a href="#">anchor or link</a></p>
+<br />
+<p>abbr: <abbr title="HyperText Markup Language">HTML</abbr> 缩写</p>
+<p>acronym: <acronym title="World Wide Web">WWW</acronym> 首字母缩写</p>
+<br />
+<p>address: This element is used to mark up contact details for the author or owner of the document,
+in order that the reader may use these details to contact the document’s owner. Such as:</p>
+<address>页面维护：yubo(at)tiantang.com & zhengchun(at)tiantang.com</address>
+<br />
+<p>bdo: A palindrome is a word, like 'kayak,' that appears
+    exactly the same when all the letters are reversed.
+    <bdo dir="rtl">Canoe</bdo>, it seems, is not apalindrome.
+</p>
+<br />
+<p>cite: More information can be found in <cite>[ISO-0000]</cite>.</p>
+<br />
+<p>
+   code: <code>var o = { name : "John", salary : 2000000 };</code>
+</p>
+<br />
+<p>del / ins: Bernie enjoyed nothing more than a <del
+    datetime="2007-11-05T23:31:05Z">night out on the town at his
+    favorite drag queen show</del> <ins
+    datetime="2007-11-05T23:33:32Z">quiet night in with a warm cup of
+    cocoa.</ins>
+</p>
+<br />
+<p>dfn: The concept of <dfn>progressive enhancement</dfn> has been
+    about for a few years. You could say that it describes an
+    approach to web development from the point of view that 'the
+    glass is half full' rather than 'the glass is half empty.'
+    Progressive enhancement came to the public's attention when ...
+</p>
+<br />
+<p>em: Do you <em>really</em> need to buy those expensive jeans? I mean,
+    is it really <em>that</em> important to you to look like some kind
+    of circus freak?
+</p>
+<br />
+<p>kbd: Hold down <kbd>CTRL</kbd>, <kbd>ALT</kbd>, and <kbd>DELETE</kbd>,
+    then select Task Manager
+</p>
+<br />
+<p>nobr: Our telephone number is <nobr>0800 123 123 123</nobr>.</p>
+<br />
+<p>pre: </p>
+<pre>
+code, kbd, pre, samp, tt {
+	font-family: courier new, courier, monospace;
+}
+</pre>
+<br />
+<p>q: Heck, even Bill Gates is quoted as saying <q>We need
+    Microformats,</q> which can only be a good thing for the cause.
+</p>
+<br />
+<p>samp: If the browser spits out an error message such as
+<samp>HTTP 404 - File not found</samp>,
+you may simply have typed the address incorrectly.
+</p>
+<br />
+<p>small：<small>那只敏捷的棕毛狐狸跃过那只懒狗。The quick brown fox jumps over the lazy dog.</small></p>
+<br />
+<p>span：<span>那只敏捷的棕毛狐狸跃过那只懒狗。The quick brown fox jumps over the lazy dog.</span></p>
+<br />
+<p>strong: Look for the sign that says <strong>turn left</strong>, then turn left!</p>
+<br />
+<p>sub / sup: H<sub>2</sub>O  E = mc<sup>2</sup>  能量 = 质量 * 光速<sup>2</sup> y = x系数<sup>指数</sup>z原子<sub>原子数</sub></p>
+<br />
+<p>tt: The scores rolled in underneath the moustached face of Dickie
+    Davies, hot off the teletype machines that someone was operating
+    deep in the dungeons of ITV: &quot;<tt>Heart of Midlothian: 4,
+    Queen of the South: 2, Plymouth Argyle 3 …</tt>&quot;
+</p>
+<br />
+<p>var: To get access to the system you first need to enter your
+    username, e.g. <var>monkeyboy123</var>, followed by your unique
+    6-digit customer ID beginning with C, e.g. <var>C13345</var>.
+</p>
+<br />
+
+<hr />
+<h2>Form Elements 表单元素:</h2>
+<br />
+<form action="">
+    <p>button: <button>I am a <strong>BUTTON</strong></button></p>
+    <br />
+    <p>fieldset / legend:</p>
+    <fieldset>
+        <legend>Friendship</legend>
+        <input type="radio" name="radFriendship" value="not applicable" id="radFriendNot_Applicable"/>
+        <label for="radFriendNot_Applicable">not applicable</label>
+        <input type="radio" name="radFriendship" value="acquaintance" id="radFriendaquaintence"/>
+        <label for="radFriendaquaintence">acquaintance</label>
+        <input type="radio" name="radFriendship" value="friend" id="radFriendfriend"/>
+        <label for="radFriendfriend">friend</label>
+    </fieldset>
+    <br />
+    <p>
+        input:
+        <br />
+        type=button:
+        <input type="button" value="Click me" />
+        <br />
+        type=checkbox:
+        <input type="checkbox" name="chknewsletter" id="chknewsletter" value="newsletter-opt-in" />
+        <label for="chknewsletter">Send me the monthly newsletter</label>
+        <br />
+        type=file:
+        <input type="file" name="picture" id="picture" accept="image/jpeg, image/gif" />
+        <br />
+        type=hidden: <input type="hidden" name="hdnCustId" />
+        <br />
+        type=image: <input type="image" src="assets/download-now.png" alt="Submit your details" />
+        <br />
+        type=password: <input type="password" name="pin" id="pin" maxlength="4" size="6" />
+        <br />
+        type=radio:
+        <input type="radio" name="station" id="rad3" value="XFM"/> <label for="rad3">XFM</label>
+        <input type="radio" name="station" id="rad4" value="4Music"/> <label for="rad4">4Music</label>
+        <br />
+        type=reset:
+        <input type="reset" name="cmdReset" id="cmdReset" value="Clear form data" />
+        <br />
+        type=submit:
+        <input type="submit" name="cmdSubmit" id="cmdSubmit" value="Send" />
+        <br />
+        <input type="text" name="txtsearch" id="txtsearch" size="20" />
+    </p>
+    <br />
+    <p>label: see above</p>
+    <br />
+    <p>optgroup / select / option: </p>
+    <select name="favoritefood">
+        <optgroup label="Dairy products">
+            <option>Cheese</option>
+            <option>Egg</option>
+        </optgroup>
+        <optgroup label="Vegetables">
+            <option>Cabbage</option>
+            <option>Lettuce</option>
+            <option>Beans</option>
+            <option>Onions</option>
+            <option>Courgettes</option>
+        </optgroup>
+    </select>
+    <br />
+    <p>textarea:</p>
+    <textarea cols="50" rows="5" id="perfectday"></textarea>
+</form>
+<br />
+
+<hr />
+<h2>Images and Media Elements 多媒体元素：</h2>
+<br />
+<p>map / area:</p>
+<map name="bigthings" id="bigthings">
+  <area shape="rect" coords="35,4,205,108"
+      href="http://en.wikipedia.org/wiki/Australia's_Big_Things"
+      alt="Australia's Big Things (on Wikipedia)"/>
+</map>
+<img src="assets/australia-big-things-map.png" alt="The Giant Prawn at Ballina" border="0" usemap="#bigthings"/></p>
+<br />
+<p>
+    image:
+    <br />
+    <a href="#"><img src="assets/big-banana.jpg" alt="The Big Banana" /></a>
+</p>
+<p>
+    object / param:
+    <br />
+    <object data="assets/flash.swf" type="application/x-shockwave-flash" width="500" height="200">
+        <param name="movie" value="movie.swf">
+        <param name="wmode" value="opaque">
+    </object>
+</p>
+<br />
+
+<hr />
+<h2>Table Elements 表格元素：</h2>
+<br />
+<table summary="Interest Rates" width="500">
+    <caption>Interest Rates</caption>
+    <colgroup>
+        <col width="50%" />
+    </colgroup>
+    <colgroup>
+        <col width="50%" />
+    </colgroup>
+    <thead>
+    <tr>
+        <th>Account Type</th>
+        <th>Interest Rate</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td>Recommended for you: 'Young Saver'</td>
+        <td>Interest from: 1.6%</td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr>
+        <td>Smart</td>
+        <td>From 2%</td>
+    </tr>
+    <tr>
+        <td>Young Saver</td>
+        <td>From 1.6%</td>
+    </tr>
+    </tbody>
+</table>
+<br />
+
+<hr />
+<h2>Frame and Window Elements 窗体元素：</h2>
+<br />
+<p>iframe:</p>
+<iframe src="http://w3c.org/" height="200" width="500" frameborder="0">
+    <p>Your browser does not support iframes. That kinda sucks, eh?</p>
+</iframe>
+<br />
+
+<hr />
+<h2>HTML5 Elements:</h2>
+<br />
+<article>article</article>
+<aside>aside</aside>
+<details>details</details>
+<figcaption>figcaption</figcaption>
+<figure>figure</figure>
+<footer>footer</footer>
+<header>header</header>
+<hgroup>hgroup</hgroup>
+<menu>menu</menu>
+<nav>nav</nav>
+<section>section</section>
+<summary>summary</summary>
+<time>time</time>
+<mark>mark</mark>
+<audio>audio</audio>
+<video>video</video>
+<hr />
+<h3>主要参考资料：</h3>
+<br />
+<ul>
+    <li><a href="http://meyerweb.com/eric/tools/css/reset/">Eric Reset CSS</a></li>
+    <li><a href="http://developer.yahoo.com/yui/3/cssreset/">YUI CSS Reset</a></li>
+    <li><a href="http://developer.yahoo.com/yui/3/cssfonts/">YUI CSS Fonts</a></li>
+    <li><a href="http://developer.yahoo.com/yui/3/cssbase/">YUI CSS Base</a></li>
+    <li><a href="http://www.dave-woods.co.uk/index.php/html5-css-reset/">HTML5 CSS Reset</a></li>
+</ul>
+<br />
+<br />
+</body>
+</html>

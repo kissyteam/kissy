@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>chart demo</title>
+    <link rel="stylesheet" href="../../../build/css/reset-min.css" />
+    <link rel="stylesheet" href="../assets/chart.css" />
+    <script src="../../../build/kissy.js"></script>
+</head>
+<body>
+
+<canvas style="background:#fff;" id="chart1" width="600" height="400"></canvas>
+<script>
+KISSY.use("chart", function(S, Chart){
+    var pie = new Chart("#chart1",{
+        type : "line",
+        elements : [{
+            name : "接待人数",
+            datas : [10,17,19,10,13],
+            label : "{name} : {data}人"
+        },
+        {
+            name : "回复人数",
+            datas : [22,12,18,27,21],
+            label : "{name} : {data}人"
+        },
+        {
+            name : "回复人数",
+            datas : [4,10,6,17,9],
+            label : "{name} : {data}人"
+        }],
+        axis : {
+            x : {
+                name : "时间",
+                labels : ["2011-1-10","2011-1-11","2011-1-12","2011-1-13","2011-1-14"]
+            },
+            y : {
+                name : "人数"
+            }
+        },
+        config : {
+            //colors : ["#aaa","#999","#666"],
+            background:"#fff",
+            drawbg : false
+        }
+    });
+});
+
+</script>
+<canvas style="background:#fff;" id="chart2" width="600" height="400"></canvas>
+<script>
+    /*
+    */
+KISSY.use("chart", function(S,Chart){
+    var pie = new Chart("#chart2",{
+        type : "line",
+        elements : [{
+            name : "接待人数",
+            datas : [10,17,19,10,13],
+            label : "{name} : {data}人"
+        },
+        {
+            name : "回复人数",
+            datas : [22,12,18,27,21],
+            label : "{name} : {data}人"
+        },
+        {
+            name : "回复人数",
+            datas : [4,10,6,17,9],
+            label : "{name} : {data}人"
+        }
+        ],
+        axis : {
+            x : {
+                name : "时间",
+                labels : ["2011-1-10","2011-1-11","2011-1-12","2011-1-13","2011-1-14"]
+            },
+            y : {
+                name : "人数"
+            }
+        },
+        config : {
+            drawbg : 0,
+            backgroundStyle : {
+                start : "#222",
+                end : "#666"
+            },
+            numberFormat : '0',
+            showLabels: false,
+            left : 30
+        }
+    });
+});
+
+</script>
+</body>
+</html>

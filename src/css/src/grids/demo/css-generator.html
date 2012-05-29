@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Layout CSS Generator</title>
+<style>
+    body {
+        font: 16px/25px courier new, monospace;
+    }
+
+    pre {
+        font: 16px/20px courier new, monospace;
+        margin-top: 5px;
+        padding: 10px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        color: #008080;
+    }
+</style>
+</head>
+<body>
+<p>栅格布局的命名（.grid-sXm0eY）规则如下：</p>
+<ol>
+    <li>当单元列的宽度为 40px 的倍数时，<br />
+        sX 表示 col-sub 的宽度 = X * 40 - 10,<br />
+        eY 表示 col-extra 的宽度 = Y * 40 - 10,<br />
+        m0 表示 col-main 的宽度 = 总宽度 - (X + Y) * 40,<br />
+        s-m-e 的顺序，表示各列的排列顺序。<br />
+        比如：总宽为 950px 时，.grid-e6m0s5 表示 col-extra(230) | col-main(510) | col-sub(190).<br />
+        下面是基于 40px 的所有标准栅格布局。可以根据栅格名，搜索复制使用（双击展开代码区域）：
+<pre style="height: 100px" ondblclick="this.style.height = (this.style.height === 'auto') ? '100px' : 'auto';">
+<script>
+    var c = 40, g = 10, N = 24,
+        COL_MIN = 4, 
+        ENDLINE = "<br />";
+    
+    function println(msg) { document.write((msg || "") + ENDLINE); }
+
+    function getGridStyle(name, cls) {
+        var ps = name.indexOf("s"), pm = name.indexOf("m"), pe = name.indexOf("e"),
+            out = "", sw, ew, ERROR_INFO = "Something is wrong!";
+
+        if(/\d*[a-z]\d*/i.test(name.replace(/s/, "").replace(/m/, "").replace(/e/, "")) // 只替换一个，防止多个 s/m/e
+           || (ps === -1 || pm === -1)
+           || !/.*m0.*/i.test(name)) {
+            return ERROR_INFO;
+        }
+
+        cls = cls || ".grid-" + name;
+        
+        if(pe === -1) { // 两栏
+            if(ps < pm) { // .grid-sXm0
+                sw = parseInt(name.substring(ps + 1, pm), 10);
+                out += cls + " .main-wrap { margin-left: " + (sw + g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -100%; }" + ENDLINE;
+
+            } else { // .grid-m0sX
+                sw = parseInt(name.substring(ps + 1), 10);
+                out += cls + " .main-wrap { margin-right: " + (sw + g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -" + sw + "px; }" + ENDLINE;
+            }
+
+        } else { // 三栏
+            if(ps < pm && pm < pe) { // .grid-sXm0eY
+                sw = parseInt(name.substring(ps + 1, pm), 10);
+                ew = parseInt(name.substring(pe + 1), 10);
+                out += cls + " .main-wrap { margin: 0 " + (ew + g) + "px 0 " + (sw + g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -100%; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -" + ew + "px; }" + ENDLINE;
+                
+            } else if(pe < pm && pm < ps) { // .grid-eXm0sY
+                sw = parseInt(name.substring(ps + 1), 10);
+                ew = parseInt(name.substring(pe + 1, pm), 10);
+                out += cls + " .main-wrap { margin: 0 " + (sw + g) + "px 0 " + (ew + g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -" + sw + "px; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -100%; }" + ENDLINE;
+                
+            } else if(pm < ps && ps < pe) { // .grid-m0sXeY
+                sw = parseInt(name.substring(ps + 1, pe), 10);
+                ew = parseInt(name.substring(pe + 1), 10);
+                out += cls + " .main-wrap { margin-right: " + (sw + ew + 2 * g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -" + (sw + ew + g) + "px; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -" + ew + "px; }" + ENDLINE;
+                
+            } else if(pm < pe && pe < ps) { // .grid-m0eXsY
+                sw = parseInt(name.substring(ps + 1), 10);
+                ew = parseInt(name.substring(pe + 1, ps), 10);
+                out += cls + " .main-wrap { margin-right: " + (sw + ew + 2 * g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -" + sw + "px; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -" + (ew + sw + g) + "px; }" + ENDLINE;
+                
+            } else if(ps < pe && pe < pm) { // .grid-sXeYm0
+                sw = parseInt(name.substring(ps + 1, pe), 10);
+                ew = parseInt(name.substring(pe + 1, pm), 10);
+                out += cls + " .main-wrap { margin-left: " + (sw + ew + 2 * g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -100%; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -100%; position: relative; left: " + (sw + g) + "px; }" + ENDLINE;
+   
+            } else if(pe < ps && ps < pm) { // .grid-eXsYm0
+                sw = parseInt(name.substring(ps + 1, pm), 10);
+                ew = parseInt(name.substring(pe + 1, ps), 10);
+                out += cls + " .main-wrap { margin-left: " + (sw + ew + 2 * g) + "px; }" + ENDLINE;
+                out += cls + " .col-sub { width: " + sw + "px; margin-left: -100%; position: relative; left: " + (ew + g) + "px; }" + ENDLINE;
+                out += cls + " .col-extra { width: " + ew + "px; margin-left: -100%; }" + ENDLINE;
+            }
+        }        
+        
+        return out || "Something is wrong!" + ENDLINE;
+    }
+
+    function printAll() {
+        var i, j, sw, ew, S_MAX, E_MAX, sum = [0, 0];
+        
+        println("/** 两个假定：a. 总宽度为 950px; b. 列宽不小于 150px. **/" + ENDLINE);
+
+        println("/** 两栏布局 **/");
+        S_MAX = N - COL_MIN;
+        for (i = COL_MIN; i <= S_MAX; ++i) {
+            sw = i * c - g;
+
+            // .grid-sXm0
+            println(getGridStyle("s" + sw + "m0", ".grid-s" + i + "m0"));
+            // .grid-m0sX
+            println(getGridStyle("m0s" + sw, ".grid-m0s" + i));
+
+            sum[0] += 2;
+        }
+
+        println("/** 三栏布局 **/");
+        S_MAX = N - 2 * COL_MIN;
+        for (i = COL_MIN; i <= S_MAX; ++i) {
+            sw = i * c - g;
+
+            E_MAX = N - i - COL_MIN;
+            for (j = COL_MIN; j <= E_MAX; ++j) {
+                ew = j * c - g;
+
+                // .grid-sXm0eY
+                println(getGridStyle("s" + sw + "m0e" + ew, ".grid-s" + i + "m0e" + j));
+                // .grid-eXm0sY
+                println(getGridStyle("e" + ew + "m0s" + sw, ".grid-e" + j + "m0s" + i));
+                // .grid-m0sXeY
+                println(getGridStyle("m0s" + sw + "e" + ew, ".grid-m0s" + i + "e" + j));
+                // .grid-m0eXsY
+                println(getGridStyle("m0e" + ew + "s" + sw, ".grid-m0e" + j + "s" + i));
+                // .grid-sXeYm0
+                println(getGridStyle("s" + sw + "e" + ew + "m0", ".grid-s" + i + "e" + j + "m0"));
+                // .grid-eXsYm0
+                println(getGridStyle("e" + ew + "s" + sw + "m0", ".grid-e" + j + "s" + i + "m0"));
+
+                sum[1] += 6;
+            }
+        }
+
+        println("/** 统计数据 **/");
+        println("/* 二栏栅格布局总数： " + sum[0] + " = (20 - 4 + 1) * 2 = 17 * 2 */");
+        println("/* 三栏栅格布局总数： " + sum[1] + " = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */");
+    }
+
+    function generateLayoutStyle(name) {
+        var layoutStyleEl = document.getElementById("layout-style"),
+            isStandardEl = document.getElementById("is-standard"),
+            cls = "";
+
+        if (isStandardEl.checked) {
+            cls = ".grid-" + name;
+            name = name.replace(/\d+/g, function(n) {
+                n = parseInt(n, 10) * 40;
+                return n ? n - g : 0;
+            });
+        }
+        
+        layoutStyleEl.innerHTML = getGridStyle(name, cls);
+    }
+
+    printAll();
+</script>
+</pre>
+    </li>
+    <li>当单元列的宽度不是 40px 的倍数时，X 和 Y 直接表示宽度。比如：<br />
+        总宽为 950px 时，.grid-s120m0e50 表示 col-sub(120) | col-main(760) | col-extra(50), 样式为：
+<pre>
+.grid-s120m0e50 .main-wrap { margin: 0 130px 0 60px; }
+.grid-s120m0e50 .col-sub { width: 120px; margin-left: -100%; }
+.grid-s120m0e50 .col-extra { width: 50px; margin-left: -50px; }            
+</pre>
+    </li>
+    <li>可以使用下面的表单来自动生成布局样式：
+        <form onsubmit="generateLayoutStyle(this.input.value); return false;" action="">
+            请输入布局名称：.grid-<input name="input" type="text" size="12"/>(例如：s8m0e9 或 e90s200m0)<br />
+            <input id="is-standard" type="checkbox" style="margin-left: 188px" /><label for="is-standard">单元列的宽度是 40px 的倍数</label><br />
+            <button type="submit" style="margin-left: 185px">生成样式</button>
+            <pre id="layout-style"></pre>
+        </form>
+    </li>
+</ol>
+
+</body>
+</html>

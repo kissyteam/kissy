@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	<style>
+		.doc dl {
+			margin-bottom:10px;
+			border:1px solid #ccc;
+			padding:10px;
+			margin:10px 0;
+			border-radius: 3px;
+		}
+		.doc dt {
+			font-weight:bold;
+			margin:10px 0;
+		}
+		.doc dd.t {
+			padding:0 0 0 20px;
+		}
+		.dddemo{
+            padding: 10px 20px;
+        }
+        input[type=text]{
+            min-width: 200px;
+            padding: 2px 5px;
+        }
+	</style>
+	
+</head>
+<body>
+ 
+
+<div  class="doc">
+
+
+<h1>changelog</h1>
+
+	<dl>
+		<dt>2011.8.11</dt>
+		<dd>1、去掉了两种默认支持的好看但不实用的错误提示样式 siderr，sidebd</dd>
+        <dd>
+            2、删除了Warn.Fixed提示类，功能合并到Warn.Static类。使用Warn.Static类，可以通过两种方式指定错误信息提示框
+			<pre class='brush:javascript;'>
+
+                &lt;div id="urlmsg"&gt; url的错误信息显示在这里 &lt;/div&gt;
+
+                //1. 伪属性data-messagebox
+				&lt;input name="url" type="text" data-messagebox="#urlmsg"  data-valid="{}"/&gt;
+
+                //2.配置项messagebox
+                &lt;input name="url" type="text"   data-valid="{messagebox:'#urlmsg'}"/&gt;
+			</pre>
+
+            <div class="dddemo">
+                <div>错误信息将显示在我指定的div里：
+                    <div id="msgbox" style="display:none" class="valid-under"><p class="estate"><span class="label"></span></p></div>
+                </div>
+                <form method="post" id="J_form_msg">
+                    <input class="text" type="text" data-valid="{messagebox:'#msgbox'}"/>
+                </form>
+            </div>
+            <script>
+                KISSY.use("validation", function(S, Validation) {
+                    var form = new Validation('#J_form_msg', {
+                                anim:0.3,
+                                style:'under'
+                            });
+                });
+            </script>
+
+        </dd>
+        <dd>
+            3、使用Warn.Static类,可以配置是否显示“正确”信息。
+			<pre class='brush:javascript;'>
+                f = new V("#form",{
+                    //填写正确显示的信息
+                    oktext: "填对了",
+                    //填写正确后，是否显示提示信息
+                    isok:false,
+                    style:'under'
+                });
+			</pre>
+        </dd>
+        <dd>
+            4、使用Warn.Static类,增加动画效果
+			<pre class='brush:javascript;'>
+                f = new V("#form",{
+                    //动画持续时间0.3秒
+                    anim:0.3,
+                    style:'under'
+                });
+			</pre>
+        </dd>
+        <dd>
+            5、增强了并且优化了异步验证，支持所有KISSY.io的配置项
+        </dd>
+        <dd>
+            6、修复了required验证的bug：非必填项，不填不报错，但是填了不符合定义的格式就会报错
+        </dd>
+        <dd>
+            7、增加了二代身份证验证，并不只是普通的位数验证哦 ^o^,输入你的身份证试试看
+            <div class="dddemo">
+                <form method="post" id="J_form_card">
+                    <input class="text" type="text" data-valid="{card:['请输入准确的二代身份证号码']}"/>
+                </form>
+            </div>
+            <script>
+                KISSY.use("validation", function(S, Validation) {
+                    var form = new Validation('#J_form_card', {
+                                anim:0.3,
+                                style:'under'
+                            });
+                });
+            </script>
+        </dd>
+
+	</dl>
+	
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

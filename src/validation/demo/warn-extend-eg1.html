@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title> 
+
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div id="viewdemo" class="doc">
+
+
+<div class="note">
+	通过 Validation.Warn.extend('name',func) 方法就能很容易的扩展一个你想要的提示类，个人化展示您的提示信息。
+</div>
+
+
+<style>
+.Validation-cool{
+
+	position:absolute;top:0;left:0;
+
+	display:inline-block;
+
+	height:25px;
+
+}
+
+.Validation-cool .estate{
+
+	float:left;
+
+	background:#ff0;
+
+	line-height:25px;
+
+	padding:0 10px;
+
+}
+</style>
+
+
+<form method="post" id="J_form">
+<ul class="form">
+
+	<li>
+		<label class="hd">用户名：</label>
+		<input class="text" type="text" name="username" id="username" data-valid="{email:true}"/>
+	</li>
+	
+	<li>
+		<label class="hd">密码：</label>
+		<input class="text" type="text" name="password" id="password" data-valid="{length:[6,30,true]}"/>
+	</li>
+
+	<li>
+		<label class="hd">重复密码：</label>
+		<input class="text" type="text" name="password2" id="password2" data-valid="{}"/>
+	</li>
+	
+	<li>
+		<label class="hd">昵称：</label>
+		<input class="text" type="text" name="nickname" id="nickname" data-valid="{}"/>
+	</li>
+	
+	<li>
+		<button type="submit">提交</button>
+	</li>
+
+</ul>
+</form>
+
+<script>
+
+	function Cool(){
+		var S = KISSY, DOM = S. DOM, Event = S.Event;
+		return {
+			init: function(){
+				var self = this, tg = self.target,
+					panel = DOM.create('<div class="Validation-cool"><p class="estate"><span class="label"></span></p></div>'),
+					estate = DOM.get('.estate',panel),
+					label = DOM.get('.label',panel);
+				
+				S.ready(function(){
+					document.body.appendChild(panel);
+				});
+				
+				S.mix(self,{
+					panel: S.one(panel),
+					estate: S.one(estate),
+					label: S.one(label)
+				});
+				self._bindEvent(self.el, 'click' ,function(ev){
+					var result = self.fire("valid",{event:ev.type});
+					if(S.isArray(result) && result.length==2){
+						self.showMessage(result[1],result[0],ev.type,ev.target);
+					}
+				})
+			},
+			/**
+			 * 根据校验结果显示提示信息
+			 */
+			showMessage: function(result,msg,evttype,target) {
+				var self = this,
+					panel = self.panel, estate = self.estate, label = self.label;	
+
+				if(result==3){
+					panel.hide();
+				}else{
+					label.html(msg)
+					//panel.show();
+					self._toggleError(target);
+				}
+			},
+			/**
+			 * 拉风的显示错误
+			 */
+			_toggleError: function(target){
+				var self = this, panel = self.panel[0],
+					target = self.target,
+					paneloffset = DOM.offset(target),
+					top = paneloffset.top,
+					left = paneloffset.left+DOM.width(target)+10;
+					
+				//还原panel的位置
+				DOM.css(panel,{top:0,left:0,opacity:0});
+				var anim = S.Anim(panel, 'top:'+top+'px;left:'+left+'px;opacity:1', 1, 'bounceOut').run();
+			}
+		}
+	}
+	
+
+
+
+	KISSY.use("validation",function(S,Validation){
+		
+		//增加提示类Cool
+		Validation.Warn.extend("Cool",Cool);
+
+		var form = new Validation('#J_form',{
+			warn: 'Cool'
+		});
+
+		KISSY.Event.on('#J_form',"submit",function(){
+			form.isValid();
+			return false;
+		});
+		
+	});
+
+</script>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

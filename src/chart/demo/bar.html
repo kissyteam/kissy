@@ -1,0 +1,86 @@
+<!--<!DOCTYPE HTML>-->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>chart demo</title>
+    <link rel="stylesheet" href="../../../build/css/reset-min.css" />
+    <link rel="stylesheet" href="../assets/chart.css" />
+    <script src="../../../build/kissy.js"></script>
+</head>
+<body>
+<canvas style="background:#fff;" id="chart1" width="600" height="400"></canvas>
+<script>
+KISSY.use("chart", function(S,Chart){
+    var pie = Chart("#chart1",{
+        type : "bar",
+        elements : [{
+            name : "接待人数",
+            datas : [10,10,10,10,10],
+            label : "<span style=\"font-weight:bold\"> {name} : {data}人</span>"
+        },
+        {
+            name : "回复人数",
+            datas : [20,20,20,20,20],
+            label : "{name} : {data}人"
+        },
+        {
+            name : "回复人数2",
+            datas : [30,30,30,30,30],
+            label : "{name} : {data}人"
+        }],
+        axis : {
+            x : {
+                name : "时间",
+                labels : ["2011-1-10","2011-1-11","2011-1-12","2011-1-13","2011-1-14"]
+            },
+            y : {
+                name : "人数"
+            }
+        },
+        config : {
+            //colors : ["#aaa","#999","#666"],
+            //showLabels : false,
+            frameColor : "#999",
+            left : 60,
+            numberFormats : [false,'0.00'],
+            numberFormat : "0.000"
+        }
+    });
+});
+
+</script>
+
+<canvas style="background:#fff;" id="chart2" width="600" height="400"></canvas>
+
+<script>
+KISSY.use("chart", function(S,Chart){
+    var bar2 = Chart("#chart2",{
+        type : "bar",
+        element : {
+            names : ["三班","二班","一班"],
+            datas : [89.05,85.45,77.2],
+            label : "{name} : {data}",
+            formats : ["0.00"]
+        },
+        axis : {
+            x : {
+                name : "时间",
+                labels : ["2011-1-10"]
+            },
+            y : {
+                name : "成绩",
+                labels : [0,20,40,60,80,100],
+                max : 100
+            }
+        },
+        config : {
+            background:"#fff",
+            numberFormat : "0.0000",
+            borderColor : "#fff",
+            paddingLeft : 30
+        }
+    });
+});
+</script>
+</body>
+</html>

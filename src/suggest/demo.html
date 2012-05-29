@@ -1,0 +1,503 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Suggest Examples</title>
+
+<link href="../../build/css/reset.css" rel="stylesheet"/>
+<link href="http://a.tbcdn.cn/p/fp/2011a/header/header-min.css" rel="stylesheet"/>
+
+<script src="../../build/kissy.js"></script>
+<script src="src/suggest.js"></script>
+
+<style>
+    #page {
+        padding: 50px 50px 300px;
+        width: 750px;
+        margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+        margin: 1em 0 0.3em;
+    }
+
+    .section {
+        margin-bottom: 50px;
+    }
+
+    .section ol {
+        margin: 5px 20px;
+    }
+
+    .section ol li {
+        list-style: decimal inside;
+        margin: 5px 0;
+    }
+
+    .search-input {
+        width: 300px;
+        height: 20px;
+        padding: 3px 2px 2px 4px;
+    }
+
+    .search-submit {
+        padding: 4px 10px;
+        margin-left: 5px;
+    }
+
+    input.g-submit {
+        padding: 2px 8px;
+        margin-left: 5px;
+    }
+
+    html {
+        overflow-y: scroll;
+    }
+</style>
+</head>
+<body>
+<div id="page">
+
+<div class="section">
+    <h2>淘宝首页的搜索提示：</h2>
+    <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+        <input type="hidden" value="" name="sort"/>
+        <input type="hidden" value="D9_5_1" name="f"/>
+        <input type="hidden" value="" name="promote"/>
+        <input type="hidden" value="2" name="isnew"/>
+        <input type="hidden" value="b" name="atype"/>
+        <input type="hidden" value="all" name="commend"/>
+        <input type="hidden" value="auction" name="search_type"/>
+        <input type="hidden" value="initiative" name="user_action"/>
+        <input type="hidden" value="s1-e" name="ssid"/>
+
+        <input name="q" id="q22" class="search-input"/>
+
+        <button type="submit" class="search-submit">淘我喜欢</button>
+    </form>
+    <script>
+        KISSY.use("suggest", function(S, Suggest) {
+            S.ready(function(S) {
+                Suggest('#q22', 'http://suggest.taobao.com/sug', {
+                    autoFocus: true,
+                    resultFormat: '约%result%个宝贝',
+                    shim: false
+                });
+            });
+        });
+    </script>
+</div>
+
+<div class="section">
+    <h2>有啊首页的搜索提示：</h2>
+    <form name="search2" method="get" action="http://youa.baidu.com/search/s" target="_blank">
+        <input class="search-input" name="keyword" id="q2"/>
+        <button type="submit" class="search-submit">百度一下</button>
+    </form>
+    <style>
+        .youa-suggest-container {
+            border-color: #5BA515
+        }
+
+        .youa-suggest-container li {
+            padding: 2px 0 3px;
+            font-size: 14px;
+            line-height: 20px
+        }
+
+        .youa-suggest-container .ks-selected {
+            background-color: #DEEFC5
+        }
+
+        .youa-suggest-container .ks-suggest-result {
+            font-size: 12px;
+            color: #999
+        }
+
+        .youa-suggest-container .ks-selected span {
+            color: #240055
+        }
+
+        .youa-suggest-container .ks-selected .ks-suggest-result {
+            color: #999
+        }
+    </style>
+    <script>
+        KISSY.use("suggest", function(S, Suggest) {
+            S.ready(function(S) {
+                // 有啊
+                // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
+                var dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
+                var sug = new Suggest('#q2', dataUrl, {
+                    containerCls: 'youa-suggest-container',
+                    charset: 'gbk',
+                    callbackFn: 'suggestCallback',
+                    queryName: 'keyword'
+                });
+
+                // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
+                // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+                sug.on('dataReturn', function() {
+                    var data = this.returnedData['r'] || [], result = [];
+
+                    for (var i = 0, len = data.length; i < len; ++i) {
+                        result.push([data[i]['key'], data[i]['val']]);
+                    }
+                    this.returnedData = result;
+                });
+            });
+        });
+    </script>
+</div>
+
+<div class="section">
+    <h2>Baidu Search:</h2>
+    <div id="bds">
+        <form action="s" name="f">
+            <input class="search-input" type="text" maxlength="100" id="kw" name="wd" autocomplete="off">
+            <input type="submit" id="su" value="百度一下">
+        </form>
+    </div>
+    <style>
+        .bd-sug {
+            border-color: #666
+        }
+
+        .bd-sug li {
+            padding: 2px 0 3px
+        }
+
+        .bd-sug .ks-selected {
+            background-color: #D5E2FF
+        }
+
+        .bd-sug .ks-selected span {
+            color: #240055
+        }
+    </style>
+    <script>
+        KISSY.use("suggest", function(S, Suggest) {
+            S.ready(function(S) {
+                // Baidu
+                var dataUrl = 'http://suggestion.baidu.com/su?p=3&cb=window.bdsug.sug';
+                var sug = new Suggest('#kw', dataUrl, {
+                    resultFormat: '',
+                    containerCls: 'bd-sug',
+                    charset: 'gb2312',
+                    queryName: 'wd',
+                    callbackFn: 'bdsug.sug'
+                });
+
+                // baidu: window.bdsug.sug({q:"nike",p:true,s:["nike官网","妮可基德曼","妮可","妮可罗宾","妮可里奇","nike鞋","nike 官网","尼可","nike女","nike360"]});
+                // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+                sug.on('dataReturn', function() {
+                    this.returnedData = this.returnedData.s || [];
+                });
+            });
+        });
+    </script>
+</div>
+
+<div class="section" style="width: 380px">
+    <h2>Google Search:</h2>
+    <form name="f" action="http://www.google.com/search">
+        <table cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr valign="top">
+                <td width="25%"></td>
+                <td nowrap="" align="center">
+                    <input type="hidden" value="en" name="hl"/>
+                    <input class="search-input" value="" title="Google Search" size="55" id="gq" name="q" maxlength="2048" autocomplete="off"/>
+                    <br/>
+                    <input type="submit" class="g-submit" onclick="this.checked=1" value="Google Search" name="btnG"/>
+                    <input type="submit" class="g-submit" onclick="this.checked=1" value="I'm Feeling Lucky" name="btnI"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" name="aq" value="f"/><input type="hidden" name="oq" value="n"/><input type="hidden" name="aqi" value="g10"/>
+    </form>
+    <style>
+        .g-sug {
+            border-color: #666
+        }
+
+        .g-sug li {
+            padding: 2px 0 3px
+        }
+
+        .g-sug .ks-selected {
+            background-color: #D5E2FF
+        }
+
+        .g-sug .ks-selected span {
+            color: #240055
+        }
+    </style>
+    <script>
+        KISSY.use("suggest", function(S, Suggest) {
+            S.ready(function(S) {
+                // Google
+                var dataUrl = 'http://clients1.google.com/complete/search?hl=en';
+                var sug = new Suggest('#gq', dataUrl, {
+                    resultFormat: '',
+                    containerCls: 'g-sug',
+                    callbackFn: 'google.ac.h'
+                });
+
+                // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
+                // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+                sug.on('dataReturn', function() {
+                    this.returnedData = this.returnedData[1] || [];
+                });
+            });
+        });
+    </script>
+</div>
+
+<div class="section">
+    <h2>搜索提示源是来自静态数据, 测试, 输入 a 或 b：</h2>
+    <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+        <input type="hidden" value="" name="sort"/>
+        <input type="hidden" value="D9_5_1" name="f"/>
+        <input type="hidden" value="" name="promote"/>
+        <input type="hidden" value="2" name="isnew"/>
+        <input type="hidden" value="b" name="atype"/>
+        <input type="hidden" value="all" name="commend"/>
+        <input type="hidden" value="auction" name="search_type"/>
+        <input type="hidden" value="initiative" name="user_action"/>
+        <input type="hidden" value="s1-e" name="ssid"/>
+
+        <input name="q" id="qs" class="search-input"/>
+
+        <button type="submit" class="search-submit">淘我喜欢</button>
+    </form>
+    <script>
+        KISSY.use("suggest", function(S, Suggest) {
+            // 淘宝搜索
+            var data = {
+                'a': {"result": [
+                    ["阿迪达斯a", "2968141"],
+                    ["阿依莲 正品 2011夏", "23551"],
+                    ["阿依莲", "85840"],
+                    ["艾格 专柜 正品2011", "32536"],
+                    ["阿迪达斯 正品", "1203473"],
+                    ["安踏", "721207"],
+                    ["艾格", "266858"],
+                    ["安全裤", "59616"],
+                    ["af", "614065"],
+                    ["艾格周末2011夏款", "7773"]
+                ]},
+                'b': {"result": [
+                    ["阿迪达斯b", "2968141"],
+                    ["阿依莲 正品 2011夏b", "23551"],
+                    ["阿依莲b", "85840"],
+                    ["艾格 专柜 正品2011b", "32536"],
+                    ["阿迪达斯 正品b", "1203473"],
+                    ["安踏b", "721207"],
+                    ["艾格b", "266858"],
+                    ["安全裤b", "59616"],
+                    ["afb", "614065"],
+                    ["艾格周末2011夏款b", "7773"]
+                ]}
+            };
+
+            var _suggest = new Suggest('#qs', data, {
+                autoFocus: true,
+                resultFormat: ''
+            });
+        });
+    </script>
+</div>
+
+<style>
+
+    .top-header {
+        width: 500px;
+    }
+</style>
+<div class="section">
+    <h2>多 Tab 输入框切换时, 数据不缓存 ：</h2>
+    <div class="top-header">
+        <div class="tsearch">
+
+            <ul class="tsearch-tab clearfix" id="J_TSearchTabs">
+                <li class="current"><a href="http://list.taobao.com/browse/cat-0.htm">宝贝</a><b class="rc-lt"></b><b
+                        class="rc-rt"></b></li>
+                <li><a href="http://www.tmall.com/go/act/tmall/iwanttobuy.php">淘宝商城</a><b class="rc-lt"></b><b
+                        class="rc-rt"></b></li>
+                <li><a href="http://shopsearch.taobao.com/browse/shop_search.htm">店铺</a><b class="rc-lt"></b><b
+                        class="rc-rt"></b></li>
+                <li><a href="http://s.taobao.com/list.html?search_type=auction">拍卖</a><b class="rc-lt"></b><b
+                        class="rc-rt"></b></li>
+                <li><a href="http://8.taobao.com/index.htm">淘吧</a><b class="rc-lt"></b><b class="rc-rt"></b></li>
+
+                <li><a href="http://jianghu.taobao.com/square.htm">宝贝分享</a><b class="rc-lt"></b><b class="rc-rt"></b>
+                </li>
+            </ul>
+
+            <div class="tsearch-panel clearfix" style="clear:none;">
+                <form target="_top" name="search" action="http://s.taobao.com/search" id="J_TSearchForm">
+                    <div class="tsearch-fields focus">
+                        <label for="q9" class=""></label>
+                        <input type="text" accesskey="s" id="q9" name="q" autofocus="true" autocomplete="off" x-webkit-speech="" x-webkit-grammar="builtin:translate"/>
+
+                        <b class="rc-lb"></b>
+                        <b class="rc-lt"></b>
+                    </div>
+                    <button type="submit" class="tsearch-submit">搜索<b class="rc-rt"></b><b class="rc-rb"></b></button>
+                    <div class="tsearch-action">
+                        <a href="http://search1.taobao.com/browse/ad_search.htm">高级搜索</a>
+                        <a href="http://service.taobao.com/support/help-10020.htm">使用帮助</a>
+
+                    </div>
+
+                    <input type="hidden" name="keyword" value=""/>
+                    <input type="hidden" name="commend" value="all"/>
+                    <input type="hidden" name="ssid" value="s5-e" autocomplete="off"/>
+                    <input type="hidden" name="search_type" value="item"/>
+                    <input type="hidden" name="atype" value=""/>
+                    <input type="hidden" name="tracelog" value=""/>
+                    <input type="hidden" name="sourceId" value="tb.index"/>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    KISSY.use("dom,event,suggest,switchable,node", function(S, DOM, Event, Suggest, Switchable, Node) {
+        var q = '#q9',
+                sug = new Suggest(DOM.get(q), 'http://suggest.taobao.com/sug?code=utf-8&extras=1', {
+                    resultFormat: '约%result%个宝贝',
+                    hideDelay: 500
+                }),
+                fp = S,
+                that = this,
+                field = fp.one(q).parent(),
+                qNode = new Node(fp.one(q)),
+                tabs = DOM.query("#J_TSearchTabs li");
+        form = field.parent("form")[0];
+        fp.__fp_sug = sug;
+        DOM.addClass(form.parentNode, "ks-switchable-content");
+        DOM.addClass("#J_TSearchTabs", "ks-switchable-nav");
+
+        var tabPanelDiv = DOM.create("<div class='tab-panel'></div>");
+
+        for (var i = 0; i < tabs.length; i++) {
+            form.parentNode.appendChild(DOM.clone(tabPanelDiv, true));
+        }
+        DOM.get(".tab-panel", form.parentNode).appendChild(form);
+
+        var tab_as = DOM.query("#J_TSearchTabs a"),
+                tabpanels = DOM.query(".tab-panel", DOM.get("#J_TSearchTabs").parentNode),
+                searchType = form["search_type"];
+
+        var CURRENT = "current",
+                SEARCH_TYPE_LIST = ["item", "mall", "shop", "auction", "taoba", "share"],
+                SEARCH_TYPE_ACTION = {
+                    "item": function() {
+                        if (q.value === '') {
+                            form.action = 'http://list.taobao.com/browse/cat-0.htm';
+                        }
+                    },
+                    "mall": function() {
+                        form.action = 'http://list.tmall.com/search_product.htm';
+                    },
+                    "shop": function() {
+                        form.action = 'http://shopsearch.taobao.com/browse/shop_search.htm';
+                    },
+                    "auction": function() {
+                        // a - 拍卖 / b - 一口价
+                        form['atype'].value = 'a';
+                    },
+                    "taoba": function() {
+                        form.action = 'http://ba.taobao.com/index.htm';
+                    },
+                    "share": function() {
+                        form['tracelog'].value = 'msearch2fx';
+                        if (q.value === '') {
+                            form.action = 'http://jianghu.taobao.com/square.htm';
+                        } else {
+                            form['keyword'].value = q.value;
+                            form.action = 'http://fx.taobao.com/view/share_search.htm';
+                        }
+                    }
+                },
+                tabType = ['bb', 'sc', 'dp', 'pm', 'tb', 'fx'];
+
+        // util - tsearch tabs switch
+        var switchToTab = function(n) {
+
+            if (n == 1) {
+                fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?area=b2c&code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+                //fp.__fp_sug.query = "";
+                //fp.__fp_sug.start();
+            } else {
+                fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+            }
+            fp.__fp_sug._dataCache = {};
+
+        };
+
+        // on input focus / blur
+        qNode.on("focus",
+                function(ev) {
+                    DOM.addClass(field, "focus");
+                }).on("blur", function(ev) {
+
+                    if (fp.trim(qNode.val()) === '') {
+                        DOM.removeClass(field, "focus");
+                    }
+                });
+
+
+        Event.on(tab_as, "click", function(e) {
+            e.preventDefault();
+        });
+
+        var searchTab = new Switchable.Tabs(DOM.get("#J_TSearchTabs").parentNode, {
+            aria:true,
+            activeTriggerCls:'current',
+            triggerType:'click'
+        });
+
+        searchTab.on("switch", function(ev) {
+            var n = ev.currentIndex;
+            tabpanels[n].appendChild(form);
+            switchToTab(n);
+            setTimeout(function() {
+                tabs[n].focus();
+            }, 0);
+            searchType.value = SEARCH_TYPE_LIST[n];
+            if (fp.get('#J_monitorImg')) {
+                var time = new Date().getTime();
+                fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=' + tabType[n] + '&t=' + time;
+            }
+        });
+
+        var btn = form.getElementsByTagName('button')[0],
+                submitHandler = function() {
+                    if (fp.get('#J_monitorImg')) {
+                        fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=ssan';
+                    }
+                    SEARCH_TYPE_ACTION[form['search_type'].value]();
+                };
+
+        if (S.UA.ie <= 8) {
+            Event.on(btn, 'click', submitHandler);
+        }
+        Event.on(form, 'submit', submitHandler);
+
+        setTimeout(function() {
+            // 默认选中宝贝Tab
+            searchType.value = 'item';
+            switchToTab(0);
+        }, 0);
+    });
+</script>
+</body>
+</html>

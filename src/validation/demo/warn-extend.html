@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div id="viewdemo" class="doc">
+
+
+<div class="note">
+	通过 Validation.Warn.extend('name',func) 方法就能很容易的扩展一个你想要的提示类，个人化展示您的提示信息。
+	<h4>两步步轻松扩展一个属于您的个性化提示类</h4>
+</div>
+
+
+
+
+1.构造您的提示类（其实就是返回一个showMessage方法，重新基类中的showMessage方法）
+<pre class='brush:javascript;'>
+function mywarn(){
+	
+	//..
+	
+	return {
+		showMessage: function(){
+		
+		}
+	}
+	
+}
+</pre>
+
+2.扩展 Validation.Warn.extend("mywarn",mywarn);
+<pre class='brush:javascript;'>
+	// 调用Validation.Warn.extend方法
+	Validation.Warn.extend("mywarn",mywarn);
+	
+	
+	//然后你就可以使用您的信息提示类
+	new Validation('form',{
+			warn:'mywarn'
+		}
+	)
+	
+</pre>
+
+
+
+
+
+<br/><br/><br/><br/><br/><br/><br/>
+<p>下面是提示类基类。扩展提示类实际上是继承该类，重写showMessage方法</p>
+
+<pre class='brush:javascript;'>
+
+	
+/**
+ * @class: BaseClass
+ * 所有提示类都继承了该类
+ * 通过重写showMessage方法达到个性化显示提示信息的目的
+ * -----------------------------------------------
+ */
+function BaseClass(target,config) {
+	var self = this;
+	
+	/**
+	 * 目标对象
+	 * @type HTMLElement
+	 */
+	self.target = target;
+	self.el = target;
+	
+	//类似alert的提示方法，该值要设置为true
+	self.single = false;
+	
+	/**
+	 * 合并配置
+	 */
+	S.mix(self,config||{});
+	
+	//初始化
+	self.init();
+};
+
+S.augment(BaseClass, S.EventTarget, {
+
+	/**
+	 * init
+	 */
+	init: function() {
+		//dosth
+	},
+	 
+	/**
+	 * 给对象绑定事件
+	 * 	- checkbox，radiobox默认只能绑定click事件
+	 *	- select默认只能绑定select事件
+	 * 	- 如果你有特殊需求也可以重写此方法
+	 * @param {Element} el
+	 * @param {String} evttype
+	 * @param {Function} fun
+	 */
+	_bindEvent: function(el,evttype,fun) {
+		switch(DOM.attr(el,'type').toLowerCase()){
+			case "radio":
+			case "checkbox":
+				Event.on(el,'click',fun);
+				break;
+			case "select":
+			case "select-multi":
+			case "file":
+				Event.on(el,"change",fun);
+				break;
+			default:
+				Event.on(el,evttype,fun);
+		}
+	},
+	
+	/**
+	 * 显示出错信息
+	 * @param {Boolean} result
+	 * @param {String} msg
+	 * @param {evttype} evttype
+	 */
+	showMessage: function(result,msg,evttype) {
+		//
+	}
+	
+});
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+/* 你可以能会用到系统常量和配置
+-------------------------------------------------------------- */
+
+//默认配置
+Validation.Define.Config = {
+	/**
+	 * 伪属性配置名称
+	 */
+	attrname: 'data-valid',
+	/**
+	 * 自动生成的字段ID的前缀
+	 */
+	prefix: "Validation-f",
+	/**
+	 * 默认消息提示类型
+	 */
+	defaultwarn: "alert"
+}
+
+//常量定义
+Validation.Define.Const = {
+	/**
+	 * 字段校验状态枚举
+	 * error 错误
+	 * ok 正确
+	 * hint 提示
+	 * ignore 忽略
+	 */
+	enumvalidsign: {
+		error: 0,
+		ok: 1,
+		hint: 2,
+		ignore: 3
+	}
+}
+
+
+
+
+
+
+
+
+
+
+ 
+/* 你也可能用到Validation.Util中带的方法
+-------------------------------------------------------------- */
+
+
+
+
+</pre>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

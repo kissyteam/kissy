@@ -1,0 +1,111 @@
+<meta charset='utf-8'/>
+<style>
+    #t {
+        background: url('http://img04.taobaocdn.com/tps/i4/T160iIXapqXXXXXXXX-180-2970.jpg') #004499 scroll no-repeat 0 0;
+    }
+</style>
+<h1>抽奖</h1>
+<div id="t" style="height: 270px;width:180px;border: 1px solid red;">
+
+</div>
+<button id="start">start</button>
+<button id="stop">stop</button>
+<button id="start2">star2</button>
+<button id="stop2">stop2</button>
+<script src="../../../build/kissy.js"></script>
+<script src="slot.js"></script>
+<script type="text/javascript">
+    KISSY.use("node", function (S, Node) {
+        var $ = Node.all,
+                height = 270,
+                num = 11,
+                multiple = 2,
+                duration = 3,
+                t = $("#t");
+
+
+        function Slot(elem, multiple, num, duration) {
+            elem = $(elem);
+            var height = elem.height();
+
+            function anim(next) {
+                var nextDuration = duration
+                if (next !== undefined) {
+                    var currentY = parseFloat(t.css("backgroundPosition").split(/\s/)[1]);
+                    nextDuration = (duration / (height * (num - 1))) *
+                            (0 - currentY ) *
+                            multiple;
+                }
+                elem.animate({
+                    backgroundPosition:"0 0"
+                }, {
+                    duration:nextDuration,
+                    complete:function () {
+                        elem.css("backgroundPosition", "0px " + (-(height * (num - 1))) + "px");
+                        if (next !== undefined) {
+                            // 比平时慢 multiple 倍
+                            var nextDuration2 = ((duration / (num - 1))) *
+                                    (num - next - 1) *
+                                    multiple * 2;
+                            elem.animate({
+                                backgroundPosition:"0px " + (-height * next + "px") + "px"
+                            }, {
+                                easing:"easeBoth",
+                                duration:nextDuration2,
+                                complete:function () {
+                                    this.fire("end", {
+                                        endIndex:next
+                                    });
+                                }
+                            });
+                        } else {
+                            anim();
+                        }
+                    }
+                });
+            }
+
+            return S.mix({
+                start:function () {
+                    this.fire('start');
+                    anim();
+                },
+                stop:function (next) {
+                    anim(next);
+                }
+            }, S.EventTarget);
+        }
+
+
+        var s = new S.Slot("#t");
+        s.set("count", num);
+        $("#start2").on("click", function () {
+            t.css("backgroundPosition", "0 0");
+            s.start();
+            $("#start2").attr("disabled", true);
+        });
+
+        $("#stop2").on("click", function () {
+            var next = Math.floor(Math.random() * num);
+            s.stop([next]);
+            $("#stop2").attr("disabled", true);
+        });
+
+
+        var s2 = Slot("#t", multiple, num, duration);
+        $("#start").on("click", function () {
+            t.css("backgroundPosition", "0 " + (-(num - 1) * height));
+            s2.start();
+            $("#start").attr("disabled", true);
+        });
+
+        $("#stop").on("click", function () {
+            t.stop();
+            // 最后一个重复
+            var next = Math.floor(Math.random() * (num - 1));
+            s2.stop(next);
+            $("#stop").attr("disabled", true);
+        });
+
+    });
+</script>

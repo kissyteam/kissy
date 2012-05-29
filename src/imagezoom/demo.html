@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ImageZoom Demo</title>
+<link href="../../build/css/reset.css" rel="stylesheet"/>
+
+<script src="../../build/kissy.js"></script>
+<script src="../../build/component.js"></script>
+
+<script src="./src/base.js"></script>
+<script src="./src/zoomer.js"></script>
+<script src="./src/autorender.js"></script>
+<script src="./src/imagezoom.js"></script>
+<style>
+    body {
+        padding: 20px 50px 50px;
+    }
+
+    h2 {
+        margin: 10px 0 10px -20px;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: normal;
+        background: #F2F2F2;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+<style>
+    img {
+        border: 1px solid #808080;
+    }
+
+    .ks-imagezoom-wrap {
+        position: relative;
+    }
+
+    .ks-imagezoom-icon {
+        display: block;
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        height: 23px;
+        width: 23px;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        background: url(http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png) no-repeat scroll left top transparent;
+    }
+
+    .ks-imagezoom-lens {
+        background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
+        cursor: move;
+        position: absolute;
+    }
+
+    .ks-imagezoom-viewer {
+        border: 1px solid #808080;
+        text-align: center;
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        overflow: hidden;
+    }
+
+    .ks-imagezoom-viewer img {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+</style>
+</head>
+
+<body>
+
+<h2>内嵌模式</h2>
+
+<div class="demo">
+    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+<style>
+    #imgList img {
+        cursor: pointer;
+        border: 1px solid gray;
+        padding: 4px;
+    }
+</style>
+<h2>多图加载</h2>
+<div class="demo">
+    <a href="#"><img id="multi" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/></a>
+</div>
+<ul id="imgList">
+    <li>
+        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg"
+             data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg"/>
+    </li>
+    <li>
+        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg"
+             data-has-zoom="true"
+             data-bigImageWidth="700"
+             data-bigImageHeight="700"
+             data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
+    </li>
+</ul>
+
+
+<script>
+    var S = KISSY;
+    KISSY.use("dom,event,imagezoom", function (S, DOM, Event, ImageZoom) {
+
+        var a = new ImageZoom({
+            imageNode:"#inner",
+            // type inner, 最好不要设置 width，height
+            type:'inner',
+            align:{
+                node:"#inner",
+                points:["tr", "tl"],
+                offset:[0, 0]
+            },
+            bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+            bigImageWidth:900,
+            bigImageHeight:900
+        });
+
+        var m = new ImageZoom({
+            imageNode:"#multi",
+            bigImageWidth:900,
+            bigImageHeight:900,
+            // 不设置默认为小图的高宽
+            width:600,
+            height:200,
+            align:{
+                points:["tr", "tl"],
+                offset:[0, 0]
+            }
+        });
+
+        Event.on("#imgList img", 'click', function () {
+            var data = DOM.attr(this, 'data-ks-imagezoom');
+            m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
+            m.changeImageSrc(data + '_310x310.jpg');
+            if (data) {
+                m.set('bigImageSrc', data);
+                m.set("bigImageWidth", parseInt(DOM.attr(this, 'data-bigImageWidth')));
+                m.set("bigImageHeight", parseInt(DOM.attr(this, 'data-bigImageHeight')))
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<script>
+    KISSY.use("ua,dom,event,node", function (S, UA, DOM, Event, Node) {
+        var NodeList = Node,
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function (p) {
+            p.on('click', function () {
+                var showing = (p.text() === SHOW_CODE),
+                        next = p.next(),
+                        pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = Node('<pre>');
+
+                    pre.attr('class', 'code')
+                            .html(p.prev().html());
+
+                    if (UA['ie']) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    });
+</script>
+</body>
+</html>

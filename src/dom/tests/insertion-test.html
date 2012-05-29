@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>DOM Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/third-party/jquery.js" charset="utf-8"></script>
+<script src="../../../build/seed.js" charset="utf-8"></script>
+<script src="../../../build/ua.js" charset="utf-8"></script>
+<!--<script src="../../../build/sizzle.js" charset="utf-8"></script>-->
+<!--<script>-->
+<!--KISSY.use("sizzle");-->
+<!--</script>-->
+<script src="../src/data.js" charset="utf-8"></script>
+<script src="../src/attr.js" charset="utf-8"></script>
+<script src="../src/base.js" charset="utf-8"></script>
+<script src="../src/class.js" charset="utf-8"></script>
+<script src="../src/create.js" charset="utf-8"></script>
+<script src="../src/insertion.js" charset="utf-8"></script>
+<script src="../src/offset.js" charset="utf-8"></script>
+<script src="../src/selector.js" charset="utf-8"></script>
+<script src="../src/style-ie.js" charset="utf-8"></script>
+<script src="../src/style.js" charset="utf-8"></script>
+<script src="../src/traversal.js" charset="utf-8"></script>
+<script src="../src/dom.js" charset="utf-8"></script>
+<script src="../../../build/event.js" charset="utf-8"></script>
+<style>
+    body, html {
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+<h1>KISSY DOM Insertion Test Cases</h1>
+<script src="insertion-spec.js"></script>
+<script>
+    window.onload = function () {
+
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function () {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
+
+    };
+</script>
+</body>
+</html>

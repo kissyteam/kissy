@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>DD auto scroll demo</title>
+<style>
+
+    #container {
+        position: relative;
+        overflow: hidden;
+        width: 400px;
+        height: 400px;
+        border: 1px red solid;
+    }
+
+    #component {
+        position: absolute;
+        left: 40px;
+        top: 40px;
+        width: 100px;
+        height: 100px;
+        background: green;
+    }
+
+    #free {
+        background: red;
+        position: absolute;
+        left: 600px;
+        top: 200px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .pad {
+        width: 1000px;
+        height: 100px;
+        margin: 40px;
+        border: 1px solid purple;
+    }
+
+    .top {
+        height: 20px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid purple;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+
+    .bottom {
+        height: 20px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border: 1px solid purple;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+
+    .left {
+        height: 100%;
+        *height: expressiont(this.parentNode.offsetHeight);
+        width: 20px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 1px solid purple;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+
+    .right {
+        height: 100%;
+        *height: expressiont(this.parentNode.offsetHeight);
+        width: 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: 1px solid purple;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+
+    .fix-top {
+        height: 20px;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background: yellow;
+    }
+
+    .fix-bottom {
+        height: 20px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+        background: yellow;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="fix-top">
+    拖动红色块时 鼠标到此之上 window 向上滚动
+</div>
+
+<div class="fix-bottom">
+    拖动红色块时 鼠标到此之下 window 向下滚动
+</div>
+
+<div style="height:100px;">
+
+</div>
+<div style="position:relative;width:400px;">
+    <div class="top">
+        拖动绿色块时 鼠标到此之上 容器向上滚动
+    </div>
+    <div class="bottom">
+        拖动绿色块时 鼠标到此之下 容器向下滚动
+    </div>
+    <div class="left">
+        拖动绿色块时 鼠标到此之左 容器向左滚动
+    </div>
+    <div class="right">
+        拖动绿色块时 鼠标到此之右 容器向右滚动
+    </div>
+    <div id="container">
+        <br><br><br><br><br><br><br><br><br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器
+        <div class="pad">
+            1.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            2.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            3.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            4.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            5.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            6.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            7.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            8.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            9.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            0.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            11.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            12.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            13.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            14.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            15.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+        <div class="pad">
+            16.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
+        </div>
+
+
+        <div id="component">
+
+        </div>
+
+    </div>
+</div>
+
+<div class="pad">
+    pad 1
+</div>
+
+<div class="pad">
+    pad 2
+</div>
+
+<div class="pad">
+    pad 3
+</div>
+
+<div class="pad">
+    pad 4
+</div>
+
+<div class="pad">
+    pad 5
+</div>
+
+<div class="pad">
+    pad 6
+</div>
+
+<div id="free">
+
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ddm.js"></script>
+<script src="../src/draggable-delegate.js"></script>
+<script src="../src/draggable.js"></script>
+<script src="../src/droppable-delegate.js"></script>
+<script src="../src/droppable.js"></script>
+<script src="../src/proxy.js"></script>
+<script src="../src/scroll.js"></script>
+<script src="../src/constrain.js"></script>
+<script src="../src/dd.js"></script>
+<script>
+
+
+    KISSY.use("dd", function(S, DD) {
+
+        var Draggable = DD.Draggable,
+                Scroll = DD.Scroll;
+
+        (function() {
+            var drag = new Draggable({
+                node :'#component',
+                move:1
+            });
+
+            new Scroll({
+                // container 容器自动滚动
+                node:"#container",
+                //滚动速度
+                rate:[10,10],
+                //容器边缘高宽度
+                diff:[20,20]
+            }).attachDrag(drag);
+        })();
+
+
+        (function() {
+            var drag = new Draggable({
+                node :'#free',
+                move:1
+            });
+
+            new Scroll({
+                //默认 window 自动滚动，相当于
+                //node :window
+                rate : [20,20],
+                diff :[20,20]
+            }).attachDrag(drag);
+        })();
+
+
+    });
+
+
+</script>
+</body>
+</html>

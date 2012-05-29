@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>input-selection demo</title>
+</head>
+<body>
+<h1>input text</h1>
+<textarea id='t' style='width:500px;height:300px;word-wrap:break-word;margin: 0;padding: 0;'>
+</textarea>
+<br/>
+<!--
+    不能加，会把 pre-wrap 的空格也断行
+    word-break:break-all;
+    -->
+<div id='t2' style='overflow-x:hidden;overflow-y:auto;
+    word-wrap:break-word;white-space: pre-wrap;'>
+</div>
+<script src='../../../build/kissy.js'></script>
+<script src='../src/input-selection.js'></script>
+<script>
+    var S = KISSY, DOM = S.DOM, UA = S.UA;
+    if (!UA.ie) {
+        (function () {
+            var t = DOM.get("#t");
+            var t2 = DOM.get("#t2");
+            var b = DOM.get("#b");
+            var m = DOM.get("#m");
+
+            var styles = ['fontFamily', 'fontSize', 'fontWeight', 'fontVariant', 'fontStyle',
+                'paddingLeft', 'paddingTop', 'paddingBottom', 'paddingRight',
+                'marginLeft', 'marginTop', 'marginBottom', 'marginRight',
+                'borderLeftColor', 'borderTopColor', 'borderBottomColor', 'borderRightColor',
+                'borderLeftStyle', 'borderTopStyle', 'borderBottomStyle', 'borderRightStyle',
+                'borderLeftWidth', 'borderTopWidth', 'borderBottomWidth', 'borderRightWidth',
+                'line-height', 'outline', 'width', 'height'];
+
+            S.each(styles, function (s) {
+                DOM.css(t2, s, DOM.css(t, s));
+            });
+
+            // textarea 连续空格，firefox 自动换行，chrome 不自动换行
+            // "&nbsp;" firefox 下问题：一二三四五， 六
+            // &nbsp; chrome 自动换行
+            // pre : firefox 不自动换行，chrome 自动换行
+            // pre-wrap 问题：i think it issss to hard to understa nd to what yo
+            var empty = '<span style="white-space:pre-wrap;"> </span>'; // 空格不换行
+
+            t.onkeyup =t.onmouseup= function () {
+                var selectionStart=DOM.prop(t,"selectionStart");
+                t2.innerHTML = t.value.substring(0,selectionStart);//.replace(/\n/g, "<br/>").replace(/\s/g, empty);
+            };
+        })();
+    } else {
+        alert('请用非 IE 访问！')
+    }
+</script>
+</body>
+</html>

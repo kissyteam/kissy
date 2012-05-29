@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+
+	
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc">
+	
+
+
+<div class="note">
+	配置错误信息的显示样式通常都是在实例化的时候传入样式名称：
+	<pre class='brush:javascript;'>
+		var check = new Validation(form,{
+			style: "under"	//错误信息提示样式
+		});
+	</pre>
+	如何想针对个别字段单独配置，传入参数即可
+	<pre class='brush:javascript;'>
+		&lt;input class="text" type="text" data-valid="{style:'siderr'}"/&gt;
+	</pre>
+</div>
+
+<form method="post">
+<ul class="form">
+
+	<li>
+		<label class="hd">姓名：</label>
+		<input class="text" type="text" data-valid="{}"/>
+	</li>
+	
+	<li>
+		<label class="hd">密码：</label>
+		<input class="text" type="text" data-valid="{style:'under'}"/>
+	</li>
+	
+	<li>
+		<button type="submit">提交</button> 
+	</li>
+	
+</ul>
+</form>
+
+<script>
+
+
+
+	KISSY.use("validation",function(S,Validation){
+
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+		
+	});
+
+</script>
+
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

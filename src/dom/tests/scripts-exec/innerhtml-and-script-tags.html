@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>InnerHTML and Script Tags</title>
+</head>
+<body>
+<h2>InnerHTML and Script Tags</h2>
+
+<div id="test">test</div>
+<div id="test2">test2</div>
+<div id="test3">test3</div>
+
+<h2>References</h2>
+<ul>
+    <li><a href="http://msdn.microsoft.com/en-us/library/ms533897(VS.85).aspx">innerHTML Property - MSDN</a></li>
+    <li><a href="https://developer.mozilla.org/en/HTML/Element/Script">script - MDC</a></li>
+    <li><a href="http://yiminghe.javaeye.com/blog/459087">赋值 script 到 innerHTMl 的Extjs 解决方案</a></li>
+    <li><a href="http://poeticcode.wordpress.com/2007/10/03/innerhtml-and-script-tags/">innerHTML and SCRIPT tags</a></li>
+    <li><a href="http://24ways.org/2005/have-your-dom-and-script-it-too">Have Your DOM and Script It Too</a></li>
+</ul>
+
+<script src="../../../../build/kissy.js"></script>
+<script>
+
+    var doc = document, bd = doc.body,
+            S = KISSY, DOM = S.DOM,
+            t = doc.getElementById('test'),
+            t2 = doc.getElementById('test2'),
+            t3 = doc.getElementById('test3'),
+            div;
+
+    /////////////////////////////////////////////////
+    // 一、inline script 的执行
+
+    // 所有浏览器都不会执行 script 内容
+    t.innerHTML = 'html 1<script>alert("set innerHTML directly");<\/script>';
+
+    // ie 会执行
+    t.innerHTML = 'html 2<script defer>alert("set innerHTML via defer");<\/script>';
+    // 测试纯 script - ie 下不会执行。解决办法是在 script 前面加任意一个字符，比如 -
+    t.innerHTML = '<script defer>alert("set innerHTML(only script) via defer");<\/script>';
+
+    // firefox 会执行
+    // ! firefox 7 开始不执行
+    div = doc.createElement('DIV');
+    div.innerHTML = 'html 3<script>alert("set innerHTML via appendChild");<\/script>';
+    t.appendChild(div);
+
+    // firefox 和 ie 会执行
+    div = doc.createElement('DIV');
+    div.innerHTML = 'html 4<script defer>alert("set innerHTML via appendChild + defer");<\/script>';
+    t.appendChild(div);
+
+    // 所有浏览器都执行
+    // 解析出 inline script 代码段，再 globalEval, 详见 KISSY.DOM.html 方法的实现
+    DOM.html(t, 'html 6<script>alert("set innerHTML via KISSY.DOM.html()");<\/script>', true);
+
+    // 所有浏览器都会执行
+    t.innerHTML = 'html 5<img src="http://img03.taobaocdn.com/tps/i3/T1ogqgXfXeXXXXXXXX-168-42.png" onload="alert(\'set innerHTML via image onload\')" />';
+
+
+    /////////////////////////////////////////////////
+    // 二、src script 的执行
+
+    // 所有浏览器都不会执行
+    t2.innerHTML = 'html 1<script src="innerhtml-and-script-tags2.js"><\/script>';
+
+    // 所有浏览器都不会执行
+    t2.innerHTML = 'html 2<script defer src="innerhtml-and-script-tags3.js"><\/script>';
+
+    // 所有浏览器都执行
+    // 解析出 script src， 动态创建 script, 添加到 head 里，详见 KISSY.DOM.html 方法的实现
+    DOM.html(t2, 'html 3<script src="innerhtml-and-script-tags.js"><\/script>', true);
+
+
+    /////////////////////////////////////////////////
+    // 三、特别注意点
+
+    // 1. 直接给 table.innerHTML = 'xx' 在 ie 下会报错，需要用 DOM 操作
+
+    // 2. script 执行时，DOM 元素有可能尚不可用，要等待
+    div = doc.createElement('DIV');
+    div.id = 'test-div';
+    div.innerHTML = 'test div<script defer>alert(document.getElementById("test-div"));<\/script>';
+</script>
+</body>
+</html>

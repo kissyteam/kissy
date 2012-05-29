@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>cascade-select</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
+<script src="../../../build/kissy.js"></script>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+</style>
+<style>
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div id="wrap">
+
+
+    <!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+    <h1>层联 select demo</h1>
+    <div id="selectContainer" style="width: 300px;margin: 50px auto;"></div>
+
+    <script>
+        KISSY.ready(function (S) {
+            KISSY.use("menubutton", function (S, MenuButton) {
+                var data = {
+                    "上海":["上海市", "崇明"],
+                    "河南":["焦作", "洛阳"],
+                    "浙江":["杭州", "温州"]
+                };
+                var s1 = new MenuButton.Select({
+                    render:"#selectContainer",
+                    prefixCls:"c2c-",
+                    menuAlign:{
+                        offset:[0, -1]
+                    },
+                    menuCfg:{
+                        width:70
+                    }
+                });
+
+                for (var d in data) {
+                    s1.addItem(new MenuButton.Option({value:d,
+                        prefixCls:"c2c-",
+                        content:d}));
+                }
+                s1.set("selectedIndex", 0);
+                s1.render();
+
+                var s2 = new MenuButton.Select({
+                    render:"#selectContainer",
+                    prefixCls:"c2c-",
+                    menuAlign:{
+                        offset:[0, -1]
+                    },
+                    menuCfg:{
+                        width:70
+                    }
+                });
+
+                update("上海");
+                s2.render();
+
+                function update(v) {
+                    var vs = data[v];
+                    s2.removeItems(true);
+                    S.log("*********************");
+                    S.each(vs, function (v_) {
+                        S.log(v_);
+                        s2.addItem(new MenuButton.Option({
+                            value:v_,
+                            prefixCls:"c2c-",
+                            content:v_}));
+                    });
+                    s2.set("selectedIndex", 0);
+                }
+
+                s1.on("click", function (e) {
+                    var v = e.target.get("value");
+                    update(v);
+                });
+
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

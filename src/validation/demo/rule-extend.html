@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div id="viewdemo" class="doc">
+
+<div class="note">
+扩展规则相当简单，下面是一个校验不能包含某些关键字的规则：
+<pre class="brush: js;">
+	//三个参数分别是 规则名称，默认提示信息，校验函数体（校验函数体前两个参数value,text是固定的，后面可以随意增减参数）
+	Validation.Rule.add('exclude','不能包含关键字{0}。',function(value,text,key){
+		if(new RegExp(key,"ig").test(value)){
+			return Validation.Util.format(text,key);
+		}
+	});
+</pre>
+
+可以像使用其他内置规则一样使用：
+<pre class="brush: js;">
+&lt;input value="woshitaobaode" class="text" type="text" name="username" id="username" data-valid="{exclude:['taobao']}"/&gt;
+</pre>
+
+</div>
+
+<form method="post">
+<ul class="form">
+	<li>
+		<label class="hd">姓名：</label>
+		<input value="woshitaobaode" class="text" type="text" name="username" id="username" data-valid="{exclude:['taobao']}"/>
+	</li>
+	
+	<li>
+		<label class="hd">昵称：</label>
+		<input value="woshibaidude" class="text" type="text" name="nickname" id="nickname" data-valid="{exclude:['baidu']}"/>
+	</li>
+
+	
+	<li>
+		<button type="submit">提交</button>
+	</li>
+
+</ul>
+</form>
+
+<script>
+
+	KISSY.use("validation",function(S,Validation){
+
+		Validation.Rule.add('exclude','不能包含关键字{0}。',function(value,text,key){
+			if(new RegExp(key,"ig").test(value)){
+				return Validation.Util.format(text,key);
+			}
+		});
+	
+		var form = S.query("form")[0],
+		
+			check = new Validation(form,{
+				style: "under"
+			});
+		
+		
+		KISSY.Event.on(form,"submit",function(){
+			check.isValid();
+			return false;
+		});
+		
+	});
+
+</script>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

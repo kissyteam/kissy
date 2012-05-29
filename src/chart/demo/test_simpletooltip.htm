@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Test SimpleTooltip</title>
+  <link rel="stylesheet" href="../../../build/css/reset-min.css" />
+  <script src="../../../build/kissy.js"></script>
+  <script src="../src/simpletooltip.js"></script>
+</head>
+<style type="text/css">
+    html,body{height:100%;}
+    .ks-chart-tooltip{
+        box-shadow:1px 1px 2px #555;
+        padding:3px;
+        position:absolute;background:#333; opacity:.6; color:#fff;}
+</style>
+<body>
+    <div style="height:2000px;"></div>
+    <script>
+        var Chart = KISSY.namespace("Chart");
+        console.log(Chart);
+        var st = new Chart.SimpleTooltip();
+        KISSY.one(document.body).on("click",function(ev){
+            st.show(ev.clientX + ',' + ev.clientY);
+        });
+    </script>
+</body>
+</html>

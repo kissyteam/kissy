@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+
+	
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc">
+	
+	<div class="note">
+		
+		<pre class="brush: js;">
+//可以重写attrname字段自定义伪属性名称,例如定义"data-check"为伪属性名称
+new Validation(form,{
+	attrname: "data-check",
+	style: "under"
+});
+		</pre>
+	</div>
+	
+
+
+	<form method="post">
+	<ul class="form">
+
+		<li>
+			<label class="hd">字段1：</label>
+            <p>这里用的伪属性是配置项里面的"data-check"，而不是默认的data-valid</p>
+			<input class="text" type="text" data-check="{}"/>
+		</li>
+		
+		<li>
+			<label class="hd">字段2：</label>
+            <p>非必填项，不填不报错，但是填了不符合定义的格式就会报错</p>
+			<input class="text" type="text"  data-check="{required:false,email:['请输入正确的email哦']}"/>
+		</li>
+
+		<li>
+			<label class="hd">字段2：</label>
+            <p>必填项，不填就报错</p>
+			<input class="text" type="text"  data-check="{email:['请输入正确的email哦']}"/>
+		</li>
+		
+		<li>
+			<button type="submit">提交</button>
+		</li>
+
+	</ul>
+	</form>
+
+	<script>
+	
+		KISSY.use("validation",function(S,Validation){
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					attrname: "data-check", //可以重写attrname字段自定义伪属性名称
+					style: "under"
+				});
+			
+			
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+			
+		});
+
+	</script>
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

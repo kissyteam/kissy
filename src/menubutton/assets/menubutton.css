@@ -1,0 +1,98 @@
+/*
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache 2.0 License.
+ * See the COPYING file for details.
+ */
+
+/*
+ * Standard styling for buttons created by goog.ui.MenuButtonRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
+
+/* State: resting. */
+.goog-menu-button {
+    /* Client apps may override the URL at which they serve the image. */
+    background: #ddd url(../../button/assets/button-bg.png) repeat-x top left;
+    border: 1px;
+    color: #000;
+    cursor: pointer;
+    list-style: none;
+    margin: 2px;
+    outline: none;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: middle;
+    border-style: solid;
+    border-color: #aaa;
+    padding: 3px 4px;
+}
+
+/* State: disabled. */
+.goog-menu-button-disabled {
+    background-image: none !important;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+    color: #333 !important;
+    border-color: #999 !important;
+}
+
+.goog-menu-button-disabled .goog-menu-button-caption,
+.goog-menu-button-disabled .goog-menu-button-dropdown {
+    color: #333 !important;
+    border-color: #999 !important;
+}
+
+/* State: hover. */
+.goog-menu-button-hover {
+    border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
+}
+
+/* State: active, open. */
+.goog-menu-button-active,
+.goog-menu-button-open {
+    background-color: #bbb;
+    background-position: bottom left;
+}
+
+/* State: focused. */
+.goog-menu-button-focused {
+    border-color: orange;
+}
+
+/* Caption style. */
+.goog-menu-button-caption {
+    padding: 0 4px 0 0;
+    vertical-align: top;
+}
+
+/* Dropdown arrow style. */
+.goog-menu-button-dropdown {
+    height: 15px;
+    width: 7px;
+    /* Client apps may override the URL at which they serve the sprite. */
+    background: url(editortoolbar.png) no-repeat -388px 0;
+    vertical-align: top;
+}
+
+/* Pill (collapsed border) styles. */
+/* TODO(gboyer): Remove specific menu button styles and have any button support being a menu button. */
+.goog-menu-button-collapse-right,
+.goog-menu-button-collapse-right {
+    margin-right: 0 !important;
+}
+
+.goog-menu-button-collapse-left,
+.goog-menu-button-collapse-left {
+    margin-left: 0 !important;
+}
+
+.goog-menu-button-collapse-left {
+    border-left: 1px solid #fff;
+}
+
+.goog-menu-button-collapse-left.goog-menu-button-checked {
+    border-left: 1px solid #ddd;
+}

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Html Beautifier</title>
+</head>
+<body>
+<h1 style="margin: 10px auto;text-align: center;"> KISSY Html Beautifier </h1>
+<div style="border: 1px solid red;" id="t">
+    <div style="border: 1px solid green;">
+        <label>前：
+            <textarea id="before" style="width:80%;height: 300px;">
+                &lt;div id="name">
+                <!--测试 comment-->
+                &lt;div>
+                &lt;div> test &lt;span>
+                test2 &lt;/span> test3 &lt;/div>
+                &lt;/div>
+                &lt;/div>
+            </textarea>
+        </label>
+        <br/>
+        <button id="start">beautify</button>
+        <br/>
+        <label>后：
+            <textarea id="after" style="width:80%;height: 300px;"></textarea>
+        </label>
+    </div>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script>
+
+
+    KISSY.use("htmlparser", function (S, HtmlParser) {
+        var $ = S.all;
+        $("#after").val("");
+        var start = $("#start");
+        start.on("click", function () {
+            var writer = new HtmlParser.BeautifyWriter(),
+                    filter = new HtmlParser.Filter(),
+                    before = S.trim($("#before").val()),
+                    n = new HtmlParser.Parser(before).parse();
+
+            filter.addRules({
+                tags:{
+                    $:function (el) {
+                        S.log("$:  " + el.tagName);
+                    }
+                },
+                text:function (v) {
+                    S.log("texts:  " + v);
+                },
+                comment:function (v) {
+                    S.log("comments:  " + v);
+                },
+                cdata:function (v) {
+                    S.log("cdatas:  " + v);
+                }
+            });
+            S.log(n);
+
+            n.writeHtml(writer, filter);
+
+            $("#after").val(writer.getHtml());
+        });
+    });
+</script>
+</body>
+</html>

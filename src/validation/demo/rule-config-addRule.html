@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+
+	
+</head>
+<body>
+ 
+ 
+
+<div class="note">
+<pre class="brush: js;">
+
+
+//可以通过编程的方式随意动态的增加字段的校验规则
+//Field.addRule() : 增加校验规则
+//Field.removeRule() : 移除校验规则
+
+		S.one("#optrule").on("click",function(ev){
+			ev.halt();
+			
+			//移除email校验
+			username.removeRule("email");
+			
+			//增加中文校验
+			username.addRule("chinese",['必须为中文']);
+			
+			//触发校验
+			username.isValid();
+			
+		});
+			
+</pre>
+</div>
+ 
+ 
+
+<div id="viewdemo" class="doc">
+	
+<form method="post">
+<ul class="form">
+
+	<li>
+		<label class="hd">用户名：</label>
+		<input class="text" type="text" name="username" id="username" value="test" data-valid="{
+			email: ['用户名是一个邮箱']
+		}"/>
+	</li>
+	
+	
+	<li>
+		<button type="submit">提交</button>   <a href="#" id="optrule">移除email校验，增加中文校验</a>
+	</li>
+	
+</ul>
+</form>
+
+<script>
+
+	KISSY.use("validation",function(S,Validation){
+	
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+	
+;
+		
+		//通过字段的id可以获取对应的实例
+		var username = check.get("username");
+		S.one("#optrule").on("click",function(ev){
+			ev.halt();
+			
+			//移除email校验
+			username.removeRule("email");
+			
+			//增加中文校验
+			username.addRule("chinese",['必须为中文']);
+			
+			//触发校验
+			username.isValid();
+			
+		});
+
+
+		
+		KISSY.Event.on(form,"submit",function(){
+			check.isValid();
+			return false;
+		});
+		
+	});
+
+</script>
+
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+

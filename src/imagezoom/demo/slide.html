@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ImageZoom 调研文档</title>
+<style>
+body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;font:14px Candara,\5FAE\8F6F\96C5\9ED1,Verdana,sans-serif;}.presentation{position:absolute;left:0;top:0;height:100%;width:100%;overflow:hidden;background:#778;}.slides{position:absolute;left:0;top:0;width:100%;height:100%;-webkit-transition:-webkit-transform 1s ease-in-out;-moz-transition:-moz-transform 1s ease-in-out;-o-transition:-o-transform 1s ease-in-out;}.slide{display:none;width:900px;height:700px;overflow:hidden;position:absolute;left:50%;top:50%;margin-top:-350px;opacity:0;background:-webkit-gradient(linear,left bottom,left top,from(#bbd),to(#fff));background:-moz-linear-gradient(bottom,#bbd,#fff);-webkit-transition:margin .25s ease-in-out;-moz-transition:margin .25s ease-in-out;-o-transition:margin .25s ease-in-out;}.slide.far-past{display:block;margin-left:-2400px;}.slide.past{display:block;margin-left:-1400px;}.slide.current{display:block;margin-left:-450px;opacity:1;}.slide.future{display:block;margin-left:500px;}.slide.far-future{display:block;margin-left:1500px;}.slide header,.slide section{display:none;}.slide.current header,.slide.current section{display:block;}.slide:nth-child(even){border-top-left-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomright:20px;}.slide:nth-child(odd){border-top-right-radius:20px;border-bottom-left-radius:20px;-webkit-border-top-right-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomleft:20px;}.slide .counter{position:absolute;left:20px;bottom:20px;display:block;color:#999;}header{position:absolute;left:30px;top:25px;margin:0;padding:0;font-size:50px;letter-spacing:-.05em;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;}section{margin-left:30px;margin-right:30px;margin-top:100px;display:block;overflow:hidden;font-size:50px;color:#3f3f3f;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;line-height:1.5;}p{font-size:25px;margin:10px 0;}h1{padding:0;margin:0;letter-spacing:-2px;font-size:60px;}h2{padding:0;margin:15px 0 5px 0;font-size:50px;font-weight:normal;}a{text-decoration:none;line-height:110%;}button{font-size:20px;}blockquote,ul,ol,dl{margin:1em;}ul,ol,dl{margin-left:2em;font-size:40px;}li{list-style:none;}.small li{font-size:25px;}ul li:before{content:'· ';}dl dd{margin-left:1em;}th,td{padding:.5em;}caption{margin-bottom:.5em;}hr{visibility:hidden;padding:0;margin:0 0 -20px 0;}section.intro h1{margin-top:80px;}section.intro p{font-size:35px;}section.intro .author{margin-top:120px;margin-bottom:-40px;}.notes{display:none;}section.center{line-height:180%;text-align:center;display:table-cell;vertical-align:middle;height:700px;width:900px;}blockquote{font-size:20px;white-space:pre;padding:10px 20px;background:rgba(0,0,255,0.05);border-radius:8px;border:1px solid rgba(0,0,255,0.2);text-shadow:none;}pre,.pre{display:block;white-space:pre;text-align:left;font-size:16px;font-family:'Bitstream Vera Sans Mono',Courier,monospace;padding:10px 20px;background:rgba(255,0,0,0.05);border-radius:8px;border:1px solid rgba(255,0,0,0.2);text-shadow:none;}pre b{font-weight:normal;color:#c61800;text-shadow:#c61800 0 0 1px;}pre em{font-weight:normal;font-style:normal;color:#18a600;text-shadow:#18a600 0 0 1px;}.css,.js,.html{color:black;display:inline-block;padding:6px 10px 3px 10px;font-size:25px;line-height:30px;text-shadow:none;letter-spacing:0;bottom:10px;position:relative;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;background:white;box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-webkit-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-moz-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;}.css{background:-webkit-gradient(linear,left top,left bottom,from(#ff4),to(#ffa));background:-moz-linear-gradient(left top,#ff4,#ffa);background-color:#ff4;}.js{background:-webkit-gradient(linear,left top,left bottom,from(#4f4),to(#afa));background:-moz-linear-gradient(left top,#4f4,#afa);background:#4f4;}.html{background:-webkit-gradient(linear,left top,left bottom,from(#e88),to(#fee));background:-moz-linear-gradient(left top,#e88,#fee);background:#e88;}
+pre {
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="presentation">
+<div id="presentation-counter"></div>
+<div class="slides">
+
+        <div class="slide">
+            <section class="center intro">
+                <h1>S.ImageZoom</h1>
+                <p class="author">乔花</p>
+                <p class="year">2010.07</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>Outline</header>
+            <section>
+                <p>一. 应用场景 </p>
+                <p>二. 同类组件 </p>
+                <p>三. 功能分析 </p>
+                <p>四. 技术方案 </p>
+                <p>五. Public API </p>
+                <p>六. 开发计划 </p>
+                <p>七. 其它 </p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>一. 应用场景</header>
+            <section>
+                <p>淘宝、京东等电子商务网站的宝贝图片细节显示</p>
+                <p>
+                    1) 凡客: 大图, 小图高度不相等.<br />
+                    <a href="http://www.vancl.com/Product_0006045/JianYueShengHuoFanRongNiuPiXiuXianXieefbc88XiDaiKuanefbc89KaQiSe.html"><img src="../assets/fanke.png" style="height: 200px;"/></a>
+                </p>
+                <p>
+                    2) 京东: 黄色的镜片遮罩影响了色度. 透明的效果好些.<br />
+                    <a href="http://www.360buy.com/product/207169.html"><img src="../assets/jingdong.png" style="height: 200px;"/></a>
+                </p>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <section>
+                <p>
+                    3) 淘宝: 默认有一个放大镜在小图右下角, 提醒用户有放大的功能, 用户引导性比较好. 鼠标移至小图上方, 放大镜消失; 小图上没有镜片效果.<br />
+                    <a href="http://item.taobao.com/auction/item_detail.htm?item_num_id=7168101872"><img src="../assets/taobao.png" style="height: 200px;"/></a>
+                </p>
+                <p>
+                    4) Zazzle: 大图和小图的高度有点偏差, 不知道是不是故意这么设计的.<br />
+                    <a href="http://www.zazzle.com/rudy_giuliani_autograph_tshirt-235490375443223402"><img src="../assets/zazzle.png" style="height: 200px;"/></a>
+                </p>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <section>
+                <p>
+                    5) Apple:
+                    <br />* 鼠标移至上方显示放大镜, 点击, 以鼠标点击的位置为轴心放大图片, 鼠标变成手型, 单击鼠标不放可拖动大图. 只能单独显示小图或者大图, 没有整体和局部的对比;
+                    <br />* 用户增加了点击鼠标拖动的操作;
+                    <br />* 在大图上移动, 用户鼠标的移动范围要大些, 影响效率;
+                    <br />* 用户能直接定位到自己想看的位置.
+                    <br />* 小图放大到大图, 过渡很自然. 
+                    <br /><a href="http://store.apple.com/us/product/IPAD_CASE?mco=MTc0MjU1OTM"><img src="../assets/apple.png" style="height: 200px;"/></a>
+                </p>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>二. 同类组件</header>
+            <section>
+                <pre>
+1. JQZoom：<a href="http://www.mind-projects.it/projects/jqzoom/">http://www.mind-projects.it/projects/jqzoom/</a>
+    - 基于 jQuery 类库，大小 8.7k
+    - 支持 standard 和 reverse 两种显示类型；
+    - 提供 preload 功能，大图显示时支持特效；
+    - 配置丰富，调用方便。
+
+2. ImageZoom: <a href="http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html">http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html</a>
+    - 基于 CJL 类库，大小 6.1k
+    - 支持 standard, follow, reverse, handle 等多种显示类型；
+    - 支持使用原图放大。大图未加载前，使用原图放大，减少等待时间；
+    - 支持预加载、放大系数、自动隐藏、鼠标滚动缩放大图等功能；
+    - 功能是同类组件中最全的，两篇介绍博文也相当不错。
+
+3. ImageScaler: <a href="http://yiminghe.javaeye.com/blog/388872">http://yiminghe.javaeye.com/blog/388872</a>
+    - 基于 Ext 类库，大小 6.9k
+    - 有缩放功能、支持拖拽、移动；
+    - 严格说来，这个组件的目的不是图片放大，而是图片裁剪功能，挺有意思。
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <pre>
+4. AnythingZoomer: <a href="http://css-tricks.com/examples/AnythingZoomer/image.php">http://css-tricks.com/examples/AnythingZoomer/image.php</a>
+    - 基于 jQuery 类库，大小 1.2k
+    - 显示类型只有跟随模式;
+    - 强大之处在于，该组件可以放大任何区域，比如文本等等，不愧为 anything zoomer!
+    
+5. CloudZoom: <a href="http://www.professorcloud.com/mainsite/cloud-zoom.htm">http://www.professorcloud.com/mainsite/cloud-zoom.htm</a>
+    - 做的很漂亮, 细节处理...
+
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>三. 功能分析</header>
+            <section>
+                <pre>
+1. 显示类型，可总结为以下 3 类：
+    - 标准模式 standard: 可参考 JQZoom 的默认显示，可设置 放大镜 lens 是否显示；
+    - 反转模式 reverse:  可参考 JQZoom 的反转模式，或 CJL ImageZoom 的 cropper 模式，该模式下，lens 必须显示；
+    - 跟随模式 follow:   可参考 CJL ImageZoom 的 follow 模式。
+
+   特有意思：Zazzle 上的 follow 模式非常值得仿效：<a href="http://www.zazzle.com/back+to+school+tshirts">Zazzle</a>
+   反转模式在调研的在线应用中，没有一家采用。很可能是因为反转效果很唐突，对用户体验无益。
+   无 lens 的标准模式，在在线应用中也很少看到。因为有 lens 的感觉更佳，组件实现时，可以不考虑无 lens 的标准模式。
+   综上考虑，KISSY 将实现以下两种显示类型：
+    - 标准模式 standard  显示 lens
+    - 跟随模式 follow 分 <del>普通跟随模式</del> 和 Zazzle 的跟随模式，具体参数实现时再定
+
+2. 大图的预加载功能。基本是标配，KISSY 可以进一步做到：
+    - 仿照 Zazzle 的效果，<del>在大图加载过程中显示进度条，以及相关提示文字</del>, 目前已添加 loading 样式
+
+3. 放大系数、滚轮缩放、拖曳裁剪等功能，对用户用途不大，不支持
+
+4. 放大镜提示小图片很不错，能引导用户主动悬浮，支持该功能
+                </pre>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>四. 技术方案</header>
+            <section>
+                <p> - 假定：小图和大图的尺寸都已知</p>
+                <p> - 小图上某个区域的尺寸也给定</p>
+                <p><img src="../assets/m1.png" style="height:300px;" /></p>
+                <p> - 1) 目标显示区域如何计算</p>
+                <p> - 2) 如何将小图上的显示区域映射到大图上的显示区域</p>
+            </section>
+        </div>
+        
+        
+        <div class="slide">
+            <section>
+                <p>目标显示区域计算</p>
+                <p><img src="../assets/m2.png" style="height:400px;" /></p>
+            </section>
+        </div>      
+        
+        <div class="slide">
+            <section>
+                <p>镜片位置</p>
+                <p><img src="../assets/m4.png" style="height:400px;" /></p>
+                <p>边界处理</p>
+            </section>
+        </div> 
+        
+        <div class="slide">
+            <section>
+                <p>鼠标移动时，小区域映射到大区域</p>
+                <p><img src="../assets/m3.png" style="height:400px;" /></p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header> Zazzle 放大渐变效果分析</header>
+            <section>
+                <p>- 小图至大图缩放具有动画效果, 且在大图未加载完成时, 使用小图进行放大. 由此需要在大图加载完毕时刻, 替换原来的小图.</p>
+                <p>- 运动初始, 图片大小为小图大小, 终态为 config 中设置的尺寸, 不使用真实大图尺寸, 是因为在动画过程中会动态设置宽高, 即使大图加载完, 也无法获取到正确的大图尺寸.</p>
+                <p>- 放大的终态, 鼠标触发时的中心点应该定位到放大区域的中心位置.</p>
+                <p>- 运动过程中, 不响应鼠标移动事件.</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>五. Public API</header>
+            <section>
+            <pre>
+config:
+    type: STANDARD,            // 显示类型
+
+    bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+    position: 'right',         // 大图显示位置, 可取 top, right, bottom, left, inner
+    //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
+    offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
+    preload: true,             // 是否预加载大图
+
+    zoomSize: [AUTO, AUTO],    // 放大区域宽高
+    lensIcon: true,            // 是否显示放大镜提示图标
+
+    zoomCls: ''                // 放大区域额外样式
+Member:
+    image       // 需要缩放的图片
+    config      // 配置参数
+    lens        // 镜片
+    lensIcon    // 放大镜图标
+    bigImage    // 大图
+    viewer      // 大图显示区域
+Method:
+    show()      // 显示
+    hide()      // 隐藏
+    set(name, val)      // 重新设置某些值
+        - bigImageSrc   // 重设大图 url
+        - hasZoom       // 重设 hasZoom 标志
+    changeImageSrc // 设置小图 src
+    refreshRegion  // 调整放大区域位置
+Event:
+    show        // 放大区域显示之后
+    hide        // 放大区域隐藏之后
+    viewer_create // 放大区域生成之后
+</pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>基本使用</header>
+            <section>
+                <pre>
+1) 出现镜片, 大图位置默认在小图右边:
+        var a = new S.ImageZoom("#standard");
+        a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
+
+2) 多图切换时, 大图 src 的更改通过 m.set('bigImageSrc', data); 小图 src 通过 changeImageSrc ,
+   也可直接在外部更改小图 src 值, 两者区别仅在是否处理 ks-imagezoom-loading 状态.
+        var m = new S.ImageZoom("#multi");
+        S.Event.on("#imgList img", 'click', function() {
+            var data = S.DOM.attr(this, 'data-ks-imagezoom');
+            m.changeImageSrc(data+'_310x310.jpg');
+            //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+            m.set('bigImageSrc', data);
+        });
+
+3) position 为 inner 时, 需要给定 bigImageSize, 且该值固定, 不会随着大图加载完毕而更新;
+        new S.ImageZoom("#innerGIF", {
+            position: 'inner',
+            bigImageSize: [512, 512],
+            offset: 0,
+            lensIcon: false
+        });
+    另外, inner 方式下, 对齐元素为原小图, 设置 alignTo 无效.
+4) hasZoom 属性, 默认为 true. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.
+        m.set('hasZoom', false);
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>默认样式名称列表</header>
+            <section>
+<pre>
+    ks-imagezoom-viewer : 放大区域样式, 注意: config 中的 zoomCls 附加到放大区域容器上
+    ks-imagezoom-lens : 镜片样式
+    ks-imagezoom-icon : 放大镜图标样式
+    ks-imagezoom-loading : 放大区域等待状态样式
+</pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>六. 开发计划</header>
+            <section>
+                <p>7月完成初稿; <span class="html">--version 0.1</span></p>
+                <p>8月第一次重构, 去除不必要功能; <span class="html">--version 1.0</span></p>
+                <p>9月第二次重构, 基于 Overlay 扩展; <span class="html">--version 1.0</span></p>
+                <p>9月实现Follow模式, 类似于 zazzle 上的效果; <span class="html">--version 1.1</span></p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>七. 其他</header>
+            <section>
+               <pre>
+接口是否足够 KISS：
+S.ImageZoom(selector, config);
+
+第一次悬浮事件的命名?
+zoom.on('firstHover', ...);
+or
+zoom.on('loadBigImage', ...);
+
+需不需要下面这些事件：
+zoom.on('show', ...);
+zoom.on('hide', ...);
+
+要暴露哪些公共方法：
+?
+
+已有功能是否已满足 8/2 原则?
+已有功能是否都需要? 有什么可以砍掉的鸡肋吗?
+通过扩展可以实现不常用的那 20% 吗?
+
+支持 touch 设备?</pre>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>资源</header>
+            <section>
+                <p>使用文档： http://kissyteam.github.com/kissy/docs/imagezoom/index.html</p>
+                <p>测试页面： http://kissyteam.github.com/kissy/src/imagezoom/test.html</p>
+            </section>
+        </div>
+    </div>
+    <!-- slides -->
+
+</div>
+<script>
+    (function(){var t=document;var b=true;var q=0;var h=/\s+/,s=[""];var m=function(u){return Array.prototype.slice.call(u||[],0)};var d=function(u){if(typeof u=="string"){return t.getElementById(u)}return u};var e=function(w,v){if(!w){return[]}if(typeof w!="string"){return m(w)}if(typeof v=="string"){v=d(v);if(!v){return[]}}v=v||document;var u=(v.nodeType==9);var x=u?v:(v.ownerDocument||document);if(!u||(">~+".indexOf(w.charAt(0))>=0)){v.id=v.id||("qUnique"+(q++));w="#"+v.id+" "+w}if(">~+".indexOf(w.slice(-1))>=0){w+=" *"}return m(x.querySelectorAll(w))};var a=function(u){if(typeof u=="string"||u instanceof String){if(u.indexOf(" ")<0){s[0]=u;return s}else{return u.split(h)}}return u};var j=function(y,x){x=a(x);var v=" "+y.className+" ";for(var w=0,u=x.length,z;w<u;++w){z=x[w];if(z&&v.indexOf(" "+z+" ")<0){v+=z+" "}}y.className=v.trim()};var k=function(y,x){var v;if(x!==undefined){x=a(x);v=" "+y.className+" ";for(var w=0,u=x.length;w<u;++w){v=v.replace(" "+x[w]+" "," ")}v=v.trim()}else{v=""}if(y.className!=v){y.className=v}};var o=function(w,v){var u=" "+w.className+" ";if(u.indexOf(" "+v.trim()+" ")>=0){k(w,v)}else{j(w,v)}};var p=navigator.userAgent;var l=parseFloat(p.split("Firefox/")[1])||undefined;var g=parseFloat(p.split("WebKit/")[1])||undefined;var r=parseFloat(p.split("Opera/")[1])||undefined;var c=(function(){var u=parseFloat(p.split("Version/")[1])||undefined;var v=(g||(l&&l>3.6)||(r&&u>=10.5));return function(){return v}})();var f=function(v,u){this._node=v;if(u>=0){this._count=u+1}if(this._node){j(this._node,"slide distant-slide")}this._makeCounter();this._makeBuildList()};f.prototype={_node:null,_count:0,_buildList:[],_visited:false,_currentState:"",_states:["distant-slide","far-past","past","current","future","far-future","distant-slide"],setState:function(v){if(typeof v!="string"){v=this._states[v]}if(v=="current"&&!this._visited){this._visited=true;this._makeBuildList()}k(this._node,this._states);j(this._node,v);this._currentState=v;var u=this;setTimeout(function(){u._runAutos()},400)},_makeCounter:function(){if(!this._count||!this._node){return}var u=t.createElement("span");u.innerHTML=this._count;u.className="counter";this._node.appendChild(u)},_makeBuildList:function(){this._buildList=[];if(b){return}if(this._node){this._buildList=e("[data-build] > *",this._node)}this._buildList.forEach(function(u){j(u,"to-build")})},_runAutos:function(){if(this._currentState!="current"){return}var u=-1;this._buildList.some(function(A,z){if(A.hasAttribute("data-auto")){u=z;return true}return false});if(u>=0){var x=this._buildList.splice(u,1)[0];var w=g?"webkitTransitionEnd":(l?"mozTransitionEnd":"oTransitionEnd");var y=this;if(c()){var v=function(z){x.parentNode.removeEventListener(w,v,false);y._runAutos()};x.parentNode.addEventListener(w,v,false);k(x,"to-build")}else{setTimeout(function(){k(x,"to-build");y._runAutos()},400)}}},buildNext:function(){if(!this._buildList.length){return false}k(this._buildList.shift(),"to-build");return true},};var n=function(v){this._slides=(v||[]).map(function(z,y){return new f(z,y)});var u=window.location.hash;try{this.current=parseInt(u.split("#slide")[1],10)}catch(x){}this.current=isNaN(this.current)?1:this.current;var w=this;t.addEventListener("keydown",function(y){w.handleKeys(y)},false);t.addEventListener("mousewheel",function(y){w.handleWheel(y)},false);t.addEventListener("DOMMouseScroll",function(y){w.handleWheel(y)},false);t.addEventListener("touchstart",function(y){w.handleTouchStart(y)},false);t.addEventListener("touchend",function(y){w.handleTouchEnd(y)},false);window.addEventListener("popstate",function(y){if(y.state){w.go(y.state)}},false);this._update()};n.prototype={_slides:[],_update:function(v){document.querySelector("#presentation-counter").innerText=this.current;if(history.pushState){if(!v){history.replaceState(this.current,"Slide "+this.current,"#slide"+this.current)}}else{window.location.hash="slide"+this.current}for(var u=this.current-1;u<this.current+7;u++){if(this._slides[u-4]){this._slides[u-4].setState(Math.max(0,u-this.current))}}},current:0,next:function(){if(!this._slides[this.current-1].buildNext()){this.current=Math.min(this.current+1,this._slides.length);this._update()}},prev:function(){this.current=Math.max(this.current-1,1);this._update()},go:function(u){this.current=u;this._update(true)},_notesOn:false,showNotes:function(){var u=this._notesOn=!this._notesOn;e(".notes").forEach(function(v){v.style.display=(notesOn)?"block":"none"})},switch3D:function(){o(document.body,"three-d")},handleWheel:function(u){var v=0;if(u.wheelDelta){v=u.wheelDelta/120;if(r){v=-v}}else{if(u.detail){v=-u.detail/3}}if(v>0){this.prev();return}if(v<0){this.next();return}},handleKeys:function(u){if(/^(input|textarea)$/i.test(u.target.nodeName)){return}switch(u.keyCode){case 37:this.prev();break;case 39:case 32:this.next();break;case 50:this.showNotes();break;case 51:this.switch3D();break}},_touchStartX:0,handleTouchStart:function(u){this._touchStartX=u.touches[0].pageX},handleTouchEnd:function(v){var w=this._touchStartX-v.changedTouches[0].pageX;var u=150;if(w>u){this.next()}else{if(w<-u){this.prev()}}},};var i=new n(e(".slide"))})();
+</script>
+</body>
+</html>

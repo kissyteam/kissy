@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+
+	
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc">
+	
+
+
+<div class="note">
+<pre class='brush:javascript;'>
+//给字段配置 data-showerror,页面初始化的时候就会自动显示你配置的信息
+//应用场景：客户端检验成功，但是服务器短校验失败，开发可以在字段增加 data-showerror="" 这个伪属性，就能很方便的打印出错误信息
+&lt;input class="text" type="text" data-showerror="这是一个错误"...
+</pre>
+</div>
+
+<form method="post">
+<ul class="form">
+
+	<li>
+		<label class="hd">姓名：</label>
+		<input class="text" type="text" data-showerror="这是一个错误" data-valid="{trim:'姓名两端不能含有空格',initError:'这是初始化显示的一个错误'}"/>
+	</li>
+	
+	<li>
+		<button type="submit">提交</button> 
+	</li>
+	
+</ul>
+</form>
+
+<script>
+
+
+
+	KISSY.use("validation",function(S,Validation){
+
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+		
+	});
+
+</script>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

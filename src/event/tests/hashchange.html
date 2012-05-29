@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>hashchange history</title>
+</head>
+<body>
+<button onclick="window.location.hash='#t'+(+new Date())">
+    设置hash
+</button>
+<style>#test {
+    height: 30px;
+    margin: 20px auto;
+    border: 1px solid #aaa;
+    line-height: 2;
+}</style>
+<div id="test"></div>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+
+<script src="../base.js"></script>
+<script src="../object.js"></script>
+<script src="../target.js"></script>
+<script src="../focusin.js"></script>
+<script src="../mouseenter.js"></script>.
+<script src="../hashchange.js"></script>
+<script src="../delegate.js"></script>
+<script src="../valuechange.js"></script>
+<script src="../../event.js"></script>
+
+<script src="../../../build/node.js"></script>
+
+<script>
+    KISSY.use("dom,event,event/hashchange", function(S, DOM, Event) {
+        debugger
+        Event.on(window, "hashchange", function(ev) {
+            DOM.get('#test').innerHTML = location.hash;
+        });
+    });
+
+</script>
+</body>
+</html>

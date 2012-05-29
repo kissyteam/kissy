@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../../build/css/reset.css" />
+<script src="../../../build/kissy.js"></script>
+<script src="../src/color.js"></script>
+<script src="../src/data.js"></script>
+<script>
+    KISSY.config({
+        packages : {
+            chart : {
+                path : '../'
+            }
+        }
+    })
+</script>
+<style>
+  html {
+    background:#333;
+  }
+  .colors {
+    clear:both;
+    height:10px;
+    padding:1px;
+  }
+  .colors li {
+    float:left;
+    width:10px;height:10px;
+    margin:0 1px;
+  }
+  #c:hover .colors:hover {
+    opacity:1;
+  }
+  #c {
+    margin:10px;
+    float:left;
+  }
+  #c:hover .colors {
+    opacity:0.1;
+  }
+  h1 {
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-size:20px;
+    color:#888;
+  }
+</style>
+</head>
+<body>
+    <h1>自动颜色生成</h1>
+    <div id="c"></div>
+    <script>
+        KISSY.use("chart/data",function(S,Data){
+            var currentUl,color,colorLi,
+                Dom = S.DOM,
+                getdefaultcolor = Data.prototype.getDefaultColor;
+            for(var i = 1; i< 50; i++){
+                var currentUl = Dom.create("<ul class=\"colors\"/>");
+                for(var j = 0; j < i; j++){
+                    color = getdefaultcolor(j,i);
+                    colorLi = Dom.create("<li style='background:"+color+"'>");
+                    S.one(currentUl).append(colorLi);
+                }
+                S.one("#c").append(currentUl);
+            }
+        });
+    </script>
+</body>
+</html>

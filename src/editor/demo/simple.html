@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Editor Test</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+<link href="../src/editor/theme/editor-common.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/elementpath.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/upload.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/bubbleview.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/button.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/draft.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/editor.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/tab.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/table.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/select.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/resize-plugin.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/overlay.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/menu.css" rel="stylesheet"/>
+</head>
+<body>
+<h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
+
+
+<div id="container" style="width: 90%;margin: 20px auto;">
+    <button onclick="window.editor.destroy();">destroy</button>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/htmlparser.js"></script>
+<script src="../../../build/dd.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/overlay.js"></script>
+<!--
+core
+-->
+
+<script src="../src/editor/core/base.js"></script>
+<script src="../src/editor/core/dom.js"></script>
+<script src="../src/editor/core/domIterator.js"></script>
+<script src="../src/editor/core/meta.js"></script>
+<script src="../src/editor/core/elementPath.js"></script>
+<script src="../src/editor/core/focusManager.js"></script>
+<script src="../src/editor/core/range.js"></script>
+<script src="../src/editor/core/selection.js"></script>
+<script src="../src/editor/core/styles.js"></script>
+<script src="../src/editor/core/utils.js"></script>
+<script src="../src/editor/core/walker.js"></script>
+<script src="../src/editor/core/zIndexManager.js"></script>
+<script src="../src/editor.js"></script>
+<!--
+core plugins
+-->
+<script src="../src/editor/core/clipboard/index.js"></script>
+<script src="../src/editor/core/enterKey/index.js"></script>
+<script src="../src/editor/core/htmlDataProcessor/index.js"></script>
+<script src="../src/editor/core/selection/index.js"></script>
+<!--
+other plugins
+-->
+<script>
+KISSY.config({
+    base:'../src/'
+});
+KISSY.use('editor', function (S, Editor) {
+
+    var cfg = {
+        // 是否初始聚焦
+        focused:true,
+        autoRender:true,
+        attachForm:true,
+        baseZIndex:10000,
+        //自定义样式
+        //customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
+        //自定义外部样式
+        //customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
+        //是否一开始自动聚焦
+        //focus:true,
+        pluginConfig:{
+            link:{
+                target:"_blank"
+            },
+            "image":{
+                // remote:false,
+                upload:{
+                    serverUrl:"upload.php",
+                    serverParams:{
+                        waterMark:function () {
+                            return S.one("#ke_img_up_watermark_1")[0].checked;
+                        }
+                    },
+                    suffix:"png,jpg,jpeg,gif",
+                    fileInput:"Filedata",
+                    sizeLimit:1000, //k
+                    extraHtml:"<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
+                }
+            },
+            "flash":{
+                "defaultWidth":"300",
+                "defaultHeight":"300"
+            },
+            "templates":[
+                {
+                    demo:"模板1效果演示html",
+                    html:"<div style='border:1px solid red'>模板1效果演示html</div><p></p>"
+                },
+                {
+                    demo:"模板2效果演示html",
+                    html:"<div style='border:1px solid red'>模板2效果演示html</div>"
+                }
+            ],
+            "fontSize":{
+                defaultValue:"14px",
+                items:[
+                    {
+                        value:"14px",
+                        attrs:{
+                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        },
+                        name:"" +
+                                " <span style='font-size:14px'>标准</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>14px</span>"
+                    },
+                    {
+                        value:"16px",
+                        attrs:{
+                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        },
+                        name:"" +
+                                " <span style='font-size:16px'>大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>16px</span>"
+                    },
+                    {
+                        value:"18px",
+                        attrs:{
+                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        },
+                        name:"" +
+                                " <span style='font-size:18px'>特大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>18px</span>"
+                    },
+                    {
+                        value:"20px",
+                        attrs:{
+                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        },
+                        name:"" +
+                                " <span style='font-size:20px'>极大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>20px</span>"
+                    }
+                ],
+                width:"115px"
+            },
+            //"font-size":false,
+            "fontFamily":{
+                defaultValue:"SimSun"
+            },
+            "multipleUpload":{
+                serverUrl:"upload.php",
+                serverParams:{
+                    waterMark:function () {
+                        return S.one("#ke_img_up_watermark_2")[0].checked;
+                    }
+                },
+                //previewSuffix:"_60x60",
+                "previewWidth":"80px",
+                sizeLimit:1000, //k,, numberLimit:15,
+                extraHtml:"<p style='margin-top:10px;'>" +
+                        "<input type='checkbox' " +
+                        "style='vertical-align:middle;margin:0 5px;' " +
+                        "id='ke_img_up_watermark_2'>" +
+                        "<span style='vertical-align:middle;'>图片加水印，防止别人盗用</span></p>"
+            },
+            "video":{
+                urlCfg:[
+                    {
+                        reg:/tudou\.com/i,
+                        url:"http://bangpai.daily.taobao.net/json/getTudouVideo.htm",
+                        paramName:"url"
+                    }
+                ],
+                "urlTip":"请输入优酷网、土豆网、酷7网的视频播放页链接...",
+                "providers":[
+                    {
+                        // 允许白名单
+                        reg:/taohua\.com/i,
+                        //默认高宽
+                        width:480,
+                        height:400,
+                        detect:function (url) {
+                            return url;
+                        }
+                    },
+                    {
+                        reg:/youku\.com/i,
+                        width:480,
+                        height:400,
+                        detect:function (url) {
+                            var m = url.match(/id_([^.]+)\.html$/);
+                            if (m) {
+                                return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                            }
+                            m = url.match(/v_playlist\/([^.]+)\.html$/);
+                            if (m) {
+                                return;
+                                //return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                            }
+                            return url;
+                        }
+                    },
+                    {
+                        reg:/tudou\.com/i,
+                        width:480,
+                        height:400,
+                        detect:function (url) {
+                            return url;
+                        }
+                    },
+                    {
+                        reg:/ku6\.com/i,
+                        width:480,
+                        height:400,
+                        detect:function (url) {
+                            var m = url.match(/show[^\/]*\/([^.]+)\.html$/);
+                            if (m) {
+                                return "http://player.ku6.com/refer/" + m[1] + "/v.swf";
+                            }
+                            return url;
+                        }
+                    }/*,
+                     {
+                     reg:/taobaocdn\.com/i,
+                     width:480,
+                     height:400,
+                     detect:function(url) {
+                     return url;
+                     }
+                     }*/
+                ]
+            },
+            "draft":{
+                // 当前编辑器的历史是否要单独保存到一个键值而不是公用
+                // saveKey:"xxx",
+                interval:5,
+                limit:10,
+                "helpHtml":"<div " +
+                        "style='width:200px;'>" +
+                        "<div style='padding:5px;'>草稿箱能够自动保存您最新编辑的内容，" +
+                        "如果发现内容丢失，" +
+                        "请选择恢复编辑历史</div></div>"
+            },
+            "resize":{
+                //direction:["y"]
+            },
+
+            "dragUpload":{
+                suffix:"png,jpg,jpeg,gif",
+                fileInput:"Filedata",
+                sizeLimit:1000,
+                serverUrl:"upload.php",
+                serverParams:{
+                    waterMark:function () {
+                        return true;
+                    }
+                }
+            }
+        },
+        render:"#container",
+        width:'100%',
+        height:"400px"
+    };
+
+    window.editor = new Editor(cfg)
+            .use(
+            "sourceArea" +
+                    ",separator" +
+                    ",bold," +
+                    "italic," +
+                    "fontFamily," +
+                    "fontSize," +
+                    "strikeThrough," +
+                    "underline," +
+                    "separator" +
+                //",checkboxSourcearea" +
+                    ",image" +
+                    ",link" +
+                    ",foreColor" +
+                    ",backColor" +
+                    ",resize" +
+                    ",draft" +
+                    ",undo" +
+                    ",indent" +
+                    ",outdent" +
+                    ",insertUnorderedList" +
+                    ",insertOrderedList" +
+                    ",elementPath" +
+                    ",pageBreak" +
+                    ",preview" +
+                    ",maximize" +
+                    ",removeFormat" +
+                    ",heading" +
+                    ",justifyLeft" +
+                    ",justifyCenter" +
+                    ",justifyRight" +
+                    ",table" +
+                    ",smiley" +
+                    ",flash" +
+                    ",xiamiMusic" +
+                    ",multipleUpload" +
+                    ",video" +
+                    ",dragUpload", function () {
+                this.on("blur", function () {
+                    S.log("editor blur");
+                });
+                this.on("selectionChange", function (e) {
+                    S.log("selectionChange : " + e.path.toString());
+                });
+            });
+
+
+});
+</script>
+</body>
+</html>

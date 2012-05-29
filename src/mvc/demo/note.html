@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+    .note {
+        border: 1px solid red;
+    }
+</style>
+</head>
+<body>
+
+<h1 style="width:400px;margin: 10px auto;">KISSY NoteBook</h1>
+<!--搜索列表界面-->
+<div id="search" style="display:none" class="page">
+    <p><input class="searchInput" /> <button class="searchBtn">search by name </button>
+        &nbsp;
+ <input class="backBtn" type="button" value="back"/>
+    </p>
+    <div class="searchList">
+
+    </div>
+</div>
+
+
+<!--笔记列表的搜索模板-->
+<script type="template" id="searchTpl">
+    {{#each list as l}}
+    <div id='{{l.id}}' class='note'>
+        <p>{{l.title}} @ {{l.time}}</p>
+    </div>
+    {{/each}}
+</script>
+
+<!--笔记列表主界面-->
+<div id="list" style="display:none" class="page">
+    <div>
+        <button class="newNote">new</button>
+        <button class="refreshNote">refresh</button>
+        &nbsp;
+        <input class="searchInput" /> <button class="searchNote">search by name </button>
+    </div>
+    <!--笔记列表容器-->
+    <div class="dataList">
+
+    </div>
+
+    <div>
+        Recent Changed/Created/Deleted Note @ <span class="statistic"></span>
+    </div>
+
+</div>
+
+<!--编辑笔记界面容器-->
+<div id="edit" style="display:none" class="page">
+</div>
+
+<div id="loading">
+    <h2 style="width:300px;margin: 100px auto;">Loading ...</h2>
+</div>
+
+
+<!-- 单个笔记的模板 -->
+<script type="template" id="noteTpl">
+    <p>{{note.title}} @ {{note.time}}</p>
+    <button class="edit">edit/view</button>
+    <button class="delete">delete</button>
+</script>
+
+<!--笔记列表的模板-->
+<script type="template" id="listTpl">
+    {{#each list as l}}
+    <div id='{{l.id}}' class='note'>
+        <p>{{l.title}} @ {{l.time}}</p>
+        <button class="edit">edit/view</button>
+        <button class="delete">delete</button>
+    </div>
+    {{/each}}
+</script>
+
+<!--编辑笔记界面的模板-->
+<script type="template" id="detailTpl">
+    <p>title：<input class='title' value='{{note.title}}'/></p>
+    <p>content:<textarea style="width:200px;height:200px;" class="content">{{note.content}}</textarea></p>
+    <button class="submit">submit</button>
+</script>
+<script
+src = "../../../build/kissy-min.js?x=201111211221" ></script>
+<script
+src = "../../../build/template-min.js?x=201111211221" ></script>
+<script
+src = "../../../build/mvc-min.js?x=201111211221" ></script>
+<script>
+    KISSY.config({
+       packages:[
+            {
+                name:'note',
+                tag:'201111211221',
+                 path:'./note_html5/'
+            }
+       ]
+    });
+    KISSY.use("note/main");
+</script>
+</body>
+</html>

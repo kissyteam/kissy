@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Html Beautifier</title>
+</head>
+<body>
+<h1 style="margin: 10px auto;text-align: center;"> KISSY Html Beautifier </h1>
+
+<label>
+    <textarea id="before" style="width:80%;height: 300px;">
+        &lt;div id="name"> <!--测试 comment--> &lt;style type='text/css'>body{color:red};&lt;/style>
+        &lt;script type='text/javascript'>alert('&lt;/body>');&lt;/script>
+        &lt;div> &lt;a href="http://docs.kissyui.com">&lt;div> test &lt;span>
+        test2 &lt;/span> test3 &lt;/div>&lt;/a> &lt;/div>
+        &lt;p>
+        &lt;textarea>&lt;div>in textarea&lt;/div>&lt;/textarea>
+        &lt;/p>
+        &lt;p>
+        &lt;input type='text' value='xx' />
+        &lt;/p>
+        &lt;/div>
+    </textarea>
+</label>
+<br><br>
+<label>
+    fix html by xhtml dtd ：<input id='fixByDtd' type="checkbox"/>
+</label>
+<br/>
+<label>
+    auto paragraph in root：<input id='autoParagraph' type="checkbox"/>
+</label>
+<br>
+<br/>
+<button id="start">beautify</button>
+<br/>
+<label>
+    <textarea id="after" style="width:80%;height: 300px;"></textarea>
+</label>
+
+<script src="../../../build/kissy.js"></script>
+<script>
+
+    KISSY.use("htmlparser", function (S, HtmlParser) {
+        var $ = S.all;
+        $("#after").val("");
+        var start = $("#start");
+        start.on("click", function () {
+            var writer = new HtmlParser.BeautifyWriter(),
+                    filter = new HtmlParser.Filter(),
+                    before = S.trim($("#before").val()),
+                    n = new HtmlParser.Parser(before, {
+                        fixByDtd:$("#fixByDtd").prop("checked"),
+                        autoParagraph:$("#autoParagraph").prop("checked")
+                    }).parse();
+
+            filter.addRules({
+                tags:{
+                    $:function (el) {
+                        S.log("$:  " + el.tagName);
+                    }
+                },
+                text:function (v) {
+                    S.log("text:  " + v);
+                },
+                comment:function (v) {
+                    S.log("comment:  " + v);
+                },
+                cdata:function (v) {
+                    S.log("cdata:  " + v);
+                }
+            });
+
+
+            n.writeHtml(writer);
+
+            $("#after").val(writer.getHtml());
+        });
+    });
+</script>
+</body>
+</html>

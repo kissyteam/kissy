@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>高级共享模式</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+<link href="../assets/default.css" rel="stylesheet"/>
+
+</head>
+<body>
+<h1>从已有节点渲染</h1>
+<div style="margin:10px auto; width:80%;text-align: center">
+    <h2>
+        dynamic
+    </h2>
+    <input id="inp"/>
+</div>
+
+<h1>全新产生新节点</h1>
+<div style="margin:10px auto; width:800px;text-align: center" id="newNew">
+    <h2>
+        dynamic
+    </h2>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/inputRender.js"></script>
+<script src="../src/input.js"></script>
+<script src="../src/autocomplete.js"></script>
+<script src="../src/menu.js"></script>
+<script src="../src/menuRender.js"></script>
+<script src="../src/localDataSource.js"></script>
+<script src="../src/remoteDataSource.js"></script>
+<script src="../src/basic.js"></script>
+<script src="../src/BasicComboBox.js"></script>
+<script src="../src/BasicComboBoxRender.js"></script>
+<script>
+    KISSY.use("autocomplete", function (S, AutoComplete) {
+
+        var autCompleteMenu = new AutoComplete.Menu();
+
+        /*
+         remote dataSource
+         */
+        (function () {
+
+            window.autoComplete = new AutoComplete.Basic({
+                srcNode:S.one("#inp"),
+                menu:autCompleteMenu,
+                xhrCfg:{
+                    url:'./interface.php',
+                    dataType:'json'
+                },
+                dataSourceCfg:{
+                    paramName:"start"
+                }
+            });
+
+            autoComplete.render();
+        })();
+
+
+        (function () {
+
+            window.autoComplete2 = new AutoComplete.Basic({
+                menu:autCompleteMenu,
+                render:"#newNew",
+                xhrCfg:{
+                    url:'./interface.php',
+                    dataType:'json'
+                },
+                dataSourceCfg:{
+                    paramName:"start",
+                    cache:true
+                },
+                maxItemCount:5,
+                format:function (query, data) {
+                    var ret = [];
+                    for (var i = 0; i < data.length; i++) {
+                        ret[i] = {
+                            content:(data[i] + "")
+                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    "<b>$&</b>"),
+                            disabled:(i % 2 ? true : false)
+                        };
+                    }
+                    return ret;
+                }
+            });
+
+            autoComplete2.render();
+
+            autoComplete2.on("select", function (e) {
+                var item = e.target;
+                alert(item.get("value") + "\n" + item.get("content") +
+                        "\n" + item.get("textContent"));
+            });
+        })();
+
+        S.log(window.autoComplete == window.autoComplete2);
+    });
+</script>
+</body>
+</html>

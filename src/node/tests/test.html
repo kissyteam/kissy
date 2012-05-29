@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Node Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<script src="../../../tools/third-party/jquery.js" charset="utf-8"></script>
+<script src="../../../build/seed.js" charset="utf-8"></script>
+<script src="../../../build/ua.js" charset="utf-8"></script>
+<script src="../../../build/dom.js" charset="utf-8"></script>
+<script src="../../../build/event.js" charset="utf-8"></script>
+<script src="../../../build/anim.js" charset="utf-8"></script>
+<script>
+    jQuery.noConflict();
+    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+</script>
+<script src="../src/base.js"></script>
+<script src="../src/attach.js"></script>
+<script src="../src/override.js"></script>
+<script src="../src/anim.js"></script>
+<script src="../src/node.js"></script>
+</head>
+<body>
+<h1>KISSY Node Test Cases</h1>
+<textarea>
+    <div id="foo">
+        <ul id="bar">
+            <li><a id="link-a" href="#">link a</a></li>
+            <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>
+            <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>
+            <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>
+            <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>
+            <li><a id="link-f" href="#">link f</a></li>
+            <li><a id="link-g" href="#">link g</a></li>
+            <li><a id="link-h" href="#">link h</a></li>
+            <li><a id="link-s" href="#">link s</a></li>
+            <li><a id="link-test-this" href="#">link for test this</a></li>
+            <li><a id="link-test-this-dom" href="#">link for test this</a></li>
+            <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>
+        </ul>
+
+        <div id="link-detach">
+            <div>1</div>
+            <div>2</div>
+        </div>
+
+        <div id="test2">#test2</div>
+        <div id="test6">#test6</div>
+
+        <button id="cb">click</button>
+    </div>
+</textarea>
+<script src="node-spec.js"></script>
+<script src="event-spec.js"></script>
+<script src="anim-spec.js"></script>
+<script>
+    KISSY.use("node", function(S, Node) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function() {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
+    });
+</script>
+</body>
+</html>

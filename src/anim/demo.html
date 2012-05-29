@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>S.Anim Demo</title>
+<link href="../../build/css/reset.css" rel="stylesheet"/>
+
+<script src="../../build/seed.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/json.js"></script>
+<script src="./src/easing.js"></script>
+<script src="./src/base.js"></script>
+<script src="./src/manager.js"></script>
+<script src="./src/color.js"></script>
+<script src="./src/fx.js"></script>
+<script src="./src/queue.js"></script>
+<script src="./src/backgroundPosition.js"></script>
+<script src="./src/anim.js"></script>
+<script src="../../build/node.js"></script>
+<style>
+    body {
+        padding: 20px
+    }
+
+    hr {
+        height: 1px;
+        border: none;
+        color: #ccc;
+        background-color: #ccc;
+        margin: 10px -10px
+    }
+
+    button {
+        margin-bottom: 5px;
+        padding: 2px 5px
+    }
+</style>
+</head>
+<body>
+
+<button id="test1-btn">run #test1</button>
+<div id="test1" style="width: 10px; height: 20px; position: absolute; top: 20px; left: 120px; text-align: center; color: #999">^o^</div>
+<hr>
+
+<button id="test2-btn">run #test2</button>
+<div id="test2" style="width: 50px; height: 20px; text-align: center; position: relative; border: 1px solid green; background: #bca">test2</div>
+<hr>
+
+<button id="test3-btn">run .test3</button>
+<div class="test3"
+     id="test31"
+     style="width: 80px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #478F45; background: #BDE877">test3 a
+</div>
+<div class="test3"
+     id="test32"
+     style="width: 80px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #C18F5A; background: #F7CA9B">test3 b
+</div>
+<hr>
+
+<button id="test4-btn">run #test4</button>
+<div id="test4" style="width: 200px; height: 80px; text-align: center; overflow: hidden; background: #bca">test4</div>
+<hr>
+
+<button id="test5-btn">run #test5</button>
+<div id="test5" style="width: 100px; height: 20px; border: 1px solid #333; padding: 20px">test</div>
+<hr>
+
+<button id="test6-btn">run #test6 slideUp</button>
+<button id="test6-btn2">run #test6 slideDown</button>
+<div id="test6" style="width: 100px; height: 100px; background-color: #ccc;">#test6</div>
+
+<hr>
+<button id="test-opacity">run opacity</button>
+
+<div id='test7' style="width: 100px; height: 100px; background-color: #ccc;">test-opacity</div>
+
+
+<hr>
+<button id="test-scroll">run scroll</button>
+<div id="test8" style="width:100px;overflow:hidden;border:1px solid red;">
+    <div style="width:500px;">
+        1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
+        6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
+        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,
+        0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
+        6,7,8,9,0,1,2,3,4,5
+        ,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
+        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,
+    </div>
+
+</div>
+<hr>
+<a href="./demo/game.html" target="_blank">淘公仔抽奖</a>
+
+<!-- Test Cases -->
+<script>
+    KISSY.use("anim,node", function(S, Anim, Node) {
+
+        var NodeList = Node,
+                Easing = Anim.Easing;
+
+
+        Node.one('#test1-btn').on('click', function() {
+            var anim2 = Anim(
+                    '#test1',
+                    'background-color: #fcc; ' +
+                            'border: 5px dashed #999; ' +
+                            'width: 100px; ' +
+                            'height: 40px; ' +
+                            'left: 900px; ' +
+                            'top: 285px; ' +
+                            'opacity: .5;' +
+                            ' border-color: #999;' +
+                            ' font-size: 48px; ' +
+                            'padding: 30px 0; ' +
+                            'color: #FF3333',
+                    5,
+                    'bounceOut'),
+
+                    anim = Anim(
+                            '#test1',
+                            'width: 50px; height: 40px; left: 500px; background: #cfc; border: 1px solid #ddd;'
+                                    + "font: 22px Chiller, Batang, serif; "
+                                    + "padding-top: 10px",
+                            3,
+                            Easing.elasticOut,
+                            function() {
+                                anim2.run();
+                            });
+            anim.run();
+        });
+
+        Node.one('#test2-btn').on('click', function() {
+            Node.one('#test2').animate('left: 500px', 3, 'backOut');
+        });
+
+        Node.one('#test3-btn').on('click', function() {
+            NodeList.all('.test3').animate('left: 800px', 5, Easing.elasticOut);
+        });
+
+        // test for 0
+        Node.one('#test4-btn').on('click', function() {
+            Node.one('#test4').animate('width: 0', 3, 'easeOutStrong');
+        });
+
+        // test for color #rgb
+        Node.one('#test5-btn').on('click', function() {
+            Node.one('#test5').animate({ backgroundColor: '#000', color: '#fff' }, 3, 'easeOutStrong');
+        });
+
+        // test for slideUp/slideDown
+        Node.one('#test6-btn').on('click', function() {
+            Node.one('#test6').slideUp();
+        });
+        Node.one('#test6-btn2').on('click', function() {
+            Node.one('#test6').slideDown();
+        });
+
+
+        Node.one("#test-opacity").on("click", function() {
+            Node.one("#test-opacity")[0].disabled = true;
+            Node.one("#test7").animate({
+                opacity:0
+            }, 2, undefined, function() {
+                Node.one("#test7").animate({
+                    opacity:1
+                }, 2, undefined, function() {
+                    Node.one("#test-opacity")[0].disabled = false;
+                });
+            });
+        });
+
+
+        Node.one("#test-scroll").on("click", function() {
+            Node.one("#test-scroll")[0].disabled = true;
+            Node.one("#test8").animate({
+                scrollLeft:500
+            }, 5, undefined, function() {
+                Node.one("#test8").animate({
+                    scrollLeft:0
+                }, 5, undefined, function() {
+                    Node.one("#test-scroll")[0].disabled = false;
+                });
+            });
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

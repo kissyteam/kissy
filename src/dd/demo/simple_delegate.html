@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>简单拖放委托实现</title>
+<style>
+
+    .container {
+        border: 1px solid red;
+        height: 450px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .component {
+        margin: 50px 10px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border: 1px solid black;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        overflow: hidden;
+    }
+
+    .cheader {
+        cursor: move;
+        border: 1px solid black;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    #drop, #drop3 {
+        border: 1px solid green;
+        height: 130px;
+        line-height: 100px;
+    }
+
+    .ks-dd-drag-over {
+        background: #a52a2a;
+    }
+
+    .ks-dd-drop-over {
+        background: #fa8072;
+    }
+
+    #container3 .component .cheader {
+        cursor: move;
+    }
+</style>
+</head>
+<body>
+
+<h2>简单拖放委托实现</h2>
+<div id="container3" class="container">
+
+    <div class="component">
+        <div class="cheader">
+            拖动头
+        </div>
+        delegate drag
+    </div>
+
+    <button id="add_delegate">add delegate drag</button>
+
+
+    <div id="drop3">
+        drop zone
+    </div>
+</div>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ddm.js"></script>
+<script src="../src/draggable-delegate.js"></script>
+<script src="../src/draggable.js"></script>
+<script src="../src/droppable-delegate.js"></script>
+<script src="../src/droppable.js"></script>
+<script src="../src/proxy.js"></script>
+<script src="../src/scroll.js"></script>
+<script src="../src/constrain.js"></script>
+<script src="../src/dd.js"></script>
+<script>
+
+    var S = KISSY;
+
+    KISSY.use("node,dd", function (S, Node, DD) {
+        var DDM = DD.DDM,
+                $ = Node.all,
+                DraggableDelegate = DD.DraggableDelegate,
+                Draggable = DD.Draggable,
+                Droppable = DD.Droppable,
+                Proxy = DD.Proxy;
+
+        /**
+         * 委托拖放
+         */
+        S.ready(function () {
+
+            var p = new Proxy({
+                /**
+                 * 如何产生替代节点
+                 * @param drag 当前拖对象
+                 */
+                node:function (drag) {
+                    var n = $(drag.get("dragNode").clone(true));
+                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.css("opacity", 0.2);
+                    return n;
+                },
+                //每次都生成新节点
+                destroyOnEnd:true,
+                moveOnEnd:0
+            });
+
+            var delegate = new DraggableDelegate({
+                container:"#container3",
+                move:1,
+                handlers:['.cheader'],
+                selector:'.component'
+            });
+
+            p.attachDrag(delegate);
+
+            var drop = new Droppable({
+                node:"#drop3"
+            });
+
+            var c = 0;
+            $("#add_delegate").on("click", function () {
+                new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
+                        + (++c) + '</div>')
+                        .prependTo("#container3");
+            });
+        });
+
+
+    });
+
+
+</script>
+</body>
+</html>

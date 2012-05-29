@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="seed.build" default="build" basedir=".">
+    <description>Seed Build File</description>
+
+    <property name="component.name" value="seed"/>
+    <property name="src.dir" location="./src/"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+
+    <target name="concat">
+        <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path location="${src.dir}/kissy.js"/>
+            <path location="${src.dir}/lang.js"/>
+            <path location="${src.dir}/promise.js"/>
+
+            <!--kissy loader start-->
+            <path location="${src.dir}/loader/base.js"/>
+            <path location="${src.dir}/loader/target.js"/>
+            <path location="${src.dir}/loader/utils.js"/>
+            <path location="${src.dir}/loader/cssOnload.js"/>
+            <path location="${src.dir}/loader/getScript.js"/>
+            <path location="${src.dir}/loader/configs.js"/>
+            <path location="${src.dir}/loader/loader.js"/>
+            <path location="${src.dir}/loader/use.js"/>
+            <path location="${src.dir}/loader/ComboLoader.js"/>
+            <path location="${src.dir}/loader/init.js"/>
+
+            <!--kissy loader end-->
+            <path location="${src.dir}/web.js"/>
+            <path location="${src.dir}/meta.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="concat,common.build">
+
+    </target>
+</project>

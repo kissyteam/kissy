@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Seed Test Runner</title>
+<link rel="stylesheet" href="../../../../../tools/jasmine/jasmine.css">
+<script src="../../../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../../../build/seed.js" charset="utf-8"></script>
+</head>
+<body>
+<script>
+    var S = KISSY;
+    S.config({
+        "combine":true,
+        "packages":[
+            {
+                name:"p",
+                path:'./'
+            }
+        ],
+        map:[
+            [/\?t=\d+/, ""]
+        ]
+    });
+    S.add({
+        "p/a":{
+            requires:["./b","core"]
+        }
+    })
+    S.use("p/a", function (S, A) {
+        S.log(A);
+    });
+</script>
+</body>
+</html>

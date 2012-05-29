@@ -1,0 +1,43 @@
+<script type="text/javascript" src="../../../../build/seed.js"></script>
+<script type="text/javascript" src="../../base.js"></script>
+<script type="text/javascript" src="../../xhrobject.js"></script>
+<script type="text/javascript" src="../../iframe-upload.js"></script>
+<script type="text/javascript" src="../../form-serializer.js"></script>
+<script type="text/javascript" src="../../form.js"></script>
+<script type="text/javascript" src="../../jsonp.js"></script>
+<script type="text/javascript" src="../../script.js"></script>
+<script type="text/javascript" src="../../xhr.js"></script>
+<script type="text/javascript" src="../../xdr.js"></script>
+<script type="text/javascript" src="../../../ajax.js"></script>
+
+<form method="post" enctype="multipart/form-data" id="f">
+    <input name="test4[]" value="t6"/>
+    <input name="test4[]" value="t7"/>
+    <select name="test[]" multiple>
+        <option value="t1" selected>v</option>
+        <option value="t2" selected>v2</option>
+    </select>
+</form>
+
+<script type="text/javascript">
+    KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
+    KISSY.ready(function(S) {
+        S.use("ajax", function(S, io) {
+            io({
+                url:"upload.php",
+                form:'#f',
+                data:{
+                    "test2":["t2","t3"],
+                    "test3":"t4"
+                },
+                success:function(data) {
+                    console.log(data);
+                },
+                //timeout:1,
+                type:'post',
+                // dataType:'xml',
+                dataType:'json'
+            });
+        });
+    });
+</script>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>mousewheel compatibility</title>
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+
+<script src="../../base.js"></script>
+<script src="../../object.js"></script>
+<script src="../../target.js"></script>
+<script src="../../focusin.js"></script>
+<script src="../../mouseenter.js"></script>
+<script src="../../delegate.js"></script>
+<script src="../../valuechange.js"></script>
+<script src="../../hashchange.js"></script>
+<script src="../../keycodes.js"></script>
+<script src="../../submit.js"></script>
+<script src="../../change.js"></script>
+<script src="../../mousewheel.js"></script>
+<script src="../../utils.js"></script>
+<script src="../../../event.js"></script>
+<style type="text/css">
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+<h1>mousewheel compatibility</h1>
+<button id="detach">detach</button>
+<div id='t' style="width:500px;border: 1px solid red;height:200px">
+    mousewheel on me
+</div>
+<p style="color: red">
+    note:<br/>
+    not perfect on mac osx with accelerated scroll
+</p>
+<script>
+    var S = KISSY;
+
+    KISSY.use("dom,event", function(S, DOM, Event) {
+        var t = DOM.get("#t");
+        var tmpl = "<p>" +
+                "wheelDelta:{wheelDelta}<br/>" +
+                "axis:{axis}<br/>" +
+                "wheelDeltaY:{wheelDeltaY}<br/>" +
+                "wheelDeltaX:{wheelDeltaX}<br/>" +
+                "detail:{detail}<br/>" +
+                "delta:{delta}<br/>" +
+                "deltaX:{deltaX}<br/>" +
+                "deltaY:{deltaY}<br/>" +
+                "</p>";
+        var tt;
+        Event.on(t, "mousewheel", tt = function(e) {
+
+            DOM.html(t, S.substitute(tmpl, {
+                wheelDelta:e.wheelDelta,
+                axis:e.axis,
+                wheelDeltaY:e.wheelDeltaY,
+                wheelDeltaX:e.wheelDeltaX,
+                detail:e.detail,
+                delta:e.delta,
+                deltaX:e.deltaX,
+                deltaY:e.deltaY
+            }));
+
+            e.preventDefault();
+
+        });
+
+        Event.on("#detach", "click", function() {
+            Event.remove(t, "mousewheel", tt);
+        });
+
+
+    });
+
+</script>
+</body>
+</html>

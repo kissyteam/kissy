@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div class="note">
+
+<pre class="brush: js;">
+//Validation.Rule.toString(rulename)方法可以很方便的打印出校验规则
+//方便查看校验规则的实现方法，知道要传入哪些参数
+
+//例如：
+console.log(Validation.Rule.toString("func"););
+
+</pre>
+
+</div>
+
+
+
+<div id="viewdemo" class="doc">
+
+<div id="see" class='highlighterbox'>
+	
+</div>
+
+<div style="margin:10px 0;">
+	
+	<select id="rulelist">
+		<option>- 请选择要查看的规则 -</option>
+		<option>func</option>
+		<option>regex</option>
+		<option>required</option>
+		<option>equalTo</option>
+		<option>length</option>
+		<option>minLength</option>
+		<option>maxLength</option>
+		<option>fiter</option>
+		<option>range</option>
+		<option>group</option>
+		<option>trim</option>
+		<option>ltrim</option>
+		<option>rtrim</option>
+		<option>chinese</option>
+		<option>english</option>
+		<option>currency</option>
+		<option>phone</option>
+		<option>mobile</option>
+		<option>url</option>
+		<option>email</option>
+	</select>
+
+	<!--<input type="text" id="rulename" value="func" /> <button type="button" id="btn">查看</button>-->
+	
+</div>
+
+
+
+<script>
+
+
+	KISSY.use("validation",function(S,Validation){
+	
+		var input = S.one("#rulename"),
+			see = S.one("#see");
+	
+		function getcode(name){
+			return Validation.Rule.toString(name);
+		}
+		
+
+		
+		
+		S.Event.on("#rulelist", "change", function(ev){
+			var tg = ev.target,
+				option = tg.options[tg.selectedIndex].text;
+			if(option)see.html("<pre>"+getcode(option)+"</pre>");
+			
+		});
+		
+		//S.get("#rulelist").value="func";
+		//see.html("<pre>"+(getcode("func"), "js")+"</pre>");
+		
+
+	});
+	
+
+</script>
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

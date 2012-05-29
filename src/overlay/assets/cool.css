@@ -1,0 +1,148 @@
+.ks-dialog, .ks-overlay {
+    position: absolute; /*防止移位带来的闪烁*/
+    left: -9999px;
+    top: -9999px;
+}
+
+.ks-dialog, .ks-popup {
+    background-color: #FBFBFB;
+    border: 1px solid #ACB4BE;
+}
+
+.ks-dialog .ks-stdmod-header {
+    background: repeat-x scroll 0 0 #D6DBE2;
+    background-image: url("dialog-hd.png");
+    border-bottom: 1px solid #ACB4BE;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 0 0 18px;
+}
+
+.ks-ext-close {
+    height: 18px;
+    width: 18px;
+    border: 1px solid transparent;
+    right: 6px;
+    top: 6px;
+    vertical-align: middle;
+    position: absolute;
+    text-decoration: none;
+    outline: none;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.ks-ext-close .ks-ext-close-x {
+    display: block;
+    background: no-repeat;
+    background-image: url("close.png");
+    height: 13px;
+    text-indent: -9999px;
+    width: 13px;
+    margin: 2.5px;
+}
+
+.ks-ext-close:hover {
+    border: 1px solid #CED5E0;
+    background: white;
+}
+
+.ks-ext-mask {
+    background-color: #000;
+    opacity: 0.3;
+    filter: alpha(opacity = 15);
+}
+
+.ks-ext-loading {
+    opacity: 0.3;
+    filter: alpha(opacity = 15);
+    background: #000 center center no-repeat scroll;
+    background-image: url("loading.gif");
+}
+
+.ke-global-loading .ks-ext-loading {
+    background-attachment: fixed;
+}
+
+.ks-overlay .ks-resizable-handler {
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+}
+
+.ks-overlay .ks-resizable-handler-b {
+    height: 15px;
+    width: 100%; /*background-color: yellow;*/
+    /*-15px ie6 cross iframe shim*/
+    bottom: -15px;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-overlay .ks-resizable-handler-t {
+    height: 15px;
+    width: 100%; /*background-color: yellow;*/
+    top: -15px;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-overlay .ks-resizable-handler-l {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight);
+    width: 15px; /*background-color: yellow;*/
+    top: 0;
+    left: -15px;
+    cursor: e-resize;
+}
+
+.ks-overlay .ks-resizable-handler-r {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight); /*background-color: yellow;*/
+    width: 15px;
+    position: absolute;
+    top: 0;
+    right: -15px;
+    cursor: e-resize;
+}
+
+.ks-overlay .ks-resizable-handler-bl {
+    height: 15px;
+    width: 15px; /*background-color: green;*/
+    z-index: 1;
+    bottom: -15px;
+    left: -15px;
+    cursor: sw-resize;
+}
+
+.ks-overlay .ks-resizable-handler-br {
+    height: 15px;
+    width: 15px;
+    z-index: 1; /*background-color: green;*/
+    bottom: -15px;
+    right: -15px;
+    cursor: se-resize;
+}
+
+.ks-overlay .ks-resizable-handler-tl {
+    height: 15px;
+    width: 15px;
+    z-index: 1; /*background-color: green;*/
+    top: -15px;
+    left: -15px;
+    cursor: nw-resize;
+}
+
+.ks-overlay .ks-resizable-handler-tr {
+    height: 15px;
+    width: 15px;
+    z-index: 1; /*background-color: green;*/
+    top: -15px;
+    right: -15px;
+    cursor: ne-resize;
+}

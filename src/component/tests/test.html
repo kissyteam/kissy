@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Component Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<style>
+    html, body {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+</head>
+<body>
+<h1>KISSY Component Test Cases</h1>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/controller.js"></script>
+<script src="../src/container.js"></script>
+<script src="../src/decorateChild.js"></script>
+<script src="../src/decorateChildren.js"></script>
+<script src="../src/delegateChildren.js"></script>
+<script src="../src/render.js"></script>
+<script src="../src/uistore.js"></script>
+<script src="../src/component.js"></script>
+
+
+<script src="../src/uibase/align.js"></script>
+<script src="../src/uibase/base.js"></script>
+<script src="../src/uibase/box.js"></script>
+<script src="../src/uibase/boxrender.js"></script>
+<script src="../src/uibase/close.js"></script>
+<script src="../src/uibase/closerender.js"></script>
+<script src="../src/uibase/constrain.js"></script>
+<script src="../src/uibase/contentbox.js"></script>
+<script src="../src/uibase/contentboxrender.js"></script>
+<script src="../src/uibase/drag.js"></script>
+<script src="../src/uibase/loading.js"></script>
+<script src="../src/uibase/loadingrender.js"></script>
+<script src="../src/uibase/mask.js"></script>
+<script src="../src/uibase/maskrender.js"></script>
+<script src="../src/uibase/position.js"></script>
+<script src="../src/uibase/positionrender.js"></script>
+<script src="../src/uibase/resize.js"></script>
+<script src="../src/uibase/shimrender.js"></script>
+<script src="../src/uibase/stdmod.js"></script>
+<script src="../src/uibase/stdmodrender.js"></script>
+<script src="../src/uibase.js"></script>
+<script src="uibase-spec.js"></script>
+<script src="align-spec.js"></script>
+<script src="component-spec.js"></script>
+<script>
+    KISSY.use("component", function (S, Component) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function () {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

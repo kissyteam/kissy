@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+
+	
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc">
+	
+
+
+<div class="note">
+	<p>目前Auth内置Alert,Static,Float,Fixed四个提示类，其中Static,Fixed支持自定义提示信息模版，响应事件等等。</p>
+
+	下面表格name列的值都可以直接用来配置错误信息显示样式，例如：
+	<pre class='brush:javascript;'>
+		var check = new Validation(form,{
+			style: "under"	//错误信息提示样式
+		});
+	</pre>
+	
+	不过你也可以字定义配置event，class，template等
+	<pre class='brush:javascript;'>
+		var check = new Validation(form,{
+			warn: "Static",	//指定使用Static类
+			event: 'blur',	//响应事件
+			invalidClass: 'errclass', //字段校验失败后，给字段增加的样式
+			template: '&lt;label class="Validation-text"&gt;&lt;span class="estate"&gt;&lt;em class="label"&gt;&lt;/em&gt;&lt;/span&gt;&lt;/label&gt;' //显示错需信息的模版
+		});
+	</pre>
+
+</div>
+
+
+
+
+
+			<div class="table">
+				<table cellspacing="5">
+					<colgroup>
+						<col width="100" />
+						<col width="200" />
+						<col width="100" />
+						<col />
+					</colgroup>
+					<thead>
+						<tr>
+							<th colspan="4">Alert</th>
+						</tr>
+						<tr class="subtitle">
+							<th>name</th>
+							<th>event</th>
+							<th>invalidClass</th>
+							<th>template</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr class="subtitle">
+							<td>text</td>
+							<td>-</td>
+							<td>vailInvalid</td>
+							<td>-</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
+
+
+
+			<div class="table">
+				<table cellspacing="5">
+					<colgroup>
+						<col width="100" />
+						<col width="200" />
+						<col />
+					</colgroup>
+					<thead>
+						<tr>
+							<th colspan="3">Static</th>
+						</tr>
+						<tr class="subtitle">
+							<th>name</th>
+							<th>event</th>
+							<th>template</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr class="subtitle">
+							<td>text</td>
+							<td>focus blur keyup</td>
+							<td>&lt;label class="Validation-text"&gt;&lt;span class="estate"&gt;&lt;em class="label"&gt;&lt;/em&gt;&lt;/span&gt;&lt;/label&gt;</td>
+						</tr>
+						
+						<tr class="subtitle">
+							<td>siderr</td>
+							<td>focus blur keyup</td>
+							<td>&lt;div class="Validation-siderr"&gt;&lt;p class="estate"&gt;&lt;s&gt;&lt;/s&gt;&lt;span class="label"&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</td>
+						</tr>
+						
+						<tr class="subtitle">
+							<td>under</td>
+							<td>focus blur keyup</td>
+							<td>&lt;div class="Validation-under"&gt;&lt;p class="estate"&gt;&lt;span class="label"&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</td>
+						</tr>
+
+						<tr class="subtitle">
+							<td>sidebd</td>
+							<td>focus blur</td>
+							<td>&lt;div class="Validation-sidebd"&gt;&lt;p class="estate"&gt;&lt;span class="label"&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+
+			
+			
+			<div class="table">
+				<table cellspacing="5">
+					<colgroup>
+						<col width="100" />
+						<col width="200" />
+						<col width="100" />
+						<col />
+					</colgroup>
+					<thead>
+						<tr>
+							<th colspan="4">Float</th>
+						</tr>
+						<tr class="subtitle">
+							<th>name</th>
+							<th>event</th>
+							<th>invalidClass</th>
+							<th>template</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr class="subtitle">
+							<td>text</td>
+							<td>focus blur keyup</td>
+							<td>vailInvalid</td>
+							<td>&lt;div class="Validation-float" style="display:none;"&gt;&lt;div class="msg"&gt;&nbsp;&lt;/div&gt;&lt;s&gt;◥◤&lt;/s&gt;&lt;/div&gt;</td>
+						</tr>
+
+
+
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

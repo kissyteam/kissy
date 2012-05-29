@@ -1,0 +1,44 @@
+/*
+KISSY CSS Reset for Post Content
+适用：以大段文字展示为主的内容区块
+维护：玉伯(lifesinger@gmail.com)
+*/
+
+/* require(reset.css) */
+
+.ks-post {
+    /* big font make content more readable */
+    font: 14px/1.8 verdana,tahoma,arial,sans-serif;
+}
+.ks-post blockquote, .ks-post ul, .ks-post ol, .ks-post dl {
+	/* giving blockquotes and lists room to breath */
+	margin: 1em;
+}
+.ks-post ul, .ks-post ol, .ks-post dl {
+	/* bringing lists on to the page with breathing room */
+	margin-left: 2em;
+}
+.ks-post ol li {
+	/* giving OL's LIs generated numbers */
+	list-style: decimal outside;
+}
+.ks-post ul li {
+	/* giving UL's LIs generated disc markers */
+	list-style: disc outside;
+}
+.ks-post dl dd {
+	/* providing spacing for definition terms */
+	margin-left: 1em;
+}
+.ks-post th, .ks-post td {
+	/* padding to make the table readable */
+	padding: .5em;
+}
+.ks-post caption {
+	/* coordinated margin to match cell's padding */
+	margin-bottom: .5em;
+}
+.ks-post p, .ks-post fieldset, .ks-post table, .ks-post pre {
+	/* so things don't run into each other */
+	margin-bottom: 1em;
+}

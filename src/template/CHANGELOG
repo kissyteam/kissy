@@ -1,0 +1,35 @@
+KISSY.Template Changelog:
+
+2010-09-22  yyfrankyy   <yyfrankyy@gmail.com>
+  * 根据new Function的思路，实现了一遍Micro Template，增加一些接口.
+
+2010-11-02  yyfrankyy   <yyfrankyy@gmail.com>
+  * 调整部分接口，实现一个较为复杂的用例，P4P.
+
+2010-11-10  yyfrankyy   <yyfrankyy@gmail.com>
+  * 迁移到kissy目录,去掉micro-template的全部转为js.
+  * 按照原来的接口，规划好部分单元测试用例.
+
+2010-12-15  yyfrankyy   <yyfrankyy@gmail.com>
+  * 重构为白名单机制，语法支持扩展.
+  * 增加js-templates-benchmark和其他模板做一下性能对比.
+  * 重写测试用例.
+
+2010-12-20  yyfrankyy   <yyfrankyy@gmail.com>
+  * 增加调试信息,可通过加载jsbeauty来得到格式良好的预处理的模板方法.
+  * 调整变量作用域,增加容错.
+
+2010-12-21  yyfrankyy   <yyfrankyy@gmail.com>
+  * 标签起始关闭重构为单一方法.
+  * 增加文档.
+
+2011-03-31  yyfrankyy   <yyfrankyy@gmail.com>
+  * 自定义表达式支持多参数传递,定义为function的时候会将参数split为数组, 直接传递
+    给表达式定义方法.
+  * 利用上述特性,each现在支持{{#each obj as value index}}自定义变量名.
+
+2011-09-20 yiminghe@gmail.com
+   * code style change
+   * remove reg cache , ugly to see
+   * fix escape by escape
+   * * expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');

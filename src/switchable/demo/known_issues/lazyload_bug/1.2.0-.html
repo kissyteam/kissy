@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+    ul, li {
+        margin: 0;
+        border: 0;
+        list-style: none;
+    }
+
+    #demo1, #demo2 {
+        width: 750px;
+        padding-top: 29px;
+    }
+
+    #demo2 {
+        width: 500px;
+    }
+
+    .ks-switchable-nav {
+        zoom: 1;
+        overflow: hidden;
+    }
+
+    .ks-switchable-nav li {
+        float: left;
+        width: 130px;
+        height: 21px;
+        line-height: 21px;
+        text-align: center;
+        background: url(../assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+
+    .ks-switchable-nav li.ks-active {
+        background-position: 0 -40px;
+        cursor: default;
+    }
+
+    .ks-switchable-content {
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</style>
+</head>
+<body>
+<div id="demo1" class="s-demo">
+    <ul class="ks-switchable-nav">
+        <li>tab 1</li>
+        <li>tab 2</li>
+        <li>tab 3</li>
+    </ul>
+    <div class="ks-switchable-content">
+        <div style="display: none">
+            <div id="demo2" class="s-demo">
+                <ul class="ks-switchable-nav">
+                    <li>tab 1-1</li>
+                    <li>tab 1-2</li>
+                    <li>tab 1-3</li>
+                </ul>
+                <div class="ks-switchable-content">
+                    <div style="display: none">
+                        <a href="#">内容 1-1</a>
+                    </div>
+                    <div style="display: none">
+                        <textarea class="ks-datalazyload-custom">
+                            <a href="#">内容 1-2</a>
+                        </textarea>
+                    </div>
+                    <div style="display: none">
+                        <textarea class="ks-datalazyload-custom">
+                            <a href="#">内容 1-3</a>
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none">
+            <a href="#">内容 2</a>
+        </div>
+        <div style="display: none">
+            <a href="#">内容 3</a>
+        </div>
+    </div>
+</div>
+<script src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+
+        S.use("datalazyload,switchable", function (S, _, Switchable) {
+            var Tabs = Switchable.Tabs;
+            window.tabs = new Tabs('#demo2', {
+                // aria:false 默认 true，支持 aria
+                switchTo:0,
+                triggerType:"click"
+            });
+        });
+
+        S.use("switchable", function (S, Switchable) {
+            var Tabs = Switchable.Tabs;
+            window.tabs2 = new Tabs('#demo1', {
+                // aria:false 默认 true，支持 aria
+                switchTo:0,
+                triggerType:"click"
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

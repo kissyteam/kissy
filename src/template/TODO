@@ -1,0 +1,13 @@
+KISSY.Template TODO.
+
+* 内置tag扩展性
+  [ ] 增强扩展性,支持自定义tag,目前已支持,不过不够安全.
+  [*] each方法增加 key-value 的特定参数名,把 _ks_value, _ks_index 作为默认值提供.
+  [ ] 支持模板嵌套
+
+* 增加配置选项
+  [ ] 增加silent配置,模板错误时不输出任何错误信息.
+  [ ] 增加缓存控制,不对任意模板进行缓存.用于运行时动态更新模板.
+
+* 集成KISSY接口
+  [-] 提供一些KISSY内置接口(DOM, Node, Ajax, Data)

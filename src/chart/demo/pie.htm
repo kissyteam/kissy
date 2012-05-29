@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>chart demo</title>
+    <link rel="stylesheet" href="../../../build/css/reset-min.css" />
+    <link rel="stylesheet" href="../assets/chart.css" />
+    <script src="../../../build/kissy.js"></script>
+</head>
+<body>
+<canvas style="background:#fff;" id="chart1" width="600" height="400"></canvas>
+<script>
+KISSY.use("chart", function(S,Chart){
+    var pie = Chart("#chart1",{
+        type : "pie",
+        element : {
+            datas : [5,1/3,1/2,1/6],
+            names : ["1212","AAA","BBB","CCC"]
+        },
+        config : {
+            //colors : ["#aaa","#999","#666"],
+            backgroundStyle : {
+                start : "#222",
+                end : "#666"
+            },
+            showLabels : true
+        }
+    });
+});
+
+</script>
+<canvas style="background:#ddd;" id="chart2" width="800" height="300"></canvas>
+<script>
+KISSY.use("chart", function(S,Chart){
+
+    var pie = Chart("#chart2",{
+        type : "pie",
+
+        element : {
+            datas : [3400,2234,423,2345,1553,147,2134,3345,999],
+            names : ["A","B","C","D","E","F","G","H","I"],
+            label : '{name} - {data}'
+        },
+        config : {
+            backgroundStyle :"#000",
+            showLabels : false,
+            numberFormat : "0,000.00",
+            firstPieOut : true
+        }
+    });
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+/* = index
+----------------------------------------------------------------------------------*/
+
+		/* Modules:= 页面布局 {{{ */
+
+			body {
+				margin:10px 0 0 0;
+				font-family:'Microsoft YaHei';
+			}
+
+			.doc{
+				margin:20px 0 0 0;
+			}
+
+			.note {
+				padding:10px;
+				background-color:#E5F5FF;
+				margin:10px 0 20px 0;
+			}
+
+			.highlighterbox {
+				display: block;
+				margin: 5px 0 0;
+				padding: 10px;
+				font-size: 14px;
+				font-family: 'consolas';
+				background: #EFE;
+				border: 1px solid #DDD;
+			}
+
+			.hidden {
+				display:none !important;
+			}
+		/* }}} */
+
+
+
+
+		/* Modules:= 页面布局 {{{ */
+
+			.intro {
+				width:750px;
+				margin:10px 0 10px 0;
+			}
+
+			.intro h2{
+				font-size:14px;
+			}
+
+			.intro ul{
+				margin:10px 0 10px 10px;
+			}
+
+		/* }}} */
+
+
+		/* Modules:= 页面布局 {{{ */
+
+			.eg {
+				margin:20px 0 0 0;
+				padding:10px;
+				border:1px solid #ccc;
+			}
+
+			.eg h3{
+				margin-bottom:10px;
+				font-size:14px;
+			}
+
+			.form{
+				margin:10px;
+			}
+
+			.form li {
+				margin-bottom:15px;
+				padding-left:90px;
+			}
+
+			.form .hd {
+				float:left;
+				text-align:left;
+				margin-left:-90px;
+				width:80px;
+			}
+
+			.form input.text, .form textarea.text, .form img.code {
+				vertical-align:middle;
+				height:18px;line-height:18px;
+				padding:3px 3px 2px;
+				border:1px solid #BDC7D8;
+			}
+			.form button {
+				padding:3px 5px;
+			}
+
+
+		/* }}} */
+
+
+
+
+
+	/* Modules:= 页面布局 {{{ */
+
+
+		#viewcode, #viewdemo{
+			border:1px solid #ccc;
+			padding:10px;
+			margin:10px 0;
+			border-radius: 3px;
+		}
+
+		#viewdemo h2 {
+			margin:0 0 10px 0;
+		}
+
+		#viewcode h2 {
+			padding:5px;
+		}
+		#viewcode h2:hover {
+			background:#B0C4DE;
+			border-radius: 3px;
+		}
+
+		.codeview{
+			display:none;
+		}
+
+
+
+	/* }}} */
+
+
+
+
+
+
+
+
+	/* Modules:= 表格样式 {{{ */
+
+
+		.table{
+			width:98%;overflow:hidden;
+			padding:1px;
+			border:1px solid #999;
+			margin-bottom:10px;
+		}
+
+		.table table{
+			width:100%;
+		}
+
+		.table thead th{
+			height:20px;
+			padding:5px;
+			color:#000;
+			text-align:left;
+			background-color:#ccc;
+		}
+
+		.table thead tr.subtitle th{
+			padding:5px;
+			color:#fff;
+			text-align:left;
+			background-color:#666;
+		}
+
+
+
+		.table tbody td{
+			padding:5px;
+			background-color:#fff;
+			border-bottom:1px solid #fff;
+		}
+
+
+
+
+	/* }}} */
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Suggest Test</title>
+
+<link href="../../build/css/reset.css" rel="stylesheet"/>
+<script src="../../build/kissy.js"></script>
+
+<script src="../src/suggest.js"></script>
+
+<style>
+    #page {
+        padding: 50px 50px 300px;
+        width: 950px;
+        margin: 0 auto;
+        line-height: 18px;
+        background: #999;
+    }
+
+    h1, h2, h3 {
+        margin: 1em 0 0.3em;
+    }
+
+    .section ol {
+        margin: 5px 20px;
+    }
+
+    .section ol li {
+        list-style: decimal inside;
+        margin: 5px 0;
+    }
+
+    .search-input {
+        width: 300px;
+        height: 20px;
+        padding: 3px 2px 2px 4px;
+    }
+
+    .search-submit {
+        padding: 4px 10px;
+        margin-left: 5px;
+    }
+
+    html {
+        overflow-y: scroll;
+    }
+</style>
+</head>
+<body>
+<div id="page">
+    <h1>Suggest: </h1>
+    <form name="search" method="get" action="http://s.taobao.com/search">
+        <input type="hidden" value="" name="sort"/>
+        <input type="hidden" value="D9_5_1" name="f"/>
+        <input type="hidden" value="" name="promote"/>
+        <input type="hidden" value="2" name="isnew"/>
+        <input type="hidden" value="b" name="atype"/>
+        <input type="hidden" value="all" name="commend"/>
+        <input type="hidden" value="auction" name="search_type"/>
+        <input type="hidden" value="initiative" name="user_action"/>
+        <input type="hidden" value="s1-e" name="ssid"/>
+
+        <input name="q" id="q" class="search-input"/>
+
+        <button type="submit" class="search-submit">Search</button>
+    </form>
+
+    <div class="section">
+        <h2>Features:</h2>
+        <ol>
+            <li>提示补全基本功能</li>
+            <li>完全跨域</li>
+            <li>小巧精简，仅依赖 ks-core, 压缩后不超过 9k</li>
+            <li>支持所有 A 级浏览器</li>
+            <li>cache 功能</li>
+            <li>支持键盘控制：上下选择及回车后直接提交，ESC 键关闭</li>
+            <li>支持鼠标控制：鼠标选择和点击提交功能</li>
+            <li>[DELAY] 支持匹配文字加亮</li>
+            <li>[DELAY] 动画效果</li>
+            <li>[DELAY] 在提示层中显示第一个搜索结果</li>
+            <li>[DELAY] 整合本地表单的提示记录</li>
+            <li>[DELAY] 关键词的模糊匹配提示功能</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Test Cases:</h2>
+        <ol>
+            <li>基本功能：输入时有提示，键盘操作，鼠标操作，点击提交按钮可正常提交</li>
+            <li>用 Del 或 Backspace 键将输入清空时，提示层隐藏</li>
+            <li>当返回结果为空时，提示层隐藏</li>
+            <li>点击提示层外面，能关闭提示层</li>
+            <li>ESC 键能关闭提示层。并且当有选中项时，再次打开能还原输入值</li>
+            <li>鼠标悬浮在提示层，继续输入时，取消选中项</li>
+            <li>服务器超慢的处理（抛弃旧请求，只显示最新结果）</li>
+            <li>鼠标选中某项 + 点击 or 键盘选中某项 + 回车 时，会触发 itemSelect</li>
+            <li>先用鼠标选中某项，然后从侧边绕过提示层移动到输入框，ENTER 提交，不触发 itemSelect</li>
+            <li>服务器超时和返回错误数据时的容错</li>
+            <li>鼠标点击选中，触发表单提交时，能触发 form 的 onsubmit 事件</li>
+            <li>ie6 下，能覆盖 select</li>
+            <li>在主流输入法开启时测试</li>
+            <li>在所有 A 级浏览器下测试</li>
+            <li>持续按下 DOWN/UP 键时，选中操作流畅自然（注意 Opera 下无效）</li>
+            <li>在提示层任意处按下鼠标，保持按住状态，移动到提示层外释放鼠标，这时输入框应该保持 focus 状态</li>
+            <li>在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 itemSelect</li>
+            <li>在提示层 A 项处按下鼠标，移动鼠标到其它地方，最后移动回 A 处释放，触发 itemSelect</li>
+            <li>输入法开启，通过 enter 键输入英文时，不会触发提交</li>
+            <li>选中某项，ESC 键关闭，再次通过 keydown 打开时，能保持原来的选中项</li>
+            <li>没有选中项，ESC 键关闭，再次通过 keydown 打开时，依旧没有选中项</li>
+            <li>当输入框为空时，按下 PgDn/PgUp/Home/End/Down/Up 键，输入框失去焦点，页面正常响应控制键</li>
+            <li>onresize 时，位置能自动调整</li>
+            <li>输入框处于焦点，点击 footer 区域，比如 同店购 三个字，提示层不会关闭</li>
+            <li>输入框处于焦点，点击 footer 区域的输入框，提示层不会关闭</li>
+            <li>切花 footer 区域的输入框焦点，提示层不会关闭</li>
+            <li>footer 区域的输入框聚焦时，点击提示层外面，提示层关闭</li>
+            <li>提示层打开时，点击 iframe 区域，提示层关闭</li>
+            <li>在提示层点击右键，不会触发关闭或表单提交等操作</li>
+            <li>input 框的宽度动态改变时，提示层显示时宽度自动自适应</li>
+            <li>webkit 下，在输入框中输入文字，按下 UP 键，光标不会跳动到最前面去</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>References:</h2>
+        <ol>
+            <li><a href="http://www.cnbeta.com/articles/84703.htm">Google 搜索建议升级</a></li>
+            <li><a href="http://developer.yahoo.com/yui/autocomplete/">YUI AutoComplete</a></li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Crazy Test:</h2>
+
+        <h3>dataBeforeRequest 和 dataReturn 事件：( 请输入 pig 和 dog )</h3>
+        <form name="search2" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
+            <input class="search-input" name="q" id="q2"/>
+            <button type="submit" class="search-submit">Search</button>
+        </form>
+
+        <h3>beforeShow 和 itemSelect 事件：</h3>
+        <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+            <input class="search-input" name="q" id="q3"/>
+            <button type="submit" class="search-submit">Search</button>
+        </form>
+
+        <h3>beforeStart 事件 和 beforeSubmit 事件：</h3>
+        <form id="form6" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+            <input class="search-input" name="q" id="q6"/>
+            <button type="submit" class="search-submit">Search</button>
+            <input type="radio" name="rel" checked value="1"/> 开启提示
+            <input type="radio" name="rel" value="0"/> 关闭提示
+        </form>
+
+        <h3>测试提示层宽度和遮罩：</h3>
+        <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
+            <input name="q" id="q4" style="margin-left: 100px"/>
+            <button type="submit">Search</button>
+        </form>
+        <br>
+        <select>
+            <option>你能把我遮罩住吗，嘿嘿 你能把我遮罩住吗你能把我遮罩住吗</option>
+        </select>
+        <br>
+        <br>
+        <iframe src="../../../"></iframe>
+
+        <h3>有啊有啊哈哈哈：</h3>
+        <form name="search7" method="get" action="http://youa.baidu.com/search/s" target="_blank">
+            <input class="search-input" name="keyword" id="q5"/>
+            <button type="submit" class="search-submit">百度一下</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    KISSY.use("dom,suggest", function(S,DOM, Suggest) {
+        S.ready(function(S) {
+            var dataUrl = 'http://suggest.taobao.com/sug';
+            //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
+            //var dataUrl = 'http://192.168.208.18:8090/sug';
+
+            // 淘宝搜索
+            var sug = new Suggest('#q', dataUrl, {
+                autoFocus: true,
+                resultFormat: '约%result%个宝贝'
+            });
+
+            sug.on('updateFooter', function() {
+                this.footer.innerHTML = '<form _fieldname="q" method="get" action="/search" style="padding: 5px 0">' +
+                        '<input type="hidden" name="q">' +
+                        '<input type="hidden" value="tdg1" name="from">' +
+                        '同店购：<input type="text" _default="第一件宝贝" class="input" style="width: 60px" index="0"><em>+</em><input type="text" style="width: 60px" _default="另一宝贝" class="input blur" index="1"><em>+</em><input type="text"  style="width: 60px" _default="另一宝贝" class="input blur" index="2"> <button class="ms-btn" type="submit">搜索</button>' +
+                        '</form>';
+            });
+
+            // 测试事件
+            var sug2 = new Suggest('#q2', dataUrl);
+            sug2.on('beforeDataRequest', function() {
+                if (this.query === 'pig') {
+                    alert('你输入的是：' + this.query);
+                }
+            });
+            sug2.on('dataReturn', function() {
+                if (this.query === 'dog') {
+                    alert('返回的数据是：' + this.returnedData);
+                }
+            });
+
+            // 测试事件2
+            var sug3 = new Suggest('#q3', dataUrl);
+            sug3.on('beforeShow', function() {
+                var container = this.container,
+                        list = DOM.get('ol', container);
+
+                if (list) {
+                    list.insertBefore(
+                            DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query + '" 的商品</span></li>'),
+                            DOM.get('li', list)
+                            );
+                    list.insertBefore(
+                            DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query + '" 的店铺</span></li>'),
+                            DOM.get('li', list)
+                            );
+                }
+
+                container.appendChild(document.createTextNode('我是天下无敌的广告'));
+            });
+            sug3.on('itemSelect', function() {
+                alert('你选中了：' + this.textInput.value);
+            });
+
+
+            // 测试 beforeStart / beforeSubmit 事件
+            var sug6 = new Suggest('#q6', dataUrl), form6 = DOM.get('#form6');
+            sug6.on('beforeStart', function() {
+                if (form6.rel[1].checked) {
+                    return false;
+                }
+            });
+            sug6.on('beforeSubmit', function() {
+                return false;
+            });
+
+            // 测试配置参数
+            new Suggest('#q4', dataUrl, {
+                containerWidth: '200px',
+                closeBtn: true
+            });
+
+
+            // 有啊有啊哈哈哈
+            // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
+            dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
+
+            var sug5 = new Suggest('#q5', dataUrl, {
+                charset: 'gbk',
+                callbackFn: 'suggestCallback',
+                queryName: 'keyword'
+            });
+
+            // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
+            // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+            sug5.on('dataReturn', function() {
+                var data = this.returnedData['r'] || [];
+                var result = [];
+
+                for (var i = 0, len = data.length; i < len; ++i) {
+                    result.push([data[i]['key'], data[i]['val']]);
+                }
+
+                this.returnedData = result;
+            });
+        });
+    });
+</script>
+</body>
+</html>
+

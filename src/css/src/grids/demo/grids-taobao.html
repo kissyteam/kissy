@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Grids Layout for Taobao</title>
+<link rel="stylesheet" href="../../reset.css" />
+<link rel="stylesheet" href="../../grids.css" />
+<link rel="stylesheet" href="../taobao.css" />
+<style>
+	body { font: 12px/150% tahoma, sans-serif; color: #333; }
+	#header { text-align: center; padding: 20px 0 10px; }
+	h1 { font: 22px georgia, serif; }
+	h2 { font: 14px courier new, monospace; margin-bottom: 5px; }
+	a { outline: none; text-decoration: none; }
+    a { color: #36c; }
+    a:hover, a:active { color: #f60; }
+
+    #content,
+    .grid-m, .main-wrap, .col-sub, .col-extra {
+        background: #F5F5F5 url(assets/grid-bg.png);
+    }
+    .grid-m, .main-wrap { background-color: #DDD; }
+    .main-wrap .test-box { border-color: #CCC; }
+    .col-sub { background-color: #CDE6FF; }
+    .col-sub .test-box { border-color: #B3D9FF; }
+    .col-extra { background-color: #DAF7D4; }
+    .col-extra .test-box { border-color: #B3EFAA; }
+
+    .layout { margin-bottom: 20px; }
+	.test-box { font: 18px courier new, monospace; padding: 10px; height: 90px; line-height: 90px; border: #ccc 1px solid; text-align: center; }
+	.col-width { padding: 10px; }
+
+    #content { padding: 10px 0; clear: both; }
+	#header ul { float: right; }
+	#header li { float: left; padding: 10px; }
+	#footer { padding-bottom: 80px; }
+	#footer .top { float: right; padding: 20px; }
+
+	.col-main .col-width { display: none; }
+	.w950 .col-main .col-width { display: inline; }
+
+    .w950 #header, .w950 #content, .w950 #footer { width: 950px }
+</style>
+<script>
+	window.onload = function() {
+		var trigger = document.getElementById("togglePageWidth"),
+            body = document.body,
+            is950;
+        trigger.onclick = function() {
+            is950 = body.className === "w950";
+			body.className = is950 ? "" : "w950";
+            this.innerHTML = !is950 ? "自适应宽度" : "切换为950宽";
+			return false;
+		};
+	};
+</script>
+</head>
+<body class="w950">
+<div id="header">
+    <h1>Grids Layout for Taobao</h1>
+    <ul>
+        <li><a id="togglePageWidth" href="#" hidefocus="true">自适应宽度</a></li>
+    </ul>
+</div>
+<div id="content">
+
+    <h2>通栏：.grid-m</h2>
+    <div class="layout grid-m">
+        <div class="col-main">
+            <div class="test-box">main<span class="col-width">950px</span></div>
+        </div>
+    </div>
+
+    <h2>两栏：.grid-s5m0</h2>
+    <div class="layout grid-s5m0">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">750px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+    </div>
+
+    <h2>两栏：.grid-m0s5</h2>
+    <div class="layout grid-m0s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">750px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+    </div>
+
+    <h2>三栏：.grid-s5m0e6</h2>
+    <div class="layout grid-s5m0e6">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
+
+    <h2>三栏：.grid-e6m0s5</h2>
+    <div class="layout grid-e6m0s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
+
+    <h2>三栏：.grid-m0e6s5</h2>
+    <div class="layout grid-m0e6s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
+
+    <h2>对照图</h2>
+    <p><img src="assets/grids-taobao.png" alt="淘宝常用栅格布局" /></p>
+</div>
+<div id="footer">
+    <a class="top" href="#header">返回页首</a>
+</div>
+</body>
+</html>

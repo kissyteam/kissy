@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+
+	
+</head>
+<body>
+
+
+<div id="viewdemo" class="doc">
+
+
+	<div class="note">
+		通过简单的配置就能实现复杂的验证和个性的信息提示方式</br>
+		当然你也可以很方便对Validation进行扩展</br>
+		相信KISSY Validation，他能帮你呈现个性的提示信息，还能实现复杂的表单验证逻辑 ^^</br>
+		更多灵活配置和使用方法见其他示例</br>
+	</div>
+
+
+	<form method="post" id="J_form_eg1">
+	<ul class="form">
+
+		<li>
+			<label class="hd">用户名：</label>
+			<input class="text" type="text" name="username" id="username" data-valid="{style:'under',email:['用户名字必须是email帐号']}"/>
+		</li>
+		
+		<li>
+			<label class="hd">密码：</label>
+			<input class="text" type="text" name="password" id="password" data-valid="{style:'under',length:[6,30,true]}"/>
+		</li>
+
+		<li>
+			<label class="hd">重复密码：</label>
+			<input class="text" type="text" name="password2" id="password2" data-valid="{style:'under',equalTo:['#password','两次密码不一致了']}"/>
+		</li>
+		
+		<li>
+			<label class="hd">昵称：</label>
+			<input class="text" type="text" name="nickname" id="nickname" data-valid="{style:'under',chinese:'昵称只能是中文'}"/>
+		</li>
+		
+		<li>
+			<label class="hd">个人主页：</label>
+			<input class="text" type="text" name="url" id="url" data-valid="{style:'under',url:'请输入正确的网址'}"/>
+		</li>
+		
+		<li>
+			<button type="button" id="btn">提交</button>
+		</li>
+
+	</ul>
+	</form>
+
+	<script>
+	
+		KISSY.use("validation",function(S,Validation){
+
+			var form1 = new Validation('#J_form_eg1',{
+			});
+
+
+			KISSY.Event.on('#btn',"click",function(){
+				form1.isValid();
+				return false;
+			});
+			
+		});
+
+	</script>
+
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>

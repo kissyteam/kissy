@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/dom.js"></script>
+
+<script src=".././src/easing.js"></script>
+<script src=".././src/base.js"></script>
+<script src=".././src/manager.js"></script>
+<script src=".././src/color.js"></script>
+<script src=".././src/fx.js"></script>
+<script src=".././src/queue.js"></script>
+<script src=".././src/backgroundPosition.js"></script>
+<script src=".././src/anim.js"></script>
+<script src="../../../build/node.js"></script>
+<style>
+    #test2 {
+        width: 100px;
+        height: 100px;
+        border: 1px solid red;
+    }
+</style>
+</head>
+<body>
+<div id="test1" style="position: absolute; text-align: center;overflow: hidden">^o^</div>
+<div id="test8" style="width:100px;overflow:hidden;border:1px solid red;">
+    <div style="width:500px;">
+        1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
+        6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
+        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,
+        0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
+        6,7,8,9,0,1,2,3,4,5
+        ,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
+        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,
+    </div>
+</div>
+<div id="test2">
+</div>
+<h1>KISSY.Anim Test Cases</h1>
+<script src="anim-spec.js"></script>
+<script src="advanced-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function () {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
+</script>
+</body>
+</html>

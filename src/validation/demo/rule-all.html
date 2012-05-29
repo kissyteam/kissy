@@ -1,0 +1,429 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	
+	
+	<style>
+		.doc dl {
+			margin-bottom:10px;
+			border:1px solid #ccc;
+			padding:10px;
+			margin:10px 0;
+			border-radius: 3px;
+		}
+		.doc dt {
+			font-weight:bold;
+			margin:10px 0;
+		}
+		.doc dd.t {
+			padding:0 0 0 20px;
+		}
+		
+	</style>
+
+	
+</head>
+<body>
+ 
+
+<div class="doc">
+	
+	
+	
+	<div class="note">
+		内置的校验规则可能很难满足各式各样的需求，复杂的逻辑你可以使用func自定义函数校验
+		<pre class="brush: js;">
+		{
+			func:function(){
+				//...
+				if(false){
+					return 'error mssage';
+				}
+			}
+		}
+		</pre>
+		简单的可以直接使用regex正则校验（这里提供一个正则网站<a target="_blank" href="http://www.regexlib.com/(A(erv9OQG0amDORUqPDVKDSRhIaMEfNet7dM_uVc629c32WVUX1ijQLasizRKKmruPd29JmfUppcWzWnSgYfEv21H5wKWbQnw_ankmdl0zJitbk7o8Gvey58fIZ0BxUhrVDWcWtD138fx5sVt_9hRebmBfM24bi6YzWlOrYOtfxyxJo_q9YGyFFEc17FUVvnt60))/Search.aspx?k=money&c=-1&m=-1&ps=20">http://www.regexlib.com/</a>，你可以直接搜索到很多实用的正则表达式）
+		<pre class="brush: js;">
+		{
+			regex:[^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w ]*))+\.(txt|TXT)$,'只能是txt文件']
+		}
+		</pre>
+	</div>
+	
+	
+	<form id="J_form">
+	
+	
+		<dl>
+			<dt>ajax校验：</dt>
+			<dd>
+				<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:['interface.txt']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" name="url" id="url" data-valid="{required:[false],length:[3,6,true],remote:['interface.txt']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+	
+	
+
+		
+
+		
+		
+		
+		<dl>
+			<dt>必填校验：</dt>
+			<dd>
+				<input class="text" type="text" data-valid="{}"/>
+				<input class="text" type="text"  data-valid="{required:false}"/>
+				<select data-valid="{}">
+					<option>请选择</option>
+					<option value="1">a</option>
+				</select>
+				<select multiple data-valid="{}">
+					<option value="a">a</option>
+					<option value="b">b</option>
+					<option value="c">c</option>
+				</select>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" data-valid="{}"/&gt;
+					&lt;input class="text" type="text"  data-valid="{required:false}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>正则校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{regex: [/\S{5,30}/,'姓名必须为5~30个字符']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" data-valid="{regex: [/\S{5,30}/,'姓名必须为5~30个字符']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>重复校验：</dt>
+			<dd>
+				<input class="text" type="text" name="password" id="password" data-valid="{regex:[/\S{6,30}/,'密码必须是6~30位']}"/>
+				<input class="text" type="text" name="password2" id="password2" data-valid="{equalTo:['#password','两次密码不一致']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{regex:[/\S{6,30}/,'密码必须是6~30位']}"/&gt;
+					&lt;input class="text" type="text"  data-valid="{equalTo:['#password','两次密码不一致']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>长度范围校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{length:[2,10,false,'姓名为2~10个字符']}"/>
+				<input class="text" type="text" value="中国中国111"  data-valid="{length:[6,10,true,'密码6~10个字符，一个中文算两个字符']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{length:[2,10,false,'姓名为2~10个字符']}"/&gt;
+					&lt;input class="text" type="text" value="中国中国111"  data-valid="{length:[6,10,true,'密码6~10个字符，一个中文算两个字符']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		<dl>
+			<dt>最大长度校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{maxLength:[5,false,'最大长度为{0}个字符']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{maxLength:[5,false,'最大长度为{0}个字符']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>最小长度校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{minLength:[5,false,'最小长度为{0}个字符']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{minLength:[5,false,'最小长度为{0}个字符']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		<dl>
+			<dt>最小长度校验：</dt>
+			<dd>
+				<input  type="file" name="fiter" id="fiter2" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input  type="file" name="fiter" id="fiter" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>上传类型校验：</dt>
+			<dd>
+				<input  type="file" name="fiter" id="fiter" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input  type="file" name="fiter" id="fiter" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		<dl>
+			<dt>数字范围校验：</dt>
+			<dd>
+				<input class="text" type="text" name="age" id="age" data-valid="{range:[18,35,'只能是18~35周岁']}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" name="age" id="age" data-valid="{range:[18,35,'只能是18~35周岁']}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		
+		<dl>
+			<dt>复选框数量校验：</dt>
+			<dd>
+				<div>
+					<label><input type="checkbox" name="love" value="1"> 足球</label>
+					<label><input type="checkbox" name="love" value="2"> 篮球</label>
+					<label><input type="checkbox" name="love" value="3"> 排球</label>
+					<label><input type="checkbox" name="love" value="4"> 高尔夫球</label>
+					<label><input type="checkbox" name="love" value="5"> 羽毛球</label>
+					<label><input type="checkbox" name="love" value="6" data-valid="{group:[2,4,'请选2~4项爱好']}"> 乒乓球</label>
+				</div>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="1"&gt; 足球&lt;/label&gt;
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="2"&gt; 篮球&lt;/label&gt;
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="3"&gt; 排球&lt;/label&gt;
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="4"&gt; 高尔夫球&lt;/label&gt;
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="5"&gt; 羽毛球&lt;/label&gt;
+					&lt;label&gt;&lt;input type="checkbox" name="love" value="6" data-valid="{group:[2,4,'请选2~4项爱好']}"&gt; 乒乓球&lt;/label&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		<dl>
+			<dt>空格校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{trim:'姓名两端不能含有空格'}"/>
+				<input class="text" type="text" data-valid="{ltrim:'左侧不能含有空格'}"/>
+				<input class="text" type="text"  data-valid="{rtrim:'右侧不能含有空格'}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{trim:'姓名两端不能含有空格'}"/&gt;
+					&lt;input class="text" type="text" data-valid="{ltrim:'左侧不能含有空格'}"/&gt;
+					&lt;input class="text" type="text"  data-valid="{rtrim:'右侧不能含有空格'}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		<dl>
+			<dt>中文校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{chinese:'只能是中文'}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{chinese:'只能是中文'}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		<dl>
+			<dt>英文校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{english:'只能是英文字母'}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{english:'只能是英文字母'}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		
+		
+		<dl>
+			<dt>金额校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{currency:'请输入正确的价格'}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{currency:'请输入正确的价格'}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		
+		<dl>
+			<dt>电话校验：</dt>
+			<dd>
+				<input class="text" type="text" data-valid="{mobile:true}"/>
+				<input class="text" type="text"  data-valid="{phone:true}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" data-valid="{mobile:true}"/&gt;
+					&lt;input class="text" type="text"  data-valid="{phone:true}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		
+		
+		<dl>
+			<dt>url校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{url:true}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text"  data-valid="{url:true}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		
+		
+		
+		
+		<dl>
+			<dt>email校验：</dt>
+			<dd>
+				<input class="text" type="text"  data-valid="{email:true}"/>
+			</dd>
+			<dd>
+				<pre class='brush:javascript;'>
+					&lt;input class="text" type="text" data-valid="{email:true}"/&gt;
+				</pre>
+			</dd>
+		</dl>
+		
+		
+		<button type="button" id="btn">提交</button>
+		
+	
+	
+	</form>
+
+	
+	
+	<script>
+
+		KISSY.use("validation",function(S,Validation){
+
+			var form = new Validation('#J_form',{
+				event: "blur",
+				style: 'under'
+			});
+			
+
+			
+			KISSY.Event.on('#btn',"click",function(){
+				console.log(form);
+				form.isValid();
+				return false;
+			});
+			
+		});
+
+	</script>
+
+	
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Html Minifier</title>
+</head>
+<body>
+<h1 style="margin: 10px auto;text-align: center;"> KISSY Html Minifier </h1>
+
+<label>Before：
+    <textarea id="before" style="width:80%;height: 300px;">&lt;div&nbsp;id=&quot;name&quot;&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--测试&nbsp;comment--&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;style&nbsp;type=&quot;text&#x2F;css&quot;&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body{color:red};
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;style&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;script&nbsp;type=&quot;text&#x2F;javascript&quot;&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(&#x27;&lt;&#x2F;body&gt;&#x27;);
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;script&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;&lt;span&gt;&nbsp;test2&nbsp;&lt;&#x2F;span&gt;&nbsp;test3
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;div&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;div&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;span&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;textarea&gt;&lt;div&gt;in&nbsp;textarea&lt;&#x2F;div&gt;&lt;&#x2F;textarea&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;p&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;span&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;text&quot;&nbsp;value=&quot;xx&quot;&nbsp;&#x2F;&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;p&gt;
+        &lt;&#x2F;div&gt;
+    </textarea>
+</label>
+<br><br>
+<label>
+    fix html by xhtml dtd ：<input id='fixByDtd' type="checkbox"/>
+</label>
+<br/>
+<label>
+    auto paragraph in root：<input id='autoParagraph' type="checkbox"/>
+</label>
+<br>
+<br/>
+<button id="start">minify</button>
+<br/>
+<label>After：
+    <textarea id="after" style="width:80%;height: 300px;"></textarea>
+</label>
+
+<script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.use("htmlparser", function (S, HtmlParser) {
+        var $ = S.all;
+        $("#after").val("");
+        var start = $("#start");
+        start.on("click", function () {
+            var writer = new HtmlParser.MinifyWriter(),
+                    before = S.trim($("#before").val()),
+                    n = new HtmlParser.Parser(before, {
+                        fixByDtd:$("#fixByDtd").prop("checked"),
+                        autoParagraph:$("#autoParagraph").prop("checked")
+                    }).parse();
+
+            n.writeHtml(writer);
+
+            $("#after").val(writer.getHtml());
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>portal</title>
+<style>
+    #cols {
+        width: 1000px;
+    }
+
+    #leftCol, #rightCol {
+
+        margin: 0 50px;
+        float: left;
+
+        border: 1px solid red;
+    }
+
+    #rightCol {
+        border: 1px solid green;
+    }
+
+    .component {
+        width: 100px;
+        height: 100px;
+        margin: 50px;
+        border: 1px solid purple;
+    }
+
+    .col .header {
+        border-bottom: 1px solid purple;
+        cursor: move;
+    }
+
+    .ks-dd-dragging * {
+        visibility: hidden;
+    }
+
+    .ks-dd-dragging {
+        border: 2px blue dashed;
+    }
+
+    .ks-dd-drop-over {
+        background: #ffff00;
+    }
+</style>
+</head>
+<body>
+<h1> portal demo</h1>
+<p>
+    拖动 header 调整组件与布局栏的位置
+</p>
+
+<div id="cols">
+    <div class="header">
+        dfasdfasdf
+    </div>
+    <div id="leftCol" class="col" style=" width: 350px;height: 500px;">
+
+        <div class="header">
+            draggble col 1
+        </div>
+
+        <div class="component">
+            <div class="header">
+                draggble component 1
+            </div>
+        </div>
+
+    </div>
+
+    <div id="rightCol" class="col" style=" width: 350px;height: 500px;">
+
+        <div class="header">
+            draggble col 2
+        </div>
+
+        <div class="component">
+            <div class="header">
+                draggble component 2
+            </div>
+        </div>
+
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ddm.js"></script>
+<script src="../src/draggable-delegate.js"></script>
+<script src="../src/draggable.js"></script>
+<script src="../src/droppable-delegate.js"></script>
+<script src="../src/droppable.js"></script>
+<script src="../src/proxy.js"></script>
+<script src="../src/scroll.js"></script>
+<script src="../src/constrain.js"></script>
+<script src="../src/dd.js"></script>
+<script>
+
+    KISSY.use("dd,node", function (S, DD, Node) {
+
+
+        var DDM = DD.DDM,
+                $ = Node.all,
+                DraggableDelegate = DD.DraggableDelegate,
+                DroppableDelegate = DD.DroppableDelegate,
+                Draggable = DD.Draggable,
+                Droppable = DD.Droppable,
+                Scroll = DD.Scroll,
+                Proxy = DD.Proxy;
+
+        var proxy = new Proxy({
+            /**
+             * 如何产生替代节点
+             * @param drag 当前拖对象
+             */
+            node:function (drag) {
+                var n = $(drag.get("dragNode").clone(true));
+                n.attr("id", S.guid("ks-dd-proxy"));
+                n.css("opacity", 0.2);
+                return n;
+            },
+            moveOnEnd:false,
+            destroyOnEnd:true
+        });
+
+        var dragDelegate = new DraggableDelegate({
+            container:"#cols",
+            move:1,
+            handlers:['.header'],
+            selector:function (el) {
+                el = $(el);
+                return el.hasClass('col') || el.hasClass('component');
+            }
+        });
+
+        proxy.attachDrag(dragDelegate);
+
+        /**
+         * 一列也为可拖放节点，防止空列无法拖入
+         */
+        new DroppableDelegate({
+            container:"#cols",
+            selector:'.col'
+        });
+
+        /**
+         * 单个 component 为可拖放节点
+         */
+        new DroppableDelegate({
+            container:"#cols",
+            selector:'.component'
+        });
+
+        dragDelegate.on("dragover", function (ev) {
+            var drag = ev.drag;
+            var drop = ev.drop;
+            var dragNode = drag.get("dragNode"),
+                    dropNode = drop.get("node");
+
+
+            if (dragNode.hasClass("component")) {
+
+                if (dropNode.hasClass("col")) {
+                    var nodes = dropNode.all(".component");
+
+                    if (nodes.length) {
+
+                        if (nodes.length == 1 &&
+
+                                ( nodes[0] === drag.get("node")[0] &&
+                                        nodes[0] !== drag.get("dragNode")[0])
+
+                                ) {
+                            // 只有 proxy
+                        } else {
+                            return;
+                        }
+                    }
+
+                    // S.log("添加到列");
+
+                    //空列
+                    dropNode.append(dragNode);
+                } else {
+
+                    // 纵轴中线位置
+                    var middleDropY = (dropNode.offset().top * 2 + dropNode.height()) / 2;
+
+                    //当前鼠标位置
+                    if (ev.pageY > middleDropY) {
+                        var next = dropNode.next();
+                        if (next && next[0] == dragNode) {
+                        } else {
+                            dragNode.insertAfter(dropNode);
+                        }
+                    } else {
+                        var prev = dropNode.prev();
+                        if (prev && prev[0] == dragNode) {
+                        } else {
+                            dragNode.insertBefore(dropNode);
+                        }
+                    }
+                }
+            }
+            // 列之间拖动
+            else if (dropNode.hasClass("col")) {
+
+                // 横轴中线位置
+                var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
+
+                //当前鼠标位置
+                if (ev.pageX > middleDropX) {
+                    next = dropNode.next();
+                    if (next && next[0] == dragNode) {
+                    } else {
+                        dragNode.insertAfter(dropNode);
+                    }
+                } else {
+                    prev = dropNode.prev();
+                    if (prev && prev[0] == dragNode) {
+                    } else {
+                        dragNode.insertBefore(dropNode);
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

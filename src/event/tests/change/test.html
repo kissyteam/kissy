@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>simulated bubble event example</title>
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+
+<script src="../../base.js"></script>
+<script src="../../object.js"></script>
+<script src="../../target.js"></script>
+<script src="../../focusin.js"></script>
+<script src="../../mouseenter.js"></script>
+<script src="../../delegate.js"></script>
+<script src="../../valuechange.js"></script>
+<script src="../../hashchange.js"></script>
+<script src="../../keycodes.js"></script>
+<script src="../../submit.js"></script>
+<script src="../../change.js"></script>
+<script src="../../mousewheel.js"></script>
+<script src="../../utils.js"></script>
+<script src="../../../event.js"></script>
+<style type="text/css">
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+<div id='t' style="width:500px;margin:20px auto;line-height: 2;">
+    <h1>bubble event manual test</h1>
+    <form action="http://www.g.cn">
+        <label>
+            <input id='inp'/></label>
+        <br/>
+        <label>
+            <input type='checkbox' id='checkb'/></label>
+        <br/>
+        <input type="submit"/>
+        <br/>
+    </form>
+    <button id='r'>remove bubble</button>
+</div>
+<script>
+    var S = KISSY;
+
+    KISSY.use("dom,event", function(S, DOM, Event) {
+
+        Event.on("#checkb", "change", function() {
+            alert("checkbox changed");
+        });
+
+        Event.on("#inp", "change", function() {
+            alert("input changed");
+        });
+
+        Event.on("#t", "change", function(e) {
+            alert(e.target.type + " changed by bubble");
+        });
+
+        Event.on("#t", "submit", function(e) {
+            alert(e.target.nodeName + " submitted by bubble");
+            e.preventDefault();
+        });
+
+        Event.on("#r", "click", function() {
+            Event.remove("#t");
+        });
+    });
+
+</script>
+</body>
+</html>

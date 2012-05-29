@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf8"/>
+<title>Template Demo</title>
+<script src="../../build/kissy.js"></script>
+<script src="src/template.js"></script>
+</head>
+
+<body>
+<script type="text/x-kissy-template" id="ajax-template">
+    <dl>
+        {{#each item}}
+        <dt>
+            <a href="{{_ks_value.link}}">{{_ks_value.title}}</a>
+        </dt>
+        <dd>{{_ks_value.description}}</dd>
+        {{/each}}
+    </dl>
+</script>
+<script type="text/x-kissy-template" id="ajax-template-p4p" data-href="http://tmatch.simba.taobao.com/?name=tbuad&catid=&pid=420434_1006,420435_1006&count=5&rct=100&o=j&keyword=iphone&offset=0&ip=121.0.29.237&frontcatid=1512%2C50008090%2C50019321%2C50018909%2C1201%2C11&type=0&refpid=&propertyid=&lid=&gprice=&loc=&sort=&q2cused=0&sbid=18&p4p=__p4p_sidebar__,__p4p_bottom__">
+    <dl>
+        {{#each p4p_sidebar}}
+        {{#each _ks_value}}
+        <dt>{{_ks_index}}</dt>
+        <dd>{{_ks_value||'无结果'}}</dd>
+        {{/each}}
+        {{/each}}
+    </dl>
+</script>
+<button id="jsonp-yql">JSONP-YQL-UED</button>
+<button id="jsonp-p4p">JSONP-P4P</button>
+<button id="clean">Clean</button>
+<div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+
+<script>
+    KISSY.use("template", function (S, T) {
+
+        function tmpl(sel, data) {
+            return S.all(T(S.all(sel).html()).render(data));
+        }
+
+        var _log = S.log, c = S.get('#console');
+        S.log = function () {
+            c.innerHTML = arguments[0];
+            _log.apply(S, arguments);
+        };
+
+        S.one('#clean').on('click', function () {
+            S.log('');
+        });
+
+        S.one('#jsonp-yql').on('click', function () {
+            S.one('#console').html('真的在异步加载中...');
+            S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+                    function (data) {
+                        S.one('#console').html('');
+                        tmpl('#ajax-template', data.query.results).appendTo('#console');
+                    }
+            );
+        });
+
+        S.one('#jsonp-p4p').on('click', function () {
+            S.one('#console').html('真的在异步加载中...');
+            S.getScript(S.one('#ajax-template-p4p').attr('data-href'),
+                    function () {
+                        S.one('#console').html('');
+                        tmpl('#ajax-template-p4p', {'p4p_sidebar':__p4p_sidebar__, 'p4p_bottom':__p4p_bottom__}).appendTo('#console');
+                    }
+            );
+        });
+    });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>UA Test</title>
+</head>
+<body>
+
+<script src="../../../build/seed.js"></script>
+<script src="../src/ua.js"></script>
+<script src="../src/extra.js"></script>
+
+<div id="out" style="margin: 20px; font: 14px 'courier new', monospace"></div>
+
+<script>
+    var S = KISSY, UA = S.UA,
+        get = function(id) {
+            return document.getElementById(id);
+        },
+        log = function(msg) {
+            out.innerHTML += (msg || '') + '<br>';
+        },
+        out = get('out'),
+        html = '',
+        p;
+
+    log(navigator.userAgent);
+
+    log();
+
+    for (p in UA) {
+        if (p.indexOf('_') !== 0) {
+            log(p + ' = ' + UA[p]);
+        }
+    }
+
+</script>
+</body>
+</html>
