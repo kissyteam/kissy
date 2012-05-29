@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -17,7 +17,6 @@ KISSY.add("editor/core/styles", function (S) {
         TRUE = true,
         FALSE = false,
         NULL = null,
-        Utils = Editor.Utils,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -704,7 +703,7 @@ KISSY.add("editor/core/styles", function (S) {
                             // parent, it means that the parent can't be included
                             // in this style DTD, so apply the style immediately.
                             while (
-                                (applyStyle = !includedNode.next(notBookmark))
+                                (applyStyle = !includedNode.next(notBookmark,1))
                                     && ( (parentNode = includedNode.parent()) &&
                                     dtd[ parentNode.nodeName() ] )
                                     && ( parentNode._4e_position(firstNode) |

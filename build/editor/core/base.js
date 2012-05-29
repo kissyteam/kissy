@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * Set up editor constructor
@@ -23,22 +23,9 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
          */
         {
             initializer:function () {
-                var self = this,
-                    textarea;
+                var self = this;
                 self.__commands = {};
                 self.__dialogs = {};
-                if (textarea = self.get("textarea")) {
-                    if (!self.get("render") && !self.get("elBefore")) {
-                        var next = textarea.next();
-                        if (next) {
-                            self.__set("elBefore", next);
-                        } else {
-                            self.__set("render", textarea.parent());
-                        }
-                    }
-                } else {
-                    self.__editor_created_new = 1;
-                }
             },
 
             /**
@@ -91,13 +78,11 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
                 //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
                 S.use(mods, function () {
-                    var h, args = S.makeArray(arguments);
+                    var args = S.makeArray(arguments);
                     args.shift();
                     useMods(args);
                     // 工具条出来后调整高度
-                    if (h = self.get("height")) {
-                        self._uiSetHeight(h);
-                    }
+                    self.adjustHeight();
                 });
 
                 self.__CORE_PLUGINS = [];
@@ -114,37 +99,37 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
              */
             {
                 /**
-                 * textarea 元素
+                 * textarea
                  * @type Node
                  */
                 textarea:{},
                 /**
-                 * iframe 元素
+                 * iframe
                  * @type Node
                  */
                 iframe:{},
                 /**
-                 * iframe 中的 contentWindow
+                 * iframe 's contentWindow
                  * @type Node
                  */
                 window:{},
                 /**
-                 * iframe 中的 document
+                 * iframe 's document
                  * @type Node
                  */
                 document:{},
-                /**
-                 * iframe 元素的 父节点
+                /*
+                 * iframe 's parentNode
                  * @type Node
                  */
                 iframeWrapEl:{},
                 /**
-                 * 工具栏节点
+                 * toolbar element
                  * @type Node
                  */
                 toolBarEl:{},
                 /**
-                 * 状态栏节点
+                 * status bar element
                  * @type Node
                  */
                 statusBarEl:{},
@@ -155,14 +140,16 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     value:false
                 },
                 /**
-                 * 编辑器当前模式：源码模式或可视化模式
-                 * @default 可视化模式
+                 * editor mode.
+                 * wysiswyg mode:1
+                 * source mode:0
+                 * @default wysiswyg mode
                  */
                 mode:{
                     value:1
                 },
                 /**
-                 * 编辑器当前内容
+                 * Current editor's content
                  * @type String
                  */
                 data:{
@@ -174,7 +161,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     }
                 },
                 /**
-                 * 编辑器经过格式化的当前内容
+                 *  Current editor's format content
                  * @type String
                  */
                 formatData:{
@@ -185,13 +172,39 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                         return this._setData(v);
                     }
                 },
+
+                /**
+                 * Custom style for editor.
+                 * @type String
+                 */
+                customStyle:{
+                    value:""
+                },
+
+                /**
+                 * Custom css link url for editor.
+                 * @type String[]
+                 */
+                customLink:{
+                    value:[]
+                },
+
                 prefixCls:{
                     value:"ke-"
                 }
             }
-        },{
+        }, {
             xclass:'editor'
         });
+
+
+    Editor.HTML_PARSER = {
+
+        textarea:function (el) {
+            return el.one("." + this.get("prefixCls") + "editor-textarea");
+        }
+
+    };
 
     S.mix(Editor, S.EventTarget);
 

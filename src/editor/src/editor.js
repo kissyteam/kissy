@@ -98,16 +98,17 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             createDom:function () {
                 var self = this,
                     wrap,
+                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea></textarea>"));
+                    self.set("textarea", textarea = $("<textarea class='" + prefixCls + "editor-textarea'></textarea>"));
                 }
 
                 editorEl = self.get("el");
 
-                editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
+                editorEl.addClass(prefixCls + "editor-wrap", undefined);
 
                 editorEl.html(EDITOR_TPL);
 
@@ -152,6 +153,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     (statusBarEl && statusBarEl.outerHeight() || 0);
                 self.get("iframeWrapEl").css(HEIGHT, v);
                 self.get("textarea").css(HEIGHT, v);
+            },
+
+
+            adjustHeight:function () {
+                var self = this, h;
+                if (h = self.get("height")) {
+                    self._uiSetHeight(h);
+                }
             },
 
             _uiSetMode:function (v) {
@@ -216,16 +225,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
             destructor:function () {
                 var self = this,
-                    editorEl = self.get("el"),
-                    textarea = self.get("textarea"),
                     doc = self.get("document")[0],
-                    win = self.get("iframe")[0].contentWindow;
+                    win = self.get("window");
 
                 self.sync();
 
                 focusManager.remove(self);
 
-                Event.remove([doc, doc.documentElement, doc.body, win]);
+                Event.remove([doc, doc.documentElement, doc.body, win[0]]);
 
                 S.each(self.__dialogs, function (d) {
                     if (d.destroy) {
@@ -234,15 +241,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 });
 
                 self.__commands = 0;
-
-                if (!self.__editor_created_new) {
-                    textarea.insertBefore(editorEl, undefined);
-                    textarea.css({
-                        width:self.get(WIDTH),
-                        height:self.get(HEIGHT)
-                    });
-                    textarea.show();
-                }
             },
 
             /**
@@ -388,7 +386,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             focus:function () {
                 var self = this,
                     doc = self.get("document")[0],
-                    win = DOM._4e_getWin(doc);
+                    win = DOM._getWin(doc);
                 // firefox7 need this
                 if (!UA['ie']) {
                     // note : 2011-11-17 report by 石霸
@@ -408,7 +406,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              */
             blur:function () {
                 var self = this,
-                    win = DOM._4e_getWin(self.get("document")[0]);
+                    win = DOM._getWin(self.get("document")[0]);
                 win.blur();
                 self.get("document")[0].body.blur();
             },
@@ -422,7 +420,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     customStyle = self.get("customStyle") || "";
                 customStyle += "\n" + cssText;
                 self.set("customStyle", customStyle);
-                DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle, id);
+                DOM.addStyleSheet(self.get("window"), customStyle, id);
             },
 
             /**
@@ -430,7 +428,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * @param id
              */
             removeCustomStyle:function (id) {
-                DOM.remove(DOM.get("#" + id, this.get("iframe")[0].contentWindow));
+                DOM.remove(DOM.get("#" + id, this.get("window")[0]));
             },
 
             /**
@@ -582,7 +580,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // another block element, the selection must move there. (#3100,#5436)
                 if (isBlock) {
                     notWhitespaceEval = Editor.Walker.whitespaces(true);
-                    next = lastElement.next(notWhitespaceEval);
+                    next = lastElement.next(notWhitespaceEval, 1);
                     nextName = next && next[0].nodeType == DOM.ELEMENT_NODE
                         && next.nodeName();
                     // Check if it's a block element that accepts text.
@@ -863,7 +861,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     function fixByBindIframeDoc(self) {
         var iframe = self.get("iframe"),
             textarea = self.get("textarea")[0],
-            win = iframe[0].contentWindow,
+            win = self.get("window")[0],
             doc = self.get("document")[0];
 
         // Gecko need a key event to 'wake up' the editing
@@ -1011,13 +1009,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         var links = "",
             i,
             innerCssFile = Utils.debugUrl("theme/editor-iframe.css");
-        if (customLink) {
-            for (i = 0; i < customLink.length; i++) {
-                links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
-                    href:customLink[i]
-                });
-            }
+
+        for (i = 0; i < customLink.length; i++) {
+            links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
+                href:customLink[i]
+            });
         }
+
         return S.substitute(IFRAME_HTML_TPL, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
@@ -1027,7 +1025,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 "",
             title:"${title}",
             href:innerCssFile,
-            style:customStyle || "",
+            style:customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
             data:data || "&nbsp;",
             script:id ?
@@ -1121,7 +1119,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             return;
         }
         var iframe = self.get("iframe"),
-            win = iframe[0].contentWindow,
+            win = self.get("window")[0],
             doc = self.get("document")[0],
             documentElement = doc.documentElement,
             body = doc.body;

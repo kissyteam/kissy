@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, Select) {
     var UA = S.UA,

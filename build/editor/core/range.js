@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -877,7 +877,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                     // Normalize the start.
                     while (startContainer[0].nodeType == DOM.TEXT_NODE
-                        && ( previous = startContainer.prev() )
+                        && ( previous = startContainer.prev(undefined, 1) )
                         && previous[0].nodeType == DOM.TEXT_NODE) {
                         startContainer = previous;
                         startOffset += previous[0].nodeValue.length;
@@ -902,7 +902,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                         // Normalize the end.
                         while (endContainer[0].nodeType == DOM.TEXT_NODE
-                            && ( previous = endContainer.prev() )
+                            && ( previous = endContainer.prev(undefined, 1) )
                             && previous[0].nodeType == DOM.TEXT_NODE) {
                             endContainer = previous;
                             endOffset += previous[0].nodeValue.length;
@@ -1653,12 +1653,13 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 function nextDFS(node, childOnly) {
                     var next;
 
-                    if (node[0].nodeType == DOM.ELEMENT_NODE && node._4e_isEditable()) {
-                        next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark);
+                    if (node[0].nodeType == DOM.ELEMENT_NODE &&
+                        node._4e_isEditable()) {
+                        next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark, 1);
                     }
 
                     if (!childOnly && !next) {
-                        next = node[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
+                        next = node[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark, 1);
                     }
 
                     return next;

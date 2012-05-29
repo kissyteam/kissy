@@ -303,8 +303,8 @@ KISSY.add("editor/core/domIterator", function (S) {
                 if (lastChild[0] && lastChild[0].nodeType == DOM.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
-                        || lastChild.prev(bookmarkGuard)
-                        || lastChild.next(bookmarkGuard))
+                        || lastChild.prev(bookmarkGuard,1)
+                        || lastChild.next(bookmarkGuard,1))
                         lastChild.remove();
                 }
             }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -11,17 +11,16 @@ build time: May 29 14:52
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/dom", function (S) {
+KISSY.add("editor/core/dom", function (S, Editor, Utils) {
 
     var TRUE = true,
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        Editor = S.Editor,
+        xhtml_dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
         UA = S.UA,
         Node = S.Node,
-        Utils = Editor.Utils,
         REMOVE_EMPTY = {
             "a":1,
             "abbr":1,
@@ -121,14 +120,8 @@ KISSY.add("editor/core/dom", function (S) {
              */
             _4e_isBlockBoundary:function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
-                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
-                    nodeNameMatches[ DOM.nodeName(el) ]);
+                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] || nodeNameMatches[ DOM.nodeName(el) ]);
             },
-
-            /**
-             * 同 {@link DOM._getWin}
-             */
-            _4e_getWin:DOM._getWin,
 
             /**
              * 返回当前元素在父元素中所有儿子节点中的序号
@@ -232,6 +225,9 @@ KISSY.add("editor/core/dom", function (S) {
              * @param thisElement
              */
             _4e_isEmptyInlineRemovable:function (thisElement) {
+                if (!xhtml_dtd.$removeEmpty[DOM.nodeName(thisElement)]) {
+                    return false;
+                }
                 var children = thisElement.childNodes;
                 for (var i = 0, count = children.length; i < count; i++) {
                     var child = children[i],
@@ -813,7 +809,6 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM.nodeName(el),
-                    xhtml_dtd = Editor.XHTML_DTD,
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
@@ -865,19 +860,17 @@ KISSY.add("editor/core/dom", function (S) {
 
 
     function mergeElements(element, isNext) {
-        var sibling = element[isNext ? "next" : "prev"]();
+        var sibling = element[isNext ? "next" : "prev"](undefined, 1);
 
-        if (sibling &&
-            sibling[0].nodeType == DOM.ELEMENT_NODE) {
+        if (sibling && sibling[0].nodeType == DOM.ELEMENT_NODE) {
 
             // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
             // queuing them to be moved later. (#5567)
             var pendingNodes = [];
 
-            while (sibling.attr('_ke_bookmark') ||
-                sibling._4e_isEmptyInlineRemovable(undefined)) {
+            while (sibling.attr('_ke_bookmark') || sibling._4e_isEmptyInlineRemovable(undefined)) {
                 pendingNodes.push(sibling);
-                sibling = isNext ? sibling.next() : sibling.prev();
+                sibling = isNext ? sibling.next(undefined, 1) : sibling.prev(undefined, 1);
                 if (!sibling) {
                     return;
                 }

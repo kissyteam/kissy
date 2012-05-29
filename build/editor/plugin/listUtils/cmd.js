@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.
@@ -188,7 +188,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
-                    (Walker.whitespaces(true)) )
+                    (Walker.whitespaces(true),1) )
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
@@ -331,7 +331,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                 // listNode._4e_mergeSiblings();
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
-                        'prev' : 'next' ](Walker.whitespaces(true));
+                        'prev' : 'next' ](Walker.whitespaces(true),1);
                     if (sibling && sibling[0] &&
                         sibling.nodeName() == self.type) {
                         sibling.remove();

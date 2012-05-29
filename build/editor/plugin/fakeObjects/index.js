@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 /**
  * fakeObjects for music ,video,flash
@@ -57,10 +57,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
             var temp = new Node('<div>', null, this.get("document")[0]);
             temp.html(html);
             // When returning the node, remove it from its parent to detach it.
-            return temp.first(
-                function (n) {
-                    return n.nodeType == DOM.ELEMENT_NODE;
-                }).remove();
+            return temp.first().remove();
         }
     });
 

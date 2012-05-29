@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:49
+build time: May 29 18:08
 */
 /**
  * Setup component namespace.
@@ -3195,8 +3195,8 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 maskDesc = maskMap[maskCls],
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (maskShared) {
-                maskDesc.num--;
+            if (maskShared && maskDesc) {
+                maskDesc.num = Math.max(maskDesc.num - 1, 0);
                 if (maskDesc.num == 0) {
                     mask.hide();
                 }

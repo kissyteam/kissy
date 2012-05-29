@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 29 18:24
 */
 KISSY.add("editor/plugin/maximize/cmd",function(d,j){function k(a){this.editor=a}var e=d.UA,l=e.ie,f=document,m=d.Node,h=d.Event,g=d.DOM,i;d.augment(k,{restoreWindow:function(){var a=this,b=a.editor;!1!==b.fire("beforeRestoreWindow")&&a._resize&&(h.remove(window,"resize",a._resize),a._resize=0,a._saveEditorStatus(),a._restoreState(),setTimeout(function(){a._restoreEditorStatus();b.notifySelectionChange();b.fire("restoreWindow")},30))},_restoreState:function(){var a=this.editor,b=this._savedParents;
 if(b){for(var c=0;c<b.length;c++){var d=b[c];d.el.css("position",d.position)}this._savedParents=null}a.get("iframeWrapEl").css({height:this.iframeHeight});g.css(f.body,{width:"",height:"",overflow:""});f.documentElement.style.overflow="";a=a.get("el")[0].style;a.position="static";a.width=this.editorElWidth;i.css({left:"-99999px",top:"-99999px"});window.scrollTo(this.scrollLeft,this.scrollTop);8>l&&this.editor.get("toolBarEl").removeClass("ke-toolbar-padding",void 0)},_saveSate:function(){var a=this.editor,
