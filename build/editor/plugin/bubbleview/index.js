@@ -1,17 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 29 14:44
 */
 /**
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Editor) {
+KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Component.define(Overlay, [], {}, {
+        BubbleView = Overlay.extend({
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
@@ -223,5 +223,5 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
     return BubbleView;
 }, {
-    requires:['component', 'overlay', 'editor']
+    requires:['overlay', 'editor']
 });

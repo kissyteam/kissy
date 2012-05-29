@@ -30,15 +30,16 @@
 
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
-        <!--
-            <delete dir="${component.build.dir}"/>
-        -->
         <mkdir dir="${component.build.dir}"/>
 
         <copy todir="${component.build.dir}">
             <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
         </copy>
 
+    </target>
+
+    <target name="clean">
+        <delete dir="${component.build.dir}"/>
     </target>
 
     <!-- 压缩代码 -->

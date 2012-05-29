@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 29 14:44
 */
 /**
  * Set up editor constructor
@@ -17,7 +17,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
      * @extends Component.UIBase.Box
      * @name Editor
      */
-    var Editor = Component.define(Component.Controller, [Component.UIBase.Box],
+    var Editor = Component.Controller.extend(
         /**
          * @lends Editor#
          */
@@ -189,7 +189,9 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     value:"ke-"
                 }
             }
-        }, "Editor");
+        },{
+            xclass:'editor'
+        });
 
     S.mix(Editor, S.EventTarget);
 
@@ -9327,11 +9329,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Editor) {
+KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Component.define(Overlay, [], {}, {
+        BubbleView = Overlay.extend({
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
@@ -9543,7 +9545,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
     return BubbleView;
 }, {
-    requires:['component', 'overlay', 'editor']
+    requires:['overlay', 'editor']
 });/**
  * triple state button for kissy editor
  * @author yiminghe@gmail.com
@@ -14351,8 +14353,8 @@ KISSY.add("editor/plugin/overlay/focus", function (S, Editor) {
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay, Focus) {
-    var Overlay4E =Component.define(Overlay, [Focus], {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
+    var Overlay4E = Overlay.extend([Focus], {
     }, {
         ATTRS:{
             prefixCls:{
@@ -14364,7 +14366,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay
         }
     });
 
-    Overlay4E.Dialog = Component.define(Overlay.Dialog, [Focus], {
+    Overlay4E.Dialog = Overlay.Dialog.extend([Focus], {
         show:function () {
             var self = this;
             //在 show 之前调用
@@ -14399,7 +14401,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay
 
     return Overlay4E
 }, {
-    requires:["editor", 'component', 'overlay', './focus', 'dd']
+    requires:["editor", 'overlay', './focus', 'dd']
 });/**
  * pagebreak functionality
  * @author yiminghe@gmail.com

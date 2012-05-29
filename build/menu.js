@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 29 12:06
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -19,7 +19,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
      * @constructor
      * @extends Component.Container
      */
-    var Menu = Component.define(Component.Container,
+    var Menu = Component.Container.extend(
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -199,12 +199,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        }, "Menu");
-
-    Component.UIStore.setUIConstructorByCssClass("menu", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Menu
-    });
+        }, {
+            xclass:'menu',
+            priority:10
+        });
 
     return Menu;
 
@@ -222,7 +220,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -232,7 +230,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = Component.define(Menu, {
+    var FilterMenu = Menu.extend({
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -333,7 +331,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
                 var children = self.get("children"),
                     strExp = str && new RegExp(regExpEscape(str), "ig"),
-                    // 匹配项样式类
+                // 匹配项样式类
                     hit = this.getCssClassWithPrefix(HIT_CLS);
 
                 // 过滤所有子组件
@@ -407,29 +405,27 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 }
             },
             DefaultRender:FilterMenuRender
-        }, "Menu_FilterMenu");
-
-    Component.UIStore.setUIConstructorByCssClass("filtermenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:FilterMenu
-    });
+        }, {
+            xclass:'filtermenu',
+            priority:20
+        });
 
     return FilterMenu;
 }, {
-    requires:['component', './base', './filtermenuRender']
+    requires:['./base', './filtermenuRender']
 });/**
  * @fileOverview filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenuRender", function (S, Node, Component, MenuRender) {
+KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    return Component.define(MenuRender, {
+    return MenuRender.extend({
         getContentElement:function () {
             return this.get("menuContent");
         },
@@ -487,10 +483,10 @@ KISSY.add("menu/filtermenuRender", function (S, Node, Component, MenuRender) {
                 return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
             }
         }
-    }, "Menu_FilterMenu_Render");
+    });
 
 }, {
-    requires:['node', 'component', './menuRender']
+    requires:['node', './menuRender']
 });/**
  * @fileOverview menu
  * @author yiminghe@gmail.com
@@ -526,7 +522,7 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
  */
 KISSY.add("menu/menuRender", function(S, UA, Component) {
 
-    return Component.define(Component.Render,{
+    return Component.Render.extend({
 
         renderUI:function() {
             var el = this.get("el");
@@ -559,7 +555,7 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
         ATTRS:{
             activeItem:{}
         }
-    },"Menu_Render");
+    });
 }, {
     requires:['ua','component']
 });/**
@@ -577,7 +573,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
      * @memberOf Menu
      * @extends Component.Controller
      */
-    var MenuItem = Component.define(Component.Controller,
+    var MenuItem = Component.Controller.extend(
         /**
          * @lends Menu.Item#
          */
@@ -641,8 +637,8 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 // 是否要滚动到当前菜单项(横向，纵向)
                 if (v) {
                     var el = this.get("el"),
-                        // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                        // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                         p = el.parent(function (e) {
                             return $(e).css("overflow") != "visible";
                         }, this.get("parent").get("el").parent());
@@ -736,15 +732,13 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     var cls = this.getCssClassWithPrefix("menuitem-selectable");
                     return el.hasClass(cls);
                 }
-            }
-        }, "Menu_Item");
+            },
 
-    MenuItem.DefaultRender = MenuItemRender;
-
-    Component.UIStore.setUIConstructorByCssClass("menuitem", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:MenuItem
-    });
+            DefaultRender:MenuItemRender
+        }, {
+            xclass:"menuitem",
+            priority:10
+        });
 
     return MenuItem;
 }, {
@@ -769,7 +763,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         return checkEl;
     }
 
-    return Component.define(Component.Render, {
+    return Component.Render.extend({
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -816,7 +810,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
         }
-    }, "Menu_Item_Render");
+    });
 }, {
     requires:['node', 'component']
 });/**
@@ -853,7 +847,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     }
 
 
-    var UIBase=Component.UIBase;
+    var UIBase = Component.UIBase;
 
     /**
      * Popup Menu
@@ -864,7 +858,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
      * @extends Component.UIBase.Position
      * @extends Component.UIBase.Align
      */
-    var PopupMenu = Component.define(Menu, [
+    var PopupMenu = Menu.extend([
         UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
@@ -998,12 +992,10 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 }
             },
             DefaultRender:PopupMenuRender
-        }, "Menu_PopupMenu");
-
-    Component.UIStore.setUIConstructorByCssClass("popupmenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:PopupMenu
-    });
+        }, {
+            xclass:'popupmenu',
+            priority:20
+        });
 
     return PopupMenu;
 
@@ -1015,11 +1007,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
  */
 KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
     var UIBase = Component.UIBase;
-    return Component.define(MenuRender, [
+    return MenuRender.extend([
         UIBase.ContentBox.Render,
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ], "Menu_PopupMenu_Render");
+    ]);
 }, {
     requires:['ua', 'component', './menuRender']
 });/**
@@ -1028,7 +1020,7 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
  */
 KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
 
-    var Separator = Component.define(Component.Controller, {
+    var Separator = Component.Controller.extend({
     }, {
         ATTRS:{
             focusable:{
@@ -1043,11 +1035,9 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             }
         },
         DefaultRender:SeparatorRender
-    }, "Menu_Separator");
-
-    Component.UIStore.setUIConstructorByCssClass("menuseparator", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Separator
+    }, {
+        xclass:'menuseparator',
+        priority:20
     });
 
     return Separator;
@@ -1060,11 +1050,11 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
  */
 KISSY.add("menu/separatorRender", function (S, Component) {
 
-    return Component.define(Component.Render, {
+    return Component.Render.extend({
         createDom:function () {
             this.get("el").attr("role", "separator");
         }
-    }, "Menu_Separator_Render");
+    });
 
 }, {
     requires:['component']
@@ -1130,7 +1120,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 return null;
             }
         } else {
-            m = Component.Controller.create(m,self);
+            m = Component.create(m, self);
             self.__set("menu", m);
         }
         if (m && m.get("parent") !== self) {
@@ -1161,7 +1151,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /**
      * Class representing a submenu that can be added as an item to other menus.
      */
-    var SubMenu =Component.define(MenuItem, [Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
             _onParentHide:function () {
                 var menu = getMenu(this);
@@ -1386,13 +1376,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             },
 
             DefaultRender:SubMenuRender
-        }, "Menu_SubMenu");
-
-
-    Component.UIStore.setUIConstructorByCssClass("submenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:SubMenu
-    });
+        }, {
+            xclass:'submenu',
+            priority:20
+        });
 
     return SubMenu;
 }, {
@@ -1405,28 +1392,29 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenuRender", function (S, Component, MenuItemRender) {
-        var SubMenuRender;
-        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
-        SubMenuRender = Component.define(MenuItemRender, {
-            renderUI:function () {
-                var self = this,
-                    el = self.get("el");
-                el.attr("aria-haspopup", "true")
-                    .append(S.substitute(ARROW_TMPL, {
-                    prefixCls:this.get("prefixCls")
-                }));
-            },
-            _uiSetHtml:function (v) {
-                var self = this;
-                SubMenuRender.superclass._uiSetHtml.call(self, v);
-                self.get("el").append(S.substitute(ARROW_TMPL, {
-                    prefixCls:this.get("prefixCls")
-                }));
-            }
-        }, "Menu_SubMenu_Render");
-        return SubMenuRender;
-    },
-    {
-        requires:['component', './menuitemRender']
+KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
+    var SubMenuRender,
+        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
+
+    SubMenuRender = MenuItemRender.extend({
+        renderUI:function () {
+            var self = this,
+                el = self.get("el");
+            el.attr("aria-haspopup", "true")
+                .append(S.substitute(ARROW_TMPL, {
+                prefixCls:this.get("prefixCls")
+            }));
+        },
+        _uiSetHtml:function (v) {
+            var self = this;
+            SubMenuRender.superclass._uiSetHtml.call(self, v);
+            self.get("el").append(S.substitute(ARROW_TMPL, {
+                prefixCls:this.get("prefixCls")
+            }));
+        }
     });
+
+    return SubMenuRender;
+}, {
+    requires:['./menuitemRender']
+});

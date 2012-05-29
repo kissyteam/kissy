@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 29 14:44
 */
 /**
  * Set up editor constructor
@@ -17,7 +17,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
      * @extends Component.UIBase.Box
      * @name Editor
      */
-    var Editor = Component.define(Component.Controller, [Component.UIBase.Box],
+    var Editor = Component.Controller.extend(
         /**
          * @lends Editor#
          */
@@ -189,7 +189,9 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     value:"ke-"
                 }
             }
-        }, "Editor");
+        },{
+            xclass:'editor'
+        });
 
     S.mix(Editor, S.EventTarget);
 

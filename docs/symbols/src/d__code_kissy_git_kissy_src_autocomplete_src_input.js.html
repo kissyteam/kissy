@@ -65,7 +65,7 @@
 <span id='line58' class='line'> 58</span>      * @extends Component.Controller
 <span id='line59' class='line'> 59</span>      * @class
 <span id='line60' class='line'> 60</span>      */</span><span class="WHIT">
-<span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="NAME">AutoComplete</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">Component.Controller</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="NAME">AutoComplete</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Controller.extend</span><span class="PUNC">(</span><span class="WHIT">
 <span id='line62' class='line'> 62</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line63' class='line'> 63</span>          * @lends AutoComplete
 <span id='line64' class='line'> 64</span>          */</span><span class="WHIT">
@@ -592,36 +592,34 @@
 <span id='line585' class='line'>585</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line586' class='line'>586</span> </span><span class="WHIT">            </span><span class="NAME">DefaultRender</span><span class="PUNC">:</span><span class="NAME">AutoCompleteRender</span><span class="WHIT">
 <span id='line587' class='line'>587</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line588' class='line'>588</span> </span><span class="WHIT">        </span><span class="STRN">"AutoComplete"</span><span class="WHIT">
-<span id='line589' class='line'>589</span> </span><span class="WHIT">    </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line590' class='line'>590</span> 
-<span id='line591' class='line'>591</span> </span><span class="WHIT">    </span><span class="NAME">Component.UIStore.setUIConstructorByCssClass</span><span class="PUNC">(</span><span class="STRN">"autocomplete-input"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line592' class='line'>592</span> </span><span class="WHIT">        </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NAME">Component.UIStore.PRIORITY.LEVEL1</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line593' class='line'>593</span> </span><span class="WHIT">        </span><span class="NAME">ui</span><span class="PUNC">:</span><span class="NAME">AutoComplete</span><span class="WHIT">
-<span id='line594' class='line'>594</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line595' class='line'>595</span> 
-<span id='line596' class='line'>596</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AutoComplete</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line597' class='line'>597</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line598' class='line'>598</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="WHIT">
-<span id='line599' class='line'>599</span> </span><span class="WHIT">        </span><span class="STRN">'event'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line600' class='line'>600</span> </span><span class="WHIT">        </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line601' class='line'>601</span> </span><span class="WHIT">        </span><span class="STRN">'menu'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line602' class='line'>602</span> </span><span class="WHIT">        </span><span class="STRN">'./inputRender'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line603' class='line'>603</span> </span><span class="WHIT">        </span><span class="STRN">'input-selection'</span><span class="WHIT">
-<span id='line604' class='line'>604</span> </span><span class="WHIT">    </span><span class="PUNC">]</span><span class="WHIT">
-<span id='line605' class='line'>605</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line606' class='line'>606</span> 
-<span id='line607' class='line'>607</span> </span><span class="COMM">/**
-<span id='line608' class='line'>608</span>  * TODO auto-complete menu 对齐当前输入位置
-<span id='line609' class='line'>609</span>  *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
-<span id='line610' class='line'>610</span>  *  - https://github.com/kir/js_cursor_position
-<span id='line611' class='line'>611</span>  *
-<span id='line612' class='line'>612</span>  * 2012-04-01 可能 issue :
-<span id='line613' class='line'>613</span>  *  - 用户键盘上下键高亮一些选项，
-<span id='line614' class='line'>614</span>  *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
-<span id='line615' class='line'>615</span>  *    到底要不要设置 selectedItem 为当前高亮项？
-<span id='line616' class='line'>616</span>  *    additional note:
-<span id='line617' class='line'>617</span>  *    1. tab 时肯定会把当前高亮项设置为 selectedItem
-<span id='line618' class='line'>618</span>  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
-<span id='line619' class='line'>619</span>  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
-<span id='line620' class='line'>620</span>  **/</span></pre></body></html>
+<span id='line588' class='line'>588</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line589' class='line'>589</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'autocomplete-input'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line590' class='line'>590</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line591' class='line'>591</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line592' class='line'>592</span> </span><span class="WHIT">    </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line593' class='line'>593</span> 
+<span id='line594' class='line'>594</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AutoComplete</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line595' class='line'>595</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line596' class='line'>596</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="WHIT">
+<span id='line597' class='line'>597</span> </span><span class="WHIT">        </span><span class="STRN">'event'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line598' class='line'>598</span> </span><span class="WHIT">        </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line599' class='line'>599</span> </span><span class="WHIT">        </span><span class="STRN">'menu'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line600' class='line'>600</span> </span><span class="WHIT">        </span><span class="STRN">'./inputRender'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line601' class='line'>601</span> </span><span class="WHIT">        </span><span class="STRN">'input-selection'</span><span class="WHIT">
+<span id='line602' class='line'>602</span> </span><span class="WHIT">    </span><span class="PUNC">]</span><span class="WHIT">
+<span id='line603' class='line'>603</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line604' class='line'>604</span> 
+<span id='line605' class='line'>605</span> </span><span class="COMM">/**
+<span id='line606' class='line'>606</span>  * TODO auto-complete menu 对齐当前输入位置
+<span id='line607' class='line'>607</span>  *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
+<span id='line608' class='line'>608</span>  *  - https://github.com/kir/js_cursor_position
+<span id='line609' class='line'>609</span>  *
+<span id='line610' class='line'>610</span>  * 2012-04-01 可能 issue :
+<span id='line611' class='line'>611</span>  *  - 用户键盘上下键高亮一些选项，
+<span id='line612' class='line'>612</span>  *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
+<span id='line613' class='line'>613</span>  *    到底要不要设置 selectedItem 为当前高亮项？
+<span id='line614' class='line'>614</span>  *    additional note:
+<span id='line615' class='line'>615</span>  *    1. tab 时肯定会把当前高亮项设置为 selectedItem
+<span id='line616' class='line'>616</span>  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
+<span id='line617' class='line'>617</span>  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
+<span id='line618' class='line'>618</span>  **/</span></pre></body></html>
