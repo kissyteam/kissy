@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 25 12:28
+build time: May 28 19:45
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
+KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
     function onMenuHide() {
@@ -19,7 +19,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @constructor
      * @extends Component.Container
      */
-    var Menu = UIBase.create(Component.Container,
+    var Menu = Component.define(Component.Container,
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -209,7 +209,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'uibase', 'component', './menuRender', './submenu']
+    requires:['event', 'component', './menuRender', './submenu']
 });
 
 /**
@@ -222,7 +222,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -232,7 +232,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = UIBase.create(Menu, {
+    var FilterMenu = Component.define(Menu, {
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -416,20 +416,20 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
 
     return FilterMenu;
 }, {
-    requires:['uibase', 'component', './base', './filtermenuRender']
+    requires:['component', './base', './filtermenuRender']
 });/**
  * @fileOverview filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
+KISSY.add("menu/filtermenuRender", function (S, Node, Component, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    return UIBase.create(MenuRender, {
+    return Component.define(MenuRender, {
         getContentElement:function () {
             return this.get("menuContent");
         },
@@ -490,7 +490,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, UIBase, MenuRender) {
     }, "Menu_FilterMenu_Render");
 
 }, {
-    requires:['node', 'uibase', './menuRender']
+    requires:['node', 'component', './menuRender']
 });/**
  * @fileOverview menu
  * @author yiminghe@gmail.com
@@ -524,9 +524,9 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuRender", function(S, UA, UIBase, Component) {
+KISSY.add("menu/menuRender", function(S, UA, Component) {
 
-    return UIBase.create(Component.Render,{
+    return Component.define(Component.Render,{
 
         renderUI:function() {
             var el = this.get("el");
@@ -561,12 +561,12 @@ KISSY.add("menu/menuRender", function(S, UA, UIBase, Component) {
         }
     },"Menu_Render");
 }, {
-    requires:['ua','uibase','component']
+    requires:['ua','component']
 });/**
  * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
     var $ = S.all;
 
@@ -577,7 +577,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
      * @memberOf Menu
      * @extends Component.Controller
      */
-    var MenuItem = UIBase.create(Component.Controller,
+    var MenuItem = Component.define(Component.Controller,
         /**
          * @lends Menu.Item#
          */
@@ -718,7 +718,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
                     view:true
                 },
                 /**
-                 * Please use {@link UIBase.Box#html} attribute instead!
+                 * Please use {@link Component.UIBase.Box#html} attribute instead!
                  * @deprecated 1.3
                  */
                 content:{
@@ -748,12 +748,12 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires:['uibase', 'component', './menuitemRender']
+    requires:['component', './menuitemRender']
 });/**
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
+KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
     var CHECK_CLS = "menuitem-checkbox";
 
@@ -769,7 +769,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, {
+    return Component.define(Component.Render, {
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -818,12 +818,12 @@ KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
         }
     }, "Menu_Item_Render");
 }, {
-    requires:['node', 'uibase', 'component']
+    requires:['node', 'component']
 });/**
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
 
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
@@ -852,16 +852,19 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
         }
     }
 
+
+    var UIBase=Component.UIBase;
+
     /**
      * Popup Menu
      * @name PopupMenu
      * @memberOf Menu
      * @constructor
      * @extends Menu
-     * @extends UIBase.Position
-     * @extends UIBase.Align
+     * @extends Component.UIBase.Position
+     * @extends Component.UIBase.Align
      */
-    var PopupMenu = UIBase.create(Menu, [
+    var PopupMenu = Component.define(Menu, [
         UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
@@ -1005,26 +1008,27 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     return PopupMenu;
 
 }, {
-    requires:['uibase', 'component', './base', './popupmenuRender']
+    requires:['component', './base', './popupmenuRender']
 });/**
  * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenuRender", function (S, UA, UIBase, MenuRender) {
-    return UIBase.create(MenuRender, [
+KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
+    var UIBase = Component.UIBase;
+    return Component.define(MenuRender, [
         UIBase.ContentBox.Render,
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
     ], "Menu_PopupMenu_Render");
 }, {
-    requires:['ua', 'uibase', './menuRender']
+    requires:['ua', 'component', './menuRender']
 });/**
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
 
-    var Separator = UIBase.create(Component.Controller, {
+    var Separator = Component.define(Component.Controller, {
     }, {
         ATTRS:{
             focusable:{
@@ -1049,26 +1053,26 @@ KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase', 'component', './separatorRender']
+    requires:['component', './separatorRender']
 });/**
  * @fileOverview menu separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separatorRender", function (S, UIBase, Component) {
+KISSY.add("menu/separatorRender", function (S, Component) {
 
-    return UIBase.create(Component.Render, {
+    return Component.define(Component.Render, {
         createDom:function () {
             this.get("el").attr("role", "separator");
         }
     }, "Menu_Separator_Render");
 
 }, {
-    requires:['uibase', 'component']
+    requires:['component']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMenuRender) {
+KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
 
     /* or precisely submenuitem */
 
@@ -1157,7 +1161,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     /**
      * Class representing a submenu that can be added as an item to other menus.
      */
-    var SubMenu = UIBase.create(MenuItem, [Component.DecorateChild], {
+    var SubMenu =Component.define(MenuItem, [Component.DecorateChild], {
 
             _onParentHide:function () {
                 var menu = getMenu(this);
@@ -1392,7 +1396,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
     return SubMenu;
 }, {
-    requires:['event', 'uibase', 'component', './menuitem', './submenuRender']
+    requires:['event', 'component', './menuitem', './submenuRender']
 });
 
 /**
@@ -1401,10 +1405,10 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenuRender", function (S, UIBase, MenuItemRender) {
+KISSY.add("menu/submenuRender", function (S, Component, MenuItemRender) {
         var SubMenuRender;
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
-        SubMenuRender = UIBase.create(MenuItemRender, {
+        SubMenuRender = Component.define(MenuItemRender, {
             renderUI:function () {
                 var self = this,
                     el = self.get("el");
@@ -1424,5 +1428,5 @@ KISSY.add("menu/submenuRender", function (S, UIBase, MenuItemRender) {
         return SubMenuRender;
     },
     {
-        requires:['uibase', './menuitemRender']
+        requires:['component', './menuitemRender']
     });

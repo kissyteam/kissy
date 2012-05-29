@@ -2,10 +2,10 @@
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenuRender", function (S, UIBase, MenuItemRender) {
+KISSY.add("menu/submenuRender", function (S, Component, MenuItemRender) {
         var SubMenuRender;
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
-        SubMenuRender = UIBase.create(MenuItemRender, {
+        SubMenuRender = Component.define(MenuItemRender, {
             renderUI:function () {
                 var self = this,
                     el = self.get("el");
@@ -25,5 +25,5 @@ KISSY.add("menu/submenuRender", function (S, UIBase, MenuItemRender) {
         return SubMenuRender;
     },
     {
-        requires:['uibase', './menuitemRender']
+        requires:['component', './menuitemRender']
     });

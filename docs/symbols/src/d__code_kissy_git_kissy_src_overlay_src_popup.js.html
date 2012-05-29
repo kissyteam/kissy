@@ -9,7 +9,7 @@
 <span id='line2' class='line'>  2</span>  * @fileOverview KISSY.Popup
 <span id='line3' class='line'>  3</span>  * @author qiaohua@taobao.com, yiminghe@gmail.com
 <span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
-<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">'overlay/popup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Overlay</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">'overlay/popup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Overlay</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line6' class='line'>  6</span> 
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line8' class='line'>  8</span>      * KISSY Popup Component
@@ -18,13 +18,13 @@
 <span id='line11' class='line'> 11</span>      * @extends Overlay
 <span id='line12' class='line'> 12</span>      * @name Popup
 <span id='line13' class='line'> 13</span>      */</span><span class="WHIT">
-<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Popup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">UIBase.create</span><span class="PUNC">(</span><span class="NAME">Overlay</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Popup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">Overlay</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line15' class='line'> 15</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line16' class='line'> 16</span>          * @lends Overlay.Popup#
 <span id='line17' class='line'> 17</span>          */</span><span class="WHIT">
 <span id='line18' class='line'> 18</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line19' class='line'> 19</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line20' class='line'> 20</span>              * see {@link UIBase.Box#show}
+<span id='line20' class='line'> 20</span>              * see {@link Component.UIBase.Box#show}
 <span id='line21' class='line'> 21</span>              * @name Overlay.Popup#show
 <span id='line22' class='line'> 22</span>              * @function
 <span id='line23' class='line'> 23</span>              */</span><span class="WHIT">
@@ -207,7 +207,7 @@
 <span id='line200' class='line'>200</span> 
 <span id='line201' class='line'>201</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Popup</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line202' class='line'>202</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line203' class='line'>203</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"uibase"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"component"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"./base"</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line203' class='line'>203</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"component"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"./base"</span><span class="PUNC">]</span><span class="WHIT">
 <span id='line204' class='line'>204</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line205' class='line'>205</span> 
 <span id='line206' class='line'>206</span> </span><span class="COMM">/**

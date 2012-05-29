@@ -9,6 +9,12 @@ KISSY.use("editor", function (S, Editor) {
         Node = S.Node;
     var Range = Editor.Range;
 
+    function myHtml(el) {
+        return el.html().toLowerCase().replace(/(\w+=)(\w+)/g, function (m, m1, m2) {
+            return m1 + '"' + m2 + '"';
+        });
+    }
+
     describe("range", function () {
 
         describe("cloneContents", function () {
@@ -27,7 +33,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("345");
+                expect(myHtml(newDiv)).toBe("345");
 
                 expect(div[0].childNodes.length).toBe(1);
 
@@ -90,7 +96,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("<span>" +
+                expect(myHtml(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "3456789" +
                     "</span>" +
@@ -175,7 +181,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("<span>" +
+                expect(myHtml(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "123456789" +
                     "</span>" +
@@ -212,12 +218,12 @@ KISSY.use("editor", function (S, Editor) {
                 var newDiv = $("<div>").appendTo("body");
 
                 newDiv.append(f);
-                expect(newDiv.html()).toBe("345");
+                expect(myHtml(newDiv)).toBe("345");
 
                 // 节点不会合并的
                 // expect(div[0].childNodes.length).toBe(1);
 
-                expect(div.html()).toBe("126789");
+                expect(myHtml(div)).toBe("126789");
 
                 // collapse to start
                 expect(range.startContainer[0]).toBe(div[0].firstChild);
@@ -259,7 +265,7 @@ KISSY.use("editor", function (S, Editor) {
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endWrapper\">" +
+                    "<span id=\"endwrapper\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "123456789" +
@@ -268,7 +274,7 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>" +
                     "g</div>").appendTo("body", undefined);
 
-                var endWrapper = $("#endWrapper");
+                var endwrapper = $("#endwrapper");
                 var range = new Range(document);
                 var textStart = new Node($("#start")[0].firstChild);
                 var textEnd = new Node($("#end")[0].firstChild);
@@ -281,14 +287,14 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("<span>" +
+                expect(myHtml(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "3456789" +
                     "</span>" +
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endWrapper\">" +
+                    "<span id=\"endwrapper\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "12345" +
@@ -302,15 +308,15 @@ KISSY.use("editor", function (S, Editor) {
                     "12" +
                     "</span>" +
                     "</span>" +
-                    "<span id=\"endWrapper\">" +
+                    "<span id=\"endwrapper\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = div.html();
+                    "g", ret2 = myHtml(div);
 
-                expect(div.html()).toBe(ret);
+                expect(myHtml(div)).toBe(ret);
 
 
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -328,10 +334,10 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("a<span>b<span id=\"start\">12" +
+                expect(myHtml(newDiv)).toBe("a<span>b<span id=\"start\">12" +
                     "</span></span>");
 
-                expect(div.html()).toBe("<span id=\"endWrapper\">" +
+                expect(myHtml(div)).toBe("<span id=\"endwrapper\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
@@ -398,7 +404,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(newDiv.html()).toBe("<span>" +
+                expect(myHtml(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "123456789" +
                     "</span>" +
@@ -413,7 +419,7 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>");
 
 
-                expect(div.html()).toBe("a<span>b</span><span>f</span>g");
+                expect(myHtml(div)).toBe("a<span>b</span><span>f</span>g");
 
                 expect(range.collapsed).toBe(true);
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -445,7 +451,7 @@ KISSY.use("editor", function (S, Editor) {
                 // 节点不会合并的
                 // expect(div[0].childNodes.length).toBe(1);
 
-                expect(div.html()).toBe("126789");
+                expect(myHtml(div)).toBe("126789");
 
                 // collapse to start
                 expect(range.startContainer[0]).toBe(div[0].firstChild);
@@ -486,7 +492,7 @@ KISSY.use("editor", function (S, Editor) {
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endWrapper\">" +
+                    "<span id=\"endwrapper\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "123456789" +
@@ -495,7 +501,7 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>" +
                     "g</div>").appendTo("body", undefined);
 
-                var endWrapper = $("#endWrapper");
+                var endwrapper = $("#endwrapper");
                 var range = new Range(document);
                 var textStart = new Node($("#start")[0].firstChild);
                 var textEnd = new Node($("#end")[0].firstChild);
@@ -513,15 +519,15 @@ KISSY.use("editor", function (S, Editor) {
                     "12" +
                     "</span>" +
                     "</span>" +
-                    "<span id=\"endWrapper\">" +
+                    "<span id=\"endwrapper\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = div.html();
+                    "g", ret2 = myHtml(div);
 
-                expect(div.html()).toBe(ret);
+                expect(myHtml(div)).toBe(ret);
 
 
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -584,7 +590,7 @@ KISSY.use("editor", function (S, Editor) {
                 expect(f).toBeUndefined();
 
 
-                expect(div.html()).toBe("a<span>b</span><span>f</span>g");
+                expect(myHtml(div)).toBe("a<span>b</span><span>f</span>g");
 
                 expect(range.collapsed).toBe(true);
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -681,87 +687,125 @@ KISSY.use("editor", function (S, Editor) {
             div.remove();
         });
 
-        it("shrink works", function () {
+        describe("shrink works", function () {
+
             var SHRINK_ELEMENT = 1,
                 SHRINK_TEXT = 2;
 
-            var div = $("<div>" +
-                "<b></b>" +
-                "<span>1" +
-                "<span _ke_bookmark=1 class='bookmark'>x</span>" +
-                "2345" +
-                "<span _ke_bookmark=1 class='bookmark'>y</span>" +
-                "6</span>" +
-                "</div>");
-            div.appendTo("body");
-
-            var span = div.first("span");
-
-            var b = div.first("b");
-
-            var range = new Range(document);
-            range.setStartBefore(div);
-            range.setEndAfter(div);
-
-            range.shrink(SHRINK_ELEMENT);
-
-            expect(range.startContainer[0]).toBe(div[0]);
-            expect(range.endContainer[0]).toBe(div[0]);
-            expect(range.startOffset).toBe(0);
-            expect(range.endOffset).toBe(2);
-
-            range.setStartBefore(div);
-            range.setEndAfter(div);
-
-            range.shrink(SHRINK_ELEMENT, 1);
-
-            expect(range.startContainer[0]).toBe(b[0]);
-            expect(range.endContainer[0]).toBe(span[0]);
-            expect(range.startOffset).toBe(0);
-            expect(range.endOffset).toBe(span[0].childNodes.length);
+            it("works simply", function () {
+                var div = $("<div>" +
+                    "<div><span>123</span></div>" +
+                    "</div>").appendTo("body");
+                var range = new Range(document);
+                var div2 = div.one("div");
+                range.setStart(div, 0);
+                range.setEnd(div, 1);
+                range.shrink(SHRINK_ELEMENT);
+                expect(range.startContainer[0]).toBe(div2[0]);
+                expect(range.endContainer[0]).toBe(div2[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(1);
+                div.remove();
+            });
 
 
-            var textStart = $(span[0].firstChild),
-                textEnd = $(span[0].lastChild);
+            it("works simply", function () {
+                var div = $("<div>" +
+                    "<div>22<span>123</span>22</div>" +
+                    "</div>").appendTo("body");
+                var range = new Range(document);
+                var div2 = div.one("div");
+                range.setStart(div, 0);
+                range.setEnd(div, 1);
+                range.shrink(SHRINK_ELEMENT);
+                expect(range.startContainer[0]).toBe(div[0]);
+                expect(range.endContainer[0]).toBe(div[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(div[0].childNodes.length);
+                div.remove();
+            });
 
-            range.setStartBefore(div);
-            range.setEndAfter(div);
+            it("works in all cases", function () {
+                var div = $("<div>" +
+                    "<b></b>" +
+                    "<span>1" +
+                    "<span _ke_bookmark=1 class='bookmark'>x</span>" +
+                    "2345" +
+                    "<span _ke_bookmark=1 class='bookmark'>y</span>" +
+                    "6</span>" +
+                    "</div>");
+                div.appendTo("body");
 
-            range.shrink(SHRINK_TEXT);
+                var span = div.first("span");
 
-            expect(range.startContainer[0]).toBe(document.body);
-            expect(range.endContainer[0]).toBe(span[0]);
-            expect(range.startOffset).toBe(div._4e_index());
-            expect(range.endOffset).toBe(span[0].childNodes.length);
-
-
-            range.shrink(SHRINK_TEXT, 1);
-
-            expect(range.startContainer[0]).toBe(document.body);
-            expect(range.endContainer[0]).toBe(textEnd[0]);
-            expect(range.startOffset).toBe(div._4e_index());
-            expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+                var b = div.first("b");
 
 
-            range.setStartAfter(b);
-            range.setEndAfter(div);
+                var range = new Range(document);
+                range.setStartBefore(div);
+                range.setEndAfter(div);
 
-            range.shrink(SHRINK_TEXT);
+                range.shrink(SHRINK_ELEMENT);
 
-            expect(range.startContainer[0]).toBe(span[0]);
-            expect(range.endContainer[0]).toBe(span[0]);
-            expect(range.startOffset).toBe(0);
-            expect(range.endOffset).toBe(span[0].childNodes.length);
+                expect(range.startContainer[0]).toBe(div[0]);
+                expect(range.endContainer[0]).toBe(div[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(2);
+
+                range.setStartBefore(div);
+                range.setEndAfter(div);
+
+                range.shrink(SHRINK_ELEMENT, 1);
+
+                expect(range.startContainer[0]).toBe(b[0]);
+                expect(range.endContainer[0]).toBe(span[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(span[0].childNodes.length);
 
 
-            range.shrink(SHRINK_TEXT, 1);
+                var textStart = $(span[0].firstChild),
+                    textEnd = $(span[0].lastChild);
 
-            expect(range.startContainer[0]).toBe(textStart[0]);
-            expect(range.endContainer[0]).toBe(textEnd[0]);
-            expect(range.startOffset).toBe(0);
-            expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+                range.setStartBefore(div);
+                range.setEndAfter(div);
 
-            div.remove();
+                range.shrink(SHRINK_TEXT);
+
+                expect(range.startContainer[0]).toBe(document.body);
+                expect(range.endContainer[0]).toBe(span[0]);
+                expect(range.startOffset).toBe(div._4e_index());
+                expect(range.endOffset).toBe(span[0].childNodes.length);
+
+
+                range.shrink(SHRINK_TEXT, 1);
+
+                expect(range.startContainer[0]).toBe(document.body);
+                expect(range.endContainer[0]).toBe(textEnd[0]);
+                expect(range.startOffset).toBe(div._4e_index());
+                expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+
+
+                range.setStartAfter(b);
+                range.setEndAfter(div);
+
+                range.shrink(SHRINK_TEXT);
+
+                expect(range.startContainer[0]).toBe(span[0]);
+                expect(range.endContainer[0]).toBe(span[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(span[0].childNodes.length);
+
+
+                range.shrink(SHRINK_TEXT, 1);
+
+                expect(range.startContainer[0]).toBe(textStart[0]);
+                expect(range.endContainer[0]).toBe(textEnd[0]);
+                expect(range.startOffset).toBe(0);
+                expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
+
+                div.remove();
+            });
+
         });
 
         it("createBookmarks2 works", function () {
@@ -1273,7 +1317,6 @@ KISSY.use("editor", function (S, Editor) {
             expect(bound.endNode[0]).toBe(span[2]);
 
             div.remove();
-
         });
 
         it("fixBlock works", function () {
@@ -1289,7 +1332,7 @@ KISSY.use("editor", function (S, Editor) {
 
             range.fixBlock(true, "p");
 
-            expect(div.html().toLowerCase()).toBe("<p>" +
+            expect(myHtml(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
                 "<span>2<span>3</span>4</span><span>2</span>" +
                 (UA.ie ? "" : "<br>") +
@@ -1310,19 +1353,17 @@ KISSY.use("editor", function (S, Editor) {
 
             range.fixBlock(false, "p");
 
-            expect(div.html().toLowerCase()).toBe("<p>" +
+            expect(myHtml(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
                 "<span>2<span>3</span>4</span><span>2</span>" +
                 (UA.ie ? "" : "<br>") +
                 "</p>");
 
             div.remove();
-
         });
 
 
         it("splitElement works", function () {
-
             var div = $("<div>" +
                     "<div>" +
                     "<span>1<span>4</span></span>" +
@@ -1336,7 +1377,7 @@ KISSY.use("editor", function (S, Editor) {
 
             range.splitElement(div.first());
 
-            expect(div.html().toLowerCase())
+            expect(myHtml(div))
                 .toBe("<div><span>1<span>4</span></span><span>2<span>3</span>4</span></div>" +
                 "<div><span></span><span>2</span></div>");
 
@@ -1357,8 +1398,6 @@ KISSY.use("editor", function (S, Editor) {
 
                 var firstText = $(div[0].childNodes[1]);
 
-                var secondText = $(div[0].childNodes[3]);
-
                 var range = new Range(document);
                 range.setStart(firstText, 1);
                 range.setEnd(firstText, 2);
@@ -1367,7 +1406,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(div.html().toLowerCase()).toBe("<p>1</p><p>2" +
+                expect(myHtml(div).replace(/\s/g, "")).toBe("<p>1</p><p>2" +
                     fake +
                     "</p><p>45" +
                     fake +
@@ -1398,7 +1437,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(div.html().toLowerCase()).toBe("<p>1</p><p>2" +
+                expect(myHtml(div)).toBe("<p>1</p><p>2" +
                     // fake +
                     "</p>" +
                     "<p>" +
@@ -1432,7 +1471,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(div.html().toLowerCase()).toBe("<p>1</p><p>" +
+                expect(myHtml(div)).toBe("<p>1</p><p>" +
                     fake +
                     "</p><p>6" +
                     // fake +
@@ -1477,7 +1516,7 @@ KISSY.use("editor", function (S, Editor) {
                     is = div.all("i");
 
                 is.item(0)._4e_breakParent(div.first());
-                expect(div.html().toLowerCase()).toBe("<div><span>12" +
+                expect(myHtml(div)).toBe("<div><span>12" +
                     "</span>" +
                     "</div>" +
                     "<i></i>" +
@@ -1488,6 +1527,65 @@ KISSY.use("editor", function (S, Editor) {
             });
         });
 
+
+        describe("insertNodeByDtd", function () {
+
+
+            it("works in common case", function () {
+                var div = $("<div>" +
+                    "<p>" +
+                    "<span class=\"text-wrapper\">" +
+                    "1234567" +
+                    "</span>" +
+                    "</p>" +
+                    "</div>").appendTo("body");
+
+                var text = $(div.one(".text-wrapper")[0].firstChild);
+
+                var range = new Range(document);
+
+                range.setStart(text, 2);
+
+                range.setEnd(text, 3);
+
+                range.insertNodeByDtd($("<p>3</p>"));
+
+                expect(myHtml(div).replace("<br>", "")).toBe("<p>" +
+                    "<span class=\"text-wrapper\">12</span>" +
+                    "</p>" +
+                    "<p>" +
+                    "3" +
+                    "</p>" + "<p>" +
+                    "<span class=\"text-wrapper\">4567</span>" +
+                    "</p>")
+
+                div.remove();
+            });
+
+            it("can replace empty p", function () {
+                var div = $("<div>" +
+                    "<p>" +
+                    "<br/>" +
+                    "</p>" +
+                    "</div>").appendTo("body");
+
+                var p = div.first();
+
+                var range = new Range(document);
+
+                range.setStart(p, 0);
+
+                range.setEnd(p, 1);
+
+                range.insertNodeByDtd($("<p>56</p>"));
+
+                expect(div.html()).toBe("<p>56</p>");
+
+                div.remove();
+            });
+
+
+        });
 
     });
 });

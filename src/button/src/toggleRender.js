@@ -2,9 +2,9 @@
  * @fileOverview Render for ToggleButton
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
+KISSY.add("button/toggleRender", function (S, Component, ButtonRender) {
 
-    return UIBase.create(ButtonRender, [], {
+    return Component.define(ButtonRender, [], {
         _uiSetChecked:function (v) {
             var self = this,
                 cls = self.getComponentCssClassWithState("-checked");
@@ -17,5 +17,5 @@ KISSY.add("button/toggleRender", function (S, UIBase, ButtonRender) {
     });
 
 }, {
-    requires:['uibase', './buttonRender']
+    requires:['component', './buttonRender']
 });

@@ -2,7 +2,7 @@
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
     var $ = Node.all,
         ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
@@ -12,7 +12,7 @@ KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender)
      * 基类树节点
      * @constructor
      */
-    var BaseNode = UIBase.create(Component.Controller,
+    var BaseNode = Component.define(Component.Controller,
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */
@@ -349,5 +349,5 @@ KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender)
     return BaseNode;
 
 }, {
-    requires:['node', 'uibase', 'component', './basenoderender']
+    requires:['node', 'component', './basenoderender']
 });

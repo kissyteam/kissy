@@ -2,7 +2,7 @@
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function (S, Node,  Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
@@ -28,7 +28,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
 
         ROW_CLS = "tree-row";
 
-    return UIBase.create(Component.Render, {
+    return Component.define(Component.Render, {
 
         _computeClass:function (children, parent
                                 //, cause
@@ -207,5 +207,5 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
     });
 
 }, {
-    requires:['node', 'uibase', 'component']
+    requires:['node', 'component']
 });

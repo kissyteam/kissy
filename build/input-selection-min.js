@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 28 19:45
 */
 KISSY.add("input-selection",function(h,d){function o(a){var b=i;b||(b=d.create(p));"textarea"==a.type?d.css(b,"width",d.css(a,"width")):d.css(b,"width",9999);h.each(q,function(c){d.css(b,c,d.css(a,c))});if(!i){var c=a.ownerDocument.body;c.insertBefore(b,c.firstChild)}return i=b}var j=d._propHooks;if("number"!=typeof h.Env.host.document.createElement("input").selectionEnd){j.selectionStart={set:function(a,b){var c=a.ownerDocument.selection.createRange();if(k(a).inRange(c)){var f=g(a,1)[1],e=l(a,b,
 f);c.collapse(!1);c.moveStart("character",-e);b>f&&c.collapse(!0);c.select()}},get:function(a){return g(a)[0]}};j.selectionEnd={set:function(a,b){var c=a.ownerDocument.selection.createRange();if(k(a).inRange(c)){var f=g(a)[0],e=l(a,f,b);c.collapse(!0);c.moveEnd("character",e);f>b&&c.collapse(!1);c.select()}},get:function(a){return g(a,1)[1]}};var g=function(a,b){var c=0,f=0,e=a.ownerDocument.selection.createRange(),d=k(a);d.inRange(e)&&(d.setEndPoint("EndToStart",e),c=m(a,d).length,b&&(f=c+m(a,e).length));

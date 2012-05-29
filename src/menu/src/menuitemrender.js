@@ -2,7 +2,7 @@
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
+KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
     var CHECK_CLS = "menuitem-checkbox";
 
@@ -18,7 +18,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, {
+    return Component.define(Component.Render, {
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -67,5 +67,5 @@ KISSY.add("menu/menuitemRender", function (S, Node, UIBase, Component) {
         }
     }, "Menu_Item_Render");
 }, {
-    requires:['node', 'uibase', 'component']
+    requires:['node', 'component']
 });

@@ -196,7 +196,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>parents：
-                                        <a href="../symbols/Component.Controller.html">Component.Controller</a>, <a href="../symbols/UIBase.Box.html">UIBase.Box</a>
+                                        <a href="../symbols/Component.Controller.html">Component.Controller</a>, <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>
                                     </p>                                                
                                     
 
@@ -404,7 +404,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="list summary-list">
-                                        <li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a></li><li class="li">Fields borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#created">created</a>, <a href="../symbols/UIBase.html#rendered">rendered</a></li><li class="li">Fields borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#el">el</a>, <a href="../symbols/UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/UIBase.Box.html#height">height</a>, <a href="../symbols/UIBase.Box.html#html">html</a>, <a href="../symbols/UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/UIBase.Box.html#visible">visible</a>, <a href="../symbols/UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/UIBase.Box.html#width">width</a></li>
+                                        <li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#created">created</a>, <a href="../symbols/Component.UIBase.html#rendered">rendered</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#el">el</a>, <a href="../symbols/Component.UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/Component.UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/Component.UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/Component.UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/Component.UIBase.Box.html#height">height</a>, <a href="../symbols/Component.UIBase.Box.html#html">html</a>, <a href="../symbols/Component.UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/Component.UIBase.Box.html#visible">visible</a>, <a href="../symbols/Component.UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/Component.UIBase.Box.html#width">width</a></li>
                                         </ul>
                                         
                                     </div>
@@ -457,7 +457,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/Editor.html#addCustomStyle">addCustomStyle</a></b>
-                                                <span class="param">(cssText)</span>
+                                                <span class="param">(cssText, id)</span>
                                                 
                                                 
                                                 
@@ -506,6 +506,16 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
+                                                <b class="name"><a href="../symbols/Editor.html#checkSelectionChange">checkSelectionChange</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Check whether selection has changed since last check point.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
                                                 <b class="name"><a href="../symbols/Editor.html#docReady">docReady</a></b>
                                                 <span class="param">(func)</span>
                                                 
@@ -532,6 +542,16 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Make current editor has focus</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.html#getDocHtml">getDocHtml</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get full html content of editor 's iframe.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -586,12 +606,32 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
+                                                <b class="name"><a href="../symbols/Editor.html#notifySelectionChange">notifySelectionChange</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Fire selectionChange manually.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
                                                 <b class="name"><a href="../symbols/Editor.html#removeCustomLink">removeCustomLink</a></b>
                                                 <span class="param">(link)</span>
                                                 
                                                 
                                                 
                                                 <span class="desc">Remove css link from current editor.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.html#removeCustomStyle">removeCustomStyle</a></b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Remove style text with specified id from current editor</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -614,11 +654,21 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="desc">Synchronize textarea value with editor data.</span>                                                
                                             </li>
                                             
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Editor.html#use">use</a></b>
+                                                <span class="param">(mods, callback)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Use editor plugins.</span>                                                
+                                            </li>
+                                            
                                         </ul>
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#bindUI">bindUI</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleBlur">handleBlur</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleKeyEventInternal">handleKeyEventInternal</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#performActionInternal">performActionInternal</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.html">UIBase</a>: <a href="../symbols/UIBase.html#destroy">destroy</a>, <a href="../symbols/UIBase.html#render">render</a>, <a href="../symbols/UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/UIBase.Box.html">UIBase.Box</a>: <a href="../symbols/UIBase.Box.html#hide">hide</a>, <a href="../symbols/UIBase.Box.html#show">show</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#bindUI">bindUI</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleBlur">handleBlur</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleKeyEventInternal">handleKeyEventInternal</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#performActionInternal">performActionInternal</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#render">render</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -1216,7 +1266,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line335">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line286">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1282,7 +1332,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line507">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line440">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1335,11 +1385,11 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 
                                                 <b class="name">addCustomStyle</b>
-                                                <span class="param">(cssText)</span>
+                                                <span class="param">(cssText, id)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line495">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line420">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1364,6 +1414,15 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="desc">{string}</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">id</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -1396,7 +1455,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line302">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line253">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1594,11 +1653,52 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line484">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line409">view source</a>
                                             </div>
 
                                             <div class="desc">
                                                 Make current editor lose focus
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="checkSelectionChange"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">checkSelectionChange</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line488">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Check whether selection has changed since last check point.
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
                                                 
@@ -1635,7 +1735,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line587">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line477">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1692,7 +1792,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line351">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line303">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1749,11 +1849,52 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line463">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line388">view source</a>
                                             </div>
 
                                             <div class="desc">
                                                 Make current editor has focus
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getDocHtml"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getDocHtml</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line372">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get full html content of editor 's iframe.
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
                                                 
@@ -1790,7 +1931,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line456">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line381">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1831,7 +1972,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line343">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line294">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1888,7 +2029,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line326">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line277">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1945,7 +2086,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line629">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line526">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2020,7 +2161,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line745">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line607">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2078,6 +2219,47 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name="notifySelectionChange"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">notifySelectionChange</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line516">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Fire selectionChange manually.
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="removeCustomLink"> </a>
                                             <div class="title">
                                                 
@@ -2086,7 +2268,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line523">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line456">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2135,6 +2317,63 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name="removeCustomStyle"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">removeCustomStyle</b>
+                                                <span class="param">(id)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line432">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Remove style text with specified id from current editor
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html">editor.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">id</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="showDialog"> </a>
                                             <div class="title">
                                                 
@@ -2143,7 +2382,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line311">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line262">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2209,7 +2448,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line427">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor.js.html#line364">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2230,6 +2469,82 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="use"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">use</b>
+                                                <span class="param">(mods, callback)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_base.js.html#line45">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Use editor plugins.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">mods</b>
+                                                            
+                                                            
+                                                            <span class="type">{Array<String>|String}</span> 
+                                                            <span class="desc">Editor plugin names.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">callback</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/Editor.html">Editor</a>}</span> 
+                                                            <span>Current instance.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -2325,6 +2640,42 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Component.Render.html">Component.Render</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.html">Component.UIBase</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Align.html">Component.UIBase.Align</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Close.html">Component.UIBase.Close</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Constrain.html">Component.UIBase.Constrain</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.ContentBox.html">Component.UIBase.ContentBox</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Drag.html">Component.UIBase.Drag</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Loading.html">Component.UIBase.Loading</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Mask.html">Component.UIBase.Mask</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Position.html">Component.UIBase.Position</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Resize.html">Component.UIBase.Resize</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.StdMod.html">Component.UIBase.StdMod</a></li>
             
             
             <li><a href="../symbols/Component.UIStore.html">Component.UIStore</a></li>
@@ -2454,42 +2805,6 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Resizable.html">Resizable</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.html">UIBase</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Align.html">UIBase.Align</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Box.html">UIBase.Box</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Close.html">UIBase.Close</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Constrain.html">UIBase.Constrain</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.ContentBox.html">UIBase.ContentBox</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Drag.html">UIBase.Drag</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Loading.html">UIBase.Loading</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Mask.html">UIBase.Mask</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Position.html">UIBase.Position</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.Resize.html">UIBase.Resize</a></li>
-            
-            
-            <li><a href="../symbols/UIBase.StdMod.html">UIBase.StdMod</a></li>
             
             
             <li><a href="../symbols/Waterfall.html">Waterfall</a></li>

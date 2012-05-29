@@ -37,11 +37,11 @@ KISSY.use("editor", function (S, Editor) {
             var walker = new Walker(range);
             var node = walker.next();
             expect(node[0].nodeType).toBe(1);
-            expect(node.html()).toBe("<span>2-1</span>2");
+            expect(node.html().toLowerCase()).toBe("<span>2-1</span>2");
 
             node = walker.next();
             expect(node[0].nodeType).toBe(1);
-            expect(node.html()).toBe("2-1");
+            expect(node.html().toLowerCase()).toBe("2-1");
 
             for (var i = 0; i < 6; i++) {
                 walker.next();

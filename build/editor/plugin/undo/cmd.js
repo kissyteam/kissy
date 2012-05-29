@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * undo,redo manager for kissy editor
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
      * @param editor
      */
     function Snapshot(editor) {
-        var contents = editor._getRawData(),
+        var contents = editor.get("document")[0].body.innerHTML,
             self = this,
             selection;
         if (contents) {
@@ -86,7 +86,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
     var //editingKeyCodes = { /*Backspace*/ 8:1, /*Delete*/ 46:1 },
         modifierKeyCodes = { /*Shift*/ 16:1, /*Ctrl*/ 17:1, /*Alt*/ 18:1 },
-        // Arrows: L, T, R, B
+    // Arrows: L, T, R, B
         navigationKeyCodes = { 37:1, 38:1, 39:1, 40:1, 33:1, 34:1 },
         zKeyCode = 90,
         yKeyCode = 89;
@@ -189,17 +189,18 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 history = self.history,
                 editor = self.editor,
+                editorDomBody = editor.get("document")[0].body,
                 snapshot = history[self.index + d];
 
             if (snapshot) {
-                editor._setRawData(snapshot.contents);
+                editorDomBody.innerHTML = snapshot.contents;
                 if (snapshot.bookmarks)
                     editor.getSelection().selectBookmarks(snapshot.bookmarks);
                 else if (UA['ie']) {
                     // IE BUG: If I don't set the selection to *somewhere* after setting
                     // document contents, then IE would create an empty paragraph at the bottom
                     // the next time the document is modified.
-                    var $range = editor.get("document")[0].body.createTextRange();
+                    var $range = editorDomBody.createTextRange();
                     $range.collapse(true);
                     $range.select();
                 }

@@ -104,8 +104,8 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
      * @class
      * @memberOf Component
      * @name Controller
-     * @extends UIBase
-     * @extends UIBase.Box
+     * @extends Component.UIBase
+     * @extends Component.UIBase.Box
      */
     var Controller = UIBase.create([UIBase.Box],
         /** @lends Component.Controller# */
@@ -190,6 +190,9 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
              */
             bindUI:function () {
                 var self = this,
+                    n,
+                    listener,
+                    listeners = self.get("listeners"),
                     focusable = self.get("focusable"),
                     handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
@@ -205,6 +208,17 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
+                }
+                for (n in listeners) {
+                    listener = listeners[n];
+                    self.on(n, listener.fn, listener.scope);
+                }
+            },
+
+
+            _uiSetFocused:function (v) {
+                if (v) {
+                    this.getKeyEventTarget()[0].focus();
                 }
             },
 
@@ -253,14 +267,14 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             /**
              * Removed the given child from this component,and returns it.
              *
-             * If destroy is true, calls {@link UIBase.#destroy} on the removed child component,
+             * If destroy is true, calls {@link Component.UIBase.#destroy} on the removed child component,
              * and subsequently detaches the child's DOM from the document.
              * Otherwise it is the caller's responsibility to
              * clean up the child component's DOM.
              *
              * @param {Component.Controller} c The child component to be removed.
              * @param {Boolean} [destroy=false] If true,
-             * calls {@link UIBase.#destroy} on the removed child component.
+             * calls {@link Component.UIBase.#destroy} on the removed child component.
              * @return {Component.Controller} The removed component.
              */
             removeChild:function (c, destroy) {
@@ -279,7 +293,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
              * Removes every child component attached to current component.
              * @see Component.Controller#removeChild
              * @param {Boolean} [destroy] If true,
-             * calls {@link UIBase.#destroy} on the removed child component.
+             * calls {@link Component.UIBase.#destroy} on the removed child component.
              */
             removeChildren:function (destroy) {
                 var self = this,
@@ -592,6 +606,24 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
                  */
                 disabled:{
                     view:true
+                },
+
+                /**
+                 * Config listener on created.
+                 * @example
+                 * <code>
+                 * {
+                 *  click:{
+                 *      scope:{x:1},
+                 *      fn:function(){
+                 *          alert(this.x);
+                 *      }
+                 *  }
+                 * }
+                 * </code>
+                 */
+                listeners:{
+                    value:{}
                 }
             },
 
@@ -632,7 +664,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
 
     return Controller;
 }, {
-    requires:['event', 'uibase', './uistore', './render']
+    requires:['event', './uibase', './uistore', './render']
 });
 /**
  * observer synchronization, model 分成两类：

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 28 19:45
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -149,10 +149,10 @@ KISSY.add("overlay/ariarender", function (S, Node) {
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
 
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
     /**
@@ -161,15 +161,15 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @namespace
      * @name Overlay
      * @extends Component.Controller
-     * @extends UIBase.ContentBox
-     * @extends UIBase.Position
-     * @extends UIBase.Loading
-     * @extends UIBase.Align
-     * @extends UIBase.Close
-     * @extends UIBase.Resize
-     * @extends UIBase.Mask
+     * @extends Component.UIBase.ContentBox
+     * @extends Component.UIBase.Position
+     * @extends Component.UIBase.Loading
+     * @extends Component.UIBase.Align
+     * @extends Component.UIBase.Close
+     * @extends Component.UIBase.Resize
+     * @extends Component.UIBase.Mask
      */
-    var Overlay = UIBase.create(Component.Controller, [
+    var Overlay = Component.define(Component.Controller, [
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -184,7 +184,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
          */
         {
             /**
-             * see {@link UIBase.Box#show}
+             * see {@link Component.UIBase.Box#show}
              * @function
              * @name Overlay#show
              */
@@ -218,7 +218,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
                 },
 
                 /**
-                 * see {@link UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link Component.UIBase.Box#visibleMode}. Default:"visibility"
                  */
                 visibleMode:{
                     value:"visibility"
@@ -235,15 +235,15 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
 
     return Overlay;
 }, {
-    requires:['uibase', 'component', './overlayrender', './effect']
+    requires:['component', './overlayrender', './effect']
 });/**
  * @fileOverview KISSY.Dialog
  * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria) {
 
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
     /**
@@ -252,11 +252,11 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
      * @name Dialog
      * @memberOf Overlay
      * @extends Overlay
-     * @extends UIBase.StdMod
-     * @extends UIBase.Drag
-     * @extends UIBase.Constrain
+     * @extends Component.UIBase.StdMod
+     * @extends Component.UIBase.Drag
+     * @extends Component.UIBase.Constrain
      */
-    var Dialog = UIBase.create(Overlay, [
+    var Dialog = Component.define(Overlay, [
         require("stdmod"),
         require("drag"),
         require("constrain"),
@@ -267,7 +267,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
          */
         {
             /**
-             * see {@link UIBase.Box#show}
+             * see {@link Component.UIBase.Box#show}
              * @name Overlay.Dialog#show
              * @function
              */
@@ -315,7 +315,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
     return Dialog;
 
 }, {
-    requires:[ "component", "overlay/base", "uibase", 'overlay/dialogrender', './aria']
+    requires:[ "component", "overlay/base",  'overlay/dialogrender', './aria']
 });
 
 /**
@@ -328,17 +328,17 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRende
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+KISSY.add("overlay/dialogrender", function(S, Component, OverlayRender, AriaRender) {
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
-    return UIBase.create(OverlayRender, [
+    return Component.define(OverlayRender, [
         require("stdmodrender"),
         AriaRender
     ]);
 }, {
-    requires:['uibase','./overlayrender','./ariarender']
+    requires:['component','./overlayrender','./ariarender']
 });/**
  * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
@@ -449,13 +449,13 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
+KISSY.add("overlay/overlayrender", function (S, UA, Component) {
 
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
-    return UIBase.create(Component.Render, [
+    return Component.define(Component.Render, [
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),
@@ -464,7 +464,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("maskrender")
     ]);
 }, {
-    requires: ["ua","uibase","component"]
+    requires:["ua", "component"]
 });
 
 /**
@@ -474,7 +474,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
     /**
      * KISSY Popup Component
@@ -483,13 +483,13 @@ KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
      * @extends Overlay
      * @name Popup
      */
-    var Popup = UIBase.create(Overlay, [],
+    var Popup =Component.define(Overlay, [],
         /**
          * @lends Overlay.Popup#
          */
         {
             /**
-             * see {@link UIBase.Box#show}
+             * see {@link Component.UIBase.Box#show}
              * @name Overlay.Popup#show
              * @function
              */
@@ -672,7 +672,7 @@ KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:["uibase", "component", "./base"]
+    requires:["component", "./base"]
 });
 
 /**

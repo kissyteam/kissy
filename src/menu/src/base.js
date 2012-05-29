@@ -2,7 +2,7 @@
  * @fileOverview menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
+KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
     function onMenuHide() {
@@ -14,7 +14,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
      * @constructor
      * @extends Component.Container
      */
-    var Menu = UIBase.create(Component.Container,
+    var Menu = Component.define(Component.Container,
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -204,7 +204,7 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'uibase', 'component', './menuRender', './submenu']
+    requires:['event', 'component', './menuRender', './submenu']
 });
 
 /**

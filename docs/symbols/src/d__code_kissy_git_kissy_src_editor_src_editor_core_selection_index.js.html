@@ -305,7 +305,7 @@
 <span id='line298' class='line'>298</span> </span><span class="WHIT">                </span><span class="NAME">savedRange</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nativeSel</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">sel.getRanges</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line299' class='line'>299</span> </span><span class="WHIT">                </span><span class="COMM">// S.log("monitor ing...");</span><span class="WHIT">
 <span id='line300' class='line'>300</span> </span><span class="WHIT">                </span><span class="COMM">// 同时检测，不同则 editor 触发 selectionChange</span><span class="WHIT">
-<span id='line301' class='line'>301</span> </span><span class="WHIT">                </span><span class="NAME">editor._monitor</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line301' class='line'>301</span> </span><span class="WHIT">                </span><span class="NAME">editor.checkSelectionChange</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line302' class='line'>302</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line303' class='line'>303</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line304' class='line'>304</span> 
@@ -327,7 +327,7 @@
 <span id='line320' class='line'>320</span> </span><span class="WHIT">        </span><span class="COMM">// press.</span><span class="WHIT">
 <span id='line321' class='line'>321</span> </span><span class="WHIT">        </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">monitor</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line322' class='line'>322</span> </span><span class="WHIT">            </span><span class="COMM">// S.log("fireSelectionChangeForNonIE in selection/index");</span><span class="WHIT">
-<span id='line323' class='line'>323</span> </span><span class="WHIT">            </span><span class="NAME">editor._monitor</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line323' class='line'>323</span> </span><span class="WHIT">            </span><span class="NAME">editor.checkSelectionChange</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line324' class='line'>324</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line325' class='line'>325</span> 
 <span id='line326' class='line'>326</span> </span><span class="WHIT">        </span><span class="NAME">Event.on</span><span class="PUNC">(</span><span class="NAME">doc</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'mouseup keyup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">monitor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">

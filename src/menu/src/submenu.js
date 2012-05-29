@@ -2,7 +2,7 @@
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMenuRender) {
+KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
 
     /* or precisely submenuitem */
 
@@ -91,7 +91,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     /**
      * Class representing a submenu that can be added as an item to other menus.
      */
-    var SubMenu = UIBase.create(MenuItem, [Component.DecorateChild], {
+    var SubMenu =Component.define(MenuItem, [Component.DecorateChild], {
 
             _onParentHide:function () {
                 var menu = getMenu(this);
@@ -326,7 +326,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
     return SubMenu;
 }, {
-    requires:['event', 'uibase', 'component', './menuitem', './submenuRender']
+    requires:['event', 'component', './menuitem', './submenuRender']
 });
 
 /**

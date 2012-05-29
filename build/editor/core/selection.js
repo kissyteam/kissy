@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * modified from ckeditor core - selection
@@ -424,8 +424,10 @@ KISSY.add("editor/core/selection", function (S) {
             var self = this,
                 node,
                 cache = self._.cache;
-            if (cache.selectedElement !== undefined)
+
+            if (cache.selectedElement !== undefined) {
                 return cache.selectedElement;
+            }
 
             // Is it native IE control type selection?
             if (OLD_IE) {
@@ -435,24 +437,26 @@ KISSY.add("editor/core/selection", function (S) {
 
             // Figure it out by checking if there's a single enclosed
             // node of the range.
+            // 处理 ^  <img/>  ^
             if (!node) {
                 node = (function () {
                     var range = self.getRanges()[ 0 ],
                         enclosed,
                         selected;
 
-                    // Check first any enclosed element, e.g. <ul>[<li><a href="#">item</a></li>]</ul>
-                    // 脱两层？？2是啥意思？
+                    // 先检查第一层
+                    // <div>^<img/>^</div>
+                    // shrink 再检查
+                    // <div><span>^<img/>^</span></div>
                     for (var i = 2;
-                         i && !
-                             (
-                                 ( enclosed = range.getEnclosedNode() )
-                                     && ( enclosed[0].nodeType == DOM.ELEMENT_NODE )
-                                     //某些值得这么多的元素？？
-                                     && styleObjectElements[ enclosed.nodeName() ]
-                                     && ( selected = enclosed )
-                                 ); i--) {
-                        // Then check any deep wrapped element, e.g. [<b><i><img /></i></b>]
+                         i && !(( enclosed = range.getEnclosedNode() ) &&
+                             ( enclosed[0].nodeType == DOM.ELEMENT_NODE ) &&
+                             // 某些值得这么多的元素？？
+                             styleObjectElements[ enclosed.nodeName() ] &&
+                             ( selected = enclosed ));
+                         i--) {
+                        // Then check any deep wrapped element
+                        // e.g. [<b><i><img /></i></b>]
                         // 一下子退到底  ^<a><span><span><img/></span></span></a>^
                         // ->
                         //<a><span><span>^<img/>^</span></span></a>
@@ -461,9 +465,11 @@ KISSY.add("editor/core/selection", function (S) {
 
                     return  selected;
                 })();
+            } else {
+                node = new Node(node);
             }
 
-            return cache.selectedElement = new Node(node);
+            return cache.selectedElement = node;
         },
 
 

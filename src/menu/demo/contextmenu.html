@@ -26,7 +26,7 @@ margin:50px auto;">
 <script>
 
 
-    KISSY.use("menu", function(S, Menu) {
+    KISSY.use("menu", function (S, Menu) {
         var context = S.all("#context");
         var sb = new Menu.PopupMenu({
             prefixCls:"goog-",
@@ -79,23 +79,23 @@ margin:50px auto;">
             prefixCls:"goog-",
             // 接受键盘事件
             focusable:1,
-            children:[b,new Menu.Item({
+            children:[b, new Menu.Item({
                 prefixCls:"goog-",
                 content:"alone"})]
         });
 
 
-        menu.on("click", function(e) {
+        menu.on("click", function (e) {
             context.html(e.target.get("content") + " clicked");
         });
 
-        context.on("contextmenu", function(e) {
+        context.on("contextmenu", function (e) {
             e.halt();
             menu.render();
-            menu.set("xy", [e.pageX,e.pageY]);
+            menu.set("xy", [e.pageX, e.pageY]);
             menu.show();
             // 接受键盘事件
-            menu.get("el")[0].focus();
+            menu.set("focused", true);
         });
 
 

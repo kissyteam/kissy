@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 25 11:20
+build time: May 28 20:42
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -451,7 +451,7 @@ build time: May 25 11:20
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120525112007';
+        S.__BUILD_TIME = '20120528204213';
     })();
 
     return S;
@@ -2214,15 +2214,19 @@ build time: May 25 11:20
         return packageDesc;
     }
 
+
+    var isWebKit = !!ua.match(/AppleWebKit/);
+
     S.mix(utils, {
 
         docHead:function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
 
-        isWebKit:!!ua.match(/AppleWebKit/),
+        isWebKit:isWebKit,
 
-        isGecko:!!ua.match(/Gecko/),
+        // like Gecko ...
+        isGecko:!isWebKit && !!ua.match(/Gecko/),
 
         isPresto:!!ua.match(/Presto/),
 
@@ -2529,6 +2533,7 @@ build time: May 25 11:20
          */
         normAdd:function (self, name, fn, config) {
             var mods = self.Env.mods,
+                t,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
@@ -2544,11 +2549,14 @@ build time: May 25 11:20
             if (S.isPlainObject(name)) {
                 S.each(name, function (modCfg, modName) {
                     modName = utils.indexMapStr(modName);
-                    if (modCfg.requires) {
-                        modCfg.requires =
-                            utils.normalizeModNames(self, modCfg.requires, modName);
-                    }
                     utils.createModuleInfo(self, modName);
+                    // 模块代码已经加载过了
+                    if (mods[modName].fn) {
+                        return;
+                    }
+                    if (t = modCfg.requires) {
+                        modCfg.requires = utils.normalizeModNames(self, t, modName);
+                    }
                     S.mix(mods[modName], modCfg);
                 });
                 return true;
@@ -2656,7 +2664,7 @@ build time: May 25 11:20
                 node = callbackObj.node,
                 exName,
                 loaded = 0;
-            if (!utils.isGecko) {
+            if (utils.isWebKit) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
                     loaded = 1;
@@ -4021,7 +4029,7 @@ build time: May 25 11:20
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120525112007'
+        tag:'20120528204213'
     }, getBaseInfo()));
 
     /**
@@ -4298,14 +4306,11 @@ build time: May 25 11:20
         /******************************
          *  Infrastructure
          ******************************/
-        "uibase":{
-            requires:['base', 'node']
-        },
         "mvc":{
             requires:["base", "ajax"]
         },
         "component":{
-            requires:["uibase", "node"]
+            requires:["node"]
         },
 
         /****************************
@@ -4358,7 +4363,7 @@ build time: May 25 11:20
             requires:["dom", "json"]
         },
         "imagezoom":{
-            requires:["node", "uibase"]
+            requires:["node", "component"]
         },
         "editor":{
             requires:['htmlparser', 'core','overlay']

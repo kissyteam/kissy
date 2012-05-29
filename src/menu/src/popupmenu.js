@@ -2,7 +2,7 @@
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
 
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
@@ -31,16 +31,19 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
         }
     }
 
+
+    var UIBase=Component.UIBase;
+
     /**
      * Popup Menu
      * @name PopupMenu
      * @memberOf Menu
      * @constructor
      * @extends Menu
-     * @extends UIBase.Position
-     * @extends UIBase.Align
+     * @extends Component.UIBase.Position
+     * @extends Component.UIBase.Align
      */
-    var PopupMenu = UIBase.create(Menu, [
+    var PopupMenu = Component.define(Menu, [
         UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
@@ -184,5 +187,5 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     return PopupMenu;
 
 }, {
-    requires:['uibase', 'component', './base', './popupmenuRender']
+    requires:['component', './base', './popupmenuRender']
 });

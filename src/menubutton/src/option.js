@@ -2,7 +2,7 @@
  * @fileOverview represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
+KISSY.add("menubutton/option", function (S,  Component, Menu) {
     var MenuItem = Menu.Item;
     /**
      * Option for Select component.
@@ -11,7 +11,7 @@ KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
      * @memberOf MenuButton
      * @extends Menu.Item
      */
-    var Option = UIBase.create(MenuItem,
+    var Option = Component.define(MenuItem,
         /**
          * @lends MenuButton.Option.prototype
          */
@@ -43,5 +43,5 @@ KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
     });
     return Option;
 }, {
-    requires:['uibase', 'component', 'menu']
+    requires:['component', 'menu']
 });

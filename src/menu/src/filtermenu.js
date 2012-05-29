@@ -2,7 +2,7 @@
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -12,7 +12,7 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = UIBase.create(Menu, {
+    var FilterMenu = Component.define(Menu, {
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -196,5 +196,5 @@ KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRen
 
     return FilterMenu;
 }, {
-    requires:['uibase', 'component', './base', './filtermenuRender']
+    requires:['component', './base', './filtermenuRender']
 });

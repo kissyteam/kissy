@@ -35,7 +35,7 @@
                 node = callbackObj.node,
                 exName,
                 loaded = 0;
-            if (!utils.isGecko) {
+            if (utils.isWebKit) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
                     loaded = 1;

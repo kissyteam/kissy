@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, UIBase, Overlay, Focus) {
-    var Overlay4E = UIBase.create(Overlay, [Focus], {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay, Focus) {
+    var Overlay4E =Component.define(Overlay, [Focus], {
     }, {
         ATTRS:{
             prefixCls:{
@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, UIBase, Overlay, F
         }
     });
 
-    Overlay4E.Dialog = UIBase.create(Overlay.Dialog, [Focus], {
+    Overlay4E.Dialog = Component.define(Overlay.Dialog, [Focus], {
         show:function () {
             var self = this;
             //在 show 之前调用
@@ -55,5 +55,5 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, UIBase, Overlay, F
 
     return Overlay4E
 }, {
-    requires:["editor", 'uibase', 'overlay', './focus', 'dd']
+    requires:["editor", 'component', 'overlay', './focus', 'dd']
 });

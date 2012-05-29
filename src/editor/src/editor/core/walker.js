@@ -69,7 +69,8 @@ KISSY.add("editor/core/walker", function (S, Editor) {
         if (rtl && !self._.guardRTL) {
             // Gets the node that stops the walker when going LTR.
             var limitRTL = range.startContainer[0],
-                blockerRTL = ( range.startOffset > 0 ) && limitRTL.childNodes[range.startOffset - 1] || null;
+                blockerRTL = ( range.startOffset > 0 ) &&
+                    limitRTL.childNodes[range.startOffset - 1] || null;
 
             self._.guardRTL = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
@@ -108,7 +109,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                 node = range.endContainer;
                 if (range.endOffset > 0) {
                     node = new Node(node[0].childNodes[range.endOffset - 1]);
-                    if (guard(node) === FALSE) {
+                    if (guard(node[0]) === FALSE) {
                         node = NULL;
                     }
                 } else {
@@ -121,7 +122,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                 node = new Node(node[0].childNodes[range.startOffset]);
 
                 if (node.length) {
-                    if (guard(node) === FALSE) {
+                    if (guard(node[0]) === FALSE) {
                         node = NULL;
                     }
                 } else {

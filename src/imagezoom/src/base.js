@@ -1,12 +1,12 @@
 /**
  * @fileOverview 图片放大效果 ImageZoom.
  */
-KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, UIBase, Node, Zoomer, undefined) {
+KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, Zoomer, undefined) {
     var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
         IMAGEZOOM_WRAP_TMPL = "<span class='{wrapClass}'></span>";
 
     function require(s) {
-        return S.require("uibase/" + s);
+        return S.require("component/uibase/" + s);
     }
 
     function show(obj) {
@@ -17,7 +17,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, UIBase, Node, Zoo
         obj && obj.hide();
     }
 
-    return UIBase.create([
+    return Component.define([
         require("boxrender"),
         require("contentboxrender"),
         require("positionrender"),
@@ -215,7 +215,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, UIBase, Node, Zoo
             }
         });
 }, {
-    requires:['dom', 'event', 'ua', 'anim', 'uibase', 'node', './zoomer']
+    requires:['dom', 'event', 'ua', 'anim', 'component', 'node', './zoomer']
 });
 
 

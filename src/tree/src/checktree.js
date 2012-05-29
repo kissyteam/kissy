@@ -2,10 +2,10 @@
  * @fileOverview root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
+KISSY.add("tree/checktree", function(S,  Component, CheckNode, CheckTreeRender, TreeMgr) {
     var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /*多继承*/
-    var CheckTree = UIBase.create(CheckNode, [Component.DelegateChildren,TreeMgr], {
+    var CheckTree = Component.define(CheckNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:CheckTreeRender
     });
@@ -18,5 +18,5 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
     return CheckTree;
 
 }, {
-    requires:['uibase','component','./checknode','./checktreerender','./treemgr']
+    requires:['component','./checknode','./checktreerender','./treemgr']
 });

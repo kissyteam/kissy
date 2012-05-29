@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 KISSY.add("editor/plugin/select/index",function(j,i,s,d){function h(a){h.superclass.constructor.call(this,a);this._init()}function m(a){return a&&-1==a.indexOf("<")?a:0}var q=j.Node,g=q.all,k=j.Event,n=j.DOM,r=i.XHTML_DTD;h.DISABLED=0;h.ENABLED=1;h.ATTRS={showValue:{},el:{},cls:{},container:{},doc:{},value:{},width:{},popUpWidth:{},title:{},items:{},emptyText:{},align:{value:["l","b"]},menuContainer:{valueFn:function(){for(var a=this.el.parent();a;){var b=a.nodeName();if(r[b]&&r[b].div)return a;a=
 a.parent()}return g(document.body)}},state:{value:1}};h.decorate=function(a){var b=a.width(),e=[];a.all("option").each(function(a){e.push({name:a.html(),value:a.val()})});return new h({width:b+"px",title:a.attr("title"),el:a,items:e,cls:"ke-combox",value:a.val()})};var o=i.Utils.addRes,t=i.Utils.destroyRes;j.extend(h,j.Base,{_init:function(){var a=this,b=a.get("container"),e=a.get("el"),c=g("<span class='ke-select-wrap'><a class='ke-select'  hidefocus='hidefocus' tabindex='0'><span class='ke-select-text'><span class='ke-select-text-inner'></span></span><span class='ke-select-drop-wrap'><span class='ke-select-drop'></span></span></a></span>"),

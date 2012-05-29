@@ -2,14 +2,14 @@
  * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
+KISSY.add("tree/checknode", function(S, Node,  Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
         CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
-    var CheckNode = UIBase.create(BaseNode, {
+    var CheckNode = Component.define(BaseNode, {
         performActionInternal:function(e) {
             var self=this;
             // 需要通知 tree 获得焦点
@@ -113,5 +113,5 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 
     return CheckNode;
 }, {
-    requires:['node','uibase','component','./basenode','./checknoderender']
+    requires:['node','component','./basenode','./checknoderender']
 });

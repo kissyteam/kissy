@@ -2,7 +2,7 @@
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
+KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
@@ -11,7 +11,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return UIBase.create(Button.Render, {
+    return Component.define(Button.Render, {
 
         createDom:function () {
             var self = this,
@@ -51,5 +51,5 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
         }
     }, "MenuButton_Render");
 }, {
-    requires:['uibase', 'button']
+    requires:['component', 'button']
 });

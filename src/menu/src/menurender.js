@@ -2,9 +2,9 @@
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuRender", function(S, UA, UIBase, Component) {
+KISSY.add("menu/menuRender", function(S, UA, Component) {
 
-    return UIBase.create(Component.Render,{
+    return Component.define(Component.Render,{
 
         renderUI:function() {
             var el = this.get("el");
@@ -39,5 +39,5 @@ KISSY.add("menu/menuRender", function(S, UA, UIBase, Component) {
         }
     },"Menu_Render");
 }, {
-    requires:['ua','uibase','component']
+    requires:['ua','component']
 });

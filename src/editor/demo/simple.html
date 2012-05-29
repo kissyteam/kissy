@@ -33,7 +33,6 @@
 <script src="../../../build/htmlparser.js"></script>
 <script src="../../../build/dd.js"></script>
 <script src="../../../build/component.js"></script>
-<script src="../../../build/uibase.js"></script>
 <script src="../../../build/overlay.js"></script>
 <!--
 core
@@ -69,6 +68,8 @@ KISSY.config({
 KISSY.use('editor', function (S, Editor) {
 
     var cfg = {
+        // 是否初始聚焦
+        focused:true,
         autoRender:true,
         attachForm:true,
         baseZIndex:10000,

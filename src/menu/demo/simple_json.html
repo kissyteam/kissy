@@ -96,19 +96,16 @@
                             xclass:'menuitem',
                             content:"alone"
                         }
-                    ]
-                });
+                    ],
 
-                menu.render();
-
-                menu.on("click", function (ev) {
-                    S.log("selected : " + ev.target.get("content"));
-                });
-
-                menu.on("delete", function (e) {
-                    S.log("deleted : " + e.target.get("content"));
-                });
-
+                    listeners:{
+                        click:{
+                            fn:function (ev) {
+                                S.log("selected : " + ev.target.get("content"));
+                            }
+                        }
+                    }
+                }).render();
 
                 var dis = Node.one("#dis");
 
@@ -119,6 +116,7 @@
                         child.set("disabled", !!dis[0].checked);
                     });
                 });
+
                 dis[0].checked = false;
             });
 </script>

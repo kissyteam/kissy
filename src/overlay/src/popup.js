@@ -2,7 +2,7 @@
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
     /**
      * KISSY Popup Component
@@ -11,13 +11,13 @@ KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
      * @extends Overlay
      * @name Popup
      */
-    var Popup = UIBase.create(Overlay, [],
+    var Popup =Component.define(Overlay, [],
         /**
          * @lends Overlay.Popup#
          */
         {
             /**
-             * see {@link UIBase.Box#show}
+             * see {@link Component.UIBase.Box#show}
              * @name Overlay.Popup#show
              * @function
              */
@@ -200,7 +200,7 @@ KISSY.add('overlay/popup', function (S, UIBase, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:["uibase", "component", "./base"]
+    requires:["component", "./base"]
 });
 
 /**

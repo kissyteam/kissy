@@ -2,9 +2,9 @@
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
 
-    var Separator = UIBase.create(Component.Controller, {
+    var Separator = Component.define(Component.Controller, {
     }, {
         ATTRS:{
             focusable:{
@@ -29,5 +29,5 @@ KISSY.add("menu/separator", function (S, UIBase, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['uibase', 'component', './separatorRender']
+    requires:['component', './separatorRender']
 });

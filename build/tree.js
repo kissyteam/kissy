@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 28 19:45
 */
 /**
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function(S,  Component, BaseNode, TreeRender, TreeMgr) {
 
     var TREE_CLS = TreeRender.TREE_CLS;
 
@@ -16,7 +16,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
      *2. 继承 mixin 树管理功能
      *3. 继承 mixin 儿子事件代理功能
      */
-    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
+    var Tree = Component.define(BaseNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:TreeRender
     });
@@ -31,7 +31,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
     return Tree;
 
 }, {
-    requires:['uibase','component','./basenode','./treerender','./treemgr']
+    requires:['component','./basenode','./treerender','./treemgr']
 });
 
 /**
@@ -45,7 +45,7 @@ KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, Tree
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
     var $ = Node.all,
         ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
@@ -55,7 +55,7 @@ KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender)
      * 基类树节点
      * @constructor
      */
-    var BaseNode = UIBase.create(Component.Controller,
+    var BaseNode = Component.define(Component.Controller,
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */
@@ -392,12 +392,12 @@ KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender)
     return BaseNode;
 
 }, {
-    requires:['node', 'uibase', 'component', './basenoderender']
+    requires:['node', 'component', './basenoderender']
 });/**
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function (S, Node,  Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
@@ -423,7 +423,7 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
 
         ROW_CLS = "tree-row";
 
-    return UIBase.create(Component.Render, {
+    return Component.define(Component.Render, {
 
         _computeClass:function (children, parent
                                 //, cause
@@ -602,19 +602,19 @@ KISSY.add("tree/basenoderender", function (S, Node, UIBase, Component) {
     });
 
 }, {
-    requires:['node', 'uibase', 'component']
+    requires:['node', 'component']
 });/**
  * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
+KISSY.add("tree/checknode", function(S, Node,  Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
         CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
-    var CheckNode = UIBase.create(BaseNode, {
+    var CheckNode = Component.define(BaseNode, {
         performActionInternal:function(e) {
             var self=this;
             // 需要通知 tree 获得焦点
@@ -718,18 +718,18 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 
     return CheckNode;
 }, {
-    requires:['node','uibase','component','./basenode','./checknoderender']
+    requires:['node','component','./basenode','./checknoderender']
 });/**
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/checknoderender", function (S, Node,  Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = " ks-inline-block";
-    return UIBase.create(BaseNodeRender, {
+    return Component.define(BaseNodeRender, {
 
         createDom:function () {
             var self = this;
@@ -754,15 +754,15 @@ KISSY.add("tree/checknoderender", function (S, Node, UIBase, Component, BaseNode
         CHECK_CLS:CHECK_CLS
     });
 }, {
-    requires:['node', 'uibase', 'component', './basenoderender']
+    requires:['node', 'component', './basenoderender']
 });/**
  * @fileOverview root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
+KISSY.add("tree/checktree", function(S,  Component, CheckNode, CheckTreeRender, TreeMgr) {
     var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /*多继承*/
-    var CheckTree = UIBase.create(CheckNode, [Component.DelegateChildren,TreeMgr], {
+    var CheckTree = Component.define(CheckNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:CheckTreeRender
     });
@@ -775,19 +775,19 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
     return CheckTree;
 
 }, {
-    requires:['uibase','component','./checknode','./checktreerender','./treemgr']
+    requires:['component','./checknode','./checktreerender','./treemgr']
 });/**
  * @fileOverview root node render for checktree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
+KISSY.add("tree/checktreerender", function(S,  Component, CheckNodeRender, TreeMgrRender) {
     var CHECK_TREE_CLS="tree-root-check";
-    return UIBase.create(CheckNodeRender, [TreeMgrRender],{
+    return Component.define(CheckNodeRender, [TreeMgrRender],{
     },{
         CHECK_TREE_CLS:CHECK_TREE_CLS
     });
 }, {
-    requires:['uibase','component','./checknoderender','./treemgrrender']
+    requires:['component','./checknoderender','./treemgrrender']
 });/**
  * @fileOverview tree component for kissy
  * @author yiminghe@gmail.com
@@ -938,11 +938,11 @@ KISSY.add("tree/treemgrrender", function(S) {
  * @fileOverview root node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, TreeMgrRender) {
+KISSY.add("tree/treerender", function(S,  Component, BaseNodeRender, TreeMgrRender) {
     var TREE_CLS="tree-root";
-    return UIBase.create(BaseNodeRender, [TreeMgrRender],{},{
+    return Component.define(BaseNodeRender, [TreeMgrRender],{},{
         TREE_CLS:TREE_CLS
     });
 }, {
-    requires:['uibase','component','./basenoderender','./treemgrrender']
+    requires:['component','./basenoderender','./treemgrrender']
 });

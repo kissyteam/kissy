@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>getVisibleRectForElement</title>
+<style>
+    .flag {
+        background: yellow;
+        opacity: 0.5;
+        filter: alpha(opacity = 50);
+        position: absolute;
+        z-index: 9999;
+    }
+</style>
+</head>
+<body>
+
+<div id="d1" style="height: 100px;overflow: hidden">
+
+    <div id="d2" style="position: absolute;;left:100px;top:100px;width:50px;height: 200px;">
+        <div id="d4">
+            <div id="d3" style="position: absolute;;left:100px;top:100px;width:50px;height: 400px;">
+                1<br>
+                1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="d5" style="height: 50px;overflow: hidden">
+    <div id="d6" style="height: 100px;overflow: hidden">
+    </div>
+</div>
+
+
+<div id="d11" style="height: 100px;">
+    <div id="d10" style="height: 100px;overflow: hidden">
+    </div>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/uibase/align.js"></script>
+<script>
+    var UA = KISSY.UA,
+            ieMode = document.documentMode || UA.ie,
+
+            DOM = KISSY.DOM;
+
+
+    KISSY.use("component/uibase/align", function (S, Align) {
+        var getOffsetParent = Align.__getOffsetParent;
+
+        var offsetParent = getOffsetParent(DOM.get("#d3"));
+        KISSY.log(offsetParent.id || offsetParent.nodeName);
+
+        offsetParent = getOffsetParent(DOM.get("#d6"));
+        KISSY.log(offsetParent.id || offsetParent.nodeName);
+
+        offsetParent = DOM.get("#d6").offsetParent;
+        KISSY.log(offsetParent.id || offsetParent.nodeName);
+
+        offsetParent = getOffsetParent(DOM.get("#d10")) || {id:'fake'};
+        KISSY.log(offsetParent.id || offsetParent.nodeName);
+
+        offsetParent = DOM.get("#d10").offsetParent;
+        KISSY.log(offsetParent.id || offsetParent.nodeName);
+    });
+
+
+</script>
+</body>
+</html>

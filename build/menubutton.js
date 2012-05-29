@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 11:31
+build time: May 28 19:45
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
     var win = S.Env.host;
 
@@ -82,7 +82,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
      * @name MenuButton
      * @extends Button
      */
-    var MenuButton = UIBase.create(Button, [Component.DecorateChild],
+    var MenuButton = Component.define(Button, [Component.DecorateChild],
         /**
          * @lends MenuButton.prototype
          */
@@ -323,7 +323,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     view:true
                 },
                 /**
-                 * Menu align configuration.See {@link UIBase.Align#align}.
+                 * Menu align configuration.See {@link Component.UIBase.Align#align}.
                  * Default node is menubutton 's root element.
                  * @type Object
                  */
@@ -365,7 +365,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
 
     return MenuButton;
 }, {
-    requires:["uibase", "node", "button", "./menubuttonRender", "menu", "component"]
+    requires:[ "node", "button", "./menubuttonRender", "menu", "component"]
 });/**
  * @fileOverview menubutton
  * @author yiminghe@gmail.com
@@ -384,7 +384,7 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
+KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
         '{prefixCls}menu-button-caption">{content}<' + '/div>' +
@@ -393,7 +393,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return UIBase.create(Button.Render, {
+    return Component.define(Button.Render, {
 
         createDom:function () {
             var self = this,
@@ -433,12 +433,12 @@ KISSY.add("menubutton/menubuttonRender", function (S, UIBase, Button) {
         }
     }, "MenuButton_Render");
 }, {
-    requires:['uibase', 'button']
+    requires:['component', 'button']
 });/**
  * @fileOverview represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
+KISSY.add("menubutton/option", function (S,  Component, Menu) {
     var MenuItem = Menu.Item;
     /**
      * Option for Select component.
@@ -447,7 +447,7 @@ KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
      * @memberOf MenuButton
      * @extends Menu.Item
      */
-    var Option = UIBase.create(MenuItem,
+    var Option = Component.define(MenuItem,
         /**
          * @lends MenuButton.Option.prototype
          */
@@ -479,12 +479,12 @@ KISSY.add("menubutton/option", function (S, UIBase, Component, Menu) {
     });
     return Option;
 }, {
-    requires:['uibase', 'component', 'menu']
+    requires:['component', 'menu']
 });/**
  * @fileOverview manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton, Menu, Option, undefined) {
+KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, Option, undefined) {
 
     function getMenuChildren(self) {
         // 需要初始化 menu
@@ -500,7 +500,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
      * @memberOf MenuButton
      * @extends MenuButton
      */
-    var Select = UIBase.create(MenuButton,
+    var Select = Component.define(MenuButton,
         /**
          * @lends MenuButton.Select.prototype
          */
@@ -724,7 +724,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
     return Select;
 
 }, {
-    requires:['node', 'uibase', 'component', './base', 'menu', './option']
+    requires:['node', 'component', './base', 'menu', './option']
 });
 
 /**

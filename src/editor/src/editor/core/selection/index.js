@@ -298,7 +298,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
                 // S.log("monitor ing...");
                 // 同时检测，不同则 editor 触发 selectionChange
-                editor._monitor();
+                editor.checkSelectionChange();
             }
         }
 
@@ -320,7 +320,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         // press.
         function monitor(e) {
             // S.log("fireSelectionChangeForNonIE in selection/index");
-            editor._monitor();
+            editor.checkSelectionChange();
         }
 
         Event.on(doc, 'mouseup keyup', monitor);

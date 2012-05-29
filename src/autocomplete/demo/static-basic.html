@@ -44,6 +44,8 @@
 
             var basicAutoComplete = new AutoComplete.Basic({
                 srcNode:S.one("#inp"),
+                // 初始就聚焦
+                focused:true,
                 // width:S.one("#inp").css("width"),
                 data:data
             });

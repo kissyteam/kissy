@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 24 18:37
+build time: May 28 19:44
 */
 /**
  * modified from ckeditor,process malformed html and ms-word copy for kissyeditor
@@ -405,7 +405,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
 
                 // Find out the list of block-like tags that can contain <br>.
                 var dtd = Editor.XHTML_DTD;
-                var blockLikeTags = Editor.Utils.mix({},
+                var blockLikeTags = S.merge(
                     dtd.$block,
                     dtd.$listItem,
                     dtd.$tableContent), i;

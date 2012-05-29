@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 25 11:48
+build time: May 28 19:41
 */
 /**
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, BasicComboBoxRender) {
+KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplete, BasicComboBoxRender) {
 
     // toggle menu show and hide
     function onBtn(e) {
@@ -24,7 +24,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
         e && e.halt();
     }
 
-    return  UIBase.create(BasicAutoComplete, {
+    return  Component.define(BasicAutoComplete, {
         bindUI:function () {
             var self = this,
                 el = self.get("el"),
@@ -49,7 +49,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
         DefaultRender:BasicComboBoxRender
     });
 }, {
-    requires:['uibase', './basic', './BasicComboBoxRender']
+    requires:['component', './basic', './BasicComboBoxRender']
 });
 
 /**
@@ -60,11 +60,11 @@ KISSY.add("autocomplete/BasicComboBox", function (S, UIBase, BasicAutoComplete, 
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteRender, Node) {
+KISSY.add("autocomplete/BasicComboBoxRender", function (S, Component, AutoCompleteRender, Node) {
 
     var $ = Node.all, Render;
 
-    return Render = UIBase.create(AutoCompleteRender, {
+    return Render = Component.define(AutoCompleteRender, {
         createDom:function () {
             var self = this,
                 container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
@@ -108,7 +108,7 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, UIBase, AutoCompleteR
         }
     });
 }, {
-    requires:['uibase', './inputRender', 'node']
+    requires:['component', './inputRender', 'node']
 });/**
  * @fileOverview Export Autocomplete.
  * @author yiminghe@gmail.com
@@ -131,7 +131,7 @@ KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, Remo
  * @fileOverview Provide basic api for AutoComplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
+KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
 
     /**
      * Provide basic api for AutoComplete Component
@@ -140,7 +140,7 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
      * @memberOf AutoComplete
      * @extends AutoComplete
      */
-    return UIBase.create(AutoComplete, [], {
+    return Component.define(AutoComplete, [], {
 
         initializer:function () {
             var self = this,
@@ -218,12 +218,12 @@ KISSY.add("autocomplete/basic", function (S, UIBase, AutoComplete, AutoCompleteM
     }, "AutoComplete_Basic");
 
 }, {
-    requires:['uibase', './input', './menu', './localDataSource', './remoteDataSource']
+    requires:['component', './input', './menu', './localDataSource', './remoteDataSource']
 });/**
  * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, AutoCompleteRender, _, undefined) {
+KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoCompleteRender, _, undefined) {
     var AutoComplete,
         KeyCodes = Event.KeyCodes;
 
@@ -279,7 +279,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
      * @extends Component.Controller
      * @class
      */
-    AutoComplete = UIBase.create(Component.Controller, [],
+    AutoComplete = Component.define(Component.Controller, [],
         /**
          * @lends AutoComplete
          */
@@ -682,7 +682,7 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
                  * Default to current active input's width.<br/>
                  * {Object} menuCfg.align :
                  * Config autoComplete menu list's alignment.
-                 * Same with {@link UIBase.Align#align} .
+                 * Same with {@link Component.UIBase.Align#align} .
                  * Default : align current input's bottom left edge
                  * with autoComplete list's top left edge.
                  * @type Object
@@ -818,7 +818,6 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
 }, {
     requires:[
         'event',
-        'uibase',
         'component',
         'menu',
         './inputRender',
@@ -843,8 +842,8 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, Menu, Aut
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
-    return UIBase.create(Component.Render, [], {
+KISSY.add("autocomplete/inputRender", function (S, Component) {
+    return Component.define(Component.Render, [], {
         renderUI:function () {
             var el = this.get("el");
             el.attr({
@@ -874,7 +873,7 @@ KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
         }
     });
 }, {
-    requires:['uibase', 'component']
+    requires:['component']
 });/**
  * @fileOverview Local dataSource for Autocomplete
  * @author yiminghe@gmail.com
@@ -942,7 +941,7 @@ KISSY.add("autocomplete/localDataSource", function (S) {
  * @fileOverview AutoComplete menu constroller.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, AutoCompleteMenuRender) {
+KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoCompleteMenuRender) {
 
 
     var AutoCompleteMenu;
@@ -954,7 +953,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
      * @extends Menu.PopupMenu
      * @class
      */
-    AutoCompleteMenu = UIBase.create(Menu.PopupMenu,
+    AutoCompleteMenu = Component.define(Menu.PopupMenu,
         /**
          * @lends AutoComplete.Menu#
          */
@@ -1107,7 +1106,7 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
 
     return AutoCompleteMenu;
 }, {
-    requires:['event', 'uibase', 'component', 'menu', './menuRender']
+    requires:['event', 'component', 'menu', './menuRender']
 });
 /**
  * 2012-03-26 yiminghe@gmail.com
@@ -1116,9 +1115,9 @@ KISSY.add("autocomplete/menu", function (S, Event, UIBase, Component, Menu, Auto
  * @fileOverview AutoComplete menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menuRender", function (S, UIBase, Menu) {
+KISSY.add("autocomplete/menuRender", function (S, Component, Menu) {
     var $ = S.all;
-    return UIBase.create(Menu.PopupMenu.Render, [], {
+    return Component.define(Menu.PopupMenu.Render, [], {
         createDom:function () {
             var self = this,
                 el = self.get("el"),
@@ -1144,7 +1143,7 @@ KISSY.add("autocomplete/menuRender", function (S, UIBase, Menu) {
         }
     });
 }, {
-    requires:['uibase', 'menu']
+    requires:['component', 'menu']
 });/**
  * @fileOverview Remote datasource for Autocomplete
  * @author yiminghe@gmail.com
