@@ -198,7 +198,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:["component", "./base"]
+    requires:["./base"]
 });
 
 /**

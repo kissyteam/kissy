@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:44
+build time: May 29 14:52
 */
 KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:44
+build time: May 29 14:52
 */
 KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;

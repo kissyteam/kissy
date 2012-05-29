@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 13:45
+build time: May 29 14:52
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
