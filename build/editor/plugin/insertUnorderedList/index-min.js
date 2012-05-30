@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 KISSY.add("editor/plugin/insertUnorderedList/index",function(e,b,c,d){return{init:function(a){d.init(a);a.addButton({cmdType:"insertUnorderedList",mode:b.WYSIWYG_MODE,contentCls:"ke-toolbar-ul"},void 0,c)}}},{requires:["editor","../listUtils/btn","./cmd"]});

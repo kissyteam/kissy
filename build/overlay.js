@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 29 14:56
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -48,7 +48,7 @@ KISSY.add("overlay/aria", function (S, Event) {
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/ariarender", function (S, Node) {
+KISSY.add("overlay/ariaRender", function (S, Node) {
 
     var $ = Node.all;
 
@@ -149,7 +149,7 @@ KISSY.add("overlay/ariarender", function (S, Node) {
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -169,7 +169,7 @@ KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
      * @extends Component.UIBase.Resize
      * @extends Component.UIBase.Mask
      */
-    var Overlay = Component.define(Component.Controller, [
+    var Overlay = Component.Controller.extend([
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -223,24 +223,21 @@ KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
                 visibleMode:{
                     value:"visibility"
                 }
-            }
+            },
+            DefaultRender:OverlayRender
+        }, {
+            xclass:'overlay',
+            priority:10
         });
-
-    Overlay.DefaultRender = OverlayRender;
-
-    Component.UIStore.setUIConstructorByCssClass("overlay", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Overlay
-    });
 
     return Overlay;
 }, {
-    requires:['component', './overlayrender', './effect']
+    requires:['component', './overlayRender', './effect']
 });/**
  * @fileOverview KISSY.Dialog
  * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -256,7 +253,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria)
      * @extends Component.UIBase.Drag
      * @extends Component.UIBase.Constrain
      */
-    var Dialog = Component.define(Overlay, [
+    var Dialog = Overlay.extend([
         require("stdmod"),
         require("drag"),
         require("constrain"),
@@ -302,20 +299,17 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria)
                         ];
                     }
                 }
-            }
+            },
+            DefaultRender:DialogRender
+        }, {
+            xclass:'dialog',
+            priority:20
         });
-
-    Dialog.DefaultRender = DialogRender;
-
-    Component.UIStore.setUIConstructorByCssClass("dialog", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Dialog
-    });
 
     return Dialog;
 
 }, {
-    requires:[ "component", "overlay/base",  'overlay/dialogrender', './aria']
+    requires:[ "overlay/base", 'overlay/dialogRender', './aria']
 });
 
 /**
@@ -328,17 +322,17 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria)
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialogrender", function(S, Component, OverlayRender, AriaRender) {
+KISSY.add("overlay/dialogRender", function(S, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("component/uibase/" + s);
     }
 
-    return Component.define(OverlayRender, [
+    return OverlayRender.extend([
         require("stdmodrender"),
         AriaRender
     ]);
 }, {
-    requires:['component','./overlayrender','./ariarender']
+    requires:['./overlayRender','./ariaRender']
 });/**
  * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
@@ -440,22 +434,22 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
 }, {
     requires:[
         "overlay/base",
-        "overlay/overlayrender",
+        "overlay/overlayRender",
         "overlay/dialog",
-        "overlay/dialogrender",
+        "overlay/dialogRender",
         "overlay/popup"
     ]
 });/**
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/overlayrender", function (S, UA, Component) {
+KISSY.add("overlay/overlayRender", function (S, UA, Component) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
     }
 
-    return Component.define(Component.Render, [
+    return Component.Render.extend([
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),
@@ -474,7 +468,7 @@ KISSY.add("overlay/overlayrender", function (S, UA, Component) {
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * KISSY Popup Component
@@ -483,7 +477,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
      * @extends Overlay
      * @name Popup
      */
-    var Popup =Component.define(Overlay, [],
+    var Popup = Overlay.extend(
         /**
          * @lends Overlay.Popup#
          */
@@ -498,7 +492,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
             initializer:function () {
                 var self = this,
-                    // 获取相关联的 DOM 节点
+                // 获取相关联的 DOM 节点
                     trigger = self.get("trigger");
                 if (trigger) {
                     if (self.get("triggerType") === 'mouse') {
@@ -663,16 +657,14 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     value:false
                 }
             }
+        }, {
+            xclass:'popup',
+            priority:20
         });
-
-    Component.UIStore.setUIConstructorByCssClass("popup", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Popup
-    });
 
     return Popup;
 }, {
-    requires:["component", "./base"]
+    requires:["./base"]
 });
 
 /**

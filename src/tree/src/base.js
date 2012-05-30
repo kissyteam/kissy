@@ -2,31 +2,42 @@
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function(S,  Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
 
     var TREE_CLS = TreeRender.TREE_CLS;
 
     /*多继承
-     *1. 继承基节点（包括可装饰儿子节点功能）
-     *2. 继承 mixin 树管理功能
-     *3. 继承 mixin 儿子事件代理功能
+     1. 继承基节点（包括可装饰儿子节点功能）
+     2. 继承 mixin 树管理功能
+     3. 继承 mixin 儿子事件代理功能
      */
-    var Tree = Component.define(BaseNode, [Component.DelegateChildren,TreeMgr], {
-    }, {
-        DefaultRender:TreeRender
-    });
 
-
-    Component.UIStore.setUIConstructorByCssClass(TREE_CLS, {
-        priority:Component.UIStore.PRIORITY.LEVEL3,
-        ui:Tree
-    });
-
-
-    return Tree;
+    /**
+     * KISSY Tree
+     * @name Tree
+     * @class
+     * @extends Tree.Node
+     */
+    return BaseNode.extend([Component.DelegateChildren, TreeMgr],
+        /**
+         * @lends Tree#
+         */
+        {
+            /**
+             * See {@link Tree.Node#expandAll}
+             */
+            expandAll:function () {
+                return BaseNode.prototype.expandAll.apply(this, arguments);
+            }
+        }, {
+            DefaultRender:TreeRender
+        }, {
+            xclass:TREE_CLS,
+            priority:30
+        });
 
 }, {
-    requires:['component','./basenode','./treerender','./treemgr']
+    requires:['component', './basenode', './treeRender', './treemgr']
 });
 
 /**

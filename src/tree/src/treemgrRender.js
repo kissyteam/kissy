@@ -2,7 +2,7 @@
  * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgrrender", function(S) {
+KISSY.add("tree/treemgrRender", function(S) {
     var FOCUSED_CLS = "tree-item-focused";
 
     function TreeMgrRender() {

@@ -2,7 +2,7 @@
  * @fileOverview manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, Option, undefined) {
+KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
 
     function getMenuChildren(self) {
         // 需要初始化 menu
@@ -18,7 +18,7 @@ KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, O
      * @memberOf MenuButton
      * @extends MenuButton
      */
-    var Select = Component.define(MenuButton,
+    var Select = MenuButton.extend(
         /**
          * @lends MenuButton.Select.prototype
          */
@@ -232,17 +232,15 @@ KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, O
                 return select;
             }
 
-        }, "Menu_Select");
-
-    Component.UIStore.setUIConstructorByCssClass("select", {
-        priority:Component.UIStore.PRIORITY.LEVEL3,
-        ui:Select
-    });
+        }, {
+            xclass:'select',
+            priority:30
+        });
 
     return Select;
 
 }, {
-    requires:['node', 'component', './base', 'menu', './option']
+    requires:['node', './base', 'menu', './option']
 });
 
 /**

@@ -69,11 +69,11 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         else if (simpleContext) {
             // 1.常见的单个元素
             // DOM.query(document.getElementById("xx"))
-            if (selector.nodeType || selector.setTimeout) {
+            if (selector['nodeType'] || selector['setTimeout']) {
                 ret = [selector];
             }
             // 2.KISSY NodeList 特殊点直接返回，提高性能
-            else if (selector.getDOMNodes) {
+            else if (selector['getDOMNodes']) {
                 return selector;
             }
             // 3.常见的数组

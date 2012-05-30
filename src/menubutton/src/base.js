@@ -77,7 +77,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
      * @name MenuButton
      * @extends Button
      */
-    var MenuButton = Component.define(Button, [Component.DecorateChild],
+    var MenuButton = Button.extend([Component.DecorateChild],
         /**
          * @lends MenuButton.prototype
          */
@@ -351,12 +351,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
             },
             DefaultRender:MenuButtonRender
-        }, "MenuButton");
-
-    Component.UIStore.setUIConstructorByCssClass("menu-button", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:MenuButton
-    });
+        }, {
+            xclass:'menu-button',
+            priority:20
+        });
 
     return MenuButton;
 }, {

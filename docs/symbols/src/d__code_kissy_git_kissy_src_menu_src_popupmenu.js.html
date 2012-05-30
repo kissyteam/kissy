@@ -39,7 +39,7 @@
 <span id='line32' class='line'> 32</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line33' class='line'> 33</span> 
 <span id='line34' class='line'> 34</span> 
-<span id='line35' class='line'> 35</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="PUNC">=</span><span class="NAME">Component.UIBase</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.UIBase</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line36' class='line'> 36</span> 
 <span id='line37' class='line'> 37</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line38' class='line'> 38</span>      * Popup Menu
@@ -50,7 +50,7 @@
 <span id='line43' class='line'> 43</span>      * @extends Component.UIBase.Position
 <span id='line44' class='line'> 44</span>      * @extends Component.UIBase.Align
 <span id='line45' class='line'> 45</span>      */</span><span class="WHIT">
-<span id='line46' class='line'> 46</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PopupMenu</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">Menu</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PopupMenu</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Menu.extend</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="WHIT">
 <span id='line47' class='line'> 47</span> </span><span class="WHIT">        </span><span class="NAME">UIBase.ContentBox</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line48' class='line'> 48</span> </span><span class="WHIT">        </span><span class="NAME">UIBase.Position</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line49' class='line'> 49</span> </span><span class="WHIT">        </span><span class="NAME">UIBase.Align</span><span class="WHIT">
@@ -184,15 +184,13 @@
 <span id='line177' class='line'>177</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line178' class='line'>178</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line179' class='line'>179</span> </span><span class="WHIT">            </span><span class="NAME">DefaultRender</span><span class="PUNC">:</span><span class="NAME">PopupMenuRender</span><span class="WHIT">
-<span id='line180' class='line'>180</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"Menu_PopupMenu"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line181' class='line'>181</span> 
-<span id='line182' class='line'>182</span> </span><span class="WHIT">    </span><span class="NAME">Component.UIStore.setUIConstructorByCssClass</span><span class="PUNC">(</span><span class="STRN">"popupmenu"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line183' class='line'>183</span> </span><span class="WHIT">        </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NAME">Component.UIStore.PRIORITY.LEVEL2</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line184' class='line'>184</span> </span><span class="WHIT">        </span><span class="NAME">ui</span><span class="PUNC">:</span><span class="NAME">PopupMenu</span><span class="WHIT">
-<span id='line185' class='line'>185</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line180' class='line'>180</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line181' class='line'>181</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'popupmenu'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line182' class='line'>182</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="WHIT">
+<span id='line183' class='line'>183</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line184' class='line'>184</span> 
+<span id='line185' class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">PopupMenu</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line186' class='line'>186</span> 
-<span id='line187' class='line'>187</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">PopupMenu</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line188' class='line'>188</span> 
-<span id='line189' class='line'>189</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line190' class='line'>190</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./popupmenuRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line191' class='line'>191</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line187' class='line'>187</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line188' class='line'>188</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./popupmenuRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line189' class='line'>189</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

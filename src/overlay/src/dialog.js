@@ -2,7 +2,7 @@
  * @fileOverview KISSY.Dialog
  * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -18,7 +18,7 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria)
      * @extends Component.UIBase.Drag
      * @extends Component.UIBase.Constrain
      */
-    var Dialog = Component.define(Overlay, [
+    var Dialog = Overlay.extend([
         require("stdmod"),
         require("drag"),
         require("constrain"),
@@ -64,20 +64,17 @@ KISSY.add('overlay/dialog', function (S, Component, Overlay, DialogRender, Aria)
                         ];
                     }
                 }
-            }
+            },
+            DefaultRender:DialogRender
+        }, {
+            xclass:'dialog',
+            priority:20
         });
-
-    Dialog.DefaultRender = DialogRender;
-
-    Component.UIStore.setUIConstructorByCssClass("dialog", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Dialog
-    });
 
     return Dialog;
 
 }, {
-    requires:[ "component", "overlay/base",  'overlay/dialogrender', './aria']
+    requires:[ "overlay/base", 'overlay/dialogRender', './aria']
 });
 
 /**

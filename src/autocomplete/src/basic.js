@@ -2,7 +2,7 @@
  * @fileOverview Provide basic api for AutoComplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
+KISSY.add("autocomplete/basic", function (S, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
 
     /**
      * Provide basic api for AutoComplete Component
@@ -11,7 +11,7 @@ KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoComple
      * @memberOf AutoComplete
      * @extends AutoComplete
      */
-    return Component.define(AutoComplete, [], {
+    return AutoComplete.extend({
 
         initializer:function () {
             var self = this,
@@ -86,8 +86,11 @@ KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoComple
                 value:{}
             }
         }
-    }, "AutoComplete_Basic");
+    }, {
+        "xclass":'autocomplete-basic',
+        priority:30
+    });
 
 }, {
-    requires:['component', './input', './menu', './localDataSource', './remoteDataSource']
+    requires:['./input', './menu', './localDataSource', './remoteDataSource']
 });

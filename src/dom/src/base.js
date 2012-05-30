@@ -61,11 +61,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         NodeTypes:NODE_TYPE,
 
         /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
-         * 其它值，返回 false
-         * @return {window|Document|HTMLElement}
+         * Return corresponding window if elem is document or window or undefined.
+         * Else return false.
+         * @param {undefined|window|document} elem
+         * @return {window|Boolean}
          */
         _getWin:function (elem) {
             if (elem == null) {

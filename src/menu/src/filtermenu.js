@@ -2,7 +2,7 @@
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -12,7 +12,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = Component.define(Menu, {
+    var FilterMenu = Menu.extend({
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -113,7 +113,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
                 var children = self.get("children"),
                     strExp = str && new RegExp(regExpEscape(str), "ig"),
-                    // 匹配项样式类
+                // 匹配项样式类
                     hit = this.getCssClassWithPrefix(HIT_CLS);
 
                 // 过滤所有子组件
@@ -187,14 +187,12 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 }
             },
             DefaultRender:FilterMenuRender
-        }, "Menu_FilterMenu");
-
-    Component.UIStore.setUIConstructorByCssClass("filtermenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:FilterMenu
-    });
+        }, {
+            xclass:'filtermenu',
+            priority:20
+        });
 
     return FilterMenu;
 }, {
-    requires:['component', './base', './filtermenuRender']
+    requires:['./base', './filtermenuRender']
 });

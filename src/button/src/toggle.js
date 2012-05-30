@@ -2,9 +2,9 @@
  * @fileOverview ToggleButton for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('button/toggle', function (S, Component, Button, ToggleRender) {
+KISSY.add('button/toggle', function (S, Button, ToggleRender) {
 
-    return Component.define(Button, [], {
+    return Button.extend({
         performActionInternal:function () {
             var self = this;
             self.set("checked", !self.get("checked"));
@@ -18,8 +18,11 @@ KISSY.add('button/toggle', function (S, Component, Button, ToggleRender) {
                 view:true
             }
         }
+    }, {
+        xclass:'toggle-button',
+        priority:30
     });
 
 }, {
-    requires:['component', './base', './toggleRender']
+    requires:['./base', './toggleRender']
 });

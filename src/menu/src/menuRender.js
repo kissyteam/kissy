@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/menuRender", function(S, UA, Component) {
 
-    return Component.define(Component.Render,{
+    return Component.Render.extend({
 
         renderUI:function() {
             var el = this.get("el");
@@ -37,7 +37,7 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
         ATTRS:{
             activeItem:{}
         }
-    },"Menu_Render");
+    });
 }, {
     requires:['ua','component']
 });

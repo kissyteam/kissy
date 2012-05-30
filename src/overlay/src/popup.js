@@ -2,7 +2,7 @@
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * KISSY Popup Component
@@ -11,7 +11,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
      * @extends Overlay
      * @name Popup
      */
-    var Popup =Component.define(Overlay, [],
+    var Popup = Overlay.extend(
         /**
          * @lends Overlay.Popup#
          */
@@ -26,7 +26,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 
             initializer:function () {
                 var self = this,
-                    // 获取相关联的 DOM 节点
+                // 获取相关联的 DOM 节点
                     trigger = self.get("trigger");
                 if (trigger) {
                     if (self.get("triggerType") === 'mouse') {
@@ -191,16 +191,14 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     value:false
                 }
             }
+        }, {
+            xclass:'popup',
+            priority:20
         });
-
-    Component.UIStore.setUIConstructorByCssClass("popup", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Popup
-    });
 
     return Popup;
 }, {
-    requires:["component", "./base"]
+    requires:["./base"]
 });
 
 /**

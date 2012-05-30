@@ -58,7 +58,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
      * @extends Component.Controller
      * @class
      */
-    AutoComplete = Component.define(Component.Controller, [],
+    AutoComplete = Component.Controller.extend(
         /**
          * @lends AutoComplete
          */
@@ -585,13 +585,11 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
             },
             DefaultRender:AutoCompleteRender
         },
-        "AutoComplete"
+        {
+            xclass:'autocomplete-input',
+            priority:10
+        }
     );
-
-    Component.UIStore.setUIConstructorByCssClass("autocomplete-input", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:AutoComplete
-    });
 
     return AutoComplete;
 }, {

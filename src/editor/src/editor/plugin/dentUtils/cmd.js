@@ -146,7 +146,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
                     // otherwise the list item will be inaccessiable. (#4476)
                     if (UA['ie'] && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
-                    })) {
+                    },1)) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));
                     }
                     li[0].appendChild(followingList[0]);

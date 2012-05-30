@@ -10,7 +10,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
      * @constructor
      * @extends Component.Controller
      */
-    var Button = Component.define(Component.Controller, [],
+    var Button = Component.Controller.extend(
         /**@lends Button.prototype */
         {
             bindUI:function () {
@@ -76,18 +76,16 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                         return this.set("html", v);
                     }
                 }
-            }
+            },
+
+            DefaultRender:ButtonRender
+        }, {
+            xclass:'button',
+            priority:10
         });
-
-    Button.DefaultRender = ButtonRender;
-
-    Component.UIStore.setUIConstructorByCssClass("button", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Button
-    });
 
     return Button;
 
 }, {
-    requires:['event','component', './buttonRender']
+    requires:['event', 'component', './buttonRender']
 });

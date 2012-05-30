@@ -2,9 +2,9 @@
  * @fileOverview AutoComplete menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menuRender", function (S, Component, Menu) {
+KISSY.add("autocomplete/menuRender", function (S, Menu) {
     var $ = S.all;
-    return Component.define(Menu.PopupMenu.Render, [], {
+    return Menu.PopupMenu.Render.extend({
         createDom:function () {
             var self = this,
                 el = self.get("el"),
@@ -30,5 +30,5 @@ KISSY.add("autocomplete/menuRender", function (S, Component, Menu) {
         }
     });
 }, {
-    requires:['component', 'menu']
+    requires:['menu']
 });

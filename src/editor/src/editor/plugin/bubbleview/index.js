@@ -2,11 +2,11 @@
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Editor) {
+KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Component.define(Overlay, [], {}, {
+        BubbleView = Overlay.extend({}, {
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
@@ -79,7 +79,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
             return undefined;
         }
 
-        var editorWin = editor.get("iframe")[0].contentWindow,
+        var editorWin = editor.get("window")[0],
             iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
@@ -177,7 +177,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
         editor.on("sourceMode", onHide);
 
-        var editorWin = editor.get("iframe")[0].contentWindow;
+        var editorWin = editor.get("window")[0];
 
         function showImmediately() {
 
@@ -218,5 +218,5 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
     return BubbleView;
 }, {
-    requires:['component', 'overlay', 'editor']
+    requires:['overlay', 'editor']
 });

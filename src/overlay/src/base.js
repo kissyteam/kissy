@@ -2,7 +2,7 @@
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -22,7 +22,7 @@ KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
      * @extends Component.UIBase.Resize
      * @extends Component.UIBase.Mask
      */
-    var Overlay = Component.define(Component.Controller, [
+    var Overlay = Component.Controller.extend([
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -76,17 +76,14 @@ KISSY.add("overlay/base", function (S,  Component, OverlayRender, Effect) {
                 visibleMode:{
                     value:"visibility"
                 }
-            }
+            },
+            DefaultRender:OverlayRender
+        }, {
+            xclass:'overlay',
+            priority:10
         });
-
-    Overlay.DefaultRender = OverlayRender;
-
-    Component.UIStore.setUIConstructorByCssClass("overlay", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Overlay
-    });
 
     return Overlay;
 }, {
-    requires:['component', './overlayrender', './effect']
+    requires:['component', './overlayRender', './effect']
 });

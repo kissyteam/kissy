@@ -328,7 +328,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
             if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
 
                 // 如果横向不能放下
-                if (!isFailX(elFuturePos, elRegion, visibleRect)) {
+                if (isFailX(elFuturePos, elRegion, visibleRect)) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[lr]/ig, {

@@ -15,6 +15,15 @@
         S.use("core", function (S) {
 
             var DOM = S.DOM, Event = S.Event, UA = S.UA;
+
+            function isCustomDomain() {
+                var win = window;
+                var domain = win.document.domain,
+                        hostname = win.location.hostname;
+                return domain != hostname &&
+                        domain != ( '[' + hostname + ']' );	// IPv6 IP support
+            }
+
             var doFormUpload = function (o, ps, url) {
                 var id = S.guid("form-upload-");
                 var frame = document.createElement('iframe');
@@ -25,10 +34,10 @@
                 var srcScript = 'document.open();' +
                     // The document domain must be set any time we
                     // call document.open().
-                        ( DOM.isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
+                        ( isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
                         'document.close();';
                 if (UA['ie']) {
-                   frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
+                    frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
                 }
                 S.log("doFormUpload : " + frame.src);
                 document.body.appendChild(frame);
@@ -70,7 +79,6 @@
                 }
 
                 function cb(e) {
-                    alert(e.type);
                     var r = {  // bogus response object
                         responseText:'',
                         responseXML:null
@@ -88,9 +96,7 @@
                         }
 
                         if (doc && doc.body) {
-
                             r.responseText = S.trim(DOM.text(doc.body));
-                            alert(r.responseText);
                         }
                         if (doc && doc['XMLDocument']) {
                             r.responseXML = doc['XMLDocument'];
@@ -137,9 +143,11 @@
             doFormUpload({
                         form:S.get('#t'),
                         callback:function (data) {
-                            alert((data));
+                            alert(data.responseText);
                         }
-                    }, {},
+                    }, {
+                        s:1
+                    },
                     'http://yiminghe.taobao.ali.com/kissy_git/kissy/' +
                             'src/ajax/tests/subdomain/upload.php');
 //            io({

@@ -9,7 +9,7 @@
 <span id='line2' class='line'>  2</span>  * @fileOverview represent a menu option , just make it selectable and can have select status
 <span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
 <span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
-<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"menubutton/option"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT">  </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Menu</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"menubutton/option"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Menu</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Menu.Item</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line8' class='line'>  8</span>      * Option for Select component.
@@ -18,7 +18,7 @@
 <span id='line11' class='line'> 11</span>      * @memberOf MenuButton
 <span id='line12' class='line'> 12</span>      * @extends Menu.Item
 <span id='line13' class='line'> 13</span>      */</span><span class="WHIT">
-<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Option</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">MenuItem</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Option</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">MenuItem.extend</span><span class="PUNC">(</span><span class="WHIT">
 <span id='line15' class='line'> 15</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line16' class='line'> 16</span>          * @lends MenuButton.Option.prototype
 <span id='line17' class='line'> 17</span>          */</span><span class="WHIT">
@@ -43,12 +43,12 @@
 <span id='line36' class='line'> 36</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
 <span id='line37' class='line'> 37</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line38' class='line'> 38</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line39' class='line'> 39</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"Menu_Option"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line40' class='line'> 40</span> </span><span class="WHIT">    </span><span class="NAME">Component.UIStore.setUIConstructorByCssClass</span><span class="PUNC">(</span><span class="STRN">"option"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line41' class='line'> 41</span> </span><span class="WHIT">        </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line42' class='line'> 42</span> </span><span class="WHIT">        </span><span class="NAME">ui</span><span class="PUNC">:</span><span class="NAME">Option</span><span class="WHIT">
-<span id='line43' class='line'> 43</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'option'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> 
 <span id='line44' class='line'> 44</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Option</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line45' class='line'> 45</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line46' class='line'> 46</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'menu'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'menu'</span><span class="PUNC">]</span><span class="WHIT">
 <span id='line47' class='line'> 47</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

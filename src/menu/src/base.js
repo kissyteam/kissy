@@ -14,7 +14,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
      * @constructor
      * @extends Component.Container
      */
-    var Menu = Component.define(Component.Container,
+    var Menu = Component.Container.extend(
         /** @lends Menu.prototype*/
         {
             _uiSetHighlightedItem:function (v, ev) {
@@ -194,12 +194,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 }
             },
             DefaultRender:MenuRender
-        }, "Menu");
-
-    Component.UIStore.setUIConstructorByCssClass("menu", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Menu
-    });
+        }, {
+            xclass:'menu',
+            priority:10
+        });
 
     return Menu;
 

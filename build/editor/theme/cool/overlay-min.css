@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 .ke-dialog,.ke-overlay{position:absolute;left:-9999px;top:-9999px;outline:0}.ke-dialog .ks-contentbox,.ke-popup .ks-contentbox{background-color:#fbfbfb;border:1px solid #acb4be}.ke-dialog .ks-stdmod-header{background:repeat-x scroll 0 0 #d6dbe2;background-image:url("overlay-hd.png");border-bottom:1px solid #acb4be;font-size:14px;font-weight:bold;height:30px;line-height:30px;padding:0 0 0 18px}.ke-dialog .ks-ext-close{height:18px;width:18px;border:1px solid transparent;right:6px;top:6px;vertical-align:middle;position:absolute;text-decoration:none;outline:0;_border-color:tomato;_filter:chroma(color = tomato);overflow:hidden;cursor:pointer}.ke-dialog .ks-ext-close .ks-ext-close-x{display:block;background:no-repeat;background-image:url("close.png");height:13px;text-indent:-9999px;width:13px;margin:2.5px}.ke-dialog .ks-ext-close:hover{border:1px solid #ced5e0;background:white}.ke-ext-mask,.ks-ext-mask{background-color:#000;opacity:.3;filter:alpha(opacity = 15)}.ke-overlay .ks-ext-loading{opacity:.6;filter:alpha(opacity = 60);background:#eee center center no-repeat scroll;background-image:url("../tao-loading.gif")}.ke-global-loading .ks-ext-loading{background-attachment:fixed}

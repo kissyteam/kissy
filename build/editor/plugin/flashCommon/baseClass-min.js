@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 KISSY.add("editor/plugin/flashCommon/baseClass",function(e,i,f,g,h,j){function a(){a.superclass.constructor.apply(this,arguments);this._init()}var k=e.Node;a.ATTRS={cls:{},type:{},label:{value:"在新窗口查看"},contextMenuHandlers:{}};e.extend(a,e.Base,{_init:function(){var c=this,b=c.get("cls"),d=c.get("editor"),a=c.get("contextMenuHandlers");f.register({editor:d,filter:"."+b,width:"120px",handlers:a});g.register({filter:function(c){return c.hasClass(b,void 0)&&c},editor:d,init:function(){var b=this,a=b.get("contentEl");
 a.html(e.substitute(' <a class="ke-bubbleview-url" target="_blank" href="#">{label}</a>   |    <span class="ke-bubbleview-link ke-bubbleview-change">编辑</span>   |    <span class="ke-bubbleview-link ke-bubbleview-remove">删除</span>',{label:c.get("label")}));var f=a.one(".ke-bubbleview-url"),g=a.one(".ke-bubbleview-change"),h=a.one(".ke-bubbleview-remove");i.Utils.preventFocus(a);g.on("click",function(a){c.show(b.selectedEl);a.halt()});h.on("click",function(c){if(e.UA.webkit){var a=d.getSelection().getRanges();

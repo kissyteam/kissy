@@ -60,7 +60,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 return null;
             }
         } else {
-            m = Component.Controller.create(m,self);
+            m = Component.create(m, self);
             self.__set("menu", m);
         }
         if (m && m.get("parent") !== self) {
@@ -91,7 +91,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /**
      * Class representing a submenu that can be added as an item to other menus.
      */
-    var SubMenu =Component.define(MenuItem, [Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
             _onParentHide:function () {
                 var menu = getMenu(this);
@@ -316,13 +316,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             },
 
             DefaultRender:SubMenuRender
-        }, "Menu_SubMenu");
-
-
-    Component.UIStore.setUIConstructorByCssClass("submenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:SubMenu
-    });
+        }, {
+            xclass:'submenu',
+            priority:20
+        });
 
     return SubMenu;
 }, {
