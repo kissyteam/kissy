@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Overlay.extend({
+        BubbleView = Overlay.extend({}, {
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)

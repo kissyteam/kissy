@@ -93,7 +93,10 @@
             requires:["node", "component"]
         },
         "editor":{
-            requires:['htmlparser', 'core','overlay']
+            requires:['htmlparser', 'core', 'overlay']
+        },
+        "editor/full":{
+            requires:['htmlparser', 'core', 'overlay']
         }
     });
     if (S.Loader) {

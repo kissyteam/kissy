@@ -521,7 +521,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * Insert a element into current editor.
              * @param {NodeList} element
              */
-            insertElement:function (element, init, callback) {
+            insertElement:function (element) {
 
                 var self = this;
 
@@ -545,13 +545,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     nextName,
                     lastElement;
 
-
-                //give sometime to breath
                 if (!ranges || ranges.length == 0) {
-                    var args = arguments, fn = args.callee;
-                    setTimeout(function () {
-                        fn.apply(self, args);
-                    }, 30);
                     return;
                 }
 
@@ -562,7 +556,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     // Remove the original contents.
 
                     clone = !i && element || element['clone'](TRUE);
-                    init && init(clone);
                     range.insertNodeByDtd(clone);
                     // Save the last element reference so we can make the
                     // selection later.
@@ -595,7 +588,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 clone && clone.scrollIntoView(undefined, false);
                 saveLater(self);
-                callback && callback(clone);
+                return clone;
             },
 
             /**

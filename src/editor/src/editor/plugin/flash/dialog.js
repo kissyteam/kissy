@@ -2,7 +2,7 @@
  * flash dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E,Select) {
+KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E, Select) {
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         Dialog = Overlay4E.Dialog,
@@ -212,15 +212,13 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
                 return;
             }
             self.dialog.hide();
-            flashUtils.insertFlash(editor, url, attrs, self._cls,
-                self._type, function (substitute) {
-                    //如果是修改，就再选中
-                    if (self.selectedFlash) {
-                        editor.getSelection()
-                            .selectElement(substitute);
-                    }
-                    editor.notifySelectionChange();
-                });
+            var substitute = flashUtils.insertFlash(editor, url, attrs, self._cls, self._type);
+            //如果是修改，就再选中
+            if (self.selectedFlash) {
+                editor.getSelection()
+                    .selectElement(substitute);
+            }
+            editor.notifySelectionChange();
         },
 
         destroy:function () {
@@ -230,5 +228,5 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
     return FlashDialog;
 }, {
-    requires:['editor', '../flashCommon/utils', '../overlay/','../select/']
+    requires:['editor', '../flashCommon/utils', '../overlay/', '../select/']
 });

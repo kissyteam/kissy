@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 18:24
+build time: May 30 12:21
 */
 KISSY.add("editor/plugin/sourceArea/index",function(e,b){var c=b.SOURCE_MODE,d=b.WYSIWYG_MODE;return{init:function(a){a.addButton({title:"源码",contentCls:"ke-toolbar-source"},{init:function(){a.on("wysiwygMode",this.boff,this);a.on("sourceMode",this.bon,this)},offClick:function(){a.set("mode",c)},onClick:function(){a.set("mode",d)}})}}},{requires:["editor","../button/"]});

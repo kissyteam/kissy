@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 18:24
+build time: May 30 12:21
 */
 /**
  * Set up editor constructor
@@ -8625,7 +8625,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * Insert a element into current editor.
              * @param {NodeList} element
              */
-            insertElement:function (element, init, callback) {
+            insertElement:function (element) {
 
                 var self = this;
 
@@ -8649,13 +8649,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     nextName,
                     lastElement;
 
-
-                //give sometime to breath
                 if (!ranges || ranges.length == 0) {
-                    var args = arguments, fn = args.callee;
-                    setTimeout(function () {
-                        fn.apply(self, args);
-                    }, 30);
                     return;
                 }
 
@@ -8666,7 +8660,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     // Remove the original contents.
 
                     clone = !i && element || element['clone'](TRUE);
-                    init && init(clone);
                     range.insertNodeByDtd(clone);
                     // Save the last element reference so we can make the
                     // selection later.
@@ -8699,7 +8692,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 clone && clone.scrollIntoView(undefined, false);
                 saveLater(self);
-                callback && callback(clone);
+                return clone;
             },
 
             /**
@@ -9337,7 +9330,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Overlay.extend({
+        BubbleView = Overlay.extend({}, {
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
@@ -11678,7 +11671,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
     var DOM = S.DOM, Node = S.Node, UA = S.UA;
     var flashUtils = {
 
-        insertFlash:function (editor, src, attrs, _cls, _type, callback) {
+        insertFlash:function (editor, src, attrs, _cls, _type) {
             var nodeInfo = flashUtils.createSWF(src, { attrs:attrs }, editor.get("document")[0]),
                 real = nodeInfo.el,
                 substitute = editor.createFakeElement(real,
@@ -11687,7 +11680,8 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                     true,
                     nodeInfo.html,
                     attrs);
-            editor.insertElement(substitute, null, callback);
+            editor.insertElement(substitute);
+            return substitute;
         },
 
         isFlashEmbed:function (element) {

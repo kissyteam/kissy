@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
     var DOM = S.DOM, Node = S.Node, UA = S.UA;
     var flashUtils = {
 
-        insertFlash:function (editor, src, attrs, _cls, _type, callback) {
+        insertFlash:function (editor, src, attrs, _cls, _type) {
             var nodeInfo = flashUtils.createSWF(src, { attrs:attrs }, editor.get("document")[0]),
                 real = nodeInfo.el,
                 substitute = editor.createFakeElement(real,
@@ -15,7 +15,8 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                     true,
                     nodeInfo.html,
                     attrs);
-            editor.insertElement(substitute, null, callback);
+            editor.insertElement(substitute);
+            return substitute;
         },
 
         isFlashEmbed:function (element) {
