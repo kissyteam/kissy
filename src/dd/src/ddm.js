@@ -34,14 +34,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      */
     {
         /**
-         * default prefix class name for dd related state (such as dragging,drag-over).
-         * @type String
-         */
-        prefixCls:{
-            value:"ks-dd-"
-        },
-
-        /**
          * cursor style when dragging,if shimmed the shim will get the cursor.
          * @type String
          */
@@ -446,6 +438,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.area = area;
     ddm.cacheWH = cacheWH;
 
+    ddm.PREFIX_CLS='ks-dd-';
     return ddm;
 }, {
     requires:["ua", "dom", "event", "node", "base"]

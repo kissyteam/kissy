@@ -56,8 +56,8 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function (e) {
-            e.halt();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
         });
         return mask;
     }
@@ -118,10 +118,14 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
             var self = this,
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (maskShared) {
-                self._maskExtHide();
-            } else {
-                mask.remove();
+            if (self.get("mask")) {
+                if (maskShared) {
+                    if (self.get("visible")) {
+                        self._maskExtHide();
+                    }
+                } else {
+                    mask.remove();
+                }
             }
         }
 

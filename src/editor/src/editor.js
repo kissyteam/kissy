@@ -98,17 +98,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             createDom:function () {
                 var self = this,
                     wrap,
-                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea class='" + prefixCls + "editor-textarea'></textarea>"));
+                    self.set("textarea", textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
                 }
 
                 editorEl = self.get("el");
-
-                editorEl.addClass(prefixCls + "editor-wrap", undefined);
 
                 editorEl.html(EDITOR_TPL);
 

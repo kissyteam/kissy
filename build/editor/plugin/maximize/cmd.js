@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 30 20:27
 */
 /**
  * Add maximizeWindow/restoreWindow to Editor.
@@ -81,6 +81,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
             editor.get("iframeWrapEl").css({
+                height:self.iframeHeight
+            });
+            editor.get("textarea").css({
                 height:self.iframeHeight
             });
             DOM.css(doc.body, {
@@ -245,6 +248,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editor.get("iframeWrapEl").css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
+
+
+            editor.get("textarea").css({
+                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+            });
+
             if (stop !== true) {
                 arguments.callee.call(self, true);
             }

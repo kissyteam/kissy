@@ -4,23 +4,18 @@
  */
 KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
     var SubMenuRender,
-        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
+        ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
         renderUI:function () {
             var self = this,
                 el = self.get("el");
-            el.attr("aria-haspopup", "true")
-                .append(S.substitute(ARROW_TMPL, {
-                prefixCls:this.get("prefixCls")
-            }));
+            el.attr("aria-haspopup", "true").append(ARROW_TMPL);
         },
         _uiSetHtml:function (v) {
             var self = this;
             SubMenuRender.superclass._uiSetHtml.call(self, v);
-            self.get("el").append(S.substitute(ARROW_TMPL, {
-                prefixCls:this.get("prefixCls")
-            }));
+            self.get("el").append(ARROW_TMPL);
         }
     });
 

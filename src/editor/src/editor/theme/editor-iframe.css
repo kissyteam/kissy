@@ -203,10 +203,6 @@ img.ke_flash, img.ke_video, img.ke_music, img.ke_xiami {
     width: 80px;
 }
 
-img.ke_music {
-    background-image: url("placeholder_music.png");
-}
-
 img.ke_video {
     background-image: url("placeholder_video.png");
 }

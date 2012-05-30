@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 30 20:27
 */
 KISSY.add("editor/core/meta",function(){var d={backColor:["../color/btn","./cmd"],localStorage:["../flashBridge/"],bold:["../font/ui","./cmd"],draft:["../localStorage/","../select/"],flash:["../flashCommon/baseClass","../flashCommon/utils"],fontFamily:["../font/ui","./cmd"],fontSize:["../font/ui","./cmd"],foreColor:["../color/btn","./cmd"],heading:["./cmd"],image:["../button/","../bubbleview/","../contextmenu/","../dialogLoader/"],indent:["./cmd"],insertOrderedList:["../listUtils/btn","./cmd"],insertUnorderedList:["../listUtils/btn",
 "./cmd"],italic:["../font/ui","./cmd"],justifyCenter:["./cmd"],justifyLeft:["./cmd"],justifyRight:["./cmd"],link:["../bubbleview/","./utils","../dialogLoader/"],maximize:["./cmd"],multipleUpload:["../dialogLoader/"],outdent:["./cmd"],overlay:["./focus","dd"],pageBreak:["../fakeObjects/"],removeFormat:["./cmd","../button/"],resize:["dd"],smiley:["../overlay/"],sourceArea:["../button/"],strikeThrough:["../font/ui","./cmd"],table:["../dialogLoader/","../contextmenu/"],underline:["../font/ui","./cmd"],

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 30 20:27
 */
 /**
  * Set up editor constructor
@@ -201,7 +201,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one("." + this.get("prefixCls") + "editor-textarea");
+            return el.one(".ks-editor-textarea");
         }
 
     };
@@ -8202,17 +8202,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             createDom:function () {
                 var self = this,
                     wrap,
-                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea class='" + prefixCls + "editor-textarea'></textarea>"));
+                    self.set("textarea", textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
                 }
 
                 editorEl = self.get("el");
-
-                editorEl.addClass(prefixCls + "editor-wrap", undefined);
 
                 editorEl.html(EDITOR_TPL);
 
@@ -12778,7 +12775,8 @@ KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyCenter",
-                title:"居中对齐"
+                title:"居中对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -12819,7 +12817,8 @@ KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyLeft",
-                title:"左对齐"
+                title:"左对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -12860,7 +12859,8 @@ KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyRight",
-                title:"右对齐"
+                title:"右对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -13921,6 +13921,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editor.get("iframeWrapEl").css({
                 height:self.iframeHeight
             });
+            editor.get("textarea").css({
+                height:self.iframeHeight
+            });
             DOM.css(doc.body, {
                 width:"",
                 height:"",
@@ -14083,6 +14086,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editor.get("iframeWrapEl").css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
+
+
+            editor.get("textarea").css({
+                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+            });
+
             if (stop !== true) {
                 arguments.callee.call(self, true);
             }

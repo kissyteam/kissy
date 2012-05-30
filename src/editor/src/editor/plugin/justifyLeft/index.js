@@ -8,7 +8,8 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyLeft",
-                title:"左对齐"
+                title:"左对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,

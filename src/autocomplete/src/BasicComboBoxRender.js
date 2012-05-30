@@ -10,16 +10,14 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, N
         createDom:function () {
             var self = this,
                 container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
-                button = $("<a " +
-                    // do need keyboard
-                    "tabindex='-1' " +
-                    "href='javascript:void(\"open\")'  " +
-                    // non-ie do not lose focus
-                    "onmousedown='return false;' " +
-                    "class='" + self.get("prefixCls") +
-                    "combobox-button'>&#x25BC;</a>")
+                button = $("<span class='ks-combobox-button'>" +
+                    "<span class='ks-combo-button-inner'>&#x25BC;</span>" +
+                    "</span>")
                     // ie do not lose focus
                     .unselectable();
+            button.on("mousedown", function (e) {
+                e.preventDefault();
+            });
             self.__set("container", container);
             self.__set("button", button);
         },
@@ -36,8 +34,7 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, N
         _uiSetFocused:function (v) {
             var self = this;
             Render.superclass._uiSetFocused.apply(self, arguments);
-            self.get("container")[v ? "addClass" : "removeClass"](self.get("prefixCls")
-                + "combobox-focused");
+            self.get("container")[v ? "addClass" : "removeClass"]("ks-combobox-focused");
         },
 
         destructor:function () {

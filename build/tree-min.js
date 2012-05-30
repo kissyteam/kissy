@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 30 20:28
 */
 KISSY.add("tree/base",function(f,e,d,b,a){return d.extend([e.DelegateChildren,a],{expandAll:function(){return d.prototype.expandAll.apply(this,arguments)}},{DefaultRender:b},{xclass:b.TREE_CLS,priority:30})},{requires:["component","./basenode","./treeRender","./treemgr"]});
 KISSY.add("tree/basenode",function(f,e,d,b){var a=e.all,g=b.ITEM_CLS,i=e.KeyCodes,h=d.Controller.extend([d.DecorateChild],{_keyNav:function(c){var a=!0,b,d=this.get("children");switch(c.keyCode){case i.HOME:b=this.get("tree");break;case i.END:b=this.get("tree").getLastVisibleDescendant();break;case i.UP:b=this.getPreviousVisibleNode();break;case i.DOWN:b=this.getNextVisibleNode();break;case i.LEFT:this.get("expanded")&&(d.length||!1===this.get("isLeaf"))?this.set("expanded",!1):b=this.get("parent");

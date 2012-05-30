@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:56
+build time: May 30 20:28
 */
 KISSY.add("overlay/aria",function(b,e){function d(){}d.ATTRS={aria:{view:!0}};d.prototype={__bindUI:function(){var a=this,c=a.get("el");if(a.get("aria"))c.on("keydown",function(c){c.keyCode===e.KeyCodes.ESC&&(a.hide(),c.halt())})}};return d},{requires:["event"]});
 KISSY.add("overlay/ariaRender",function(b,e){function d(){}function a(a){var b=a.keyCode,d=this.get("el");if(b==f){var b=c(a.target),e=this.__ariaArchor;if(b.equals(d)&&a.shiftKey)e[0].focus(),a.halt();else if(b.equals(e)&&!a.shiftKey)d[0].focus(),a.halt();else if(b.equals(d)||d.contains(b))return;a.halt()}}var c=e.all,f=e.KeyCodes.TAB;d.prototype={__renderUI:function(){var a=this.get("el"),d=this.get("header");this.get("aria")&&(a.attr("role","dialog"),a.attr("tabindex",0),d.attr("id")||d.attr("id",

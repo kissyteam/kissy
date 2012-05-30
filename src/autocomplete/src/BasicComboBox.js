@@ -6,7 +6,6 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
 
     // toggle menu show and hide
     function onBtn(e) {
-        S.log("mousedown");
         var self = this,
             menu = self.get("menu"),
             domEl = self.get("el")[0];

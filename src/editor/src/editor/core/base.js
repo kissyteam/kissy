@@ -196,7 +196,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one("." + this.get("prefixCls") + "editor-textarea");
+            return el.one(".ks-editor-textarea");
         }
 
     };

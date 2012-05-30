@@ -109,7 +109,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<label>" +
             "对齐：" +
             "<select class='ke-img-align' title='对齐'>" +
-            "<option value=''>无</option>" +
+            "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
             "</select>" +
@@ -121,8 +121,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "" +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
-            "class='ke-img-margin ke-input' style='width:60px' value='"
-            + MARGIN_DEFAULT + "'/> 像素" +
+            "class='ke-img-margin ke-input' style='width:60px'/> 像素" +
             "</label>" +
             "</td>" +
             "</tr>" +
@@ -428,10 +427,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             if (width) {
                 style += "width:" + width + "px;";
             }
-            if (align) {
+            if (align != 'none') {
                 style += "float:" + align + ";";
             }
-            if (!isNaN(margin)) {
+            if (!isNaN(margin) && margin != 0) {
                 style += "margin:" + margin + "px;";
             }
 
@@ -515,7 +514,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     h = self.selectedEl.height();
                 valInput(self.imgHeight, h);
                 valInput(self.imgWidth, w);
-                self.imgAlign.val(self.selectedEl.css("float") || "none");
+                self.imgAlign.val(self.selectedEl.style("float") || "none");
                 var margin = parseInt(self.selectedEl.style("margin"))
                     || 0;
                 self.imgMargin.val(margin);
@@ -530,6 +529,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     self.imgLinkBlank.attr("checked", true);
                 }
             } else {
+                var defaultMargin = self.imageCfg['defaultMargin'];
+                if (defaultMargin == undefined) {
+                    defaultMargin = MARGIN_DEFAULT;
+                }
                 if (self.tab['panels'].length == 2) {
                     active = 1;
                 }
@@ -539,7 +542,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 resetInput(self.imgHeight);
                 resetInput(self.imgWidth);
                 self.imgAlign.val("none");
-                self.imgMargin.val(MARGIN_DEFAULT);
+                self.imgMargin.val(defaultMargin);
                 self.imgRatio[0].disabled = true;
                 self.imgRatioValue = null;
             }

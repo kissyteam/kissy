@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 30 20:27
 */
 /**
 ke-post ，编辑器内容外部包装容器
@@ -526,7 +526,7 @@ kissy editor cool theme
 /*
 编辑器容器
 */
-.ke-editor-wrap {
+.ke-editor {
     background: white;
     border: 1px solid rgb(206, 213, 224);
     font-size: 13px;

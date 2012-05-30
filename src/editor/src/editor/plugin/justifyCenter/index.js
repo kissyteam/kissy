@@ -8,7 +8,8 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyCenter",
-                title:"居中对齐"
+                title:"居中对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,

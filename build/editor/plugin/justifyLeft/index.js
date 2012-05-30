@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 30 20:27
 */
 KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
@@ -13,7 +13,8 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
             justifyCenterCmd.init(editor);
             editor.addButton({
                 contentCls:"ke-toolbar-justifyLeft",
-                title:"左对齐"
+                title:"左对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,

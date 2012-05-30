@@ -156,12 +156,7 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                     view:true
                 }
             }
-        },
-        {
-            xclass:'autocomplete-menu',
-            priority:40
-        }
-    );
+        });
 
     return AutoCompleteMenu;
 }, {
