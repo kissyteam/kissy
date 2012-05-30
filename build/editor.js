@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * Set up editor constructor
@@ -187,10 +187,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  */
                 customLink:{
                     value:[]
-                },
-
-                prefixCls:{
-                    value:"ke-"
                 }
             }
         }, {
@@ -201,7 +197,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(".ks-editor-textarea");
+            return el.one(this.get("prefixCls") + ".editor-textarea");
         }
 
     };
@@ -479,11 +475,11 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             pastes = {"copy":0, "cut":0, "paste":0};
         for (var i in pastes) {
             if (pastes.hasOwnProperty(i)) {
-                pastes[i] = el.one(".ke-paste-" + i);
+                pastes[i] = el.one(".ks-editor-paste-" + i);
                 if (!pastes[i]) {
                     (function (cmd) {
                         var cmdObj = new Node("<a href='#'" +
-                            "class='ke-paste-" + cmd + "'>"
+                            "class='ks-editor-paste-" + cmd + "'>"
                             + lang[cmd]
                             + "</a>").appendTo(el);
                         cmdObj.on("click", function (ev) {
@@ -2808,7 +2804,7 @@ KISSY.add("editor/core/meta", function () {
             "backColor/cmd":['../color/cmd'],
             "bold/cmd":['../font/cmd'],
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
-            "color/colorPicker/dialog":['../overlay/'],
+            "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
             "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
             "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],
@@ -7504,7 +7500,7 @@ KISSY.add("editor/core/utils", function (S) {
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
-                    inp.addClass("ke-input-tip");
+                    inp.addClass("ks-editor-input-tip");
                     inp.val(placeholder);
                 } else if (!UA['ie']) {
                     inp.val("");
@@ -7518,13 +7514,13 @@ KISSY.add("editor/core/utils", function (S) {
              */
             valInput:function (inp, val) {
                 if (val === undefined) {
-                    if (inp.hasClass("ke-input-tip")) {
+                    if (inp.hasClass("ks-editor-input-tip")) {
                         return "";
                     } else {
                         return inp.val();
                     }
                 } else {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     inp.val(val);
                 }
             },
@@ -7541,12 +7537,12 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 inp.on("blur", function () {
                     if (!S.trim(inp.val())) {
-                        inp.addClass("ke-input-tip");
+                        inp.addClass("ks-editor-input-tip");
                         inp.val(tip);
                     }
                 });
                 inp.on("focus", function () {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     if (S.trim(inp.val()) == tip) {
                         inp.val("");
                     }
@@ -8142,11 +8138,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
         HTML5_DTD = '<!doctype html>',
 
-        KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
+        KE_TEXTAREA_WRAP_CLASS = ".ks-editor-textarea-wrap",
 
-        KE_TOOLBAR_CLASS = ".ke-editor-tools",
+        KE_TOOLBAR_CLASS = ".ks-editor-tools",
 
-        KE_STATUSBAR_CLASS = ".ke-editor-status",
+        KE_STATUSBAR_CLASS = ".ks-editor-status",
 
         IFRAME_HTML_TPL = HTML5_DTD + "<html>" +
             "<head>{doctype}" +
@@ -8157,7 +8153,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ke-editor'>" +
+            "<body class='ks-editor'>" +
             "{data}" +
             "{script}" +
             "</body>" +
@@ -8298,6 +8294,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             bindUI:function () {
                 var self = this,
                     form,
+                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea");
 
                 if (self.get("attachForm") &&
@@ -8322,6 +8319,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 }
 
                 self.on("docReady", docReady);
+
+                self.on("blur", function () {
+                    self.get("el").removeClass(prefixCls + "editor-focused");
+                });
+
+                self.on("focus", function () {
+                    self.get("el").addClass(prefixCls + "editor-focused");
+                });
             },
 
             destructor:function () {

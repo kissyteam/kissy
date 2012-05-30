@@ -4,7 +4,7 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui,cmd) {
             cmd.init(editor);
             editor.addButton({
                 cmdType:'italic',
-                contentCls:"ke-toolbar-italic",
+                contentCls:"ks-editor-toolbar-italic",
                 title:"斜体 "
             }, undefined, ui.Button);
         }

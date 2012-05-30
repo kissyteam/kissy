@@ -1,163 +1,163 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
-ke-post ，编辑器内容外部包装容器
+ks-editor-post ，编辑器内容外部包装容器
 from : resource://gre/res/html.css
 @authoryiminghe@gmail.com
-<div class='ke-post'>
+<div class='ks-editor-post'>
 编辑器生成内容
 </div>
 **/
 /*
 清除编辑器内容里面的浮动
  */
-.ks-clear:after, .ke-post:after {
+.ks-clear:after, .ks-editor-post:after {
     content: '\20';
     display: block;
     height: 0;
     clear: both;
 }
 
-.ke-post, .ks-clear {
+.ks-editor-post, .ks-clear {
     *zoom: 1;
 }
 
-.ke-hidden {
+.ks-editor-hidden {
     position: absolute;
     left: -9999px;
     top: -9999px;
 }
 
-.ke-post h1,
-.ke-post h2,
-.ke-post h3,
-.ke-post h4,
-.ke-post h5,
-.ke-post h6,
-.ke-post hr,
-.ke-post p,
-.ke-post blockquote, /* structural elements  */
-.ke-post dl,
-.ke-post dt,
-.ke-post dd,
-.ke-post ul,
-.ke-post ol,
-.ke-post li, /* list elements */
-.ke-post pre, /* text formatting elements */
-.ke-post form,
-.ke-post fieldset,
-.ke-post legend,
-.ke-post button,
-.ke-post input,
-.ke-post textarea, /* form elements*/
-.ke-post th,
-.ke-post td /* table elements  */
+.ks-editor-post h1,
+.ks-editor-post h2,
+.ks-editor-post h3,
+.ks-editor-post h4,
+.ks-editor-post h5,
+.ks-editor-post h6,
+.ks-editor-post hr,
+.ks-editor-post p,
+.ks-editor-post blockquote, /* structural elements  */
+.ks-editor-post dl,
+.ks-editor-post dt,
+.ks-editor-post dd,
+.ks-editor-post ul,
+.ks-editor-post ol,
+.ks-editor-post li, /* list elements */
+.ks-editor-post pre, /* text formatting elements */
+.ks-editor-post form,
+.ks-editor-post fieldset,
+.ks-editor-post legend,
+.ks-editor-post button,
+.ks-editor-post input,
+.ks-editor-post textarea, /* form elements*/
+.ks-editor-post th,
+.ks-editor-post td /* table elements  */
 {
     margin: 0;
     padding: 0;
 }
 
-.ke-post address,
-.ke-post caption,
-.ke-post cite,
-.ke-post code,
-.ke-post dfn,
-.ke-post em,
-.ke-post strong,
-.ke-post h1,
-.ke-post h2,
-.ke-post h3,
-.ke-post h4,
-.ke-post h5,
-.ke-post h6,
-.ke-post th,
-.ke-post var {
+.ks-editor-post address,
+.ks-editor-post caption,
+.ks-editor-post cite,
+.ks-editor-post code,
+.ks-editor-post dfn,
+.ks-editor-post em,
+.ks-editor-post strong,
+.ks-editor-post h1,
+.ks-editor-post h2,
+.ks-editor-post h3,
+.ks-editor-post h4,
+.ks-editor-post h5,
+.ks-editor-post h6,
+.ks-editor-post th,
+.ks-editor-post var {
     font-style: inherit;
     font-weight: inherit;
 }
 
-.ke-post,
-.ke-post button,
-.ke-post input,
-.ke-post select,
+.ks-editor-post,
+.ks-editor-post button,
+.ks-editor-post input,
+.ks-editor-post select,
 /* for ie */
-.ke-post textarea {
+.ks-editor-post textarea {
     font: 14px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
 }
 
-.ke-post h1 {
+.ks-editor-post h1 {
     font-size: 2em;
     font-weight: bold;
     margin: .67em 0;
 }
 
-.ke-post h2 {
+.ks-editor-post h2 {
     font-size: 1.5em;
     font-weight: bold;
     margin: .83em 0;
 }
 
-.ke-post h3 {
+.ks-editor-post h3 {
     font-size: 1.17em;
     font-weight: bold;
     margin: 1em 0;
 }
 
-.ke-post h4 {
+.ks-editor-post h4 {
     font-weight: bold;
     margin: 1.33em 0;
 }
 
-.ke-post h5 {
+.ks-editor-post h5 {
     font-size: 0.83em;
     font-weight: bold;
     margin: 1.67em 0;
 }
 
-.ke-post h6 {
+.ks-editor-post h6 {
     font-size: 0.67em;
     font-weight: bold;
     margin: 2.33em 0;
 }
 
-.ke-post blockquote {
+.ks-editor-post blockquote {
     display: block;
     margin: 1em 40px;
 }
 
-.ke-post address {
+.ks-editor-post address {
     display: block;
     font-style: italic;
 }
 
-.ke-post i, .ke-post cite, .ke-post em, .ke-post var, .ke-post dfn {
+.ks-editor-post i, .ks-editor-post cite, .ks-editor-post em, .ks-editor-post var, .ks-editor-post dfn {
     font-style: italic;
     font-weight: inherit;
     /*防止reset css破坏层叠继承性*/
     *font-weight:expression(function (el) { el.runtimeStyle.fontWeight = el.parentNode.currentStyle.fontWeight;}(this));
 }
 
-.ke-post strong {
+.ks-editor-post strong {
     font-style: inherit;
     *font-style:expression(function (el) { el.runtimeStyle.fontStyle = el.parentNode.currentStyle.fontStyle;}(this));
     font-weight: bold;
 }
 
-.ke-post u, .ke-post ins {
+.ks-editor-post u, .ks-editor-post ins {
     text-decoration: underline;
 }
 
-.ke-post s, .ke-post strike, .ke-post del {
+.ks-editor-post s, .ks-editor-post strike, .ks-editor-post del {
     text-decoration: line-through;
 }
 
 /* <hr> noshade and color attributes are handled completely
 by the nsHTMLHRElement attribute mapping code
 */
-.ke-post hr {
+.ks-editor-post hr {
     display: block;
     height: 2px;
     border: 1px inset;
@@ -165,28 +165,28 @@ by the nsHTMLHRElement attribute mapping code
     color: gray;
 }
 
-.ke-post code, .ke-post kbd, .ke-post pre, .ke-post samp {
+.ks-editor-post code, .ks-editor-post kbd, .ks-editor-post pre, .ks-editor-post samp {
     font-family: courier new, courier, monospace;
 }
 
-.ke-post small {
+.ks-editor-post small {
     font-size: 12px;
 }
 
-.ke-post sup {
+.ks-editor-post sup {
     vertical-align: text-top;
 }
 
-.ke-post sub {
+.ks-editor-post sub {
     vertical-align: text-bottom;
 }
 
-.ke-post legend {
+.ks-editor-post legend {
     color: #000;
 }
 
 /* for ie6 */
-.ke-post fieldset, .ke-post img {
+.ks-editor-post fieldset, .ks-editor-post img {
     border: 0;
 }
 
@@ -197,7 +197,7 @@ by the nsHTMLHRElement attribute mapping code
     (设置middle , ie6 有问题)
     上下想有空隙的话可以用间隔选项设置
 
-.ke-post img {
+.ks-editor-post img {
     vertical-align:top;
 }
 */
@@ -205,87 +205,87 @@ by the nsHTMLHRElement attribute mapping code
 /*
 switch to default
 */
-.ke-post table.k-e-collapse-table {
+.ks-editor-post table.k-e-collapse-table {
     display: table;
     border-collapse: collapse;
     border-color: black;
 }
 
-.ke-post table {
+.ks-editor-post table {
     /*prevent inherit for nested table*/
     border-collapse:separate;
     border-spacing:2px;
 }
 
 /* giving blockquotes and lists room to breath */
-.ke-post blockquote, .ke-post ul, .ke-post ol, .ke-post dl {
+.ks-editor-post blockquote, .ks-editor-post ul, .ks-editor-post ol, .ks-editor-post dl {
     margin: 1em;
 }
 
 /* bringing lists on to the page with breathing room */
-.ke-post ul, .ke-post ol, .ke-post dl {
+.ks-editor-post ul, .ks-editor-post ol, .ks-editor-post dl {
     margin-left: 2em;
 }
 
-.ke-post ol li {
+.ks-editor-post ol li {
 /* giving OL's LIs generated numbers */
     list-style: decimal outside;
 }
 
-.ke-post ul  li {
+.ks-editor-post ul  li {
 /* giving UL's LIs generated disc markers */
     list-style: disc outside;
 }
 
-.ke-post ul  li {
+.ks-editor-post ul  li {
 /* giving UL's LIs generated disc markers */
     list-style: disc outside;
 }
 
-.ke-post ul li ul li {
+.ks-editor-post ul li ul li {
     list-style: circle;
 }
 
-.ke-post ul li ul li ul li {
+.ks-editor-post ul li ul li ul li {
     list-style: square;
 }
 
-.ke-post dl dd {
+.ks-editor-post dl dd {
 /* providing spacing for definition terms */
     margin-left: 1em;
 }
 
-.ke-post table.k-e-collapse-table >tbody>tr>th,
-.ke-post table.k-e-collapse-table >tbody>tr>td {
+.ks-editor-post table.k-e-collapse-table >tbody>tr>th,
+.ks-editor-post table.k-e-collapse-table >tbody>tr>td {
 /* padding to make the table readable */
 /*padding: .5em;*/
     border-color: black;
 }
 
-.ke-post th {
+.ks-editor-post th {
     font-weight: bold;
     text-align: center;
 }
 
-.ke-post caption {
+.ks-editor-post caption {
 /* coordinated margin to match cell's padding */
     margin-bottom: .5em;
 /* prevent ie6,7 newline */
     white-space: nowrap;
 }
 
-.ke-post fieldset, .ke-post table, .ke-post  pre {
+.ks-editor-post fieldset, .ks-editor-post table, .ks-editor-post  pre {
 /* so things don't run into each other */
 /*margin-bottom: 1em;*/
 }
 
-.ke-post ul, .ke-post ol {
+.ks-editor-post ul, .ks-editor-post ol {
     margin-left: 0;
     padding-left: 40px;
 }
 
 /*firefox 破碎图片手动定义才出现*/
-.ke-post img:-moz-broken {
+.ks-editor-post img:-moz-broken {
     -moz-force-broken-image-icon: 1;
     height: 24px;
     width: 24px;
@@ -293,7 +293,7 @@ switch to default
 google tip or bubble style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ke-bubbleview-bubble {
+.ks-editor-bubbleview-bubble {
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
@@ -312,13 +312,13 @@ google tip or bubble style for kissy editor
     border-color: #BBB #BBB #A8A8A8;
 }
 
-.ke-bubbleview-link, .ke-bubbleview-url {
+.ks-editor-bubbleview-link, .ks-editor-bubbleview-url {
     cursor: pointer;
     text-decoration: none;
     color: #15C;
 }
 
-.ke-bubbleview-link:hover, .ke-bubbleview-url:hover {
+.ks-editor-bubbleview-link:hover, .ks-editor-bubbleview-url:hover {
     color: #15C;
     text-decoration: underline;
 }
@@ -331,7 +331,7 @@ LoVe F HAte
 /**
 link
 **/
-.ke-triplebutton {
+.ks-editor-triplebutton {
     color: black;
     display: inline-block;
     zoom: 1;
@@ -352,12 +352,12 @@ link
     *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
 }
 
-.ke-triplebutton-on {
+.ks-editor-triplebutton-on {
     border-color: #729BD1;
     background-color: #DDE1EB;
 }
 
-.ke-triplebutton-disabled {
+.ks-editor-triplebutton-disabled {
     opacity: 0.3;
     /*ie7不支持透明属性*/
     /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
@@ -366,7 +366,7 @@ link
 }
 
 /*ie9 标准模式 filter 形成黑框*/
-.ks-ie9 .ke-triplebutton-disabled {
+.ks-ie9 .ks-editor-triplebutton-disabled {
     filter:none;
 }
 
@@ -374,25 +374,25 @@ link
 /**
 focus
 **/
-.ke-triplebutton:focus {
+.ks-editor-triplebutton:focus {
 }
 
 /**
 hover
 **/
-.ke-triplebutton:hover {
+.ks-editor-triplebutton:hover {
     text-decoration: none;
     color: black;
     cursor: pointer;
 }
 
-.ke-triplebutton-off:hover {
+.ks-editor-triplebutton-off:hover {
     border-color: rgb(206, 213, 224);
 }
 
 
 
-.ke-triplebutton-on:hover {
+.ks-editor-triplebutton-on:hover {
     border-color:#a1badf;
 }
 
@@ -400,16 +400,16 @@ hover
 /**
 active
 **/
-.ke-triplebutton-active {
+.ks-editor-triplebutton-active {
     border-color:#a1badf !important;
     background-color: #DDE1EB;
 }
-.ke-triplebutton:active {
+.ks-editor-triplebutton:active {
     color: black;
 }
 
 
-.ke-button {
+.ks-editor-button {
     display: inline-block;
     zoom: 1;
     *display: inline;
@@ -435,7 +435,7 @@ active
     *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
 }
 
-.ke-button:hover ,.ke-button-hover{
+.ks-editor-button:hover ,.ks-editor-button-hover{
     border-color: rgb(232, 204, 160);
     background: #f5e7ce repeat-x left top;
   background-image: url('./cool.png');
@@ -446,11 +446,11 @@ active
     color: black;
     text-decoration: none;
 }
-.ke-triplebutton-disabled:hover {
+.ks-editor-triplebutton-disabled:hover {
     opacity: 0.3;
     cursor: default;
 }
-.ke-triplebutton-disabled.ke-button:hover {
+.ks-editor-triplebutton-disabled.ks-editor-button:hover {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -52px;
@@ -458,10 +458,10 @@ active
     border-color:rgb(193, 200, 209);
 }
 /*ie6 没有多类选择器，只生效最后一个class*/
-.ks-ie6 .ke-button:hover{
-    /*background-image: url("ke-button-bg-active.png");没用了，行内css expression已经设了*/
+.ks-ie6 .ks-editor-button:hover{
+    /*background-image: url("ks-editor-button-bg-active.png");没用了，行内css expression已经设了*/
     border-color: rgb(232, 204, 160);
-}.ke-draft {
+}.ks-editor-draft {
     position: absolute;
     right: 15px;
     height: 22px;
@@ -471,16 +471,16 @@ active
     text-align: right;
 }
 
-.ke-draft .ke-select {
+.ks-editor-draft .ks-editor-select {
     background-color: #ffffff;
     text-align: left;
 }
 
-.ke-draft-save-btn span {
+.ks-editor-draft-save-btn span {
     vertical-align: middle;
 }
 
-.ke-draft-mansave {
+.ks-editor-draft-mansave {
     background: no-repeat scroll 0 1px transparent;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
@@ -493,15 +493,15 @@ active
     margin: 1px 0 2px 0;
 }
 
-.ke-draft-title, .ke-draft-time {
+.ks-editor-draft-title, .ks-editor-draft-time {
     vertical-align: middle;
 }
 
-.ke-draft-time {
+.ks-editor-draft-time {
     margin: 0 10px;
 }
 
-.ke-draft-help {
+.ks-editor-draft-help {
     /*不能使用 center center ,ie 对于容器理解有误,text-indent会增加容器*/
     background: no-repeat;
   background-image: url('./cool.png');
@@ -526,7 +526,7 @@ kissy editor cool theme
 /*
 编辑器容器
 */
-.ke-editor {
+.ks-editor {
     background: white;
     border: 1px solid rgb(206, 213, 224);
     font-size: 13px;
@@ -537,18 +537,18 @@ kissy editor cool theme
 /*
 textarea,iframe包装
 */
-.ke-textarea-wrap {
+.ks-editor-textarea-wrap {
     overflow: hidden;
 }
 
-.ke-textarea-wrap textarea {
+.ks-editor-textarea-wrap textarea {
     border-width: 0;
 }
 
 /*
 工具栏
 */
-.ke-editor-tools {
+.ks-editor-tools {
     background-color: rgb(245, 247, 250);
     background: -webkit-gradient(linear, left top, left bottom, from(#f8fafd), to(#f2f5f8));
     background: -moz-linear-gradient(center top, #f8fafd, #f2f5f8) repeat scroll 0 0 transparent;
@@ -560,7 +560,7 @@ textarea,iframe包装
 /*
 状态栏
 */
-.ke-editor-status {
+.ks-editor-status {
     background-color: rgb(235, 238, 242);
     background: -webkit-gradient(linear, left top, left bottom, from(#e7e9ed), to(#f1f4f7));
     background: -moz-linear-gradient(center top, #e7e9ed, #f1f4f7) repeat scroll 0 0 transparent;
@@ -575,11 +575,11 @@ textarea,iframe包装
 工具按钮 
 */
 
-ke-toolbar-padding {
+ks-editor-toolbar-padding {
     padding: 5px;
 }
 
-.ke-toolbar-item {
+.ks-editor-toolbar-item {
     background: no-repeat scroll left top transparent;
     display: block;
     height: 16px;
@@ -590,7 +590,7 @@ ke-toolbar-padding {
     margin: 2px 4px; /*扩大可点击区域，不能在a加padding，ie问题*/
 }
 
-.ke-toolbar-separator {
+.ks-editor-toolbar-separator {
     display: inline-block;
     zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
     *display: inline;
@@ -604,31 +604,31 @@ ke-toolbar-padding {
     width: 0;
 }
 
-.ke-toolbar-source {
+.ks-editor-toolbar-source {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -107px;
 }
 
-.ke-toolbar-preview {
+.ks-editor-toolbar-preview {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -123px;
 }
 
-.ke-toolbar-bold {
+.ks-editor-toolbar-bold {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -139px;
 }
 
-.ke-toolbar-italic {
+.ks-editor-toolbar-italic {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -155px;
 }
 
-.ke-toolbar-underline {
+.ks-editor-toolbar-underline {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -171px;
@@ -640,7 +640,7 @@ ke-toolbar-padding {
     margin-right: 7px;
 }
 
-.ke-toolbar-strikeThrough {
+.ks-editor-toolbar-strikeThrough {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -182px;
@@ -649,61 +649,61 @@ ke-toolbar-padding {
     margin-bottom: 5px;
 }
 
-.ke-toolbar-ol {
+.ks-editor-toolbar-ol {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -193px;
 }
 
-.ke-toolbar-ul {
+.ks-editor-toolbar-ul {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -209px;
 }
 
-.ke-toolbar-outdent {
+.ks-editor-toolbar-outdent {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -225px;
 }
 
-.ke-toolbar-indent {
+.ks-editor-toolbar-indent {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -241px;
 }
 
-.ke-toolbar-justifyLeft {
+.ks-editor-toolbar-justifyLeft {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -257px;
 }
 
-.ke-toolbar-justifyCenter {
+.ks-editor-toolbar-justifyCenter {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -273px;
 }
 
-.ke-toolbar-justifyRight {
+.ks-editor-toolbar-justifyRight {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -289px;
 }
 
-.ke-toolbar-image {
+.ks-editor-toolbar-image {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -305px;
 }
 
-.ke-toolbar-mul-image {
+.ks-editor-toolbar-mul-image {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -321px;
 }
 
-.ke-toolbar-back-color {
+.ks-editor-toolbar-back-color {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -337px;
@@ -712,7 +712,7 @@ ke-toolbar-padding {
     margin-top: 3px;
 }
 
-.ke-toolbar-fore-color {
+.ks-editor-toolbar-fore-color {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -352px;
@@ -722,13 +722,13 @@ ke-toolbar-padding {
     margin-bottom: 3px;
 }
 
-.ke-toolbar-undo {
+.ks-editor-toolbar-undo {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -366px;
 }
 
-.ke-toolbar-redo {
+.ks-editor-toolbar-redo {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -381px;
@@ -736,61 +736,61 @@ ke-toolbar-padding {
     margin: 3px 4px;
 }
 
-.ke-toolbar-table {
+.ks-editor-toolbar-table {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -396px;
 }
 
-.ke-toolbar-template {
+.ks-editor-toolbar-template {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -412px;
 }
 
-.ke-toolbar-maximize {
+.ks-editor-toolbar-maximize {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -428px;
 }
 
-.ke-toolbar-flash {
+.ks-editor-toolbar-flash {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -444px;
 }
 
-.ke-toolbar-link {
+.ks-editor-toolbar-link {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -460px;
 }
 
-.ke-toolbar-music {
+.ks-editor-toolbar-music {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -476px;
 }
 
-.ke-toolbar-video {
+.ks-editor-toolbar-video {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -492px;
 }
 
-.ke-toolbar-smiley {
+.ks-editor-toolbar-smiley {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -508px;
 }
 
-.ke-toolbar-removeformat {
+.ks-editor-toolbar-removeformat {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -524px;
 }
 
-.ke-toolbar-pagebreak {
+.ks-editor-toolbar-pagebreak {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -540px;
@@ -799,13 +799,13 @@ ke-toolbar-padding {
     margin-bottom: 4px;
 }
 
-.ke-toolbar-restore {
+.ks-editor-toolbar-restore {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -551px;
 }
 
-.ke-input {
+.ks-editor-input {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
@@ -816,21 +816,21 @@ ke-toolbar-padding {
     line-height: 22px;
 }
 
-.ke-input-tip {
+.ks-editor-input-tip {
     color: #969696;
-}.ke-element-path {
+}.ks-editor-element-path {
     padding: 0 5px;
     text-decoration: none;
 }
 
-.ke-element-path:hover {
+.ks-editor-element-path:hover {
     background: #CCFFFF;
     text-decoration: none;
 }/**
 menu style for kissy editor ,include contextmenu and select menu
 @author yiminghe@gmail.com
 **/
-.ke-menu {
+.ks-editor-menu {
     background: none repeat scroll 0 0 #fcfcfc;
     border-color: rgb(206, 213, 224);
     border-style: solid;
@@ -851,7 +851,7 @@ menu style for kissy editor ,include contextmenu and select menu
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
 }
 
-.ke-menu a, .ke-menu-title {
+.ks-editor-menu a, .ks-editor-menu-title {
     display: block;
     color: rgb(102, 102, 102);
     margin: 0;
@@ -863,27 +863,27 @@ menu style for kissy editor ,include contextmenu and select menu
     color: black;
 }
 
-.ke-menu-title {
+.ks-editor-menu-title {
     background-color: #dcdcdc;
     padding: 3px;
     display: none;
     color: black;
 }
 
-.ke-menu a:hover, .ke-menu-selected {
+.ks-editor-menu a:hover, .ks-editor-menu-selected {
     background: #D6E9F8;
     text-decoration: none;
     color: black;
 }
 
-.ke-menu a.ke-menuitem-disable {
+.ks-editor-menu a.ks-editor-menuitem-disable {
     color: gray;
 }
 
-.ke-menu a.ke-menuitem-disable:hover {
+.ks-editor-menu a.ks-editor-menuitem-disable:hover {
     background: #fcfcfc;
 }
-.ke-dialog, .ke-overlay {
+.ks-editor-dialog, .ks-editor-overlay {
     position: absolute;
     /*防止移位带来的闪烁*/
     left: -9999px;
@@ -891,12 +891,12 @@ menu style for kissy editor ,include contextmenu and select menu
     outline: none;
 }
 
-.ke-dialog .ks-contentbox, .ke-popup .ks-contentbox {
+.ks-editor-dialog .ks-contentbox, .ks-editor-popup .ks-contentbox {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
 
-.ke-dialog .ks-stdmod-header {
+.ks-editor-dialog .ks-stdmod-header {
     background: repeat-x scroll 0 0 #D6DBE2;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
@@ -909,7 +909,7 @@ menu style for kissy editor ,include contextmenu and select menu
     padding: 0 0 0 18px;
 }
 
-.ke-dialog .ks-ext-close {
+.ks-editor-dialog .ks-ext-close {
     height: 18px;
     width: 18px;
     border: 1px solid transparent;
@@ -925,7 +925,7 @@ menu style for kissy editor ,include contextmenu and select menu
     cursor: pointer;
 }
 
-.ke-dialog .ks-ext-close .ks-ext-close-x {
+.ks-editor-dialog .ks-ext-close .ks-ext-close-x {
     display: block;
     background: no-repeat;
   background-image: url('./cool.png');
@@ -937,27 +937,27 @@ menu style for kissy editor ,include contextmenu and select menu
     margin: 2.5px;
 }
 
-.ke-dialog .ks-ext-close:hover {
+.ks-editor-dialog .ks-ext-close:hover {
     border: 1px solid #CED5E0;
     background: white;
 }
 
-.ke-ext-mask, .ks-ext-mask {
+.ks-editor-ext-mask, .ks-ext-mask {
     background-color: #000;
     opacity: 0.3;
     filter: alpha(opacity = 15);
 }
 
-.ke-overlay .ks-ext-loading {
+.ks-editor-overlay .ks-ext-loading {
     opacity: 0.6;
     filter: alpha(opacity = 60);
     background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
-.ke-global-loading .ks-ext-loading {
+.ks-editor-global-loading .ks-ext-loading {
     background-attachment: fixed;
-}.ke-progressbar {
+}.ks-editor-progressbar {
     border: 1px solid #D6DEE6;
     position: relative;
     margin-left: auto;
@@ -968,13 +968,13 @@ menu style for kissy editor ,include contextmenu and select menu
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#EAEFF4', endColorstr = '#EBF0F3');
 }
 
-.ke-progressbar-inner {
+.ks-editor-progressbar-inner {
     border: 1px solid #3571B4;
     background-color: #6FA5DB;
     padding: 1px;
 }
 
-.ke-progressbar-inner-bg {
+.ks-editor-progressbar-inner-bg {
     height: 100%;
     background-color: #73B1E9;
     background: -webkit-gradient(linear, left top, left bottom, from(#73B1E9), to(#3F81C8));
@@ -982,7 +982,7 @@ menu style for kissy editor ,include contextmenu and select menu
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#73B1E9', endColorstr = '#3F81C8');
 }
 
-.ke-progressbar-title {
+.ks-editor-progressbar-title {
     width: 30px;
     top: 0;
     left: 40%;
@@ -992,7 +992,7 @@ menu style for kissy editor ,include contextmenu and select menu
     resize handler style for kissy editor
     @author yiminghe@gmail.com
 **/
-.ke-resizer {
+.ks-editor-resizer {
     background: no-repeat right bottom;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
@@ -1009,24 +1009,24 @@ menu style for kissy editor ,include contextmenu and select menu
 select style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ke-select-text,
-.ke-select-drop-wrap,
-.ke-select-drop,
-.ke-select-wrap,
-.ke-select {
+.ks-editor-select-text,
+.ks-editor-select-drop-wrap,
+.ks-editor-select-drop,
+.ks-editor-select-wrap,
+.ks-editor-select {
     display: inline-block;
     zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
     *display: inline;
 }
 
-.ke-select-wrap {
+.ks-editor-select-wrap {
     margin: 0 2px;
     cursor: pointer;
     line-height: 0;
     vertical-align: middle;
 }
 
-.ke-select {
+.ks-editor-select {
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
@@ -1039,17 +1039,17 @@ select style for kissy editor
     overflow: hidden;
 }
 
-.ke-select:hover {
+.ks-editor-select:hover {
     color: black;
     text-decoration: none;
     border-color: #729BD1;
 }
 
-.ke-select:active {
+.ks-editor-select:active {
     color: #000;
 }
 
-.ke-select-drop {
+.ks-editor-select-drop {
     background: no-repeat scroll center center transparent;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
@@ -1060,13 +1060,13 @@ select style for kissy editor
     font-size: 0;
 }
 
-.ke-select-active {
+.ks-editor-select-active {
     background-color: #ffffff;
 }
 
-.ke-select-disabled,
-.ke-select-disabled .ke-select:hover,
-.ke-select-disabled .ke-select {
+.ks-editor-select-disabled,
+.ks-editor-select-disabled .ks-editor-select:hover,
+.ks-editor-select-disabled .ks-editor-select {
     cursor: default;
     opacity: 0.7;
     filter: alpha(opacity = 70);
@@ -1074,43 +1074,43 @@ select style for kissy editor
     border-color: rgb(193, 200, 209);
 }
 
-.ks-ie9 .ke-select-disabled .ke-select {
+.ks-ie9 .ks-editor-select-disabled .ks-editor-select {
     filter: none;
 }
 
-.ke-menu .ke-select-menu-item {
+.ks-editor-menu .ks-editor-select-menuitem {
     padding-left: 12px;
     padding-right: 20px;
 }
 
-.ke-select-text {
+.ks-editor-select-text {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
     position: relative;
 }
 
-.ke-combox .ke-select {
+.ks-editor-combox .ks-editor-select {
     height: 24px;
 }
 
-.ke-combox .ke-select-drop,
-.ke-combox .ke-select-text {
+.ks-editor-combox .ks-editor-select-drop,
+.ks-editor-combox .ks-editor-select-text {
     height: 24px;
     line-height: 24px;
 }
 
-.ke-combox .ke-select-drop {
+.ks-editor-combox .ks-editor-select-drop {
     height: 3px;
     margin-top: 8px;
 }
 
-.ks-ie7 .ke-combox .ke-select-text {
+.ks-ie7 .ks-editor-combox .ks-editor-select-text {
     position: static;
     padding-bottom: 8px;
 }
 
-.ks-ie6 .ke-combox .ke-select-text {
+.ks-ie6 .ks-editor-combox .ks-editor-select-text {
     /*odd ie ,字错位*/
     position: static;
     /*
@@ -1119,29 +1119,29 @@ select style for kissy editor
     padding-top: 2px;
 }
 
-.ke-select-drop-wrap {
+.ks-editor-select-drop-wrap {
     padding-right: 4px;
     vertical-align: middle;
 }
 
-.ks-ie6 .ke-select-drop-wrap,
-.ks-ie7 .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-select-drop-wrap,
+.ks-ie7 .ks-editor-select-drop-wrap {
     vertical-align: bottom;
 }
 
-.ks-ie6 .ke-combox .ke-select-drop-wrap,
-.ks-ie7 .ke-combox .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap,
+.ks-ie7 .ks-editor-combox .ks-editor-select-drop-wrap {
     vertical-align: middle;
     margin-top: -10px;
     height: 23px;
     zoom: 1;
 }
 
-.ks-ie6 .ke-combox .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap {
     margin-top: -5px;
 }
 
-.ke-combox .ke-select-drop-wrap {
+.ks-editor-combox .ks-editor-select-drop-wrap {
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
@@ -1153,16 +1153,16 @@ select style for kissy editor
     padding-top: 1px;
 }
 
-.ks-ie8 .ke-combox .ke-select-drop-wrap,
-.ks-ie9 .ke-combox .ke-select-drop-wrap {
+.ks-ie8 .ks-editor-combox .ks-editor-select-drop-wrap,
+.ks-ie9 .ks-editor-combox .ks-editor-select-drop-wrap {
     top: 0;
 }
 
-.ke-combox .ke-select-text {
+.ks-editor-combox .ks-editor-select-text {
     border-right: 1px solid #C1C8D1;
     background: #FFFFFF repeat-x scroll 0 0;
     background-image: url("text-bg.png");
-}.ke-smiley-sprite {
+}.ks-editor-smiley-sprite {
     background: url("http://a.tbcdn.cn/sys/wangwang/smiley/sprite.png") no-repeat scroll -1px 0 transparent;
     height: 235px;
     width: 288px;
@@ -1171,22 +1171,22 @@ select style for kissy editor
     overflow: hidden;
 }
 
-.ke-smiley-sprite a {
+.ks-editor-smiley-sprite a {
     width: 24px;
     height: 24px;
     border: 1px solid white;
     float: left;
 }
 
-.ke-smiley-sprite a:hover {
+.ks-editor-smiley-sprite a:hover {
     border: 1px solid #808080;
-}.ke-tabs {
+}.ks-editor-tabs {
     padding-left: 10px;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
 }
 
-.ke-tabs li {
+.ks-editor-tabs li {
     background-color: #F2F2F2;
     border-color: #CED5E0;
     border-style: solid solid none;
@@ -1203,32 +1203,32 @@ select style for kissy editor
     outline: none;
 }
 
-.ke-tabs li.ks-active {
+.ks-editor-tabs li.ks-active {
     background-color: #FCFCFC;
     border-color: #CED5E0 #CED5E0 #FCFCFC;
     cursor: default;
     margin-bottom: -1px;
     padding-bottom: 1px;
-}.ke-table-config td {
+}.ks-editor-table-config td {
     padding:2px;
-}.ke-upload-btn-wrap {
+}.ks-editor-upload-btn-wrap {
     position: relative;
     padding: 15px 20px 15px 10px;
     zoom: 1;
 }
 
-.ke-upload-list {
+.ks-editor-upload-list {
     width: 100%;
 }
 
-.ke-upload-list th {
+.ks-editor-upload-list th {
     border-top: 1px solid #c1c8d1;
     background-color: #E7E9ED;
     background: -webkit-gradient(linear, left top, left bottom, from(#E7E9ED), to(#F1F4F7));
     background: -moz-linear-gradient(top, #E7E9ED, #F1F4F7);
 }
 
-.ke-upload-list td, .ke-upload-list th {
+.ks-editor-upload-list td, .ks-editor-upload-list th {
     padding: 0;
     height: 26px;
     line-height: 26px;
@@ -1236,7 +1236,7 @@ select style for kissy editor
     border-bottom: 1px solid #c1c8d1;
 }
 
-.ke-upload-complete .ke-upload-filename {
+.ks-editor-upload-complete .ks-editor-upload-filename {
     text-decoration: underline;
     cursor: pointer;
 }

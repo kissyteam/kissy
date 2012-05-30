@@ -41,7 +41,7 @@ KISSY.add("editor/core/meta", function () {
             "backColor/cmd":['../color/cmd'],
             "bold/cmd":['../font/cmd'],
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
-            "color/colorPicker/dialog":['../overlay/'],
+            "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
             "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
             "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],

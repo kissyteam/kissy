@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
 google tip or bubble style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ke-bubbleview-bubble {
+.ks-editor-bubbleview-bubble {
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
@@ -26,13 +26,13 @@ google tip or bubble style for kissy editor
     border-color: #BBB #BBB #A8A8A8;
 }
 
-.ke-bubbleview-link, .ke-bubbleview-url {
+.ks-editor-bubbleview-link, .ks-editor-bubbleview-url {
     cursor: pointer;
     text-decoration: none;
     color: #15C;
 }
 
-.ke-bubbleview-link:hover, .ke-bubbleview-url:hover {
+.ks-editor-bubbleview-link:hover, .ks-editor-bubbleview-url:hover {
     color: #15C;
     text-decoration: underline;
 }

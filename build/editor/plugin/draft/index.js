@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * draft for kissy editor
@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         Event = S.Event,
         INTERVAL = 5,
         JSON = S['JSON'],
-        DRAFT_SAVE = "ke-draft-save20110503";
+        DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
         n += "";
@@ -94,25 +94,25 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='ke-draft'>" +
-                    "<span class='ke-draft-title'>" +
+                "<div class='ks-editor-draft'>" +
+                    "<span class='ks-editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='ke-draft-time'/>")
+            self.timeTip = new Node("<span class='ks-editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
                 "<a href='#' " +
                     "onclick='return false;' " +
-                    "class='ke-button ke-draft-save-btn' " +
+                    "class='ks-editor-button ks-editor-draft-save-btn' " +
                     "style='" +
                     "vertical-align:middle;" +
                     "padding:1px 9px;" +
                     "'>" +
-                    "<span class='ke-draft-mansave'>" +
+                    "<span class='ks-editor-draft-mansave'>" +
                     "</span>" +
                     "<span>立即保存</span>" +
                     "</a>"
@@ -179,7 +179,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ke-draft-help ke-triplebutton-off" ' +
+                    'class="ks-editor-draft-help ks-editor-triplebutton-off" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -234,6 +234,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
             self.helpPopup = new Overlay({
                 content:help,
+                prefixCls:'ks-editor-',
                 autoRender:true,
                 width:help.width() + "px",
                 mask:false

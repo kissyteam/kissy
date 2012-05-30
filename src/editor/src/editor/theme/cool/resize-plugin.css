@@ -2,7 +2,7 @@
     resize handler style for kissy editor
     @author yiminghe@gmail.com
 **/
-.ke-resizer {
+.ks-editor-resizer {
     background: no-repeat right bottom;
     background-image: url("resizer.png");/** sprite-ref: cool; */
     height: 10px;

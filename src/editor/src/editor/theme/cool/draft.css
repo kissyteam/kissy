@@ -1,4 +1,4 @@
-.ke-draft {
+.ks-editor-draft {
     position: absolute;
     right: 15px;
     height: 22px;
@@ -8,16 +8,16 @@
     text-align: right;
 }
 
-.ke-draft .ke-select {
+.ks-editor-draft .ks-editor-select {
     background-color: #ffffff;
     text-align: left;
 }
 
-.ke-draft-save-btn span {
+.ks-editor-draft-save-btn span {
     vertical-align: middle;
 }
 
-.ke-draft-mansave {
+.ks-editor-draft-mansave {
     background: no-repeat scroll 0 1px transparent;
     background-image: url("icon_save.png"); /** sprite-ref: cool; */
     width: 18px;
@@ -28,15 +28,15 @@
     margin: 1px 0 2px 0;
 }
 
-.ke-draft-title, .ke-draft-time {
+.ks-editor-draft-title, .ks-editor-draft-time {
     vertical-align: middle;
 }
 
-.ke-draft-time {
+.ks-editor-draft-time {
     margin: 0 10px;
 }
 
-.ke-draft-help {
+.ks-editor-draft-help {
     /*不能使用 center center ,ie 对于容器理解有误,text-indent会增加容器*/
     background: no-repeat;
     background-image: url("icon_help.png"); /** sprite-ref: cool; */

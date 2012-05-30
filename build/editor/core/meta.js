@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 KISSY.add("editor/core/meta", function () {
 
@@ -46,7 +46,7 @@ KISSY.add("editor/core/meta", function () {
             "backColor/cmd":['../color/cmd'],
             "bold/cmd":['../font/cmd'],
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
-            "color/colorPicker/dialog":['../overlay/'],
+            "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
             "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
             "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],

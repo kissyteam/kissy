@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * custom overlay  for kissy editor
@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             "zIndex":{
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             draggable:{
                 value:true

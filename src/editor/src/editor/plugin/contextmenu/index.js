@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
     var $ = S.all,
-        MENUITEM_DISABLED_CLS = "ke-menuitem-disable",
+        MENUITEM_DISABLED_CLS = "ks-editor-menuitem-disable",
         Event = S.Event;
 
     /**
@@ -92,11 +92,12 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
             self.menu = new Overlay({
                 autoRender:true,
                 width:self.get("width"),
-                elCls:"ke-menu"
+                elCls:'ks-editor-menu',
+                prefixCls:"ks-editor-"
             });
             var el = self.menu.get("contentEl");
             for (var f in handlers) {
-                var a = $("<a href='#'>" + f + "</a>");
+                var a = $("<a href='#' class='ks-editor-menuitem'>" + f + "</a>");
                 el.append(a);
                 if (handlers.hasOwnProperty(f)) {
                     (function (a, handler) {

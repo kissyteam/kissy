@@ -481,7 +481,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
 
             editor.addButton({
-                contentCls:"ke-toolbar-table",
+                contentCls:"ks-editor-toolbar-table",
                 mode:Editor.WYSIWYG_MODE,
                 title:"插入表格"
             }, {

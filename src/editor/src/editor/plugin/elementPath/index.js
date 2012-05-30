@@ -1,6 +1,6 @@
 KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
-    var CLASS = "ke-element-path";
+    var CLASS = "ks-editor-element-path";
 
     function ElementPaths(cfg) {
         var self = this;

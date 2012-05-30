@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * bubble or tip view for kissy editor
@@ -17,10 +17,10 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
                 },
                 elCls:{
-                    value:"ke-bubbleview-bubble"
+                    value:"ks-editor-bubbleview-bubble"
                 },
                 prefixCls:{
-                    value:"ke-"
+                    value:"ks-editor-"
                 },
                 effect:{
                     value:{

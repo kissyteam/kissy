@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
     return {
@@ -11,13 +11,13 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
                 mode:Editor.WYSIWYG_MODE,
                 title:"撤销",
                 editor:editor,
-                contentCls:"ke-toolbar-undo"
+                contentCls:"ks-editor-toolbar-undo"
             }, undefined, Btn.UndoBtn);
             editor.addButton({
                 mode:Editor.WYSIWYG_MODE,
                 title:"重做",
                 editor:editor,
-                contentCls:"ke-toolbar-redo"
+                contentCls:"ks-editor-toolbar-redo"
             }, undefined, Btn.RedoBtn);
         }
     };

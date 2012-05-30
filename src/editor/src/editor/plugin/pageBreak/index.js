@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             editor.addButton({
                 title:"分页",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-pagebreak"
+                contentCls:"ks-editor-toolbar-pagebreak"
             }, {
                 offClick:function () {
                     var editor = this.get("editor"),

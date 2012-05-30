@@ -1,8 +1,8 @@
 /**
-ke-post ，编辑器内容外部包装容器
+ks-editor-post ，编辑器内容外部包装容器
 from : resource://gre/res/html.css
 @authoryiminghe@gmail.com
-<div class='ke-post'>
+<div class='ks-editor-post'>
 编辑器生成内容
 </div>
 **/
@@ -10,150 +10,150 @@ from : resource://gre/res/html.css
 /*
 清除编辑器内容里面的浮动
  */
-.ks-clear:after, .ke-post:after {
+.ks-clear:after, .ks-editor-post:after {
     content: '\20';
     display: block;
     height: 0;
     clear: both;
 }
 
-.ke-post, .ks-clear {
+.ks-editor-post, .ks-clear {
     *zoom: 1;
 }
 
-.ke-hidden {
+.ks-editor-hidden {
     position: absolute;
     left: -9999px;
     top: -9999px;
 }
 
-.ke-post h1,
-.ke-post h2,
-.ke-post h3,
-.ke-post h4,
-.ke-post h5,
-.ke-post h6,
-.ke-post hr,
-.ke-post p,
-.ke-post blockquote, /* structural elements  */
-.ke-post dl,
-.ke-post dt,
-.ke-post dd,
-.ke-post ul,
-.ke-post ol,
-.ke-post li, /* list elements */
-.ke-post pre, /* text formatting elements */
-.ke-post form,
-.ke-post fieldset,
-.ke-post legend,
-.ke-post button,
-.ke-post input,
-.ke-post textarea, /* form elements*/
-.ke-post th,
-.ke-post td /* table elements  */
+.ks-editor-post h1,
+.ks-editor-post h2,
+.ks-editor-post h3,
+.ks-editor-post h4,
+.ks-editor-post h5,
+.ks-editor-post h6,
+.ks-editor-post hr,
+.ks-editor-post p,
+.ks-editor-post blockquote, /* structural elements  */
+.ks-editor-post dl,
+.ks-editor-post dt,
+.ks-editor-post dd,
+.ks-editor-post ul,
+.ks-editor-post ol,
+.ks-editor-post li, /* list elements */
+.ks-editor-post pre, /* text formatting elements */
+.ks-editor-post form,
+.ks-editor-post fieldset,
+.ks-editor-post legend,
+.ks-editor-post button,
+.ks-editor-post input,
+.ks-editor-post textarea, /* form elements*/
+.ks-editor-post th,
+.ks-editor-post td /* table elements  */
 {
     margin: 0;
     padding: 0;
 }
 
-.ke-post address,
-.ke-post caption,
-.ke-post cite,
-.ke-post code,
-.ke-post dfn,
-.ke-post em,
-.ke-post strong,
-.ke-post h1,
-.ke-post h2,
-.ke-post h3,
-.ke-post h4,
-.ke-post h5,
-.ke-post h6,
-.ke-post th,
-.ke-post var {
+.ks-editor-post address,
+.ks-editor-post caption,
+.ks-editor-post cite,
+.ks-editor-post code,
+.ks-editor-post dfn,
+.ks-editor-post em,
+.ks-editor-post strong,
+.ks-editor-post h1,
+.ks-editor-post h2,
+.ks-editor-post h3,
+.ks-editor-post h4,
+.ks-editor-post h5,
+.ks-editor-post h6,
+.ks-editor-post th,
+.ks-editor-post var {
     font-style: inherit;
     font-weight: inherit;
 }
 
-.ke-post,
-.ke-post button,
-.ke-post input,
-.ke-post select,
+.ks-editor-post,
+.ks-editor-post button,
+.ks-editor-post input,
+.ks-editor-post select,
 /* for ie */
-.ke-post textarea {
+.ks-editor-post textarea {
     font: 14px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
 }
 
-.ke-post h1 {
+.ks-editor-post h1 {
     font-size: 2em;
     font-weight: bold;
     margin: .67em 0;
 }
 
-.ke-post h2 {
+.ks-editor-post h2 {
     font-size: 1.5em;
     font-weight: bold;
     margin: .83em 0;
 }
 
-.ke-post h3 {
+.ks-editor-post h3 {
     font-size: 1.17em;
     font-weight: bold;
     margin: 1em 0;
 }
 
-.ke-post h4 {
+.ks-editor-post h4 {
     font-weight: bold;
     margin: 1.33em 0;
 }
 
-.ke-post h5 {
+.ks-editor-post h5 {
     font-size: 0.83em;
     font-weight: bold;
     margin: 1.67em 0;
 }
 
-.ke-post h6 {
+.ks-editor-post h6 {
     font-size: 0.67em;
     font-weight: bold;
     margin: 2.33em 0;
 }
 
-.ke-post blockquote {
+.ks-editor-post blockquote {
     display: block;
     margin: 1em 40px;
 }
 
-.ke-post address {
+.ks-editor-post address {
     display: block;
     font-style: italic;
 }
 
-.ke-post i, .ke-post cite, .ke-post em, .ke-post var, .ke-post dfn {
+.ks-editor-post i, .ks-editor-post cite, .ks-editor-post em, .ks-editor-post var, .ks-editor-post dfn {
     font-style: italic;
     font-weight: inherit;
     /*防止reset css破坏层叠继承性*/
     *font-weight:expression(function (el) { el.runtimeStyle.fontWeight = el.parentNode.currentStyle.fontWeight;}(this));
 }
 
-.ke-post strong {
+.ks-editor-post strong {
     font-style: inherit;
     *font-style:expression(function (el) { el.runtimeStyle.fontStyle = el.parentNode.currentStyle.fontStyle;}(this));
     font-weight: bold;
 }
 
-.ke-post u, .ke-post ins {
+.ks-editor-post u, .ks-editor-post ins {
     text-decoration: underline;
 }
 
-.ke-post s, .ke-post strike, .ke-post del {
+.ks-editor-post s, .ks-editor-post strike, .ks-editor-post del {
     text-decoration: line-through;
 }
 
 /* <hr> noshade and color attributes are handled completely
 by the nsHTMLHRElement attribute mapping code
 */
-.ke-post hr {
+.ks-editor-post hr {
     display: block;
     height: 2px;
     border: 1px inset;
@@ -161,28 +161,28 @@ by the nsHTMLHRElement attribute mapping code
     color: gray;
 }
 
-.ke-post code, .ke-post kbd, .ke-post pre, .ke-post samp {
+.ks-editor-post code, .ks-editor-post kbd, .ks-editor-post pre, .ks-editor-post samp {
     font-family: courier new, courier, monospace;
 }
 
-.ke-post small {
+.ks-editor-post small {
     font-size: 12px;
 }
 
-.ke-post sup {
+.ks-editor-post sup {
     vertical-align: text-top;
 }
 
-.ke-post sub {
+.ks-editor-post sub {
     vertical-align: text-bottom;
 }
 
-.ke-post legend {
+.ks-editor-post legend {
     color: #000;
 }
 
 /* for ie6 */
-.ke-post fieldset, .ke-post img {
+.ks-editor-post fieldset, .ks-editor-post img {
     border: 0;
 }
 
@@ -193,7 +193,7 @@ by the nsHTMLHRElement attribute mapping code
     (设置middle , ie6 有问题)
     上下想有空隙的话可以用间隔选项设置
 
-.ke-post img {
+.ks-editor-post img {
     vertical-align:top;
 }
 */
@@ -201,87 +201,87 @@ by the nsHTMLHRElement attribute mapping code
 /*
 switch to default
 */
-.ke-post table.k-e-collapse-table {
+.ks-editor-post table.k-e-collapse-table {
     display: table;
     border-collapse: collapse;
     border-color: black;
 }
 
-.ke-post table {
+.ks-editor-post table {
     /*prevent inherit for nested table*/
     border-collapse:separate;
     border-spacing:2px;
 }
 
 /* giving blockquotes and lists room to breath */
-.ke-post blockquote, .ke-post ul, .ke-post ol, .ke-post dl {
+.ks-editor-post blockquote, .ks-editor-post ul, .ks-editor-post ol, .ks-editor-post dl {
     margin: 1em;
 }
 
 /* bringing lists on to the page with breathing room */
-.ke-post ul, .ke-post ol, .ke-post dl {
+.ks-editor-post ul, .ks-editor-post ol, .ks-editor-post dl {
     margin-left: 2em;
 }
 
-.ke-post ol li {
+.ks-editor-post ol li {
 /* giving OL's LIs generated numbers */
     list-style: decimal outside;
 }
 
-.ke-post ul  li {
+.ks-editor-post ul  li {
 /* giving UL's LIs generated disc markers */
     list-style: disc outside;
 }
 
-.ke-post ul  li {
+.ks-editor-post ul  li {
 /* giving UL's LIs generated disc markers */
     list-style: disc outside;
 }
 
-.ke-post ul li ul li {
+.ks-editor-post ul li ul li {
     list-style: circle;
 }
 
-.ke-post ul li ul li ul li {
+.ks-editor-post ul li ul li ul li {
     list-style: square;
 }
 
-.ke-post dl dd {
+.ks-editor-post dl dd {
 /* providing spacing for definition terms */
     margin-left: 1em;
 }
 
-.ke-post table.k-e-collapse-table >tbody>tr>th,
-.ke-post table.k-e-collapse-table >tbody>tr>td {
+.ks-editor-post table.k-e-collapse-table >tbody>tr>th,
+.ks-editor-post table.k-e-collapse-table >tbody>tr>td {
 /* padding to make the table readable */
 /*padding: .5em;*/
     border-color: black;
 }
 
-.ke-post th {
+.ks-editor-post th {
     font-weight: bold;
     text-align: center;
 }
 
-.ke-post caption {
+.ks-editor-post caption {
 /* coordinated margin to match cell's padding */
     margin-bottom: .5em;
 /* prevent ie6,7 newline */
     white-space: nowrap;
 }
 
-.ke-post fieldset, .ke-post table, .ke-post  pre {
+.ks-editor-post fieldset, .ks-editor-post table, .ks-editor-post  pre {
 /* so things don't run into each other */
 /*margin-bottom: 1em;*/
 }
 
-.ke-post ul, .ke-post ol {
+.ks-editor-post ul, .ks-editor-post ol {
     margin-left: 0;
     padding-left: 40px;
 }
 
 /*firefox 破碎图片手动定义才出现*/
-.ke-post img:-moz-broken {
+.ks-editor-post img:-moz-broken {
     -moz-force-broken-image-icon: 1;
     height: 24px;
     width: 24px;

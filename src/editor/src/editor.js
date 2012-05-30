@@ -38,11 +38,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
         HTML5_DTD = '<!doctype html>',
 
-        KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
+        KE_TEXTAREA_WRAP_CLASS = ".ks-editor-textarea-wrap",
 
-        KE_TOOLBAR_CLASS = ".ke-editor-tools",
+        KE_TOOLBAR_CLASS = ".ks-editor-tools",
 
-        KE_STATUSBAR_CLASS = ".ke-editor-status",
+        KE_STATUSBAR_CLASS = ".ks-editor-status",
 
         IFRAME_HTML_TPL = HTML5_DTD + "<html>" +
             "<head>{doctype}" +
@@ -53,7 +53,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ke-editor'>" +
+            "<body class='ks-editor'>" +
             "{data}" +
             "{script}" +
             "</body>" +
@@ -194,6 +194,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             bindUI:function () {
                 var self = this,
                     form,
+                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea");
 
                 if (self.get("attachForm") &&
@@ -218,6 +219,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 }
 
                 self.on("docReady", docReady);
+
+                self.on("blur", function () {
+                    self.get("el").removeClass(prefixCls + "editor-focused");
+                });
+
+                self.on("focus", function () {
+                    self.get("el").addClass(prefixCls + "editor-focused");
+                });
             },
 
             destructor:function () {

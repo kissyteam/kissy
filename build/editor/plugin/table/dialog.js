@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * table dialog
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
         alignStyle = 'margin-left:2px;',
         MIDDLE = "vertical-align:middle;",
         TABLE_HTML = "<div style='padding:20px 20px 10px 20px;'>" +
-            "<table class='ke-table-config' style='width:100%'>" +
+            "<table class='ks-editor-table-config' style='width:100%'>" +
             "<tr>" +
             "<td>" +
             "<label>行数： " +
@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='行数请输入正整数' " +
             " value='2' " +
-            " class='ke-table-rows ke-table-create-only ke-input' " +
+            " class='ks-editor-table-rows ks-editor-table-create-only ks-editor-input' " +
             "style='" + alignStyle + MIDDLE + "'" +
             " size='" +
             IN_SIZE +
@@ -43,10 +43,10 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "value='200' " +
             "style='" +
             alignStyle + MIDDLE + "' " +
-            "class='ke-table-width ke-input' " +
+            "class='ks-editor-table-width ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             "</label> " +
-            "<select class='ke-table-width-unit' title='宽度单位'>" +
+            "<select class='ks-editor-table-width-unit' title='宽度单位'>" +
             "<option value='px'>像素</option>" +
             "<option value='%'>百分比</option>" +
             "</select>" +
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='列数请输入正整数' " +
-            "class='ke-table-cols ke-table-create-only ke-input' " +
+            "class='ks-editor-table-cols ks-editor-table-create-only ks-editor-input' " +
             "style='" + alignStyle + MIDDLE + "'" +
             "value='3' " +
             "size='" +
@@ -73,7 +73,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "value='' " +
             "style='" +
             alignStyle + MIDDLE + "'" +
-            "class='ke-table-height ke-input' " +
+            "class='ks-editor-table-height ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             "</label> &nbsp;像素" +
             "</td>" +
@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "<tr>" +
             "<td>" +
             "<label>对齐： </label>" +
-            "<select class='ke-table-align' title='对齐'>" +
+            "<select class='ks-editor-table-align' title='对齐'>" +
             "<option value=''>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -90,7 +90,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "</td>" +
             "<td>" +
             "<label>标题格：</label> " +
-            "<select class='ke-table-head ke-table-create-only' title='标题格'>" +
+            "<select class='ks-editor-table-head ks-editor-table-create-only' title='标题格'>" +
             "<option value=''>无</option>" +
             "<option value='1'>有</option>" +
             "</select>" +
@@ -105,20 +105,20 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "value='1' " +
             "style='" +
             alignStyle + MIDDLE + "'" +
-            "class='ke-table-border ke-input' " +
+            "class='ks-editor-table-border ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             "</label> &nbsp;像素" +
             " " +
             '<label><input ' +
             'type="checkbox" ' +
             'style="vertical-align: middle; margin-left: 5px;" ' +
-            'class="ke-table-collapse" ' +
+            'class="ks-editor-table-collapse" ' +
             '/> 合并边框' +
             "</label>" +
             "</td>" +
             "<td>" +
             "<label " +
-            "class='ke-table-cellpadding-holder'" +
+            "class='ks-editor-table-cellpadding-holder'" +
             ">边&nbsp;&nbsp;&nbsp;距： " +
             "<input " +
             " data-verify='^(\\d+)?$' " +
@@ -126,7 +126,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "value='0' " +
             "style='" +
             alignStyle + MIDDLE + "'" +
-            "class='ke-table-cellpadding ke-input' " +
+            "class='ks-editor-table-cellpadding ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             " &nbsp;像素</label>" +
             "</td>" +
@@ -136,7 +136,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "<label>" +
             "标题： " +
             "<input " +
-            "class='ke-table-caption ke-input' " +
+            "class='ks-editor-table-caption ks-editor-input' " +
             "style='width:380px;" +
             alignStyle + MIDDLE + "'>" +
             "</label>" +
@@ -146,10 +146,10 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
-            "class='ke-table-ok ke-button' " +
+            "class='ks-editor-table-ok ks-editor-button' " +
             "style='margin-right:20px;'>确定</a> " +
             "<a " +
-            "class='ke-table-cancel ke-button'>取消</a>" +
+            "class='ks-editor-table-cancel ks-editor-button'>取消</a>" +
             "</div>",
         addRes = Editor.Utils.addRes,
         destroyRes = Editor.Utils.destroyRes;
@@ -178,20 +178,20 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                 }),
                 dbody = d.get("body"),
                 foot = d.get("footer");
-            d.twidth = dbody.one(".ke-table-width");
-            d.theight = dbody.one(".ke-table-height");
-            d.tborder = dbody.one(".ke-table-border");
-            d.tcaption = dbody.one(".ke-table-caption");
-            d.talign = Select.decorate(dbody.one(".ke-table-align"));
-            d.trows = dbody.one(".ke-table-rows");
-            d.tcols = dbody.one(".ke-table-cols");
-            d.thead = Select.decorate(dbody.one(".ke-table-head"));
-            d.cellpaddingHolder = dbody.one(".ke-table-cellpadding-holder");
-            d.cellpadding = dbody.one(".ke-table-cellpadding");
-            d.tcollapse = dbody.one(".ke-table-collapse");
-            var tok = foot.one(".ke-table-ok"),
-                tclose = foot.one(".ke-table-cancel");
-            d.twidthunit = Select.decorate(dbody.one(".ke-table-width-unit"));
+            d.twidth = dbody.one(".ks-editor-table-width");
+            d.theight = dbody.one(".ks-editor-table-height");
+            d.tborder = dbody.one(".ks-editor-table-border");
+            d.tcaption = dbody.one(".ks-editor-table-caption");
+            d.talign = Select.decorate(dbody.one(".ks-editor-table-align"));
+            d.trows = dbody.one(".ks-editor-table-rows");
+            d.tcols = dbody.one(".ks-editor-table-cols");
+            d.thead = Select.decorate(dbody.one(".ks-editor-table-head"));
+            d.cellpaddingHolder = dbody.one(".ks-editor-table-cellpadding-holder");
+            d.cellpadding = dbody.one(".ks-editor-table-cellpadding");
+            d.tcollapse = dbody.one(".ks-editor-table-collapse");
+            var tok = foot.one(".ks-editor-table-ok"),
+                tclose = foot.one(".ks-editor-table-cancel");
+            d.twidthunit = Select.decorate(dbody.one(".ks-editor-table-width-unit"));
             self.dialog = d;
             tok.on("click", self._tableOk, self);
 
@@ -421,11 +421,11 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             if (self.selectedTable) {
                 self._fillTableDialog();
                 d.get("el")
-                    .all(".ke-table-create-only")
+                    .all(".ks-editor-table-create-only")
                     .attr("disabled", "disabled");
                 d.thead.disable();
             } else {
-                d.get("el").all(".ke-table-create-only")
+                d.get("el").all(".ks-editor-table-create-only")
                     .removeAttr("disabled");
                 d.thead.enable();
             }

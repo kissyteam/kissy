@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
         movie = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
-        name = "ke-multipleUpload",
+        name = "ks-editor-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 
     function MultiUploadDialog(editor) {
@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
 
             var bangpaiUploaderHolder = d.get("body"),
                 btnHolder = new Node(
-                    "<div class='ke-upload-btn-wrap'>" +
+                    "<div class='ks-editor-upload-btn-wrap'>" +
                         "<span " +
                         "style='" +
                         "margin:0 15px 0 0px;" +
@@ -93,11 +93,11 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                         "</div>").appendTo(bangpaiUploaderHolder, undefined),
                 listWrap = new Node("<div style='display:none'>")
                     .appendTo(bangpaiUploaderHolder, undefined),
-                btn = new Node("<a class='ke-button'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
+                btn = new Node("<a class='ks-editor-button'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
                     .appendTo(btnHolder, undefined),
 
                 listTableWrap = new Node("<div>" +
-                    "<table class='ke-upload-list'>" +
+                    "<table class='ks-editor-upload-list'>" +
                     "<thead>" +
                     "<tr>" +
                     "<th style='width:30px;'>" +
@@ -126,20 +126,20 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                     "style='" +
                     "margin:15px 15px 30px 6px;" +
                     "'>" +
-                    "<a class='ke-bangpaiupload-delall'" +
+                    "<a class='ks-editor-bangpaiupload-delall'" +
                     " style='" +
                     "margin-right:20px;" +
                     "cursor:pointer;" +
                     "margin-left:40px;" +
                     "'>清空列表</a>" +
-                    "<a class='ke-button ke-bangpaiupload-ok'>确定上传</a>" +
-                    "<a class='ke-button ke-bangpaiupload-insertall'" +
+                    "<a class='ks-editor-button ks-editor-bangpaiupload-ok'>确定上传</a>" +
+                    "<a class='ks-editor-button ks-editor-bangpaiupload-insertall'" +
                     " style='margin-left:20px;'>全部插入</a>" +
                     "</p>")
                     .appendTo(listWrap, undefined),
-                up = upHolder.one(".ke-bangpaiupload-ok"),
-                insertAll = upHolder.one(".ke-bangpaiupload-insertall"),
-                delAll = upHolder.one(".ke-bangpaiupload-delall"),
+                up = upHolder.one(".ks-editor-bangpaiupload-ok"),
+                insertAll = upHolder.one(".ks-editor-bangpaiupload-insertall"),
+                delAll = upHolder.one(".ks-editor-bangpaiupload-delall"),
                 fid = S.guid(name),
                 statusText = new Node("<span>")
                     .prependTo(upHolder, undefined);
@@ -160,7 +160,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                     " target='_blank'>点此升级</a>";
             }
 
-            btn.addClass("ke-triplebutton-disabled", undefined);
+            btn.addClass("ks-editor-triplebutton-disabled", undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
             if (!UA.fpvGEQ(FLASH_VERSION_REQUIRED)) {
@@ -225,10 +225,10 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             self.uploader = uploader;
 
             uploader.on("mouseOver", function () {
-                bel.addClass("ke-button-hover", undefined);
+                bel.addClass("ks-editor-button-hover", undefined);
             });
             uploader.on("mouseOut", function () {
-                bel.removeClass("ke-button-hover", undefined);
+                bel.removeClass("ks-editor-button-hover", undefined);
             });
             self.addRes(uploader);
             insertAll.on("click", function (ev) {
@@ -266,7 +266,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             list.on("click", function (ev) {
                 var target = new Node(ev.target), tr;
                 ev.halt();
-                if (target.hasClass("ke-upload-insert", undefined)) {
+                if (target.hasClass("ks-editor-upload-insert", undefined)) {
                     tr = target.parent("tr");
                     var url = tr.attr("url");
                     new Image().src = url;
@@ -274,9 +274,9 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                         url + "'/>", null, editor.get("document")[0]));
                 }
                 if (
-                    target.hasClass("ke-upload-delete", undefined)
+                    target.hasClass("ks-editor-upload-delete", undefined)
                         ||
-                        target.hasClass("ke-upload-insert", undefined)
+                        target.hasClass("ks-editor-upload-insert", undefined)
                     ) {
                     tr = target.parent("tr");
                     self._removeTrFile(tr);
@@ -285,7 +285,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 /**
                  * 支持排序
                  */
-                if (target.hasClass("ke-upload-moveup", undefined)) {
+                if (target.hasClass("ks-editor-upload-moveup", undefined)) {
                     tr = target.parent("tr");
                     tr.css("backgroundColor", "#eef4f9");
                     tr['animate']({
@@ -300,7 +300,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                         self._syncStatus();
                     }
 
-                } else if (target.hasClass("ke-upload-movedown", undefined)) {
+                } else if (target.hasClass("ks-editor-upload-movedown", undefined)) {
                     tr = target.parent("tr");
                     tr.css("backgroundColor", "#eef4f9");
                     tr['animate']({
@@ -353,10 +353,10 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 var currentFid = 0;
                 listWrap.on("mouseover", function (ev) {
                     var t = new Node(ev.target),
-                        td = t.parent(".ke-upload-filename");
+                        td = t.parent(".ks-editor-upload-filename");
                     if (td) {
                         var tr = td.parent("tr");
-                        if (tr.hasClass("ke-upload-complete", undefined)) {
+                        if (tr.hasClass("ks-editor-upload-complete", undefined)) {
                             var url = tr.attr("url"),
                                 fid = tr.attr("fid");
                             if (!url) return;
@@ -437,7 +437,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             if (tr) {
                 bar && bar.destroy();
                 delete progressBars[id];
-                tr.one(".ke-upload-progress").html("<div " +
+                tr.one(".ks-editor-upload-progress").html("<div " +
                     "style='color:red;'>" +
                     status +
                     "</div>");
@@ -457,7 +457,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         _onUploadStart:function (ev) {
             var id = ev.id || (ev['file'] && ev['file'].id);
             var tr = this._getFileTr(id);
-            tr[0].className = "ke-upload-uploading";
+            tr[0].className = "ks-editor-upload-uploading";
         },
         _onUploadCompleteData:function (ev) {
             var self = this,
@@ -492,7 +492,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             }
             var tr = self._getFileTr(id);
             if (tr) {
-                tr.one(".ke-upload-insert").show();
+                tr.one(".ks-editor-upload-insert").show();
                 self._tagComplete(tr, data['imgUrl']);
             }
 
@@ -510,7 +510,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         ddisable:function () {
             var self = this;
             self.uploader['lock']();
-            self.btn.addClass("ke-triplebutton-disabled", undefined);
+            self.btn.addClass("ks-editor-triplebutton-disabled", undefined);
             self.flashPos.offset({
                 left:-9999,
                 top:-9999
@@ -519,7 +519,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         denable:function () {
             var self = this;
             self.uploader['unlock']();
-            self.btn.removeClass("ke-triplebutton-disabled", undefined);
+            self.btn.removeClass("ks-editor-triplebutton-disabled", undefined);
             self.flashPos.offset(self.btn.offset());
         },
         _syncStatus:function () {
@@ -530,7 +530,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             if (trs.length == 0) {
                 self._listWrap.hide();
             } else {
-                list.all(".ke-upload-seq").each(function (n) {
+                list.all(".ks-editor-upload-seq").each(function (n) {
                     n.html(seq++);
                 });
                 var wait = 0;
@@ -566,7 +566,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         },
         _tagComplete:function (tr, url) {
             tr.attr("url", url);
-            tr[0].className = "ke-upload-complete";
+            tr[0].className = "ks-editor-upload-complete";
         },
         _save:function () {
             var self = this,
@@ -577,8 +577,8 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 var tr = new Node(trs[i]),
                     url = tr.attr("url");
                 if (url) {
-                    var size = tr.one(".ke-upload-filesize").html(),
-                        name = tr.one(".ke-upload-filename").text();
+                    var size = tr.one(".ks-editor-upload-filesize").html(),
+                        name = tr.one(".ks-editor-upload-filename").text();
                     data.push({
                         name:name,
                         size:size,
@@ -604,7 +604,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
              chrome not work !
              kissy bug?
              var row = new Node("<tr fid='" + id + "'>"
-             + "<td class='ke-upload-seq'>"
+             + "<td class='ks-editor-upload-seq'>"
              + "</td>"
              + "<td>"
              + f.name
@@ -612,14 +612,14 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
              + "<td>"
              + size
              + "k</td>" +
-             "<td class='ke-upload-progress'>" +
+             "<td class='ks-editor-upload-progress'>" +
              "</td>" +
              "<td>" +
              "<a href='#' " +
-             "class='ke-upload-insert' " +
+             "class='ks-editor-upload-insert' " +
              "style='display:none'>" +
              "[插入]</a> &nbsp; " +
-             "<a href='#' class='ke-upload-delete'>[删除]</a> &nbsp; "
+             "<a href='#' class='ks-editor-upload-delete'>[删除]</a> &nbsp; "
              +
              "</td>"
              + "</tr>").appendTo(list);
@@ -632,34 +632,34 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 row = tbl.insertRow(-1);
             DOM.attr(row, "fid", id);
             var cell = row.insertCell(-1);
-            DOM.attr(cell, "class", 'ke-upload-seq');
+            DOM.attr(cell, "class", 'ks-editor-upload-seq');
             cell = row.insertCell(-1);
             if (f.name.length > 18) {
                 f.name = f.name.substring(0, 18) + "...";
             }
             DOM.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
-            DOM.attr(cell, "class", 'ke-upload-filename');
+            DOM.attr(cell, "class", 'ks-editor-upload-filename');
             cell = row.insertCell(-1);
             DOM.html(cell, f.size);
-            DOM.attr(cell, "class", 'ke-upload-filesize');
+            DOM.attr(cell, "class", 'ks-editor-upload-filesize');
             cell = row.insertCell(-1);
-            DOM.attr(cell, "class", 'ke-upload-progress');
+            DOM.attr(cell, "class", 'ks-editor-upload-progress');
             cell = row.insertCell(-1);
             DOM.html(cell, "" +
-                "<a class='ke-upload-moveup' href='#'>[上移]</a> &nbsp; " +
-                "<a class='ke-upload-movedown' href='#'>[下移]</a> &nbsp; " +
-                "<a href='#' class='ke-upload-insert' style='" +
+                "<a class='ks-editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
+                "<a class='ks-editor-upload-movedown' href='#'>[下移]</a> &nbsp; " +
+                "<a href='#' class='ks-editor-upload-insert' style='" +
                 (f.complete ? "" : "display:none;") +
                 "' " +
 
                 ">" +
                 "[插入]</a> &nbsp; " +
-                "<a href='#' class='ke-upload-delete'>" +
+                "<a href='#' class='ks-editor-upload-delete'>" +
                 "[删除]" +
                 "</a> &nbsp;");
             var rowNode = new Node(row);
 
-            var prog = rowNode.one(".ke-upload-progress");
+            var prog = rowNode.one(".ks-editor-upload-progress");
             if (parseInt(f.size) > self._sizeLimit) {
                 self._uploadError({
                     id:id,
@@ -671,7 +671,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
 
             } else {
                 progressBars[id] = new ProgressBar({
-                    container:rowNode.one(".ke-upload-progress"),
+                    container:rowNode.one(".ks-editor-upload-progress"),
                     width:"100px",
                     height:"15px"
                 });
@@ -755,7 +755,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 });
                 return;
             }
-            btn.removeClass("ke-triplebutton-disabled", undefined);
+            btn.removeClass("ks-editor-triplebutton-disabled", undefined);
             flashPos.offset(btn.offset());
             uploader['setAllowMultipleFiles'](true);
             uploader['setFileFilters']([

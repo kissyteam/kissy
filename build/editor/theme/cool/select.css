@@ -1,30 +1,30 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
 select style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ke-select-text,
-.ke-select-drop-wrap,
-.ke-select-drop,
-.ke-select-wrap,
-.ke-select {
+.ks-editor-select-text,
+.ks-editor-select-drop-wrap,
+.ks-editor-select-drop,
+.ks-editor-select-wrap,
+.ks-editor-select {
     display: inline-block;
     zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
     *display: inline;
 }
 
-.ke-select-wrap {
+.ks-editor-select-wrap {
     margin: 0 2px;
     cursor: pointer;
     line-height: 0;
     vertical-align: middle;
 }
 
-.ke-select {
+.ks-editor-select {
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
@@ -37,17 +37,17 @@ select style for kissy editor
     overflow: hidden;
 }
 
-.ke-select:hover {
+.ks-editor-select:hover {
     color: black;
     text-decoration: none;
     border-color: #729BD1;
 }
 
-.ke-select:active {
+.ks-editor-select:active {
     color: #000;
 }
 
-.ke-select-drop {
+.ks-editor-select-drop {
     background: no-repeat scroll center center transparent;
     background-image: url("arrow.png"); /** sprite-ref: cool; */
     width: 7px;
@@ -56,13 +56,13 @@ select style for kissy editor
     font-size: 0;
 }
 
-.ke-select-active {
+.ks-editor-select-active {
     background-color: #ffffff;
 }
 
-.ke-select-disabled,
-.ke-select-disabled .ke-select:hover,
-.ke-select-disabled .ke-select {
+.ks-editor-select-disabled,
+.ks-editor-select-disabled .ks-editor-select:hover,
+.ks-editor-select-disabled .ks-editor-select {
     cursor: default;
     opacity: 0.7;
     filter: alpha(opacity = 70);
@@ -70,43 +70,43 @@ select style for kissy editor
     border-color: rgb(193, 200, 209);
 }
 
-.ks-ie9 .ke-select-disabled .ke-select {
+.ks-ie9 .ks-editor-select-disabled .ks-editor-select {
     filter: none;
 }
 
-.ke-menu .ke-select-menu-item {
+.ks-editor-menu .ks-editor-select-menuitem {
     padding-left: 12px;
     padding-right: 20px;
 }
 
-.ke-select-text {
+.ks-editor-select-text {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
     position: relative;
 }
 
-.ke-combox .ke-select {
+.ks-editor-combox .ks-editor-select {
     height: 24px;
 }
 
-.ke-combox .ke-select-drop,
-.ke-combox .ke-select-text {
+.ks-editor-combox .ks-editor-select-drop,
+.ks-editor-combox .ks-editor-select-text {
     height: 24px;
     line-height: 24px;
 }
 
-.ke-combox .ke-select-drop {
+.ks-editor-combox .ks-editor-select-drop {
     height: 3px;
     margin-top: 8px;
 }
 
-.ks-ie7 .ke-combox .ke-select-text {
+.ks-ie7 .ks-editor-combox .ks-editor-select-text {
     position: static;
     padding-bottom: 8px;
 }
 
-.ks-ie6 .ke-combox .ke-select-text {
+.ks-ie6 .ks-editor-combox .ks-editor-select-text {
     /*odd ie ,字错位*/
     position: static;
     /*
@@ -115,44 +115,44 @@ select style for kissy editor
     padding-top: 2px;
 }
 
-.ke-select-drop-wrap {
+.ks-editor-select-drop-wrap {
     padding-right: 4px;
     vertical-align: middle;
 }
 
-.ks-ie6 .ke-select-drop-wrap,
-.ks-ie7 .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-select-drop-wrap,
+.ks-ie7 .ks-editor-select-drop-wrap {
     vertical-align: bottom;
 }
 
-.ks-ie6 .ke-combox .ke-select-drop-wrap,
-.ks-ie7 .ke-combox .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap,
+.ks-ie7 .ks-editor-combox .ks-editor-select-drop-wrap {
     vertical-align: middle;
     margin-top: -10px;
     height: 23px;
     zoom: 1;
 }
 
-.ks-ie6 .ke-combox .ke-select-drop-wrap {
+.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap {
     margin-top: -5px;
 }
 
-.ke-combox .ke-select-drop-wrap {
+.ks-editor-combox .ks-editor-select-drop-wrap {
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
-    background-image: url("ke-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
+    background-image: url("ks-editor-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image: none;
     height: 24px;
     padding-top: 1px;
 }
 
-.ks-ie8 .ke-combox .ke-select-drop-wrap,
-.ks-ie9 .ke-combox .ke-select-drop-wrap {
+.ks-ie8 .ks-editor-combox .ks-editor-select-drop-wrap,
+.ks-ie9 .ks-editor-combox .ks-editor-select-drop-wrap {
     top: 0;
 }
 
-.ke-combox .ke-select-text {
+.ks-editor-combox .ks-editor-select-text {
     border-right: 1px solid #C1C8D1;
     background: #FFFFFF repeat-x scroll 0 0;
     background-image: url("text-bg.png");

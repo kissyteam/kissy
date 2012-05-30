@@ -1,9 +1,9 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
-.ke-progressbar {
+.ks-editor-progressbar {
     border: 1px solid #D6DEE6;
     position: relative;
     margin-left: auto;
@@ -14,13 +14,13 @@ build time: May 30 20:27
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#EAEFF4', endColorstr = '#EBF0F3');
 }
 
-.ke-progressbar-inner {
+.ks-editor-progressbar-inner {
     border: 1px solid #3571B4;
     background-color: #6FA5DB;
     padding: 1px;
 }
 
-.ke-progressbar-inner-bg {
+.ks-editor-progressbar-inner-bg {
     height: 100%;
     background-color: #73B1E9;
     background: -webkit-gradient(linear, left top, left bottom, from(#73B1E9), to(#3F81C8));
@@ -28,7 +28,7 @@ build time: May 30 20:27
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#73B1E9', endColorstr = '#3F81C8');
 }
 
-.ke-progressbar-title {
+.ks-editor-progressbar-title {
     width: 30px;
     top: 0;
     left: 40%;

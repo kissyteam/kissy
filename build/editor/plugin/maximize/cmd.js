@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * Add maximizeWindow/restoreWindow to Editor.
@@ -15,11 +15,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         Event = S.Event,
         DOM = S.DOM,
         iframe,
-        MAXIMIZE_TOOLBAR_CLASS = "ke-toolbar-padding",
+        MAXIMIZE_TOOLBAR_CLASS = "ks-editor-toolbar-padding",
         init = function () {
             if (!iframe) {
                 iframe = new Node("<" + "iframe " +
-                    " class='ke-maximize-shim'" +
+                    " class='ks-editor-maximize-shim'" +
                     " style='" +
                     "position:absolute;" +
                     "top:-9999px;" +

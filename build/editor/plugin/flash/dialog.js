@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * flash dialog
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^https?://[^\\s]+$' " +
             " data-warning='网址格式为：http://' " +
-            "class='ke-flash-url ke-input' style='width:300px;" +
+            "class='ks-editor-flash-url ks-editor-input' style='width:300px;" +
             MIDDLE + "' />" +
             "</label>" +
             "</p>" +
@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='宽度请输入正整数' " +
-            "class='ke-flash-width ke-input' style='width:60px;" +
+            "class='ks-editor-flash-width ks-editor-input' style='width:60px;" +
             "margin-left:2px;" +
             MIDDLE + "' /> 像素 </label>" +
             "</td>" +
@@ -38,14 +38,14 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<label>高度：<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='高度请输入正整数' " +
-            "class='ke-flash-height ke-input' " +
+            "class='ks-editor-flash-height ks-editor-input' " +
             "style='width:60px;" +
             MIDDLE + "' /> 像素 </label></td>" +
             "</tr>" +
             "<tr>" +
             "<td>" +
             "<label>对齐： " +
-            "<select class='ke-flash-align' title='对齐'>" +
+            "<select class='ks-editor-flash-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -56,7 +56,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' "
-            + "class='ke-flash-margin ke-input' " +
+            + "class='ks-editor-flash-margin ks-editor-input' " +
             "style='width:60px;" +
             MIDDLE + "' value='"
             + 5 + "'/> 像素" +
@@ -65,9 +65,9 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "</table>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ke-flash-ok ke-button' " +
+            "class='ks-editor-flash-ok ks-editor-button' " +
             "style='margin-left:40px;margin-right:20px;'>确定</a> " +
-            "<a class='ke-flash-cancel ke-button'>取消</a></div>";
+            "<a class='ks-editor-flash-cancel ks-editor-button'>取消</a></div>";
 
 
     function FlashDialog(editor) {
@@ -163,13 +163,13 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             var self = this,
                 d = self.dialog,
                 el = d.get("el");
-            self.dHeight = el.one(".ke-flash-height");
-            self.dWidth = el.one(".ke-flash-width");
-            self.dUrl = el.one(".ke-flash-url");
-            self.dAlign = Select.decorate(el.one(".ke-flash-align"));
-            self.dMargin = el.one(".ke-flash-margin");
-            var action = el.one(".ke-flash-ok"),
-                cancel = el.one(".ke-flash-cancel");
+            self.dHeight = el.one(".ks-editor-flash-height");
+            self.dWidth = el.one(".ks-editor-flash-width");
+            self.dUrl = el.one(".ks-editor-flash-url");
+            self.dAlign = Select.decorate(el.one(".ks-editor-flash-align"));
+            self.dMargin = el.one(".ks-editor-flash-margin");
+            var action = el.one(".ks-editor-flash-ok"),
+                cancel = el.one(".ks-editor-flash-cancel");
             action.on("click", self._gen, self);
             cancel.on("click", function (ev) {
                 d.hide();

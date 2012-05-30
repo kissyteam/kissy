@@ -3,7 +3,7 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
     return {
         init:function (editor) {
             editor.addButton({
-                contentCls:"ke-toolbar-mul-image",
+                contentCls:"ks-editor-toolbar-mul-image",
                 title:"批量插图",
                 mode:Editor.WYSIWYG_MODE
             }, {

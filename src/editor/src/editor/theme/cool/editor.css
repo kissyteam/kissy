@@ -5,7 +5,7 @@ kissy editor cool theme
 /*
 编辑器容器
 */
-.ke-editor {
+.ks-editor {
     background: white;
     border: 1px solid rgb(206, 213, 224);
     font-size: 13px;
@@ -16,18 +16,18 @@ kissy editor cool theme
 /*
 textarea,iframe包装
 */
-.ke-textarea-wrap {
+.ks-editor-textarea-wrap {
     overflow: hidden;
 }
 
-.ke-textarea-wrap textarea {
+.ks-editor-textarea-wrap textarea {
     border-width: 0;
 }
 
 /*
 工具栏
 */
-.ke-editor-tools {
+.ks-editor-tools {
     background-color: rgb(245, 247, 250);
     background: -webkit-gradient(linear, left top, left bottom, from(#f8fafd), to(#f2f5f8));
     background: -moz-linear-gradient(center top, #f8fafd, #f2f5f8) repeat scroll 0 0 transparent;
@@ -39,7 +39,7 @@ textarea,iframe包装
 /*
 状态栏
 */
-.ke-editor-status {
+.ks-editor-status {
     background-color: rgb(235, 238, 242);
     background: -webkit-gradient(linear, left top, left bottom, from(#e7e9ed), to(#f1f4f7));
     background: -moz-linear-gradient(center top, #e7e9ed, #f1f4f7) repeat scroll 0 0 transparent;
@@ -54,11 +54,11 @@ textarea,iframe包装
 工具按钮 
 */
 
-ke-toolbar-padding {
+ks-editor-toolbar-padding {
     padding: 5px;
 }
 
-.ke-toolbar-item {
+.ks-editor-toolbar-item {
     background: no-repeat scroll left top transparent;
     display: block;
     height: 16px;
@@ -69,7 +69,7 @@ ke-toolbar-padding {
     margin: 2px 4px; /*扩大可点击区域，不能在a加padding，ie问题*/
 }
 
-.ke-toolbar-separator {
+.ks-editor-toolbar-separator {
     display: inline-block;
     zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
     *display: inline;
@@ -83,23 +83,23 @@ ke-toolbar-padding {
     width: 0;
 }
 
-.ke-toolbar-source {
+.ks-editor-toolbar-source {
     background-image: url("sourceArea.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-preview {
+.ks-editor-toolbar-preview {
     background-image: url("preview.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-bold {
+.ks-editor-toolbar-bold {
     background-image: url("bold.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-italic {
+.ks-editor-toolbar-italic {
     background-image: url("italic.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-underline {
+.ks-editor-toolbar-underline {
     background-image: url("underline.png"); /** sprite-ref: cool; */
     height: 11px;
     margin-top: 5px;
@@ -109,57 +109,57 @@ ke-toolbar-padding {
     margin-right: 7px;
 }
 
-.ke-toolbar-strikeThrough {
+.ks-editor-toolbar-strikeThrough {
     background-image: url("strike.png"); /** sprite-ref: cool; */
     height: 11px;
     margin-top: 4px;
     margin-bottom: 5px;
 }
 
-.ke-toolbar-ol {
+.ks-editor-toolbar-ol {
     background-image: url("ol.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-ul {
+.ks-editor-toolbar-ul {
     background-image: url("ul.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-outdent {
+.ks-editor-toolbar-outdent {
     background-image: url("outdent.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-indent {
+.ks-editor-toolbar-indent {
     background-image: url("indent.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-justifyLeft {
+.ks-editor-toolbar-justifyLeft {
     background-image: url("justify-left.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-justifyCenter {
+.ks-editor-toolbar-justifyCenter {
     background-image: url("justify-center.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-justifyRight {
+.ks-editor-toolbar-justifyRight {
     background-image: url("justify-right.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-image {
+.ks-editor-toolbar-image {
     background-image: url("image.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-mul-image {
+.ks-editor-toolbar-mul-image {
     background-image: url("mul-image.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-back-color {
+.ks-editor-toolbar-back-color {
     background-image: url("bgcolor.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 15px;
     margin-top: 3px;
 }
 
-.ke-toolbar-fore-color {
+.ks-editor-toolbar-fore-color {
     background-image: url("color.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 14px;
@@ -167,64 +167,64 @@ ke-toolbar-padding {
     margin-bottom: 3px;
 }
 
-.ke-toolbar-undo {
+.ks-editor-toolbar-undo {
     background-image: url("undo.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-redo {
+.ks-editor-toolbar-redo {
     background-image: url("redo.png"); /** sprite-ref: cool; */
     height: 15px;
     margin: 3px 4px;
 }
 
-.ke-toolbar-table {
+.ks-editor-toolbar-table {
     background-image: url("table.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-template {
+.ks-editor-toolbar-template {
     background-image: url("templates.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-maximize {
+.ks-editor-toolbar-maximize {
     background-image: url("maximize.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-flash {
+.ks-editor-toolbar-flash {
     background-image: url("flash.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-link {
+.ks-editor-toolbar-link {
     background-image: url("link.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-music {
+.ks-editor-toolbar-music {
     background-image: url("music.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-video {
+.ks-editor-toolbar-video {
     background-image: url("video.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-smiley {
+.ks-editor-toolbar-smiley {
     background-image: url("smiley.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-removeformat {
+.ks-editor-toolbar-removeformat {
     background-image: url("removeformat.png"); /** sprite-ref: cool; */
 }
 
-.ke-toolbar-pagebreak {
+.ks-editor-toolbar-pagebreak {
     background-image: url("pagebreak.png"); /** sprite-ref: cool; */
     height: 12px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
-.ke-toolbar-restore {
+.ks-editor-toolbar-restore {
     background-image: url("restore.png"); /** sprite-ref: cool; */
 }
 
-.ke-input {
+.ks-editor-input {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
@@ -235,6 +235,6 @@ ke-toolbar-padding {
     line-height: 22px;
 }
 
-.ke-input-tip {
+.ks-editor-input-tip {
     color: #969696;
 }

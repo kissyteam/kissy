@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * flash utilities
@@ -136,7 +136,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                 params_str = "",
                 vars_str = "";
             doc = doc || document;
-            attrs.id = attrs.id || S.guid("ke-runtimeflash-");
+            attrs.id = attrs.id || S.guid("ks-editor-runtimeflash-");
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a))
                     attrs_str += a + "='" + attrs[a] + "' ";

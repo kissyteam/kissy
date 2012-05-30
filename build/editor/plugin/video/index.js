@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
     var CLS_VIDEO = "ke_video",
@@ -100,7 +100,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             });
 
             editor.addButton({
-                contentCls:"ke-toolbar-video",
+                contentCls:"ks-editor-toolbar-video",
                 title:"插入视频",
                 mode:Editor.WYSIWYG_MODE
             }, {

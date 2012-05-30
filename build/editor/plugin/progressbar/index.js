@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: May 30 21:24
 */
 /**
  * progressbar ui
@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
             var self = this,
                 h = self.get("height"),
                 el = new Node("<div" +
-                    " class='ke-progressbar' " +
+                    " class='ks-editor-progressbar' " +
                     " style='width:" +
                     self.get("width") +
                     ";" +
@@ -46,12 +46,12 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
                 container = self.get("container"),
                 p = new Node(
                     "<div style='overflow:hidden;'>" +
-                        "<div class='ke-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
-                        "<div class='ke-progressbar-inner-bg'></div>" +
+                        "<div class='ks-editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
+                        "<div class='ks-editor-progressbar-inner-bg'></div>" +
                         "</div>" +
                         "</div>"
                 ).appendTo(el),
-                title = new Node("<span class='ke-progressbar-title'></span>").appendTo(el);
+                title = new Node("<span class='ks-editor-progressbar-title'></span>").appendTo(el);
             if (container)
                 el.appendTo(container);
             self.el = el;

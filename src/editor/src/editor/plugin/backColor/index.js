@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
             editor.addButton({
                 cmdType:'backColor',
                 title:"背景颜色",
-                contentCls:"ke-toolbar-back-color"
+                contentCls:"ks-editor-toolbar-back-color"
             }, undefined, Button);
         }
     };

@@ -27,6 +27,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     //Dialog 不行
     var o = new Overlay({
         width:"0px",
+        prefixCls:'ks-editor-',
         elStyle:{
             overflow:'hidden'
         },

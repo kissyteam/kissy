@@ -12,10 +12,10 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
                 },
                 elCls:{
-                    value:"ke-bubbleview-bubble"
+                    value:"ks-editor-bubbleview-bubble"
                 },
                 prefixCls:{
-                    value:"ke-"
+                    value:"ks-editor-"
                 },
                 effect:{
                     value:{

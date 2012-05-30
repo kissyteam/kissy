@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
             editor.addButton({
                 title:"清除格式",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-removeformat"
+                contentCls:"ks-editor-toolbar-removeformat"
             }, {
                 offClick:function () {
                     editor.execCommand("removeFormat");
