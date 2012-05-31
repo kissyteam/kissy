@@ -8,7 +8,7 @@ KISSY.use('mvc,event,ua', function (S, MVC, Event, UA) {
 
     describe("domain in router", function () {
 
-        it("change domain works", function () {
+        it("change domain in middle of code does not work for ie<8", function () {
 
             var ok = 0;
 
