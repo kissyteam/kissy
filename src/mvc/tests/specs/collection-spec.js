@@ -1,3 +1,7 @@
+/**
+ * Collection spec for mvc
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("mvc", function (S, MVC) {
 
     var Model = MVC.Model,

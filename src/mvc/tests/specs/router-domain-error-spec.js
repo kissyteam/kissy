@@ -1,3 +1,7 @@
+/**
+ * Domain error spec for mvc
+ * @author yiminghe@gmail.com
+ */
 KISSY.use('mvc,event,ua', function (S, MVC, Event, UA) {
 
     var Model = MVC.Model,

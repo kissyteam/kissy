@@ -1,3 +1,7 @@
+/**
+ * Router spec for mvc
+ * @author yiminghe@gmail.com
+ */
 KISSY.use('mvc,event', function(S, MVC, Event) {
 
     var Model = MVC.Model,

@@ -1,3 +1,7 @@
+/**
+ * Usage model tc
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("mvc", function(S, mvc) {
     var Model = mvc.Model,
         Collection = mvc.Collection;

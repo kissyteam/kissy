@@ -1,7 +1,5 @@
 /**
- * change spec for supporting bubbling in ie<9
- * ie<9 change event can not be simulated !!!
- * move to change/test.html manually
+ * domain spec for event
  * @author yiminghe@gmail.com
  */
 KISSY.use("event", function (S, Event) {
