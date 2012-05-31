@@ -79,7 +79,7 @@ KISSY.add("editor/core/selection", function (S) {
             function () {
                 var self = this,
                     cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = DOM._4e_getWin(self.document).getSelection() );
+                return cache.nativeSel || ( cache.nativeSel = DOM._getWin(self.document).getSelection() );
             }
             :
             function () {

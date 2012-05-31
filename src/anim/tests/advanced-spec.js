@@ -7,8 +7,6 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
     var ANIM_KEY = Anim.Q.queueCollectionKey;
     describe("advanced usage", function () {
 
-        waits(1000);
-
         var test = $('#test2');
         afterEach(function () {
             test = $('#test2');
@@ -27,11 +25,11 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2
+                duration:0.1
             }).animate({
                     height:200
                 }, {
-                    duration:0.2
+                    duration:0.1
                 });
 
             waits(100);
@@ -41,7 +39,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).toBe(height);
             });
 
-            waits(1000);
+            waits(300);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -61,13 +59,13 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             var anim1 = Anim(dtest, {
                 width:200
             }, {
-                duration:0.2
+                duration:0.1
             }).run();
 
             test.animate({
                 height:200
             }, {
-                duration:0.2
+                duration:0.1
             });
 
             waits(100);
@@ -78,7 +76,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 anim1.stop();
             });
 
-            waits(1000);
+            waits(300);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -98,12 +96,12 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:false
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:false
                 });
 
@@ -114,7 +112,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(1000);
+            waits(200);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -131,12 +129,12 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 });
 
@@ -147,7 +145,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(1000);
+            waits(200);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -165,22 +163,22 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 }).animate({
                     width:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"now"
                 }).animate({
                     height:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 });
 
@@ -192,7 +190,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(1000);
+            waits(400);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -212,12 +210,12 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 });
 
@@ -226,14 +224,14 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             }, {
                 callback:function () {
                 },
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             });
 
             test.animate({
                 height:300
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"before"
             });
 
@@ -245,7 +243,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(1000);
+            waits(300);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -265,22 +263,22 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 }).animate({
                     width:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"now"
                 }).animate({
                     height:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 });
 
@@ -292,7 +290,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(1500);
+            waits(300);
             runs(function () {
                 expect(test.isRunning()).toBe(0);
                 expect(test.width()).not.toBe(width);
@@ -314,22 +312,22 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.2,
+                duration:0.1,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 }).animate({
                     width:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"now"
                 }).animate({
                     height:300
                 }, {
-                    duration:0.2,
+                    duration:0.1,
                     queue:"before"
                 });
 
@@ -340,7 +338,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.width()).toBe(200);
                 expect(test.height()).toBe(200);
             });
-            waits(1500);
+            waits(300);
             runs(function () {
                 expect(test.isRunning()).toBe(0);
                 expect(test.width()).toBe(200);
@@ -355,7 +353,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         it("should keeping inline style clean", function () {
 
             test.hide(0.2);
-            waits(500);
+            waits(300);
             runs(function () {
                 expect(test.isRunning()).toBe(0);
                 expect(test.style("height")).toBe("");
@@ -379,10 +377,10 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(anims).toBe(undefined);
             });
             runs(function () {
-                test.hide(0.5);
+                test.hide(0.1);
             });
 
-            waits(1500);
+            waits(200);
 
             runs(function () {
                 expect(test.isRunning()).toBe(0);
@@ -396,7 +394,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         it("sync running with queue", function () {
             test.slideDown();
             test.slideUp(0.2);
-            waits(500);
+            waits(300);
             runs(function () {
                 expect(test.css("display")).toBe("none");
             });

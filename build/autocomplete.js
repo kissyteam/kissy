@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 29 14:49
 */
 /**
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplete, BasicComboBoxRender) {
+KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicComboBoxRender) {
 
     // toggle menu show and hide
     function onBtn(e) {
@@ -24,7 +24,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplet
         e && e.halt();
     }
 
-    return  Component.define(BasicAutoComplete, {
+    return  BasicAutoComplete.extend({
         bindUI:function () {
             var self = this,
                 el = self.get("el"),
@@ -47,9 +47,12 @@ KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplet
             }
         },
         DefaultRender:BasicComboBoxRender
+    },{
+        xclass:"autocomplete-combobox",
+        priority:30
     });
 }, {
-    requires:['component', './basic', './BasicComboBoxRender']
+    requires:['./basic', './BasicComboBoxRender']
 });
 
 /**
@@ -60,11 +63,11 @@ KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplet
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBoxRender", function (S, Component, AutoCompleteRender, Node) {
+KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, Node) {
 
     var $ = Node.all, Render;
 
-    return Render = Component.define(AutoCompleteRender, {
+    return Render = AutoCompleteRender.extend({
         createDom:function () {
             var self = this,
                 container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
@@ -108,7 +111,7 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, Component, AutoComple
         }
     });
 }, {
-    requires:['component', './inputRender', 'node']
+    requires:['./inputRender', 'node']
 });/**
  * @fileOverview Export Autocomplete.
  * @author yiminghe@gmail.com
@@ -131,7 +134,7 @@ KISSY.add("autocomplete", function (S, Menu, AutoComplete, LocalDataSource, Remo
  * @fileOverview Provide basic api for AutoComplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
+KISSY.add("autocomplete/basic", function (S, AutoComplete, AutoCompleteMenu, LocalDataSource, RemoteDataSource) {
 
     /**
      * Provide basic api for AutoComplete Component
@@ -140,7 +143,7 @@ KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoComple
      * @memberOf AutoComplete
      * @extends AutoComplete
      */
-    return Component.define(AutoComplete, [], {
+    return AutoComplete.extend({
 
         initializer:function () {
             var self = this,
@@ -215,10 +218,13 @@ KISSY.add("autocomplete/basic", function (S, Component, AutoComplete, AutoComple
                 value:{}
             }
         }
-    }, "AutoComplete_Basic");
+    }, {
+        "xclass":'autocomplete-basic',
+        priority:30
+    });
 
 }, {
-    requires:['component', './input', './menu', './localDataSource', './remoteDataSource']
+    requires:['./input', './menu', './localDataSource', './remoteDataSource']
 });/**
  * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
@@ -279,7 +285,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
      * @extends Component.Controller
      * @class
      */
-    AutoComplete = Component.define(Component.Controller, [],
+    AutoComplete = Component.Controller.extend(
         /**
          * @lends AutoComplete
          */
@@ -806,13 +812,11 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
             },
             DefaultRender:AutoCompleteRender
         },
-        "AutoComplete"
+        {
+            xclass:'autocomplete-input',
+            priority:10
+        }
     );
-
-    Component.UIStore.setUIConstructorByCssClass("autocomplete-input", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:AutoComplete
-    });
 
     return AutoComplete;
 }, {
@@ -843,7 +847,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/inputRender", function (S, Component) {
-    return Component.define(Component.Render, [], {
+    return Component.Render.extend({
         renderUI:function () {
             var el = this.get("el");
             el.attr({
@@ -941,7 +945,7 @@ KISSY.add("autocomplete/localDataSource", function (S) {
  * @fileOverview AutoComplete menu constroller.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoCompleteMenuRender) {
+KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender) {
 
 
     var AutoCompleteMenu;
@@ -953,7 +957,7 @@ KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoComplete
      * @extends Menu.PopupMenu
      * @class
      */
-    AutoCompleteMenu = Component.define(Menu.PopupMenu,
+    AutoCompleteMenu = Menu.PopupMenu.extend(
         /**
          * @lends AutoComplete.Menu#
          */
@@ -1096,17 +1100,15 @@ KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoComplete
                 }
             }
         },
-        "AutoComplete_Menu"
+        {
+            xclass:'autocomplete-menu',
+            priority:40
+        }
     );
-
-    Component.UIStore.setUIConstructorByCssClass("autocomplete-menu", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:AutoCompleteMenu
-    });
 
     return AutoCompleteMenu;
 }, {
-    requires:['event', 'component', 'menu', './menuRender']
+    requires:['event', 'menu', './menuRender']
 });
 /**
  * 2012-03-26 yiminghe@gmail.com
@@ -1115,9 +1117,9 @@ KISSY.add("autocomplete/menu", function (S, Event, Component, Menu, AutoComplete
  * @fileOverview AutoComplete menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/menuRender", function (S, Component, Menu) {
+KISSY.add("autocomplete/menuRender", function (S, Menu) {
     var $ = S.all;
-    return Component.define(Menu.PopupMenu.Render, [], {
+    return Menu.PopupMenu.Render.extend({
         createDom:function () {
             var self = this,
                 el = self.get("el"),
@@ -1143,7 +1145,7 @@ KISSY.add("autocomplete/menuRender", function (S, Component, Menu) {
         }
     });
 }, {
-    requires:['component', 'menu']
+    requires:['menu']
 });/**
  * @fileOverview Remote datasource for Autocomplete
  * @author yiminghe@gmail.com

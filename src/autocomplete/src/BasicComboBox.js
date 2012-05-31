@@ -2,7 +2,7 @@
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplete, BasicComboBoxRender) {
+KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicComboBoxRender) {
 
     // toggle menu show and hide
     function onBtn(e) {
@@ -19,7 +19,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplet
         e && e.halt();
     }
 
-    return  Component.define(BasicAutoComplete, {
+    return  BasicAutoComplete.extend({
         bindUI:function () {
             var self = this,
                 el = self.get("el"),
@@ -42,9 +42,12 @@ KISSY.add("autocomplete/BasicComboBox", function (S, Component, BasicAutoComplet
             }
         },
         DefaultRender:BasicComboBoxRender
+    },{
+        xclass:"autocomplete-combobox",
+        priority:30
     });
 }, {
-    requires:['component', './basic', './BasicComboBoxRender']
+    requires:['./basic', './BasicComboBoxRender']
 });
 
 /**

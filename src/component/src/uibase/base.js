@@ -391,7 +391,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
 
                 // debug mode , give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
-                S.log("UIBase.create : " + name, eval("C=function " + name + "(){ UIBase.apply(this, arguments);}"));
+                S.log("UIBase.create : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
 
                 S.extend(C, base, px, sx);
 

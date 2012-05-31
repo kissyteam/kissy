@@ -28,15 +28,15 @@
 <div id="wrap">
     <h1 id="describe">simple button demo</h1>
 
-    <div id="button_container">
-
-    </div>
+    <h2>显示构造器生成</h2>
+    <div id="button_container"></div>
     <label>禁用：<input type="checkbox" id='dis'/></label>
 
     <h2>从已知元素生成</h2>
+    <div id="exist" class="ks-button">渐进增强</div>
 
-    <div id="exist">渐进增强</div>
-
+    <h2>从 json 描述生成</h2>
+    <div id="button_container2"></div>
 </div>
 <script src="../../../build/kissy.js"></script>
 <script src="../src/button.js"></script>
@@ -48,13 +48,13 @@
 <script>
 
     KISSY.Config.tag = Math.random();
-    KISSY.use("node,button", function (S, Node, Button) {
+    KISSY.use("node,button,component", function (S, Node, Button, Component) {
         // view
         // render to container : button_container
         // model and control
         // view as a parameter
         var b = new Button({
-            content:"测试",
+            content:"by new",
             describedby:"describe",
             render:"#button_container",
             prefixCls:"goog-"
@@ -92,6 +92,21 @@
         exist.on("click", function () {
             alert("渐进增强 click");
         });
+
+        Component.create({
+            xclass:'button',
+            prefixCls:"goog-",
+            content:'json',
+            render:"#button_container2",
+            listeners:{
+                click:{
+                    fn:function () {
+                        alert('json');
+                    }
+                }
+            }
+        }).render();
+
     });
 </script>
 </body>

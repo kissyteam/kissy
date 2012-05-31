@@ -18,7 +18,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         return checkEl;
     }
 
-    return Component.define(Component.Render, {
+    return Component.Render.extend({
 
         _uiSetChecked:function (v) {
             var self = this,
@@ -65,7 +65,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
         }
-    }, "Menu_Item_Render");
+    });
 }, {
     requires:['node', 'component']
 });

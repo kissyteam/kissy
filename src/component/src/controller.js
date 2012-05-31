@@ -2,7 +2,7 @@
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, undefined) {
+KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore, Render, undefined) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -107,7 +107,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
      * @extends Component.UIBase
      * @extends Component.UIBase.Box
      */
-    var Controller = UIBase.create([UIBase.Box],
+    var Controller = Component.define([UIBase.Box],
         /** @lends Component.Controller# */
         {
 
@@ -628,9 +628,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             },
 
             DefaultRender:Render
-        },
-        "Component_Controller"
-    );
+        });
 
     /**
      * Create a component instance using json with xclass
@@ -660,11 +658,11 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
         return component;
     }
 
-    Controller.create = create;
+    Component.create = create;
 
     return Controller;
 }, {
-    requires:['event', './uibase', './uistore', './render']
+    requires:['event', './base', './uibase', './uistore', './render']
 });
 /**
  * observer synchronization, model 分成两类：

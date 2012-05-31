@@ -13,9 +13,9 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
 }, {
     requires:[
         "overlay/base",
-        "overlay/overlayrender",
+        "overlay/overlayRender",
         "overlay/dialog",
-        "overlay/dialogrender",
+        "overlay/dialogRender",
         "overlay/popup"
     ]
 });

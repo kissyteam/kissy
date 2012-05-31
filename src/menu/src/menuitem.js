@@ -13,7 +13,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
      * @memberOf Menu
      * @extends Component.Controller
      */
-    var MenuItem = Component.define(Component.Controller,
+    var MenuItem = Component.Controller.extend(
         /**
          * @lends Menu.Item#
          */
@@ -77,8 +77,8 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 // 是否要滚动到当前菜单项(横向，纵向)
                 if (v) {
                     var el = this.get("el"),
-                        // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                        // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                         p = el.parent(function (e) {
                             return $(e).css("overflow") != "visible";
                         }, this.get("parent").get("el").parent());
@@ -172,15 +172,13 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     var cls = this.getCssClassWithPrefix("menuitem-selectable");
                     return el.hasClass(cls);
                 }
-            }
-        }, "Menu_Item");
+            },
 
-    MenuItem.DefaultRender = MenuItemRender;
-
-    Component.UIStore.setUIConstructorByCssClass("menuitem", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:MenuItem
-    });
+            DefaultRender:MenuItemRender
+        }, {
+            xclass:"menuitem",
+            priority:10
+        });
 
     return MenuItem;
 }, {

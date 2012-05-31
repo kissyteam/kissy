@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 /**
  * image dialog (support upload and remote)
@@ -471,7 +471,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             }
 
             // need a breath for firefox
-            // else insertElement(img); img[0].parentNode==null
             setTimeout(function () {
                 var link = findAWithImg(img),
                     linkVal = S.trim(valInput(self.imgLink)),

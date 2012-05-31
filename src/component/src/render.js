@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function (S, UIBase, UIStore) {
+KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
 
     /**
      * Base Render class for KISSY Component.
@@ -12,7 +12,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @name Render
      * @extends Component.UIBase
      */
-    return UIBase.create([UIBase.Box.Render],
+    return Component.define([UIBase.Box.Render],
         /**
          * @lends Component.Render#
          */
@@ -134,7 +134,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
                  */
                 highlighted:{}
             }
-        }, "Component_Render");
+        });
 }, {
-    requires:['./uibase', './uistore']
+    requires:['./base', './uibase', './uistore']
 });

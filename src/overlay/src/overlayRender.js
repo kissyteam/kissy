@@ -2,13 +2,13 @@
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/overlayrender", function (S, UA, Component) {
+KISSY.add("overlay/overlayRender", function (S, UA, Component) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
     }
 
-    return Component.define(Component.Render, [
+    return Component.Render.extend([
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),

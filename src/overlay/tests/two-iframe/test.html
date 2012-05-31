@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../../../../build/css/base.css"/>
+<link rel="stylesheet" href="../../assets/cool.css"/>
+</head>
+<body>
+<script src="../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function () {
+        KISSY.use("overlay", function (S, Overlay) {
+            var $ = S.all;
+            var a = new Overlay({
+                headerContent:"haha",
+                width:440,
+                content:'<iframe ' +
+                        'width=440 ' +
+                        'height=280 ' +
+                        'src="http://favorite.daily.taobao.net/popup/add_collection.htm?id=45774434&itemid=45774434&itemtype=0&sellerid=1b2dee71e38216e1e0b265c3d0bf4889&scjjc=2&_tb_token_=&_tb_token_=b007e5157b75&t=1338349315485"></iframe>',
+                height:280
+            });
+            a.center();
+            a.show();
+        });
+    });
+</script>
+</body>
+</html>

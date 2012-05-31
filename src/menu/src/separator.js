@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
 
-    var Separator = Component.define(Component.Controller, {
+    var Separator = Component.Controller.extend({
     }, {
         ATTRS:{
             focusable:{
@@ -19,11 +19,9 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             }
         },
         DefaultRender:SeparatorRender
-    }, "Menu_Separator");
-
-    Component.UIStore.setUIConstructorByCssClass("menuseparator", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Separator
+    }, {
+        xclass:'menuseparator',
+        priority:20
     });
 
     return Separator;

@@ -48,7 +48,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 'background-color': '#ccc'
             });
 
-            test1.slideUp(1);
+            test1.slideUp(0.2);
 
             waits(100);
 
@@ -69,7 +69,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 }
             });
 
-            waits(1000);
+            waits(200);
 
             runs(function() {
                 if (transitionName) {
@@ -84,7 +84,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
 
 
             runs(function() {
-                test1.slideDown(1);
+                test1.slideDown(0.2);
             });
 
             waits(100);
@@ -106,7 +106,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 }
             });
 
-            waits(1000);
+            waits(200);
 
             runs(function() {
                 if (transitionName) {
@@ -128,7 +128,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 height: '100px'
             });
 
-            test2.hide(1);
+            test2.hide(0.2);
 
             waits(100);
 
@@ -147,7 +147,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 }
             });
 
-            waits(1000);
+            waits(200);
 
             runs(function() {
                 if (transitionName) {
@@ -160,7 +160,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             });
 
             runs(function() {
-                test2.show(1);
+                test2.show(0.2);
             });
 
 
@@ -182,7 +182,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             });
 
 
-            waits(1000);
+            waits(200);
 
             runs(function() {
                 if (transitionName) {

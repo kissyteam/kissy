@@ -2,13 +2,13 @@
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknoderender", function (S, Node,  Component, BaseNodeRender) {
+KISSY.add("tree/checknodeRender", function (S, Node,BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = " ks-inline-block";
-    return Component.define(BaseNodeRender, {
+    return BaseNodeRender.extend({
 
         createDom:function () {
             var self = this;
@@ -33,5 +33,5 @@ KISSY.add("tree/checknoderender", function (S, Node,  Component, BaseNodeRender)
         CHECK_CLS:CHECK_CLS
     });
 }, {
-    requires:['node', 'component', './basenoderender']
+    requires:['node', './basenodeRender']
 });

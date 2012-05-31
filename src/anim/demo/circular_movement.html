@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+    Circular movement
+</title>
+</head>
+<body>
+
+<h1>Circular movement</h1>
+<div style="position: absolute;top:-100px;
+background-color: red;
+border-radius: 50px;
+left:-100px;" id="t">
+
+</div>
+
+<div id='t2'
+     style="position: absolute;
+border: 1px solid red;
+border-radius: 100px;
+">
+</div>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/node.js"></script>
+<script src=".././src/easing.js"></script>
+<script src=".././src/base.js"></script>
+<script src=".././src/manager.js"></script>
+<script src=".././src/color.js"></script>
+<script src=".././src/fx.js"></script>
+<script src=".././src/queue.js"></script>
+<script src=".././src/backgroundPosition.js"></script>
+<script src=".././src/anim.js"></script>
+
+
+<script type="text/javascript">
+    KISSY.ready(function (S) {
+        S.use("node");
+        var t = S.all('#t'),
+                t2 = S.all('#t2'),
+                R = 10, R2 = 100, N = 100;
+        t.css({
+            width:2 * R,
+            height:2 * R
+        });
+
+        t2.css({
+            left:N,
+            top:N,
+            width:2 * R2,
+            height:2 * R2
+        });
+
+        function filter(f) {
+            if (Math.abs(f) < 1e-10) {
+                return 0;
+            }
+            return f;
+        }
+
+        function translate(x) {
+            return x + R2 + N - R;
+        }
+
+        t.css({
+            left:translate(R2),
+            top:translate(0)
+        });
+
+        function run() {
+            S.all('#t').animate({
+                zoom2:1
+            }, {
+                easing:"easingNone",
+                duration:5,
+                frame:function (fx, stop) {
+                    var n = Math.sin(fx.pos * 2 * Math.PI);
+                    t.css('top', translate(filter(n) * R2));
+                    t.css('left', translate(filter(Math.cos(fx.pos * 2 * Math.PI)) * R2))
+                },
+                complete:run
+            });
+        }
+
+        run();
+
+    });
+</script>
+</body>
+</html>

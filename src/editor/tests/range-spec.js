@@ -5,14 +5,29 @@
 KISSY.use("editor", function (S, Editor) {
     var $ = S.all,
         UA = S.UA,
+        DOM = S.DOM,
         RANGE = Editor.RANGE,
         Node = S.Node;
     var Range = Editor.Range;
 
+    function trimNode(t) {
+        if (t.nodeType == DOM.TEXT_NODE) {
+            t.nodeValue = S.trim(t.nodeValue);
+        } else {
+            var cs = t.childNodes || [];
+            for (var i = 0; i < cs.length; i++) {
+                trimNode(cs[i]);
+            }
+        }
+    }
+
     function myHtml(el) {
-        return el.html().toLowerCase().replace(/(\w+=)(\w+)/g, function (m, m1, m2) {
-            return m1 + '"' + m2 + '"';
-        });
+        trimNode(el[0]);
+        return el.html().toLowerCase()
+            .replace(/\s+</g, "<")
+            .replace(/([\w-]+=)([\w-]+)/g, function (m, m1, m2) {
+                return m1 + '"' + m2 + '"';
+            });
     }
 
     describe("range", function () {
@@ -1461,8 +1476,6 @@ KISSY.use("editor", function (S, Editor) {
 
                 var firstText = $(div[0].childNodes[1]);
 
-                var secondText = $(div[0].childNodes[3]);
-
                 var range = new Range(document);
                 range.setStart(firstText, 0);
                 range.setEnd(firstText, 4);
@@ -1579,7 +1592,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 range.insertNodeByDtd($("<p>56</p>"));
 
-                expect(div.html()).toBe("<p>56</p>");
+                expect(myHtml(div)).toBe("<p>56</p>");
 
                 div.remove();
             });

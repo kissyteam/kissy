@@ -2,7 +2,7 @@
  * @fileOverview container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
+KISSY.add("component/container", function (S, Controller, DelegateChildren, DecorateChildren) {
     /**
      * Container class. Extend it to acquire the abilities of
      * delegating events and
@@ -13,7 +13,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
      * @extends Component.Controller
      * @memberOf Component
      */
-    return UIBase.create(Controller, [DelegateChildren, DecorateChildren],
+    return Controller.extend([DelegateChildren, DecorateChildren],
         /**
          * @lends Component.Container
          */
@@ -39,5 +39,5 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
         });
 
 }, {
-    requires:['./uibase', './controller', './uistore', './delegateChildren', './decorateChildren']
+    requires:['./controller', './delegateChildren', './decorateChildren']
 });

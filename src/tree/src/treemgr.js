@@ -7,12 +7,23 @@ KISSY.add("tree/treemgr", function(S, Event) {
     function TreeMgr() {
     }
 
-    TreeMgr.ATTRS = {
-        // 默认 true
-        // 是否显示根节点
+    TreeMgr.ATTRS =
+    /**
+     * @lends Tree#
+     */
+    {
+        /**
+         * Whether show root node.
+         * Default:false.
+         * @type Boolean
+         */
         showRootNode:{
             view:true
         },
+        /**
+         * Current selected tree node.
+         * @type Tree.Node
+         */
         selectedItem:{},
         tree:{
             valueFn:function() {

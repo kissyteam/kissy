@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
      */
     function fixCursorForIE(editor) {
         var started,
-            win = editor.get("iframe")[0].contentWindow,
+            win = editor.get("window")[0],
             doc = editor.get("document")[0],
             startRng;
 
@@ -406,14 +406,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock.next(nextValidEl);
+                        var element = fixedBlock.next(nextValidEl,1);
                         if (element &&
                             element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock.prev(nextValidEl);
+                            element = fixedBlock.prev(nextValidEl,1);
                             if (element &&
                                 element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {

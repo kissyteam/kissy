@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 29 14:52
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -82,7 +82,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
      * @name MenuButton
      * @extends Button
      */
-    var MenuButton = Component.define(Button, [Component.DecorateChild],
+    var MenuButton = Button.extend([Component.DecorateChild],
         /**
          * @lends MenuButton.prototype
          */
@@ -356,12 +356,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
             },
             DefaultRender:MenuButtonRender
-        }, "MenuButton");
-
-    Component.UIStore.setUIConstructorByCssClass("menu-button", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:MenuButton
-    });
+        }, {
+            xclass:'menu-button',
+            priority:20
+        });
 
     return MenuButton;
 }, {
@@ -384,16 +382,16 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
+KISSY.add("menubutton/menubuttonRender", function (S, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
-        '{prefixCls}menu-button-caption">{content}<' + '/div>' +
-        '<div class="ks-inline-block ' +
-        '{prefixCls}menu-button-dropdown"><' + '/div>',
+            '{prefixCls}menu-button-caption">{content}<' + '/div>' +
+            '<div class="ks-inline-block ' +
+            '{prefixCls}menu-button-dropdown"><' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return Component.define(Button.Render, {
+    return Button.Render.extend({
 
         createDom:function () {
             var self = this,
@@ -431,14 +429,14 @@ KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
             collapsed:{
             }
         }
-    }, "MenuButton_Render");
+    });
 }, {
-    requires:['component', 'button']
+    requires:['button']
 });/**
  * @fileOverview represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function (S,  Component, Menu) {
+KISSY.add("menubutton/option", function (S, Menu) {
     var MenuItem = Menu.Item;
     /**
      * Option for Select component.
@@ -447,7 +445,7 @@ KISSY.add("menubutton/option", function (S,  Component, Menu) {
      * @memberOf MenuButton
      * @extends Menu.Item
      */
-    var Option = Component.define(MenuItem,
+    var Option = MenuItem.extend(
         /**
          * @lends MenuButton.Option.prototype
          */
@@ -472,19 +470,19 @@ KISSY.add("menubutton/option", function (S,  Component, Menu) {
                     value:true
                 }
             }
-        }, "Menu_Option");
-    Component.UIStore.setUIConstructorByCssClass("option", {
-        priority:10,
-        ui:Option
-    });
+        }, {
+            xclass:'option',
+            priority:10
+        });
+
     return Option;
 }, {
-    requires:['component', 'menu']
+    requires:['menu']
 });/**
  * @fileOverview manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, Option, undefined) {
+KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
 
     function getMenuChildren(self) {
         // 需要初始化 menu
@@ -500,7 +498,7 @@ KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, O
      * @memberOf MenuButton
      * @extends MenuButton
      */
-    var Select = Component.define(MenuButton,
+    var Select = MenuButton.extend(
         /**
          * @lends MenuButton.Select.prototype
          */
@@ -714,17 +712,15 @@ KISSY.add("menubutton/select", function (S, Node, Component, MenuButton, Menu, O
                 return select;
             }
 
-        }, "Menu_Select");
-
-    Component.UIStore.setUIConstructorByCssClass("select", {
-        priority:Component.UIStore.PRIORITY.LEVEL3,
-        ui:Select
-    });
+        }, {
+            xclass:'select',
+            priority:30
+        });
 
     return Select;
 
 }, {
-    requires:['node', 'component', './base', 'menu', './option']
+    requires:['node', './base', 'menu', './option']
 });
 
 /**

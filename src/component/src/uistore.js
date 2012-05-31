@@ -79,21 +79,7 @@ KISSY.add("component/uistore", function (S) {
          * @param {Function} componentConstructor Component's constructor.
          * @function
          */
-        setUIConstructorByCssClass:setUIConstructorByCssClass,
-
-        /**
-         * Component's constructor's priority enum.
-         * Used for getCssClassByUIConstructor, when multiple component constructors are found.
-         * @type Object
-         */
-        PRIORITY:{
-            LEVEL1:10,
-            LEVEL2:20,
-            LEVEL3:30,
-            LEVEL4:40,
-            "LEVEL5":50,
-            "LEVEL6":60
-        }
+        setUIConstructorByCssClass:setUIConstructorByCssClass
     };
 
     UIStore.getCssClassWithPrefix = getCssClassWithPrefix;

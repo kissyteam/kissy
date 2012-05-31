@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 29 14:49
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -15,7 +15,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
      * @constructor
      * @extends Component.Controller
      */
-    var Button = Component.define(Component.Controller, [],
+    var Button = Component.Controller.extend(
         /**@lends Button.prototype */
         {
             bindUI:function () {
@@ -81,20 +81,18 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                         return this.set("html", v);
                     }
                 }
-            }
+            },
+
+            DefaultRender:ButtonRender
+        }, {
+            xclass:'button',
+            priority:10
         });
-
-    Button.DefaultRender = ButtonRender;
-
-    Component.UIStore.setUIConstructorByCssClass("button", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Button
-    });
 
     return Button;
 
 }, {
-    requires:['event','component', './buttonRender']
+    requires:['event', 'component', './buttonRender']
 });/**
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
@@ -117,7 +115,7 @@ KISSY.add("button", function (S, Button, Render, Split, Toggle) {
  */
 KISSY.add("button/buttonRender", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return Component.define(Component.Render, [], {
+    return Component.Render.extend({
         createDom:function () {
             // set wai-aria role
             this.get("el")
@@ -263,9 +261,9 @@ KISSY.add("button/split", function (S) {
  * @fileOverview ToggleButton for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('button/toggle', function (S, Component, Button, ToggleRender) {
+KISSY.add('button/toggle', function (S, Button, ToggleRender) {
 
-    return Component.define(Button, [], {
+    return Button.extend({
         performActionInternal:function () {
             var self = this;
             self.set("checked", !self.get("checked"));
@@ -279,17 +277,20 @@ KISSY.add('button/toggle', function (S, Component, Button, ToggleRender) {
                 view:true
             }
         }
+    }, {
+        xclass:'toggle-button',
+        priority:30
     });
 
 }, {
-    requires:['component', './base', './toggleRender']
+    requires:['./base', './toggleRender']
 });/**
  * @fileOverview Render for ToggleButton
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/toggleRender", function (S, Component, ButtonRender) {
+KISSY.add("button/toggleRender", function (S, ButtonRender) {
 
-    return Component.define(ButtonRender, [], {
+    return ButtonRender.extend({
         _uiSetChecked:function (v) {
             var self = this,
                 cls = self.getComponentCssClassWithState("-checked");
@@ -302,5 +303,5 @@ KISSY.add("button/toggleRender", function (S, Component, ButtonRender) {
     });
 
 }, {
-    requires:['component', './buttonRender']
+    requires:[ './buttonRender']
 });

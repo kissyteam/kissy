@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 /**
  * undo,redo manager for kissy editor
@@ -100,31 +100,33 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 editor = self.editor;
 
-            editor.get("document").on("keydown", function (ev) {
-                var keyCode = ev.keyCode;
-                if (keyCode in navigationKeyCodes
-                    || keyCode in modifierKeyCodes) {
-                    return;
-                }
-                // ctrl+z，撤销
-                if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                    if (false !== editor.fire("restore", {direction:-1})) {
-                        self.restore(-1);
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (ev) {
+                    var keyCode = ev.keyCode;
+                    if (keyCode in navigationKeyCodes
+                        || keyCode in modifierKeyCodes) {
+                        return;
                     }
-                    ev.halt();
-                    return;
-                }
-                // ctrl+y，重做
-                if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                    if (false !== editor.fire("restore", {direction:1})) {
-                        self.restore(1);
+                    // ctrl+z，撤销
+                    if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire("restore", {direction:-1})) {
+                            self.restore(-1);
+                        }
+                        ev.halt();
+                        return;
                     }
-                    ev.halt();
-                    return;
-                }
-                if (editor.fire("save", {buffer:1}) !== false) {
-                    self.save(1);
-                }
+                    // ctrl+y，重做
+                    if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire("restore", {direction:1})) {
+                            self.restore(1);
+                        }
+                        ev.halt();
+                        return;
+                    }
+                    if (editor.fire("save", {buffer:1}) !== false) {
+                        self.save(1);
+                    }
+                });
             });
         },
 

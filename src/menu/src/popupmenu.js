@@ -32,7 +32,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     }
 
 
-    var UIBase=Component.UIBase;
+    var UIBase = Component.UIBase;
 
     /**
      * Popup Menu
@@ -43,7 +43,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
      * @extends Component.UIBase.Position
      * @extends Component.UIBase.Align
      */
-    var PopupMenu = Component.define(Menu, [
+    var PopupMenu = Menu.extend([
         UIBase.ContentBox,
         UIBase.Position,
         UIBase.Align
@@ -177,12 +177,10 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 }
             },
             DefaultRender:PopupMenuRender
-        }, "Menu_PopupMenu");
-
-    Component.UIStore.setUIConstructorByCssClass("popupmenu", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:PopupMenu
-    });
+        }, {
+            xclass:'popupmenu',
+            priority:20
+        });
 
     return PopupMenu;
 

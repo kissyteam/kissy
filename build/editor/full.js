@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 /**
  * Set up editor constructor
@@ -17,28 +17,15 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
      * @extends Component.UIBase.Box
      * @name Editor
      */
-    var Editor = Component.define(Component.Controller, [Component.UIBase.Box],
+    var Editor = Component.Controller.extend(
         /**
          * @lends Editor#
          */
         {
             initializer:function () {
-                var self = this,
-                    textarea;
+                var self = this;
                 self.__commands = {};
                 self.__dialogs = {};
-                if (textarea = self.get("textarea")) {
-                    if (!self.get("render") && !self.get("elBefore")) {
-                        var next = textarea.next();
-                        if (next) {
-                            self.__set("elBefore", next);
-                        } else {
-                            self.__set("render", textarea.parent());
-                        }
-                    }
-                } else {
-                    self.__editor_created_new = 1;
-                }
             },
 
             /**
@@ -91,13 +78,11 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
                 //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
                 S.use(mods, function () {
-                    var h, args = S.makeArray(arguments);
+                    var args = S.makeArray(arguments);
                     args.shift();
                     useMods(args);
                     // 工具条出来后调整高度
-                    if (h = self.get("height")) {
-                        self._uiSetHeight(h);
-                    }
+                    self.adjustHeight();
                 });
 
                 self.__CORE_PLUGINS = [];
@@ -114,37 +99,37 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
              */
             {
                 /**
-                 * textarea 元素
+                 * textarea
                  * @type Node
                  */
                 textarea:{},
                 /**
-                 * iframe 元素
+                 * iframe
                  * @type Node
                  */
                 iframe:{},
                 /**
-                 * iframe 中的 contentWindow
+                 * iframe 's contentWindow
                  * @type Node
                  */
                 window:{},
                 /**
-                 * iframe 中的 document
+                 * iframe 's document
                  * @type Node
                  */
                 document:{},
-                /**
-                 * iframe 元素的 父节点
+                /*
+                 * iframe 's parentNode
                  * @type Node
                  */
                 iframeWrapEl:{},
                 /**
-                 * 工具栏节点
+                 * toolbar element
                  * @type Node
                  */
                 toolBarEl:{},
                 /**
-                 * 状态栏节点
+                 * status bar element
                  * @type Node
                  */
                 statusBarEl:{},
@@ -155,14 +140,16 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     value:false
                 },
                 /**
-                 * 编辑器当前模式：源码模式或可视化模式
-                 * @default 可视化模式
+                 * editor mode.
+                 * wysiswyg mode:1
+                 * source mode:0
+                 * @default wysiswyg mode
                  */
                 mode:{
                     value:1
                 },
                 /**
-                 * 编辑器当前内容
+                 * Current editor's content
                  * @type String
                  */
                 data:{
@@ -174,7 +161,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                     }
                 },
                 /**
-                 * 编辑器经过格式化的当前内容
+                 *  Current editor's format content
                  * @type String
                  */
                 formatData:{
@@ -185,11 +172,39 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                         return this._setData(v);
                     }
                 },
+
+                /**
+                 * Custom style for editor.
+                 * @type String
+                 */
+                customStyle:{
+                    value:""
+                },
+
+                /**
+                 * Custom css link url for editor.
+                 * @type String[]
+                 */
+                customLink:{
+                    value:[]
+                },
+
                 prefixCls:{
                     value:"ke-"
                 }
             }
-        }, "Editor");
+        }, {
+            xclass:'editor'
+        });
+
+
+    Editor.HTML_PARSER = {
+
+        textarea:function (el) {
+            return el.one("." + this.get("prefixCls") + "editor-textarea");
+        }
+
+    };
 
     S.mix(Editor, S.EventTarget);
 
@@ -505,17 +520,16 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/dom", function (S) {
+KISSY.add("editor/core/dom", function (S, Editor, Utils) {
 
     var TRUE = true,
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        Editor = S.Editor,
+        xhtml_dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
         UA = S.UA,
         Node = S.Node,
-        Utils = Editor.Utils,
         REMOVE_EMPTY = {
             "a":1,
             "abbr":1,
@@ -615,14 +629,8 @@ KISSY.add("editor/core/dom", function (S) {
              */
             _4e_isBlockBoundary:function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
-                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] ||
-                    nodeNameMatches[ DOM.nodeName(el) ]);
+                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] || nodeNameMatches[ DOM.nodeName(el) ]);
             },
-
-            /**
-             * 同 {@link DOM._getWin}
-             */
-            _4e_getWin:DOM._getWin,
 
             /**
              * 返回当前元素在父元素中所有儿子节点中的序号
@@ -726,6 +734,9 @@ KISSY.add("editor/core/dom", function (S) {
              * @param thisElement
              */
             _4e_isEmptyInlineRemovable:function (thisElement) {
+                if (!xhtml_dtd.$removeEmpty[DOM.nodeName(thisElement)]) {
+                    return false;
+                }
                 var children = thisElement.childNodes;
                 for (var i = 0, count = children.length; i < count; i++) {
                     var child = children[i],
@@ -1307,7 +1318,6 @@ KISSY.add("editor/core/dom", function (S) {
             _4e_isEditable:function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM.nodeName(el),
-                    xhtml_dtd = Editor.XHTML_DTD,
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
@@ -1359,19 +1369,17 @@ KISSY.add("editor/core/dom", function (S) {
 
 
     function mergeElements(element, isNext) {
-        var sibling = element[isNext ? "next" : "prev"]();
+        var sibling = element[isNext ? "next" : "prev"](undefined, 1);
 
-        if (sibling &&
-            sibling[0].nodeType == DOM.ELEMENT_NODE) {
+        if (sibling && sibling[0].nodeType == DOM.ELEMENT_NODE) {
 
             // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
             // queuing them to be moved later. (#5567)
             var pendingNodes = [];
 
-            while (sibling.attr('_ke_bookmark') ||
-                sibling._4e_isEmptyInlineRemovable(undefined)) {
+            while (sibling.attr('_ke_bookmark') || sibling._4e_isEmptyInlineRemovable(undefined)) {
                 pendingNodes.push(sibling);
-                sibling = isNext ? sibling.next() : sibling.prev();
+                sibling = isNext ? sibling.next(undefined, 1) : sibling.prev(undefined, 1);
                 if (!sibling) {
                     return;
                 }
@@ -1707,8 +1715,8 @@ KISSY.add("editor/core/domIterator", function (S) {
                 if (lastChild[0] && lastChild[0].nodeType == DOM.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
-                        || lastChild.prev(bookmarkGuard)
-                        || lastChild.next(bookmarkGuard))
+                        || lastChild.prev(bookmarkGuard,1)
+                        || lastChild.next(bookmarkGuard,1))
                         lastChild.remove();
                 }
             }
@@ -2129,7 +2137,7 @@ KISSY.add("editor/core/focusManager", function (S) {
                 return INSTANCES[id];
             },
             add:function (editor) {
-                var win = DOM._4e_getWin(editor.get("document")[0]);
+                var win = DOM._getWin(editor.get("document")[0]);
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
@@ -2138,7 +2146,7 @@ KISSY.add("editor/core/focusManager", function (S) {
             },
             remove:function (editor) {
                 delete INSTANCES[editor._UUID];
-                var win = DOM._4e_getWin(editor.get("document")[0]);
+                var win = DOM._getWin(editor.get("document")[0]);
                 Event.remove(win, "focus", focus, editor);
                 Event.remove(win, "blur", blur, editor);
             }
@@ -3719,7 +3727,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                     // Normalize the start.
                     while (startContainer[0].nodeType == DOM.TEXT_NODE
-                        && ( previous = startContainer.prev() )
+                        && ( previous = startContainer.prev(undefined, 1) )
                         && previous[0].nodeType == DOM.TEXT_NODE) {
                         startContainer = previous;
                         startOffset += previous[0].nodeValue.length;
@@ -3744,7 +3752,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                         // Normalize the end.
                         while (endContainer[0].nodeType == DOM.TEXT_NODE
-                            && ( previous = endContainer.prev() )
+                            && ( previous = endContainer.prev(undefined, 1) )
                             && previous[0].nodeType == DOM.TEXT_NODE) {
                             endContainer = previous;
                             endOffset += previous[0].nodeValue.length;
@@ -4495,12 +4503,13 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                 function nextDFS(node, childOnly) {
                     var next;
 
-                    if (node[0].nodeType == DOM.ELEMENT_NODE && node._4e_isEditable()) {
-                        next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark);
+                    if (node[0].nodeType == DOM.ELEMENT_NODE &&
+                        node._4e_isEditable()) {
+                        next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark, 1);
                     }
 
                     if (!childOnly && !next) {
-                        next = node[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark);
+                        next = node[ isMoveToEnd ? 'prev' : 'next' ](nonWhitespaceOrIsBookmark, 1);
                     }
 
                     return next;
@@ -4724,7 +4733,7 @@ KISSY.add("editor/core/selection", function (S) {
             function () {
                 var self = this,
                     cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = DOM._4e_getWin(self.document).getSelection() );
+                return cache.nativeSel || ( cache.nativeSel = DOM._getWin(self.document).getSelection() );
             }
             :
             function () {
@@ -5467,7 +5476,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
      */
     function fixCursorForIE(editor) {
         var started,
-            win = editor.get("iframe")[0].contentWindow,
+            win = editor.get("window")[0],
             doc = editor.get("document")[0],
             startRng;
 
@@ -5849,14 +5858,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock.next(nextValidEl);
+                        var element = fixedBlock.next(nextValidEl,1);
                         if (element &&
                             element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock.prev(nextValidEl);
+                            element = fixedBlock.prev(nextValidEl,1);
                             if (element &&
                                 element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
@@ -5929,7 +5938,6 @@ KISSY.add("editor/core/styles", function (S) {
         TRUE = true,
         FALSE = false,
         NULL = null,
-        Utils = Editor.Utils,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -6616,7 +6624,7 @@ KISSY.add("editor/core/styles", function (S) {
                             // parent, it means that the parent can't be included
                             // in this style DTD, so apply the style immediately.
                             while (
-                                (applyStyle = !includedNode.next(notBookmark))
+                                (applyStyle = !includedNode.next(notBookmark,1))
                                     && ( (parentNode = includedNode.parent()) &&
                                     dtd[ parentNode.nodeName() ] )
                                     && ( parentNode._4e_position(firstNode) |
@@ -8194,16 +8202,17 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             createDom:function () {
                 var self = this,
                     wrap,
+                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea></textarea>"));
+                    self.set("textarea", textarea = $("<textarea class='" + prefixCls + "editor-textarea'></textarea>"));
                 }
 
                 editorEl = self.get("el");
 
-                editorEl.addClass(self.get("prefixCls") + "editor-wrap", undefined);
+                editorEl.addClass(prefixCls + "editor-wrap", undefined);
 
                 editorEl.html(EDITOR_TPL);
 
@@ -8248,6 +8257,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     (statusBarEl && statusBarEl.outerHeight() || 0);
                 self.get("iframeWrapEl").css(HEIGHT, v);
                 self.get("textarea").css(HEIGHT, v);
+            },
+
+
+            adjustHeight:function () {
+                var self = this, h;
+                if (h = self.get("height")) {
+                    self._uiSetHeight(h);
+                }
             },
 
             _uiSetMode:function (v) {
@@ -8312,16 +8329,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
             destructor:function () {
                 var self = this,
-                    editorEl = self.get("el"),
-                    textarea = self.get("textarea"),
                     doc = self.get("document")[0],
-                    win = self.get("iframe")[0].contentWindow;
+                    win = self.get("window");
 
                 self.sync();
 
                 focusManager.remove(self);
 
-                Event.remove([doc, doc.documentElement, doc.body, win]);
+                Event.remove([doc, doc.documentElement, doc.body, win[0]]);
 
                 S.each(self.__dialogs, function (d) {
                     if (d.destroy) {
@@ -8330,15 +8345,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 });
 
                 self.__commands = 0;
-
-                if (!self.__editor_created_new) {
-                    textarea.insertBefore(editorEl, undefined);
-                    textarea.css({
-                        width:self.get(WIDTH),
-                        height:self.get(HEIGHT)
-                    });
-                    textarea.show();
-                }
             },
 
             /**
@@ -8484,7 +8490,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             focus:function () {
                 var self = this,
                     doc = self.get("document")[0],
-                    win = DOM._4e_getWin(doc);
+                    win = DOM._getWin(doc);
                 // firefox7 need this
                 if (!UA['ie']) {
                     // note : 2011-11-17 report by 石霸
@@ -8504,7 +8510,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              */
             blur:function () {
                 var self = this,
-                    win = DOM._4e_getWin(self.get("document")[0]);
+                    win = DOM._getWin(self.get("document")[0]);
                 win.blur();
                 self.get("document")[0].body.blur();
             },
@@ -8518,7 +8524,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     customStyle = self.get("customStyle") || "";
                 customStyle += "\n" + cssText;
                 self.set("customStyle", customStyle);
-                DOM.addStyleSheet(self.get("iframe")[0].contentWindow, customStyle, id);
+                DOM.addStyleSheet(self.get("window"), customStyle, id);
             },
 
             /**
@@ -8526,7 +8532,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * @param id
              */
             removeCustomStyle:function (id) {
-                DOM.remove(DOM.get("#" + id, this.get("iframe")[0].contentWindow));
+                DOM.remove(DOM.get("#" + id, this.get("window")[0]));
             },
 
             /**
@@ -8619,7 +8625,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
              * Insert a element into current editor.
              * @param {NodeList} element
              */
-            insertElement:function (element, init, callback) {
+            insertElement:function (element) {
 
                 var self = this;
 
@@ -8643,13 +8649,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     nextName,
                     lastElement;
 
-
-                //give sometime to breath
                 if (!ranges || ranges.length == 0) {
-                    var args = arguments, fn = args.callee;
-                    setTimeout(function () {
-                        fn.apply(self, args);
-                    }, 30);
                     return;
                 }
 
@@ -8660,7 +8660,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     // Remove the original contents.
 
                     clone = !i && element || element['clone'](TRUE);
-                    init && init(clone);
                     range.insertNodeByDtd(clone);
                     // Save the last element reference so we can make the
                     // selection later.
@@ -8678,7 +8677,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // another block element, the selection must move there. (#3100,#5436)
                 if (isBlock) {
                     notWhitespaceEval = Editor.Walker.whitespaces(true);
-                    next = lastElement.next(notWhitespaceEval);
+                    next = lastElement.next(notWhitespaceEval, 1);
                     nextName = next && next[0].nodeType == DOM.ELEMENT_NODE
                         && next.nodeName();
                     // Check if it's a block element that accepts text.
@@ -8693,7 +8692,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 clone && clone.scrollIntoView(undefined, false);
                 saveLater(self);
-                callback && callback(clone);
+                return clone;
             },
 
             /**
@@ -8959,7 +8958,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     function fixByBindIframeDoc(self) {
         var iframe = self.get("iframe"),
             textarea = self.get("textarea")[0],
-            win = iframe[0].contentWindow,
+            win = self.get("window")[0],
             doc = self.get("document")[0];
 
         // Gecko need a key event to 'wake up' the editing
@@ -9107,13 +9106,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         var links = "",
             i,
             innerCssFile = Utils.debugUrl("theme/editor-iframe.css");
-        if (customLink) {
-            for (i = 0; i < customLink.length; i++) {
-                links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
-                    href:customLink[i]
-                });
-            }
+
+        for (i = 0; i < customLink.length; i++) {
+            links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
+                href:customLink[i]
+            });
         }
+
         return S.substitute(IFRAME_HTML_TPL, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
@@ -9123,7 +9122,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 "",
             title:"${title}",
             href:innerCssFile,
-            style:customStyle || "",
+            style:customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
             data:data || "&nbsp;",
             script:id ?
@@ -9217,7 +9216,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             return;
         }
         var iframe = self.get("iframe"),
-            win = iframe[0].contentWindow,
+            win = self.get("window")[0],
             doc = self.get("document")[0],
             documentElement = doc.documentElement,
             body = doc.body;
@@ -9327,11 +9326,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Editor) {
+KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Component.define(Overlay, [], {}, {
+        BubbleView = Overlay.extend({}, {
             ATTRS:{
                 zIndex:{
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
@@ -9404,7 +9403,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
             return undefined;
         }
 
-        var editorWin = editor.get("iframe")[0].contentWindow,
+        var editorWin = editor.get("window")[0],
             iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
@@ -9502,7 +9501,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
         editor.on("sourceMode", onHide);
 
-        var editorWin = editor.get("iframe")[0].contentWindow;
+        var editorWin = editor.get("window")[0];
 
         function showImmediately() {
 
@@ -9543,7 +9542,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Component, Overlay, Edi
 
     return BubbleView;
 }, {
-    requires:['component', 'overlay', 'editor']
+    requires:['overlay', 'editor']
 });/**
  * triple state button for kissy editor
  * @author yiminghe@gmail.com
@@ -10329,7 +10328,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
                     // otherwise the list item will be inaccessiable. (#4476)
                     if (UA['ie'] && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
-                    })) {
+                    },1)) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));
                     }
                     li[0].appendChild(followingList[0]);
@@ -11174,10 +11173,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
             var temp = new Node('<div>', null, this.get("document")[0]);
             temp.html(html);
             // When returning the node, remove it from its parent to detach it.
-            return temp.first(
-                function (n) {
-                    return n.nodeType == DOM.ELEMENT_NODE;
-                }).remove();
+            return temp.first().remove();
         }
     });
 
@@ -11675,7 +11671,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
     var DOM = S.DOM, Node = S.Node, UA = S.UA;
     var flashUtils = {
 
-        insertFlash:function (editor, src, attrs, _cls, _type, callback) {
+        insertFlash:function (editor, src, attrs, _cls, _type) {
             var nodeInfo = flashUtils.createSWF(src, { attrs:attrs }, editor.get("document")[0]),
                 real = nodeInfo.el,
                 substitute = editor.createFakeElement(real,
@@ -11684,7 +11680,8 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                     true,
                     nodeInfo.html,
                     attrs);
-            editor.insertElement(substitute, null, callback);
+            editor.insertElement(substitute);
+            return substitute;
         },
 
         isFlashEmbed:function (element) {
@@ -13327,7 +13324,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
-                    (Walker.whitespaces(true)) )
+                    (Walker.whitespaces(true),1) )
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
@@ -13470,7 +13467,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                 // listNode._4e_mergeSiblings();
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
-                        'prev' : 'next' ](Walker.whitespaces(true));
+                        'prev' : 'next' ](Walker.whitespaces(true),1);
                     if (sibling && sibling[0] &&
                         sibling.nodeName() == self.type) {
                         sibling.remove();
@@ -14351,8 +14348,8 @@ KISSY.add("editor/plugin/overlay/focus", function (S, Editor) {
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay, Focus) {
-    var Overlay4E =Component.define(Overlay, [Focus], {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
+    var Overlay4E = Overlay.extend([Focus], {
     }, {
         ATTRS:{
             prefixCls:{
@@ -14364,7 +14361,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay
         }
     });
 
-    Overlay4E.Dialog = Component.define(Overlay.Dialog, [Focus], {
+    Overlay4E.Dialog = Overlay.Dialog.extend([Focus], {
         show:function () {
             var self = this;
             //在 show 之前调用
@@ -14399,7 +14396,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Component, Overlay
 
     return Overlay4E
 }, {
-    requires:["editor", 'component', 'overlay', './focus', 'dd']
+    requires:["editor", 'overlay', './focus', 'dd']
 });/**
  * pagebreak functionality
  * @author yiminghe@gmail.com
@@ -16298,31 +16295,33 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 editor = self.editor;
 
-            editor.get("document").on("keydown", function (ev) {
-                var keyCode = ev.keyCode;
-                if (keyCode in navigationKeyCodes
-                    || keyCode in modifierKeyCodes) {
-                    return;
-                }
-                // ctrl+z，撤销
-                if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                    if (false !== editor.fire("restore", {direction:-1})) {
-                        self.restore(-1);
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (ev) {
+                    var keyCode = ev.keyCode;
+                    if (keyCode in navigationKeyCodes
+                        || keyCode in modifierKeyCodes) {
+                        return;
                     }
-                    ev.halt();
-                    return;
-                }
-                // ctrl+y，重做
-                if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                    if (false !== editor.fire("restore", {direction:1})) {
-                        self.restore(1);
+                    // ctrl+z，撤销
+                    if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire("restore", {direction:-1})) {
+                            self.restore(-1);
+                        }
+                        ev.halt();
+                        return;
                     }
-                    ev.halt();
-                    return;
-                }
-                if (editor.fire("save", {buffer:1}) !== false) {
-                    self.save(1);
-                }
+                    // ctrl+y，重做
+                    if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire("restore", {direction:1})) {
+                            self.restore(1);
+                        }
+                        ev.halt();
+                        return;
+                    }
+                    if (editor.fire("save", {buffer:1}) !== false) {
+                        self.save(1);
+                    }
+                });
             });
         },
 

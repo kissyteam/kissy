@@ -19,7 +19,7 @@
 <span id='line12' class='line'> 12</span>      * @extends Component.UIBase.Box
 <span id='line13' class='line'> 13</span>      * @name Editor
 <span id='line14' class='line'> 14</span>      */</span><span class="WHIT">
-<span id='line15' class='line'> 15</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.define</span><span class="PUNC">(</span><span class="NAME">Component.Controller</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">Component.UIBase.Box</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Controller.extend</span><span class="PUNC">(</span><span class="WHIT">
 <span id='line16' class='line'> 16</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line17' class='line'> 17</span>          * @lends Editor#
 <span id='line18' class='line'> 18</span>          */</span><span class="WHIT">
@@ -191,13 +191,15 @@
 <span id='line184' class='line'>184</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"ke-"</span><span class="WHIT">
 <span id='line185' class='line'>185</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line186' class='line'>186</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line187' class='line'>187</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"Editor"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line188' class='line'>188</span> 
-<span id='line189' class='line'>189</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">Editor</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">S.EventTarget</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line187' class='line'>187</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line188' class='line'>188</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'editor'</span><span class="WHIT">
+<span id='line189' class='line'>189</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line190' class='line'>190</span> 
-<span id='line191' class='line'>191</span> </span><span class="WHIT">    </span><span class="NAME">KISSY.Editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line191' class='line'>191</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">Editor</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">S.EventTarget</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line192' class='line'>192</span> 
-<span id='line193' class='line'>193</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line194' class='line'>194</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line195' class='line'>195</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'htmlparser'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'core'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line196' class='line'>196</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line193' class='line'>193</span> </span><span class="WHIT">    </span><span class="NAME">KISSY.Editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line194' class='line'>194</span> 
+<span id='line195' class='line'>195</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Editor</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line196' class='line'>196</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line197' class='line'>197</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'htmlparser'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'core'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line198' class='line'>198</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

@@ -167,8 +167,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 ret = t;
             }
             // Trigger an inline bound script
-            if (cur[ ontype ] &&
-                cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -179,7 +178,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
-                getNodeName(target)=="a")) {
+                getNodeName(target) == "a")) {
                 var old;
                 try {
                     // execute default action on dom node

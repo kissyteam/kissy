@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 /**
  * Add indent and outdent command identifier for KISSY Editor.Modified from CKEditor
@@ -151,7 +151,7 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
                     // otherwise the list item will be inaccessiable. (#4476)
                     if (UA['ie'] && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
-                    })) {
+                    },1)) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));
                     }
                     li[0].appendChild(followingList[0]);

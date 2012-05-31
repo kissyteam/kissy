@@ -2,11 +2,11 @@
  * @fileOverview Combobox derived from Autocomplete.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/BasicComboBoxRender", function (S, Component, AutoCompleteRender, Node) {
+KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, Node) {
 
     var $ = Node.all, Render;
 
-    return Render = Component.define(AutoCompleteRender, {
+    return Render = AutoCompleteRender.extend({
         createDom:function () {
             var self = this,
                 container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
@@ -50,5 +50,5 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, Component, AutoComple
         }
     });
 }, {
-    requires:['component', './inputRender', 'node']
+    requires:['./inputRender', 'node']
 });

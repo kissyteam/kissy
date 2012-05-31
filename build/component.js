@@ -1,40 +1,77 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 20:19
+build time: May 29 18:08
 */
 /**
- * @fileOverview mvc based component framework for kissy
+ * Setup component namespace.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component", function (KISSY, UIBase, Controller, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+KISSY.add("component/base", function (S, UIBase, UIStore) {
     /**
      * @name Component
      * @namespace
      */
     var Component = {
-        UIBase:UIBase,
-        Controller:Controller,
-        "Render":Render,
-        "Container":Container,
-        "UIStore":UIStore,
-        "DelegateChildren":DelegateChildren,
-        "DecorateChild":DecorateChild,
-        "DecorateChildren":DecorateChildren
+        UIStore:UIStore,
+        UIBase:UIBase
     };
+
+    function extend() {
+        var args = S.makeArray(arguments),
+            ret,
+            last = args[args.length - 1];
+        args.unshift(this);
+        if (last.xclass) {
+            args.pop();
+            args.push(last.xclass);
+        }
+        ret = UIBase.create.apply(UIBase, args);
+        if (last.xclass) {
+            UIStore.setUIConstructorByCssClass(last.xclass, {
+                ui:ret,
+                priority:last.priority
+            });
+        }
+        ret.extend = extend;
+        return ret;
+    }
+
     /**
      * Shortcut for {@link Component.UIBase.create}.
      * @function
      */
-    Component.define = UIBase.create;
+    Component.define = function () {
+        var args = S.makeArray(arguments), cls;
+        cls = args.shift();
+        return extend.apply(cls, args);
+    }
+
+    return Component;
+}, {
+    requires:['./uibase', './uistore']
+});/**
+ * @fileOverview mvc based component framework for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component", function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {
+
+    S.mix(Component, {
+        Controller:Controller,
+        "Render":Render,
+        "Container":Container,
+        "DelegateChildren":DelegateChildren,
+        "DecorateChild":DecorateChild,
+        "DecorateChildren":DecorateChildren
+    });
+
     return Component;
 }, {
     requires:[
-        'component/uibase',
+        'component/base',
         'component/controller',
         'component/render',
         'component/container',
-        'component/uistore',
         'component/delegateChildren',
         'component/decorateChildren',
         'component/decorateChild']
@@ -42,7 +79,7 @@ KISSY.add("component", function (KISSY, UIBase, Controller, Render, Container, U
  * @fileOverview container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
+KISSY.add("component/container", function (S, Controller, DelegateChildren, DecorateChildren) {
     /**
      * Container class. Extend it to acquire the abilities of
      * delegating events and
@@ -53,7 +90,7 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
      * @extends Component.Controller
      * @memberOf Component
      */
-    return UIBase.create(Controller, [DelegateChildren, DecorateChildren],
+    return Controller.extend([DelegateChildren, DecorateChildren],
         /**
          * @lends Component.Container
          */
@@ -79,12 +116,12 @@ KISSY.add("component/container", function (S, UIBase, Controller, UIStore, Deleg
         });
 
 }, {
-    requires:['./uibase', './controller', './uistore', './delegateChildren', './decorateChildren']
+    requires:['./controller', './delegateChildren', './decorateChildren']
 });/**
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, undefined) {
+KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore, Render, undefined) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -189,7 +226,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
      * @extends Component.UIBase
      * @extends Component.UIBase.Box
      */
-    var Controller = UIBase.create([UIBase.Box],
+    var Controller = Component.define([UIBase.Box],
         /** @lends Component.Controller# */
         {
 
@@ -710,9 +747,7 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
             },
 
             DefaultRender:Render
-        },
-        "Component_Controller"
-    );
+        });
 
     /**
      * Create a component instance using json with xclass
@@ -742,11 +777,11 @@ KISSY.add("component/controller", function (S, Event, UIBase, UIStore, Render, u
         return component;
     }
 
-    Controller.create = create;
+    Component.create = create;
 
     return Controller;
 }, {
-    requires:['event', './uibase', './uistore', './render']
+    requires:['event', './base', './uibase', './uistore', './render']
 });
 /**
  * observer synchronization, model 分成两类：
@@ -938,7 +973,7 @@ KISSY.add("component/delegateChildren", function (S) {
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function (S, UIBase, UIStore) {
+KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
 
     /**
      * Base Render class for KISSY Component.
@@ -947,7 +982,7 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
      * @name Render
      * @extends Component.UIBase
      */
-    return UIBase.create([UIBase.Box.Render],
+    return Component.define([UIBase.Box.Render],
         /**
          * @lends Component.Render#
          */
@@ -1069,9 +1104,9 @@ KISSY.add("component/render", function (S, UIBase, UIStore) {
                  */
                 highlighted:{}
             }
-        }, "Component_Render");
+        });
 }, {
-    requires:['./uibase', './uistore']
+    requires:['./base', './uibase', './uistore']
 });/**
  * @fileOverview uibase
  * @author yiminghe@gmail.com
@@ -1452,7 +1487,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
             if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
 
                 // 如果横向不能放下
-                if (!isFailX(elFuturePos, elRegion, visibleRect)) {
+                if (isFailX(elFuturePos, elRegion, visibleRect)) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[lr]/ig, {
@@ -1937,7 +1972,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
 
                 // debug mode , give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
-                S.log("UIBase.create : " + name, eval("C=function " + name + "(){ UIBase.apply(this, arguments);}"));
+                S.log("UIBase.create : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
 
                 S.extend(C, base, px, sx);
 
@@ -3160,8 +3195,8 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 maskDesc = maskMap[maskCls],
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (maskShared) {
-                maskDesc.num--;
+            if (maskShared && maskDesc) {
+                maskDesc.num = Math.max(maskDesc.num - 1, 0);
                 if (maskDesc.num == 0) {
                     mask.hide();
                 }
@@ -3735,21 +3770,7 @@ KISSY.add("component/uistore", function (S) {
          * @param {Function} componentConstructor Component's constructor.
          * @function
          */
-        setUIConstructorByCssClass:setUIConstructorByCssClass,
-
-        /**
-         * Component's constructor's priority enum.
-         * Used for getCssClassByUIConstructor, when multiple component constructors are found.
-         * @type Object
-         */
-        PRIORITY:{
-            LEVEL1:10,
-            LEVEL2:20,
-            LEVEL3:30,
-            LEVEL4:40,
-            "LEVEL5":50,
-            "LEVEL6":60
-        }
+        setUIConstructorByCssClass:setUIConstructorByCssClass
     };
 
     UIStore.getCssClassWithPrefix = getCssClassWithPrefix;

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 KISSY.add("editor/plugin/table/index",function(j,k,r,y){function s(a){function d(a){!(0<f.length)&&a[0].nodeType==l.ELEMENT_NODE&&t.test(a.nodeName())&&!a.data("selected_cell")&&(a._4e_setMarker(e,"selected_cell",!0,void 0),f.push(a))}for(var c=a.createBookmarks(),b=a.getRanges(),f=[],e={},g=0;g<b.length;g++){var i=b[g];if(i.collapsed)i=i.getCommonAncestor(),(i=i.closest("td",void 0)||i.closest("th",void 0))&&f.push(i);else{var i=new Walker(i),h;for(i.guard=d;h=i.next();)if((h=h.parent())&&t.test(h.nodeName())&&
 !h.data("selected_cell"))h._4e_setMarker(e,"selected_cell",!0,void 0),f.push(h)}}k.Utils.clearAllMarkers(e);a.selectBookmarks(c);return f}function u(a,d){var c=a.getStartElement().parent("tr");if(c){var b=c.clone(!0);b.insertBefore(c);c=(d?b[0]:c[0]).cells;for(b=0;b<c.length;b++)c[b].innerHTML="",o.ie||(new h(c[b]))._4e_appendBogus(void 0)}}function p(a){if(a instanceof k.Selection){for(var d=s(a),c=d.length,a=[],b,f,e=0;e<c;e++){var g=d[e].parent(),i=g[0].rowIndex;!e&&(b=i-1);a[i]=g;e==c-1&&(f=i+

@@ -2,21 +2,27 @@
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
+KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     var $ = Node.all,
         ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
 
 
     /**
-     * 基类树节点
+     * Tree Node
      * @constructor
+     * @name Node
+     * @memberOf Tree
+     * @extends Component.Controller
      */
-    var BaseNode = Component.define(Component.Controller,
+    var BaseNode = Component.Controller.extend(
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */
         [Component.DecorateChild],
+        /**
+         * @lends Tree.Node#
+         */
         {
             _keyNav:function (e) {
                 var self = this,
@@ -148,8 +154,7 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
             },
 
             /**
-             * 选中当前节点
-             * @public
+             * Select current tree node.
              */
             select:function () {
                 var self = this;
@@ -244,6 +249,9 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
                 }
             },
 
+            /**
+             * Expand all descend nodes of current node
+             */
             expandAll:function () {
                 var self = this;
                 self.set("expanded", true);
@@ -252,6 +260,9 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
                 });
             },
 
+            /**
+             * Collapse all descend nodes of current node
+             */
             collapseAll:function () {
                 var self = this;
                 self.set("expanded", false);
@@ -263,11 +274,19 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
 
         {
             DefaultRender:BaseNodeRender,
-            ATTRS:{
+            ATTRS:/**
+             * @lends Tree.Node#
+             */
+            {
                 /*事件代理*/
                 handleMouseEvents:{
                     value:false
                 },
+                /**
+                 * Current tree node 's id.
+                 * Will generated automatically.
+                 * @type String
+                 */
                 id:{
                     getter:function () {
                         var self = this,
@@ -279,52 +298,77 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
                     }
                 },
                 /**
-                 * 节点字内容
+                 * Can used For config.
+                 * Content of current tree node.
                  * @type String
                  */
                 content:{view:true},
 
                 /**
-                 * 强制指明该节点是否具备子孙，影响样式，不配置默认样式自动变化
+                 * Only For Config.
+                 * Whether to force current tree node as a leaf.
+                 * Default:false.
+                 * It will change as children are added.
                  * @type Boolean
                  */
                 isLeaf:{
                     view:true
                 },
 
+                /**
+                 * Element for expand icon.
+                 * @type {NodeList}
+                 */
                 expandIconEl:{ view:true},
 
+                /**
+                 * Element for icon.
+                 * @type {NodeList}
+                 */
                 iconEl:{ view:true},
 
                 /**
-                 * 是否选中
+                 * Whether current tree node is selected.
                  * @type Boolean
                  */
                 selected:{
                     view:true
                 },
 
+                /**
+                 * Whether current tree node is expanded.
+                 */
                 expanded:{
                     value:false,
                     view:true
                 },
 
                 /**
-                 * html title
+                 * Html title for current tree node.
                  * @type String
                  */
-                tooltip:{view:true},
+                tooltip:{
+                    view:true
+                },
+
+                /**
+                 * Tree instance current tree node belongs to.
+                 * @type Tree
+                 */
                 tree:{
                 },
 
                 /**
-                 * depth of node
+                 * depth of node.
+                 * @type Number
                  */
                 depth:{
                     value:0,
                     view:true
                 },
-                focusable:{value:false},
+                focusable:{
+                    value:false
+                },
                 decorateChildCls:{
                     value:"tree-children"
                 }
@@ -349,5 +393,5 @@ KISSY.add("tree/basenode", function (S, Node,  Component, BaseNodeRender) {
     return BaseNode;
 
 }, {
-    requires:['node', 'component', './basenoderender']
+    requires:['node', 'component', './basenodeRender']
 });

@@ -2,16 +2,16 @@
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
+KISSY.add("menubutton/menubuttonRender", function (S, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
-        '{prefixCls}menu-button-caption">{content}<' + '/div>' +
-        '<div class="ks-inline-block ' +
-        '{prefixCls}menu-button-dropdown"><' + '/div>',
+            '{prefixCls}menu-button-caption">{content}<' + '/div>' +
+            '<div class="ks-inline-block ' +
+            '{prefixCls}menu-button-dropdown"><' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return Component.define(Button.Render, {
+    return Button.Render.extend({
 
         createDom:function () {
             var self = this,
@@ -49,7 +49,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, Component, Button) {
             collapsed:{
             }
         }
-    }, "MenuButton_Render");
+    });
 }, {
-    requires:['component', 'button']
+    requires:['button']
 });

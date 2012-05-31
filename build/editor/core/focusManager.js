@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 12:21
 */
 /**
  * 多实例的管理，主要是焦点控制，主要是为了
@@ -44,7 +44,7 @@ KISSY.add("editor/core/focusManager", function (S) {
                 return INSTANCES[id];
             },
             add:function (editor) {
-                var win = DOM._4e_getWin(editor.get("document")[0]);
+                var win = DOM._getWin(editor.get("document")[0]);
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
@@ -53,7 +53,7 @@ KISSY.add("editor/core/focusManager", function (S) {
             },
             remove:function (editor) {
                 delete INSTANCES[editor._UUID];
-                var win = DOM._4e_getWin(editor.get("document")[0]);
+                var win = DOM._getWin(editor.get("document")[0]);
                 Event.remove(win, "focus", focus, editor);
                 Event.remove(win, "blur", blur, editor);
             }
