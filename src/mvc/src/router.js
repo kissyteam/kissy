@@ -11,7 +11,6 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         // all registered route instance
         allRoutes = [],
         win = S.Env.host,
-        location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
         ROUTER_MAP = "__routerMap";
