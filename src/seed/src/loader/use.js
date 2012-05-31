@@ -208,7 +208,7 @@
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
             charset = mod.getCharset(),
-            url = mod['fullpath'],
+            url = mod.getFullPath(),
             isCss = utils.isCss(url)
 
         mod.status = mod.status || INIT;

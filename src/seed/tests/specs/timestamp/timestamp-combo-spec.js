@@ -6,7 +6,7 @@ describe("loader", function () {
         it("works theoretically", function () {
 
             S.Env.mods = {};
-            S.Config.packages = {};
+            S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
             var combine = S.config("combine");
@@ -55,7 +55,7 @@ describe("loader", function () {
 
         it("works practically", function () {
             S.Env.mods = {};
-            S.Config.packages = {};
+            S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
             S.config({
@@ -105,7 +105,7 @@ describe("loader", function () {
         it("works theoretically when package has no combo", function () {
 
             S.Env.mods = {};
-            S.Config.packages = {};
+            S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
             var combine = S.config("combine");
@@ -158,7 +158,7 @@ describe("loader", function () {
 
         it("works practically when package has no combo", function () {
             S.Env.mods = {};
-            S.Config.packages = {};
+            S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
             S.config({

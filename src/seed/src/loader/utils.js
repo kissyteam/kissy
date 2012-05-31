@@ -220,10 +220,11 @@
                 return mod;
             }
 
-            mods[modName] = mod = new Loader.Module();
             // 防止 cfg 里有 tag，构建 fullpath 需要
-            S.mix(mod, cfg);
-            mod.name = modName;
+            mods[modName] = mod = new Loader.Module(S.mix({
+                name:modName,
+                SS:self
+            }, cfg));
 
             var packageInfo = getPackageInfo(self, mod),
                 path = defaultComponentJsName(modName, packageInfo);
@@ -233,9 +234,6 @@
                 path:path,
                 packageInfo:packageInfo
             }, false);
-
-            mod.fullpath = utils.getMappedPath(self, packageInfo.base +
-                mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
         },

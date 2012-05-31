@@ -1515,7 +1515,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line342">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line352">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1537,88 +1537,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Object|String}</span> 
-                                                            <span class="desc">config object or config key.</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.packages</b>
-                                                            
-                                                            
-                                                            <span class="type">{Object[]}</span> 
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.packages.0.name</b>
-                                                            
-                                                            
-                                                            <span class="type">{String}</span> 
-                                                            <span class="desc">package name</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.packages.0.path</b>
-                                                            
-                                                            
-                                                            <span class="type">{String}</span> 
-                                                            <span class="desc">package path</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.packages.0.tag</b>
-                                                            
-                                                            
-                                                            <span class="type">{String}</span> 
-                                                            <span class="desc">timestamp for this package's module file</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.map</b>
-                                                            
-                                                            
-                                                            <span class="type">{Array[]}</span> 
-                                                            <span class="desc">file map configs</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.map.0</b>
-                                                            
-                                                            
-                                                            <span class="type">{Array[]}</span> 
-                                                            <span class="desc">a single map rule</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.map.0.0</b>
-                                                            
-                                                            
-                                                            <span class="type">{RegExp}</span> 
-                                                            <span class="desc">a regular expression to match url</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.map.0.1</b>
-                                                            
-                                                            
-                                                            <span class="type">{String|Function}</span> 
-                                                            <span class="desc">provide replacement for String.replace</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">c.combine</b>
-                                                            
-                                                            
-                                                            <span class="type">{Boolean}</span> 
-                                                            <span class="desc">whether to enable combo</span>
+                                                            <span class="desc">Config object or config key.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -1627,7 +1546,16 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{String}</span> 
-                                                            <span class="desc">set base for kissy loader.use with caution!</span>
+                                                            <span class="desc">KISSY 's base path.                         Default: get from kissy(-min).js or seed(-min).js</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.tag</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">KISSY 's timestamp for native module.                         Default: KISSY 's build time.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -1636,7 +1564,97 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Boolean}</span> 
-                                                            <span class="desc">whether to enable debug mod</span>
+                                                            <span class="desc">whether to enable debug mod.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.combine</b>
+                                                            
+                                                            
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">whether to enable combo.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Packages definition with package name as the key.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.base</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Package base path.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.tag</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Timestamp for this package's module file.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.debug</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Whether force debug mode for current package.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.packages.combine</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">Whether allow combine for current package modules.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map</b>
+                                                            
+                                                            
+                                                            <span class="type">{Array[]}</span> 
+                                                            <span class="desc">file map      File url map configs.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0</b>
+                                                            
+                                                            
+                                                            <span class="type">{Array[]}</span> 
+                                                            <span class="desc">A single map rule.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0.0</b>
+                                                            
+                                                            
+                                                            <span class="type">{RegExp}</span> 
+                                                            <span class="desc">A regular expression to match url.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">c.map.0.1</b>
+                                                            
+                                                            
+                                                            <span class="type">{String|Function}</span> 
+                                                            <span class="desc">Replacement for String.replace.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -1645,7 +1663,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                              ]
                                                             
-                                                            <span class="desc">config value</span>
+                                                            <span class="desc">config value.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -1670,7 +1688,7 @@ a.go-top:active{text-decoration:none;}
                                                     <ul>
                                                         
                                                         <li>
-                                                            <pre class="code">// use gallery from cdn<code>KISSY.config({     combine:true,     packages:[{         name:"gallery",         path:"http://a.tbcdn.cn/s/kissy/gallery/"     }]});</code>// use map to reduce connection count<code>S.config({map:[[ /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/, "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]]});</code></pre>
+                                                            <pre class="code">// use gallery from cdn<code>KISSY.config({     combine:true,     base:'',     packages:{         "gallery":{             base:"http://a.tbcdn.cn/s/kissy/gallery/"         }     },     modules:{         "gallery/x/y":{             requires:["gallery/x/z"]         }     }});</code>// use map to reduce connection count<code>S.config("map",[ [  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1" ]]);</code></pre>
                                                         </li>
                                                         
                                                     </ul>
@@ -1938,7 +1956,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line393">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line426">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3544,7 +3562,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line413">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line446">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -3794,7 +3812,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line379">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_kissy.js.html#line412">view source</a>
                                             </div>
 
                                             <div class="desc">

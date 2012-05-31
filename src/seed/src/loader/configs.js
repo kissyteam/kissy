@@ -85,13 +85,12 @@
      * });
      */
     S.configs.modules = function (modules) {
-        var self = this,
-            t,
-            mods = self.Env.mods;
+        var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 modName = utils.indexMapStr(modName);
                 utils.createModuleInfo(self, modName, modCfg);
+                S.mix(self.Env.mods[modName], modCfg);
             });
         }
     };

@@ -34,13 +34,6 @@
              * @example
              * <code>
              * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-
-             * KISSY.add({
-             *     'mod-name': {
-             *         fullpath: 'url',
-             *         requires: ['mod1','mod2']
-             *     }
-             * });
              * </code>
              */
             add:function (name, fn, config) {

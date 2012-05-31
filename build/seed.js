@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 31 22:01
+build time: May 31 23:24
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -484,7 +484,7 @@ build time: May 31 22:01
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120531220155';
+        S.__BUILD_TIME = '20120531232402';
     })();
 
     return S;
@@ -2015,7 +2015,12 @@ build time: May 31 22:01
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
-                return this.fullpath;
+                var self = this, t;
+                return self.fullpath || (self.fullpath =
+                    Loader.Utils.getMappedPath(self.SS,
+                        self.packageInfo.base +
+                            self.path +
+                            ((t = self.getTag()) ? ("?t=" + t) : "")));
             },
 
             /**
@@ -2365,10 +2370,11 @@ build time: May 31 22:01
                 return mod;
             }
 
-            mods[modName] = mod = new Loader.Module();
             // 防止 cfg 里有 tag，构建 fullpath 需要
-            S.mix(mod, cfg);
-            mod.name = modName;
+            mods[modName] = mod = new Loader.Module(S.mix({
+                name:modName,
+                SS:self
+            }, cfg));
 
             var packageInfo = getPackageInfo(self, mod),
                 path = defaultComponentJsName(modName, packageInfo);
@@ -2378,9 +2384,6 @@ build time: May 31 22:01
                 path:path,
                 packageInfo:packageInfo
             }, false);
-
-            mod.fullpath = utils.getMappedPath(self, packageInfo.base +
-                mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
         },
@@ -2973,13 +2976,12 @@ build time: May 31 22:01
      * });
      */
     S.configs.modules = function (modules) {
-        var self = this,
-            t,
-            mods = self.Env.mods;
+        var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 modName = utils.indexMapStr(modName);
                 utils.createModuleInfo(self, modName, modCfg);
+                S.mix(self.Env.mods[modName], modCfg);
             });
         }
     };
@@ -3032,13 +3034,6 @@ build time: May 31 22:01
              * @example
              * <code>
              * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-
-             * KISSY.add({
-             *     'mod-name': {
-             *         fullpath: 'url',
-             *         requires: ['mod1','mod2']
-             *     }
-             * });
              * </code>
              */
             add:function (name, fn, config) {
@@ -3440,7 +3435,7 @@ build time: May 31 22:01
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
             charset = mod.getCharset(),
-            url = mod['fullpath'],
+            url = mod.getFullPath(),
             isCss = utils.isCss(url)
 
         mod.status = mod.status || INIT;
@@ -4057,7 +4052,7 @@ build time: May 31 22:01
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120531220155'
+        tag:'20120531232402'
     }, getBaseInfo()));
 
     /**
