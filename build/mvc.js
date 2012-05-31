@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: May 31 15:30
 */
 /**
  * @fileOverview collection of models
@@ -642,7 +642,6 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         // all registered route instance
         allRoutes = [],
         win = S.Env.host,
-        location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
         ROUTER_MAP = "__routerMap";

@@ -2429,6 +2429,10 @@ jasmine.version_ = {
 
 jasmine.kissyNext = function (failedCount) {
     if (!failedCount && parent != window) {
-        parent.window.location.href = 'http://chengyu.taobao.ali.com/kissy_git/kissy/src/test.php#next';
+        if ('postMessage' in parent) {
+            parent.postMessage('next', '*');
+        } else {
+            parent.name = 'next';
+        }
     }
 }

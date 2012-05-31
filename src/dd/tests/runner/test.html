@@ -243,8 +243,7 @@ for delegate-spec.js
 <script>
     KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
         if (UA.ie == 9) {
-
-            jasmine.kissyNext(this.results().failedCount);
+            jasmine.kissyNext(0);
 
             // ie9 模拟鼠标拖放有问题
             S.all('#wrap').hide();
