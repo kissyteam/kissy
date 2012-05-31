@@ -52,7 +52,7 @@ KISSY.add("editor/core/meta", function () {
             "image/dialog":['../overlay/', 'switchable', '../select/'],
             "indent/cmd":['../dentUtils/cmd'],
             "insertOrderedList/cmd":['../listUtils/cmd'],
-            "insertUnorderedList/cmd":['../listUtils/cmd.js'],
+            "insertUnorderedList/cmd":['../listUtils/cmd'],
             "italic/cmd":['../font/cmd'],
             "justifyCenter/cmd":['../justifyUtils/cmd'],
             "justifyLeft/cmd":['../justifyUtils/cmd'],

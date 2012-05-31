@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: May 31 22:01
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -309,63 +309,96 @@ build time: May 30 20:28
 
             /**
              * set KISSY configuration
-             * @param {Object|String} c config object or config key.
-             * @param {Object[]} c.packages
-             * @param {String} c.packages.0.name package name
-             * @param {String} c.packages.0.path package path
-             * @param {String} c.packages.0.tag timestamp for this package's module file
-             * @param {Array[]} c.map file map configs
-             * @param {Array[]} c.map.0 a single map rule
-             * @param {RegExp} c.map.0.0 a regular expression to match url
-             * @param {String|Function} c.map.0.1 provide replacement for String.replace
-             * @param {Boolean} c.combine whether to enable combo
-             * @param {String} c.base set base for kissy loader.use with caution!
-             * @param {Boolean} c.debug whether to enable debug mod
-             * @param [v] config value
+             * @param {Object|String}   c Config object or config key.
+             * @param {String} c.base   KISSY 's base path.
+             *                          Default: get from kissy(-min).js or seed(-min).js
+             * @param {String} c.tag    KISSY 's timestamp for native module.
+             *                          Default: KISSY 's build time.
+             * @param {Boolean} c.debug     whether to enable debug mod.
+             * @param {Boolean} c.combine   whether to enable combo.
+             * @param {Object} c.packages Packages definition with package name as the key.
+             * @param {String} c.packages.base    Package base path.
+             * @param {String} c.packages.tag     Timestamp for this package's module file.
+             * @param {String} c.packages.debug     Whether force debug mode for current package.
+             * @param {String} c.packages.combine     Whether allow combine for current package modules.
+             * @param {Array[]} c.map file map      File url map configs.
+             * @param {Array[]} c.map.0     A single map rule.
+             * @param {RegExp} c.map.0.0    A regular expression to match url.
+             * @param {String|Function} c.map.0.1   Replacement for String.replace.
+             * @param [v] config value.
              * @example
              * // use gallery from cdn
              * <code>
              * KISSY.config({
              *      combine:true,
-             *      packages:[{
-             *          name:"gallery",
-             *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
-             *      }]
+             *      base:'',
+             *      packages:{
+             *          "gallery":{
+             *              base:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *          }
+             *      },
+             *      modules:{
+             *          "gallery/x/y":{
+             *              requires:["gallery/x/z"]
+             *          }
+             *      }
              * });
              * </code>
              * // use map to reduce connection count
              * <code>
-             * S.config({
-             * map:[
-             * [
-             *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
-             *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
-             * ]
-             * });
+             * S.config("map",[
+             *  [
+             *   /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+             *   "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"
+             *  ]
+             * ]);
              * </code>
              */
             config:function (c, v) {
                 var cfg,
                     r,
+                    self = this,
+                    runs = [],
+                    fn,
+                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(c)) {
-                    for (var p in c) {
+                    for (p in c) {
                         if (hasOwnProperty(c, p)) {
-                            S.config(p, c[p]);
+                            runs.push({
+                                name:p,
+                                order:configs[p] && configs[p].order || 0,
+                                value:c[p]
+                            });
                         }
                     }
+
+                    runs.sort(function (a1, a2) {
+                        return a1.order > a2.order;
+                    });
+
+                    S.each(runs, function (r) {
+                        fn = configs[p = r.name];
+                        v = r.value;
+                        if (fn) {
+                            fn.call(self, v);
+                        } else {
+                            Config[p] = v;
+                        }
+                    });
+
                 } else {
                     cfg = configs[c];
                     if (v === undefined) {
                         if (cfg) {
-                            r = cfg();
+                            r = cfg.call(self);
                         } else {
                             r = Config[c];
                         }
                     } else {
                         if (cfg) {
-                            r = cfg(v);
+                            r = cfg.call(self, v);
                         } else {
                             Config[c] = v;
                         }
@@ -451,7 +484,7 @@ build time: May 30 20:28
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120530202838';
+        S.__BUILD_TIME = '20120531220155';
     })();
 
     return S;
@@ -2156,34 +2189,13 @@ build time: May 30 20:28
         }
     }
 
-    function removeSuffixAndTagFromModName(modName) {
-        var tag = undefined,
-            m,
-            withTagReg = /([^?]+)(?:\?t=(.+))/;
-
-        if (m = modName.match(withTagReg)) {
-            modName = m[1];
-            tag = m[2];
-        }
-
-        // js do not need suffix
-        modName = modName.replace(/\.js$/i, "");
-
-        return {
-            modName:modName,
-            tag:tag
-        };
-    }
-
 
     function getPackageInfo(self, mod) {
-        if (mod.packageInfo) {
-            return mod.packageInfo;
-        }
 
         var modName = mod.name,
             Config = self.Config,
-            packages = Config.packages || {},
+            Env = self.Env,
+            packages = Env.packages || {},
             pName = "",
             packageDesc;
 
@@ -2204,7 +2216,7 @@ build time: May 30 20:28
         S.mix(packageDesc, {
             name:pName,
             tag:encodeURIComponent(Config.tag),
-            path:Config.base,
+            base:Config.base,
             debug:Config.debug,
             charset:"utf-8"
         }, false);
@@ -2338,13 +2350,13 @@ build time: May 30 20:28
             return path.substring(0, path.length - 1);
         },
 
-        getPackageInfo:getPackageInfo,
+        createModulesInfo:function (self, modNames) {
+            S.each(modNames, function (m) {
+                utils.createModuleInfo(self, m);
+            });
+        },
 
-        createModuleInfo:function (self, modName) {
-            var info = removeSuffixAndTagFromModName(modName);
-
-            modName = info.modName;
-
+        createModuleInfo:function (self, modName, cfg) {
             var mods = self.Env.mods,
                 t,
                 mod = mods[modName];
@@ -2353,14 +2365,10 @@ build time: May 30 20:28
                 return mod;
             }
 
-            if (!mod) {
-                mods[modName] = mod = new Loader.Module();
-                mod.name = modName;
-            }
-
-            if (info.tag) {
-                mod.tag = info.tag;
-            }
+            mods[modName] = mod = new Loader.Module();
+            // 防止 cfg 里有 tag，构建 fullpath 需要
+            S.mix(mod, cfg);
+            mod.name = modName;
 
             var packageInfo = getPackageInfo(self, mod),
                 path = defaultComponentJsName(modName, packageInfo);
@@ -2371,7 +2379,7 @@ build time: May 30 20:28
                 packageInfo:packageInfo
             }, false);
 
-            mod.fullpath = utils.getMappedPath(self, packageInfo.path +
+            mod.fullpath = utils.getMappedPath(self, packageInfo.base +
                 mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
@@ -2404,15 +2412,16 @@ build time: May 30 20:28
             }
 
             var fn = mod.fn,
+                requires,
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            requires = mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, utils.getModules(self, mod.requires));
+                    value = fn.apply(mod, utils.getModules(self, requires));
                 } else {
                     value = fn;
                 }
@@ -2441,37 +2450,45 @@ build time: May 30 20:28
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
-         * 4. create module info with tag : core.js?t=xx => core , tag=xx
          * @param {KISSY} self Global KISSY instance
          * @param {String|String[]} modNames Array of module names or module names string separated by comma
          */
-        normalizeModNames:function (self, modNames, refModName, keepAlias) {
-            var ret = [],
+        normalizeModNames:function (self, modNames, refModName) {
+            return utils.unalias(self, utils.normalizeModNamesWithAlias(self, modNames, refModName));
+        },
+
+        unalias:function (self, names) {
+            var ret = [].concat(names),
+                i,
+                m,
+                alias,
+                ok = 0,
                 mods = self['Env'].mods;
-            S.each(modNames, function (name) {
-                var alias, m;
-                // 1. index map
-                name = indexMap(name);
-                // 2. un alias
-                if (!keepAlias && (m = mods[name]) && (alias = m.alias)) {
-                    ret.push.apply(ret, indexMap(alias));
-                } else {
-                    ret.push(name);
+            while (!ok) {
+                ok = 1;
+                for (i = ret.length - 1; i >= 0; i--) {
+                    if ((m = mods[ret[i]]) && (alias = m.alias)) {
+                        ok = 0;
+                        ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
+                    }
                 }
-            });
-            // 3. relative to absolute (optional)
-            if (refModName) {
-                ret = utils.normalDepModuleName(refModName, ret);
             }
-            // 4. create module info with tag
-            S.each(ret, function (name, i) {
-                ret[i] = utils.createModuleInfo(self, name).name;
-            });
             return ret;
         },
 
         normalizeModNamesWithAlias:function (self, modNames, refModName) {
-            return utils.normalizeModNames(self, modNames, refModName, 1);
+            var ret = [], i, l;
+            if (modNames) {
+                // 1. index map
+                for (i = 0, l = modNames.length; i < l; i++) {
+                    ret.push(indexMap(modNames[i]));
+                }
+            }
+            // 3. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            return ret;
         },
 
         // 注册模块，将模块和定义 factory 关联起来
@@ -2484,6 +2501,7 @@ build time: May 30 20:28
                 return;
             }
 
+            // 没有 use，静态载入的 add 可能执行
             utils.createModuleInfo(self, name);
 
             mod = mods[name];
@@ -2495,72 +2513,9 @@ build time: May 30 20:28
 
             mod.fn = fn;
 
-
-            if (config && config.requires) {
-                config.requires = utils.normalizeModNames(self, config.requires, name);
-            }
-
             S.mix((mods[name] = mod), config);
 
             S.log(name + " is loaded");
-        },
-
-        /**
-         * 只用来指定模块依赖信息. 注意：需要在 package 声明后 add ！
-         * @param self
-         * @param name
-         * @param fn
-         * @param config
-         * @example
-         * <code>
-         *
-         * KISSY.config({
-         *  packages:[
-         *      {
-         *          name:"biz1",
-         *          path:"haha"
-         *      }
-         *  ]
-         * });
-         *
-         * KISSY.add({
-         *   "biz1/main" : {
-         *      requires:[ "biz1/part1" , "biz1/part2" ]
-         *   }
-         * });
-         *
-         * </code>
-         */
-        normAdd:function (self, name, fn, config) {
-            var mods = self.Env.mods,
-                t,
-                o;
-
-            // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name) &&
-                !config &&
-                S.isPlainObject(fn)) {
-                o = {};
-                o[name] = fn;
-                name = o;
-            }
-
-            // S.add( { name: config } )
-            if (S.isPlainObject(name)) {
-                S.each(name, function (modCfg, modName) {
-                    modName = utils.indexMapStr(modName);
-                    utils.createModuleInfo(self, modName);
-                    // 模块代码已经加载过了
-                    if (mods[modName].fn) {
-                        return;
-                    }
-                    if (t = modCfg.requires) {
-                        modCfg.requires = utils.normalizeModNames(self, t, modName);
-                    }
-                    S.mix(mods[modName], modCfg);
-                });
-                return true;
-            }
         },
 
         getMappedPath:function (self, path) {
@@ -2955,8 +2910,10 @@ build time: May 30 20:28
      * </code>
      */
     S.configs.map = function (rules) {
-        return S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules || []);
+        var self = this;
+        return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
     };
+
     /**
      * 包声明
      * biz -> .
@@ -2965,21 +2922,79 @@ build time: May 30 20:28
      * @private
      */
     S.configs.packages = function (cfgs) {
-        var ps = S.Config.packages = S.Config.packages || {};
-        S.each(cfgs, function (cfg) {
-            ps[cfg.name] = cfg;
-            //注意正则化
-            cfg.path = cfg.path && utils.normalBasePath(cfg.path);
-            cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
-        });
-        return ps;
+        var self = this,
+            name,
+            base,
+            tag,
+            Env = self.Env,
+            ps = Env.packages = Env.packages || {};
+        if (cfgs) {
+            S.each(cfgs, function (cfg, key) {
+                // 兼容数组方式
+                name = cfg.name || key;
+                // 兼容 path
+                base = cfg.base || cfg.path;
+                tag = cfg.tag;
+                ps[ name ] = cfg;
+                // 注意正则化
+                cfg.name = name;
+                cfg.base = base && utils.normalBasePath(base);
+                cfg.tag = tag && encodeURIComponent(tag);
+                delete cfg.path;
+            });
+        }
     };
 
-    S.configs.base = function (base) {
-        if (!base) {
-            return S.Config.base;
+    /*
+     只用来指定模块依赖信息.
+     * <code>
+     *
+     * KISSY.config({
+     *  base:'',
+     *  // dom-min.js
+     *  debug:'',
+     *  combine:true,
+     *  tag:'',
+     *  packages:{
+     *      "biz1": {
+     *          // path change to base
+     *          base: "haha",
+     *          // x.js
+     *          debug:'',
+     *          tag:'',
+     *          combine:false,
+     *      }
+     *  },
+     *  modules:{
+     *      "biz1/main" : {
+     *          requires: [ "biz1/part1" , "biz1/part2" ]
+     *      }
+     *  }
+     * });
+     */
+    S.configs.modules = function (modules) {
+        var self = this,
+            t,
+            mods = self.Env.mods;
+        if (modules) {
+            S.each(modules, function (modCfg, modName) {
+                modName = utils.indexMapStr(modName);
+                utils.createModuleInfo(self, modName, modCfg);
+            });
         }
-        S.Config.base = utils.normalBasePath(base);
+    };
+
+    S.configs.modules.order = 10;
+
+    /**
+     * KISSY 's base path.
+     */
+    S.configs.base = function (base) {
+        var self = this;
+        if (!base) {
+            return self.Config.base;
+        }
+        self.Config.base = utils.normalBasePath(base);
     };
 })(KISSY);/**
  * @fileOverview simple loader from KISSY<=1.2
@@ -3030,18 +3045,18 @@ build time: May 30 20:28
                 var self = this,
                     SS = self.SS,
                     mod,
-                    mods = SS.Env.mods,
-                    o;
+                    requires,
+                    mods = SS.Env.mods;
 
-
-                if (utils.normAdd(SS, name, fn, config)) {
-                    return;
+                // 兼容 1.3.0pr1
+                if (S.isPlainObject(name)) {
+                    return SS.config({
+                        modules:name
+                    });
                 }
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
-
-                    name = utils.indexMapStr(name);
 
                     utils.registerModule(SS, name, fn, config);
 
@@ -3052,10 +3067,13 @@ build time: May 30 20:28
                         return;
                     }
 
-
-                    if (config && utils.isAttached(SS, config.requires)) {
-                        utils.attachMod(SS, mod);
+                    if (config) {
+                        requires = utils.normalizeModNames(SS, config.requires, name);
+                        if (config && utils.isAttached(SS, requires)) {
+                            utils.attachMod(SS, mod);
+                        }
                     }
+
                     return;
                 }
                 // S.add(fn,config);
@@ -3146,19 +3164,19 @@ build time: May 30 20:28
         if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
             return utils.removePostfix(src.substring(base.length));
         }
-        var packages = SS.Config.packages,
+        var packages = SS.Env.packages,
             finalPackagePath,
             finalPackageLength = -1;
-        //外部模块去除包路径，得到模块名
+        // 外部模块去除包路径，得到模块名
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
-                var p_path = packages[p].path;
+                var packageBase = packages[p].base;
                 if (packages.hasOwnProperty(p) &&
-                    src.lastIndexOf(p_path, 0) === 0) {
+                    src.lastIndexOf(packageBase, 0) === 0) {
                     // longest match
-                    if (p_path.length > finalPackageLength) {
-                        finalPackageLength = p_path.length;
-                        finalPackagePath = p_path;
+                    if (packageBase.length > finalPackageLength) {
+                        finalPackageLength = packageBase.length;
+                        finalPackagePath = packageBase;
                     }
                 }
             }
@@ -3253,15 +3271,18 @@ build time: May 30 20:28
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-            var normalizedModNames = utils.normalizeModNames(SS, modNames),
+            var normalizedModNames = utils.unalias(SS, modNames),
                 count = normalizedModNames.length,
                 currentIndex = 0;
 
-            // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, normalizedModNames)) {
+            function end() {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
-                return;
+            }
+
+            // 已经全部 attached, 直接执行回调即可
+            if (utils.isAttached(SS, normalizedModNames)) {
+                return end();
             }
 
             // 有尚未 attached 的模块
@@ -3270,8 +3291,7 @@ build time: May 30 20:28
                 attachModByName(self, modName, function () {
                     currentIndex++;
                     if (currentIndex == count) {
-                        var mods = utils.getModules(SS, modNames);
-                        callback && callback.apply(SS, mods);
+                        end();
                     }
                 });
             });
@@ -3282,8 +3302,9 @@ build time: May 30 20:28
 
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
-        var SS = self.SS,
-            mod = SS.Env.mods[modName];
+        var SS = self.SS, mod;
+        utils.createModuleInfo(SS, modName);
+        mod = SS.Env.mods[modName];
         if (mod.status === ATTACHED) {
             callback();
             return;
@@ -3561,9 +3582,11 @@ build time: May 30 20:28
 
                 modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-                var unaliasModNames = utils.normalizeModNames(SS, modNames);
+                var unaliasModNames = utils.unalias(SS, modNames);
 
                 var allModNames = self.calculate(unaliasModNames);
+
+                utils.createModulesInfo(SS, allModNames);
 
                 var comboUrls = self.getComboUrls(allModNames);
 
@@ -3622,7 +3645,7 @@ build time: May 30 20:28
 
                 if (!countJss) {
                     // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-                    var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                    var unaliasModNames = utils.unalias(self.SS, modNames);
                     self.attachMods(unaliasModNames);
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
@@ -3644,7 +3667,7 @@ build time: May 30 20:28
                                 }
                             }
                             if (success && !(--countJss)) {
-                                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                                var unaliasModNames = utils.unalias(self.SS, modNames);
                                 self.attachMods(unaliasModNames);
                                 if (utils.isAttached(self.SS, unaliasModNames)) {
                                     fn.apply(null, utils.getModules(self.SS, modNames))
@@ -3662,13 +3685,12 @@ build time: May 30 20:28
             add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS;
-
-                if (utils.normAdd(SS, name, fn, config)) {
-                    return;
+                // 兼容 1.3.0pr1
+                if (S.isPlainObject(name)) {
+                    return SS.config({
+                        modules:name
+                    });
                 }
-
-                name = utils.indexMapStr(name);
-
                 utils.registerModule(SS, name, fn, config);
             },
 
@@ -3728,18 +3750,22 @@ build time: May 30 20:28
                     i,
                     SS = self.SS,
                     Config = S.Config,
-                    packagePath,
+                    packageBase,
                     combos = {};
 
                 S.each(modNames, function (modName) {
                     var mod = self.getModInfo(modName);
-                    var packageInfo = utils.getPackageInfo(SS, mod);
-                    var packagePath = packageInfo.path;
+                    var packageInfo = mod.getPackageInfo();
+                    var packageBase = packageInfo.base;
                     var type = utils.isCss(mod.path) ? "css" : "js", mods;
                     var packageName = packageInfo.name;
-                    combos[packagePath] = combos[packagePath] || {};
-                    mods = combos[packagePath][type] = combos[packagePath][type] || [];
-                    mods.tag = mod.getTag();
+                    combos[packageBase] = combos[packageBase] || {};
+                    mods = combos[packageBase][type] = combos[packageBase][type] || [];
+                    mods.combine = 1;
+                    if (packageInfo.combine === false) {
+                        mods.combine = 0;
+                    }
+                    mods.tag = packageInfo.tag;
                     mods.charset = mod.getCharset();
                     mods.name = packageName;
                     mods.push(mod);
@@ -3754,22 +3780,21 @@ build time: May 30 20:28
                     comboSep = Config.comboSep,
                     maxUrlLength = Config.comboMaxUrlLength;
 
-                for (packagePath in combos) {
-                    for (var type in combos[packagePath]) {
+                for (packageBase in combos) {
+                    for (var type in combos[packageBase]) {
                         t = [];
-                        var jss = combos[packagePath][type],
+                        var jss = combos[packageBase][type],
                             packageName = jss.name,
                             packageNamePath = packageName + "/";
-                        res[type][packagePath] = [];
-                        res[type][packagePath].charset = jss.charset;
+                        res[type][packageBase] = [];
+                        res[type][packageBase].charset = jss.charset;
                         // current package's mods
-                        res[type][packagePath].mods = [];
+                        res[type][packageBase].mods = [];
                         // add packageName to common prefix
                         // combo grouped by package
-                        var prefix = packagePath +
-                                (packageName ? packageNamePath : "") +
-                                comboPrefix,
+                        var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
                             path,
+                            tag,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
                             // remove packageName prefix from mod path
@@ -3777,11 +3802,16 @@ build time: May 30 20:28
                             if (packageName) {
                                 path = utils.removePackageNameFromModName(packageName, path);
                             }
+                            res[type][packageBase].mods.push(jss[i]);
+                            if (!jss.combine) {
+                                tag = jss[i].getTag();
+                                res[type][packageBase].push(utils.getMappedPath(SS, prefix + path + (tag ? ("?t=" + tag) : "")));
+                                continue;
+                            }
                             t.push(path);
-                            res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
-                                res[type][packagePath].push(self.getComboUrl(
+                                res[type][packageBase].push(self.getComboUrl(
                                     prefix,
                                     t,
                                     comboSep,
@@ -3792,7 +3822,7 @@ build time: May 30 20:28
                             }
                         }
                         if (t.length) {
-                            res[type][packagePath].push(self.getComboUrl(
+                            res[type][packageBase].push(self.getComboUrl(
                                 prefix,
                                 t,
                                 comboSep,
@@ -4026,10 +4056,8 @@ build time: May 30 20:28
     }
 
     S.config(S.mix({
-        // the default timeout for getScript
-        timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120530202838'
+        tag:'20120531220155'
     }, getBaseInfo()));
 
     /**

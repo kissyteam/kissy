@@ -1,5 +1,6 @@
 describe("KISSY ComboLoader", function () {
     var S = KISSY,
+        host=location.hostname,
         ComboLoader = S.Loader.Combo;
 
 
@@ -73,6 +74,7 @@ describe("KISSY ComboLoader", function () {
         });
         var r;
         r = l.calculate(["a", "h"]);
+        S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
         expect(c.js[S.Config.base][0] == (S.Config.base +
             "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js")).
@@ -102,6 +104,7 @@ describe("KISSY ComboLoader", function () {
         }
         var r;
         r = l.calculate(ret);
+        S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
         var cjs = c.js[S.Config.base];
         expect(cjs.length).toBe(6);
@@ -160,6 +163,7 @@ describe("KISSY ComboLoader", function () {
         });
 
         var mods = S.getLoader().calculate(["tests/a"]);
+        S.Loader.Utils.createModulesInfo(S, mods);
         var urls = S.getLoader().getComboUrls(mods);
         var host = location.hostname;
 
@@ -234,6 +238,50 @@ describe("KISSY ComboLoader", function () {
 
         runs(function () {
             expect(order).toEqual([1, 2]);
+        });
+    });
+
+    it("works for not combo for specified packages", function () {
+        window.TIMESTAMP_X = 0;
+        var combine = S.config("combine");
+
+        S.config({
+            base:'',
+            tag:'',
+            combine:true,
+            debug:true,
+            packages:{
+                'timestamp':{
+                    combine:false,
+                    base:'/kissy_git/kissy/src/seed/tests/specs/'
+                }
+            },
+            modules:{
+                'timestamp/x':{
+                    requires:['./z']
+                },
+                'timestamp/y':{
+                    requires:['./x']
+                }
+            }
+        });
+
+        runs(function () {
+            var loader = S.getLoader(), Loader = S.Loader, utils = Loader.Utils;
+
+            var allModNames = loader.calculate(["timestamp/y"]);
+
+            utils.createModulesInfo(S, allModNames);
+            var comboUrls = loader.getComboUrls(allModNames);
+
+            var key = "http://"+host+"/kissy_git/kissy/src/seed/tests/specs/";
+
+            var jss = comboUrls.js[key];
+
+            expect(jss[0]).toBe("http://"+host+"/kissy_git/kissy/src/seed/tests/specs/timestamp/??y.js");
+            expect(jss[1]).toBe("http://"+host+"/kissy_git/kissy/src/seed/tests/specs/timestamp/??x.js");
+            expect(jss[2]).toBe("http://"+host+"/kissy_git/kissy/src/seed/tests/specs/timestamp/??z.js");
+
         });
     });
 

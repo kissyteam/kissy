@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 21:24
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
     var CLS_VIDEO = "ke_video",

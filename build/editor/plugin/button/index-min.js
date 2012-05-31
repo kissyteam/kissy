@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 21:24
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/button/index",function(h,f,i){function j(a){return a&&-1==a.indexOf("<")?a:0}var b=i.define([i.UIBase.Box.Render],{_updateHref:function(){this.get("el").attr("href","javascript:void('"+(j(this.get("text"))||j(this.get("title")))+"')")},bindUI:function(){var a=this,g=a.get("keepFocus"),d=a.get("el");d.on("click",a._action,a);g&&d.unselectable();d.on("mousedown",function(b){"off"==a.get("state")&&d.addClass("ks-editor-triplebutton-active");g&&b.halt()});d.on("mouseup mouseleave",
 function(){"off"==a.get("state")&&d.hasClass("ks-editor-triplebutton-active")&&setTimeout(function(){d.removeClass("ks-editor-triplebutton-active")},300)})},_uiSetTitle:function(){this.get("el").attr("title",this.get("title"));this._updateHref()},_uiSetContentCls:function(a){var b=this.get("el");void 0!==a&&(b.html("<span class='ks-editor-toolbar-item "+a+"' />"),this.get("keepFocus")&&b.unselectable(void 0))},_uiSetText:function(a){this.get("el").html(a);this._updateHref()},_uiSetState:function(a,

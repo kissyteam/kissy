@@ -1,4 +1,5 @@
-KISSY.add("timestamp/y", function () {
+KISSY.add("timestamp/y", function (S, X) {
+    return X;
 }, {
-    requires:["./x?t=c"]
+    requires:["./x"]
 })

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 21:24
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, Editor, listCmd) {
 
@@ -33,5 +33,5 @@ KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, Editor, listCmd)
     };
 
 }, {
-    requires:['editor', '../listUtils/cmd.js']
+    requires:['editor', '../listUtils/cmd']
 });

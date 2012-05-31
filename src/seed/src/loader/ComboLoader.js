@@ -74,9 +74,11 @@
 
                 modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-                var unaliasModNames = utils.normalizeModNames(SS, modNames);
+                var unaliasModNames = utils.unalias(SS, modNames);
 
                 var allModNames = self.calculate(unaliasModNames);
+
+                utils.createModulesInfo(SS, allModNames);
 
                 var comboUrls = self.getComboUrls(allModNames);
 
@@ -135,7 +137,7 @@
 
                 if (!countJss) {
                     // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-                    var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                    var unaliasModNames = utils.unalias(self.SS, modNames);
                     self.attachMods(unaliasModNames);
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
@@ -157,7 +159,7 @@
                                 }
                             }
                             if (success && !(--countJss)) {
-                                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                                var unaliasModNames = utils.unalias(self.SS, modNames);
                                 self.attachMods(unaliasModNames);
                                 if (utils.isAttached(self.SS, unaliasModNames)) {
                                     fn.apply(null, utils.getModules(self.SS, modNames))
@@ -175,13 +177,12 @@
             add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS;
-
-                if (utils.normAdd(SS, name, fn, config)) {
-                    return;
+                // 兼容 1.3.0pr1
+                if (S.isPlainObject(name)) {
+                    return SS.config({
+                        modules:name
+                    });
                 }
-
-                name = utils.indexMapStr(name);
-
                 utils.registerModule(SS, name, fn, config);
             },
 
@@ -241,18 +242,22 @@
                     i,
                     SS = self.SS,
                     Config = S.Config,
-                    packagePath,
+                    packageBase,
                     combos = {};
 
                 S.each(modNames, function (modName) {
                     var mod = self.getModInfo(modName);
-                    var packageInfo = utils.getPackageInfo(SS, mod);
-                    var packagePath = packageInfo.path;
+                    var packageInfo = mod.getPackageInfo();
+                    var packageBase = packageInfo.base;
                     var type = utils.isCss(mod.path) ? "css" : "js", mods;
                     var packageName = packageInfo.name;
-                    combos[packagePath] = combos[packagePath] || {};
-                    mods = combos[packagePath][type] = combos[packagePath][type] || [];
-                    mods.tag = mod.getTag();
+                    combos[packageBase] = combos[packageBase] || {};
+                    mods = combos[packageBase][type] = combos[packageBase][type] || [];
+                    mods.combine = 1;
+                    if (packageInfo.combine === false) {
+                        mods.combine = 0;
+                    }
+                    mods.tag = packageInfo.tag;
                     mods.charset = mod.getCharset();
                     mods.name = packageName;
                     mods.push(mod);
@@ -267,22 +272,21 @@
                     comboSep = Config.comboSep,
                     maxUrlLength = Config.comboMaxUrlLength;
 
-                for (packagePath in combos) {
-                    for (var type in combos[packagePath]) {
+                for (packageBase in combos) {
+                    for (var type in combos[packageBase]) {
                         t = [];
-                        var jss = combos[packagePath][type],
+                        var jss = combos[packageBase][type],
                             packageName = jss.name,
                             packageNamePath = packageName + "/";
-                        res[type][packagePath] = [];
-                        res[type][packagePath].charset = jss.charset;
+                        res[type][packageBase] = [];
+                        res[type][packageBase].charset = jss.charset;
                         // current package's mods
-                        res[type][packagePath].mods = [];
+                        res[type][packageBase].mods = [];
                         // add packageName to common prefix
                         // combo grouped by package
-                        var prefix = packagePath +
-                                (packageName ? packageNamePath : "") +
-                                comboPrefix,
+                        var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
                             path,
+                            tag,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
                             // remove packageName prefix from mod path
@@ -290,11 +294,16 @@
                             if (packageName) {
                                 path = utils.removePackageNameFromModName(packageName, path);
                             }
+                            res[type][packageBase].mods.push(jss[i]);
+                            if (!jss.combine) {
+                                tag = jss[i].getTag();
+                                res[type][packageBase].push(utils.getMappedPath(SS, prefix + path + (tag ? ("?t=" + tag) : "")));
+                                continue;
+                            }
                             t.push(path);
-                            res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
-                                res[type][packagePath].push(self.getComboUrl(
+                                res[type][packageBase].push(self.getComboUrl(
                                     prefix,
                                     t,
                                     comboSep,
@@ -305,7 +314,7 @@
                             }
                         }
                         if (t.length) {
-                            res[type][packagePath].push(self.getComboUrl(
+                            res[type][packageBase].push(self.getComboUrl(
                                 prefix,
                                 t,
                                 comboSep,

@@ -1,24 +1,32 @@
 describe("loader", function () {
     describe("timestamp for individual module works", function () {
-
+        var S = KISSY;
 
         it("works and avoid repeated loading", function () {
             var mods = KISSY.Env.mods;
 
             KISSY.config({
                 debug:true,
-                packages:[
-                    {
-                        name:'timestamp',
+                packages:{
+                    'timestamp':{
                         tag:'a',
                         path:'/kissy_git/kissy/src/seed/tests/specs/'
                     }
-                ]
+                },
+                modules:{
+                    'timestamp/x':{
+                        tag:'b',
+                        requires:['./z']
+                    },
+                    'timestamp/z':{
+                        tag:'z'
+                    }
+                }
             });
 
             var ok1;
 
-            KISSY.use("timestamp/x.js?t=b", function () {
+            KISSY.use("timestamp/x", function () {
                 ok1 = 1;
             });
 
@@ -27,7 +35,10 @@ describe("loader", function () {
             });
 
             runs(function () {
+                expect(S.endsWith(mods["timestamp/x"].fullpath, "b")).toBe(true);
+                expect(S.endsWith(mods["timestamp/z"].fullpath, "z")).toBe(true);
                 expect(mods["timestamp/x"].getTag()).toBe("b");
+                expect(mods["timestamp/z"].getTag()).toBe("z");
                 expect(window.TIMESTAMP_X).toBe(1);
             });
 

@@ -39,15 +39,18 @@
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-            var normalizedModNames = utils.normalizeModNames(SS, modNames),
+            var normalizedModNames = utils.unalias(SS, modNames),
                 count = normalizedModNames.length,
                 currentIndex = 0;
 
-            // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, normalizedModNames)) {
+            function end() {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
-                return;
+            }
+
+            // 已经全部 attached, 直接执行回调即可
+            if (utils.isAttached(SS, normalizedModNames)) {
+                return end();
             }
 
             // 有尚未 attached 的模块
@@ -56,8 +59,7 @@
                 attachModByName(self, modName, function () {
                     currentIndex++;
                     if (currentIndex == count) {
-                        var mods = utils.getModules(SS, modNames);
-                        callback && callback.apply(SS, mods);
+                        end();
                     }
                 });
             });
@@ -68,8 +70,9 @@
 
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
-        var SS = self.SS,
-            mod = SS.Env.mods[modName];
+        var SS = self.SS, mod;
+        utils.createModuleInfo(SS, modName);
+        mod = SS.Env.mods[modName];
         if (mod.status === ATTACHED) {
             callback();
             return;
