@@ -4,10 +4,12 @@
  */
 KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 
-	var CLS_GRID_ROW = 'grid-row',
-		CLS_GRID_CELL = 'grid-cell',
-		CLS_GRID_CELL_INNER = 'grid-cell-inner',
-		CLS_CELL_TEXT = 'grid-cell-text';
+	var CLS_GRID_ROW = 'ks-grid-row',
+		CLS_ROW_ODD = 'ks-grid-row-odd',
+		CLS_ROW_EVEN = 'ks-grid-row-even',
+		CLS_GRID_CELL = 'ks-grid-cell',
+		CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
+		CLS_CELL_TEXT = 'ks-grid-cell-text';
 	var GridBodyRender = Component.Render.extend({
 		/**
 		* @see {Component.Controller#renderUI}
@@ -25,14 +27,38 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//clear data in table
 		clearData : function(){
 			var _self = this,
-				prefixCls = _self.get('prefixCls'),
 				tbodyEl = _self.get('tbodyEl');
-			tbodyEl.children('.'+prefixCls + CLS_GRID_ROW).remove();
+			tbodyEl.children('.' + CLS_GRID_ROW).remove();
 		},
-		_createRow : function(item,index){
+		//create row element and append to tbody
+		_createRow : function(record,index){
 			var _self = this,
-				colomns = _self.get('columns');
-
+				columns = _self.get('columns'),
+				tbodyEl = _self.get('tbodyEl'),
+				rowTemplate = _self.get('rowTemplate'),
+				oddCls = index % 2 === 0 ? CLS_ROW_ODD : CLS_ROW_EVEN,
+				cellsTemplate = [];
+			
+			S.each(columns,function(column,colIndex){
+				var dataIndex = column.get('dataIndex'),
+					renderer = column.get('renderer'),
+					value = record[dataIndex],
+					text = renderer ? renderer(value, record) : value;
+				cellsTemplate.push(_self._getCellTemplate(column,text,value,record));
+			});
+			rowTemplate = Template(rowTemplate).render({cellsTemplate : cellsTemplate.join(''),oddCls : oddCls});
+			return new S.Node(rowTemplate).appendTo(tbodyEl);
+		},
+		//get cell template by config and record
+		_getCellTemplate : function(column, text,value,obj){
+			var _self = this,
+				cellTemplate = _self.get('cellTemplate');
+			return Template(cellTemplate)
+				.render({
+					id : column.get('id'),
+					dataIndex : column.get('dataIndex'),
+					text : text
+				});
 		},
 		//get the template of column
 		_getTemplate : function(){
@@ -99,9 +125,9 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this;
 			var _self = this;
 			_self.clearData();
-			S.each(data,function(item,index){
-				var rowEl = _self.get('view')._createRow(item,index);
-				_self.fire('rowcreated',{record : item,data : item,row : rowEl[0]});
+			S.each(data,function(record,index){
+				var rowEl = _self.get('view')._createRow(record,index);
+				_self.fire('rowcreated',{record : record,data : record,row : rowEl[0]});
 			});
 			_self.fire('aftershow');
 		},
@@ -116,6 +142,15 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		 */		
 		{
 			/**
+			* columns of the component
+			* @see Grid.Column
+			* @private
+			*/
+			columns : {
+				view : true,
+				value : []
+			},
+			/**
 			* @private
 			*/
 			tbodyEl:{
@@ -123,10 +158,12 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			},
 			/**
 			* The CSS class to apply to this header's table element.
+			* @type {String}
+			* @default 'ks-grid-table' this css cannot be ovrrided
 			*/
 			tableCls : {
 				view : true,
-				value : 'ks-grid-table'
+				value : ''
 			},
 			/**
 			* @type {Boolean}
@@ -136,12 +173,21 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 				value : false
 			},
 			/**
+			* True to stripe the rows.
+			* @type {Boolean}
+			* @default true
+			*/
+			stripeRows : {
+				view : true,
+				value : true
+			},
+			/**
 			* An template used to create the internal structure inside this Component's encapsulating Element.
 			* User can use the syntax of Kissy's template componet.
 			* Only in the configuration of the column can set this property.
 			* @type String
-			* @default <pre> &lt;div class="{{prefixCls}}grid-body-scroll"&gt;'+
-			*	'&lt;table cellspacing="0" cellpadding="0" class="{{prefixCls}}grid-table" &gt;'+
+			* @default <pre> &lt;div class="grid-body-scroll"&gt;'+
+			*	'&lt;table cellspacing="0" cellpadding="0" class="grid-table" &gt;'+
 			*		'&lt;tbody&gt;&lt;/tbody&gt;'+
 			*		'&lt;tfoot&gt;&lt;/tfoot&gt;'+
 			*	'&lt;/table&gt;'+
@@ -150,8 +196,8 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			*/
 			template : {
 				view : true,
-				value : '<div class="{{prefixCls}}grid-body-scroll">'+
-							'<table cellspacing="0" cellpadding="0" class="{{tableCls}}"">'+
+				value : '<div class="grid-body-scroll">'+
+							'<table cellspacing="0" cellpadding="0" class="ks-grid-table {{tableCls}}"">'+
 								'<tbody></tbody>'+
 								'<tfoot></tfoot>'+
 							'</table>'+
@@ -161,25 +207,25 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			* An template used to create the row which encapsulates cells.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default  <pre>'&lt;tr class="{{prefixCls}}' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
+			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
 			*/
 			rowTemplate : {
 				view : true,
-				value : '<tr class="{{prefixCls}}' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTemplate}}</tr>'
+				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTemplate}}</tr>'
 			},
 			/**
 			* An template used to create the cell.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default <pre>'&lt;td  class="{{prefixCls}}' + CLS_GRID_CELL + ' {{prefixCls}}grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
-			*		'&lt;div class="{{prefixCls}}' + CLS_GRID_CELL_INNER + '" &gt;&lt;span class="{{prefixCls}}' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;&lt;/div&gt;'+
+			* @default <pre>'&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
+			*		'&lt;div class="' + CLS_GRID_CELL_INNER + '" &gt;&lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;&lt;/div&gt;'+
 			*	'&lt;/td&gt;'
 			*</pre>
 			*/
 			cellTemplate : {
 				view : true,
-				value : '<td  class="{{prefixCls}}' + CLS_GRID_CELL + ' {{prefixCls}}grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}>'+
-							'<div class="{{prefixCls}}' + CLS_GRID_CELL_INNER + '" ><span class="{{prefixCls}}' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span></div>'+
+				value : '<td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}>'+
+							'<div class="' + CLS_GRID_CELL_INNER + '" ><span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span></div>'+
 						'</td>'
 	
 			},

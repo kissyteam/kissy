@@ -58,6 +58,16 @@ KISSY.add('grid/header',function(S,Component,Column){
 			});
 		},
 		/**
+		* get the columns of this header,the result equals the 'children' property .
+		* @return {Array} columns 
+		* @example var columns = header.getColumns();
+		*	<br>or</br>
+		* var columns = header.get('children');
+		*/
+		getColumns : function(){
+			return this.get('children');
+		},
+		/**
 		* get {@link Grid.Column} instance by index,when column moved ,the index changed.
 		* @param {Number} index The index of columns
 		* @return {Grid.Column} the column in the header,if the index outof the range,the result is null
@@ -127,7 +137,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 			*/
 			tableCls : {
 				view : true,
-				value : 'grid-table'
+				value : 'ks-grid-table'
 			}
 		},
 		DefaultRender : headerRender
