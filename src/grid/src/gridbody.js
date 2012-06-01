@@ -30,7 +30,8 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			tbodyEl.children('.'+prefixCls + CLS_GRID_ROW).remove();
 		},
 		_createRow : function(item,index){
-			var _self = this;
+			var _self = this,
+				colomns = _self.get('columns');
 
 		},
 		//get the template of column
