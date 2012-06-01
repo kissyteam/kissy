@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * Add table plugin for KISSY.
@@ -486,7 +486,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
 
             editor.addButton({
-                contentCls:"ke-toolbar-table",
+                contentCls:"ks-editor-toolbar-table",
                 mode:Editor.WYSIWYG_MODE,
                 title:"插入表格"
             }, {

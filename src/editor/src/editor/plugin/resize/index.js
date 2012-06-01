@@ -23,7 +23,7 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 }
             }
 
-            var resizer = new Node("<div class='ke-resizer' style='cursor: "
+            var resizer = new Node("<div class='ks-editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
 

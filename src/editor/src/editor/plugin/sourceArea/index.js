@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
         init:function (editor) {
             editor.addButton({
                 title:"源码",
-                contentCls:"ke-toolbar-source"
+                contentCls:"ks-editor-toolbar-source"
             }, {
                 init:function () {
                     var self = this;

@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
-    var CLASS = "ke-element-path";
+    var CLASS = "ks-editor-element-path";
 
     function ElementPaths(cfg) {
         var self = this;

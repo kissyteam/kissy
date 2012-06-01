@@ -1,6 +1,6 @@
 KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
-    var smiley_markup = "<div class='ke-smiley-sprite'>";
+    var smiley_markup = "<div class='ks-editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +
             "data-icon='http://a.tbcdn.cn/sys/wangwang/smiley/48x48/" + i + ".gif'>" +
@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     return {
         init:function (editor) {
             editor.addButton({
-                contentCls:"ke-toolbar-smiley",
+                contentCls:"ks-editor-toolbar-smiley",
                 title:"插入表情",
                 keepFocus:false,
                 mode:Editor.WYSIWYG_MODE
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                             focus4e:false,
                             width:"297px",
                             autoRender:true,
-                            elCls:"ke-popup",
+                            elCls:"ks-editor-popup",
                             zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                             mask:false
                         });

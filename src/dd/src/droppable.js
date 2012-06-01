@@ -4,6 +4,8 @@
  */
 KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
+    var PREFIX_CLS = DDM.PREFIX_CLS;
+
     /**
      * make a node droppable
      * @memberOf DD
@@ -164,26 +166,24 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     drag = DDM.get("activeDrag"),
                     node = self.get("node"),
                     dropGroups = self.get("groups"),
-                    dragGroups = drag.get("groups"),
-                    prefixCls = DDM.get("prefixCls");
+                    dragGroups = drag.get("groups");
                 if (validDrop(dropGroups, dragGroups)) {
                     DDM._addValidDrop(self);
                     // 委托时取不到节点
                     if (node) {
-                        node.addClass(prefixCls + "drop-active-valid");
+                        node.addClass(PREFIX_CLS + "drop-active-valid");
                         DDM.cacheWH(node);
                     }
                 } else if (node) {
-                    node.addClass(prefixCls + "drop-active-invalid");
+                    node.addClass(PREFIX_CLS + "drop-active-invalid");
                 }
             },
 
             _deActive:function () {
-                var node = this.get("node"),
-                    prefixCls = DDM.get("prefixCls");
+                var node = this.get("node");
                 if (node) {
-                    node.removeClass(prefixCls + "drop-active-valid")
-                        .removeClass(prefixCls + "drop-active-invalid");
+                    node.removeClass(PREFIX_CLS + "drop-active-valid")
+                        .removeClass(PREFIX_CLS + "drop-active-invalid");
                 }
             },
 
@@ -197,7 +197,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
             _handleOut:function () {
                 var self = this,
                     ret = self.__getCustomEvt();
-                self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+                self.get("node").removeClass(PREFIX_CLS + "drop-over");
                 /**
                  * html5 => dragleave
                  */
@@ -208,7 +208,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                 var self = this,
                     e = self.__getCustomEvt(ev);
                 e.drag._handleEnter(e);
-                self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
+                self.get("node").addClass(PREFIX_CLS + "drop-over");
                 self.fire("dropenter", e);
             },
 
@@ -223,7 +223,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
             _end:function () {
                 var self = this,
                     ret = self.__getCustomEvt();
-                self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+                self.get("node").removeClass(PREFIX_CLS + "drop-over");
                 self.fire('drophit', ret);
             },
 

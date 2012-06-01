@@ -131,7 +131,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                 params_str = "",
                 vars_str = "";
             doc = doc || document;
-            attrs.id = attrs.id || S.guid("ke-runtimeflash-");
+            attrs.id = attrs.id || S.guid("ks-editor-runtimeflash-");
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a))
                     attrs_str += a + "='" + attrs[a] + "' ";

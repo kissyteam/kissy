@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
             editor.addButton({
                 title:"增加缩进量 ",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-indent"
+                contentCls:"ks-editor-toolbar-indent"
             }, {
                 offClick:function () {
                     editor.execCommand("indent");

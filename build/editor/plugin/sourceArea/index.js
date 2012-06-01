@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * source editor for kissy editor
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
         init:function (editor) {
             editor.addButton({
                 title:"源码",
-                contentCls:"ke-toolbar-source"
+                contentCls:"ks-editor-toolbar-source"
             }, {
                 init:function () {
                     var self = this;

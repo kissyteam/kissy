@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * triple state button for kissy editor
@@ -11,11 +11,11 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Component) {
     var ON = "on",
         OFF = "off",
         DISABLED = "disabled",
-        BUTTON_CLASS = "ke-triplebutton",
-        ON_CLASS = "ke-triplebutton-on",
-        OFF_CLASS = "ke-triplebutton-off",
-        ACTIVE_CLASS = "ke-triplebutton-active",
-        DISABLED_CLASS = "ke-triplebutton-disabled";
+        BUTTON_CLASS = "ks-editor-triplebutton",
+        ON_CLASS = "ks-editor-triplebutton-on",
+        OFF_CLASS = "ks-editor-triplebutton-off",
+        ACTIVE_CLASS = "ks-editor-triplebutton-active",
+        DISABLED_CLASS = "ks-editor-triplebutton-disabled";
 
     function getTipText(str) {
         if (str && str.indexOf("<") == -1) {
@@ -68,7 +68,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Component) {
             var self = this,
                 el = self.get("el");
             if (contentCls !== undefined) {
-                el.html("<span class='ke-toolbar-item " + contentCls + "' />");
+                el.html("<span class='ks-editor-toolbar-item " + contentCls + "' />");
                 if (self.get('keepFocus')) {
                     el.unselectable(undefined);
                 }

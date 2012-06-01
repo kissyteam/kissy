@@ -1,9 +1,9 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
-.ke-dialog, .ke-overlay {
+.ks-editor-dialog, .ks-editor-overlay {
     position: absolute;
     /*防止移位带来的闪烁*/
     left: -9999px;
@@ -11,12 +11,12 @@ build time: May 30 12:21
     outline: none;
 }
 
-.ke-dialog .ks-contentbox, .ke-popup .ks-contentbox {
+.ks-editor-dialog .ks-contentbox, .ks-editor-popup .ks-contentbox {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
 
-.ke-dialog .ks-stdmod-header {
+.ks-editor-dialog .ks-stdmod-header {
     background: repeat-x scroll 0 0 #D6DBE2;
     background-image: url("overlay-hd.png"); /** sprite-ref: cool; sprite-alignment: repeat; */
     border-bottom: 1px solid #ACB4BE;
@@ -27,7 +27,7 @@ build time: May 30 12:21
     padding: 0 0 0 18px;
 }
 
-.ke-dialog .ks-ext-close {
+.ks-editor-dialog .ks-ext-close {
     height: 18px;
     width: 18px;
     border: 1px solid transparent;
@@ -43,7 +43,7 @@ build time: May 30 12:21
     cursor: pointer;
 }
 
-.ke-dialog .ks-ext-close .ks-ext-close-x {
+.ks-editor-dialog .ks-ext-close .ks-ext-close-x {
     display: block;
     background: no-repeat;
     background-image: url("close.png"); /** sprite-ref: cool; */
@@ -53,24 +53,24 @@ build time: May 30 12:21
     margin: 2.5px;
 }
 
-.ke-dialog .ks-ext-close:hover {
+.ks-editor-dialog .ks-ext-close:hover {
     border: 1px solid #CED5E0;
     background: white;
 }
 
-.ke-ext-mask, .ks-ext-mask {
+.ks-editor-ext-mask, .ks-ext-mask {
     background-color: #000;
     opacity: 0.3;
     filter: alpha(opacity = 15);
 }
 
-.ke-overlay .ks-ext-loading {
+.ks-editor-overlay .ks-ext-loading {
     opacity: 0.6;
     filter: alpha(opacity = 60);
     background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
-.ke-global-loading .ks-ext-loading {
+.ks-editor-global-loading .ks-ext-loading {
     background-attachment: fixed;
 }

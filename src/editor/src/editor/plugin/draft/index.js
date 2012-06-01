@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         Event = S.Event,
         INTERVAL = 5,
         JSON = S['JSON'],
-        DRAFT_SAVE = "ke-draft-save20110503";
+        DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
         n += "";
@@ -89,30 +89,30 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='ke-draft'>" +
-                    "<span class='ke-draft-title'>" +
+                "<div class='ks-editor-draft'>" +
+                    "<span class='ks-editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='ke-draft-time'/>")
+            self.timeTip = new Node("<span class='ks-editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
-                "<a href='#' " +
-                    "onclick='return false;' " +
-                    "class='ke-button ke-draft-save-btn' " +
-                    "style='" +
-                    "vertical-align:middle;" +
-                    "padding:1px 9px;" +
-                    "'>" +
-                    "<span class='ke-draft-mansave'>" +
-                    "</span>" +
-                    "<span>立即保存</span>" +
-                    "</a>"
-            ).unselectable()
-                .appendTo(holder),
+                    "<a href='#' " +
+                        "onclick='return false;' " +
+                        "class='ks-editor-button ks-editor-draft-save-btn' " +
+                        "style='" +
+                        "vertical-align:middle;" +
+                        "padding:1px 9px;" +
+                        "'>" +
+                        "<span class='ks-editor-draft-mansave'>" +
+                        "</span>" +
+                        "<span>立即保存</span>" +
+                        "</a>"
+                ).unselectable()
+                    .appendTo(holder),
                 versions = new Select({
                     container:holder,
                     menuContainer:document.body,
@@ -174,7 +174,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ke-draft-help ke-triplebutton-off" ' +
+                    'class="ks-editor-draft-help ks-editor-triplebutton-off" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -229,8 +229,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
             self.helpPopup = new Overlay({
                 content:help,
+                prefixCls:'ks-editor-',
                 autoRender:true,
                 width:help.width() + "px",
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
                 mask:false
             });
             self.helpPopup.get("el")
@@ -288,11 +290,11 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             var self = this,
                 drafts = self._getDrafts(),
                 editor = self.editor,
-                //不使用rawdata
-                //undo 只需获得可视区域内代码
-                //可视区域内代码！= 最终代码
-                //代码模式也要支持草稿功能
-                //统一获得最终代码
+            //不使用rawdata
+            //undo 只需获得可视区域内代码
+            //可视区域内代码！= 最终代码
+            //代码模式也要支持草稿功能
+            //统一获得最终代码
                 data = editor.get("formatData");
 
             //如果当前内容为空，不保存版本

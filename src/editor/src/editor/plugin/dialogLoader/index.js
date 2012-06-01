@@ -13,8 +13,8 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
                         y:0,
                         // 指定全局 loading zIndex 值
                         "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
-                        prefixCls:'ke-',
-                        elCls:"ke-global-loading"
+                        prefixCls:'ks-editor-',
+                        elCls:"ks-editor-global-loading"
                     });
                 }
                 globalMask.set("height", S.DOM.docHeight());

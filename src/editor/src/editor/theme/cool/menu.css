@@ -2,7 +2,7 @@
 menu style for kissy editor ,include contextmenu and select menu
 @author yiminghe@gmail.com
 **/
-.ke-menu {
+.ks-editor-menu {
     background: none repeat scroll 0 0 #fcfcfc;
     border-color: rgb(206, 213, 224);
     border-style: solid;
@@ -23,7 +23,7 @@ menu style for kissy editor ,include contextmenu and select menu
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
 }
 
-.ke-menu a, .ke-menu-title {
+.ks-editor-menu a, .ks-editor-menu-title {
     display: block;
     color: rgb(102, 102, 102);
     margin: 0;
@@ -35,23 +35,23 @@ menu style for kissy editor ,include contextmenu and select menu
     color: black;
 }
 
-.ke-menu-title {
+.ks-editor-menu-title {
     background-color: #dcdcdc;
     padding: 3px;
     display: none;
     color: black;
 }
 
-.ke-menu a:hover, .ke-menu-selected {
+.ks-editor-menu a:hover, .ks-editor-menu-selected {
     background: #D6E9F8;
     text-decoration: none;
     color: black;
 }
 
-.ke-menu a.ke-menuitem-disable {
+.ks-editor-menu a.ks-editor-menuitem-disable {
     color: gray;
 }
 
-.ke-menu a.ke-menuitem-disable:hover {
+.ks-editor-menu a.ks-editor-menuitem-disable:hover {
     background: #fcfcfc;
 }

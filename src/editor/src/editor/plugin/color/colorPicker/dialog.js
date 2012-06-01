@@ -7,13 +7,13 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         DOM = S.DOM;
 
     DOM.addStyleSheet("" +
-        ".ke-color-advanced-picker-left {" +
+        ".ks-editor-color-advanced-picker-left {" +
         "float:left;" +
         "display:inline;" +
         "margin-left:10px;" +
         "}" +
 
-        ".ke-color-advanced-picker-right {" +
+        ".ks-editor-color-advanced-picker-right {" +
         "float:right;" +
         "width:50px;" +
         "display:inline;" +
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         "cursor:crosshair;" +
         "}" +
         "" +
-        ".ke-color-advanced-picker-right a {" +
+        ".ks-editor-color-advanced-picker-right a {" +
         "height:2px;" +
         "line-height:0;" +
         "fontSize:0;" +
@@ -29,10 +29,10 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         "}" +
         "" +
 
-        ".ke-color-advanced-picker-left ul{" +
+        ".ks-editor-color-advanced-picker-left ul{" +
         "float:left;" +
         "}" +
-        ".ke-color-advanced-picker-left li,.ke-color-advanced-picker-left a{" +
+        ".ks-editor-color-advanced-picker-left li,.ks-editor-color-advanced-picker-left a{" +
         "overflow:hidden;" +
         "width:15px;" +
         "height:16px;" +
@@ -40,11 +40,11 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         "fontSize:0;" +
         "display:block;" +
         "}" +
-        ".ke-color-advanced-picker-left a:hover{" +
+        ".ks-editor-color-advanced-picker-left a:hover{" +
         "width:13px;height:13px;border:1px solid white;" +
         "}" +
         "" +
-        ".ke-color-advanced-indicator {" +
+        ".ks-editor-color-advanced-indicator {" +
         "margin-left:10px;" +
         "*zoom:1;" +
         "display:inline-block;" +
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         "vertical-align:middle;" +
         "line-height:0;" +
         "overflow:hidden;" +
-        "}", "ke-color-advanced");
+        "}", "ks-editor-color-advanced");
 
     //获取颜色数组
     function getData(color) {
@@ -175,25 +175,25 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
                         return "<li><a style='background-color" + ":" + hex(x) + "' href='#'></a></li>";
                     }).join("");
             }).join("</ul><ul>") + "</ul>",
-        panelHtml = "<div class='ke-color-advanced-picker'>" +
+        panelHtml = "<div class='ks-editor-color-advanced-picker'>" +
             "<div class='ks-clear'>" +
-            "<div class='ke-color-advanced-picker-left'>" +
+            "<div class='ks-editor-color-advanced-picker-left'>" +
             pickerHtml +
             "</div>" +
-            "<div class='ke-color-advanced-picker-right'>" +
+            "<div class='ks-editor-color-advanced-picker-right'>" +
             "</div>" +
             "</div>" +
             "<div style='padding:10px;'>" +
             "<label>" +
             "颜色值： " +
-            "<input style='width:100px' class='ke-color-advanced-value'/>" +
+            "<input style='width:100px' class='ks-editor-color-advanced-value'/>" +
             "</label>" +
-            "<span class='ke-color-advanced-indicator'></span>" +
+            "<span class='ks-editor-color-advanced-indicator'></span>" +
             "</div>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
-            "<a class='ke-button ke-color-advanced-ok'>确定</a>&nbsp;&nbsp;&nbsp;" +
-            "<a class='ke-button  ke-color-advanced-cancel'>取消</a>" +
+            "<a class='ks-editor-button ks-editor-color-advanced-ok'>确定</a>&nbsp;&nbsp;&nbsp;" +
+            "<a class='ks-editor-button  ks-editor-color-advanced-cancel'>取消</a>" +
             "</div>";
 
     function ColorPicker(editor) {
@@ -218,12 +218,12 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
             var win = self.dialog,
                 body = win.get("body"),
                 foot = win.get("footer"),
-                indicator = body.one(".ke-color-advanced-indicator"),
-                indicatorValue = body.one(".ke-color-advanced-value"),
-                left = body.one(".ke-color-advanced-picker-left"),
-                right = body.one(".ke-color-advanced-picker-right"),
-                ok = foot.one(".ke-color-advanced-ok"),
-                cancel = foot.one(".ke-color-advanced-cancel");
+                indicator = body.one(".ks-editor-color-advanced-indicator"),
+                indicatorValue = body.one(".ks-editor-color-advanced-value"),
+                left = body.one(".ks-editor-color-advanced-picker-left"),
+                right = body.one(".ks-editor-color-advanced-picker-right"),
+                ok = foot.one(".ks-editor-color-advanced-ok"),
+                cancel = foot.one(".ks-editor-color-advanced-cancel");
 
             ok.on("click", function (ev) {
                 var v = S.trim(indicatorValue.val()),
@@ -277,7 +277,7 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
             var self = this,
                 win = self.dialog,
                 body = win.get("body"),
-                detailPanel = body.one(".ke-color-advanced-picker-right");
+                detailPanel = body.one(".ks-editor-color-advanced-picker-right");
 
             detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),
                 function (x) {
@@ -298,5 +298,5 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
 
     return ColorPicker;
 }, {
-    requires:['editor', '../overlay/']
+    requires:['editor', '../../overlay/']
 });

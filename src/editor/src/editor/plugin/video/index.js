@@ -95,7 +95,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             });
 
             editor.addButton({
-                contentCls:"ke-toolbar-video",
+                contentCls:"ks-editor-toolbar-video",
                 title:"插入视频",
                 mode:Editor.WYSIWYG_MODE
             }, {

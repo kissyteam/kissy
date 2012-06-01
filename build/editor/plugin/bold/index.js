@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/bold/index", function (S, Editor, ui,cmd) {
     return {
@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui,cmd) {
             cmd.init(editor);
             editor.addButton({
                 cmdType:'bold',
-                contentCls:"ke-toolbar-bold",
+                contentCls:"ks-editor-toolbar-bold",
                 title:"粗体 "
             }, undefined, ui.Button);
         }

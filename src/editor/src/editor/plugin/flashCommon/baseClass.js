@@ -16,11 +16,11 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     }
 
     var tipHtml = ' <a ' +
-        'class="ke-bubbleview-url" ' +
+        'class="ks-editor-bubbleview-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ke-bubbleview-link ke-bubbleview-change">编辑</span>   |   '
-        + ' <span class="ke-bubbleview-link ke-bubbleview-remove">删除</span>';
+        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-change">编辑</span>   |   '
+        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -58,9 +58,9 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                     el.html(S.substitute(tipHtml, {
                         label:self.get("label")
                     }));
-                    var tipUrlEl = el.one(".ke-bubbleview-url"),
-                        tipChangeEl = el.one(".ke-bubbleview-change"),
-                        tipRemoveEl = el.one(".ke-bubbleview-remove");
+                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
+                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
+                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
                     //ie focus not lose
                     Editor.Utils.preventFocus(el);
 

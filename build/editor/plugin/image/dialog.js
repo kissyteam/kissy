@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * image dialog (support upload and remote)
@@ -14,8 +14,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
         HTTP_TIP = "http://",
         AUTOMATIC_TIP = "自动",
         MARGIN_DEFAULT = 10,
-        IMAGE_DIALOG_BODY_HTML = "<div class='ke-image-wrap'>" +
-            "<ul class='ke-tabs ks-clear ks-switchable-nav'>" +
+        IMAGE_DIALOG_BODY_HTML = "<div class='ks-editor-image-wrap'>" +
+            "<ul class='ks-editor-tabs ks-clear ks-switchable-nav'>" +
             "<li " +
             "class='ks-active' " +
             "" +
@@ -35,27 +35,27 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "</ul>" +
             "<div style='" +
             "padding:12px 20px 5px 20px;'>" +
-            "<div class='ke-image-tabs-content-wrap ks-switchable-content' " +
+            "<div class='ks-editor-image-tabs-content-wrap ks-switchable-content' " +
             ">" +
             "<div>" +
             "<label>" +
             "<span " +
-            "class='ke-image-title'" +
+            "class='ks-editor-image-title'" +
             ">" +
             "图片地址： " +
             "</span>" +
             "<input " +
             " data-verify='^(https?:/)?/[^\\s]+$' " +
             " data-warning='网址格式为：http:// 或 /' " +
-            "class='ke-img-url ke-input' " +
+            "class='ks-editor-img-url ks-editor-input' " +
             "style='width:390px;vertical-align:middle;' " +
             "/>" +
             "</label>" +
             "</div>" +
             "<div style='position:relative;display: none'>" +
-            "<form class='ke-img-upload-form' enctype='multipart/form-data'>" +
+            "<form class='ks-editor-img-upload-form' enctype='multipart/form-data'>" +
             "<p style='zoom:1;'>" +
-            "<input class='ke-input ke-img-local-url' " +
+            "<input class='ks-editor-input ks-editor-img-local-url' " +
             "readonly='readonly' " +
             "style='margin-right: 15px; " +
             "vertical-align: middle; " +
@@ -67,16 +67,16 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "left:390px;" +
             "top:0px;" +
             "z-index:1;' " +
-            "class='ke-image-up ke-button'>浏览...</a>" +
+            "class='ks-editor-image-up ks-editor-button'>浏览...</a>" +
             "</p>" +
-            "<div class='ke-img-up-extraHtml'>" +
+            "<div class='ks-editor-img-up-extraHtml'>" +
             "</div>" +
             "</form>" +
             "</div>" +
             "</div>" +
             "<table " +
             "style='width:100%;margin-top:8px;' " +
-            "class='ke-img-setting'>" +
+            "class='ks-editor-img-setting'>" +
             "<tr>" +
             "<td>" +
             "<label>" +
@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<input " +
             " data-verify='^(" + AUTOMATIC_TIP + "|((?!0$)\\d+))?$' " +
             " data-warning='宽度请输入正整数' " +
-            "class='ke-img-width ke-input' " +
+            "class='ks-editor-img-width ks-editor-input' " +
             "style='vertical-align:middle;width:60px' " +
             "/> 像素 </label>" +
             "</td>" +
@@ -94,13 +94,13 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<input " +
             " data-verify='^(" + AUTOMATIC_TIP + "|((?!0$)\\d+))?$' " +
             " data-warning='高度请输入正整数' " +
-            "class='ke-img-height ke-input' " +
+            "class='ks-editor-img-height ks-editor-input' " +
             "style='vertical-align:middle;width:60px' " +
             "/> 像素 </label>" +
             "<label>" +
             "<input " +
             "type='checkbox' " +
-            "class='ke-img-ratio' " +
+            "class='ks-editor-img-ratio' " +
             "style='vertical-align:middle;" +
             "margin-left:5px;" +
             "' " +
@@ -113,8 +113,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<td>" +
             "<label>" +
             "对齐：" +
-            "<select class='ke-img-align' title='对齐'>" +
-            "<option value=''>无</option>" +
+            "<select class='ks-editor-img-align' title='对齐'>" +
+            "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
             "</select>" +
@@ -126,8 +126,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "" +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
-            "class='ke-img-margin ke-input' style='width:60px' value='"
-            + MARGIN_DEFAULT + "'/> 像素" +
+            "class='ks-editor-img-margin ks-editor-input' style='width:60px'/> 像素" +
             "</label>" +
             "</td>" +
             "</tr>" +
@@ -136,7 +135,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<label>" +
             "链接网址： " +
             "<input " +
-            "class='ke-img-link ke-input' " +
+            "class='ks-editor-img-link ks-editor-input' " +
             "style='width:235px;vertical-align:middle;' " +
             " data-verify='^(?:(?:\\s*)|(?:https?://[^\\s]+)|(?:#.+))$' " +
             " data-warning='请输入合适的网址格式' " +
@@ -144,7 +143,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "</label>" +
             "<label>" +
             "<input " +
-            "class='ke-img-link-blank' " +
+            "class='ks-editor-img-link-blank' " +
             "style='vertical-align:middle;" +
             "margin-left:5px;" +
             "' " +
@@ -160,11 +159,11 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
         IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
-            "class='ke-img-insert ke-button' " +
+            "class='ks-editor-img-insert ks-editor-button' " +
             "style='margin-right:30px;'>确定</a> " +
             "<a  " +
             "href='javascript:void(\'取消\')' " +
-            "class='ke-img-cancel ke-button'>取消</a></div>",
+            "class='ks-editor-img-cancel ks-editor-button'>取消</a></div>",
 
         warning = "请点击浏览上传图片",
 
@@ -210,24 +209,24 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             });
 
             var content = self.d.get("el"),
-                cancel = content.one(".ke-img-cancel"),
-                ok = content.one(".ke-img-insert"),
+                cancel = content.one(".ks-editor-img-cancel"),
+                ok = content.one(".ks-editor-img-insert"),
                 verifyInputs = Editor.Utils.verifyInputs,
-                commonSettingTable = content.one(".ke-img-setting");
-            self.uploadForm = content.one(".ke-img-upload-form");
-            self.imgLocalUrl = content.one(".ke-img-local-url");
+                commonSettingTable = content.one(".ks-editor-img-setting");
+            self.uploadForm = content.one(".ks-editor-img-upload-form");
+            self.imgLocalUrl = content.one(".ks-editor-img-local-url");
             self.tab = new Switchable['Tabs'](self.d.get("body")[0], {
                 "triggerType":"click"
             });
             self.imgLocalUrl.val(warning);
-            self.imgUrl = content.one(".ke-img-url");
-            self.imgHeight = content.one(".ke-img-height");
-            self.imgWidth = content.one(".ke-img-width");
-            self.imgRatio = content.one(".ke-img-ratio");
-            self.imgAlign = Select.decorate(content.one(".ke-img-align"));
-            self.imgMargin = content.one(".ke-img-margin");
-            self.imgLink = content.one(".ke-img-link");
-            self.imgLinkBlank = content.one(".ke-img-link-blank");
+            self.imgUrl = content.one(".ks-editor-img-url");
+            self.imgHeight = content.one(".ks-editor-img-height");
+            self.imgWidth = content.one(".ks-editor-img-width");
+            self.imgRatio = content.one(".ks-editor-img-ratio");
+            self.imgAlign = Select.decorate(content.one(".ks-editor-img-align"));
+            self.imgMargin = content.one(".ks-editor-img-margin");
+            self.imgLink = content.one(".ks-editor-img-link");
+            self.imgLinkBlank = content.one(".ks-editor-img-link-blank");
             var placeholder = Editor.Utils.placeholder;
             placeholder(self.imgUrl, HTTP_TIP);
             placeholder(self.imgHeight, AUTOMATIC_TIP);
@@ -261,7 +260,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 ev.halt();
             });
 
-            var loadingCancel = new Node("<a class='ke-button' style='position:absolute;" +
+            var loadingCancel = new Node("<a class='ks-editor-button' style='position:absolute;" +
                 "z-index:" +
                 Editor.baseZIndex(Editor.zIndexManager.LOADING_CANCEL) + ";" +
                 "left:-9999px;" +
@@ -371,10 +370,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
 
             if (self.cfg) {
                 if (self.cfg['extraHtml']) {
-                    content.one(".ke-img-up-extraHtml")
+                    content.one(".ks-editor-img-up-extraHtml")
                         .html(self.cfg['extraHtml']);
                 }
-                var ke_image_up = content.one(".ke-image-up"),
+                var ke_image_up = content.one(".ks-editor-image-up"),
                     sizeLimit = self.cfg && self.cfg['sizeLimit'];
 
                 self.fileInput = new Node("<input " +
@@ -395,10 +394,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 self.imgLocalUrl.val(warning);
                 self.fileInput.css("opacity", 0);
                 self.fileInput.on("mouseenter", function () {
-                    ke_image_up.addClass("ke-button-hover");
+                    ke_image_up.addClass("ks-editor-button-hover");
                 });
                 self.fileInput.on("mouseleave", function () {
-                    ke_image_up.removeClass("ke-button-hover");
+                    ke_image_up.removeClass("ks-editor-button-hover");
                 });
                 self.fileInput.on("change", function () {
                     var file = self.fileInput.val();
@@ -433,10 +432,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             if (width) {
                 style += "width:" + width + "px;";
             }
-            if (align) {
+            if (align != 'none') {
                 style += "float:" + align + ";";
             }
-            if (!isNaN(margin)) {
+            if (!isNaN(margin) && margin != 0) {
                 style += "margin:" + margin + "px;";
             }
 
@@ -471,6 +470,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             }
 
             // need a breath for firefox
+            // else insertElement(img); img[0].parentNode==null
             setTimeout(function () {
                 var link = findAWithImg(img),
                     linkVal = S.trim(valInput(self.imgLink)),
@@ -519,7 +519,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     h = self.selectedEl.height();
                 valInput(self.imgHeight, h);
                 valInput(self.imgWidth, w);
-                self.imgAlign.val(self.selectedEl.css("float") || "none");
+                self.imgAlign.val(self.selectedEl.style("float") || "none");
                 var margin = parseInt(self.selectedEl.style("margin"))
                     || 0;
                 self.imgMargin.val(margin);
@@ -534,6 +534,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     self.imgLinkBlank.attr("checked", true);
                 }
             } else {
+                var defaultMargin = self.imageCfg['defaultMargin'];
+                if (defaultMargin == undefined) {
+                    defaultMargin = MARGIN_DEFAULT;
+                }
                 if (self.tab['panels'].length == 2) {
                     active = 1;
                 }
@@ -543,7 +547,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 resetInput(self.imgHeight);
                 resetInput(self.imgWidth);
                 self.imgAlign.val("none");
-                self.imgMargin.val(MARGIN_DEFAULT);
+                self.imgMargin.val(defaultMargin);
                 self.imgRatio[0].disabled = true;
                 self.imgRatioValue = null;
             }

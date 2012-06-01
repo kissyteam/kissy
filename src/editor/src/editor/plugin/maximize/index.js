@@ -3,8 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
-    var MAXIMIZE_CLASS = "ke-toolbar-maximize",
-        RESTORE_CLASS = "ke-toolbar-restore",
+    var MAXIMIZE_CLASS = "ks-editor-toolbar-maximize",
+        RESTORE_CLASS = "ks-editor-toolbar-restore",
         MAXIMIZE_TIP = "全屏",
         RESTORE_TIP = "取消全屏";
 

@@ -1,59 +1,59 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4E, DialogLoader) {
 
     var Node = S.Node,
         DOM = S.DOM;
 
-    DOM.addStyleSheet(".ke-color-panel a {" +
+    DOM.addStyleSheet(".ks-editor-color-panel a {" +
         "display: block;" +
         "color:black;" +
         "text-decoration: none;" +
         "}" +
         "" +
-        ".ke-color-panel a:hover {" +
+        ".ks-editor-color-panel a:hover {" +
         "color:black;" +
         "text-decoration: none;" +
         "}" +
-        ".ke-color-panel a:active {" +
+        ".ks-editor-color-panel a:active {" +
         "color:black;" +
         "}" +
 
-        ".ke-color-palette {" +
+        ".ks-editor-color-palette {" +
         "    margin: 5px 8px 8px;" +
         "}" +
 
-        ".ke-color-palette table {" +
+        ".ks-editor-color-palette table {" +
         "    border: 1px solid #666666;" +
         "    border-collapse: collapse;" +
         "}" +
 
-        ".ke-color-palette td {" +
+        ".ks-editor-color-palette td {" +
         "    border-right: 1px solid #666666;" +
         "    height: 18px;" +
         "    width: 18px;" +
         "}" +
 
-        "a.ke-color-a {" +
+        "a.ks-editor-color-a {" +
         "    height: 18px;" +
         "    width: 18px;" +
         "}" +
 
-        "a.ke-color-a:hover {" +
+        "a.ks-editor-color-a:hover {" +
         "    border: 1px solid #ffffff;" +
         "    height: 16px;" +
         "    width: 16px;" +
         "}" +
-        "a.ke-color-remove {" +
+        "a.ks-editor-color-remove {" +
         "  padding:3px 8px;" +
         "  margin:2px 0 3px 0;" +
         "}" +
-        "a.ke-color-remove:hover {" +
+        "a.ks-editor-color-remove:hover {" +
         "    background-color: #D6E9F8;" +
-        "}", "ke-color-plugin");
+        "}", "ks-editor-color-plugin");
 
     var COLORS = [
         ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
@@ -70,13 +70,13 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
 
 
     function initHtml() {
-        html = "<div class='ke-color-panel'>" +
-            "<a class='ke-color-remove' " +
+        html = "<div class='ks-editor-color-panel'>" +
+            "<a class='ks-editor-color-remove' " +
             "href=\"javascript:void('清除');\">" +
             "清除" +
             "</a>";
         for (var i = 0; i < 3; i++) {
-            html += "<div class='ke-color-palette'><table>";
+            html += "<div class='ks-editor-color-palette'><table>";
             var c = COLORS[i], l = c.length / 8;
             for (var k = 0; k < l; k++) {
                 html += "<tr>";
@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
                     var currentColor = "#" + (c[8 * k + j]);
                     html += "<td>";
                     html += "<a href='javascript:void(0);' " +
-                        "class='ke-color-a' " +
+                        "class='ks-editor-color-a' " +
                         "style='background-color:"
                         + currentColor
                         + "'" +
@@ -97,7 +97,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
         }
         html += "" +
             "<div>" +
-            "<a class='ke-button ke-color-others'>其他颜色</a>" +
+            "<a class='ks-editor-button ks-editor-color-others'>其他颜色</a>" +
             "</div>" +
             "</div>";
     }
@@ -127,7 +127,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
                 elAttrs:{
                     tabindex:0
                 },
-                elCls:"ke-popup",
+                elCls:"ks-editor-popup",
                 content:html,
                 autoRender:true,
                 width:170,
@@ -142,7 +142,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             });
             colorWin.on("show", self.bon, self);
             colorWin.on("hide", self.boff, self);
-            var others = colorPanel.one(".ke-color-others");
+            var others = colorPanel.one(".ks-editor-color-others");
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
@@ -160,11 +160,12 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             colorWin.show();
             colorWin.get("el")[0].focus();
         },
+
         _selectColor:function (ev) {
             ev.halt();
             var self = this,
                 t = new Node(ev.target);
-            if (t.hasClass("ke-color-a")) {
+            if (t.hasClass("ks-editor-color-a")) {
                 self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
             }
         },

@@ -1,4 +1,4 @@
-.ks-autocomplete-menu {
+.ks-menu {
     background: #fff;
     border-color: #999;
     border-style: solid;
@@ -11,7 +11,7 @@
     z-index: 99999;
 }
 
-.ks-autocomplete-menuitem {
+.ks-menuitem {
     color: #404040;
     list-style: none;
     margin: 0;
@@ -21,12 +21,12 @@
     white-space: nowrap;
 }
 
-.ks-autocomplete-menuitem-disabled .ks-autocomplete-menuitem-content {
+.ks-menuitem-disabled .ks-menuitem-content {
     color: #ccc !important;
 }
 
-.ks-autocomplete-menuitem-highlight,
-.ks-autocomplete-menuitem-hover {
+.ks-menuitem-highlight,
+.ks-menuitem-hover {
     background-color: #39F;
     color: white;
 }

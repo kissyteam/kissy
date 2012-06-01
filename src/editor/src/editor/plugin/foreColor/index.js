@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
             editor.addButton({
                 cmdType:'foreColor',
                 title:"文本颜色",
-                contentCls:"ke-toolbar-fore-color"
+                contentCls:"ks-editor-toolbar-fore-color"
             }, undefined, Button);
         }
     };

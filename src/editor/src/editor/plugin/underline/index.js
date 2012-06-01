@@ -4,7 +4,7 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
             cmd.init(editor);
             editor.addButton({
                 cmdType:"underline",
-                contentCls:"ke-toolbar-underline",
+                contentCls:"ks-editor-toolbar-underline",
                 title:"下划线 "
             }, undefined, ui.Button);
         }

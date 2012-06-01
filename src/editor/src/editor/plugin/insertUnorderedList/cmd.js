@@ -28,5 +28,5 @@ KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, Editor, listCmd)
     };
 
 }, {
-    requires:['editor', '../listUtils/cmd.js']
+    requires:['editor', '../listUtils/cmd']
 });

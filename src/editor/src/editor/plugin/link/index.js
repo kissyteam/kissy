@@ -8,15 +8,15 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
         tipHtml = '<a ' +
             'href="" '
             + ' target="_blank" ' +
-            'class="ke-bubbleview-url">' +
+            'class="ks-editor-bubbleview-url">' +
             '在新窗口查看' +
             '</a>  –  '
             + ' <span ' +
-            'class="ke-bubbleview-link ke-bubbleview-change">' +
+            'class="ks-editor-bubbleview-link ks-editor-bubbleview-change">' +
             '编辑' +
             '</span>   |   '
             + ' <span ' +
-            'class="ke-bubbleview-link ke-bubbleview-remove">' +
+            'class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">' +
             '去除' +
             '</span>';
 
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
     return {init:function (editor) {
 
         editor.addButton({
-            contentCls:"ke-toolbar-link",
+            contentCls:"ks-editor-toolbar-link",
             title:"插入链接",
             mode:Editor.WYSIWYG_MODE
         }, {
@@ -49,9 +49,9 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
                 var bubble = this,
                     el = bubble.get("contentEl");
                 el.html(tipHtml);
-                var tipurl = el.one(".ke-bubbleview-url"),
-                    tipchange = el.one(".ke-bubbleview-change"),
-                    tipremove = el.one(".ke-bubbleview-remove");
+                var tipurl = el.one(".ks-editor-bubbleview-url"),
+                    tipchange = el.one(".ks-editor-bubbleview-change"),
+                    tipremove = el.one(".ks-editor-bubbleview-remove");
                 //ie focus not lose
                 Editor.Utils.preventFocus(el);
                 tipchange.on("click", function (ev) {

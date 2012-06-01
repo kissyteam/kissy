@@ -14,10 +14,11 @@ KISSY.add("component/uistore", function (S) {
     };
 
     function getUIConstructorByCssClass(cls) {
-        var cs = cls.split(/\s+/), p = -1, ui = null;
+        var cs = cls.split(/\s+/), p = -1, t, ui = null;
         for (var i = 0; i < cs.length; i++) {
             var uic = uis[cs[i]];
-            if (uic && uic.priority > p) {
+            if (uic && (t = uic.priority) > p) {
+                p = t;
                 ui = uic.ui;
             }
         }

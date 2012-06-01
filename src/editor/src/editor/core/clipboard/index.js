@@ -264,11 +264,11 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             pastes = {"copy":0, "cut":0, "paste":0};
         for (var i in pastes) {
             if (pastes.hasOwnProperty(i)) {
-                pastes[i] = el.one(".ke-paste-" + i);
+                pastes[i] = el.one(".ks-editor-paste-" + i);
                 if (!pastes[i]) {
                     (function (cmd) {
                         var cmdObj = new Node("<a href='#'" +
-                            "class='ke-paste-" + cmd + "'>"
+                            "class='ks-editor-paste-" + cmd + "'>"
                             + lang[cmd]
                             + "</a>").appendTo(el);
                         cmdObj.on("click", function (ev) {

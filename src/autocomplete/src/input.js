@@ -136,7 +136,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     for (var i = 0; i < data.length; i++) {
                         v = data[i];
                         autoCompleteMenu.addChild(new Menu.Item(S.mix({
-                            prefixCls:self.get("prefixCls") + "autocomplete-",
+                            prefixCls:self.get("prefixCls"),
                             content:v,
                             textContent:v,
                             value:v

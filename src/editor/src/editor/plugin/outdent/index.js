@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
             editor.addButton({
                 title:"减少缩进量 ",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-outdent"
+                contentCls:"ks-editor-toolbar-outdent"
             }, {
                 offClick:function () {
                     editor.execCommand("outdent");

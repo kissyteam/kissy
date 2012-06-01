@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * localStorage support for ie<8
@@ -32,6 +32,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     //Dialog 不行
     var o = new Overlay({
         width:"0px",
+        prefixCls:'ks-editor-',
         elStyle:{
             overflow:'hidden'
         },

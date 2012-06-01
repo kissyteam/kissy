@@ -4,6 +4,8 @@
  */
 KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
+    var PREFIX_CLS=DDM.PREFIX_CLS;
+
     /**
      * drag multiple nodes under a container element using only one draggable instance as a delegate.
      * @memberOf DD
@@ -60,7 +62,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
             _uiSetDisabledChange:function (d) {
                 this.get("container")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+                    'removeClass'](PREFIX_CLS + '-disabled');
             },
 
             _init:function () {

@@ -7,8 +7,9 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
         init:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton({
-                contentCls:"ke-toolbar-justifyRight",
-                title:"右对齐"
+                contentCls:"ks-editor-toolbar-justifyRight",
+                title:"右对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,

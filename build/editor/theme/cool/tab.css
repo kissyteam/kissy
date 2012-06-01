@@ -1,15 +1,15 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
-.ke-tabs {
+.ks-editor-tabs {
     padding-left: 10px;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
 }
 
-.ke-tabs li {
+.ks-editor-tabs li {
     background-color: #F2F2F2;
     border-color: #CED5E0;
     border-style: solid solid none;
@@ -26,7 +26,7 @@ build time: May 30 12:21
     outline: none;
 }
 
-.ke-tabs li.ks-active {
+.ks-editor-tabs li.ks-active {
     background-color: #FCFCFC;
     border-color: #CED5E0 #CED5E0 #FCFCFC;
     cursor: default;

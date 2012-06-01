@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * Set up editor constructor
@@ -187,10 +187,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  */
                 customLink:{
                     value:[]
-                },
-
-                prefixCls:{
-                    value:"ke-"
                 }
             }
         }, {
@@ -201,7 +197,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one("." + this.get("prefixCls") + "editor-textarea");
+            return el.one(this.get("prefixCls") + ".editor-textarea");
         }
 
     };
@@ -479,11 +475,11 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             pastes = {"copy":0, "cut":0, "paste":0};
         for (var i in pastes) {
             if (pastes.hasOwnProperty(i)) {
-                pastes[i] = el.one(".ke-paste-" + i);
+                pastes[i] = el.one(".ks-editor-paste-" + i);
                 if (!pastes[i]) {
                     (function (cmd) {
                         var cmdObj = new Node("<a href='#'" +
-                            "class='ke-paste-" + cmd + "'>"
+                            "class='ks-editor-paste-" + cmd + "'>"
                             + lang[cmd]
                             + "</a>").appendTo(el);
                         cmdObj.on("click", function (ev) {
@@ -2808,7 +2804,7 @@ KISSY.add("editor/core/meta", function () {
             "backColor/cmd":['../color/cmd'],
             "bold/cmd":['../font/cmd'],
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
-            "color/colorPicker/dialog":['../overlay/'],
+            "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
             "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
             "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],
@@ -2819,7 +2815,7 @@ KISSY.add("editor/core/meta", function () {
             "image/dialog":['../overlay/', 'switchable', '../select/'],
             "indent/cmd":['../dentUtils/cmd'],
             "insertOrderedList/cmd":['../listUtils/cmd'],
-            "insertUnorderedList/cmd":['../listUtils/cmd.js'],
+            "insertUnorderedList/cmd":['../listUtils/cmd'],
             "italic/cmd":['../font/cmd'],
             "justifyCenter/cmd":['../justifyUtils/cmd'],
             "justifyLeft/cmd":['../justifyUtils/cmd'],
@@ -7504,7 +7500,7 @@ KISSY.add("editor/core/utils", function (S) {
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
-                    inp.addClass("ke-input-tip");
+                    inp.addClass("ks-editor-input-tip");
                     inp.val(placeholder);
                 } else if (!UA['ie']) {
                     inp.val("");
@@ -7518,13 +7514,13 @@ KISSY.add("editor/core/utils", function (S) {
              */
             valInput:function (inp, val) {
                 if (val === undefined) {
-                    if (inp.hasClass("ke-input-tip")) {
+                    if (inp.hasClass("ks-editor-input-tip")) {
                         return "";
                     } else {
                         return inp.val();
                     }
                 } else {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     inp.val(val);
                 }
             },
@@ -7541,12 +7537,12 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 inp.on("blur", function () {
                     if (!S.trim(inp.val())) {
-                        inp.addClass("ke-input-tip");
+                        inp.addClass("ks-editor-input-tip");
                         inp.val(tip);
                     }
                 });
                 inp.on("focus", function () {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     if (S.trim(inp.val()) == tip) {
                         inp.val("");
                     }
@@ -8142,11 +8138,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
         HTML5_DTD = '<!doctype html>',
 
-        KE_TEXTAREA_WRAP_CLASS = ".ke-textarea-wrap",
+        KE_TEXTAREA_WRAP_CLASS = ".ks-editor-textarea-wrap",
 
-        KE_TOOLBAR_CLASS = ".ke-editor-tools",
+        KE_TOOLBAR_CLASS = ".ks-editor-tools",
 
-        KE_STATUSBAR_CLASS = ".ke-editor-status",
+        KE_STATUSBAR_CLASS = ".ks-editor-status",
 
         IFRAME_HTML_TPL = HTML5_DTD + "<html>" +
             "<head>{doctype}" +
@@ -8157,7 +8153,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ke-editor'>" +
+            "<body class='ks-editor'>" +
             "{data}" +
             "{script}" +
             "</body>" +
@@ -8202,17 +8198,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             createDom:function () {
                 var self = this,
                     wrap,
-                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea class='" + prefixCls + "editor-textarea'></textarea>"));
+                    self.set("textarea", textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
                 }
 
                 editorEl = self.get("el");
-
-                editorEl.addClass(prefixCls + "editor-wrap", undefined);
 
                 editorEl.html(EDITOR_TPL);
 
@@ -8301,6 +8294,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             bindUI:function () {
                 var self = this,
                     form,
+                    prefixCls = self.get("prefixCls"),
                     textarea = self.get("textarea");
 
                 if (self.get("attachForm") &&
@@ -8325,6 +8319,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 }
 
                 self.on("docReady", docReady);
+
+                self.on("blur", function () {
+                    self.get("el").removeClass(prefixCls + "editor-focused");
+                });
+
+                self.on("focus", function () {
+                    self.get("el").addClass(prefixCls + "editor-focused");
+                });
             },
 
             destructor:function () {
@@ -9281,7 +9283,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             editor.addButton({
                 cmdType:'backColor',
                 title:"背景颜色",
-                contentCls:"ke-toolbar-back-color"
+                contentCls:"ks-editor-toolbar-back-color"
             }, undefined, Button);
         }
     };
@@ -9315,7 +9317,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             cmd.init(editor);
             editor.addButton({
                 cmdType:'bold',
-                contentCls:"ke-toolbar-bold",
+                contentCls:"ks-editor-toolbar-bold",
                 title:"粗体 "
             }, undefined, ui.Button);
         }
@@ -9336,10 +9338,10 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
                     value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
                 },
                 elCls:{
-                    value:"ke-bubbleview-bubble"
+                    value:"ks-editor-bubbleview-bubble"
                 },
                 prefixCls:{
-                    value:"ke-"
+                    value:"ks-editor-"
                 },
                 effect:{
                     value:{
@@ -9551,11 +9553,11 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Component) {
     var ON = "on",
         OFF = "off",
         DISABLED = "disabled",
-        BUTTON_CLASS = "ke-triplebutton",
-        ON_CLASS = "ke-triplebutton-on",
-        OFF_CLASS = "ke-triplebutton-off",
-        ACTIVE_CLASS = "ke-triplebutton-active",
-        DISABLED_CLASS = "ke-triplebutton-disabled";
+        BUTTON_CLASS = "ks-editor-triplebutton",
+        ON_CLASS = "ks-editor-triplebutton-on",
+        OFF_CLASS = "ks-editor-triplebutton-off",
+        ACTIVE_CLASS = "ks-editor-triplebutton-active",
+        DISABLED_CLASS = "ks-editor-triplebutton-disabled";
 
     function getTipText(str) {
         if (str && str.indexOf("<") == -1) {
@@ -9608,7 +9610,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Component) {
             var self = this,
                 el = self.get("el");
             if (contentCls !== undefined) {
-                el.html("<span class='ke-toolbar-item " + contentCls + "' />");
+                el.html("<span class='ks-editor-toolbar-item " + contentCls + "' />");
                 if (self.get('keepFocus')) {
                     el.unselectable(undefined);
                 }
@@ -9809,52 +9811,52 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
     var Node = S.Node,
         DOM = S.DOM;
 
-    DOM.addStyleSheet(".ke-color-panel a {" +
+    DOM.addStyleSheet(".ks-editor-color-panel a {" +
         "display: block;" +
         "color:black;" +
         "text-decoration: none;" +
         "}" +
         "" +
-        ".ke-color-panel a:hover {" +
+        ".ks-editor-color-panel a:hover {" +
         "color:black;" +
         "text-decoration: none;" +
         "}" +
-        ".ke-color-panel a:active {" +
+        ".ks-editor-color-panel a:active {" +
         "color:black;" +
         "}" +
 
-        ".ke-color-palette {" +
+        ".ks-editor-color-palette {" +
         "    margin: 5px 8px 8px;" +
         "}" +
 
-        ".ke-color-palette table {" +
+        ".ks-editor-color-palette table {" +
         "    border: 1px solid #666666;" +
         "    border-collapse: collapse;" +
         "}" +
 
-        ".ke-color-palette td {" +
+        ".ks-editor-color-palette td {" +
         "    border-right: 1px solid #666666;" +
         "    height: 18px;" +
         "    width: 18px;" +
         "}" +
 
-        "a.ke-color-a {" +
+        "a.ks-editor-color-a {" +
         "    height: 18px;" +
         "    width: 18px;" +
         "}" +
 
-        "a.ke-color-a:hover {" +
+        "a.ks-editor-color-a:hover {" +
         "    border: 1px solid #ffffff;" +
         "    height: 16px;" +
         "    width: 16px;" +
         "}" +
-        "a.ke-color-remove {" +
+        "a.ks-editor-color-remove {" +
         "  padding:3px 8px;" +
         "  margin:2px 0 3px 0;" +
         "}" +
-        "a.ke-color-remove:hover {" +
+        "a.ks-editor-color-remove:hover {" +
         "    background-color: #D6E9F8;" +
-        "}", "ke-color-plugin");
+        "}", "ks-editor-color-plugin");
 
     var COLORS = [
         ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
@@ -9871,13 +9873,13 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
 
 
     function initHtml() {
-        html = "<div class='ke-color-panel'>" +
-            "<a class='ke-color-remove' " +
+        html = "<div class='ks-editor-color-panel'>" +
+            "<a class='ks-editor-color-remove' " +
             "href=\"javascript:void('清除');\">" +
             "清除" +
             "</a>";
         for (var i = 0; i < 3; i++) {
-            html += "<div class='ke-color-palette'><table>";
+            html += "<div class='ks-editor-color-palette'><table>";
             var c = COLORS[i], l = c.length / 8;
             for (var k = 0; k < l; k++) {
                 html += "<tr>";
@@ -9885,7 +9887,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
                     var currentColor = "#" + (c[8 * k + j]);
                     html += "<td>";
                     html += "<a href='javascript:void(0);' " +
-                        "class='ke-color-a' " +
+                        "class='ks-editor-color-a' " +
                         "style='background-color:"
                         + currentColor
                         + "'" +
@@ -9898,7 +9900,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
         }
         html += "" +
             "<div>" +
-            "<a class='ke-button ke-color-others'>其他颜色</a>" +
+            "<a class='ks-editor-button ks-editor-color-others'>其他颜色</a>" +
             "</div>" +
             "</div>";
     }
@@ -9928,7 +9930,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
                 elAttrs:{
                     tabindex:0
                 },
-                elCls:"ke-popup",
+                elCls:"ks-editor-popup",
                 content:html,
                 autoRender:true,
                 width:170,
@@ -9943,7 +9945,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             });
             colorWin.on("show", self.bon, self);
             colorWin.on("hide", self.boff, self);
-            var others = colorPanel.one(".ke-color-others");
+            var others = colorPanel.one(".ks-editor-color-others");
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
@@ -9961,11 +9963,12 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             colorWin.show();
             colorWin.get("el")[0].focus();
         },
+
         _selectColor:function (ev) {
             ev.halt();
             var self = this,
                 t = new Node(ev.target);
-            if (t.hasClass("ke-color-a")) {
+            if (t.hasClass("ks-editor-color-a")) {
                 self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
             }
         },
@@ -10018,7 +10021,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
  */
 KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
     var $ = S.all,
-        MENUITEM_DISABLED_CLS = "ke-menuitem-disable",
+        MENUITEM_DISABLED_CLS = "ks-editor-menuitem-disable",
         Event = S.Event;
 
     /**
@@ -10106,11 +10109,12 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
             self.menu = new Overlay({
                 autoRender:true,
                 width:self.get("width"),
-                elCls:"ke-menu"
+                elCls:'ks-editor-menu',
+                prefixCls:"ks-editor-"
             });
             var el = self.menu.get("contentEl");
             for (var f in handlers) {
-                var a = $("<a href='#'>" + f + "</a>");
+                var a = $("<a href='#' class='ks-editor-menuitem'>" + f + "</a>");
                 el.append(a);
                 if (handlers.hasOwnProperty(f)) {
                     (function (a, handler) {
@@ -10475,8 +10479,8 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
                         y:0,
                         // 指定全局 loading zIndex 值
                         "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
-                        prefixCls:'ke-',
-                        elCls:"ke-global-loading"
+                        prefixCls:'ks-editor-',
+                        elCls:"ks-editor-global-loading"
                     });
                 }
                 globalMask.set("height", S.DOM.docHeight());
@@ -10514,7 +10518,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         Event = S.Event,
         INTERVAL = 5,
         JSON = S['JSON'],
-        DRAFT_SAVE = "ke-draft-save20110503";
+        DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
         n += "";
@@ -10595,30 +10599,30 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='ke-draft'>" +
-                    "<span class='ke-draft-title'>" +
+                "<div class='ks-editor-draft'>" +
+                    "<span class='ks-editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='ke-draft-time'/>")
+            self.timeTip = new Node("<span class='ks-editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
-                "<a href='#' " +
-                    "onclick='return false;' " +
-                    "class='ke-button ke-draft-save-btn' " +
-                    "style='" +
-                    "vertical-align:middle;" +
-                    "padding:1px 9px;" +
-                    "'>" +
-                    "<span class='ke-draft-mansave'>" +
-                    "</span>" +
-                    "<span>立即保存</span>" +
-                    "</a>"
-            ).unselectable()
-                .appendTo(holder),
+                    "<a href='#' " +
+                        "onclick='return false;' " +
+                        "class='ks-editor-button ks-editor-draft-save-btn' " +
+                        "style='" +
+                        "vertical-align:middle;" +
+                        "padding:1px 9px;" +
+                        "'>" +
+                        "<span class='ks-editor-draft-mansave'>" +
+                        "</span>" +
+                        "<span>立即保存</span>" +
+                        "</a>"
+                ).unselectable()
+                    .appendTo(holder),
                 versions = new Select({
                     container:holder,
                     menuContainer:document.body,
@@ -10680,7 +10684,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ke-draft-help ke-triplebutton-off" ' +
+                    'class="ks-editor-draft-help ks-editor-triplebutton-off" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -10735,8 +10739,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
             self.helpPopup = new Overlay({
                 content:help,
+                prefixCls:'ks-editor-',
                 autoRender:true,
                 width:help.width() + "px",
+                zIndex:Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
                 mask:false
             });
             self.helpPopup.get("el")
@@ -10794,11 +10800,11 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             var self = this,
                 drafts = self._getDrafts(),
                 editor = self.editor,
-                //不使用rawdata
-                //undo 只需获得可视区域内代码
-                //可视区域内代码！= 最终代码
-                //代码模式也要支持草稿功能
-                //统一获得最终代码
+            //不使用rawdata
+            //undo 只需获得可视区域内代码
+            //可视区域内代码！= 最终代码
+            //代码模式也要支持草稿功能
+            //统一获得最终代码
                 data = editor.get("formatData");
 
             //如果当前内容为空，不保存版本
@@ -11038,7 +11044,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
     requires:['editor']
 });KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
-    var CLASS = "ke-element-path";
+    var CLASS = "ks-editor-element-path";
 
     function ElementPaths(cfg) {
         var self = this;
@@ -11529,11 +11535,11 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     }
 
     var tipHtml = ' <a ' +
-        'class="ke-bubbleview-url" ' +
+        'class="ks-editor-bubbleview-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ke-bubbleview-link ke-bubbleview-change">编辑</span>   |   '
-        + ' <span class="ke-bubbleview-link ke-bubbleview-remove">删除</span>';
+        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-change">编辑</span>   |   '
+        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -11571,9 +11577,9 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                     el.html(S.substitute(tipHtml, {
                         label:self.get("label")
                     }));
-                    var tipUrlEl = el.one(".ke-bubbleview-url"),
-                        tipChangeEl = el.one(".ke-bubbleview-change"),
-                        tipRemoveEl = el.one(".ke-bubbleview-remove");
+                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
+                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
+                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
                     //ie focus not lose
                     Editor.Utils.preventFocus(el);
 
@@ -11796,7 +11802,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
                 params_str = "",
                 vars_str = "";
             doc = doc || document;
-            attrs.id = attrs.id || S.guid("ke-runtimeflash-");
+            attrs.id = attrs.id || S.guid("ks-editor-runtimeflash-");
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a))
                     attrs_str += a + "='" + attrs[a] + "' ";
@@ -11932,7 +11938,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
 
             if (pluginConfig.btn !== false) {
                 editor.addButton({
-                    contentCls:"ke-toolbar-flash",
+                    contentCls:"ks-editor-toolbar-flash",
                     title:"插入Flash",
                     mode:Editor.WYSIWYG_MODE
                 }, {
@@ -12339,7 +12345,7 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
             editor.addButton({
                 cmdType:'foreColor',
                 title:"文本颜色",
-                contentCls:"ke-toolbar-fore-color"
+                contentCls:"ks-editor-toolbar-fore-color"
             }, undefined, Button);
         }
     };
@@ -12476,9 +12482,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                 (!/(^|\s+)ke_/.test(node[0].className)) &&
                 node;
         },
-        tipHtml = '<a class="ke-bubbleview-url" target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="ke-bubbleview-link ke-bubbleview-change" href="#">编辑</a>  |  '
-            + '<a class="ke-bubbleview-link ke-bubbleview-remove" href="#">删除</a>'
+        tipHtml = '<a class="ks-editor-bubbleview-url" target="_blank" href="#">在新窗口查看</a>  |  '
+            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-change" href="#">编辑</a>  |  '
+            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-remove" href="#">删除</a>'
             + '';
 
     return {
@@ -12490,7 +12496,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
             editor.addButton({
-                contentCls:"ke-toolbar-image",
+                contentCls:"ks-editor-toolbar-image",
                 title:"插入图片",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -12545,9 +12551,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                     var bubble = this,
                         el = bubble.get("contentEl");
                     el.html(tipHtml);
-                    var tipUrlEl = el.one(".ke-bubbleview-url"),
-                        tipChangeEl = el.one(".ke-bubbleview-change"),
-                        tipRemoveEl = el.one(".ke-bubbleview-remove");
+                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
+                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
+                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
                     Editor.Utils.preventFocus(el);
                     tipChangeEl.on("click", function (ev) {
                         showImageEditor(bubble.selectedEl);
@@ -12609,7 +12615,7 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
             editor.addButton({
                 title:"增加缩进量 ",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-indent"
+                contentCls:"ks-editor-toolbar-indent"
             }, {
                 offClick:function () {
                     editor.execCommand("indent");
@@ -12663,7 +12669,7 @@ KISSY.add("editor/plugin/insertOrderedList/index", function (S, Editor, ListButt
             editor.addButton({
                 cmdType:"insertOrderedList",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-ol"
+                contentCls:"ks-editor-toolbar-ol"
             }, undefined, ListButton);
         }
     };
@@ -12699,7 +12705,7 @@ KISSY.add("editor/plugin/insertOrderedList/index", function (S, Editor, ListButt
     };
 
 }, {
-    requires:['editor', '../listUtils/cmd.js']
+    requires:['editor', '../listUtils/cmd']
 });/**
  * Add ul/ol button.
  * @author yiminghe@gmail.com
@@ -12712,7 +12718,7 @@ KISSY.add("editor/plugin/insertUnorderedList/index", function (S, Editor, ListBu
             editor.addButton({
                 cmdType:"insertUnorderedList",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-ul"
+                contentCls:"ks-editor-toolbar-ul"
             }, undefined, ListButton);
         }
     };
@@ -12747,7 +12753,7 @@ KISSY.add("editor/plugin/insertUnorderedList/index", function (S, Editor, ListBu
             cmd.init(editor);
             editor.addButton({
                 cmdType:'italic',
-                contentCls:"ke-toolbar-italic",
+                contentCls:"ks-editor-toolbar-italic",
                 title:"斜体 "
             }, undefined, ui.Button);
         }
@@ -12777,8 +12783,9 @@ KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
         init:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton({
-                contentCls:"ke-toolbar-justifyCenter",
-                title:"居中对齐"
+                contentCls:"ks-editor-toolbar-justifyCenter",
+                title:"居中对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -12818,8 +12825,9 @@ KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
         init:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton({
-                contentCls:"ke-toolbar-justifyLeft",
-                title:"左对齐"
+                contentCls:"ks-editor-toolbar-justifyLeft",
+                title:"左对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -12859,8 +12867,9 @@ KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
         init:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton({
-                contentCls:"ke-toolbar-justifyRight",
-                title:"右对齐"
+                contentCls:"ks-editor-toolbar-justifyRight",
+                title:"右对齐",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
                 offClick:exec,
@@ -12952,15 +12961,15 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
         tipHtml = '<a ' +
             'href="" '
             + ' target="_blank" ' +
-            'class="ke-bubbleview-url">' +
+            'class="ks-editor-bubbleview-url">' +
             '在新窗口查看' +
             '</a>  –  '
             + ' <span ' +
-            'class="ke-bubbleview-link ke-bubbleview-change">' +
+            'class="ks-editor-bubbleview-link ks-editor-bubbleview-change">' +
             '编辑' +
             '</span>   |   '
             + ' <span ' +
-            'class="ke-bubbleview-link ke-bubbleview-remove">' +
+            'class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">' +
             '去除' +
             '</span>';
 
@@ -12973,7 +12982,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
     return {init:function (editor) {
 
         editor.addButton({
-            contentCls:"ke-toolbar-link",
+            contentCls:"ks-editor-toolbar-link",
             title:"插入链接",
             mode:Editor.WYSIWYG_MODE
         }, {
@@ -12993,9 +13002,9 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
                 var bubble = this,
                     el = bubble.get("contentEl");
                 el.html(tipHtml);
-                var tipurl = el.one(".ke-bubbleview-url"),
-                    tipchange = el.one(".ke-bubbleview-change"),
-                    tipremove = el.one(".ke-bubbleview-remove");
+                var tipurl = el.one(".ks-editor-bubbleview-url"),
+                    tipchange = el.one(".ks-editor-bubbleview-change"),
+                    tipremove = el.one(".ks-editor-bubbleview-remove");
                 //ie focus not lose
                 Editor.Utils.preventFocus(el);
                 tipchange.on("click", function (ev) {
@@ -13775,6 +13784,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     //Dialog 不行
     var o = new Overlay({
         width:"0px",
+        prefixCls:'ks-editor-',
         elStyle:{
             overflow:'hidden'
         },
@@ -13853,11 +13863,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         Event = S.Event,
         DOM = S.DOM,
         iframe,
-        MAXIMIZE_TOOLBAR_CLASS = "ke-toolbar-padding",
+        MAXIMIZE_TOOLBAR_CLASS = "ks-editor-toolbar-padding",
         init = function () {
             if (!iframe) {
                 iframe = new Node("<" + "iframe " +
-                    " class='ke-maximize-shim'" +
+                    " class='ks-editor-maximize-shim'" +
                     " style='" +
                     "position:absolute;" +
                     "top:-9999px;" +
@@ -13919,6 +13929,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
             editor.get("iframeWrapEl").css({
+                height:self.iframeHeight
+            });
+            editor.get("textarea").css({
                 height:self.iframeHeight
             });
             DOM.css(doc.body, {
@@ -14083,6 +14096,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editor.get("iframeWrapEl").css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
+
+
+            editor.get("textarea").css({
+                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+            });
+
             if (stop !== true) {
                 arguments.callee.call(self, true);
             }
@@ -14160,8 +14179,8 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
-    var MAXIMIZE_CLASS = "ke-toolbar-maximize",
-        RESTORE_CLASS = "ke-toolbar-restore",
+    var MAXIMIZE_CLASS = "ks-editor-toolbar-maximize",
+        RESTORE_CLASS = "ks-editor-toolbar-restore",
         MAXIMIZE_TIP = "全屏",
         RESTORE_TIP = "取消全屏";
 
@@ -14196,7 +14215,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
     return {
         init:function (editor) {
             editor.addButton({
-                contentCls:"ke-toolbar-mul-image",
+                contentCls:"ks-editor-toolbar-mul-image",
                 title:"批量插图",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -14248,7 +14267,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
             editor.addButton({
                 title:"减少缩进量 ",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-outdent"
+                contentCls:"ks-editor-toolbar-outdent"
             }, {
                 offClick:function () {
                     editor.execCommand("outdent");
@@ -14353,7 +14372,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             "zIndex":{
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
@@ -14377,7 +14396,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             draggable:{
                 value:true
@@ -14449,7 +14468,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             editor.addButton({
                 title:"分页",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-pagebreak"
+                contentCls:"ks-editor-toolbar-pagebreak"
             }, {
                 offClick:function () {
                     var editor = this.get("editor"),
@@ -14498,7 +14517,7 @@ KISSY.add("editor/plugin/preview/index", function () {
         init:function (editor) {
             editor.addButton({
                 title:"预览",
-                contentCls:"ke-toolbar-preview"}, {
+                contentCls:"ks-editor-toolbar-preview"}, {
                 offClick:function () {
                     var self = this,
                         editor = self.get("editor");
@@ -14572,7 +14591,7 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
             var self = this,
                 h = self.get("height"),
                 el = new Node("<div" +
-                    " class='ke-progressbar' " +
+                    " class='ks-editor-progressbar' " +
                     " style='width:" +
                     self.get("width") +
                     ";" +
@@ -14583,12 +14602,12 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
                 container = self.get("container"),
                 p = new Node(
                     "<div style='overflow:hidden;'>" +
-                        "<div class='ke-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
-                        "<div class='ke-progressbar-inner-bg'></div>" +
+                        "<div class='ks-editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
+                        "<div class='ks-editor-progressbar-inner-bg'></div>" +
                         "</div>" +
                         "</div>"
                 ).appendTo(el),
-                title = new Node("<span class='ke-progressbar-title'></span>").appendTo(el);
+                title = new Node("<span class='ks-editor-progressbar-title'></span>").appendTo(el);
             if (container)
                 el.appendTo(container);
             self.el = el;
@@ -14751,7 +14770,7 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
             editor.addButton({
                 title:"清除格式",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-removeformat"
+                contentCls:"ks-editor-toolbar-removeformat"
             }, {
                 offClick:function () {
                     editor.execCommand("removeFormat");
@@ -14786,7 +14805,7 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 }
             }
 
-            var resizer = new Node("<div class='ke-resizer' style='cursor: "
+            var resizer = new Node("<div class='ks-editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
 
@@ -14844,30 +14863,30 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
         $ = Node.all,
         Event = S.Event,
         DOM = S.DOM,
-        SELECT_ACTIVE_CLASS = "ke-select-active",
-        MENU_SELECTED_CLASS = "ke-menu-selected",
-        SELECT_MARKUP = "<span class='ke-select-wrap'>" +
+        SELECT_ACTIVE_CLASS = "ks-editor-select-active",
+        MENU_SELECTED_CLASS = "ks-editor-menu-selected",
+        SELECT_MARKUP = "<span class='ks-editor-select-wrap'>" +
             // 设置 tabindex=0 ，否则 click 会导致 blur->focus 事件触发
-            "<a class='ke-select' " +
+            "<a class='ks-editor-select' " +
             " hide" +
             "focus='hidefocus' tabindex='0'>" +
-            "<span class='ke-select-text'>" +
-            "<span class='ke-select-text-inner'></span>" +
+            "<span class='ks-editor-select-text'>" +
+            "<span class='ks-editor-select-text-inner'></span>" +
             "</span>" +
-            "<span class='ke-select-drop-wrap'>" +
-            "<span class='ke-select-drop'></span>" +
+            "<span class='ks-editor-select-drop-wrap'>" +
+            "<span class='ks-editor-select-drop'></span>" +
             "</span>" +
             "</a>" +
             "</span>",
         MENU_ITEM_TPL = "<a " +
-            "class='ke-select-menu-item' " +
+            "class='ks-editor-select-menuitem' " +
             "tabindex='-1' " +
             "href='javascript:void(\"{tip}\")' " +
             "data-value='{value}'>" +
             "{name}" +
             "</a>",
         SELECT_MENU_MARKUP = "<div>",
-        SELECT_DISABLED_CLASS = "ke-select-disabled",
+        SELECT_DISABLED_CLASS = "ks-editor-select-disabled",
         ENABLED = 1,
         dtd = Editor.XHTML_DTD,
         DISABLED = 0;
@@ -14932,7 +14951,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
             title:el.attr("title"),
             el:el,
             items:items,
-            cls:"ke-combox",
+            cls:"ks-editor-combox",
             value:el.val()
         });
     };
@@ -14956,9 +14975,9 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 titleA = el.one("a"),
                 title = self.get("title") || "",
                 cls = self.get("cls"),
-                text = el.one(".ke-select-text"),
-                innerText = el.one(".ke-select-text-inner"),
-                drop = el.one(".ke-select-drop");
+                text = el.one(".ks-editor-select-text"),
+                innerText = el.one(".ks-editor-select-text-inner"),
+                drop = el.one(".ks-editor-select-drop");
 
             if (self.get("value") !== undefined) {
                 innerText.html(self._findNameByV(self.get("value")));
@@ -14986,7 +15005,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
             el.on("keydown", self._keydown, self);
             self.el = el;
             self.title = innerText;
-            self._focusA = el.one("a.ke-select");
+            self._focusA = el.one("a.ks-editor-select");
             self._focusA.on("blur", function () {
                 if (self.menu) {
                     self.menu.hide();
@@ -15163,10 +15182,11 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 menuNode;
             //要在适当位置插入 !!!
             var menu = new Overlay({
+                prefixCls:'ks-editor-',
                 autoRender:true,
                 render:self.get("menuContainer"),
                 content:SELECT_MENU_MARKUP,
-                elCls:"ke-menu",
+                elCls:"ks-editor-menu",
                 width:popUpWidth ? popUpWidth : el.width(),
                 zIndex:Editor.baseZIndex(Editor.zIndexManager.SELECT)
             }), items = self.get("items");
@@ -15198,7 +15218,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
 
             if (self.get("title")) {
                 $("<div " +
-                    "class='ke-menu-title ke-select-menu-item' " +
+                    "class='ks-editor-menu-title ks-editor-select-menuitem' " +
                     "style='margin-top:-6px;' " +
                     ">" + self.get("title") + "</div>").appendTo(menuNode, undefined);
             }
@@ -15246,7 +15266,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 menuNode = self.menuNode,
                 t = $(ev.target),
                 a = t.closest(function (n) {
-                    return DOM.contains(menuNode,n) && DOM.nodeName(n) == "a";
+                    return DOM.contains(menuNode, n) && DOM.nodeName(n) == "a";
                 }, undefined);
 
             if (!a || !a.attr("data-value")) {
@@ -15279,13 +15299,13 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 wl = DOM.scrollLeft(),
                 wh = DOM.viewportHeight() ,
                 ww = DOM.viewportWidth(),
-                //右边界坐标,60 is buffer
+            //右边界坐标,60 is buffer
                 wr = wl + ww - 60,
-                //下边界坐标
+            //下边界坐标
                 wb = wt + wh,
-                //下拉框向下弹出的y坐标
+            //下拉框向下弹出的y坐标
                 sb = xy.top + (el.height() - 2),
-                //下拉框右对齐的最右边x坐标
+            //下拉框右对齐的最右边x坐标
                 sr = xy.left + el.width() - 2,
                 align = self.get("align"),
                 xAlign = align[0],
@@ -15448,7 +15468,7 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
     return {
         init:function (editor) {
             var s = new S.Node('<span ' +
-                'class="ke-toolbar-separator">&nbsp;' +
+                'class="ks-editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
             editor.on("destroy", function () {
@@ -15460,7 +15480,7 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
     requires:['editor']
 });KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
-    var smiley_markup = "<div class='ke-smiley-sprite'>";
+    var smiley_markup = "<div class='ks-editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +
             "data-icon='http://a.tbcdn.cn/sys/wangwang/smiley/48x48/" + i + ".gif'>" +
@@ -15472,7 +15492,7 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
     return {
         init:function (editor) {
             editor.addButton({
-                contentCls:"ke-toolbar-smiley",
+                contentCls:"ks-editor-toolbar-smiley",
                 title:"插入表情",
                 keepFocus:false,
                 mode:Editor.WYSIWYG_MODE
@@ -15496,7 +15516,7 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
                             focus4e:false,
                             width:"297px",
                             autoRender:true,
-                            elCls:"ke-popup",
+                            elCls:"ks-editor-popup",
                             zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                             mask:false
                         });
@@ -15544,7 +15564,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
         init:function (editor) {
             editor.addButton({
                 title:"源码",
-                contentCls:"ke-toolbar-source"
+                contentCls:"ks-editor-toolbar-source"
             }, {
                 init:function () {
                     var self = this;
@@ -15595,7 +15615,7 @@ KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
             cmd.init(editor);
             editor.addButton({
                 cmdType:"strikeThrough",
-                contentCls:"ke-toolbar-strikeThrough",
+                contentCls:"ks-editor-toolbar-strikeThrough",
                 title:"删除线 "
             }, undefined, ui.Button);
         }
@@ -16085,7 +16105,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
 
             editor.addButton({
-                contentCls:"ke-toolbar-table",
+                contentCls:"ks-editor-toolbar-table",
                 mode:Editor.WYSIWYG_MODE,
                 title:"插入表格"
             }, {
@@ -16126,7 +16146,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             cmd.init(editor);
             editor.addButton({
                 cmdType:"underline",
-                contentCls:"ke-toolbar-underline",
+                contentCls:"ks-editor-toolbar-underline",
                 title:"下划线 "
             }, undefined, ui.Button);
         }
@@ -16452,13 +16472,13 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
                 mode:Editor.WYSIWYG_MODE,
                 title:"撤销",
                 editor:editor,
-                contentCls:"ke-toolbar-undo"
+                contentCls:"ks-editor-toolbar-undo"
             }, undefined, Btn.UndoBtn);
             editor.addButton({
                 mode:Editor.WYSIWYG_MODE,
                 title:"重做",
                 editor:editor,
-                contentCls:"ke-toolbar-redo"
+                contentCls:"ks-editor-toolbar-redo"
             }, undefined, Btn.RedoBtn);
         }
     };
@@ -16561,7 +16581,7 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
             });
 
             editor.addButton({
-                contentCls:"ke-toolbar-video",
+                contentCls:"ks-editor-toolbar-video",
                 title:"插入视频",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -16676,7 +16696,7 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
 
 
             editor.addButton({
-                contentCls:"ke-toolbar-music",
+                contentCls:"ks-editor-toolbar-music",
                 title:"插入虾米音乐",
                 mode:Editor.WYSIWYG_MODE
             }, {

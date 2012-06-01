@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 30 20:28
 */
 /**
  * patch for nodejs
@@ -202,7 +202,7 @@ build time: May 29 14:52
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 20:42
+build time: May 30 19:50
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -652,7 +652,7 @@ build time: May 28 20:42
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120528204213';
+        S.__BUILD_TIME = '20120530195018';
     })();
 
     return S;
@@ -4230,7 +4230,7 @@ build time: May 28 20:42
         // the default timeout for getScript
         timeout:10,
         comboMaxUrlLength:1024,
-        tag:'20120528204213'
+        tag:'20120530195018'
     }, getBaseInfo()));
 
     /**
@@ -4567,7 +4567,10 @@ build time: May 28 20:42
             requires:["node", "component"]
         },
         "editor":{
-            requires:['htmlparser', 'core','overlay']
+            requires:['htmlparser', 'core', 'overlay']
+        },
+        "editor/full":{
+            requires:['htmlparser', 'core', 'overlay']
         }
     });
     if (S.Loader) {
@@ -4588,7 +4591,7 @@ build time: May 28 20:42
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 30 19:50
 */
 /**
  * @fileOverview ua
@@ -4876,7 +4879,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:42
+build time: May 30 19:45
 */
 /**
  * @fileOverview dom-attr
@@ -5583,11 +5586,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         NodeTypes:NODE_TYPE,
 
         /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
-         * 其它值，返回 false
-         * @return {window|Document|HTMLElement}
+         * Return corresponding window if elem is document or window or undefined.
+         * Else return false.
+         * @param {undefined|window|document} elem
+         * @return {window|Boolean}
          */
         _getWin:function (elem) {
             if (elem == null) {
@@ -7466,11 +7468,11 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         else if (simpleContext) {
             // 1.常见的单个元素
             // DOM.query(document.getElementById("xx"))
-            if (selector.nodeType || selector.setTimeout) {
+            if (selector['nodeType'] || selector['setTimeout']) {
                 ret = [selector];
             }
             // 2.KISSY NodeList 特殊点直接返回，提高性能
-            else if (selector.getDOMNodes) {
+            else if (selector['getDOMNodes']) {
                 return selector;
             }
             // 3.常见的数组
@@ -8981,10 +8983,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
              * @returns {HTMLElement}
              */
-            closest:function (selector, filter, context) {
+            closest:function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
                     return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-                }, context, true);
+                }, context, true, allowTextNode);
             },
 
             /**
@@ -8997,7 +8999,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             parent:function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
                     return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-                }, context);
+                }, context, undefined);
             },
 
             /**
@@ -9007,10 +9009,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
-            first:function (selector, filter) {
+            first:function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.firstChild, filter, 'nextSibling',
-                    undefined, undefined, true);
+                    undefined, undefined, true, allowTextNode);
             },
 
             /**
@@ -9020,10 +9022,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
-            last:function (selector, filter) {
+            last:function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.lastChild, filter, 'previousSibling',
-                    undefined, undefined, true);
+                    undefined, undefined, true, allowTextNode);
             },
 
             /**
@@ -9033,8 +9035,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
-            next:function (selector, filter) {
-                return nth(selector, filter, 'nextSibling', undefined);
+            next:function (selector, filter, allowTextNode) {
+                return nth(selector, filter, 'nextSibling', undefined,
+                    undefined, undefined, allowTextNode);
             },
 
             /**
@@ -9044,8 +9047,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
-            prev:function (selector, filter) {
-                return nth(selector, filter, 'previousSibling', undefined);
+            prev:function (selector, filter, allowTextNode) {
+                return nth(selector, filter, 'previousSibling',
+                    undefined, undefined, undefined, allowTextNode);
             },
 
             /**
@@ -9054,8 +9058,8 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement[]}
              */
-            siblings:function (selector, filter) {
-                return getSiblings(selector, filter, true);
+            siblings:function (selector, filter, allowTextNode) {
+                return getSiblings(selector, filter, true, allowTextNode);
             },
 
             /**
@@ -9069,7 +9073,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Get the childrNodes of the first element in the set of matched elements (includes text and comment nodes),
+             * Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),
              * optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
@@ -9119,7 +9123,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     // filter 可为 number, selector, fn array ，为数组时返回多个
     // direction 可为 parentNode, nextSibling, previousSibling
     // context : 到某个阶段不再查找直接返回
-    function nth(elem, filter, direction, extraFilter, context, includeSef) {
+    function nth(elem, filter, direction, extraFilter, context, includeSef, allowTextNode) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
@@ -9153,7 +9157,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
         while (elem && elem != context) {
-            if (elem.nodeType == DOM.ELEMENT_NODE &&
+            if ((
+                elem.nodeType == DOM.ELEMENT_NODE ||
+                    elem.nodeType == DOM.TEXT_NODE && allowTextNode
+                ) &&
                 testFilter(elem, filter) &&
                 (!extraFilter || extraFilter(elem))) {
                 ret.push(elem);
@@ -9231,7 +9238,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:44
+build time: May 30 19:49
 */
 /**
  * @fileOverview responsible for registering event
@@ -9584,8 +9591,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 ret = t;
             }
             // Trigger an inline bound script
-            if (cur[ ontype ] &&
-                cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -9596,7 +9602,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
-                getNodeName(target)=="a")) {
+                getNodeName(target) == "a")) {
                 var old;
                 try {
                     // execute default action on dom node
@@ -11544,7 +11550,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 30 19:49
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -12054,7 +12060,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 30 19:45
 */
 /**
  * @fileOverview form data  serialization util
@@ -13966,7 +13972,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 30 19:45
 */
 /**
  * @fileOverview cookie
@@ -14080,7 +14086,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 30 19:45
 */
 /**
  * @fileOverview attribute management
@@ -14701,7 +14707,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:41
+build time: May 30 19:45
 */
 /**
  * @fileOverview anim
@@ -14798,7 +14804,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         specialVals = ["hide", "show", "toggle"],
-        // shorthand css properties
+    // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
@@ -14959,7 +14965,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return;
         }
 
-        if (elem.nodeType==DOM.ELEMENT_NODE) {
+        if (elem.nodeType == DOM.ELEMENT_NODE) {
             hidden = (DOM.css(elem, "display") === "none");
             for (prop in props) {
                 val = props[prop];
@@ -15087,7 +15093,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs[prop] = fx;
         }
 
-        if (elem.nodeType==DOM.ELEMENT_NODE &&
+        if (elem.nodeType == DOM.ELEMENT_NODE &&
             (props.width || props.height)) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE does not
@@ -15170,15 +15176,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                             c == 0) {
                             fx.finished = c;
                             end &= c;
-                        }
-                        else {
+                        } else {
                             end &= fx.frame();
+                            // 最后通知下
+                            if (end && config.frame) {
+                                config.frame(fx);
+                            }
                         }
                     }
                 }
 
-                if ((self.fire("step") === false) ||
-                    end) {
+                if ((self.fire("step") === false) || end) {
                     // complete 事件只在动画到达最后一帧时才触发
                     self.stop(end);
                 }
@@ -15289,7 +15297,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             Q.removeQueues(elem);
         }
         var allRunning = DOM.data(elem, runningKey),
-            // can not stop in for/in , stop will modified allRunning too
+        // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allRunning);
         for (var k in anims) {
             anims[k].stop(end);
@@ -16060,7 +16068,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 28 19:45
+build time: May 30 19:49
 */
 /**
  * @fileOverview anim-node-plugin

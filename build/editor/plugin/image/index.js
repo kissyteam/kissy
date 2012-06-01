@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * insert image for kissy editor
@@ -20,9 +20,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                 (!/(^|\s+)ke_/.test(node[0].className)) &&
                 node;
         },
-        tipHtml = '<a class="ke-bubbleview-url" target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="ke-bubbleview-link ke-bubbleview-change" href="#">编辑</a>  |  '
-            + '<a class="ke-bubbleview-link ke-bubbleview-remove" href="#">删除</a>'
+        tipHtml = '<a class="ks-editor-bubbleview-url" target="_blank" href="#">在新窗口查看</a>  |  '
+            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-change" href="#">编辑</a>  |  '
+            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-remove" href="#">删除</a>'
             + '';
 
     return {
@@ -34,7 +34,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
             editor.addButton({
-                contentCls:"ke-toolbar-image",
+                contentCls:"ks-editor-toolbar-image",
                 title:"插入图片",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -89,9 +89,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                     var bubble = this,
                         el = bubble.get("contentEl");
                     el.html(tipHtml);
-                    var tipUrlEl = el.one(".ke-bubbleview-url"),
-                        tipChangeEl = el.one(".ke-bubbleview-change"),
-                        tipRemoveEl = el.one(".ke-bubbleview-remove");
+                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
+                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
+                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
                     Editor.Utils.preventFocus(el);
                     tipChangeEl.on("click", function (ev) {
                         showImageEditor(bubble.selectedEl);

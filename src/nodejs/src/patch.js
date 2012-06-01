@@ -43,14 +43,26 @@
     mix(S, {
         configs:{
             packages:function (cfgs) {
-                var ps = S.__packages = S.__packages || {};
-                for (var i = 0; i < cfgs.length; i++) {
-                    var cfg = cfgs[i], p;
-                    ps[cfg.name] = cfg;
-                    if ((p = cfg.path) && !p.match(/\/$/)) {
-                        p += "/";
+                var ps = S.__packages = S.__packages || {}, cfg, p, i;
+                if (S.isArray(cfgs)) {
+                    for (i = 0; i < cfgs.length; i++) {
+                        cfg = cfgs[i];
+                        ps[cfg.name] = cfg;
+                        if ((p = (cfg.path || cfg.base)) && !p.match(/\/$/)) {
+                            p += "/";
+                        }
+                        cfg.base = p;
                     }
-                    cfg.path = p;
+                } else {
+                    for (i in cfgs) {
+                        cfg = cfgs[i];
+                        ps[i] = cfg;
+                        cfg.name = i;
+                        if ((p = (cfg.path || cfg.base)) && !p.match(/\/$/)) {
+                            p += "/";
+                        }
+                        cfg.base = p;
+                    }
                 }
             }
         }

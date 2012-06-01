@@ -311,152 +311,185 @@
 <span id='line304' class='line'>304</span> 
 <span id='line305' class='line'>305</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line306' class='line'>306</span>              * set KISSY configuration
-<span id='line307' class='line'>307</span>              * @param {Object|String} c config object or config key.
-<span id='line308' class='line'>308</span>              * @param {Object[]} c.packages
-<span id='line309' class='line'>309</span>              * @param {String} c.packages.0.name package name
-<span id='line310' class='line'>310</span>              * @param {String} c.packages.0.path package path
-<span id='line311' class='line'>311</span>              * @param {String} c.packages.0.tag timestamp for this package's module file
-<span id='line312' class='line'>312</span>              * @param {Array[]} c.map file map configs
-<span id='line313' class='line'>313</span>              * @param {Array[]} c.map.0 a single map rule
-<span id='line314' class='line'>314</span>              * @param {RegExp} c.map.0.0 a regular expression to match url
-<span id='line315' class='line'>315</span>              * @param {String|Function} c.map.0.1 provide replacement for String.replace
-<span id='line316' class='line'>316</span>              * @param {Boolean} c.combine whether to enable combo
-<span id='line317' class='line'>317</span>              * @param {String} c.base set base for kissy loader.use with caution!
-<span id='line318' class='line'>318</span>              * @param {Boolean} c.debug whether to enable debug mod
-<span id='line319' class='line'>319</span>              * @param [v] config value
-<span id='line320' class='line'>320</span>              * @example
-<span id='line321' class='line'>321</span>              * // use gallery from cdn
-<span id='line322' class='line'>322</span>              * &lt;code>
-<span id='line323' class='line'>323</span>              * KISSY.config({
-<span id='line324' class='line'>324</span>              *      combine:true,
-<span id='line325' class='line'>325</span>              *      packages:[{
-<span id='line326' class='line'>326</span>              *          name:"gallery",
-<span id='line327' class='line'>327</span>              *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
-<span id='line328' class='line'>328</span>              *      }]
-<span id='line329' class='line'>329</span>              * });
-<span id='line330' class='line'>330</span>              * &lt;/code>
-<span id='line331' class='line'>331</span>              * // use map to reduce connection count
-<span id='line332' class='line'>332</span>              * &lt;code>
-<span id='line333' class='line'>333</span>              * S.config({
-<span id='line334' class='line'>334</span>              * map:[
-<span id='line335' class='line'>335</span>              * [
-<span id='line336' class='line'>336</span>              *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
-<span id='line337' class='line'>337</span>              *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
-<span id='line338' class='line'>338</span>              * ]
-<span id='line339' class='line'>339</span>              * });
-<span id='line340' class='line'>340</span>              * &lt;/code>
-<span id='line341' class='line'>341</span>              */</span><span class="WHIT">
-<span id='line342' class='line'>342</span> </span><span class="WHIT">            </span><span class="NAME">config</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line343' class='line'>343</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cfg</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line344' class='line'>344</span> </span><span class="WHIT">                    </span><span class="NAME">r</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line345' class='line'>345</span> </span><span class="WHIT">                    </span><span class="NAME">Config</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line346' class='line'>346</span> </span><span class="WHIT">                    </span><span class="NAME">configs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.configs</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line347' class='line'>347</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isObject</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line348' class='line'>348</span> </span><span class="WHIT">                    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line349' class='line'>349</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line350' class='line'>350</span> </span><span class="WHIT">                            </span><span class="NAME">S.config</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line351' class='line'>351</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line352' class='line'>352</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line353' class='line'>353</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line354' class='line'>354</span> </span><span class="WHIT">                    </span><span class="NAME">cfg</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">configs</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line355' class='line'>355</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line356' class='line'>356</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line357' class='line'>357</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cfg</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line358' class='line'>358</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line359' class='line'>359</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Config</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line360' class='line'>360</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line361' class='line'>361</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line362' class='line'>362</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line363' class='line'>363</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cfg</span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line364' class='line'>364</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line365' class='line'>365</span> </span><span class="WHIT">                            </span><span class="NAME">Config</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line366' class='line'>366</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line367' class='line'>367</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line368' class='line'>368</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line369' class='line'>369</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">r</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line370' class='line'>370</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line307' class='line'>307</span>              * @param {Object|String}   c Config object or config key.
+<span id='line308' class='line'>308</span>              * @param {String} c.base   KISSY 's base path.
+<span id='line309' class='line'>309</span>              *                          Default: get from kissy(-min).js or seed(-min).js
+<span id='line310' class='line'>310</span>              * @param {String} c.tag    KISSY 's timestamp for native module.
+<span id='line311' class='line'>311</span>              *                          Default: KISSY 's build time.
+<span id='line312' class='line'>312</span>              * @param {Boolean} c.debug     whether to enable debug mod.
+<span id='line313' class='line'>313</span>              * @param {Boolean} c.combine   whether to enable combo.
+<span id='line314' class='line'>314</span>              * @param {Object} c.packages Packages definition with package name as the key.
+<span id='line315' class='line'>315</span>              * @param {String} c.packages.base    Package base path.
+<span id='line316' class='line'>316</span>              * @param {String} c.packages.tag     Timestamp for this package's module file.
+<span id='line317' class='line'>317</span>              * @param {String} c.packages.debug     Whether force debug mode for current package.
+<span id='line318' class='line'>318</span>              * @param {String} c.packages.combine     Whether allow combine for current package modules.
+<span id='line319' class='line'>319</span>              * @param {Array[]} c.map file map      File url map configs.
+<span id='line320' class='line'>320</span>              * @param {Array[]} c.map.0     A single map rule.
+<span id='line321' class='line'>321</span>              * @param {RegExp} c.map.0.0    A regular expression to match url.
+<span id='line322' class='line'>322</span>              * @param {String|Function} c.map.0.1   Replacement for String.replace.
+<span id='line323' class='line'>323</span>              * @param [v] config value.
+<span id='line324' class='line'>324</span>              * @example
+<span id='line325' class='line'>325</span>              * // use gallery from cdn
+<span id='line326' class='line'>326</span>              * &lt;code>
+<span id='line327' class='line'>327</span>              * KISSY.config({
+<span id='line328' class='line'>328</span>              *      combine:true,
+<span id='line329' class='line'>329</span>              *      base:'',
+<span id='line330' class='line'>330</span>              *      packages:{
+<span id='line331' class='line'>331</span>              *          "gallery":{
+<span id='line332' class='line'>332</span>              *              base:"http://a.tbcdn.cn/s/kissy/gallery/"
+<span id='line333' class='line'>333</span>              *          }
+<span id='line334' class='line'>334</span>              *      },
+<span id='line335' class='line'>335</span>              *      modules:{
+<span id='line336' class='line'>336</span>              *          "gallery/x/y":{
+<span id='line337' class='line'>337</span>              *              requires:["gallery/x/z"]
+<span id='line338' class='line'>338</span>              *          }
+<span id='line339' class='line'>339</span>              *      }
+<span id='line340' class='line'>340</span>              * });
+<span id='line341' class='line'>341</span>              * &lt;/code>
+<span id='line342' class='line'>342</span>              * // use map to reduce connection count
+<span id='line343' class='line'>343</span>              * &lt;code>
+<span id='line344' class='line'>344</span>              * S.config("map",[
+<span id='line345' class='line'>345</span>              *  [
+<span id='line346' class='line'>346</span>              *   /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+<span id='line347' class='line'>347</span>              *   "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"
+<span id='line348' class='line'>348</span>              *  ]
+<span id='line349' class='line'>349</span>              * ]);
+<span id='line350' class='line'>350</span>              * &lt;/code>
+<span id='line351' class='line'>351</span>              */</span><span class="WHIT">
+<span id='line352' class='line'>352</span> </span><span class="WHIT">            </span><span class="NAME">config</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line353' class='line'>353</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cfg</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line354' class='line'>354</span> </span><span class="WHIT">                    </span><span class="NAME">r</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line355' class='line'>355</span> </span><span class="WHIT">                    </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line356' class='line'>356</span> </span><span class="WHIT">                    </span><span class="NAME">runs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line357' class='line'>357</span> </span><span class="WHIT">                    </span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line358' class='line'>358</span> </span><span class="WHIT">                    </span><span class="NAME">p</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line359' class='line'>359</span> </span><span class="WHIT">                    </span><span class="NAME">Config</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line360' class='line'>360</span> </span><span class="WHIT">                    </span><span class="NAME">configs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.configs</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line361' class='line'>361</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isObject</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line362' class='line'>362</span> </span><span class="WHIT">                    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line363' class='line'>363</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">c</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line364' class='line'>364</span> </span><span class="WHIT">                            </span><span class="NAME">runs.push</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line365' class='line'>365</span> </span><span class="WHIT">                                </span><span class="NAME">name</span><span class="PUNC">:</span><span class="NAME">p</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line366' class='line'>366</span> </span><span class="WHIT">                                </span><span class="NAME">order</span><span class="PUNC">:</span><span class="NAME">configs</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">configs</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">order</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line367' class='line'>367</span> </span><span class="WHIT">                                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">c</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line368' class='line'>368</span> </span><span class="WHIT">                            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line369' class='line'>369</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line370' class='line'>370</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line371' class='line'>371</span> 
-<span id='line372' class='line'>372</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line373' class='line'>373</span>              * Prints debug info.
-<span id='line374' class='line'>374</span>              * @param msg {String} the message to log.
-<span id='line375' class='line'>375</span>              * @param {String} [cat] the log category for the message. Default
-<span id='line376' class='line'>376</span>              *        categories are "info", "warn", "error", "time" etc.
-<span id='line377' class='line'>377</span>              * @param {String} [src] the source of the the message (opt)
-<span id='line378' class='line'>378</span>              */</span><span class="WHIT">
-<span id='line379' class='line'>379</span> </span><span class="WHIT">            </span><span class="NAME">log</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">cat</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">src</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line380' class='line'>380</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.Config.debug</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line381' class='line'>381</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">src</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line382' class='line'>382</span> </span><span class="WHIT">                        </span><span class="NAME">msg</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">': '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line383' class='line'>383</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line384' class='line'>384</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">host</span><span class="PUNC">[</span><span class="STRN">'console'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line385' class='line'>385</span> </span><span class="WHIT">                        </span><span class="NAME">console</span><span class="PUNC">[</span><span class="NAME">cat</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console</span><span class="PUNC">[</span><span class="NAME">cat</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">cat</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'log'</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line386' class='line'>386</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line387' class='line'>387</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line388' class='line'>388</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line389' class='line'>389</span> 
-<span id='line390' class='line'>390</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line391' class='line'>391</span>              * Throws error message.
-<span id='line392' class='line'>392</span>              */</span><span class="WHIT">
-<span id='line393' class='line'>393</span> </span><span class="WHIT">            </span><span class="NAME">error</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line394' class='line'>394</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.Config.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line395' class='line'>395</span> </span><span class="WHIT">                    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line396' class='line'>396</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line397' class='line'>397</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line398' class='line'>398</span> 
-<span id='line399' class='line'>399</span> </span><span class="WHIT">            </span><span class="COMM">/*
-<span id='line400' class='line'>400</span>              * Generate a global unique id.
-<span id='line401' class='line'>401</span>              * @param {String} [pre] guid prefix
-<span id='line402' class='line'>402</span>              * @return {String} the guid
-<span id='line403' class='line'>403</span>              */</span><span class="WHIT">
-<span id='line404' class='line'>404</span> </span><span class="WHIT">            </span><span class="NAME">guid</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pre</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line405' class='line'>405</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pre</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">EMPTY</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">guid</span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line406' class='line'>406</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line407' class='line'>407</span> 
-<span id='line408' class='line'>408</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line409' class='line'>409</span>              * Get all the property names of o as array
-<span id='line410' class='line'>410</span>              * @param {Object} o
-<span id='line411' class='line'>411</span>              * @returns {Array}
-<span id='line412' class='line'>412</span>              */</span><span class="WHIT">
-<span id='line413' class='line'>413</span> </span><span class="WHIT">            </span><span class="NAME">keys</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line414' class='line'>414</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line415' class='line'>415</span> 
-<span id='line416' class='line'>416</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">o</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line417' class='line'>417</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line418' class='line'>418</span> </span><span class="WHIT">                        </span><span class="NAME">result.push</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line372' class='line'>372</span> </span><span class="WHIT">                    </span><span class="NAME">runs.sort</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">a1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">a2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line373' class='line'>373</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">a1.order</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">a2.order</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line374' class='line'>374</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line375' class='line'>375</span> 
+<span id='line376' class='line'>376</span> </span><span class="WHIT">                    </span><span class="NAME">S.each</span><span class="PUNC">(</span><span class="NAME">runs</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">r</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line377' class='line'>377</span> </span><span class="WHIT">                        </span><span class="NAME">fn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">configs</span><span class="PUNC">[</span><span class="NAME">p</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">r.name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line378' class='line'>378</span> </span><span class="WHIT">                        </span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">r.value</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line379' class='line'>379</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line380' class='line'>380</span> </span><span class="WHIT">                            </span><span class="NAME">fn.call</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line381' class='line'>381</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line382' class='line'>382</span> </span><span class="WHIT">                            </span><span class="NAME">Config</span><span class="PUNC">[</span><span class="NAME">p</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line383' class='line'>383</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line384' class='line'>384</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line385' class='line'>385</span> 
+<span id='line386' class='line'>386</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line387' class='line'>387</span> </span><span class="WHIT">                    </span><span class="NAME">cfg</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">configs</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line388' class='line'>388</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line389' class='line'>389</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line390' class='line'>390</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cfg.call</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line391' class='line'>391</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line392' class='line'>392</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Config</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line393' class='line'>393</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line394' class='line'>394</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line395' class='line'>395</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line396' class='line'>396</span> </span><span class="WHIT">                            </span><span class="NAME">r</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cfg.call</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line397' class='line'>397</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line398' class='line'>398</span> </span><span class="WHIT">                            </span><span class="NAME">Config</span><span class="PUNC">[</span><span class="NAME">c</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line399' class='line'>399</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line400' class='line'>400</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line401' class='line'>401</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line402' class='line'>402</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">r</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line403' class='line'>403</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line404' class='line'>404</span> 
+<span id='line405' class='line'>405</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line406' class='line'>406</span>              * Prints debug info.
+<span id='line407' class='line'>407</span>              * @param msg {String} the message to log.
+<span id='line408' class='line'>408</span>              * @param {String} [cat] the log category for the message. Default
+<span id='line409' class='line'>409</span>              *        categories are "info", "warn", "error", "time" etc.
+<span id='line410' class='line'>410</span>              * @param {String} [src] the source of the the message (opt)
+<span id='line411' class='line'>411</span>              */</span><span class="WHIT">
+<span id='line412' class='line'>412</span> </span><span class="WHIT">            </span><span class="NAME">log</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">cat</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">src</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line413' class='line'>413</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.Config.debug</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line414' class='line'>414</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">src</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line415' class='line'>415</span> </span><span class="WHIT">                        </span><span class="NAME">msg</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">': '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line416' class='line'>416</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line417' class='line'>417</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">host</span><span class="PUNC">[</span><span class="STRN">'console'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line418' class='line'>418</span> </span><span class="WHIT">                        </span><span class="NAME">console</span><span class="PUNC">[</span><span class="NAME">cat</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console</span><span class="PUNC">[</span><span class="NAME">cat</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">cat</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'log'</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line419' class='line'>419</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line420' class='line'>420</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line421' class='line'>421</span> 
-<span id='line422' class='line'>422</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasEnumBug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line423' class='line'>423</span> </span><span class="WHIT">                    </span><span class="NAME">S.each</span><span class="PUNC">(</span><span class="NAME">enumProperties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line424' class='line'>424</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line425' class='line'>425</span> </span><span class="WHIT">                            </span><span class="NAME">result.push</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line426' class='line'>426</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line427' class='line'>427</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line428' class='line'>428</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line429' class='line'>429</span> 
-<span id='line430' class='line'>430</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line431' class='line'>431</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line432' class='line'>432</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line433' class='line'>433</span> 
-<span id='line434' class='line'>434</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span id='line435' class='line'>435</span>      * Initializes
-<span id='line436' class='line'>436</span>      */</span><span class="WHIT">
-<span id='line437' class='line'>437</span> </span><span class="WHIT">    </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line438' class='line'>438</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line439' class='line'>439</span> </span><span class="WHIT">        </span><span class="NAME">S.Env</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Env</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line440' class='line'>440</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line441' class='line'>441</span> </span><span class="WHIT">        </span><span class="COMM">// NOTICE: '@DEBUG@' will replace with '' when compressing.</span><span class="WHIT">
-<span id='line442' class='line'>442</span> </span><span class="WHIT">        </span><span class="COMM">// So, if loading source file, debug is on by default.</span><span class="WHIT">
-<span id='line443' class='line'>443</span> </span><span class="WHIT">        </span><span class="COMM">// If loading min version, debug is turned off automatically.</span><span class="WHIT">
-<span id='line444' class='line'>444</span> </span><span class="WHIT">        </span><span class="NAME">c.debug</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'@DEBUG@'</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line445' class='line'>445</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line446' class='line'>446</span>          * The build time of the library
-<span id='line447' class='line'>447</span>          * @type {String}
-<span id='line448' class='line'>448</span>          */</span><span class="WHIT">
-<span id='line449' class='line'>449</span> </span><span class="WHIT">        </span><span class="NAME">S.__BUILD_TIME</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'@TIMESTAMP@'</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line450' class='line'>450</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line451' class='line'>451</span> 
-<span id='line452' class='line'>452</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">S</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line453' class='line'>453</span> 
-<span id='line454' class='line'>454</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="STRN">'KISSY'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line455' class='line'>455</span> </span></pre></body></html>
+<span id='line421' class='line'>421</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line422' class='line'>422</span> 
+<span id='line423' class='line'>423</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line424' class='line'>424</span>              * Throws error message.
+<span id='line425' class='line'>425</span>              */</span><span class="WHIT">
+<span id='line426' class='line'>426</span> </span><span class="WHIT">            </span><span class="NAME">error</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line427' class='line'>427</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.Config.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line428' class='line'>428</span> </span><span class="WHIT">                    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line429' class='line'>429</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line430' class='line'>430</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line431' class='line'>431</span> 
+<span id='line432' class='line'>432</span> </span><span class="WHIT">            </span><span class="COMM">/*
+<span id='line433' class='line'>433</span>              * Generate a global unique id.
+<span id='line434' class='line'>434</span>              * @param {String} [pre] guid prefix
+<span id='line435' class='line'>435</span>              * @return {String} the guid
+<span id='line436' class='line'>436</span>              */</span><span class="WHIT">
+<span id='line437' class='line'>437</span> </span><span class="WHIT">            </span><span class="NAME">guid</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pre</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line438' class='line'>438</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pre</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">EMPTY</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">guid</span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line439' class='line'>439</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line440' class='line'>440</span> 
+<span id='line441' class='line'>441</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line442' class='line'>442</span>              * Get all the property names of o as array
+<span id='line443' class='line'>443</span>              * @param {Object} o
+<span id='line444' class='line'>444</span>              * @returns {Array}
+<span id='line445' class='line'>445</span>              */</span><span class="WHIT">
+<span id='line446' class='line'>446</span> </span><span class="WHIT">            </span><span class="NAME">keys</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line447' class='line'>447</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line448' class='line'>448</span> 
+<span id='line449' class='line'>449</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">o</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line450' class='line'>450</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line451' class='line'>451</span> </span><span class="WHIT">                        </span><span class="NAME">result.push</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line452' class='line'>452</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line453' class='line'>453</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line454' class='line'>454</span> 
+<span id='line455' class='line'>455</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasEnumBug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line456' class='line'>456</span> </span><span class="WHIT">                    </span><span class="NAME">S.each</span><span class="PUNC">(</span><span class="NAME">enumProperties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line457' class='line'>457</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line458' class='line'>458</span> </span><span class="WHIT">                            </span><span class="NAME">result.push</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line459' class='line'>459</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line460' class='line'>460</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line461' class='line'>461</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line462' class='line'>462</span> 
+<span id='line463' class='line'>463</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line464' class='line'>464</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line465' class='line'>465</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line466' class='line'>466</span> 
+<span id='line467' class='line'>467</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line468' class='line'>468</span>      * Initializes
+<span id='line469' class='line'>469</span>      */</span><span class="WHIT">
+<span id='line470' class='line'>470</span> </span><span class="WHIT">    </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line471' class='line'>471</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">c</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line472' class='line'>472</span> </span><span class="WHIT">        </span><span class="NAME">S.Env</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Env</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line473' class='line'>473</span> </span><span class="WHIT">        </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Config</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line474' class='line'>474</span> </span><span class="WHIT">        </span><span class="COMM">// NOTICE: '@DEBUG@' will replace with '' when compressing.</span><span class="WHIT">
+<span id='line475' class='line'>475</span> </span><span class="WHIT">        </span><span class="COMM">// So, if loading source file, debug is on by default.</span><span class="WHIT">
+<span id='line476' class='line'>476</span> </span><span class="WHIT">        </span><span class="COMM">// If loading min version, debug is turned off automatically.</span><span class="WHIT">
+<span id='line477' class='line'>477</span> </span><span class="WHIT">        </span><span class="NAME">c.debug</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'@DEBUG@'</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line478' class='line'>478</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line479' class='line'>479</span>          * The build time of the library
+<span id='line480' class='line'>480</span>          * @type {String}
+<span id='line481' class='line'>481</span>          */</span><span class="WHIT">
+<span id='line482' class='line'>482</span> </span><span class="WHIT">        </span><span class="NAME">S.__BUILD_TIME</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'@TIMESTAMP@'</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line483' class='line'>483</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line484' class='line'>484</span> 
+<span id='line485' class='line'>485</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">S</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line486' class='line'>486</span> 
+<span id='line487' class='line'>487</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="STRN">'KISSY'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line488' class='line'>488</span> </span></pre></body></html>

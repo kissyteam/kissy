@@ -8,11 +8,9 @@ KISSY.add("autocomplete/menuRender", function (S, Menu) {
         createDom:function () {
             var self = this,
                 el = self.get("el"),
-                head = $("<div class='" +
-                    self.get("prefixCls") + "autocomplete-menu-header"
+                head = $("<div class='ks-autocomplete-menu-header"
                     + "'></div>"),
-                foot = $("<div class='" +
-                    self.get("prefixCls") + "autocomplete-menu-footer"
+                foot = $("<div class='ks-autocomplete-menu-footer"
                     + "'></div>");
             el.prepend(head);
             el.append(foot);

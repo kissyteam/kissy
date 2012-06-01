@@ -44,34 +44,13 @@
         }
     }
 
-    function removeSuffixAndTagFromModName(modName) {
-        var tag = undefined,
-            m,
-            withTagReg = /([^?]+)(?:\?t=(.+))/;
-
-        if (m = modName.match(withTagReg)) {
-            modName = m[1];
-            tag = m[2];
-        }
-
-        // js do not need suffix
-        modName = modName.replace(/\.js$/i, "");
-
-        return {
-            modName:modName,
-            tag:tag
-        };
-    }
-
 
     function getPackageInfo(self, mod) {
-        if (mod.packageInfo) {
-            return mod.packageInfo;
-        }
 
         var modName = mod.name,
             Config = self.Config,
-            packages = Config.packages || {},
+            Env = self.Env,
+            packages = Env.packages || {},
             pName = "",
             packageDesc;
 
@@ -92,7 +71,7 @@
         S.mix(packageDesc, {
             name:pName,
             tag:encodeURIComponent(Config.tag),
-            path:Config.base,
+            base:Config.base,
             debug:Config.debug,
             charset:"utf-8"
         }, false);
@@ -226,13 +205,13 @@
             return path.substring(0, path.length - 1);
         },
 
-        getPackageInfo:getPackageInfo,
+        createModulesInfo:function (self, modNames) {
+            S.each(modNames, function (m) {
+                utils.createModuleInfo(self, m);
+            });
+        },
 
-        createModuleInfo:function (self, modName) {
-            var info = removeSuffixAndTagFromModName(modName);
-
-            modName = info.modName;
-
+        createModuleInfo:function (self, modName, cfg) {
             var mods = self.Env.mods,
                 t,
                 mod = mods[modName];
@@ -241,14 +220,11 @@
                 return mod;
             }
 
-            if (!mod) {
-                mods[modName] = mod = new Loader.Module();
-                mod.name = modName;
-            }
-
-            if (info.tag) {
-                mod.tag = info.tag;
-            }
+            // 防止 cfg 里有 tag，构建 fullpath 需要
+            mods[modName] = mod = new Loader.Module(S.mix({
+                name:modName,
+                SS:self
+            }, cfg));
 
             var packageInfo = getPackageInfo(self, mod),
                 path = defaultComponentJsName(modName, packageInfo);
@@ -258,9 +234,6 @@
                 path:path,
                 packageInfo:packageInfo
             }, false);
-
-            mod.fullpath = utils.getMappedPath(self, packageInfo.path +
-                mod.path + ((t = mod.getTag()) ? ("?t=" + t) : ""));
 
             return mod;
         },
@@ -292,15 +265,16 @@
             }
 
             var fn = mod.fn,
+                requires,
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            requires = mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, utils.getModules(self, mod.requires));
+                    value = fn.apply(mod, utils.getModules(self, requires));
                 } else {
                     value = fn;
                 }
@@ -329,37 +303,45 @@
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
-         * 4. create module info with tag : core.js?t=xx => core , tag=xx
          * @param {KISSY} self Global KISSY instance
          * @param {String|String[]} modNames Array of module names or module names string separated by comma
          */
-        normalizeModNames:function (self, modNames, refModName, keepAlias) {
-            var ret = [],
+        normalizeModNames:function (self, modNames, refModName) {
+            return utils.unalias(self, utils.normalizeModNamesWithAlias(self, modNames, refModName));
+        },
+
+        unalias:function (self, names) {
+            var ret = [].concat(names),
+                i,
+                m,
+                alias,
+                ok = 0,
                 mods = self['Env'].mods;
-            S.each(modNames, function (name) {
-                var alias, m;
-                // 1. index map
-                name = indexMap(name);
-                // 2. un alias
-                if (!keepAlias && (m = mods[name]) && (alias = m.alias)) {
-                    ret.push.apply(ret, indexMap(alias));
-                } else {
-                    ret.push(name);
+            while (!ok) {
+                ok = 1;
+                for (i = ret.length - 1; i >= 0; i--) {
+                    if ((m = mods[ret[i]]) && (alias = m.alias)) {
+                        ok = 0;
+                        ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
+                    }
                 }
-            });
-            // 3. relative to absolute (optional)
-            if (refModName) {
-                ret = utils.normalDepModuleName(refModName, ret);
             }
-            // 4. create module info with tag
-            S.each(ret, function (name, i) {
-                ret[i] = utils.createModuleInfo(self, name).name;
-            });
             return ret;
         },
 
         normalizeModNamesWithAlias:function (self, modNames, refModName) {
-            return utils.normalizeModNames(self, modNames, refModName, 1);
+            var ret = [], i, l;
+            if (modNames) {
+                // 1. index map
+                for (i = 0, l = modNames.length; i < l; i++) {
+                    ret.push(indexMap(modNames[i]));
+                }
+            }
+            // 3. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            return ret;
         },
 
         // 注册模块，将模块和定义 factory 关联起来
@@ -372,6 +354,7 @@
                 return;
             }
 
+            // 没有 use，静态载入的 add 可能执行
             utils.createModuleInfo(self, name);
 
             mod = mods[name];
@@ -383,72 +366,9 @@
 
             mod.fn = fn;
 
-
-            if (config && config.requires) {
-                config.requires = utils.normalizeModNames(self, config.requires, name);
-            }
-
             S.mix((mods[name] = mod), config);
 
             S.log(name + " is loaded");
-        },
-
-        /**
-         * 只用来指定模块依赖信息. 注意：需要在 package 声明后 add ！
-         * @param self
-         * @param name
-         * @param fn
-         * @param config
-         * @example
-         * <code>
-         *
-         * KISSY.config({
-         *  packages:[
-         *      {
-         *          name:"biz1",
-         *          path:"haha"
-         *      }
-         *  ]
-         * });
-         *
-         * KISSY.add({
-         *   "biz1/main" : {
-         *      requires:[ "biz1/part1" , "biz1/part2" ]
-         *   }
-         * });
-         *
-         * </code>
-         */
-        normAdd:function (self, name, fn, config) {
-            var mods = self.Env.mods,
-                t,
-                o;
-
-            // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name) &&
-                !config &&
-                S.isPlainObject(fn)) {
-                o = {};
-                o[name] = fn;
-                name = o;
-            }
-
-            // S.add( { name: config } )
-            if (S.isPlainObject(name)) {
-                S.each(name, function (modCfg, modName) {
-                    modName = utils.indexMapStr(modName);
-                    utils.createModuleInfo(self, modName);
-                    // 模块代码已经加载过了
-                    if (mods[modName].fn) {
-                        return;
-                    }
-                    if (t = modCfg.requires) {
-                        modCfg.requires = utils.normalizeModNames(self, t, modName);
-                    }
-                    S.mix(mods[modName], modCfg);
-                });
-                return true;
-            }
         },
 
         getMappedPath:function (self, path) {

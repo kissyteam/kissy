@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * link dialog
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "<input " +
             " data-verify='^(https?://[^\\s]+)|(#.+)$' " +
             " data-warning='请输入合适的网址格式' " +
-            "class='ke-link-url ke-input' " +
+            "class='ks-editor-link-url ks-editor-input' " +
             "style='width:390px;" +
             MIDDLE +
             "'" +
@@ -30,12 +30,12 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "style='margin: 15px 0 10px 0px;'>" +
             "<label>" +
             "链接名称： " +
-            "<input class='ke-link-title ke-input' style='width:100px;" +
+            "<input class='ks-editor-link-title ks-editor-input' style='width:100px;" +
             MIDDLE + "'>" +
             "</label> " +
             "<label>" +
             "<input " +
-            "class='ke-link-blank' " +
+            "class='ks-editor-link-blank' " +
             "style='vertical-align: middle; margin-left: 21px;' " +
             "type='checkbox'/>" +
             " &nbsp; 在新窗口打开链接" +
@@ -45,11 +45,11 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
-            "class='ke-link-ok ke-button' " +
+            "class='ks-editor-link-ok ks-editor-button' " +
             "style='margin-left:65px;margin-right:20px;'>确定</a> " +
             "<a " +
             "href='javascript:void(\'取消\')' " +
-            "class='ke-link-cancel ke-button'>取消</a>" +
+            "class='ks-editor-link-cancel ks-editor-button'>取消</a>" +
             "</div>";
 
     function LinkDialog(editor) {
@@ -72,11 +72,11 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             self.dialog = d;
             var body = d.get("body"),
                 foot = d.get("footer");
-            d.urlEl = body.one(".ke-link-url");
-            d.urlTitle = body.one(".ke-link-title");
-            d.targetEl = body.one(".ke-link-blank");
-            var cancel = foot.one(".ke-link-cancel"),
-                ok = foot.one(".ke-link-ok");
+            d.urlEl = body.one(".ks-editor-link-url");
+            d.urlTitle = body.one(".ks-editor-link-title");
+            d.targetEl = body.one(".ks-editor-link-blank");
+            var cancel = foot.one(".ks-editor-link-cancel"),
+                ok = foot.one(".ks-editor-link-ok");
             ok.on("click", self._link, self);
             cancel.on("click", function (ev) {
                 ev && ev.halt();

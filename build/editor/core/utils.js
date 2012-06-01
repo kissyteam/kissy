@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * common utils for kissy editor
@@ -202,7 +202,7 @@ KISSY.add("editor/core/utils", function (S) {
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
-                    inp.addClass("ke-input-tip");
+                    inp.addClass("ks-editor-input-tip");
                     inp.val(placeholder);
                 } else if (!UA['ie']) {
                     inp.val("");
@@ -216,13 +216,13 @@ KISSY.add("editor/core/utils", function (S) {
              */
             valInput:function (inp, val) {
                 if (val === undefined) {
-                    if (inp.hasClass("ke-input-tip")) {
+                    if (inp.hasClass("ks-editor-input-tip")) {
                         return "";
                     } else {
                         return inp.val();
                     }
                 } else {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     inp.val(val);
                 }
             },
@@ -239,12 +239,12 @@ KISSY.add("editor/core/utils", function (S) {
                 }
                 inp.on("blur", function () {
                     if (!S.trim(inp.val())) {
-                        inp.addClass("ke-input-tip");
+                        inp.addClass("ks-editor-input-tip");
                         inp.val(tip);
                     }
                 });
                 inp.on("focus", function () {
-                    inp.removeClass("ke-input-tip");
+                    inp.removeClass("ks-editor-input-tip");
                     if (S.trim(inp.val()) == tip) {
                         inp.val("");
                     }

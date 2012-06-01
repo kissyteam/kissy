@@ -149,8 +149,6 @@
     }
 
     S.config(S.mix({
-        // the default timeout for getScript
-        timeout:10,
         comboMaxUrlLength:1024,
         tag:'@TIMESTAMP@'
     }, getBaseInfo()));

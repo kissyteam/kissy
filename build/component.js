@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 18:08
+build time: May 30 20:25
 */
 /**
  * Setup component namespace.
@@ -3147,8 +3147,8 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function (e) {
-            e.halt();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
         });
         return mask;
     }
@@ -3209,10 +3209,14 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
             var self = this,
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (maskShared) {
-                self._maskExtHide();
-            } else {
-                mask.remove();
+            if (self.get("mask")) {
+                if (maskShared) {
+                    if (self.get("visible")) {
+                        self._maskExtHide();
+                    }
+                } else {
+                    mask.remove();
+                }
             }
         }
 
@@ -3362,7 +3366,7 @@ KISSY.add("component/uibase/positionrender", function () {
     Position.prototype = {
 
         __createDom:function () {
-            this.get("el").addClass(this.get("prefixCls") + "ext-position");
+            this.get("el").addClass("ks-ext-position");
         },
 
         _uiSetZIndex:function (x) {

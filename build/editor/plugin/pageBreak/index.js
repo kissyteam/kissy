@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * pagebreak functionality
@@ -55,7 +55,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             editor.addButton({
                 title:"分页",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-pagebreak"
+                contentCls:"ks-editor-toolbar-pagebreak"
             }, {
                 offClick:function () {
                     var editor = this.get("editor"),

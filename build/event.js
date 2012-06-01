@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:52
+build time: May 30 20:27
 */
 /**
  * @fileOverview responsible for registering event
@@ -354,8 +354,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 ret = t;
             }
             // Trigger an inline bound script
-            if (cur[ ontype ] &&
-                cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -366,7 +365,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
-                getNodeName(target)=="a")) {
+                getNodeName(target) == "a")) {
                 var old;
                 try {
                     // execute default action on dom node

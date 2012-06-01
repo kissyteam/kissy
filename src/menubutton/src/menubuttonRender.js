@@ -5,9 +5,9 @@
 KISSY.add("menubutton/menubuttonRender", function (S, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
-            '{prefixCls}menu-button-caption">{content}<' + '/div>' +
+            'ks-menu-button-caption">{content}<' + '/div>' +
             '<div class="ks-inline-block ' +
-            '{prefixCls}menu-button-dropdown"><' + '/div>',
+            'ks-menu-button-dropdown"><' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
@@ -17,8 +17,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
             var self = this,
                 el = self.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:self.get("html"),
-                    prefixCls:self.get("prefixCls")
+                    content:self.get("html")
                 });
             el.html(html)
                 //带有 menu

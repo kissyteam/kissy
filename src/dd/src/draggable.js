@@ -7,6 +7,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     var each = S.each,
         ie = UA['ie'],
         NULL = null,
+        PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
 
     /**
@@ -299,7 +300,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             setter:function (d) {
                 var self = this;
                 self.get("dragNode")[d ? 'addClass' : 'removeClass']
-                    (DDM.get("prefixCls") + "dragging");
+                    (PREFIX_CLS + "dragging");
             }
         },
 
@@ -452,7 +453,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
             _uiSetDisabledChange:function (d) {
                 this.get("dragNode")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+                    'removeClass'](PREFIX_CLS + '-disabled');
             },
 
             _init:function () {
@@ -616,7 +617,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 // 如果已经开始，收尾工作
                 if (self.get("dragging")) {
                     self.get("node")
-                        .removeClass(DDM.get("prefixCls") + "drag-over");
+                        .removeClass(PREFIX_CLS + "drag-over");
                     if (activeDrop = DDM.get("activeDrop")) {
                         self.fire('dragdrophit', {
                             drag:self,
@@ -636,7 +637,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
             _handleOut:function () {
                 var self = this;
-                self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+                self.get("node").removeClass(PREFIX_CLS + "drag-over");
                 /**
                  *  html5 => dragleave
                  */
@@ -652,8 +653,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              */
             _handleEnter:function (e) {
                 var self = this;
-                self.get("node").addClass(DDM.get("prefixCls") + "drag-over");
-                //第一次先触发 dropenter,dragenter
+                self.get("node").addClass(PREFIX_CLS + "drag-over");
+                //第一次先触发 dropenter, dragenter
                 self.fire("dragenter", e);
             },
 

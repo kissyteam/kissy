@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/insertOrderedList/index", function (S, Editor, ListButt
             editor.addButton({
                 cmdType:"insertOrderedList",
                 mode:Editor.WYSIWYG_MODE,
-                contentCls:"ke-toolbar-ol"
+                contentCls:"ks-editor-toolbar-ol"
             }, undefined, ListButton);
         }
     };

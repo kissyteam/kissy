@@ -10,11 +10,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         Event = S.Event,
         DOM = S.DOM,
         iframe,
-        MAXIMIZE_TOOLBAR_CLASS = "ke-toolbar-padding",
+        MAXIMIZE_TOOLBAR_CLASS = "ks-editor-toolbar-padding",
         init = function () {
             if (!iframe) {
                 iframe = new Node("<" + "iframe " +
-                    " class='ke-maximize-shim'" +
+                    " class='ks-editor-maximize-shim'" +
                     " style='" +
                     "position:absolute;" +
                     "top:-9999px;" +
@@ -76,6 +76,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
             editor.get("iframeWrapEl").css({
+                height:self.iframeHeight
+            });
+            editor.get("textarea").css({
                 height:self.iframeHeight
             });
             DOM.css(doc.body, {
@@ -240,6 +243,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editor.get("iframeWrapEl").css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
+
+
+            editor.get("textarea").css({
+                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+            });
+
             if (stop !== true) {
                 arguments.callee.call(self, true);
             }

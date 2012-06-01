@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
             editor.addButton({
                 cmdType:'backColor',
                 title:"背景颜色",
-                contentCls:"ke-toolbar-back-color"
+                contentCls:"ks-editor-toolbar-back-color"
             }, undefined, Button);
         }
     };

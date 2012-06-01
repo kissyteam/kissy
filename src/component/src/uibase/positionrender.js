@@ -36,7 +36,7 @@ KISSY.add("component/uibase/positionrender", function () {
     Position.prototype = {
 
         __createDom:function () {
-            this.get("el").addClass(this.get("prefixCls") + "ext-position");
+            this.get("el").addClass("ks-ext-position");
         },
 
         _uiSetZIndex:function (x) {

@@ -51,7 +51,12 @@
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
-                return this.fullpath;
+                var self = this, t;
+                return self.fullpath || (self.fullpath =
+                    Loader.Utils.getMappedPath(self.SS,
+                        self.packageInfo.base +
+                            self.path +
+                            ((t = self.getTag()) ? ("?t=" + t) : "")));
             },
 
             /**

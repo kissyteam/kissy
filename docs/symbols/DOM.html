@@ -337,7 +337,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.closest">closest</a></b>
-                                                <span class="param">(selector, filter, context)</span>
+                                                <span class="param">(selector, filter, context, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -361,7 +361,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Get the childrNodes of the first element in the set of matched elements (includes text and comment nodes),optionally filtered by a filter.</span>                                                
+                                                <span class="desc">Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),optionally filtered by a filter.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -447,7 +447,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.first">first</a></b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -577,7 +577,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.last">last</a></b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -587,7 +587,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.next">next</a></b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -657,7 +657,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.prev">prev</a></b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -787,7 +787,7 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 DOM.
                                                 <b class="name"><a href="../symbols/DOM.html#.siblings">siblings</a></b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -1374,7 +1374,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line137">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line139">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1553,7 +1553,7 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">closest</b>
-                                                <span class="param">(selector, filter, context)</span>
+                                                <span class="param">(selector, filter, context, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -1602,6 +1602,15 @@ a.go-top:active{text-decoration:none;}
                                                             <span class="desc">Search bound element</span>
                                                         </li>
                                                     
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
                                                     </ul>
                                                 </dd>
                                                 
@@ -1644,7 +1653,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line158">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line160">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1722,11 +1731,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line148">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line150">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Get the childrNodes of the first element in the set of matched elements (includes text and comment nodes),optionally filtered by a filter.
+                                                Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),optionally filtered by a filter.
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html">traversal.js</a>.
                                                 
@@ -2241,7 +2250,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line173">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line175">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2402,7 +2411,7 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">first</b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -2440,6 +2449,15 @@ a.go-top:active{text-decoration:none;}
                                                              ]
                                                             <span class="type">{String|Function}</span> 
                                                             <span class="desc">Selector string or filter function</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -3377,7 +3395,7 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">last</b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -3415,6 +3433,15 @@ a.go-top:active{text-decoration:none;}
                                                              ]
                                                             <span class="type">{String|Function}</span> 
                                                             <span class="desc">Selector string or filter function</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -3455,7 +3482,7 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">next</b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
@@ -3493,6 +3520,15 @@ a.go-top:active{text-decoration:none;}
                                                              ]
                                                             <span class="type">{String|Function}</span> 
                                                             <span class="desc">Selector string or filter function</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -4031,11 +4067,11 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">prev</b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line117">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line118">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4069,6 +4105,15 @@ a.go-top:active{text-decoration:none;}
                                                              ]
                                                             <span class="type">{String|Function}</span> 
                                                             <span class="desc">Selector string or filter function</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -4958,11 +5003,11 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>DOM.</span>
                                                 <b class="name">siblings</b>
-                                                <span class="param">(selector, filter)</span>
+                                                <span class="param">(selector, filter, allowTextNode)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line127">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dom_src_traversal.js.html#line129">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -4996,6 +5041,15 @@ a.go-top:active{text-decoration:none;}
                                                              ]
                                                             <span class="type">{String|Function}</span> 
                                                             <span class="desc">Selector string or filter function</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">allowTextNode</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>

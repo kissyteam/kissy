@@ -7,7 +7,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             "zIndex":{
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"ke-"
+                value:"ks-editor-"
             },
             draggable:{
                 value:true

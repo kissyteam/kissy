@@ -304,63 +304,96 @@
 
             /**
              * set KISSY configuration
-             * @param {Object|String} c config object or config key.
-             * @param {Object[]} c.packages
-             * @param {String} c.packages.0.name package name
-             * @param {String} c.packages.0.path package path
-             * @param {String} c.packages.0.tag timestamp for this package's module file
-             * @param {Array[]} c.map file map configs
-             * @param {Array[]} c.map.0 a single map rule
-             * @param {RegExp} c.map.0.0 a regular expression to match url
-             * @param {String|Function} c.map.0.1 provide replacement for String.replace
-             * @param {Boolean} c.combine whether to enable combo
-             * @param {String} c.base set base for kissy loader.use with caution!
-             * @param {Boolean} c.debug whether to enable debug mod
-             * @param [v] config value
+             * @param {Object|String}   c Config object or config key.
+             * @param {String} c.base   KISSY 's base path.
+             *                          Default: get from kissy(-min).js or seed(-min).js
+             * @param {String} c.tag    KISSY 's timestamp for native module.
+             *                          Default: KISSY 's build time.
+             * @param {Boolean} c.debug     whether to enable debug mod.
+             * @param {Boolean} c.combine   whether to enable combo.
+             * @param {Object} c.packages Packages definition with package name as the key.
+             * @param {String} c.packages.base    Package base path.
+             * @param {String} c.packages.tag     Timestamp for this package's module file.
+             * @param {String} c.packages.debug     Whether force debug mode for current package.
+             * @param {String} c.packages.combine     Whether allow combine for current package modules.
+             * @param {Array[]} c.map file map      File url map configs.
+             * @param {Array[]} c.map.0     A single map rule.
+             * @param {RegExp} c.map.0.0    A regular expression to match url.
+             * @param {String|Function} c.map.0.1   Replacement for String.replace.
+             * @param [v] config value.
              * @example
              * // use gallery from cdn
              * <code>
              * KISSY.config({
              *      combine:true,
-             *      packages:[{
-             *          name:"gallery",
-             *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
-             *      }]
+             *      base:'',
+             *      packages:{
+             *          "gallery":{
+             *              base:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *          }
+             *      },
+             *      modules:{
+             *          "gallery/x/y":{
+             *              requires:["gallery/x/z"]
+             *          }
+             *      }
              * });
              * </code>
              * // use map to reduce connection count
              * <code>
-             * S.config({
-             * map:[
-             * [
-             *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
-             *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
-             * ]
-             * });
+             * S.config("map",[
+             *  [
+             *   /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+             *   "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"
+             *  ]
+             * ]);
              * </code>
              */
             config:function (c, v) {
                 var cfg,
                     r,
+                    self = this,
+                    runs = [],
+                    fn,
+                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(c)) {
-                    for (var p in c) {
+                    for (p in c) {
                         if (hasOwnProperty(c, p)) {
-                            S.config(p, c[p]);
+                            runs.push({
+                                name:p,
+                                order:configs[p] && configs[p].order || 0,
+                                value:c[p]
+                            });
                         }
                     }
+
+                    runs.sort(function (a1, a2) {
+                        return a1.order > a2.order;
+                    });
+
+                    S.each(runs, function (r) {
+                        fn = configs[p = r.name];
+                        v = r.value;
+                        if (fn) {
+                            fn.call(self, v);
+                        } else {
+                            Config[p] = v;
+                        }
+                    });
+
                 } else {
                     cfg = configs[c];
                     if (v === undefined) {
                         if (cfg) {
-                            r = cfg();
+                            r = cfg.call(self);
                         } else {
                             r = Config[c];
                         }
                     } else {
                         if (cfg) {
-                            r = cfg(v);
+                            r = cfg.call(self, v);
                         } else {
                             Config[c] = v;
                         }

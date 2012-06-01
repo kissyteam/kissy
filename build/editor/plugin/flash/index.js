@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * Add flash plugin.
@@ -69,7 +69,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
 
             if (pluginConfig.btn !== false) {
                 editor.addButton({
-                    contentCls:"ke-toolbar-flash",
+                    contentCls:"ks-editor-toolbar-flash",
                     title:"插入Flash",
                     mode:Editor.WYSIWYG_MODE
                 }, {

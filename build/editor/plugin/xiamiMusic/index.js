@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
     var CLS_XIAMI = "ke_xiami",
@@ -104,7 +104,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
 
             editor.addButton({
-                contentCls:"ke-toolbar-music",
+                contentCls:"ks-editor-toolbar-music",
                 title:"插入虾米音乐",
                 mode:Editor.WYSIWYG_MODE
             }, {

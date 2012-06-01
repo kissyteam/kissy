@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 29 14:49
+build time: May 30 20:24
 */
 /**
  * @fileOverview Combobox derived from Autocomplete.
@@ -11,7 +11,6 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
 
     // toggle menu show and hide
     function onBtn(e) {
-        S.log("mousedown");
         var self = this,
             menu = self.get("menu"),
             domEl = self.get("el")[0];
@@ -71,16 +70,14 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, N
         createDom:function () {
             var self = this,
                 container = $("<span class='" + self.get("prefixCls") + "combobox'></span>"),
-                button = $("<a " +
-                    // do need keyboard
-                    "tabindex='-1' " +
-                    "href='javascript:void(\"open\")'  " +
-                    // non-ie do not lose focus
-                    "onmousedown='return false;' " +
-                    "class='" + self.get("prefixCls") +
-                    "combobox-button'>&#x25BC;</a>")
+                button = $("<span class='ks-combobox-button'>" +
+                    "<span class='ks-combo-button-inner'>&#x25BC;</span>" +
+                    "</span>")
                     // ie do not lose focus
                     .unselectable();
+            button.on("mousedown", function (e) {
+                e.preventDefault();
+            });
             self.__set("container", container);
             self.__set("button", button);
         },
@@ -97,8 +94,7 @@ KISSY.add("autocomplete/BasicComboBoxRender", function (S, AutoCompleteRender, N
         _uiSetFocused:function (v) {
             var self = this;
             Render.superclass._uiSetFocused.apply(self, arguments);
-            self.get("container")[v ? "addClass" : "removeClass"](self.get("prefixCls")
-                + "combobox-focused");
+            self.get("container")[v ? "addClass" : "removeClass"]("ks-combobox-focused");
         },
 
         destructor:function () {
@@ -363,7 +359,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     for (var i = 0; i < data.length; i++) {
                         v = data[i];
                         autoCompleteMenu.addChild(new Menu.Item(S.mix({
-                            prefixCls:self.get("prefixCls") + "autocomplete-",
+                            prefixCls:self.get("prefixCls"),
                             content:v,
                             textContent:v,
                             value:v
@@ -1099,12 +1095,7 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                     view:true
                 }
             }
-        },
-        {
-            xclass:'autocomplete-menu',
-            priority:40
-        }
-    );
+        });
 
     return AutoCompleteMenu;
 }, {
@@ -1123,11 +1114,9 @@ KISSY.add("autocomplete/menuRender", function (S, Menu) {
         createDom:function () {
             var self = this,
                 el = self.get("el"),
-                head = $("<div class='" +
-                    self.get("prefixCls") + "autocomplete-menu-header"
+                head = $("<div class='ks-autocomplete-menu-header"
                     + "'></div>"),
-                foot = $("<div class='" +
-                    self.get("prefixCls") + "autocomplete-menu-footer"
+                foot = $("<div class='ks-autocomplete-menu-footer"
                     + "'></div>");
             el.prepend(head);
             el.append(foot);

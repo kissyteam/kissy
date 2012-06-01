@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
 for kissy editor iframe
@@ -206,10 +206,6 @@ img.ke_flash, img.ke_video, img.ke_music, img.ke_xiami {
     border: 1px solid #A9A9A9;
     height: 80px;
     width: 80px;
-}
-
-img.ke_music {
-    background-image: url("placeholder_music.png");
 }
 
 img.ke_video {

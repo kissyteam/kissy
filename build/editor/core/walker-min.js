@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/core/walker",function(i,m){function g(a,c){if(this._.end)return j;var b,d=this.range,f,i=this.guard,g=this.type,l=a?"_4e_previousSourceNode":"_4e_nextSourceNode";if(!this._.start&&(this._.start=1,d.trim(),d.collapsed))return this.end(),j;if(!a&&!this._.guardLTR){var m=d.endContainer[0],o=m.childNodes[d.endOffset];this._.guardLTR=function(a,b){return b&&(m==a||"body"==h.nodeName(a))?!1:a!=o}}if(a&&!this._.guardRTL){var n=d.startContainer[0],q=0<d.startOffset&&n.childNodes[d.startOffset-
 1]||null;this._.guardRTL=function(a,b){return b&&(n==a||"body"==h.nodeName(a))?!1:a!=q}}var r=a?this._.guardRTL:this._.guardLTR;f=i?function(a,b){return r(a,b)===e?e:i(a,b)}:r;this.current?b=this.current[l](e,g,f):a?(b=d.endContainer,0<d.endOffset?(b=new p(b[0].childNodes[d.endOffset-1]),f(b[0])===e&&(b=j)):b=f(b,k)===e?j:b._4e_previousSourceNode(k,g,f,void 0)):(b=d.startContainer,b=new p(b[0].childNodes[d.startOffset]),b.length?f(b[0])===e&&(b=j):b=f(d.startContainer,k)===e?j:d.startContainer._4e_nextSourceNode(k,

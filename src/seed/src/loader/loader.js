@@ -34,31 +34,24 @@
              * @example
              * <code>
              * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-
-             * KISSY.add({
-             *     'mod-name': {
-             *         fullpath: 'url',
-             *         requires: ['mod1','mod2']
-             *     }
-             * });
              * </code>
              */
             add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
-                    mods = SS.Env.mods,
-                    o;
+                    requires,
+                    mods = SS.Env.mods;
 
-
-                if (utils.normAdd(SS, name, fn, config)) {
-                    return;
+                // 兼容 1.3.0pr1
+                if (S.isPlainObject(name)) {
+                    return SS.config({
+                        modules:name
+                    });
                 }
 
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
-
-                    name = utils.indexMapStr(name);
 
                     utils.registerModule(SS, name, fn, config);
 
@@ -69,10 +62,13 @@
                         return;
                     }
 
-
-                    if (config && utils.isAttached(SS, config.requires)) {
-                        utils.attachMod(SS, mod);
+                    if (config) {
+                        requires = utils.normalizeModNames(SS, config.requires, name);
+                        if (config && utils.isAttached(SS, requires)) {
+                            utils.attachMod(SS, mod);
+                        }
                     }
+
                     return;
                 }
                 // S.add(fn,config);
@@ -163,19 +159,19 @@
         if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
             return utils.removePostfix(src.substring(base.length));
         }
-        var packages = SS.Config.packages,
+        var packages = SS.Env.packages,
             finalPackagePath,
             finalPackageLength = -1;
-        //外部模块去除包路径，得到模块名
+        // 外部模块去除包路径，得到模块名
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
-                var p_path = packages[p].path;
+                var packageBase = packages[p].base;
                 if (packages.hasOwnProperty(p) &&
-                    src.lastIndexOf(p_path, 0) === 0) {
+                    src.lastIndexOf(packageBase, 0) === 0) {
                     // longest match
-                    if (p_path.length > finalPackageLength) {
-                        finalPackageLength = p_path.length;
-                        finalPackagePath = p_path;
+                    if (packageBase.length > finalPackageLength) {
+                        finalPackageLength = packageBase.length;
+                        finalPackagePath = packageBase;
                     }
                 }
             }

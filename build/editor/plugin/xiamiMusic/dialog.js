@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, Select) {
     var UA = S.UA,
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
         TIP = "输入歌曲名、专辑名、艺人名";
 
 
-    var css = '.ke-xiami-list {' +
+    var css = '.ks-editor-xiami-list {' +
         'margin:10px 0 10px 0;' +
         'padding:10px 20px 0 20px;' +
         'border-top:1px solid #CED5E0;' +
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
         '}' +
         '' +
         '' +
-        '.ke-xiami-list li{' +
+        '.ks-editor-xiami-list li{' +
         'border:1px solid #CED5E0;' +
         'border-width:0 0 1px 0;' +
         'overflow:hidden;' +
@@ -36,13 +36,13 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
         '}' +
         '' +
         '' +
-        '.ke-xiami-list .ke-xiami-add {' +
+        '.ks-editor-xiami-list .ks-editor-xiami-add {' +
         'float:right;' +
         '}' +
         '' +
         '' +
         '' +
-        '.ke-xiami-list .ke-xiami-song {' +
+        '.ks-editor-xiami-list .ks-editor-xiami-song {' +
         'float:left;' +
         'width:300px;' +
         'white-space:nowrap;' +
@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
         '}' +
         '' +
         '' +
-        '.ke-xiami-paging a{' +
+        '.ks-editor-xiami-paging a{' +
         'display: inline-block;'
         + ' zoom: 1; '
         + ' *display: inline; '
@@ -59,18 +59,18 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
         '}' +
         '' +
         '' +
-        '.ke-xiami-paging a:hover,.ke-xiami-paging a.ke-xiami-curpage {' +
+        '.ks-editor-xiami-paging a:hover,.ks-editor-xiami-paging a.ks-editor-xiami-curpage {' +
         'color:red;' +
         'text-decoration:none;' +
         '}' +
         '' +
         '' +
-        '.ke-xiami-paging {' +
+        '.ks-editor-xiami-paging {' +
         'text-align:center;' +
         'margin:20px -10px 0 -10px;' +
         '}' +
         '' +
-        '.ke-xiami-page-more {' +
+        '.ks-editor-xiami-page-more {' +
         'padding:0 10px;' +
         '}';
 
@@ -86,17 +86,17 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
     var MIDDLE = "vertical-align:middle;",
         MARGIN_DEFAULT = 0,
         bodyHtml = "<div style='padding:20px 0;'>" +
-            "<form action='#' class='ke-xiami-form' style='margin:0 20px;'>" +
-            "<p class='ke-xiami-title'>" +
+            "<form action='#' class='ks-editor-xiami-form' style='margin:0 20px;'>" +
+            "<p class='ks-editor-xiami-title'>" +
             "" +
             "</p>" +
-            "<p class='ke-xiami-url-wrap'>" +
-            "<input class='ke-xiami-url ke-input' " +
+            "<p class='ks-editor-xiami-url-wrap'>" +
+            "<input class='ks-editor-xiami-url ks-editor-input' " +
             "style='width:374px;" + (UA['ie'] == 6 ? "" : MIDDLE)
             + "'" +
             "/> &nbsp; " +
             " <a " +
-            "class='ke-xiami-submit ke-button'" +
+            "class='ks-editor-xiami-submit ks-editor-button'" +
             ">"
             + BTIP + "</a>" +
             "</p>" +
@@ -104,7 +104,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             "style='margin:10px 0'>" +
             "<label>对 齐： " +
             "<select " +
-            "class='ke-xiami-align' title='对齐'>" +
+            "class='ks-editor-xiami-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -116,20 +116,20 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             "" +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
-            "class='ke-xiami-margin ke-input' style='width:60px;" +
+            "class='ks-editor-xiami-margin ks-editor-input' style='width:60px;" +
             MIDDLE + "' value='"
             + MARGIN_DEFAULT + "'/> 像素" +
             "</label>" +
             "</p>" +
             "</form>" +
             "<div " +
-            "class='ke-xiami-list'>" +
+            "class='ks-editor-xiami-list'>" +
             "</div>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ke-xiami-ok ke-button' " +
+            "class='ks-editor-xiami-ok ks-editor-button' " +
             "style='margin-right:20px;'>确&nbsp;定</a>" +
-            "<a class='ke-xiami-cancel ke-button'>取&nbsp;消</a></div>";
+            "<a class='ks-editor-xiami-cancel ks-editor-button'>取&nbsp;消</a></div>";
 
     function XiamiMusicDialog() {
         XiamiMusicDialog.superclass.constructor.apply(this, arguments);
@@ -150,16 +150,16 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 d = self.dialog,
                 del = d.get("el"),
                 dfoot = d.get("footer"),
-                input = del.one(".ke-xiami-url");
-            self.dAlign = Select.decorate(del.one(".ke-xiami-align"));
+                input = del.one(".ks-editor-xiami-url");
+            self.dAlign = Select.decorate(del.one(".ks-editor-xiami-align"));
             self.addRes(self.dAlign);
             self._xiami_input = input;
             Editor.Utils.placeholder(input, TIP);
             self.addRes(input);
-            self._xiamia_list = del.one(".ke-xiami-list");
-            self._xiami_submit = del.one(".ke-xiami-submit");
+            self._xiamia_list = del.one(".ks-editor-xiami-list");
+            self._xiami_submit = del.one(".ks-editor-xiami-submit");
             self._xiami_submit.on("click", function (ev) {
-                if (!self._xiami_submit.hasClass("ke-triplebutton-disabled", undefined))
+                if (!self._xiami_submit.hasClass("ks-editor-triplebutton-disabled", undefined))
                     loadRecordsByPage(1);
                 ev.halt();
             });
@@ -169,12 +169,12 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                     loadRecordsByPage(1);
                 }
             });
-            self.dMargin = del.one(".ke-xiami-margin");
-            self._xiami_url_wrap = del.one(".ke-xiami-url-wrap");
-            self._xiamia_title = del.one(".ke-xiami-title");
+            self.dMargin = del.one(".ks-editor-xiami-margin");
+            self._xiami_url_wrap = del.one(".ks-editor-xiami-url-wrap");
+            self._xiamia_title = del.one(".ks-editor-xiami-title");
 
-            var _xiami_ok = dfoot.one(".ke-xiami-ok");
-            dfoot.one(".ke-xiami-cancel").on("click", function (ev) {
+            var _xiami_ok = dfoot.one(".ks-editor-xiami-ok");
+            dfoot.one(".ks-editor-xiami-cancel").on("click", function (ev) {
                 d.hide();
                 ev.halt();
             });
@@ -207,7 +207,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                     alert("不能为空！");
                     return;
                 }
-                self._xiami_submit.addClass("ke-triplebutton-disabled", undefined);
+                self._xiami_submit.addClass("ks-editor-triplebutton-disabled", undefined);
                 var req = S.substitute(XIAMI_URL, {
                     key:encodeURIComponent(input.val()),
                     page:page
@@ -230,7 +230,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         self._listSearch(data);
                     },
                     error:function () {
-                        self._xiami_submit.removeClass("ke-triplebutton-disabled", undefined);
+                        self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
                         var html = "<p style='text-align:center;margin:10px 0;'>" +
                             "不好意思，超时了，请重试！" +
                             "</p>";
@@ -244,11 +244,11 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 var t = new Node(ev.target),
                     add = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, "ke-xiami-add");
+                            DOM.hasClass(node, "ks-editor-xiami-add");
                     }, undefined),
                     paging = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, "ke-xiami-page-item");
+                            DOM.hasClass(node, "ks-editor-xiami-page-item");
                     }, undefined);
                 if (add) {
                     self._dinfo = {
@@ -279,7 +279,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 html = "";
             // xiami 返回结果自动trim了
             if (data.key == S.trim(self._xiami_input.val())) {
-                self._xiami_submit.removeClass("ke-triplebutton-disabled", undefined);
+                self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
                 //self._xiami_submit.enable();
                 if (re && re.length) {
                     html = "<ul>";
@@ -287,7 +287,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         var r = re[i], d = getDisplayName(r);
                         html += "<li " +
                             "title='" + d + "'>" +
-                            "<span class='ke-xiami-song'>"
+                            "<span class='ks-editor-xiami-song'>"
                             + limit(d, 35) +
                             "</span>" +
                             "" +
@@ -295,7 +295,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                             //album_id_song_id
                             "<a href='#' " +
                             "title='" + d + "' " +
-                            "class='ke-xiami-add' data-value='" +
+                            "class='ks-editor-xiami-add' data-value='" +
                             (
                                 r['album_id']
                                     + "_"
@@ -312,7 +312,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         end = page + 1;
 
                     if (totalpage > 1) {
-                        html += "<p class='ke-xiami-paging'>";
+                        html += "<p class='ks-editor-xiami-paging'>";
                         if (start <= 2) {
                             end = Math.min(2 - start + end, totalpage - 1);
                             start = 2;
@@ -326,14 +326,14 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         }
                         html += getXiamiPaging(page, 1, "1");
                         if (start != 2) {
-                            html += "<span class='ke-xiami-page-more'>...</span>";
+                            html += "<span class='ks-editor-xiami-page-more'>...</span>";
                         }
                         for (i = start; i <= end; i++) {
                             html += getXiamiPaging(page, i, undefined);
                         }
                         if (end != totalpage) {
                             if (end != totalpage - 1) {
-                                html += "<span class='ke-xiami-page-more'>...</span>";
+                                html += "<span class='ks-editor-xiami-page-more'>...</span>";
                             }
                             html += getXiamiPaging(page, totalpage, totalpage);
                         }
@@ -370,7 +370,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 self._xiami_url_wrap.show();
                 self.dialog.get("footer").hide();
                 self._xiamia_title.hide();
-                self._xiami_submit.removeClass("ke-triplebutton-disabled", undefined);
+                self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
                 //self._xiami_submit.enable();
             }
             self._xiamia_list.hide();
@@ -390,8 +390,8 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
 
 
     function getXiamiPaging(page, i, s) {
-        return "<a class='ke-xiami-page-item ke-button" +
-            ((page == i) ? " ke-xiami-curpage" : "") +
+        return "<a class='ks-editor-xiami-page-item ks-editor-button" +
+            ((page == i) ? " ks-editor-xiami-curpage" : "") +
             "' data-value='" + i + "' href='#'>" + (s || i) + "</a>";
     }
 

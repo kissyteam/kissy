@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 12:21
+build time: May 31 22:01
 */
 /**
  * select component for kissy editor,need refactor to KISSY MenuButton
@@ -13,30 +13,30 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
         $ = Node.all,
         Event = S.Event,
         DOM = S.DOM,
-        SELECT_ACTIVE_CLASS = "ke-select-active",
-        MENU_SELECTED_CLASS = "ke-menu-selected",
-        SELECT_MARKUP = "<span class='ke-select-wrap'>" +
+        SELECT_ACTIVE_CLASS = "ks-editor-select-active",
+        MENU_SELECTED_CLASS = "ks-editor-menu-selected",
+        SELECT_MARKUP = "<span class='ks-editor-select-wrap'>" +
             // 设置 tabindex=0 ，否则 click 会导致 blur->focus 事件触发
-            "<a class='ke-select' " +
+            "<a class='ks-editor-select' " +
             " hide" +
             "focus='hidefocus' tabindex='0'>" +
-            "<span class='ke-select-text'>" +
-            "<span class='ke-select-text-inner'></span>" +
+            "<span class='ks-editor-select-text'>" +
+            "<span class='ks-editor-select-text-inner'></span>" +
             "</span>" +
-            "<span class='ke-select-drop-wrap'>" +
-            "<span class='ke-select-drop'></span>" +
+            "<span class='ks-editor-select-drop-wrap'>" +
+            "<span class='ks-editor-select-drop'></span>" +
             "</span>" +
             "</a>" +
             "</span>",
         MENU_ITEM_TPL = "<a " +
-            "class='ke-select-menu-item' " +
+            "class='ks-editor-select-menuitem' " +
             "tabindex='-1' " +
             "href='javascript:void(\"{tip}\")' " +
             "data-value='{value}'>" +
             "{name}" +
             "</a>",
         SELECT_MENU_MARKUP = "<div>",
-        SELECT_DISABLED_CLASS = "ke-select-disabled",
+        SELECT_DISABLED_CLASS = "ks-editor-select-disabled",
         ENABLED = 1,
         dtd = Editor.XHTML_DTD,
         DISABLED = 0;
@@ -101,7 +101,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
             title:el.attr("title"),
             el:el,
             items:items,
-            cls:"ke-combox",
+            cls:"ks-editor-combox",
             value:el.val()
         });
     };
@@ -125,9 +125,9 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 titleA = el.one("a"),
                 title = self.get("title") || "",
                 cls = self.get("cls"),
-                text = el.one(".ke-select-text"),
-                innerText = el.one(".ke-select-text-inner"),
-                drop = el.one(".ke-select-drop");
+                text = el.one(".ks-editor-select-text"),
+                innerText = el.one(".ks-editor-select-text-inner"),
+                drop = el.one(".ks-editor-select-drop");
 
             if (self.get("value") !== undefined) {
                 innerText.html(self._findNameByV(self.get("value")));
@@ -155,7 +155,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
             el.on("keydown", self._keydown, self);
             self.el = el;
             self.title = innerText;
-            self._focusA = el.one("a.ke-select");
+            self._focusA = el.one("a.ks-editor-select");
             self._focusA.on("blur", function () {
                 if (self.menu) {
                     self.menu.hide();
@@ -332,10 +332,11 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 menuNode;
             //要在适当位置插入 !!!
             var menu = new Overlay({
+                prefixCls:'ks-editor-',
                 autoRender:true,
                 render:self.get("menuContainer"),
                 content:SELECT_MENU_MARKUP,
-                elCls:"ke-menu",
+                elCls:"ks-editor-menu",
                 width:popUpWidth ? popUpWidth : el.width(),
                 zIndex:Editor.baseZIndex(Editor.zIndexManager.SELECT)
             }), items = self.get("items");
@@ -367,7 +368,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
 
             if (self.get("title")) {
                 $("<div " +
-                    "class='ke-menu-title ke-select-menu-item' " +
+                    "class='ks-editor-menu-title ks-editor-select-menuitem' " +
                     "style='margin-top:-6px;' " +
                     ">" + self.get("title") + "</div>").appendTo(menuNode, undefined);
             }
@@ -415,7 +416,7 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 menuNode = self.menuNode,
                 t = $(ev.target),
                 a = t.closest(function (n) {
-                    return DOM.contains(menuNode,n) && DOM.nodeName(n) == "a";
+                    return DOM.contains(menuNode, n) && DOM.nodeName(n) == "a";
                 }, undefined);
 
             if (!a || !a.attr("data-value")) {
@@ -448,13 +449,13 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, Overlay, undefined)
                 wl = DOM.scrollLeft(),
                 wh = DOM.viewportHeight() ,
                 ww = DOM.viewportWidth(),
-                //右边界坐标,60 is buffer
+            //右边界坐标,60 is buffer
                 wr = wl + ww - 60,
-                //下边界坐标
+            //下边界坐标
                 wb = wt + wh,
-                //下拉框向下弹出的y坐标
+            //下拉框向下弹出的y坐标
                 sb = xy.top + (el.height() - 2),
-                //下拉框右对齐的最右边x坐标
+            //下拉框右对齐的最右边x坐标
                 sr = xy.left + el.width() - 2,
                 align = self.get("align"),
                 xAlign = align[0],
