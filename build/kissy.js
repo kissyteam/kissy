@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:52
+build time: Jun 1 16:57
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -484,7 +484,7 @@ build time: Jun 1 16:52
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120601165233';
+        S.__BUILD_TIME = '20120601165718';
     })();
 
     return S;
@@ -4049,7 +4049,7 @@ build time: Jun 1 16:52
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120601165233'
+        tag:'20120601165718'
     }, getBaseInfo()));
 
     /**
@@ -14526,7 +14526,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:52
+build time: Jun 1 16:57
 */
 /**
  * @fileOverview anim
@@ -14768,6 +14768,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             config = self.config,
             _backupProps = self._backupProps,
             elem = self.elem,
+            elemStyle,
             hidden,
             val,
             prop,
@@ -14805,19 +14806,20 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // Record all 3 overflow attributes because IE does not
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
+            elemStyle = elem.style;
             S.mix(_backupProps, {
-                overflow:DOM.style(elem, "overflow"),
-                "overflow-x":DOM.style(elem, "overflowX"),
-                "overflow-y":DOM.style(elem, "overflowY")
+                overflow:elemStyle.overflow,
+                "overflow-x":elemStyle.overflowX,
+                "overflow-y":elemStyle.overflowY
             });
-            DOM.css(elem, "overflow", "hidden");
+            elemStyle.overflow = "hidden";
             // inline element should has layout/inline-block
             if (DOM.css(elem, "display") === "inline" &&
                 DOM.css(elem, "float") === "none") {
                 if (UA['ie']) {
-                    DOM.css(elem, "zoom", 1);
+                    elemStyle.zoom = 1;
                 } else {
-                    DOM.css(elem, "display", "inline-block");
+                    elemStyle.display = "inline-block";
                 }
             }
         }
