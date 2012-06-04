@@ -570,6 +570,35 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
     };
 
+    S.each(["pause", "resume"], function (action) {
+        Anim[action] = function (elem, queueName) {
+            if (
+            // default queue
+                queueName === null ||
+                    // name of specified queue
+                    S.isString(queueName) ||
+                    // anims not belong to any queue
+                    queueName === false
+                ) {
+                return pauseResumeQueue(elem, queueName, action);
+            }
+            pauseResumeQueue(elem, undefined, action);
+        };
+    });
+
+    function pauseResumeQueue(elem, queueName, action) {
+        var allAnims = DOM.data(elem, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+        for (var k in anims) {
+            var anim = anims[k];
+            if (queueName === undefined ||
+                anim.config.queue == queueName) {
+                anim[action]();
+            }
+        }
+    }
+
     /**
      *
      * @param elem element which anim belongs to

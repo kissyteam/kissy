@@ -44,6 +44,20 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             });
             return self;
         },
+        pause:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        resume:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
+            });
+            return self;
+        },
         isRunning:function () {
             var self = this;
             for (var i = 0; i < self.length; i++) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 19:16
+build time: Jun 4 20:00
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -484,7 +484,7 @@ build time: Jun 4 19:16
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120604191635';
+        S.__BUILD_TIME = '20120604200056';
     })();
 
     return S;
@@ -4049,7 +4049,7 @@ build time: Jun 4 19:16
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120604191635'
+        tag:'20120604200056'
     }, getBaseInfo()));
 
     /**
@@ -14526,7 +14526,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 19:16
+build time: Jun 4 20:00
 */
 /**
  * @fileOverview anim
@@ -15186,6 +15186,35 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             anims[k].stop(end);
         }
     };
+
+    S.each(["pause", "resume"], function (action) {
+        Anim[action] = function (elem, queueName) {
+            if (
+            // default queue
+                queueName === null ||
+                    // name of specified queue
+                    S.isString(queueName) ||
+                    // anims not belong to any queue
+                    queueName === false
+                ) {
+                return pauseResumeQueue(elem, queueName, action);
+            }
+            pauseResumeQueue(elem, undefined, action);
+        };
+    });
+
+    function pauseResumeQueue(elem, queueName, action) {
+        var allAnims = DOM.data(elem, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+        for (var k in anims) {
+            var anim = anims[k];
+            if (queueName === undefined ||
+                anim.config.queue == queueName) {
+                anim[action]();
+            }
+        }
+    }
 
     /**
      *
@@ -15968,7 +15997,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 19:02
+build time: Jun 4 20:00
 */
 /**
  * @fileOverview anim-node-plugin
@@ -16013,6 +16042,20 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             var self = this;
             S.each(self, function (elem) {
                 Anim.stop(elem, end, clearQueue, queue);
+            });
+            return self;
+        },
+        pause:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        resume:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
             });
             return self;
         },

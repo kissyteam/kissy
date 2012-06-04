@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 19:02
+build time: Jun 4 20:00
 */
 /**
  * @fileOverview anim-node-plugin
@@ -46,6 +46,20 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             var self = this;
             S.each(self, function (elem) {
                 Anim.stop(elem, end, clearQueue, queue);
+            });
+            return self;
+        },
+        pause:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        resume:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
             });
             return self;
         },

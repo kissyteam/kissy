@@ -28,6 +28,7 @@ History:
  - [!] 删除 csspath/cssfullpath 配置
  - [+] 内置 gallery 包地址
  - [+] 增加 KISSY.keys， #101
+ - [+] 支持 KISSY.config({packages:{},modules:{}}); modules,packages 均可配置时间戳
 
  - [*] KISSY.ready try catch 达到互不影响的效果
 
@@ -56,6 +57,7 @@ History:
  - [+] DOM 增加 outerHTML 方法，全浏览器兼容
 
  - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
+ - [+] NodeList.prototype 增加 nodeName/outerHTML/pause/resume/contents/wrap/wrapAll/unwrap/wrapInner
 
  - [*] KISSY.Base : values should not be set if any validator occurs error
  - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
