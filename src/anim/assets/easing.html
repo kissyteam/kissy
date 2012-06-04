@@ -15,10 +15,17 @@
     #wrap {
         width: 600px;
         margin: 0 auto;
+        zoom:1;
     }
 
     .container {
         border: 1px solid #555;
+        margin-top: -1px;
+        zoom:1;
+    }
+
+    .svgContainer {
+        margin-left: -1px;
     }
 </style>
 </head>
@@ -76,7 +83,7 @@
             var single = easings[i];
             var container = $("<div class='container'></div>").appendTo("#wrap");
             var h2 = $("<h2></h2>").appendTo(container);
-            var div = $("<div></div>").appendTo(container).css({
+            var div = $("<div class='svgContainer'></div>").appendTo(container).css({
                 width:width,
                 height:height + gap[i] * 2
             });
@@ -88,7 +95,7 @@
         function drawEasing(container, w, h, easings, gap) {
             var paper = Raphael(container, w, h + gap * 2);
 
-            var x = 0, y = gap - 0;
+            var x = .5, y = gap + .5;
 
             var stepX = w / steps, stepY = h / steps, pathGrid = "";
 

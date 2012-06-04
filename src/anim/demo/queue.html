@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Demo - 动画队列支持</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<style>
+    .playground {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 20px;
+        border: 5px dashed #AABBCC;
+    }
+
+    .anim {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+    }
+
+    .right {
+        background: transparent url(assets/right.png) no-repeat center center;
+    }
+
+    .left {
+        background: transparent url(assets/left.png) no-repeat center center;
+    }
+
+    .up {
+        background: transparent url(assets/up.png) no-repeat center center;
+    }
+
+    .down {
+        background: transparent url(assets/down.png) no-repeat center center;
+    }
+</style>
+<link href="../../../build/kissy.js" rel="stylesheet"/>
+</head>
+<body>
+<div class="playground">
+    <div class="anim" id="animObj"></div>
+</div>
+<script>
+    // prefetch
+    window.image1 = new Image();
+    window.image1.src = "assets/right.png";
+
+    window.image2 = new Image();
+    window.image2.src = "assets/left.png";
+
+    window.image3 = new Image();
+    window.image3.src = "assets/up.png";
+
+    window.image4 = new Image();
+    window.image4.src = "assets/down.png";
+</script>
+<script src="assets/queue.js"></script>
+</body>
+</html>

@@ -52,13 +52,13 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.elem, "backgroundPosition");
+            return DOM.css(this.anim.elem, "backgroundPosition");
         },
 
         update:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem,
+                elem = self.anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);

@@ -46,6 +46,7 @@ History:
  - [+] io 增加配置 beforeSend ，可用于发送前监听 nativeXhr 事件，例如 upload progress
 
  - [*] anim 支持 backgroundPosition
+ - [+] anim 支持 pause/resume
 
  - [x] dom 支持 css("backgroundPosition") in ie
  - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
