@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 4 13:27
 */
 /**
  * @fileOverview anim
@@ -980,10 +980,14 @@ KISSY.add('anim/easing', function () {
          * then reverses and comes back to end.
          */
         "backBoth":function (t) {
+            var s = BACK_CONST;
+            var m = (s *= 1.525) + 1;
+
             if ((t *= 2 ) < 1) {
-                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                return .5 * (t * t * (m * t - s));
             }
-            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            return .5 * ((t -= 2) * t * (m * t + s) + 2);
+
         },
 
         /**

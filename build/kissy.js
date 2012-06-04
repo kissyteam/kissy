@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 4 13:27
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -484,7 +484,7 @@ build time: Jun 1 16:57
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120601165718';
+        S.__BUILD_TIME = '20120604132721';
     })();
 
     return S;
@@ -4049,7 +4049,7 @@ build time: Jun 1 16:57
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120601165718'
+        tag:'20120604132721'
     }, getBaseInfo()));
 
     /**
@@ -14526,7 +14526,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 4 13:27
 */
 /**
  * @fileOverview anim
@@ -15505,10 +15505,14 @@ KISSY.add('anim/easing', function () {
          * then reverses and comes back to end.
          */
         "backBoth":function (t) {
+            var s = BACK_CONST;
+            var m = (s *= 1.525) + 1;
+
             if ((t *= 2 ) < 1) {
-                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                return .5 * (t * t * (m * t - s));
             }
-            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            return .5 * ((t -= 2) * t * (m * t + s) + 2);
+
         },
 
         /**
