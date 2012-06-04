@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 1 16:57
 */
 /**
  * @fileOverview anim
@@ -243,6 +243,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             config = self.config,
             _backupProps = self._backupProps,
             elem = self.elem,
+            elemStyle,
             hidden,
             val,
             prop,
@@ -268,6 +269,32 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // need to invoke complete
                     self.stop(1);
                     return;
+                }
+            }
+        }
+
+        // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
+        // <div style='width:0'><div style='width:100px'></div></div>
+        if (elem.nodeType == DOM.ELEMENT_NODE &&
+            (props.width || props.height)) {
+            // Make sure that nothing sneaks out
+            // Record all 3 overflow attributes because IE does not
+            // change the overflow attribute when overflowX and
+            // overflowY are set to the same value
+            elemStyle = elem.style;
+            S.mix(_backupProps, {
+                overflow:elemStyle.overflow,
+                "overflow-x":elemStyle.overflowX,
+                "overflow-y":elemStyle.overflowY
+            });
+            elemStyle.overflow = "hidden";
+            // inline element should has layout/inline-block
+            if (DOM.css(elem, "display") === "inline" &&
+                DOM.css(elem, "float") === "none") {
+                if (UA['ie']) {
+                    elemStyle.zoom = 1;
+                } else {
+                    elemStyle.display = "inline-block";
                 }
             }
         }
@@ -317,6 +344,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 取得单位，并对单个属性构建 Fx 对象
         for (prop in props) {
+
             if (!props.hasOwnProperty(prop)) {
                 continue;
             }
@@ -385,29 +413,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             propCfg.unit = unit;
             fx.load(propCfg);
             fxs[prop] = fx;
-        }
-
-        if (elem.nodeType == DOM.ELEMENT_NODE &&
-            (props.width || props.height)) {
-            // Make sure that nothing sneaks out
-            // Record all 3 overflow attributes because IE does not
-            // change the overflow attribute when overflowX and
-            // overflowY are set to the same value
-            S.mix(_backupProps, {
-                overflow:DOM.style(elem, "overflow"),
-                "overflow-x":DOM.style(elem, "overflowX"),
-                "overflow-y":DOM.style(elem, "overflowY")
-            });
-            DOM.css(elem, "overflow", "hidden");
-            // inline element should has layout/inline-block
-            if (DOM.css(elem, "display") === "inline" &&
-                DOM.css(elem, "float") === "none") {
-                if (UA['ie']) {
-                    DOM.css(elem, "zoom", 1);
-                } else {
-                    DOM.css(elem, "display", "inline-block");
-                }
-            }
         }
 
         AM.start(self);

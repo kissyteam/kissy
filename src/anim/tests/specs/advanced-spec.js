@@ -402,7 +402,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
 
         it("should call frame", function () {
             var stoppedCalled = 0,
-                t = $("<div style='height:100px;width:100px;'></div>").appendTo("body");
+                t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
             var anim = new Anim(t, {
                 width:10
             }, {
