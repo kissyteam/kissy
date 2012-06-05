@@ -26,6 +26,7 @@
 <script src="../src/slide/base.js"></script>
 <script src="../src/tabs/base.js"></script>
 <script src="../src/tabs/aria.js"></script>
+<script src="../src/seamless.js"></script>
 <script src="../src/switchable.js"></script>
 <style>
     #title {
@@ -38,19 +39,32 @@
 </head>
 <body>
 <h1 id="title">circular picture gallery</h1>
-<div id="list" style="overflow: hidden;margin: 100px auto;">
+<div id="list" style="overflow: hidden;margin: 100px auto;width:1470px;height: 170px ">
     <ul id="content" class="pic-list">
         <li class="picture" style="display: block; float: left;">
-            <img border="0" src="http://i.mmcdn.cn/simba/img/T1UP50XmXhXXXXXXXX.jpg?noq=y" width="490" height="170">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                1
+            </div>
         </li>
         <li class="picture" style="display: block; float: left;">
-            <img src="http://img01.taobaocdn.com/tps/i1/T1Gj90XbdgXXXXXXXX-490-170.png" width="490" height="170">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                2
+            </div>
         </li>
         <li class="picture" style="display: block; float: left;">
-            <img border="0" src="http://i.mmcdn.cn/simba/img/T1dn50XgtbXXXXXXXX.jpg?noq=y" width="490" height="170">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                3
+            </div>
         </li>
         <li class="picture" style="display: block; float: left;">
-            <img border="0" src="http://i.mmcdn.cn/simba/img/T1dim0XXtlXXXXXXXX.jpg?noq=y" width="490" height="170">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                4
+            </div>
+        </li>
+        <li class="picture" style="display: block; float: left;">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                5
+            </div>
         </li>
 
     </ul>
@@ -58,7 +72,6 @@
 <script>
     KISSY.use("switchable", function (S, Switchable) {
         var DOM = S.DOM;
-
         var s = new Switchable.Slide('#list', {
             contentCls:'pic-list',
             hasTriggers:false,
@@ -67,43 +80,54 @@
             easing:"easeOutStrong"
         });
 
-        var count = 3, width = 490;
+        // for kissy 1.2
+        /*
+         var realStep = 1,
+         offsetXX,
+         effect = s.config.effect,
+         panels = s.panels,
+         prop,
+         lastIndex,
+         container = S.container,
+         viewSize = [DOM.width(container), DOM.height(container)],
+         totalXX;
 
-        DOM.width('#list', count * width);
-        DOM.height("#list", 170);
+         if (effect == 'scrollx') {
+         prop = "left";
+         realStep = Math.floor(viewSize[0] / (offsetXX = panels[0].offsetWidth));
+         } else if (effect == 'scrolly') {
+         prop = "top";
+         realStep = Math.floor(viewSize[1] / (offsetXX = panels[0].offsetHeight));
+         }
 
-        var panels = s.panels,
-                offsetWidth = panels[0].offsetWidth,
-                totalWidth = offsetWidth * panels.length,
-                lastIndex = panels.length - count + 1;
+         totalXX = offsetXX * panels.length;
+         lastIndex = panels.length - realStep + 1;
 
-        s.on("beforeSwitch", function (e) {
-            var toIndex = e.toIndex;
-            if (toIndex >= lastIndex) {
-                var gap = toIndex - lastIndex;
-                DOM.css(panels[gap], {
-                    position:"relative",
-                    left:totalWidth
-                });
-            } else if (toIndex == 0) {
-                DOM.css(panels[lastIndex], {
-                    position:"relative",
-                    left:totalWidth
-                });
-            }
-        });
+         s.on("beforeSwitch", function (e) {
+         var toIndex = e.toIndex;
+         if (toIndex >= lastIndex) {
+         var gap = Math.abs(toIndex - lastIndex);
+         DOM.css(panels[gap], "position", "relative");
+         DOM.css(panels[gap], prop, totalXX);
+         } else if (!toIndex) {
+         DOM.css(panels[realStep - 1], {
+         position:"relative"
+         });
+         DOM.css(panels[realStep - 1], prop, totalXX);
+         }
+         });
 
-        s.on("switch", function (e) {
-            if (e.currentIndex == 0) {
-                for (var i = 1; i < count; i++) {
-                    DOM.css(panels[i], {
-                        position:"",
-                        left:""
-                    });
-                }
-            }
-        });
-
+         s.on("switch", function (e) {
+         if (e.currentIndex == 0) {
+         for (var i = 1; i < realStep; i++) {
+         DOM.css(panels[i], {
+         position:""
+         });
+         DOM.css(panels[i], prop, "");
+         }
+         }
+         });
+         */
     });
 </script>
 </body>

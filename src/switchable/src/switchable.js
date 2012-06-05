@@ -28,6 +28,7 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "switchable/lazyload",
         "switchable/slide/base",
         "switchable/tabs/base",
-        "switchable/tabs/aria"
+        "switchable/tabs/aria",
+        "switchable/seamless"
     ]
 });
