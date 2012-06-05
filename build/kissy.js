@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 20:01
+build time: Jun 5 12:12
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -46,19 +46,27 @@ build time: Jun 4 20:01
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {Boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+             * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
+             * @param {String[]} [ov.whitelist] array of white-list properties
+             * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {Boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should be set true too!
+             * @param [deep=false] {Boolean} whether recursive mix if encounter object.
              * @return {Object} the augmented object
              * @example
              * <code>
              * var t={};
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
              * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              * </code>
              */
             mix:function (r, s, ov, wl, deep) {
+                if (typeof ov === 'object') {
+                    wl = ov['whitelist'];
+                    deep = ov['deep'];
+                    ov = ov['overwrite'];
+                }
                 var cache = [], c, i = 0;
                 mixInternal(r, s, ov, wl, deep, cache);
                 while (c = cache[i++]) {
@@ -89,6 +97,7 @@ build time: Jun 4 20:01
             } else {
 
                 s[MIX_CIRCULAR_DETECTION] = r;
+
                 cache.push(s);
 
                 for (p in s) {
@@ -111,7 +120,10 @@ build time: Jun 4 20:01
         },
 
         _mix = function (p, r, s, ov, deep, cache) {
-            if (ov || !(p in r)) {
+            // 要求覆盖
+            // 或者目的不存在
+            // 或者深度mix
+            if (ov || !(p in r) || deep) {
                 var target = r[p],
                     src = s[p];
                 // prevent never-end loop
@@ -134,7 +146,7 @@ build time: Jun 4 20:01
                         cache.push(src);
                         mixInternal(clone, src, ov, undefined, true, cache);
                     }
-                } else if (src !== undefined) {
+                } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
                 }
             }
@@ -484,7 +496,7 @@ build time: Jun 4 20:01
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120604200122';
+        S.__BUILD_TIME = '20120605121210';
     })();
 
     return S;
@@ -4049,7 +4061,7 @@ build time: Jun 4 20:01
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120604200122'
+        tag:'20120605121210'
     }, getBaseInfo()));
 
     /**
@@ -4296,110 +4308,108 @@ build time: Jun 4 20:01
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    S.add({
-
-        /****************************
-         * Core
-         ****************************/
-        "dom":{
-            requires:["ua"]
-        },
-        "event":{
-            requires:["dom"]
-        },
-        "ajax":{
-            requires:["dom", "event", "json"]
-        },
-        "anim":{
-            requires:["dom", "event"]
-        },
-        "base":{
-            requires:["event"]
-        },
-        "node":{
-            requires:["dom", "event", "anim"]
-        },
-        core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
-        },
-
-        /******************************
-         *  Infrastructure
-         ******************************/
-        "mvc":{
-            requires:["base", "ajax"]
-        },
-        "component":{
-            requires:["node"]
-        },
-
-        /****************************
-         *  UI Component
-         ****************************/
-
-        "input-selection":{
-            requires:['dom']
-        },
-        "button":{
-            requires:["component", "node"]
-        },
-        "overlay":{
-            requires:["component", "node"]
-        },
-        "resizable":{
-            requires:["base", "node"]
-        },
-        "menu":{
-            requires:["component", "node"]
-        },
-        "menubutton":{
-            requires:["menu", "button"]
-        },
-        "validation":{
-            requires:["node", "ajax"]
-        },
-        "waterfall":{
-            requires:["node", "base", "ajax"]
-        },
-        "tree":{
-            requires:["component", "node"]
-        },
-        "suggest":{
-            requires:["dom", "event"]
-        },
-        "switchable":{
-            requires:["dom", "event", "anim", "json"]
-        },
-        "calendar":{
-            requires:["node"]
-        },
-        "datalazyload":{
-            requires:["dom", "event"]
-        },
-        "dd":{
-            requires:["node", "base"]
-        },
-        "flash":{
-            requires:["dom", "json"]
-        },
-        "imagezoom":{
-            requires:["node", "component"]
-        },
-        "editor":{
-            requires:['htmlparser', 'core', 'overlay']
-        },
-        "editor/full":{
-            requires:['htmlparser', 'core', 'overlay']
-        }
-    });
     if (S.Loader) {
         S.config({
-            packages:[
-                {
-                    name:"gallery",
+            packages:{
+                gallery:{
                     path:S.Loader.Utils.normalizePath(S.Config.base + '../')
                 }
-            ]
+            },
+            modules:{
+                /****************************
+                 * Core
+                 ****************************/
+                "dom":{
+                    requires:["ua"]
+                },
+                "event":{
+                    requires:["dom"]
+                },
+                "ajax":{
+                    requires:["dom", "event", "json"]
+                },
+                "anim":{
+                    requires:["dom", "event"]
+                },
+                "base":{
+                    requires:["event"]
+                },
+                "node":{
+                    requires:["dom", "event", "anim"]
+                },
+                core:{
+                    alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
+                },
+
+                /******************************
+                 *  Infrastructure
+                 ******************************/
+                "mvc":{
+                    requires:["base", "ajax"]
+                },
+                "component":{
+                    requires:["node"]
+                },
+
+                /****************************
+                 *  UI Component
+                 ****************************/
+
+                "input-selection":{
+                    requires:['dom']
+                },
+                "button":{
+                    requires:["component", "node"]
+                },
+                "overlay":{
+                    requires:["component", "node"]
+                },
+                "resizable":{
+                    requires:["base", "node"]
+                },
+                "menu":{
+                    requires:["component", "node"]
+                },
+                "menubutton":{
+                    requires:["menu", "button"]
+                },
+                "validation":{
+                    requires:["node", "ajax"]
+                },
+                "waterfall":{
+                    requires:["node", "base", "ajax"]
+                },
+                "tree":{
+                    requires:["component", "node"]
+                },
+                "suggest":{
+                    requires:["dom", "event"]
+                },
+                "switchable":{
+                    requires:["dom", "event", "anim", "json"]
+                },
+                "calendar":{
+                    requires:["node"]
+                },
+                "datalazyload":{
+                    requires:["dom", "event"]
+                },
+                "dd":{
+                    requires:["node", "base"]
+                },
+                "flash":{
+                    requires:["dom", "json"]
+                },
+                "imagezoom":{
+                    requires:["node", "component"]
+                },
+                "editor":{
+                    requires:['htmlparser', 'core', 'overlay']
+                },
+                "editor/full":{
+                    requires:['htmlparser', 'core', 'overlay']
+                }
+            }
         });
     }
 })(KISSY);
@@ -4698,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 11:59
 */
 /**
  * @fileOverview dom-attr
@@ -5905,7 +5915,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 /**
                  * Create a deep copy of the first of matched elements.
                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
-                 * @param {Boolean} [deep=false] whether perform deep copy
+                 * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
+                 * @param {Boolean} [deep.deep] whether perform deep copy
+                 * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
+                 * whether event handlers and data should be copied along with the elements.
+                 * @param {Boolean} [deep.deepWithDataAndEvent=false]
+                 * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+                 * if set true then deep argument must be set true as well.
                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
                  * whether event handlers and data should be copied along with the elements.
                  * @param {Boolean} [deepWithDataAndEvent=false]
@@ -5915,6 +5931,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @returns {HTMLElement}
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+
+                    if (typeof deep === 'object') {
+                        deepWithDataAndEvent = deep['deepWithDataAndEvent'];
+                        withDataAndEvent = deep['withDataAndEvent'];
+                        deep = deep['deep'];
+                    }
+
                     var elem = DOM.get(selector);
 
                     if (!elem) {
@@ -5944,9 +5967,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     // runtime 获得事件模块
                     if (withDataAndEvent) {
-                        cloneWidthDataAndEvent(elem, clone);
+                        cloneWithDataAndEvent(elem, clone);
                         if (deep && deepWithDataAndEvent) {
-                            processAll(cloneWidthDataAndEvent, elem, clone);
+                            processAll(cloneWithDataAndEvent, elem, clone);
                         }
                     }
                     return clone;
@@ -5993,7 +6016,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
 
         // 克隆除了事件的 data
-        function cloneWidthDataAndEvent(src, dest) {
+        function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
             if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
@@ -6376,7 +6399,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * If name unset and data unset returns the full data store for the element.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @param {String} [data] The new data value.
+             * @param [data] The new data value.
              * @returns {Object|undefined}
              */
             data:function (selector, name, data) {

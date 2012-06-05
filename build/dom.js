@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 11:59
 */
 /**
  * @fileOverview dom-attr
@@ -1208,7 +1208,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 /**
                  * Create a deep copy of the first of matched elements.
                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
-                 * @param {Boolean} [deep=false] whether perform deep copy
+                 * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
+                 * @param {Boolean} [deep.deep] whether perform deep copy
+                 * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
+                 * whether event handlers and data should be copied along with the elements.
+                 * @param {Boolean} [deep.deepWithDataAndEvent=false]
+                 * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+                 * if set true then deep argument must be set true as well.
                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
                  * whether event handlers and data should be copied along with the elements.
                  * @param {Boolean} [deepWithDataAndEvent=false]
@@ -1218,6 +1224,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @returns {HTMLElement}
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+
+                    if (typeof deep === 'object') {
+                        deepWithDataAndEvent = deep['deepWithDataAndEvent'];
+                        withDataAndEvent = deep['withDataAndEvent'];
+                        deep = deep['deep'];
+                    }
+
                     var elem = DOM.get(selector);
 
                     if (!elem) {
@@ -1247,9 +1260,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     // runtime 获得事件模块
                     if (withDataAndEvent) {
-                        cloneWidthDataAndEvent(elem, clone);
+                        cloneWithDataAndEvent(elem, clone);
                         if (deep && deepWithDataAndEvent) {
-                            processAll(cloneWidthDataAndEvent, elem, clone);
+                            processAll(cloneWithDataAndEvent, elem, clone);
                         }
                     }
                     return clone;
@@ -1296,7 +1309,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
 
         // 克隆除了事件的 data
-        function cloneWidthDataAndEvent(src, dest) {
+        function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
             if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
@@ -1679,7 +1692,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * If name unset and data unset returns the full data store for the element.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @param {String} [data] The new data value.
+             * @param [data] The new data value.
              * @returns {Object|undefined}
              */
             data:function (selector, name, data) {

@@ -41,19 +41,27 @@
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {Boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+             * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
+             * @param {String[]} [ov.whitelist] array of white-list properties
+             * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {Boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should be set true too!
+             * @param [deep=false] {Boolean} whether recursive mix if encounter object.
              * @return {Object} the augmented object
              * @example
              * <code>
              * var t={};
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
              * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              * </code>
              */
             mix:function (r, s, ov, wl, deep) {
+                if (typeof ov === 'object') {
+                    wl = ov['whitelist'];
+                    deep = ov['deep'];
+                    ov = ov['overwrite'];
+                }
                 var cache = [], c, i = 0;
                 mixInternal(r, s, ov, wl, deep, cache);
                 while (c = cache[i++]) {
@@ -84,6 +92,7 @@
             } else {
 
                 s[MIX_CIRCULAR_DETECTION] = r;
+
                 cache.push(s);
 
                 for (p in s) {
@@ -106,7 +115,10 @@
         },
 
         _mix = function (p, r, s, ov, deep, cache) {
-            if (ov || !(p in r)) {
+            // 要求覆盖
+            // 或者目的不存在
+            // 或者深度mix
+            if (ov || !(p in r) || deep) {
                 var target = r[p],
                     src = s[p];
                 // prevent never-end loop
@@ -129,7 +141,7 @@
                         cache.push(src);
                         mixInternal(clone, src, ov, undefined, true, cache);
                     }
-                } else if (src !== undefined) {
+                } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
                 }
             }
