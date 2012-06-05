@@ -39,8 +39,8 @@
     border-color: #999 !important;
 }
 
-.goog-menu-button-disabled .goog-menu-button-caption,
-.goog-menu-button-disabled .goog-menu-button-dropdown {
+.goog-menu-button-disabled .ks-menu-button-caption,
+.goog-menu-button-disabled .ks-menu-button-dropdown {
     color: #333 !important;
     border-color: #999 !important;
 }
@@ -63,13 +63,13 @@
 }
 
 /* Caption style. */
-.goog-menu-button-caption {
+.ks-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: top;
 }
 
 /* Dropdown arrow style. */
-.goog-menu-button-dropdown {
+.ks-menu-button-dropdown {
     height: 15px;
     width: 7px;
     /* Client apps may override the URL at which they serve the sprite. */
