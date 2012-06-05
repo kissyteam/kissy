@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 12:17
 */
 /**
  * Setup component namespace.
@@ -1599,13 +1599,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * @extends Base
      */
     function UIBase(config) {
+        var self=this;
+
         // 读取用户设置的属性值并设置到自身
-        Base.apply(this, arguments);
+        Base.apply(self, arguments);
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
-        initHierarchy(this, config);
+        initHierarchy(self, config);
         // 是否自动渲染
-        config && config.autoRender && this.render();
+        config && config.autoRender && self.render();
 
         /**
          * @name Component.UIBase#afterRenderUI
@@ -1754,6 +1756,49 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     }
 
     /**
+     * 根据属性变化设置 UI
+     */
+    function bindUI(self) {
+        var attrs = self['__attrs'],
+            attr, m;
+
+        for (attr in attrs) {
+            if (attrs.hasOwnProperty(attr)) {
+                m = UI_SET + ucfirst(attr);
+                if (self[m]) {
+                    // 自动绑定事件到对应函数
+                    (function (attr, m) {
+                        self.on('after' + ucfirst(attr) + 'Change', function (ev) {
+                            self[m](ev.newVal, ev);
+                        });
+                    })(attr, m);
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据当前（初始化）状态来设置 UI
+     */
+    function syncUI(self) {
+        var v,
+            f,
+            attrs = self['__attrs'];
+        for (var a in attrs) {
+            if (attrs.hasOwnProperty(a)) {
+                var m = UI_SET + ucfirst(a);
+                //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                if ((f = self[m])
+                    // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                    && attrs[a].sync !== false
+                    && (v = self.get(a)) !== undefined) {
+                    f.call(self, v);
+                }
+            }
+        }
+    }
+
+    /**
      * Parse attribute from existing dom node.
      * @type Object
      * @memberOf Component.UIBase
@@ -1801,11 +1846,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
-                    self._createDom();
-                    self.fire('createDom');
+                    self.fire('beforeCreateDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
-                    self.fire('afterCreateDom');
                     self.__set("created", true);
+                    self.fire('afterCreateDom');
                 }
                 return self;
             },
@@ -1817,20 +1861,16 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
-                    self.create();
-                    self._renderUI();
-                    // 实际上是 beforeRenderUI
-                    self.fire('renderUI');
+                    self.create(undefined);
+                    self.fire('beforeRenderUI');
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
                     self.fire('afterRenderUI');
-                    self._bindUI();
-                    // 实际上是 beforeBindUI
-                    self.fire('bindUI');
+                    self.fire('beforeBindUI');
+                    bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
                     self.fire('afterBindUI');
-                    self._syncUI();
-                    // 实际上是 beforeSyncUI
-                    self.fire('syncUI');
+                    self.fire('beforeSyncUI');
+                    syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
                     self.fire('afterSyncUI');
                     self.__set("rendered", true);
@@ -1846,16 +1886,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
             createDom:noop,
 
             /**
-             * 创建 dom 节点，但不放在 document 中
-             */
-            _createDom:noop,
-
-            /**
-             * 节点已经创建完毕，可以放在 document 中了
-             */
-            _renderUI:noop,
-
-            /**
              * For overridden. Render logic of subclass component.
              * @protected
              * @function
@@ -1863,56 +1893,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
             renderUI:noop,
 
             /**
-             * 根据属性变化设置 UI
-             */
-            _bindUI:function () {
-                var self = this,
-                    attrs = self['__attrs'],
-                    attr, m;
-
-                for (attr in attrs) {
-                    if (attrs.hasOwnProperty(attr)) {
-                        m = UI_SET + ucfirst(attr);
-                        if (self[m]) {
-                            // 自动绑定事件到对应函数
-                            (function (attr, m) {
-                                self.on('after' + ucfirst(attr) + 'Change', function (ev) {
-                                    self[m](ev.newVal, ev);
-                                });
-                            })(attr, m);
-                        }
-                    }
-                }
-            },
-
-            /**
              * For overridden. Bind logic for subclass component.
              * @protected
              * @function
              */
             bindUI:noop,
-
-            /**
-             * 根据当前（初始化）状态来设置 UI
-             */
-            _syncUI:function () {
-                var self = this,
-                    v,
-                    f,
-                    attrs = self['__attrs'];
-                for (var a in attrs) {
-                    if (attrs.hasOwnProperty(a)) {
-                        var m = UI_SET + ucfirst(a);
-                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if ((f = self[m])
-                            // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
-                            && attrs[a].sync !== false
-                            && (v = self.get(a)) !== undefined) {
-                            f.call(self, v);
-                        }
-                    }
-                }
-            },
 
             /**
              * For overridden. Sync attribute with ui.
@@ -1983,7 +1968,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                     var desc = {
                         // ATTRS:
                         // HMTL_PARSER:
-                    }, constructors = extensions.concat(C);
+                    }, constructors = extensions['concat'](C);
 
                     // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                     // 主类最优先
@@ -1995,8 +1980,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                                     desc[K] = desc[K] || {};
                                     // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
                                     // 但是值是对象的话会深度合并
-                                    // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
-                                    S.mix(desc[K], ext[K], true, undefined, true);
+                                    // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
+                                    S.mix(desc[K], ext[K], {
+                                        deep:true
+                                    });
                                 }
                             });
                         }
@@ -3709,10 +3696,11 @@ KISSY.add("component/uistore", function (S) {
     };
 
     function getUIConstructorByCssClass(cls) {
-        var cs = cls.split(/\s+/), p = -1, ui = null;
+        var cs = cls.split(/\s+/), p = -1, t, ui = null;
         for (var i = 0; i < cs.length; i++) {
             var uic = uis[cs[i]];
-            if (uic && uic.priority > p) {
+            if (uic && (t = uic.priority) > p) {
+                p = t;
                 ui = uic.ui;
             }
         }

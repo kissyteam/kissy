@@ -18,13 +18,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * @extends Base
      */
     function UIBase(config) {
+        var self=this;
+
         // 读取用户设置的属性值并设置到自身
-        Base.apply(this, arguments);
+        Base.apply(self, arguments);
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
-        initHierarchy(this, config);
+        initHierarchy(self, config);
         // 是否自动渲染
-        config && config.autoRender && this.render();
+        config && config.autoRender && self.render();
 
         /**
          * @name Component.UIBase#afterRenderUI
@@ -286,7 +288,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                     bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
                     self.fire('afterBindUI');
-                    // 实际上是 beforeSyncUI
                     self.fire('beforeSyncUI');
                     syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");

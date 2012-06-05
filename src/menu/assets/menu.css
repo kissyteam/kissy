@@ -23,7 +23,7 @@
     padding: 4px 0;
 }
 
-.goog-ext-position {
+.ks-ext-position {
     position: absolute;
     z-index: 20000; /* Arbitrary, but some apps depend on it... */
 }
