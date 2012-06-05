@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 12:12
+build time: Jun 5 21:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 5 12:12
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120605121210';
+        S.__BUILD_TIME = '20120605213833';
     })();
 
     return S;
@@ -4061,7 +4061,7 @@ build time: Jun 5 12:12
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120605121210'
+        tag:'20120605213833'
     }, getBaseInfo()));
 
     /**
@@ -4420,7 +4420,7 @@ build time: Jun 5 12:12
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview ua
@@ -4708,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 11:59
+build time: Jun 5 21:35
 */
 /**
  * @fileOverview dom-attr
@@ -9080,7 +9080,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: Jun 5 21:37
 */
 /**
  * @fileOverview responsible for registering event
@@ -9936,12 +9936,12 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         HASH_CHANGE = 'hashchange';
 
     // ie8 支持 hashchange
-    // 但IE8以上切换浏览器模式到IE7（兼容模式），会导致 'onhashchange' in window === true，但是不触发事件
+    // 但IE8以上切换浏览器模式到IE7（兼容模式），
+    // 会导致 'onhashchange' in window === true，但是不触发事件
 
-    // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
-    // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
+    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
+    // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
     if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
-
 
         function getIframeDoc(iframe) {
             return iframe.contentWindow.document;
@@ -9979,7 +9979,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
             hashChange = ie && ie < 8 ? function (hash) {
                 // S.log("set iframe html :" + hash);
-
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
                         // 后面通过 innerText，相当于 unEscapeHTML
@@ -11392,7 +11391,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11902,7 +11901,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview form data  serialization util
@@ -13289,7 +13288,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // deep mix,exclude context!
         var context = c.context;
         delete c.context;
-        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+        c = S.mix(S.clone(defaultConfig), c, {
+            deep:true
+        });
         c.context = context;
 
         if (!("crossDomain" in c)) {
@@ -13639,7 +13640,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
              * @param {Object} setting for details see {@link io}
              */
             setupConfig:function (setting) {
-                S.mix(defaultConfig, setting, undefined, undefined, true);
+                S.mix(defaultConfig, setting, {
+                    deep:true
+                });
             },
             /**
              * @private
@@ -13814,7 +13817,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 21:35
 */
 /**
  * @fileOverview cookie
@@ -13928,7 +13931,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview attribute management
@@ -14549,7 +14552,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 20:00
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview anim
@@ -16020,7 +16023,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 4 20:00
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview anim-node-plugin

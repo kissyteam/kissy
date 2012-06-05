@@ -38,9 +38,11 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
             },
             button:{
                 view:true
+            },
+            xrender:{
+                value:BasicComboBoxRender
             }
-        },
-        DefaultRender:BasicComboBoxRender
+        }
     },{
         xclass:"autocomplete-combobox",
         priority:30

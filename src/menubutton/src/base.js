@@ -348,9 +348,11 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 collapsed:{
                     value:true,
                     view:true
+                },
+                xrender:{
+                    value:MenuButtonRender
                 }
-            },
-            DefaultRender:MenuButtonRender
+            }
         }, {
             xclass:'menu-button',
             priority:20

@@ -63,9 +63,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                             }
                         ];
                     }
+                },
+                xrender:{
+                    value:DialogRender
                 }
-            },
-            DefaultRender:DialogRender
+            }
         }, {
             xclass:'dialog',
             priority:20

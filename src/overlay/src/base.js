@@ -75,9 +75,11 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                  */
                 visibleMode:{
                     value:"visibility"
+                },
+                xrender:{
+                    value:OverlayRender
                 }
-            },
-            DefaultRender:OverlayRender
+            }
         }, {
             xclass:'overlay',
             priority:10

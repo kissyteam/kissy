@@ -43,9 +43,11 @@ KISSY.add("menu/delmenuitem", function (S, Node, Menu, DelMenuItemRender) {
         ATTRS:{
             delTooltip:{
                 view:true
+            },
+            xrender:{
+                value:DelMenuItemRender
             }
-        },
-        DefaultRender:DelMenuItemRender
+        }
     });
 }, {
     requires:['node', 'menu', './delmenuitemRender']

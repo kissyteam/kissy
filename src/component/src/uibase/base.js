@@ -18,7 +18,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * @extends Base
      */
     function UIBase(config) {
-        var self=this;
+        var self = this;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
@@ -178,7 +178,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * 根据属性变化设置 UI
      */
     function bindUI(self) {
-        var attrs = self['__attrs'],
+        var attrs = self.getAttrs(),
             attr, m;
 
         for (attr in attrs) {
@@ -202,7 +202,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     function syncUI(self) {
         var v,
             f,
-            attrs = self['__attrs'];
+            attrs = self.getAttrs();
         for (var a in attrs) {
             if (attrs.hasOwnProperty(a)) {
                 var m = UI_SET + ucfirst(a);

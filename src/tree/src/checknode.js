@@ -127,10 +127,13 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                     // 1 儿子有选择
                     // 2 全部都选了
                     value:0
+                },
+
+                xrender:{
+                    value:CheckNodeRender
                 }
             },
-            CHECK_CLS:CHECK_CLS,
-            DefaultRender:CheckNodeRender
+            CHECK_CLS:CHECK_CLS
         }, {
             xclass:CHECK_CLS,
             priority:20

@@ -312,10 +312,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 },
                 decorateChildCls:{
                     value:"popupmenu"
+                },
+                xrender:{
+                    value:SubMenuRender
                 }
-            },
-
-            DefaultRender:SubMenuRender
+            }
         }, {
             xclass:'submenu',
             priority:20

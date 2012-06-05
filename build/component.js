@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 12:17
+build time: Jun 5 21:43
 */
 /**
  * Setup component namespace.
@@ -172,16 +172,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             c = self.constructor,
             attrs,
             cfg = {},
-            DefaultRender;
-        while (c && !DefaultRender) {
-            DefaultRender = c['DefaultRender'];
-            c = c.superclass && c.superclass.constructor;
-        }
-        if (DefaultRender) {
+            Render=self.get('xrender');
+
+        if (Render) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            attrs = self['__attrs'] || {};
+            attrs = self.getAttrs();
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName], v;
@@ -192,7 +189,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                     }
                 }
             }
-            return new DefaultRender(cfg);
+            return new Render(cfg);
         }
         return 0;
     }
@@ -246,7 +243,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             initializer:function () {
                 // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
-                    attrs = self['__attrs'] || {};
+                    attrs = self.getAttrs();
                 for (var attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
                         var attrCfg = attrs[attrName];
@@ -743,10 +740,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  */
                 listeners:{
                     value:{}
-                }
-            },
+                },
 
-            DefaultRender:Render
+                xrender:{
+                    value:Render
+                }
+            }
         });
 
     /**
@@ -1599,7 +1598,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * @extends Base
      */
     function UIBase(config) {
-        var self=this;
+        var self = this;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
@@ -1759,7 +1758,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * 根据属性变化设置 UI
      */
     function bindUI(self) {
-        var attrs = self['__attrs'],
+        var attrs = self.getAttrs(),
             attr, m;
 
         for (attr in attrs) {
@@ -1783,7 +1782,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     function syncUI(self) {
         var v,
             f,
-            attrs = self['__attrs'];
+            attrs = self.getAttrs();
         for (var a in attrs) {
             if (attrs.hasOwnProperty(a)) {
                 var m = UI_SET + ucfirst(a);

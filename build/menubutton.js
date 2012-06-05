@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 12:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -353,9 +353,11 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 collapsed:{
                     value:true,
                     view:true
+                },
+                xrender:{
+                    value:MenuButtonRender
                 }
-            },
-            DefaultRender:MenuButtonRender
+            }
         }, {
             xclass:'menu-button',
             priority:20

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview Combobox derived from Autocomplete.
@@ -43,9 +43,11 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
             },
             button:{
                 view:true
+            },
+            xrender:{
+                value:BasicComboBoxRender
             }
-        },
-        DefaultRender:BasicComboBoxRender
+        }
     },{
         xclass:"autocomplete-combobox",
         priority:30
@@ -804,9 +806,11 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                  */
                 strAppendedOnComplete:{
                     value:""
+                },
+                xrender:{
+                    value:AutoCompleteRender
                 }
-            },
-            DefaultRender:AutoCompleteRender
+            }
         },
         {
             xclass:'autocomplete-input',
@@ -1086,13 +1090,15 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                 self._inputs = null;
             }
         }, {
-            DefaultRender:AutoCompleteMenuRender,
             ATTRS:{
                 head:{
                     view:true
                 },
                 foot:{
                     view:true
+                },
+                xrender:{
+                    value:AutoCompleteMenuRender
                 }
             }
         });

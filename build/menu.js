@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -196,9 +196,11 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                  */
                 activeItem:{
                     view:true
+                },
+                xrender:{
+                    value:MenuRender
                 }
-            },
-            DefaultRender:MenuRender
+            }
         }, {
             xclass:'menu',
             priority:10
@@ -402,9 +404,12 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
                 allowMultiple:{
                     value:false
+                },
+
+                xrender:{
+                    value:FilterMenuRender
                 }
-            },
-            DefaultRender:FilterMenuRender
+            }
         }, {
             xclass:'filtermenu',
             priority:20
@@ -724,6 +729,9 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     setter:function (v) {
                         return this.set("html", v);
                     }
+                },
+                xrender:{
+                    value:MenuItemRender
                 }
             },
 
@@ -732,9 +740,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     var cls = this.getCssClassWithPrefix("menuitem-selectable");
                     return el.hasClass(cls);
                 }
-            },
-
-            DefaultRender:MenuItemRender
+            }
         }, {
             xclass:"menuitem",
             priority:10
@@ -989,9 +995,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  */
                 autoHideDelay:{
                     value:0.1
+                },
+                xrender:{
+                    value:PopupMenuRender
                 }
-            },
-            DefaultRender:PopupMenuRender
+            }
         }, {
             xclass:'popupmenu',
             priority:20
@@ -1032,9 +1040,11 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             },
             handleMouseEvents:{
                 value:false
+            },
+            xrender:{
+                value:SeparatorRender
             }
-        },
-        DefaultRender:SeparatorRender
+        }
     }, {
         xclass:'menuseparator',
         priority:20
@@ -1372,10 +1382,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 },
                 decorateChildCls:{
                     value:"popupmenu"
+                },
+                xrender:{
+                    value:SubMenuRender
                 }
-            },
-
-            DefaultRender:SubMenuRender
+            }
         }, {
             xclass:'submenu',
             priority:20

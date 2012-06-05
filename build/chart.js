@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:35
 */
 KISSY.add("chart/anim",function(S){
     var P = S.namespace("Chart"),

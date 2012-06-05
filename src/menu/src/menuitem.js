@@ -164,6 +164,9 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     setter:function (v) {
                         return this.set("html", v);
                     }
+                },
+                xrender:{
+                    value:MenuItemRender
                 }
             },
 
@@ -172,9 +175,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     var cls = this.getCssClassWithPrefix("menuitem-selectable");
                     return el.hasClass(cls);
                 }
-            },
-
-            DefaultRender:MenuItemRender
+            }
         }, {
             xclass:"menuitem",
             priority:10

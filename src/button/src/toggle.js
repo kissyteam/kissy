@@ -11,11 +11,13 @@ KISSY.add('button/toggle', function (S, Button, ToggleRender) {
             self.constructor.superclass.performActionInternal.apply(self, arguments);
         }
     }, {
-        DefaultRender:ToggleRender,
         ATTRS:{
             checked:{
                 value:false,
                 view:true
+            },
+            xrender:{
+                value:ToggleRender
             }
         }
     }, {
