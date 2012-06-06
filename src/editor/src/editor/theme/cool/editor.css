@@ -83,8 +83,8 @@ ks-editor-toolbar-padding {
     width: 0;
 }
 
-.ks-editor-toolbar-source {
-    background-image: url("sourceArea.png"); /** sprite-ref: cool; */
+.ks-editor-toolbar-sourceArea {
+    background-image: url("sourcearea.png"); /** sprite-ref: cool; */
 }
 
 .ks-editor-toolbar-preview {
@@ -116,11 +116,11 @@ ks-editor-toolbar-padding {
     margin-bottom: 5px;
 }
 
-.ks-editor-toolbar-ol {
+.ks-editor-toolbar-orderedList {
     background-image: url("ol.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-ul {
+.ks-editor-toolbar-unorderedList {
     background-image: url("ul.png"); /** sprite-ref: cool; */
 }
 
@@ -148,18 +148,18 @@ ks-editor-toolbar-padding {
     background-image: url("image.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-mul-image {
-    background-image: url("mul-image.png"); /** sprite-ref: cool; */
+.ks-editor-toolbar-multipleUpload {
+    background-image: url("multiple-image.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-back-color {
+.ks-editor-toolbar-backColor {
     background-image: url("bgcolor.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 15px;
     margin-top: 3px;
 }
 
-.ks-editor-toolbar-fore-color {
+.ks-editor-toolbar-foreColor {
     background-image: url("color.png"); /** sprite-ref: cool; */
     width: 24px;
     height: 14px;
@@ -201,6 +201,10 @@ ks-editor-toolbar-padding {
     background-image: url("music.png"); /** sprite-ref: cool; */
 }
 
+.ks-editor-toolbar-xiamiMusic {
+    background-image: url("music.png"); /** sprite-ref: cool; */
+}
+
 .ks-editor-toolbar-video {
     background-image: url("video.png"); /** sprite-ref: cool; */
 }
@@ -209,11 +213,11 @@ ks-editor-toolbar-padding {
     background-image: url("smiley.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-removeformat {
+.ks-editor-toolbar-removeFormat {
     background-image: url("removeformat.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-pagebreak {
+.ks-editor-toolbar-pageBreak {
     background-image: url("pagebreak.png"); /** sprite-ref: cool; */
     height: 12px;
     margin-top: 4px;

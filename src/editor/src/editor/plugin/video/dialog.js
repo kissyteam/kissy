@@ -62,9 +62,9 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
             "</table>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ks-editor-video-ok ks-editor-button' " +
+            "class='ks-editor-video-ok ks-editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</button> " +
-            "<a class='ks-editor-video-cancel ks-editor-button'>取消</a></div>";
+            "<a class='ks-editor-video-cancel ks-editor-button ks-inline-block'>取消</a></div>";
 
     function VideoDialog() {
         VideoDialog.superclass.constructor.apply(this, arguments);
@@ -90,7 +90,17 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
                 d = self.dialog,
                 el = d.get("el");
             self.dUrl = el.one(".ks-editor-video-url");
-            self.dAlign = Select.decorate(el.one(".ks-editor-video-align"));
+            self.dAlign = Select.decorate(el.one(".ks-editor-video-align"),{
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:el
+                }
+            });
             self.dMargin = el.one(".ks-editor-video-margin");
             self.dWidth = el.one(".ks-editor-video-width");
             self.dHeight = el.one(".ks-editor-video-height");
@@ -129,7 +139,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
                         height:parseInt(self.dHeight.val()) || p.height,
                         width:parseInt(self.dWidth.val()) || p.width,
                         style:"margin:" + (parseInt(self.dMargin.val()) || 0) + "px;" +
-                            "float:" + self.dAlign.val() + ";"
+                            "float:" + self.dAlign.get("value") + ";"
                     }
                 };
             }
@@ -180,13 +190,13 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
             if (f) {
                 var r = editor.restoreRealElement(f);
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
-                self.dAlign.val(f.css("float"));
+                self.dAlign.set("value",f.css("float"));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
                 Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
                 Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
             } else {
                 Editor.Utils.resetInput(self.dUrl);
-                self.dAlign.val("none");
+                self.dAlign.set("value","none");
                 self.dMargin.val(MARGIN_DEFAULT);
                 Editor.Utils.resetInput(self.dWidth);
                 Editor.Utils.resetInput(self.dHeight);

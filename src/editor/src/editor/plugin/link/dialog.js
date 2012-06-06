@@ -40,11 +40,11 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
-            "class='ks-editor-link-ok ks-editor-button' " +
+            "class='ks-editor-link-ok ks-editor-button ks-inline-block' " +
             "style='margin-left:65px;margin-right:20px;'>确定</a> " +
             "<a " +
             "href='javascript:void(\'取消\')' " +
-            "class='ks-editor-link-cancel ks-editor-button'>取消</a>" +
+            "class='ks-editor-link-cancel ks-editor-button ks-inline-block'>取消</a>" +
             "</div>";
 
     function LinkDialog(editor) {

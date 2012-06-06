@@ -21,6 +21,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 var self = this;
                 self.__commands = {};
                 self.__dialogs = {};
+                self.__controls={};
             },
 
             /**

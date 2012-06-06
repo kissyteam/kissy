@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * flash dialog
@@ -65,9 +65,9 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "</table>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ks-editor-flash-ok ks-editor-button' " +
+            "class='ks-editor-flash-ok ks-editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</a> " +
-            "<a class='ks-editor-flash-cancel ks-editor-button'>取消</a></div>";
+            "<a class='ks-editor-flash-cancel ks-editor-button ks-inline-block'>取消</a></div>";
 
 
     function FlashDialog(editor) {
@@ -137,14 +137,14 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
                 if (f.css("height")) {
                     self.dHeight.val(parseInt(f.css("height")));
                 }
-                self.dAlign.val(f.css("float"));
+                self.dAlign.set("value", f.css("float"));
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
             } else {
                 Editor.Utils.resetInput(self.dUrl);
                 self.dWidth.val(cfg['defaultWidth'] || "");
                 self.dHeight.val(cfg['defaultHeight'] || "");
-                self.dAlign.val("none");
+                self.dAlign.set("value", "none");
                 self.dMargin.val("5");
             }
         },
@@ -166,7 +166,17 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             self.dHeight = el.one(".ks-editor-flash-height");
             self.dWidth = el.one(".ks-editor-flash-width");
             self.dUrl = el.one(".ks-editor-flash-url");
-            self.dAlign = Select.decorate(el.one(".ks-editor-flash-align"));
+            self.dAlign = Select.decorate(el.one(".ks-editor-flash-align"), {
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                  hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:el
+                }
+            });
             self.dMargin = el.one(".ks-editor-flash-margin");
             var action = el.one(".ks-editor-flash-ok"),
                 cancel = el.one(".ks-editor-flash-cancel");
@@ -194,7 +204,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
                     style:"margin:" +
                         (parseInt(self.dMargin.val()) || 0) +
                         "px;" +
-                        "float:" + self.dAlign.val() + ";"
+                        "float:" + self.dAlign.get("value") + ";"
                 }
             };
         },

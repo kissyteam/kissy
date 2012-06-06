@@ -1,8 +1,8 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/font/ui",function(f,i,d,k){function e(){e.superclass.constructor.apply(this,arguments)}function c(){c.superclass.constructor.apply(this,arguments)}var j=i.Utils.getQueryCmd;f.extend(e,k,{click:function(a){var b=a.newVal,g=this.get("cmdType"),a=a.prevVal,h=this.get("editor");h.focus();b==a?h.execCommand(g,b,!1):h.execCommand(g,b)},selectionChange:function(a){for(var b=a.path,a=j(this.get("cmdType")),g=this.get("items"),h=this.get("editor"),b=b.elements,d=0,e;d<b.length;d++){e=
-b[d];for(var c=0;c<g.length;c++){var f=g[c].value;if(h.execCommand(a,f,e)){this.set("value",f);return}}}(a=this.get("defaultValue"))?this.set("value",a):this.reset("value")}});f.extend(c,d,{offClick:function(){var a=this.get("cmdType"),b=this.get("editor");b.execCommand(a);b.focus()},onClick:function(){var a=this.get("cmdType"),b=this.get("editor");b.execCommand(a,!1);b.focus()},selectionChange:function(a){var b=this.get("editor"),c=j(this.get("cmdType"));b.execCommand(c,a.path)?this.set("state",
-d.ON):this.set("state",d.OFF)}},{ATTRS:{mode:{value:i.WYSIWYG_MODE}}});return{Button:c,Select:e}},{requires:["editor","../button/","../select/"]});
+KISSY.add("editor/plugin/font/ui",function(d,e,j,k){var i=e.Utils.getQueryCmd,d=k.extend({click:function(b){var a=b.target.get("value"),c=this.get("cmdType"),b=b.prevTarget&&b.prevTarget.get("value"),f=this.get("editor");f.focus();a==b?f.execCommand(c,a,!1):f.execCommand(c,a)},selectionChange:function(b){var a=b.path,b=i(this.get("cmdType")),c=this.get("menu"),c=c.get&&c.get("children"),f=this.get("editor"),a=a.elements;if(c){for(var g=0,d;g<a.length;g++){d=a[g];for(var h=0;h<c.length;h++){var e=
+c[h].get("value");if(f.execCommand(b,e,d)){this.set("value",e);return}}}this.set("value",null)}}});return{Button:j.Toggle.extend({offClick:function(){var b=this.get("cmdType"),a=this.get("editor");a.execCommand(b);a.focus()},onClick:function(){var b=this.get("cmdType"),a=this.get("editor");a.execCommand(b,!1);a.focus()},selectionChange:function(b){var a=this.get("editor"),c=i(this.get("cmdType"));a.execCommand(c,b.path)?this.set("checked",!0):this.set("checked",!1)}},{ATTRS:{mode:{value:e.WYSIWYG_MODE}}}),
+Select:d}},{requires:["editor","../button/","../select/"]});

@@ -1,9 +1,9 @@
-KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4E, DialogLoader) {
+KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
 
     var Node = S.Node,
         DOM = S.DOM;
 
-    DOM.addStyleSheet(".ks-editor-color-panel a {" +
+    DOM.addStyleSheet(window, ".ks-editor-color-panel a {" +
         "display: block;" +
         "color:black;" +
         "text-decoration: none;" +
@@ -92,18 +92,25 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
         }
         html += "" +
             "<div>" +
-            "<a class='ks-editor-button ks-editor-color-others'>其他颜色</a>" +
+            "<a class='ks-editor-button ks-editor-color-others ks-inline-block'>其他颜色</a>" +
             "</div>" +
             "</div>";
     }
 
     initHtml();
 
-    function ColorButton() {
-        ColorButton.superclass.constructor.apply(this, arguments);
-    }
+    var ColorButton = Button.Toggle.extend({
 
-    S.extend(ColorButton, TripleButton, {
+        init:function () {
+            var self = this;
+            self.on("blur", function () {
+                // make select color works
+                setTimeout(function () {
+                    self.onClick();
+                }, 150);
+            });
+        },
+
         offClick:function () {
             this._prepare();
         },
@@ -132,11 +139,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
             var colorWin = self.colorWin;
             colorPanel = colorWin.get("contentEl");
             colorPanel.on("click", self._selectColor, self);
-            colorWin.get("el").on("blur", function () {
-                colorWin.hide();
+            colorWin.on("hide", function () {
+                self.set("checked", false);
             });
-            colorWin.on("show", self.bon, self);
-            colorWin.on("hide", self.boff, self);
             var others = colorPanel.one(".ks-editor-color-others");
             others.on("click", function (ev) {
                 ev.halt();
@@ -153,7 +158,6 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, TripleButton, Overlay4
                 colorWin = self.colorWin;
             colorWin.align(el, ["bl", "tl"], [0, 2]);
             colorWin.show();
-            colorWin.get("el")[0].focus();
         },
 
         _selectColor:function (ev) {

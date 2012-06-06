@@ -1,19 +1,18 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/bold/index", function (S, Editor, ui,cmd) {
+KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
-            editor.addButton({
+            editor.addButton("bold", {
                 cmdType:'bold',
-                contentCls:"ks-editor-toolbar-bold",
-                title:"粗体 "
+                tooltip:"粗体 "
             }, undefined, ui.Button);
         }
     };
 }, {
-    requires:['editor', '../font/ui','./cmd']
+    requires:['editor', '../font/ui', './cmd']
 });

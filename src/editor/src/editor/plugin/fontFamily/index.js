@@ -7,80 +7,84 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
+
             var pluginConfig = editor.get("pluginConfig"),
                 fontFamilies = pluginConfig["fontFamily"];
+
             fontFamilies = fontFamilies || {};
+
             S.mix(fontFamilies, {
-                items:[
+                children:[
                     //ie 不认识中文？？？
                     {
-                        name:"宋体",
+                        content:"宋体",
                         value:"SimSun"
                     },
                     {
-                        name:"黑体",
+                        content:"黑体",
                         value:"SimHei"
                     },
                     {
-                        name:"隶书",
+                        content:"隶书",
                         value:"LiSu"
                     },
                     {
-                        name:"楷体",
+                        content:"楷体",
                         value:"KaiTi_GB2312"
                     },
                     {
-                        name:"微软雅黑",
+                        content:"微软雅黑",
                         value:"Microsoft YaHei"
                     },
                     {
-                        name:"Georgia",
+                        content:"Georgia",
                         value:"Georgia"
                     },
                     {
-                        name:"Times New Roman",
+                        content:"Times New Roman",
                         value:"Times New Roman"
                     },
                     {
-                        name:"Impact",
+                        content:"Impact",
                         value:"Impact"
                     },
                     {
-                        name:"Courier New",
+                        content:"Courier New",
                         value:"Courier New"
                     },
                     {
-                        name:"Arial",
+                        content:"Arial",
                         value:"Arial"
                     },
                     {
-                        name:"Verdana",
+                        content:"Verdana",
                         value:"Verdana"
                     },
                     {
-                        name:"Tahoma",
+                        content:"Tahoma",
                         value:"Tahoma"
                     }
                 ],
                 width:"130px"
             }, false);
 
-            S.each(fontFamilies.items, function (item) {
-                var attrs = item.attrs || {},
+            S.each(fontFamilies.children, function (item) {
+                var attrs = item.elAttrs || {},
                     value = item.value;
                 attrs.style = attrs.style || "";
                 attrs.style += ";font-family:" + value;
-                item.attrs = attrs;
+                item.elAttrs = attrs;
             });
 
-            editor.addSelect({
+            editor.addSelect("fontFamily", {
                 cmdType:"fontFamily",
-                title:"字体",
-                width:"110px",
+                defaultCaption:"字体",
+                width:130,
                 mode:Editor.WYSIWYG_MODE,
-                defaultValue:fontFamilies.defaultValue,
-                popUpWidth:fontFamilies.width,
-                items:fontFamilies.items
+                menu:{
+                    width:fontFamilies.width,
+                    children:fontFamilies.children
+                }
             }, undefined, ui.Select);
         }};
 }, {

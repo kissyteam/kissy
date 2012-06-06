@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * Add indent button.
@@ -12,13 +12,13 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
     return {
         init:function (editor) {
             indexCmd.init(editor);
-            editor.addButton({
-                title:"增加缩进量 ",
-                mode:Editor.WYSIWYG_MODE,
-                contentCls:"ks-editor-toolbar-indent"
+            editor.addButton("indent",{
+                tooltip:"增加缩进量 ",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {
                     editor.execCommand("indent");
+                    editor.focus();
                 }
             });
         }

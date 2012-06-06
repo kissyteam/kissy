@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/justifyRight/index",function(e,d,b){function a(){this.get("editor").execCommand("justifyRight")}return{init:function(c){b.init(c);c.addButton({contentCls:"ks-editor-toolbar-justifyRight",title:"右对齐",mode:d.WYSIWYG_MODE},{onClick:a,offClick:a,selectionChange:function(a){var b=d.Utils.getQueryCmd("justifyRight");c.execCommand(b,a.path)?this.bon():this.boff()}})}}},{requires:["editor","./cmd"]});
+KISSY.add("editor/plugin/justifyRight/index",function(e,d,c){function b(){var a=this.get("editor");a.execCommand("justifyRight");a.focus()}return{init:function(a){c.init(a);a.addButton("justifyRight",{tooltip:"右对齐",checkable:!0,mode:d.WYSIWYG_MODE},{onClick:b,offClick:b,selectionChange:function(b){var c=d.Utils.getQueryCmd("justifyRight");a.execCommand(c,b.path)?this.set("checked",!0):this.set("checked",!1)}})}}},{requires:["editor","./cmd"]});

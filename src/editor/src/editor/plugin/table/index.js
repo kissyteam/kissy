@@ -480,10 +480,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             });
 
 
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-table",
+            editor.addButton("table",{
                 mode:Editor.WYSIWYG_MODE,
-                title:"插入表格"
+                tooltip:"插入表格"
             }, {
                 offClick:function () {
                     DialogLoader.useDialog(editor, "table/dialog", {

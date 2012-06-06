@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * source editor for kissy editor
@@ -13,14 +13,18 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
     return {
         init:function (editor) {
-            editor.addButton({
-                title:"源码",
-                contentCls:"ks-editor-toolbar-source"
+            editor.addButton("sourceArea", {
+                tooltip:"源码",
+                checkable:true
             }, {
                 init:function () {
                     var self = this;
-                    editor.on("wysiwygMode", self.boff, self);
-                    editor.on("sourceMode", self.bon, self);
+                    editor.on("wysiwygMode", function () {
+                        self.set("checked", false);
+                    });
+                    editor.on("sourceMode", function () {
+                        self.set("checked", true);
+                    });
                 },
                 offClick:function () {
                     editor.set("mode", SOURCE_MODE);

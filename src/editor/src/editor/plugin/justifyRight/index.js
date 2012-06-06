@@ -1,14 +1,16 @@
 KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
-        this.get("editor").execCommand("justifyRight");
+        var editor = this.get("editor");
+        editor.execCommand("justifyRight");
+        editor.focus();
     }
 
     return {
         init:function (editor) {
             justifyCenterCmd.init(editor);
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-justifyRight",
-                title:"右对齐",
+            editor.addButton("justifyRight", {
+                tooltip:"右对齐",
+                checkable:true,
                 mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
@@ -16,9 +18,9 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                 selectionChange:function (e) {
                     var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
                     if (editor.execCommand(queryCmd, e.path)) {
-                        this.bon();
+                        this.set("checked", true);
                     } else {
-                        this.boff();
+                        this.set("checked", false);
                     }
                 }
             });

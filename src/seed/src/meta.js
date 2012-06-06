@@ -99,10 +99,10 @@
                     requires:["node", "component"]
                 },
                 "editor":{
-                    requires:['htmlparser', 'core', 'overlay']
+                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
                 },
                 "editor/full":{
-                    requires:['htmlparser', 'core', 'overlay']
+                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
                 }
             }
         });

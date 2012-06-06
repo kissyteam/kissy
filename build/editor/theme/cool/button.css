@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
 triple state button style for kissy editor
@@ -9,131 +9,81 @@ LoVe F HAte
 @author yiminghe@gmail.com
 **/
 
-/**
-link
-**/
-.ks-editor-triplebutton {
+.ks-editor-button {
+    padding: 3px 18px;
+    border: 1px solid rgb(193, 200, 209);
+    _padding-bottom: 2px;
+    *padding-bottom: 2px;
     color: black;
-    display: inline-block;
-    zoom: 1;
-    *display: inline;
-    margin: 2px 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    box-shadow: 0 1px 1px #E4E4E4;
+    background: #e8ebee repeat-x left top;
+    background-image: url("ks-editor-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
+}
+
+.ks-editor-tools .ks-editor-button {
+    padding: 0;
+    box-shadow: none;
+    background: none;
+}
+
+.ks-editor-toolbar-button {
     border: 1px solid transparent;
     /*透明边框 ie6 不支持 ,_hack*/
     _border-color: tomato;
     _filter: chroma(color = tomato);
-    vertical-align: middle;
-    white-space: nowrap;
-    /*outline: none;*/
-    cursor: pointer;
-    *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
+    outline: none;
 }
 
-.ks-editor-triplebutton-on {
+.ks-editor-button {
+    margin: 2px;
+    border-radius: 2px;
+}
+
+.ks-editor-tools .ks-editor-toggle-button-checked {
     border-color: #729BD1;
-    background-color: #DDE1EB;
+    background-color: #DDE1EB !important;
 }
 
-.ks-editor-triplebutton-disabled {
+.ks-editor-button-hover, .ks-editor-button:hover {
+    cursor: pointer;
+    text-decoration: none;
+    border-color: rgb(232, 204, 160);
+    background: #f5e7ce repeat-x left top;
+    background-image: url("ks-editor-button-bg-active.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
+}
+
+.ks-editor-tools .ks-editor-button-hover,
+.ks-editor-tools .ks-editor-button:hover {
+    background: none;
+    border-color: rgb(206, 213, 224);
+}
+
+.ks-editor-button-disabled {
     opacity: 0.3;
     /*ie7不支持透明属性*/
     /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
     filter: chroma(color = tomato) alpha(opacity = 30);
-    cursor: default;
 }
 
 /*ie9 标准模式 filter 形成黑框*/
-.ks-ie9 .ks-editor-triplebutton-disabled {
-    filter:none;
-}
-
-
-/**
-focus
-**/
-.ks-editor-triplebutton:focus {
+.ks-ie9 .ks-editor-button-disabled {
+    filter: none;
 }
 
 /**
 hover
 **/
-.ks-editor-triplebutton:hover {
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
+.ks-editor-tools .ks-editor-button-hover.ks-editor-toggle-button-checked {
+    border-color: #a1badf;
 }
-
-.ks-editor-triplebutton-off:hover {
-    border-color: rgb(206, 213, 224);
-}
-
-
-
-.ks-editor-triplebutton-on:hover {
-    border-color:#a1badf;
-}
-
 
 /**
 active
 **/
-.ks-editor-triplebutton-active {
-    border-color:#a1badf !important;
-    background-color: #DDE1EB;
-}
-.ks-editor-triplebutton:active {
-    color: black;
-}
-
-
-.ks-editor-button {
-    display: inline-block;
-    zoom: 1;
-    *display: inline;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -moz-box-shadow: 0px 1px 1px rgb(228, 228, 228);
-    -webkit-box-shadow: 0px 1px 1px rgb(228, 228, 228);
-    box-shadow: 0px 1px 1px rgb(228, 228, 228);
-    border: 1px solid rgb(193, 200, 209);
-    background: #e8ebee repeat-x left top;
-    background-image: url("ks-editor-button-bg.png");/** sprite-ref: cool; sprite-alignment: repeat;*/
-    -background-image:none;
-    padding: 3px 18px;
-    _padding-bottom: 2px;
-    *padding-bottom: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    /*outline: none;*/
-    color: black;
-    *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
-}
-
-.ks-editor-button:hover ,.ks-editor-button-hover{
-    border-color: rgb(232, 204, 160);
-    background: #f5e7ce repeat-x left top;
-    background-image: url("ks-editor-button-bg-active.png");/** sprite-ref: cool; sprite-alignment: repeat;*/
-    -background-image:none;
-    cursor: pointer;
-    color: black;
-    text-decoration: none;
-}
-.ks-editor-triplebutton-disabled:hover {
-    opacity: 0.3;
-    cursor: default;
-}
-.ks-editor-triplebutton-disabled.ks-editor-button:hover {
-    background-image: url("ks-editor-button-bg.png");/** sprite-ref: cool; */
-    -background-image:none;
-    border-color:rgb(193, 200, 209);
-}
-/*ie6 没有多类选择器，只生效最后一个class*/
-.ks-ie6 .ks-editor-button:hover{
-    /*background-image: url("ks-editor-button-bg-active.png");没用了，行内css expression已经设了*/
-    border-color: rgb(232, 204, 160);
+.ks-editor-tools .ks-editor-button-active,
+.ks-editor-button:active {
+    border-color: #a1badf !important;
+    background-color: #DDE1EB !important;
 }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * Set up editor constructor
@@ -26,6 +26,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 var self = this;
                 self.__commands = {};
                 self.__dialogs = {};
+                self.__controls={};
             },
 
             /**
@@ -2775,8 +2776,8 @@ KISSY.add("editor/core/meta", function () {
             "heading":['./cmd'],
             "image":['../button/', '../bubbleview/', '../contextmenu/', '../dialogLoader/'],
             "indent":['./cmd'],
-            "insertOrderedList":['../listUtils/btn', './cmd'],
-            "insertUnorderedList":['../listUtils/btn', './cmd'],
+            "orderedList":['../listUtils/btn', './cmd'],
+            "unorderedList":['../listUtils/btn', './cmd'],
             "italic":['../font/ui', './cmd'],
             "justifyCenter":['./cmd'],
             "justifyLeft":['./cmd'],
@@ -2814,8 +2815,8 @@ KISSY.add("editor/core/meta", function () {
             "foreColor/cmd":['../color/cmd'],
             "image/dialog":['../overlay/', 'switchable', '../select/'],
             "indent/cmd":['../dentUtils/cmd'],
-            "insertOrderedList/cmd":['../listUtils/cmd'],
-            "insertUnorderedList/cmd":['../listUtils/cmd'],
+            "orderedList/cmd":['../listUtils/cmd'],
+            "unorderedList/cmd":['../listUtils/cmd'],
             "italic/cmd":['../font/cmd'],
             "justifyCenter/cmd":['../justifyUtils/cmd'],
             "justifyLeft/cmd":['../justifyUtils/cmd'],
@@ -8346,7 +8347,31 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     }
                 });
 
-                self.__commands = 0;
+                S.each(self.__controls, function (control) {
+                    if (control.destroy) {
+                        control.destroy();
+                    }
+                });
+
+                self.__dialogs = {};
+                self.__commands = {};
+                self.__controls = {};
+            },
+
+            /**
+             * Retrieve control by id
+             */
+            getControl:function (id) {
+                return this.__controls[id];
+            },
+
+
+            /**
+             * Register a control to editor by id.
+             * @private
+             */
+            addControl:function (id, control) {
+                this.__controls[id] = control;
             },
 
             /**

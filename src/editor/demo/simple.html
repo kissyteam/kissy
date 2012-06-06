@@ -28,9 +28,7 @@
 
 <div style="width: 90%;margin: 20px auto;">
     <div id="container" class="ks-editor">
-        <textarea class="ks-editor-textarea">
-
-        </textarea>
+        <textarea class="ks-editor-textarea"></textarea>
     </div>
     <button onclick="window.editor.destroy();">destroy</button>
 </div>
@@ -39,10 +37,12 @@
 <script src="../../../build/dd.js"></script>
 <script src="../../../build/component.js"></script>
 <script src="../../../build/overlay.js"></script>
+<script src="../../../build/button.js"></script>
+<script src="../../../build/menu.js"></script>
+<script src="../../../build/menubutton.js"></script>
 <!--
 core
 -->
-
 <script src="../src/editor/core/base.js"></script>
 <script src="../src/editor/core/dom.js"></script>
 <script src="../src/editor/core/domIterator.js"></script>
@@ -118,51 +118,46 @@ KISSY.use('editor', function (S, Editor) {
                     html:"<div style='border:1px solid red'>模板2效果演示html</div>"
                 }
             ],
-            "fontSize":{
-                defaultValue:"14px",
-                items:[
+            "fontSizex":{
+                children:[
                     {
                         value:"14px",
-                        attrs:{
+                        elAttrs:{
                             style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
                         },
-                        name:"" +
+                        content:"" +
                                 " <span style='font-size:14px'>标准</span>" +
                                 "<span style='position:absolute;top:1px;right:3px;'>14px</span>"
                     },
                     {
                         value:"16px",
-                        attrs:{
+                        elAttrs:{
                             style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
                         },
-                        name:"" +
+                        content:"" +
                                 " <span style='font-size:16px'>大</span>" +
                                 "<span style='position:absolute;top:1px;right:3px;'>16px</span>"
                     },
                     {
                         value:"18px",
-                        attrs:{
+                        elAttrs:{
                             style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
                         },
-                        name:"" +
+                        content:"" +
                                 " <span style='font-size:18px'>特大</span>" +
                                 "<span style='position:absolute;top:1px;right:3px;'>18px</span>"
                     },
                     {
                         value:"20px",
-                        attrs:{
+                        elAttrs:{
                             style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
                         },
-                        name:"" +
+                        content:"" +
                                 " <span style='font-size:20px'>极大</span>" +
                                 "<span style='position:absolute;top:1px;right:3px;'>20px</span>"
                     }
                 ],
                 width:"115px"
-            },
-            // "font-size":false,
-            "fontFamily":{
-                defaultValue:"SimSun"
             },
             "multipleUpload":{
                 serverUrl:"upload.php",
@@ -280,45 +275,46 @@ KISSY.use('editor', function (S, Editor) {
         height:"400px"
     };
 
+    var plugins = "sourceArea" +
+            ",separator" +
+            ",bold" +
+            ",italic," +
+            "fontFamily," +
+            "fontSize," +
+            "strikeThrough," +
+            "underline," +
+            "separator" +
+        //",checkboxSourcearea" +
+            ",image" +
+            ",link" +
+            ",foreColor" +
+            ",backColor" +
+            ",resize" +
+            ",draft" +
+            ",undo" +
+            ",indent" +
+            ",outdent" +
+            ",unorderedList" +
+            ",orderedList" +
+            ",elementPath" +
+            ",pageBreak" +
+            ",preview" +
+            ",maximize" +
+            ",removeFormat" +
+            ",heading" +
+            ",justifyLeft" +
+            ",justifyCenter" +
+            ",justifyRight" +
+            ",table" +
+            ",smiley" +
+            ",flash" +
+            ",xiamiMusic" +
+            ",multipleUpload" +
+            ",video" +
+            ",dragUpload";
+
     window.editor = new Editor(cfg)
-            .use(
-            "sourceArea" +
-                    ",separator" +
-                    ",bold," +
-                    "italic," +
-                    "fontFamily," +
-                    "fontSize," +
-                    "strikeThrough," +
-                    "underline," +
-                    "separator" +
-                //",checkboxSourcearea" +
-                    ",image" +
-                    ",link" +
-                    ",foreColor" +
-                    ",backColor" +
-                    ",resize" +
-                    ",draft" +
-                    ",undo" +
-                    ",indent" +
-                    ",outdent" +
-                    ",insertUnorderedList" +
-                    ",insertOrderedList" +
-                    ",elementPath" +
-                    ",pageBreak" +
-                    ",preview" +
-                    ",maximize" +
-                    ",removeFormat" +
-                    ",heading" +
-                    ",justifyLeft" +
-                    ",justifyCenter" +
-                    ",justifyRight" +
-                    ",table" +
-                    ",smiley" +
-                    ",flash" +
-                    ",xiamiMusic" +
-                    ",multipleUpload" +
-                    ",video" +
-                    ",dragUpload", function () {
+            .use(plugins, function () {
                 this.on("blur", function () {
                     S.log("editor blur");
                 });
@@ -326,7 +322,6 @@ KISSY.use('editor', function (S, Editor) {
                     S.log("selectionChange : " + e.path.toString());
                 });
             });
-
 
 });
 </script>

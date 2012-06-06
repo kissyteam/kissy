@@ -25,58 +25,56 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
         return lastElement.closest('a', undefined);
     }
 
+    return {
+        init:function (editor) {
+            editor.addButton("link", {
+                tooltip:"插入链接",
+                mode:Editor.WYSIWYG_MODE
+            }, {
+                offClick:function () {
+                    showLinkEditDialog();
+                }
+            });
 
-    return {init:function (editor) {
-
-        editor.addButton({
-            contentCls:"ks-editor-toolbar-link",
-            title:"插入链接",
-            mode:Editor.WYSIWYG_MODE
-        }, {
-            offClick:function () {
-                showLinkEditDialog();
+            function showLinkEditDialog(selectedEl) {
+                DialogLoader.useDialog(editor, "link/dialog", selectedEl);
             }
-        });
 
-        function showLinkEditDialog(selectedEl) {
-            DialogLoader.useDialog(editor, "link/dialog", selectedEl);
+            BubbleView.register({
+                editor:editor,
+                filter:checkLink,
+                init:function () {
+                    var bubble = this,
+                        el = bubble.get("contentEl");
+                    el.html(tipHtml);
+                    var tipUrl = el.one(".ks-editor-bubbleview-url"),
+                        tipChange = el.one(".ks-editor-bubbleview-change"),
+                        tipRemove = el.one(".ks-editor-bubbleview-remove");
+                    //ie focus not lose
+                    Editor.Utils.preventFocus(el);
+                    tipChange.on("click", function (ev) {
+                        showLinkEditDialog(bubble.selectedEl);
+                        ev.halt();
+                    });
+
+                    tipRemove.on("click", function (ev) {
+                        Utils.removeLink(editor, bubble.selectedEl);
+                        ev.halt();
+                    });
+
+                    bubble.on("show", function () {
+                        var a = bubble.selectedEl;
+                        if (!a) {
+                            return;
+                        }
+                        var href = a.attr(Utils._ke_saved_href) ||
+                            a.attr("href");
+                        tipUrl.html(href);
+                        tipUrl.attr("href", href);
+                    });
+                }
+            });
         }
-
-        BubbleView.register({
-            editor:editor,
-            filter:checkLink,
-            init:function () {
-                var bubble = this,
-                    el = bubble.get("contentEl");
-                el.html(tipHtml);
-                var tipurl = el.one(".ks-editor-bubbleview-url"),
-                    tipchange = el.one(".ks-editor-bubbleview-change"),
-                    tipremove = el.one(".ks-editor-bubbleview-remove");
-                //ie focus not lose
-                Editor.Utils.preventFocus(el);
-                tipchange.on("click", function (ev) {
-                    showLinkEditDialog(bubble.selectedEl);
-                    ev.halt();
-                });
-
-                tipremove.on("click", function (ev) {
-                    Utils.removeLink(editor, bubble.selectedEl);
-                    ev.halt();
-                });
-
-                bubble.on("show", function () {
-                    var a = bubble.selectedEl;
-                    if (!a) {
-                        return;
-                    }
-                    var href = a.attr(Utils._ke_saved_href) ||
-                        a.attr("href");
-                    tipurl.html(href);
-                    tipurl.attr("href", href);
-                });
-            }
-        });
-    }
     };
 }, {
     requires:['editor', '../bubbleview/', './utils', '../dialogLoader/']

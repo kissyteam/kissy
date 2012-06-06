@@ -1,4 +1,4 @@
-KISSY.add("editor/plugin/insertUnorderedList/cmd", function (S, Editor, listCmd) {
+KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
 
     var insertUnorderedList = "insertUnorderedList",
         ListCommand = listCmd.ListCommand,

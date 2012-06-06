@@ -98,9 +98,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             });
 
 
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-music",
-                title:"插入虾米音乐",
+            editor.addButton("xiamiMusic", {
+                tooltip:"插入虾米音乐",
                 mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {

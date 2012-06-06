@@ -1,16 +1,15 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 KISSY.add("editor/plugin/italic/index", function (S, Editor, ui,cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
-            editor.addButton({
+            editor.addButton("italic",{
                 cmdType:'italic',
-                contentCls:"ks-editor-toolbar-italic",
-                title:"斜体 "
+                tooltip:"斜体 "
             }, undefined, ui.Button);
         }
     };

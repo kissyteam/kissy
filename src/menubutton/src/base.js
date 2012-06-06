@@ -16,6 +16,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 return null;
             }
         }
+        if (m.xclass) {
+            if (init) {
+                m = Component.create(m, self);
+                self.__set("menu", m);
+            } else {
+                return null;
+            }
+        }
         if (m && m.get("parent") !== self) {
             m.__set("parent", self);
             self.bindMenu();

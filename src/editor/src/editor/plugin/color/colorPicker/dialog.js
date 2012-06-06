@@ -192,8 +192,9 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
             "</div>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
-            "<a class='ks-editor-button ks-editor-color-advanced-ok'>确定</a>&nbsp;&nbsp;&nbsp;" +
-            "<a class='ks-editor-button  ks-editor-color-advanced-cancel'>取消</a>" +
+            "<a class='ks-editor-button ks-editor-color-advanced-ok ks-inline-block'>确定</a>" +
+            "&nbsp;&nbsp;&nbsp;" +
+            "<a class='ks-editor-button  ks-editor-color-advanced-cancel ks-inline-block'>取消</a>" +
             "</div>";
 
     function ColorPicker(editor) {

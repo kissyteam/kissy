@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/outdent/index",function(e,a,c){return{init:function(b){c.init(b);var d=a.Utils.getQueryCmd("outdent");b.addButton({title:"减少缩进量 ",mode:a.WYSIWYG_MODE,contentCls:"ks-editor-toolbar-outdent"},{offClick:function(){b.execCommand("outdent")},selectionChange:function(a){b.execCommand(d,a.path)?this.enable():this.disable()}})}}},{requires:["editor","./cmd"]});
+KISSY.add("editor/plugin/outdent/index",function(e,b,c){return{init:function(a){c.init(a);var d=b.Utils.getQueryCmd("outdent");a.addButton("outdent",{tooltip:"减少缩进量 ",mode:b.WYSIWYG_MODE},{offClick:function(){a.execCommand("outdent");a.focus()},selectionChange:function(b){a.execCommand(d,b.path)?this.set("disabled",!1):this.set("disabled",!0)}})}}},{requires:["editor","./cmd"]});

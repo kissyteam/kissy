@@ -4,11 +4,11 @@
  */
 KISSY.add('button/toggle', function (S, Button, ToggleRender) {
 
-    return Button.extend({
+    var ToggleButton = Button.extend({
         performActionInternal:function () {
             var self = this;
             self.set("checked", !self.get("checked"));
-            self.constructor.superclass.performActionInternal.apply(self, arguments);
+            ToggleButton.superclass.performActionInternal.apply(self, arguments);
         }
     }, {
         ATTRS:{
@@ -24,6 +24,8 @@ KISSY.add('button/toggle', function (S, Button, ToggleRender) {
         xclass:'toggle-button',
         priority:30
     });
+
+    return ToggleButton;
 
 }, {
     requires:['./base', './toggleRender']

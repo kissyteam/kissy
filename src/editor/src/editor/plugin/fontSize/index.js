@@ -2,7 +2,7 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui,cmd) {
+KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
 
     return {
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui,cmd) {
                 var v = [];
                 S.each(vs, function (n) {
                     v.push({
-                        name:n,
+                        content:n,
                         value:n
                     });
                 });
@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui,cmd) {
             fontSizes = fontSizes || {};
 
             S.mix(fontSizes, {
-                items:wrapFont([
+                children:wrapFont([
                     "8px", "10px", "12px",
                     "14px", "18px", "24px",
                     "36px", "48px", "60px",
@@ -36,17 +36,17 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui,cmd) {
                 width:"55px"
             }, false);
 
-            editor.addSelect({
+            editor.addSelect("fontSize", {
                 cmdType:"fontSize",
-                title:"大小",
-                width:"30px",
+                defaultCaption:"大小",
+                width:"55px",
                 mode:Editor.WYSIWYG_MODE,
-                showValue:true,
-                defaultValue:fontSizes.defaultValue,
-                popUpWidth:fontSizes.width,
-                items:fontSizes.items
+                menu:{
+                    width:fontSizes.width,
+                    children:fontSizes.children
+                }
             }, undefined, ui.Select);
         }};
 }, {
-    requires:['editor', '../font/ui','./cmd']
+    requires:['editor', '../font/ui', './cmd']
 });

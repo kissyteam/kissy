@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, Select) {
     var UA = S.UA,
@@ -96,7 +96,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             + "'" +
             "/> &nbsp; " +
             " <a " +
-            "class='ks-editor-xiami-submit ks-editor-button'" +
+            "class='ks-editor-xiami-submit ks-editor-button ks-inline-block'" +
             ">"
             + BTIP + "</a>" +
             "</p>" +
@@ -127,9 +127,9 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             "</div>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ks-editor-xiami-ok ks-editor-button' " +
+            "class='ks-editor-xiami-ok ks-editor-button ks-inline-block' " +
             "style='margin-right:20px;'>确&nbsp;定</a>" +
-            "<a class='ks-editor-xiami-cancel ks-editor-button'>取&nbsp;消</a></div>";
+            "<a class='ks-editor-xiami-cancel ks-editor-button ks-inline-block'>取&nbsp;消</a></div>";
 
     function XiamiMusicDialog() {
         XiamiMusicDialog.superclass.constructor.apply(this, arguments);
@@ -151,7 +151,17 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 del = d.get("el"),
                 dfoot = d.get("footer"),
                 input = del.one(".ks-editor-xiami-url");
-            self.dAlign = Select.decorate(del.one(".ks-editor-xiami-align"));
+            self.dAlign = Select.decorate(del.one(".ks-editor-xiami-align"), {
+                prefixCls:'ks-editor-big-',
+                width:80,
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:del
+                }
+            });
             self.addRes(self.dAlign);
             self._xiami_input = input;
             Editor.Utils.placeholder(input, TIP);
@@ -190,7 +200,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         style:"margin:" +
                             (parseInt(self.dMargin.val()) || 0)
                             + "px;" +
-                            "float:" + self.dAlign.val() + ";"
+                            "float:" + self.dAlign.get("value") + ";"
                     }
                 };
                 self._gen();
@@ -261,7 +271,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                             style:"margin:" +
                                 (parseInt(self.dMargin.val()) || 0)
                                 + "px;" +
-                                "float:" + self.dAlign.val() + ";"
+                                "float:" + self.dAlign.get("value") + ";"
                         }
                     };
                     self._gen();
@@ -358,14 +368,14 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             if (f) {
                 self._xiami_input.val(f.attr("title"));
                 self._xiamia_title.html(f.attr("title"));
-                self.dAlign.val(f.css("float"));
+                self.dAlign.set("value", f.css("float"));
                 self.dMargin.val(parseInt(f.style("margin")) || 0);
                 self._xiami_url_wrap.hide();
                 self.dialog.get("footer").show();
                 self._xiamia_title.show();
             } else {
                 Editor.Utils.resetInput(self._xiami_input);
-                self.dAlign.val("none");
+                self.dAlign.set("value", "none");
                 self.dMargin.val(MARGIN_DEFAULT);
                 self._xiami_url_wrap.show();
                 self.dialog.get("footer").hide();
@@ -390,7 +400,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
 
 
     function getXiamiPaging(page, i, s) {
-        return "<a class='ks-editor-xiami-page-item ks-editor-button" +
+        return "<a class='ks-editor-xiami-page-item ks-editor-button ks-inline-block" +
             ((page == i) ? " ks-editor-xiami-curpage" : "") +
             "' data-value='" + i + "' href='#'>" + (s || i) + "</a>";
     }

@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/justifyCenter/index",function(e,d,b){function a(){this.get("editor").execCommand("justifyCenter")}return{init:function(c){b.init(c);c.addButton({contentCls:"ks-editor-toolbar-justifyCenter",title:"居中对齐",mode:d.WYSIWYG_MODE},{onClick:a,offClick:a,selectionChange:function(a){var b=d.Utils.getQueryCmd("justifyCenter");c.execCommand(b,a.path)?this.bon():this.boff()}})}}},{requires:["editor","./cmd"]});
+KISSY.add("editor/plugin/justifyCenter/index",function(e,d,c){function b(){var a=this.get("editor");a.execCommand("justifyCenter");a.focus()}return{init:function(a){c.init(a);a.addButton("justifyCenter",{tooltip:"居中对齐",checkable:!0,mode:d.WYSIWYG_MODE},{onClick:b,offClick:b,selectionChange:function(b){var c=d.Utils.getQueryCmd("justifyCenter");a.execCommand(c,b.path)?this.set("checked",!0):this.set("checked",!1)}})}}},{requires:["editor","./cmd"]});

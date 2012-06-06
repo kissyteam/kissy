@@ -62,7 +62,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "left:390px;" +
             "top:0px;" +
             "z-index:1;' " +
-            "class='ks-editor-image-up ks-editor-button'>浏览...</a>" +
+            "class='ks-editor-image-up ks-editor-button ks-inline-block'>浏览...</a>" +
             "</p>" +
             "<div class='ks-editor-img-up-extraHtml'>" +
             "</div>" +
@@ -154,11 +154,11 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
         IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
-            "class='ks-editor-img-insert ks-editor-button' " +
+            "class='ks-editor-img-insert ks-editor-button ks-inline-block' " +
             "style='margin-right:30px;'>确定</a> " +
             "<a  " +
             "href='javascript:void(\'取消\')' " +
-            "class='ks-editor-img-cancel ks-editor-button'>取消</a></div>",
+            "class='ks-editor-img-cancel ks-editor-button ks-inline-block'>取消</a></div>",
 
         warning = "请点击浏览上传图片",
 
@@ -218,7 +218,17 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgHeight = content.one(".ks-editor-img-height");
             self.imgWidth = content.one(".ks-editor-img-width");
             self.imgRatio = content.one(".ks-editor-img-ratio");
-            self.imgAlign = Select.decorate(content.one(".ks-editor-img-align"));
+            self.imgAlign = Select.decorate(content.one(".ks-editor-img-align"), {
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:content
+                }
+            });
             self.imgMargin = content.one(".ks-editor-img-margin");
             self.imgLink = content.one(".ks-editor-img-link");
             self.imgLinkBlank = content.one(".ks-editor-img-link-blank");
@@ -255,7 +265,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 ev.halt();
             });
 
-            var loadingCancel = new Node("<a class='ks-editor-button' style='position:absolute;" +
+            var loadingCancel = new Node("<a class='ks-editor-button ks-inline-block' " +
+                "style='position:absolute;" +
                 "z-index:" +
                 Editor.baseZIndex(Editor.zIndexManager.LOADING_CANCEL) + ";" +
                 "left:-9999px;" +
@@ -417,7 +428,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 img,
                 height = parseInt(valInput(self.imgHeight)),
                 width = parseInt(valInput(self.imgWidth)),
-                align = self.imgAlign.val(),
+                align = self.imgAlign.get("value"),
                 margin = parseInt(self.imgMargin.val()),
                 style = '';
 
@@ -514,7 +525,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     h = self.selectedEl.height();
                 valInput(self.imgHeight, h);
                 valInput(self.imgWidth, w);
-                self.imgAlign.val(self.selectedEl.style("float") || "none");
+                self.imgAlign.set("value", self.selectedEl.style("float") || "none");
                 var margin = parseInt(self.selectedEl.style("margin"))
                     || 0;
                 self.imgMargin.val(margin);
@@ -541,7 +552,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 resetInput(self.imgLink);
                 resetInput(self.imgHeight);
                 resetInput(self.imgWidth);
-                self.imgAlign.val("none");
+                self.imgAlign.set("value", "none");
                 self.imgMargin.val(defaultMargin);
                 self.imgRatio[0].disabled = true;
                 self.imgRatioValue = null;

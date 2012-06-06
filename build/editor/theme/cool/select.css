@@ -1,30 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
 select style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ks-editor-select-text,
-.ks-editor-select-drop-wrap,
-.ks-editor-select-drop,
-.ks-editor-select-wrap,
-.ks-editor-select {
-    display: inline-block;
-    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
-    *display: inline;
-}
 
-.ks-editor-select-wrap {
-    margin: 0 2px;
-    cursor: pointer;
-    line-height: 0;
-    vertical-align: middle;
-}
-
-.ks-editor-select {
+.ks-editor-select, .ks-editor-big-select {
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
@@ -35,33 +19,43 @@ select style for kissy editor
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
+    outline: none;
 }
 
-.ks-editor-select:hover {
+.ks-editor-tools .ks-editor-select {
+    margin: 0 2px;
+}
+
+.ks-editor-tools .ks-editor-select-hover {
     color: black;
     text-decoration: none;
     border-color: #729BD1;
 }
 
-.ks-editor-select:active {
+.ks-editor-tools .ks-editor-select-active {
     color: #000;
+    background-color: #ffffff;
 }
 
-.ks-editor-select-drop {
+.ks-editor-tools .ks-menu-button-dropdown,
+.ks-editor-big-select .ks-menu-button-dropdown-inner {
     background: no-repeat scroll center center transparent;
     background-image: url("arrow.png"); /** sprite-ref: cool; */
     width: 7px;
     height: 3px;
     vertical-align: middle;
     font-size: 0;
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px;
 }
 
-.ks-editor-select-active {
-    background-color: #ffffff;
+.ks-ie7 .ks-editor-tools .ks-menu-button-dropdown {
+    margin-top: -10px;
 }
 
 .ks-editor-select-disabled,
-.ks-editor-select-disabled .ks-editor-select:hover,
+.ks-editor-select-disabled .ks-editor-select-hover,
 .ks-editor-select-disabled .ks-editor-select {
     cursor: default;
     opacity: 0.7;
@@ -74,86 +68,44 @@ select style for kissy editor
     filter: none;
 }
 
-.ks-editor-menu .ks-editor-select-menuitem {
-    padding-left: 12px;
-    padding-right: 20px;
-}
-
-.ks-editor-select-text {
+.ks-editor-tools .ks-menu-button-caption {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
     position: relative;
 }
 
-.ks-editor-combox .ks-editor-select {
+.ks-editor-big-select {
     height: 24px;
 }
 
-.ks-editor-combox .ks-editor-select-drop,
-.ks-editor-combox .ks-editor-select-text {
-    height: 24px;
-    line-height: 24px;
-}
-
-.ks-editor-combox .ks-editor-select-drop {
-    height: 3px;
-    margin-top: 8px;
-}
-
-.ks-ie7 .ks-editor-combox .ks-editor-select-text {
-    position: static;
-    padding-bottom: 8px;
-}
-
-.ks-ie6 .ks-editor-combox .ks-editor-select-text {
-    /*odd ie ,字错位*/
-    position: static;
-    /*
-    top: -2px;
-    */
-    padding-top: 2px;
-}
-
-.ks-editor-select-drop-wrap {
-    padding-right: 4px;
-    vertical-align: middle;
-}
-
-.ks-ie6 .ks-editor-select-drop-wrap,
-.ks-ie7 .ks-editor-select-drop-wrap {
-    vertical-align: bottom;
-}
-
-.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap,
-.ks-ie7 .ks-editor-combox .ks-editor-select-drop-wrap {
-    vertical-align: middle;
-    margin-top: -10px;
-    height: 23px;
-    zoom: 1;
-}
-
-.ks-ie6 .ks-editor-combox .ks-editor-select-drop-wrap {
-    margin-top: -5px;
-}
-
-.ks-editor-combox .ks-editor-select-drop-wrap {
+.ks-editor-big-select .ks-menu-button-dropdown {
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
     background-image: url("ks-editor-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image: none;
     height: 24px;
+    width:14px;
     padding-top: 1px;
+    float: right;
+    border-left:1px solid #C1C8D1;
 }
 
-.ks-ie8 .ks-editor-combox .ks-editor-select-drop-wrap,
-.ks-ie9 .ks-editor-combox .ks-editor-select-drop-wrap {
-    top: 0;
+.ks-ie7 .ks-editor-big-select .ks-menu-button-dropdown {
+    margin-top: -23px;
 }
 
-.ks-editor-combox .ks-editor-select-text {
-    border-right: 1px solid #C1C8D1;
+.ks-editor-big-select {
     background: #FFFFFF repeat-x scroll 0 0;
     background-image: url("text-bg.png");
+}
+
+.ks-editor-big-select .ks-menu-button-caption{
+    padding-left: 5px;
+}
+
+.ks-ie7 .ks-editor-big-select .ks-menu-button-caption{
+    padding-left: 5px;
+    padding-top: 5px;
 }

@@ -53,7 +53,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             c = self.constructor,
             attrs,
             cfg = {},
-            Render=self.get('xrender');
+            Render = self.get('xrender');
 
         if (Render) {
             /**
@@ -446,6 +446,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleFocus:function (ev) {
                 this.set("focused", !!ev);
+                this.fire("focus");
             },
 
             /**
@@ -455,6 +456,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleBlur:function (ev) {
                 this.set("focused", !ev);
+                this.fire("blur");
             },
 
             /**
