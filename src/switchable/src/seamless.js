@@ -14,7 +14,7 @@ KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
                 container = self.container,
                 effect = config.effect;
 
-            if (config.steps == 1 && panels.length) {
+            if (config.steps == 1 && panels.length && config.circular) {
                 var realStep = 1,
                     offsetXX,
                     prop,
