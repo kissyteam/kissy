@@ -3,93 +3,171 @@ describe('kissy.js', function () {
     var S = KISSY,
         host = S.Env.host;
 
-    it('S.mix', function () {
-        var o1 = { a:1, b:2 },
-            o2 = { a:1, b:2 },
-            o3 = { a:1, b:2 },
+
+    describe("S.mix", function () {
+
+        it("works simply", function () {
+            var o1 = { a:1, b:2 },
+                o2 = { a:1, b:2 },
+                o3 = { a:1, b:2 },
             //o4 = { a: 1, b: 2 },
-            o = { a:'a', c:true };
+                o = { a:'a', c:true };
 
-        S.mix(o1, o);
-        expect(o1.a).toBe('a');
+            S.mix(o1, o);
+            expect(o1.a).toBe('a');
 
-        // turn off override
-        S.mix(o2, o, false);
-        expect(o2.a).toBe(1);
+            // turn off override
+            S.mix(o2, o, false);
+            expect(o2.a).toBe(1);
 
-        // whitelist
-        S.mix(o3, o, true, ['c']);
-        expect(o3.a).toBe(1);
+            // whitelist
+            S.mix(o3, o, true, ['c']);
+            expect(o3.a).toBe(1);
 
 
-        // deep object mix testcase
-        var r = {
-            x:1,
-            y:{
-                z:1
-            },
-            q:[2, 5]
-        };
+            // deep object mix testcase
+            var r = {
+                x:1,
+                y:{
+                    z:1
+                },
+                q:[2, 5]
+            };
 
-        S.mix(r, {
-            x:2,
-            y:{
-                s:1
-            },
-            q:[6]
+            S.mix(r, {
+                x:2,
+                y:{
+                    s:1
+                },
+                q:[6]
+            });
+
+            expect(r.x).toBe(2);
+            expect(r.y.s).toBe(1);
+            expect(r.y.z).toBeUndefined();
+            expect(r.q + "").toBe([6] + "");
         });
 
-        expect(r.x).toBe(2);
-        expect(r.y.s).toBe(1);
-        expect(r.y.z).toBeUndefined();
-        expect(r.q + "").toBe([6] + "");
 
-        // 1.2 新加 deep 参数测试
-        r = {
-            x:1,
-            y:{
-                z:1
-            },
-            q:[2, 5]
-        };
+        it('works for deep mix', function () {
+            var r = {
+                x:1,
+                y:{
+                    z:1
+                },
+                q:[2, 5]
+            };
 
-        S.mix(r, {
-            x:2,
-            y:{
-                s:1
-            },
-            q:[undefined, 6]
-        }, undefined, undefined, true);
+            S.mix(r, {
+                x:2,
+                y:{
+                    s:1
+                },
+                q:[undefined, 6]
+            }, undefined, undefined, true);
 
-        expect(r.x).toBe(2);
-        expect(r.y.s).toBe(1);
-        expect(r.y.z).toBe(1);
-        expect(r.q + "").toBe([2, 6] + "");
+            expect(r.x).toBe(2);
+            expect(r.y.s).toBe(1);
+            expect(r.y.z).toBe(1);
+            expect(r.q + "").toBe([2, 6] + "");
 
+            r = {
+                x:1,
+                y:{
+                    z:1
+                },
+                q:[2, 5]
+            };
+
+            S.mix(r, {
+                x:2,
+                y:{
+                    s:1
+                },
+                q:[undefined, 6]
+            }, {
+                deep:true
+            });
+
+            expect(r.x).toBe(2);
+            expect(r.y.s).toBe(1);
+            expect(r.y.z).toBe(1);
+            expect(r.q + "").toBe([2, 6] + "");
+
+            r = {
+                x:1,
+                y:{
+                    z:1
+                },
+                q:[2, 5]
+            };
+
+            S.mix(r, {
+                x:2,
+                y:{
+                    s:1,
+                    z:2
+                },
+                q:[undefined, 6]
+            }, {
+                overwrite:false,
+                deep:true
+            });
+
+            expect(r.x).toBe(1);
+            expect(r.y.s).toBe(1);
+            expect(r.y.z).toBe(1);
+            expect(r.q + "").toBe([2, 5] + "");
+        });
+
+
+        it("can mix circular reference object", function () {
+            var o = {};
+
+            o.x = 1;
+
+            o.y = {};
+
+            o.y.z = 3;
+
+            o.y.a = o;
+
+            var n = {};
+
+            S.mix(n, o, undefined, undefined, true);
+
+            expect(n.x).toBe(1);
+
+            expect(n.y.z).toBe(3);
+
+            expect(n.y.a).toBe(n);
+
+            expect(n.__MIX_CIRCULAR).toBeUndefined();
+            expect(n.y.__MIX_CIRCULAR).toBeUndefined();
+        });
+
+        it('solve JsEnumBug', function () {
+            var v = {
+                toString:function () {
+                    return 1;
+                }
+            };
+            var z = {};
+            S.mix(z, v);
+            expect(z.toString()).toBe(1);
+        });
 
     });
 
-
-    it('S.mix solve JsEnumBug', function () {
-        var v = {
-            toString:function () {
-                return 1;
-            }
-        };
-
-        var z = {};
-        S.mix(z, v);
-        expect(z.toString()).toBe(1);
-    });
 
     it('S.merge', function () {
         var a = {
-            'bool':false,
-            'num':0,
-            'nul':null,
-            'undef':undefined,
-            'str':'blabber'
-        },
+                'bool':false,
+                'num':0,
+                'nul':null,
+                'undef':undefined,
+                'str':'blabber'
+            },
             b = {
                 'bool':'oops',
                 'num':'oops',
@@ -206,28 +284,4 @@ describe('kissy.js', function () {
     });
 
 
-    it("S.mix can mix circular reference object", function () {
-        var o = {};
-
-        o.x = 1;
-
-        o.y = {};
-
-        o.y.z = 3;
-
-        o.y.a = o;
-
-        var n = {};
-
-        S.mix(n, o, undefined, undefined, true);
-
-        expect(n.x).toBe(1);
-
-        expect(n.y.z).toBe(3);
-
-        expect(n.y.a).toBe(n);
-
-        expect(n.__MIX_CIRCULAR).toBeUndefined();
-        expect(n.y.__MIX_CIRCULAR).toBeUndefined();
-    });
 });

@@ -174,9 +174,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  */
                 autoHideDelay:{
                     value:0.1
+                },
+                xrender:{
+                    value:PopupMenuRender
                 }
-            },
-            DefaultRender:PopupMenuRender
+            }
         }, {
             xclass:'popupmenu',
             priority:20

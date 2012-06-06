@@ -36,8 +36,8 @@
 }
 
 
-::root .c2c-menu-button-caption,
-::root .c2c-menu-button-dropdown {
+::root .ks-menu-button-caption,
+::root .ks-menu-button-dropdown {
     /* Required to make pseudo-rounded corners work on Safari. */
     line-height: normal;
 }
@@ -50,8 +50,8 @@
 }
 
 .c2c-menu-button-disabled ,
-.c2c-menu-button-disabled .c2c-menu-button-caption,
-.c2c-menu-button-disabled .c2c-menu-button-dropdown {
+.c2c-menu-button-disabled .ks-menu-button-caption,
+.c2c-menu-button-disabled .ks-menu-button-dropdown {
     border-color: #999 !important;
 }
 
@@ -78,14 +78,14 @@
 }
 
 /* Caption style. */
-.c2c-menu-button-caption {
+.ks-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: top;
     margin: 0 4px;
 }
 
 /* Dropdown arrow style. */
-.c2c-menu-button-dropdown {
+.ks-menu-button-dropdown {
     height: 20px;
     width: 20px;
     /* Client apps may override the URL at which they serve the sprite. */
@@ -93,14 +93,14 @@
     vertical-align: top;
 }
 
-.c2c-button-hover .c2c-menu-button-dropdown,
-.c2c-button-focused .c2c-menu-button-dropdown,
-.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
+.c2c-button-hover .ks-menu-button-dropdown,
+.c2c-button-focused .ks-menu-button-dropdown,
+.c2c-menu-buttonmenu-button-open .ks-menu-button-dropdown {
     background-position: -1px -23px;
 }
 
-.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown,
-.c2c-button-hover .c2c-menu-button-dropdown {
+.c2c-menu-buttonmenu-button-open .ks-menu-button-dropdown,
+.c2c-button-hover .ks-menu-button-dropdown {
     border-color: #ffad33;
 }
 

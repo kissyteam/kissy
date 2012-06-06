@@ -13,7 +13,7 @@
 
 
 /* State: resting. */
-.goog-submenu-arrow {
+.ks-submenu-arrow {
   color: #000;
   left: auto;
   padding-right: 6px;
@@ -23,7 +23,7 @@
 }
 
 /* State: disabled. */
-.goog-menuitem-disabled .goog-submenu-arrow {
+.goog-menuitem-disabled .ks-submenu-arrow {
   color: #ccc;
 }
 

@@ -53,16 +53,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             c = self.constructor,
             attrs,
             cfg = {},
-            DefaultRender;
-        while (c && !DefaultRender) {
-            DefaultRender = c['DefaultRender'];
-            c = c.superclass && c.superclass.constructor;
-        }
-        if (DefaultRender) {
+            Render=self.get('xrender');
+
+        if (Render) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            attrs = self['__attrs'] || {};
+            attrs = self.getAttrs();
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName], v;
@@ -73,7 +70,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                     }
                 }
             }
-            return new DefaultRender(cfg);
+            return new Render(cfg);
         }
         return 0;
     }
@@ -127,7 +124,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             initializer:function () {
                 // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
-                    attrs = self['__attrs'] || {};
+                    attrs = self.getAttrs();
                 for (var attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
                         var attrCfg = attrs[attrName];
@@ -624,10 +621,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  */
                 listeners:{
                     value:{}
-                }
-            },
+                },
 
-            DefaultRender:Render
+                xrender:{
+                    value:Render
+                }
+            }
         });
 
     /**

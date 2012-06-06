@@ -70,7 +70,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // deep mix,exclude context!
         var context = c.context;
         delete c.context;
-        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+        c = S.mix(S.clone(defaultConfig), c, {
+            deep:true
+        });
         c.context = context;
 
         if (!("crossDomain" in c)) {
@@ -420,7 +422,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
              * @param {Object} setting for details see {@link io}
              */
             setupConfig:function (setting) {
-                S.mix(defaultConfig, setting, undefined, undefined, true);
+                S.mix(defaultConfig, setting, {
+                    deep:true
+                });
             },
             /**
              * @private

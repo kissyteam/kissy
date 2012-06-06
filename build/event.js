@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: Jun 5 21:37
 */
 /**
  * @fileOverview responsible for registering event
@@ -857,12 +857,12 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         HASH_CHANGE = 'hashchange';
 
     // ie8 支持 hashchange
-    // 但IE8以上切换浏览器模式到IE7（兼容模式），会导致 'onhashchange' in window === true，但是不触发事件
+    // 但IE8以上切换浏览器模式到IE7（兼容模式），
+    // 会导致 'onhashchange' in window === true，但是不触发事件
 
-    // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
-    // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
+    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
+    // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
     if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
-
 
         function getIframeDoc(iframe) {
             return iframe.contentWindow.document;
@@ -900,7 +900,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
             hashChange = ie && ie < 8 ? function (hash) {
                 // S.log("set iframe html :" + hash);
-
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
                         // 后面通过 innerText，相当于 unEscapeHTML

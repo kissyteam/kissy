@@ -17,25 +17,27 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         load:function (cfg) {
             var self = this;
             S.mix(self, cfg);
-            self.startTime = S.now();
             self.pos = 0;
             self.unit = self.unit || "";
         },
 
         frame:function (end) {
             var self = this,
+                anim = self.anim,
                 endFlag = 0,
                 elapsedTime;
             if (self.finished) {
                 return 1;
             }
-            var t = S.now();
-            if (end || t >= self.duration + self.startTime) {
+            var t = S.now(),
+                _startTime = anim._startTime,
+                duration = anim.config.duration;
+            if (end || t >= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
             } else {
-                elapsedTime = t - self.startTime;
-                self.pos = self.easing(elapsedTime / self.duration);
+                elapsedTime = t - _startTime;
+                self.pos = self.easing(elapsedTime / duration);
             }
             self.update();
             self.finished = self.finished || endFlag;
@@ -61,8 +63,9 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
 
         update:function () {
             var self = this,
+                anim = self.anim,
                 prop = self.prop,
-                elem = self.elem,
+                elem = anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -90,7 +93,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         cur:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem;
+                elem = self.anim.elem;
             if (isAttr(elem, prop)) {
                 return DOM.attr(elem, prop, undefined, 1);
             }

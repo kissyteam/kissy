@@ -273,11 +273,13 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
         },
 
         {
-            DefaultRender:BaseNodeRender,
             ATTRS:/**
              * @lends Tree.Node#
              */
             {
+                xrender:{
+                    value:BaseNodeRender
+                },
                 /*事件代理*/
                 handleMouseEvents:{
                     value:false

@@ -581,9 +581,11 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                  */
                 strAppendedOnComplete:{
                     value:""
+                },
+                xrender:{
+                    value:AutoCompleteRender
                 }
-            },
-            DefaultRender:AutoCompleteRender
+            }
         },
         {
             xclass:'autocomplete-input',

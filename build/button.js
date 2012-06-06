@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -80,10 +80,11 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                     setter:function (v) {
                         return this.set("html", v);
                     }
+                },
+                xrender:{
+                    value:ButtonRender
                 }
-            },
-
-            DefaultRender:ButtonRender
+            }
         }, {
             xclass:'button',
             priority:10
@@ -270,11 +271,13 @@ KISSY.add('button/toggle', function (S, Button, ToggleRender) {
             self.constructor.superclass.performActionInternal.apply(self, arguments);
         }
     }, {
-        DefaultRender:ToggleRender,
         ATTRS:{
             checked:{
                 value:false,
                 view:true
+            },
+            xrender:{
+                value:ToggleRender
             }
         }
     }, {

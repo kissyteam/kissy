@@ -147,13 +147,15 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                 self._inputs = null;
             }
         }, {
-            DefaultRender:AutoCompleteMenuRender,
             ATTRS:{
                 head:{
                     view:true
                 },
                 foot:{
                     view:true
+                },
+                xrender:{
+                    value:AutoCompleteMenuRender
                 }
             }
         });

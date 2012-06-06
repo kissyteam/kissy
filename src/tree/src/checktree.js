@@ -23,11 +23,15 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
                 return CheckTree.superclass.expandAll.apply(this, arguments);
             }
         }, {
+            ATTRS:{
+                xrender:{
+                    value:CheckTreeRender
+                }
+            }
         }, {
             xclass:CHECK_TREE_CLS,
             priority:40
         });
-    CheckTree.DefaultRender = CheckTreeRender;
     return CheckTree;
 
 }, {

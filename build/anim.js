@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview anim
@@ -69,13 +69,13 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.elem, "backgroundPosition");
+            return DOM.css(this.anim.elem, "backgroundPosition");
         },
 
         update:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem,
+                elem = self.anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -354,9 +354,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             var to,
                 from,
                 propCfg = {
-                    elem:elem,
                     prop:prop,
-                    duration:config.duration,
+                    anim:self,
                     easing:specialEasing[prop]
                 },
                 fx = Fx.getFx(propCfg);
@@ -415,6 +414,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs[prop] = fx;
         }
 
+        self._startTime = S.now();
+
         AM.start(self);
     }
 
@@ -430,6 +431,32 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
              */
             isRunning:function () {
                 return isRunning(this);
+            },
+
+            isPaused:function () {
+                return isPaused(this);
+            },
+
+            pause:function () {
+                var self = this;
+                if (self.isRunning()) {
+                    self._pauseDiff = S.now() - self._startTime;
+                    AM.stop(self);
+                    removeRunning(self);
+                    savePaused(self);
+                }
+                return self;
+            },
+
+            resume:function () {
+                var self = this;
+                if (self.isPaused()) {
+                    self._startTime = S.now() - self._pauseDiff;
+                    removePaused(self);
+                    saveRunning(self);
+                    AM.start(self);
+                }
+                return self;
             },
 
             _runInternal:runInternal,
@@ -572,6 +599,38 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         return 0;
     }
 
+
+    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+
+    function savePaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (!paused) {
+            DOM.data(elem, pausedKey, paused = {});
+        }
+        paused[S.stamp(anim)] = anim;
+    }
+
+    function removePaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (paused) {
+            delete paused[S.stamp(anim)];
+            if (S.isEmptyObject(paused)) {
+                DOM.removeData(elem, pausedKey);
+            }
+        }
+    }
+
+    function isPaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (paused) {
+            return !!paused[S.stamp(anim)];
+        }
+        return 0;
+    }
+
     /**
      * stop all the anims currently running
      * @param {HTMLElement} elem element which anim belongs to
@@ -603,6 +662,35 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
     };
 
+    S.each(["pause", "resume"], function (action) {
+        Anim[action] = function (elem, queueName) {
+            if (
+            // default queue
+                queueName === null ||
+                    // name of specified queue
+                    S.isString(queueName) ||
+                    // anims not belong to any queue
+                    queueName === false
+                ) {
+                return pauseResumeQueue(elem, queueName, action);
+            }
+            pauseResumeQueue(elem, undefined, action);
+        };
+    });
+
+    function pauseResumeQueue(elem, queueName, action) {
+        var allAnims = DOM.data(elem, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+        for (var k in anims) {
+            var anim = anims[k];
+            if (queueName === undefined ||
+                anim.config.queue == queueName) {
+                anim[action]();
+            }
+        }
+    }
+
     /**
      *
      * @param elem element which anim belongs to
@@ -633,6 +721,16 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     Anim.isRunning = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
+    };
+
+    /**
+     * whether elem has paused anim
+     * @param {HTMLElement} elem
+     * @private
+     */
+    Anim.isPaused = function (elem) {
+        var paused = DOM.data(elem, pausedKey);
+        return paused && !S.isEmptyObject(paused);
     };
 
     Anim.Q = Q;
@@ -980,10 +1078,14 @@ KISSY.add('anim/easing', function () {
          * then reverses and comes back to end.
          */
         "backBoth":function (t) {
+            var s = BACK_CONST;
+            var m = (s *= 1.525) + 1;
+
             if ((t *= 2 ) < 1) {
-                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                return .5 * (t * t * (m * t - s));
             }
-            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            return .5 * ((t -= 2) * t * (m * t + s) + 2);
+
         },
 
         /**
@@ -1074,25 +1176,27 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         load:function (cfg) {
             var self = this;
             S.mix(self, cfg);
-            self.startTime = S.now();
             self.pos = 0;
             self.unit = self.unit || "";
         },
 
         frame:function (end) {
             var self = this,
+                anim = self.anim,
                 endFlag = 0,
                 elapsedTime;
             if (self.finished) {
                 return 1;
             }
-            var t = S.now();
-            if (end || t >= self.duration + self.startTime) {
+            var t = S.now(),
+                _startTime = anim._startTime,
+                duration = anim.config.duration;
+            if (end || t >= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
             } else {
-                elapsedTime = t - self.startTime;
-                self.pos = self.easing(elapsedTime / self.duration);
+                elapsedTime = t - _startTime;
+                self.pos = self.easing(elapsedTime / duration);
             }
             self.update();
             self.finished = self.finished || endFlag;
@@ -1118,8 +1222,9 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
 
         update:function () {
             var self = this,
+                anim = self.anim,
                 prop = self.prop,
-                elem = self.elem,
+                elem = anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -1147,7 +1252,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         cur:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem;
+                elem = self.anim.elem;
             if (isAttr(elem, prop)) {
                 return DOM.attr(elem, prop, undefined, 1);
             }

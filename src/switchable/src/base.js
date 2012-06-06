@@ -138,6 +138,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         var priority = cfg.priority = cfg.priority || 0,
             i = 0,
             plugins = Type.Plugins = Type.Plugins || [];
+        // 大的在前
         for (; i < plugins.length; i++) {
             if (plugins[i].priority < priority) {
                 break;

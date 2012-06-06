@@ -30,7 +30,11 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
                 return BaseNode.prototype.expandAll.apply(this, arguments);
             }
         }, {
-            DefaultRender:TreeRender
+            ATTRS:{
+                xrender:{
+                    value:TreeRender
+                }
+            }
         }, {
             xclass:TREE_CLS,
             priority:30

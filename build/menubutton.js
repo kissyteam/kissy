@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -353,9 +353,11 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 collapsed:{
                     value:true,
                     view:true
+                },
+                xrender:{
+                    value:MenuButtonRender
                 }
-            },
-            DefaultRender:MenuButtonRender
+            }
         }, {
             xclass:'menu-button',
             priority:20
@@ -388,7 +390,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
             'ks-menu-button-caption">{content}<' + '/div>' +
             '<div class="ks-inline-block ' +
             'ks-menu-button-dropdown"><' + '/div>',
-        CAPTION_CLS = "menu-button-caption",
+        CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
     return Button.Render.extend({
@@ -405,7 +407,7 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
         },
 
         _uiSetHtml:function (v) {
-            var caption = this.get("el").one("." + this.getCssClassWithPrefix(CAPTION_CLS));
+            var caption = this.get("el").one("." + CAPTION_CLS);
             caption.html("");
             v && caption.append(v);
         },

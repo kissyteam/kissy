@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview accordion aria support
@@ -733,6 +733,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         var priority = cfg.priority = cfg.priority || 0,
             i = 0,
             plugins = Type.Plugins = Type.Plugins || [];
+        // 大的在前
         for (; i < plugins.length; i++) {
             if (plugins[i].priority < priority) {
                 break;
@@ -2496,11 +2497,78 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
  * 承玉：2011.06.02 review switchable
  */
 /**
+ * @fileOverview Seamless support for switchable
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
+    Switchable.addPlugin({
+        name:'seamless',
+
+        priority:5,
+
+        init:function (self) {
+            var config = self.config,
+                panels = self.panels,
+                container = self.container,
+                effect = config.effect;
+
+            if (config.steps == 1 && panels.length) {
+                var realStep = 1,
+                    offsetXX,
+                    prop,
+                    lastIndex,
+                    viewSize = [DOM.width(container), DOM.height(container)],
+                    totalXX;
+
+                if (effect == 'scrollx') {
+                    prop = "left";
+                    realStep = Math.floor(viewSize[0] / (offsetXX = panels[0].offsetWidth));
+                } else if (effect == 'scrolly') {
+                    prop = "top";
+                    realStep = Math.floor(viewSize[1] / (offsetXX = panels[0].offsetHeight));
+                }
+
+                if (realStep <= config.steps) {
+                    return;
+                }
+
+                totalXX = offsetXX * panels.length;
+                lastIndex = panels.length - realStep + 1;
+
+                self.on("beforeSwitch", function (e) {
+                    var toIndex = e.toIndex;
+                    if (toIndex >= lastIndex) {
+                        var gap = Math.abs(toIndex - lastIndex);
+                        DOM.css(panels[gap], "position", "relative");
+                        DOM.css(panels[gap], prop, totalXX);
+                    } else if (!toIndex) {
+                        DOM.css(panels[realStep - 1], {
+                            position:"relative"
+                        });
+                        DOM.css(panels[realStep - 1], prop, totalXX);
+                    }
+                });
+
+                self.on("switch", function (e) {
+                    if (e.currentIndex == 0) {
+                        for (var i = 1; i < realStep; i++) {
+                            DOM.css(panels[i], {
+                                position:""
+                            });
+                            DOM.css(panels[i], prop, "");
+                        }
+                    }
+                });
+            }
+        }
+    });
+}, {
+    requires:['dom', './base']
+});/**
  * @fileOverview Tabs Widget
  * @author lifesinger@gmail.com
  */
-KISSY.add('switchable/slide/base', function(S, Switchable) {
-
+KISSY.add('switchable/slide/base', function (S, Switchable) {
 
 
     /**
@@ -2519,9 +2587,9 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         Slide.superclass.constructor.apply(self, arguments);
     }
 
-    Slide.Config={
-        autoplay: true,
-        circular: true
+    Slide.Config = {
+        autoplay:true,
+        circular:true
     };
 
     S.extend(Slide, Switchable);
@@ -2563,7 +2631,8 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
         "switchable/lazyload",
         "switchable/slide/base",
         "switchable/tabs/base",
-        "switchable/tabs/aria"
+        "switchable/tabs/aria",
+        "switchable/seamless"
     ]
 });
 /**

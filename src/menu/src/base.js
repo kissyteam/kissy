@@ -191,9 +191,11 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                  */
                 activeItem:{
                     view:true
+                },
+                xrender:{
+                    value:MenuRender
                 }
-            },
-            DefaultRender:MenuRender
+            }
         }, {
             xclass:'menu',
             priority:10

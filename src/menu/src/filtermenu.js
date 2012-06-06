@@ -184,9 +184,12 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
                 allowMultiple:{
                     value:false
+                },
+
+                xrender:{
+                    value:FilterMenuRender
                 }
-            },
-            DefaultRender:FilterMenuRender
+            }
         }, {
             xclass:'filtermenu',
             priority:20

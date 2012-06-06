@@ -190,7 +190,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * If name unset and data unset returns the full data store for the element.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @param {String} [data] The new data value.
+             * @param [data] The new data value.
              * @returns {Object|undefined}
              */
             data:function (selector, name, data) {

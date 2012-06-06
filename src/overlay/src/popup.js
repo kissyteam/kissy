@@ -31,7 +31,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 if (trigger) {
                     if (self.get("triggerType") === 'mouse') {
                         self._bindTriggerMouse();
-                        self.on('bindUI', function () {
+                        self.on('afterRenderUI', function () {
                             self._bindContainerMouse();
                         });
                     } else {

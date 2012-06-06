@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -222,9 +222,11 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                  */
                 visibleMode:{
                     value:"visibility"
+                },
+                xrender:{
+                    value:OverlayRender
                 }
-            },
-            DefaultRender:OverlayRender
+            }
         }, {
             xclass:'overlay',
             priority:10
@@ -298,9 +300,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                             }
                         ];
                     }
+                },
+                xrender:{
+                    value:DialogRender
                 }
-            },
-            DefaultRender:DialogRender
+            }
         }, {
             xclass:'dialog',
             priority:20
@@ -497,7 +501,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 if (trigger) {
                     if (self.get("triggerType") === 'mouse') {
                         self._bindTriggerMouse();
-                        self.on('bindUI', function () {
+                        self.on('afterRenderUI', function () {
                             self._bindContainerMouse();
                         });
                     } else {

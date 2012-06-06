@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 5 21:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -46,19 +46,27 @@ build time: Jun 1 16:57
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {Boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+             * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
+             * @param {String[]} [ov.whitelist] array of white-list properties
+             * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {Boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should be set true too!
+             * @param [deep=false] {Boolean} whether recursive mix if encounter object.
              * @return {Object} the augmented object
              * @example
              * <code>
              * var t={};
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
              * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              * </code>
              */
             mix:function (r, s, ov, wl, deep) {
+                if (typeof ov === 'object') {
+                    wl = ov['whitelist'];
+                    deep = ov['deep'];
+                    ov = ov['overwrite'];
+                }
                 var cache = [], c, i = 0;
                 mixInternal(r, s, ov, wl, deep, cache);
                 while (c = cache[i++]) {
@@ -89,6 +97,7 @@ build time: Jun 1 16:57
             } else {
 
                 s[MIX_CIRCULAR_DETECTION] = r;
+
                 cache.push(s);
 
                 for (p in s) {
@@ -111,7 +120,10 @@ build time: Jun 1 16:57
         },
 
         _mix = function (p, r, s, ov, deep, cache) {
-            if (ov || !(p in r)) {
+            // 要求覆盖
+            // 或者目的不存在
+            // 或者深度mix
+            if (ov || !(p in r) || deep) {
                 var target = r[p],
                     src = s[p];
                 // prevent never-end loop
@@ -134,7 +146,7 @@ build time: Jun 1 16:57
                         cache.push(src);
                         mixInternal(clone, src, ov, undefined, true, cache);
                     }
-                } else if (src !== undefined) {
+                } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
                 }
             }
@@ -484,7 +496,7 @@ build time: Jun 1 16:57
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120601165718';
+        S.__BUILD_TIME = '20120605213833';
     })();
 
     return S;
@@ -4049,7 +4061,7 @@ build time: Jun 1 16:57
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120601165718'
+        tag:'20120605213833'
     }, getBaseInfo()));
 
     /**
@@ -4296,110 +4308,108 @@ build time: Jun 1 16:57
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    S.add({
-
-        /****************************
-         * Core
-         ****************************/
-        "dom":{
-            requires:["ua"]
-        },
-        "event":{
-            requires:["dom"]
-        },
-        "ajax":{
-            requires:["dom", "event", "json"]
-        },
-        "anim":{
-            requires:["dom", "event"]
-        },
-        "base":{
-            requires:["event"]
-        },
-        "node":{
-            requires:["dom", "event", "anim"]
-        },
-        core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
-        },
-
-        /******************************
-         *  Infrastructure
-         ******************************/
-        "mvc":{
-            requires:["base", "ajax"]
-        },
-        "component":{
-            requires:["node"]
-        },
-
-        /****************************
-         *  UI Component
-         ****************************/
-
-        "input-selection":{
-            requires:['dom']
-        },
-        "button":{
-            requires:["component", "node"]
-        },
-        "overlay":{
-            requires:["component", "node"]
-        },
-        "resizable":{
-            requires:["base", "node"]
-        },
-        "menu":{
-            requires:["component", "node"]
-        },
-        "menubutton":{
-            requires:["menu", "button"]
-        },
-        "validation":{
-            requires:["node", "ajax"]
-        },
-        "waterfall":{
-            requires:["node", "base", "ajax"]
-        },
-        "tree":{
-            requires:["component", "node"]
-        },
-        "suggest":{
-            requires:["dom", "event"]
-        },
-        "switchable":{
-            requires:["dom", "event", "anim", "json"]
-        },
-        "calendar":{
-            requires:["node"]
-        },
-        "datalazyload":{
-            requires:["dom", "event"]
-        },
-        "dd":{
-            requires:["node", "base"]
-        },
-        "flash":{
-            requires:["dom", "json"]
-        },
-        "imagezoom":{
-            requires:["node", "component"]
-        },
-        "editor":{
-            requires:['htmlparser', 'core', 'overlay']
-        },
-        "editor/full":{
-            requires:['htmlparser', 'core', 'overlay']
-        }
-    });
     if (S.Loader) {
         S.config({
-            packages:[
-                {
-                    name:"gallery",
+            packages:{
+                gallery:{
                     path:S.Loader.Utils.normalizePath(S.Config.base + '../')
                 }
-            ]
+            },
+            modules:{
+                /****************************
+                 * Core
+                 ****************************/
+                "dom":{
+                    requires:["ua"]
+                },
+                "event":{
+                    requires:["dom"]
+                },
+                "ajax":{
+                    requires:["dom", "event", "json"]
+                },
+                "anim":{
+                    requires:["dom", "event"]
+                },
+                "base":{
+                    requires:["event"]
+                },
+                "node":{
+                    requires:["dom", "event", "anim"]
+                },
+                core:{
+                    alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
+                },
+
+                /******************************
+                 *  Infrastructure
+                 ******************************/
+                "mvc":{
+                    requires:["base", "ajax"]
+                },
+                "component":{
+                    requires:["node"]
+                },
+
+                /****************************
+                 *  UI Component
+                 ****************************/
+
+                "input-selection":{
+                    requires:['dom']
+                },
+                "button":{
+                    requires:["component", "node"]
+                },
+                "overlay":{
+                    requires:["component", "node"]
+                },
+                "resizable":{
+                    requires:["base", "node"]
+                },
+                "menu":{
+                    requires:["component", "node"]
+                },
+                "menubutton":{
+                    requires:["menu", "button"]
+                },
+                "validation":{
+                    requires:["node", "ajax"]
+                },
+                "waterfall":{
+                    requires:["node", "base", "ajax"]
+                },
+                "tree":{
+                    requires:["component", "node"]
+                },
+                "suggest":{
+                    requires:["dom", "event"]
+                },
+                "switchable":{
+                    requires:["dom", "event", "anim", "json"]
+                },
+                "calendar":{
+                    requires:["node"]
+                },
+                "datalazyload":{
+                    requires:["dom", "event"]
+                },
+                "dd":{
+                    requires:["node", "base"]
+                },
+                "flash":{
+                    requires:["dom", "json"]
+                },
+                "imagezoom":{
+                    requires:["node", "component"]
+                },
+                "editor":{
+                    requires:['htmlparser', 'core', 'overlay']
+                },
+                "editor/full":{
+                    requires:['htmlparser', 'core', 'overlay']
+                }
+            }
         });
     }
 })(KISSY);
@@ -4410,7 +4420,7 @@ build time: Jun 1 16:57
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview ua
@@ -4698,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 21:35
 */
 /**
  * @fileOverview dom-attr
@@ -5905,7 +5915,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 /**
                  * Create a deep copy of the first of matched elements.
                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
-                 * @param {Boolean} [deep=false] whether perform deep copy
+                 * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
+                 * @param {Boolean} [deep.deep] whether perform deep copy
+                 * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
+                 * whether event handlers and data should be copied along with the elements.
+                 * @param {Boolean} [deep.deepWithDataAndEvent=false]
+                 * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+                 * if set true then deep argument must be set true as well.
                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
                  * whether event handlers and data should be copied along with the elements.
                  * @param {Boolean} [deepWithDataAndEvent=false]
@@ -5915,6 +5931,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @returns {HTMLElement}
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+
+                    if (typeof deep === 'object') {
+                        deepWithDataAndEvent = deep['deepWithDataAndEvent'];
+                        withDataAndEvent = deep['withDataAndEvent'];
+                        deep = deep['deep'];
+                    }
+
                     var elem = DOM.get(selector);
 
                     if (!elem) {
@@ -5944,9 +5967,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     // runtime 获得事件模块
                     if (withDataAndEvent) {
-                        cloneWidthDataAndEvent(elem, clone);
+                        cloneWithDataAndEvent(elem, clone);
                         if (deep && deepWithDataAndEvent) {
-                            processAll(cloneWidthDataAndEvent, elem, clone);
+                            processAll(cloneWithDataAndEvent, elem, clone);
                         }
                     }
                     return clone;
@@ -5993,7 +6016,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
 
         // 克隆除了事件的 data
-        function cloneWidthDataAndEvent(src, dest) {
+        function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
             if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
@@ -6376,7 +6399,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * If name unset and data unset returns the full data store for the element.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @param {String} [data] The new data value.
+             * @param [data] The new data value.
              * @returns {Object|undefined}
              */
             data:function (selector, name, data) {
@@ -9057,7 +9080,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:27
+build time: Jun 5 21:37
 */
 /**
  * @fileOverview responsible for registering event
@@ -9913,12 +9936,12 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         HASH_CHANGE = 'hashchange';
 
     // ie8 支持 hashchange
-    // 但IE8以上切换浏览器模式到IE7（兼容模式），会导致 'onhashchange' in window === true，但是不触发事件
+    // 但IE8以上切换浏览器模式到IE7（兼容模式），
+    // 会导致 'onhashchange' in window === true，但是不触发事件
 
-    // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
-    // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
+    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
+    // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
     if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
-
 
         function getIframeDoc(iframe) {
             return iframe.contentWindow.document;
@@ -9956,7 +9979,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
             hashChange = ie && ie < 8 ? function (hash) {
                 // S.log("set iframe html :" + hash);
-
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
                         // 后面通过 innerText，相当于 unEscapeHTML
@@ -11369,7 +11391,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11879,7 +11901,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview form data  serialization util
@@ -13266,7 +13288,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         // deep mix,exclude context!
         var context = c.context;
         delete c.context;
-        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+        c = S.mix(S.clone(defaultConfig), c, {
+            deep:true
+        });
         c.context = context;
 
         if (!("crossDomain" in c)) {
@@ -13616,7 +13640,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
              * @param {Object} setting for details see {@link io}
              */
             setupConfig:function (setting) {
-                S.mix(defaultConfig, setting, undefined, undefined, true);
+                S.mix(defaultConfig, setting, {
+                    deep:true
+                });
             },
             /**
              * @private
@@ -13791,7 +13817,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:25
+build time: Jun 5 21:35
 */
 /**
  * @fileOverview cookie
@@ -13905,7 +13931,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:24
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview attribute management
@@ -14526,7 +14552,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 5 21:34
 */
 /**
  * @fileOverview anim
@@ -14594,13 +14620,13 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.elem, "backgroundPosition");
+            return DOM.css(this.anim.elem, "backgroundPosition");
         },
 
         update:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem,
+                elem = self.anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -14879,9 +14905,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             var to,
                 from,
                 propCfg = {
-                    elem:elem,
                     prop:prop,
-                    duration:config.duration,
+                    anim:self,
                     easing:specialEasing[prop]
                 },
                 fx = Fx.getFx(propCfg);
@@ -14940,6 +14965,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs[prop] = fx;
         }
 
+        self._startTime = S.now();
+
         AM.start(self);
     }
 
@@ -14955,6 +14982,32 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
              */
             isRunning:function () {
                 return isRunning(this);
+            },
+
+            isPaused:function () {
+                return isPaused(this);
+            },
+
+            pause:function () {
+                var self = this;
+                if (self.isRunning()) {
+                    self._pauseDiff = S.now() - self._startTime;
+                    AM.stop(self);
+                    removeRunning(self);
+                    savePaused(self);
+                }
+                return self;
+            },
+
+            resume:function () {
+                var self = this;
+                if (self.isPaused()) {
+                    self._startTime = S.now() - self._pauseDiff;
+                    removePaused(self);
+                    saveRunning(self);
+                    AM.start(self);
+                }
+                return self;
             },
 
             _runInternal:runInternal,
@@ -15097,6 +15150,38 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         return 0;
     }
 
+
+    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+
+    function savePaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (!paused) {
+            DOM.data(elem, pausedKey, paused = {});
+        }
+        paused[S.stamp(anim)] = anim;
+    }
+
+    function removePaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (paused) {
+            delete paused[S.stamp(anim)];
+            if (S.isEmptyObject(paused)) {
+                DOM.removeData(elem, pausedKey);
+            }
+        }
+    }
+
+    function isPaused(anim) {
+        var elem = anim.elem,
+            paused = DOM.data(elem, pausedKey);
+        if (paused) {
+            return !!paused[S.stamp(anim)];
+        }
+        return 0;
+    }
+
     /**
      * stop all the anims currently running
      * @param {HTMLElement} elem element which anim belongs to
@@ -15128,6 +15213,35 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
     };
 
+    S.each(["pause", "resume"], function (action) {
+        Anim[action] = function (elem, queueName) {
+            if (
+            // default queue
+                queueName === null ||
+                    // name of specified queue
+                    S.isString(queueName) ||
+                    // anims not belong to any queue
+                    queueName === false
+                ) {
+                return pauseResumeQueue(elem, queueName, action);
+            }
+            pauseResumeQueue(elem, undefined, action);
+        };
+    });
+
+    function pauseResumeQueue(elem, queueName, action) {
+        var allAnims = DOM.data(elem, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+        for (var k in anims) {
+            var anim = anims[k];
+            if (queueName === undefined ||
+                anim.config.queue == queueName) {
+                anim[action]();
+            }
+        }
+    }
+
     /**
      *
      * @param elem element which anim belongs to
@@ -15158,6 +15272,16 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     Anim.isRunning = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
+    };
+
+    /**
+     * whether elem has paused anim
+     * @param {HTMLElement} elem
+     * @private
+     */
+    Anim.isPaused = function (elem) {
+        var paused = DOM.data(elem, pausedKey);
+        return paused && !S.isEmptyObject(paused);
     };
 
     Anim.Q = Q;
@@ -15505,10 +15629,14 @@ KISSY.add('anim/easing', function () {
          * then reverses and comes back to end.
          */
         "backBoth":function (t) {
+            var s = BACK_CONST;
+            var m = (s *= 1.525) + 1;
+
             if ((t *= 2 ) < 1) {
-                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                return .5 * (t * t * (m * t - s));
             }
-            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            return .5 * ((t -= 2) * t * (m * t + s) + 2);
+
         },
 
         /**
@@ -15599,25 +15727,27 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         load:function (cfg) {
             var self = this;
             S.mix(self, cfg);
-            self.startTime = S.now();
             self.pos = 0;
             self.unit = self.unit || "";
         },
 
         frame:function (end) {
             var self = this,
+                anim = self.anim,
                 endFlag = 0,
                 elapsedTime;
             if (self.finished) {
                 return 1;
             }
-            var t = S.now();
-            if (end || t >= self.duration + self.startTime) {
+            var t = S.now(),
+                _startTime = anim._startTime,
+                duration = anim.config.duration;
+            if (end || t >= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
             } else {
-                elapsedTime = t - self.startTime;
-                self.pos = self.easing(elapsedTime / self.duration);
+                elapsedTime = t - _startTime;
+                self.pos = self.easing(elapsedTime / duration);
             }
             self.update();
             self.finished = self.finished || endFlag;
@@ -15643,8 +15773,9 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
 
         update:function () {
             var self = this,
+                anim = self.anim,
                 prop = self.prop,
-                elem = self.elem,
+                elem = anim.elem,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -15672,7 +15803,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         cur:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.elem;
+                elem = self.anim.elem;
             if (isAttr(elem, prop)) {
                 return DOM.attr(elem, prop, undefined, 1);
             }
@@ -15892,7 +16023,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview anim-node-plugin
@@ -15901,7 +16032,7 @@ build time: May 30 20:28
  *         qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
+KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
     var FX = [
         // height animations
@@ -15925,25 +16056,48 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
     }
 
     S.augment(Node, {
-        animate:function() {
+        animate:function () {
             var self = this,
                 args = S.makeArray(arguments);
-            S.each(self, function(elem) {
+            S.each(self, function (elem) {
                 Anim.apply(undefined, [elem].concat(args)).run();
             });
             return self;
         },
-        stop:function(end, clearQueue, queue) {
+        stop:function (end, clearQueue, queue) {
             var self = this;
-            S.each(self, function(elem) {
+            S.each(self, function (elem) {
                 Anim.stop(elem, end, clearQueue, queue);
             });
             return self;
         },
-        isRunning:function() {
+        pause:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        resume:function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
+            });
+            return self;
+        },
+        isRunning:function () {
             var self = this;
             for (var i = 0; i < self.length; i++) {
                 if (Anim.isRunning(self[i])) {
+                    return 1;
+                }
+            }
+            return 0;
+        },
+        isPaused:function () {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isPaused(self[i])) {
                     return 1;
                 }
             }
@@ -15952,24 +16106,24 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
     });
 
     S.each({
-            show: getFxs("show", 3),
-            hide: getFxs("hide", 3),
+            show:getFxs("show", 3),
+            hide:getFxs("hide", 3),
             toggle:getFxs("toggle", 3),
-            fadeIn: getFxs("show", 3, 2),
-            fadeOut: getFxs("hide", 3, 2),
+            fadeIn:getFxs("show", 3, 2),
+            fadeOut:getFxs("hide", 3, 2),
             fadeToggle:getFxs("toggle", 3, 2),
-            slideDown: getFxs("show", 1),
-            slideUp: getFxs("hide", 1),
+            slideDown:getFxs("show", 1),
+            slideUp:getFxs("hide", 1),
             slideToggle:getFxs("toggle", 1)
         },
-        function(v, k) {
-            Node.prototype[k] = function(speed, callback, easing) {
+        function (v, k) {
+            Node.prototype[k] = function (speed, callback, easing) {
                 var self = this;
                 // 没有参数时，调用 DOM 中的对应方法
                 if (DOM[k] && !speed) {
                     DOM[k](self);
                 } else {
-                    S.each(self, function(elem) {
+                    S.each(self, function (elem) {
                         Anim(elem, v, speed, easing || 'easeOut', callback).run();
                     });
                 }
@@ -15978,7 +16132,7 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
         });
 
 }, {
-    requires:["dom","anim","./base"]
+    requires:["dom", "anim", "./base"]
 });
 /**
  * 2011-11-10

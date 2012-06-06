@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: May 30 20:28
+build time: Jun 5 21:38
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -35,7 +35,11 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
                 return BaseNode.prototype.expandAll.apply(this, arguments);
             }
         }, {
-            DefaultRender:TreeRender
+            ATTRS:{
+                xrender:{
+                    value:TreeRender
+                }
+            }
         }, {
             xclass:TREE_CLS,
             priority:30
@@ -327,11 +331,13 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
         },
 
         {
-            DefaultRender:BaseNodeRender,
             ATTRS:/**
              * @lends Tree.Node#
              */
             {
+                xrender:{
+                    value:BaseNodeRender
+                },
                 /*事件代理*/
                 handleMouseEvents:{
                     value:false
@@ -787,10 +793,13 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                     // 1 儿子有选择
                     // 2 全部都选了
                     value:0
+                },
+
+                xrender:{
+                    value:CheckNodeRender
                 }
             },
-            CHECK_CLS:CHECK_CLS,
-            DefaultRender:CheckNodeRender
+            CHECK_CLS:CHECK_CLS
         }, {
             xclass:CHECK_CLS,
             priority:20
@@ -879,11 +888,15 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
                 return CheckTree.superclass.expandAll.apply(this, arguments);
             }
         }, {
+            ATTRS:{
+                xrender:{
+                    value:CheckTreeRender
+                }
+            }
         }, {
             xclass:CHECK_TREE_CLS,
             priority:40
         });
-    CheckTree.DefaultRender = CheckTreeRender;
     return CheckTree;
 
 }, {

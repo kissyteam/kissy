@@ -2,8 +2,7 @@
  * @fileOverview Tabs Widget
  * @author lifesinger@gmail.com
  */
-KISSY.add('switchable/slide/base', function(S, Switchable) {
-
+KISSY.add('switchable/slide/base', function (S, Switchable) {
 
 
     /**
@@ -22,9 +21,9 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         Slide.superclass.constructor.apply(self, arguments);
     }
 
-    Slide.Config={
-        autoplay: true,
-        circular: true
+    Slide.Config = {
+        autoplay:true,
+        circular:true
     };
 
     S.extend(Slide, Switchable);

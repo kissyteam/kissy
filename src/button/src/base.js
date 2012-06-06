@@ -75,10 +75,11 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                     setter:function (v) {
                         return this.set("html", v);
                     }
+                },
+                xrender:{
+                    value:ButtonRender
                 }
-            },
-
-            DefaultRender:ButtonRender
+            }
         }, {
             xclass:'button',
             priority:10

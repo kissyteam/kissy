@@ -16,9 +16,11 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             },
             handleMouseEvents:{
                 value:false
+            },
+            xrender:{
+                value:SeparatorRender
             }
-        },
-        DefaultRender:SeparatorRender
+        }
     }, {
         xclass:'menuseparator',
         priority:20

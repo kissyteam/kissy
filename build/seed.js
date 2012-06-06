@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 1 16:57
+build time: Jun 5 21:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -46,19 +46,27 @@ build time: Jun 1 16:57
              * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
-             * @param {Boolean} [ov=true] whether overwrite existing property
+             * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+             * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
+             * @param {String[]} [ov.whitelist] array of white-list properties
+             * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {Boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should be set true too!
+             * @param [deep=false] {Boolean} whether recursive mix if encounter object.
              * @return {Object} the augmented object
              * @example
              * <code>
              * var t={};
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
              * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              * </code>
              */
             mix:function (r, s, ov, wl, deep) {
+                if (typeof ov === 'object') {
+                    wl = ov['whitelist'];
+                    deep = ov['deep'];
+                    ov = ov['overwrite'];
+                }
                 var cache = [], c, i = 0;
                 mixInternal(r, s, ov, wl, deep, cache);
                 while (c = cache[i++]) {
@@ -89,6 +97,7 @@ build time: Jun 1 16:57
             } else {
 
                 s[MIX_CIRCULAR_DETECTION] = r;
+
                 cache.push(s);
 
                 for (p in s) {
@@ -111,7 +120,10 @@ build time: Jun 1 16:57
         },
 
         _mix = function (p, r, s, ov, deep, cache) {
-            if (ov || !(p in r)) {
+            // 要求覆盖
+            // 或者目的不存在
+            // 或者深度mix
+            if (ov || !(p in r) || deep) {
                 var target = r[p],
                     src = s[p];
                 // prevent never-end loop
@@ -134,7 +146,7 @@ build time: Jun 1 16:57
                         cache.push(src);
                         mixInternal(clone, src, ov, undefined, true, cache);
                     }
-                } else if (src !== undefined) {
+                } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
                 }
             }
@@ -484,7 +496,7 @@ build time: Jun 1 16:57
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120601165718';
+        S.__BUILD_TIME = '20120605213833';
     })();
 
     return S;
@@ -4049,7 +4061,7 @@ build time: Jun 1 16:57
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120601165718'
+        tag:'20120605213833'
     }, getBaseInfo()));
 
     /**
@@ -4296,110 +4308,108 @@ build time: Jun 1 16:57
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    S.add({
-
-        /****************************
-         * Core
-         ****************************/
-        "dom":{
-            requires:["ua"]
-        },
-        "event":{
-            requires:["dom"]
-        },
-        "ajax":{
-            requires:["dom", "event", "json"]
-        },
-        "anim":{
-            requires:["dom", "event"]
-        },
-        "base":{
-            requires:["event"]
-        },
-        "node":{
-            requires:["dom", "event", "anim"]
-        },
-        core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
-        },
-
-        /******************************
-         *  Infrastructure
-         ******************************/
-        "mvc":{
-            requires:["base", "ajax"]
-        },
-        "component":{
-            requires:["node"]
-        },
-
-        /****************************
-         *  UI Component
-         ****************************/
-
-        "input-selection":{
-            requires:['dom']
-        },
-        "button":{
-            requires:["component", "node"]
-        },
-        "overlay":{
-            requires:["component", "node"]
-        },
-        "resizable":{
-            requires:["base", "node"]
-        },
-        "menu":{
-            requires:["component", "node"]
-        },
-        "menubutton":{
-            requires:["menu", "button"]
-        },
-        "validation":{
-            requires:["node", "ajax"]
-        },
-        "waterfall":{
-            requires:["node", "base", "ajax"]
-        },
-        "tree":{
-            requires:["component", "node"]
-        },
-        "suggest":{
-            requires:["dom", "event"]
-        },
-        "switchable":{
-            requires:["dom", "event", "anim", "json"]
-        },
-        "calendar":{
-            requires:["node"]
-        },
-        "datalazyload":{
-            requires:["dom", "event"]
-        },
-        "dd":{
-            requires:["node", "base"]
-        },
-        "flash":{
-            requires:["dom", "json"]
-        },
-        "imagezoom":{
-            requires:["node", "component"]
-        },
-        "editor":{
-            requires:['htmlparser', 'core', 'overlay']
-        },
-        "editor/full":{
-            requires:['htmlparser', 'core', 'overlay']
-        }
-    });
     if (S.Loader) {
         S.config({
-            packages:[
-                {
-                    name:"gallery",
+            packages:{
+                gallery:{
                     path:S.Loader.Utils.normalizePath(S.Config.base + '../')
                 }
-            ]
+            },
+            modules:{
+                /****************************
+                 * Core
+                 ****************************/
+                "dom":{
+                    requires:["ua"]
+                },
+                "event":{
+                    requires:["dom"]
+                },
+                "ajax":{
+                    requires:["dom", "event", "json"]
+                },
+                "anim":{
+                    requires:["dom", "event"]
+                },
+                "base":{
+                    requires:["event"]
+                },
+                "node":{
+                    requires:["dom", "event", "anim"]
+                },
+                core:{
+                    alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
+                },
+
+                /******************************
+                 *  Infrastructure
+                 ******************************/
+                "mvc":{
+                    requires:["base", "ajax"]
+                },
+                "component":{
+                    requires:["node"]
+                },
+
+                /****************************
+                 *  UI Component
+                 ****************************/
+
+                "input-selection":{
+                    requires:['dom']
+                },
+                "button":{
+                    requires:["component", "node"]
+                },
+                "overlay":{
+                    requires:["component", "node"]
+                },
+                "resizable":{
+                    requires:["base", "node"]
+                },
+                "menu":{
+                    requires:["component", "node"]
+                },
+                "menubutton":{
+                    requires:["menu", "button"]
+                },
+                "validation":{
+                    requires:["node", "ajax"]
+                },
+                "waterfall":{
+                    requires:["node", "base", "ajax"]
+                },
+                "tree":{
+                    requires:["component", "node"]
+                },
+                "suggest":{
+                    requires:["dom", "event"]
+                },
+                "switchable":{
+                    requires:["dom", "event", "anim", "json"]
+                },
+                "calendar":{
+                    requires:["node"]
+                },
+                "datalazyload":{
+                    requires:["dom", "event"]
+                },
+                "dd":{
+                    requires:["node", "base"]
+                },
+                "flash":{
+                    requires:["dom", "json"]
+                },
+                "imagezoom":{
+                    requires:["node", "component"]
+                },
+                "editor":{
+                    requires:['htmlparser', 'core', 'overlay']
+                },
+                "editor/full":{
+                    requires:['htmlparser', 'core', 'overlay']
+                }
+            }
         });
     }
 })(KISSY);

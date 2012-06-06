@@ -259,7 +259,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 /**
                  * Create a deep copy of the first of matched elements.
                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
-                 * @param {Boolean} [deep=false] whether perform deep copy
+                 * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
+                 * @param {Boolean} [deep.deep] whether perform deep copy
+                 * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
+                 * whether event handlers and data should be copied along with the elements.
+                 * @param {Boolean} [deep.deepWithDataAndEvent=false]
+                 * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+                 * if set true then deep argument must be set true as well.
                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
                  * whether event handlers and data should be copied along with the elements.
                  * @param {Boolean} [deepWithDataAndEvent=false]
@@ -269,6 +275,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @returns {HTMLElement}
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+
+                    if (typeof deep === 'object') {
+                        deepWithDataAndEvent = deep['deepWithDataAndEvent'];
+                        withDataAndEvent = deep['withDataAndEvent'];
+                        deep = deep['deep'];
+                    }
+
                     var elem = DOM.get(selector);
 
                     if (!elem) {
@@ -298,9 +311,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     // runtime 获得事件模块
                     if (withDataAndEvent) {
-                        cloneWidthDataAndEvent(elem, clone);
+                        cloneWithDataAndEvent(elem, clone);
                         if (deep && deepWithDataAndEvent) {
-                            processAll(cloneWidthDataAndEvent, elem, clone);
+                            processAll(cloneWithDataAndEvent, elem, clone);
                         }
                     }
                     return clone;
@@ -347,7 +360,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
 
         // 克隆除了事件的 data
-        function cloneWidthDataAndEvent(src, dest) {
+        function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
             if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {

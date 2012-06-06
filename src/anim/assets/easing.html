@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<script src='../../../build/kissy.js'></script>
+<script src='../../../tools/third-party/raphael.js'></script>
+<style>
+    body {
+        background: #000;
+    }
+
+    h1, h2, a {
+        color: white;
+    }
+
+    #wrap {
+        width: 600px;
+        margin: 0 auto;
+        zoom:1;
+    }
+
+    .container {
+        border: 1px solid #555;
+        margin-top: -1px;
+        zoom:1;
+    }
+
+    .svgContainer {
+        margin-left: -1px;
+    }
+</style>
+</head>
+<body>
+
+<h1>easing visualization</h1>
+
+<div id="wrap">
+
+</div>
+
+<h2>refer</h2>
+<a href="http://aralejs.org/lib/easing/examples/easing.html">aralejs</a>
+
+
+<script>
+    (function (S) {
+        var $ = S.all;
+        var easings = [
+            [
+                "swing"
+            ],
+            [
+                "easeNone",
+                "easeIn",
+                "easeOut",
+                "easeBoth",
+                "easeInStrong",
+                "easeOutStrong",
+                "easeBothStrong"
+            ],
+            [
+                "backIn",
+                "backOut",
+                "backBoth"],
+            [
+                "elasticIn",
+                "elasticOut",
+                "elasticBoth"
+            ],
+            [
+                "bounceIn",
+                "bounceOut",
+                "bounceBoth"
+            ]
+        ];
+
+        var steps = 20, steps2 = 300, width = 600, height = 600,
+
+                gap = [0, 0, 100, 250, 0];
+
+        var easingFns = S.Anim.Easing;
+
+        for (var i = 0; i < easings.length; i++) {
+            var single = easings[i];
+            var container = $("<div class='container'></div>").appendTo("#wrap");
+            var h2 = $("<h2></h2>").appendTo(container);
+            var div = $("<div class='svgContainer'></div>").appendTo(container).css({
+                width:width,
+                height:height + gap[i] * 2
+            });
+
+            drawEasing(div[0], width, height, single, gap[i]);
+
+        }
+
+        function drawEasing(container, w, h, easings, gap) {
+            var paper = Raphael(container, w, h + gap * 2);
+
+            var x = .5, y = gap + .5;
+
+            var stepX = w / steps, stepY = h / steps, pathGrid = "";
+
+            for (var i = 0; i < steps + 1; i++) {
+                pathGrid += ("M" + x + "," + (y + i * stepY) + "l" +
+                        w + "," + 0);
+                pathGrid += ("M" + (x + i * stepX) + "," + y + "l" +
+                        0 + "," + h);
+            }
+
+            paper.path(pathGrid).attr({
+                stroke:'#555'
+            });
+
+            var stepX2 = w / steps2;
+            var hue = (Math.random() * 360);
+
+            function nextColour() {
+                var colour = 'hsl(' + [hue, 50, 50] + ')';
+                hue = (hue + 43) % 360;
+                return colour;
+            }
+
+            var easingHtml = [];
+
+            for (var j = 0; j < easings.length; j++) {
+                var color = nextColour(),
+                        path = "";
+                easingHtml.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
+                    color:Raphael.getRGB(color).hex,
+                    easing:easings[j]
+                }));
+                for (i = 0; i < steps2; i++) {
+                    var sx = (stepX2 * i);
+                    var sy = (y + easingFns[easings[j]](i / steps2) * h);
+                    // if (sy > 1e10) {
+                    // backBoth bug
+                    // }
+                    path += "M" + sx + "," + (-(sy - gap) + gap + h) + "l" + "1,0" + "l" + "0,1" +
+                            "l" + "-1,0" + "l" + "0,-1z";
+                }
+                paper.path(path).attr({
+                    stroke:color
+                });
+            }
+
+            $(container).prev("h2").html(easingHtml.join(" / "));
+        }
+    })(KISSY);
+</script>
+
+</body>
+</html>
