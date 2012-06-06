@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 22 14:18
+build time: Jun 6 13:51
 */
 /**
  * Switchable
@@ -1152,7 +1152,12 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
                     Event.on(btn, 'mousedown', function(ev) {
                         ev.preventDefault();
-                        if (!DOM.hasClass(btn, disableCls)) {
+                        var activeIndex = self.activeIndex;
+
+                        if (d == "prev" && (activeIndex != 0 || cfg.circular)) {
+                            self[d](DOM_EVENT);
+                        }
+                        if (d == "next" && (activeIndex != self.length - 1 || cfg.circular)) {
                             self[d](DOM_EVENT);
                         }
                     });
