@@ -2,7 +2,7 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
+KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) {
     var Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
@@ -141,10 +141,10 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
-            "class='ks-editor-table-ok ks-editor-button' " +
+            "class='ks-editor-table-ok ks-editor-button ks-inline-block' " +
             "style='margin-right:20px;'>确定</a> " +
             "<a " +
-            "class='ks-editor-table-cancel ks-editor-button'>取消</a>" +
+            "class='ks-editor-table-cancel ks-editor-button ks-inline-block'>取消</a>" +
             "</div>",
         addRes = Editor.Utils.addRes,
         destroyRes = Editor.Utils.destroyRes;
@@ -177,16 +177,46 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             d.theight = dbody.one(".ks-editor-table-height");
             d.tborder = dbody.one(".ks-editor-table-border");
             d.tcaption = dbody.one(".ks-editor-table-caption");
-            d.talign = Select.decorate(dbody.one(".ks-editor-table-align"));
+            d.talign = Select.decorate(dbody.one(".ks-editor-table-align"), {
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:dbody
+                }
+            });
             d.trows = dbody.one(".ks-editor-table-rows");
             d.tcols = dbody.one(".ks-editor-table-cols");
-            d.thead = Select.decorate(dbody.one(".ks-editor-table-head"));
+            d.thead = Select.decorate(dbody.one(".ks-editor-table-head"), {
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:dbody
+                }
+            });
             d.cellpaddingHolder = dbody.one(".ks-editor-table-cellpadding-holder");
             d.cellpadding = dbody.one(".ks-editor-table-cellpadding");
             d.tcollapse = dbody.one(".ks-editor-table-collapse");
             var tok = foot.one(".ks-editor-table-ok"),
                 tclose = foot.one(".ks-editor-table-cancel");
-            d.twidthunit = Select.decorate(dbody.one(".ks-editor-table-width-unit"));
+            d.twidthunit = Select.decorate(dbody.one(".ks-editor-table-width-unit"), {
+                prefixCls:'ks-editor-big-',
+                elAttrs:{
+                    hideFocus:"hideFocus"
+                },
+                width:80,
+                menuCfg:{
+                    prefixCls:'ks-editor-',
+                    render:dbody
+                }
+            });
             self.dialog = d;
             tok.on("click", self._tableOk, self);
 
@@ -202,7 +232,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                 tableDialog = self.dialog,
                 inputs = tableDialog.get("el").all("input");
 
-            if (tableDialog.twidthunit.val() == "%") {
+            if (tableDialog.twidthunit.get("value") == "%") {
                 var tw = parseInt(tableDialog.twidth.val());
                 if (
                     !tw || (
@@ -230,7 +260,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                 d = self.dialog,
                 selectedTable = self.selectedTable,
                 caption = selectedTable.one("caption"),
-                talignVal = d.talign.val(),
+                talignVal = d.talign.get("value"),
                 tborderVal = d.tborder.val();
 
             if (valid(talignVal))
@@ -251,7 +281,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
 
             if (valid(d.twidth.val()))
                 selectedTable.css("width",
-                    trim(d.twidth.val()) + d.twidthunit.val());
+                    trim(d.twidth.val()) + d.twidthunit.get("value"));
             else
                 selectedTable.css("width", "");
             if (valid(d.theight.val()))
@@ -294,12 +324,12 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                 i,
                 cols = parseInt(d.tcols.val()) || 1,
                 rows = parseInt(d.trows.val()) || 1,
-                //firefox 需要 br 才能得以放置焦点
+            //firefox 需要 br 才能得以放置焦点
                 cellpad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
                 editor = self.editor;
 
-            if (valid(d.talign.val()))
-                html += "align='" + trim(d.talign.val()) + "' ";
+            if (valid(d.talign.get("value")))
+                html += "align='" + trim(d.talign.get("value")) + "' ";
 
             if (valid(d.tborder.val()))
                 html += "border='" + trim(d.tborder.val()) + "' ";
@@ -309,7 +339,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
 
             if (valid(d.twidth.val())) {
                 styles.push("width:" + trim(d.twidth.val())
-                    + d.twidthunit.val() + ";");
+                    + d.twidthunit.get("value") + ";");
             }
 
             if (valid(d.theight.val())) {
@@ -339,7 +369,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                 html += "<caption><span>" + Editor.Utils.htmlEncode(trim(d.tcaption.val()))
                     + "</span></caption>";
             }
-            if (d.thead.val()) {
+            if (d.thead.get("value")) {
                 html += "<thead>";
                 html += "<tr>";
                 for (i = 0; i < cols; i++)
@@ -374,7 +404,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
                         || "0");
             }
 
-            d.talign.val(selectedTable.attr("align") ||
+            d.talign.set("value", selectedTable.attr("align") ||
                 "");
 
 
@@ -388,9 +418,9 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             //忽略pt单位
             d.twidth.val(w.replace(/px|%|(.*pt)/i, ""));
             if (w.indexOf("%") != -1) {
-                d.twidthunit.val("%");
+                d.twidthunit.set("value", "%");
             } else {
-                d.twidthunit.val("px");
+                d.twidthunit.set("value", "px");
             }
 
             d.theight.val((selectedTable.style("height") || "")
@@ -402,12 +432,12 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             d.tcaption.val(c);
             var head = selectedTable.first("thead"),
                 rowLenth = (selectedTable.one("tbody") ?
-                selectedTable.one("tbody").children().length : 0)
-                + (head ? head.children("tr").length : 0);
+                    selectedTable.one("tbody").children().length : 0)
+                    + (head ? head.children("tr").length : 0);
             d.trows.val(rowLenth);
             d.tcols.val(selectedTable.one("tr") ?
                 selectedTable.one("tr").children().length : 0);
-            d.thead.val(head ? '1' : '');
+            d.thead.set("value", head ? '1' : '');
         },
         _realTableShow:function () {
             var self = this,
@@ -422,7 +452,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
             } else {
                 d.get("el").all(".ks-editor-table-create-only")
                     .removeAttr("disabled");
-                d.thead.enable();
+                d.thead.set('disabled', false);
             }
             if (self.selectedTd) {
                 d.cellpaddingHolder.show();
@@ -447,5 +477,5 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E,Select) {
 
     return TableDialog;
 }, {
-    requires:['editor', '../overlay/','../select/']
+    requires:['editor', '../overlay/', '../select/']
 });

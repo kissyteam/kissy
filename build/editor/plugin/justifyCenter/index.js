@@ -1,19 +1,21 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
-        this.get("editor").execCommand("justifyCenter");
+        var editor=this.get("editor");
+        editor.execCommand("justifyCenter");
+        editor.focus();
     }
 
     return {
         init:function (editor) {
             justifyCenterCmd.init(editor);
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-justifyCenter",
-                title:"居中对齐",
+            editor.addButton("justifyCenter", {
+                tooltip:"居中对齐",
+                checkable:true,
                 mode:Editor.WYSIWYG_MODE
             }, {
                 onClick:exec,
@@ -21,9 +23,9 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 selectionChange:function (e) {
                     var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
                     if (editor.execCommand(queryCmd, e.path)) {
-                        this.bon();
+                        this.set("checked", true);
                     } else {
-                        this.boff();
+                        this.set("checked", false);
                     }
                 }
             });

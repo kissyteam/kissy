@@ -2,17 +2,17 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
-            editor.addButton({
+
+            editor.addButton("undo",{
                 mode:Editor.WYSIWYG_MODE,
-                title:"撤销",
-                editor:editor,
-                contentCls:"ks-editor-toolbar-undo"
+                tooltip:"撤销",
+                editor:editor
             }, undefined, Btn.UndoBtn);
-            editor.addButton({
+
+            editor.addButton("redo",{
                 mode:Editor.WYSIWYG_MODE,
-                title:"重做",
-                editor:editor,
-                contentCls:"ks-editor-toolbar-redo"
+                tooltip:"重做",
+                editor:editor
             }, undefined, Btn.RedoBtn);
         }
     };

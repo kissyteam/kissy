@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:34
+build time: Jun 6 14:57
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -264,11 +264,11 @@ KISSY.add("button/split", function (S) {
  */
 KISSY.add('button/toggle', function (S, Button, ToggleRender) {
 
-    return Button.extend({
+    var ToggleButton = Button.extend({
         performActionInternal:function () {
             var self = this;
             self.set("checked", !self.get("checked"));
-            self.constructor.superclass.performActionInternal.apply(self, arguments);
+            ToggleButton.superclass.performActionInternal.apply(self, arguments);
         }
     }, {
         ATTRS:{
@@ -284,6 +284,8 @@ KISSY.add('button/toggle', function (S, Button, ToggleRender) {
         xclass:'toggle-button',
         priority:30
     });
+
+    return ToggleButton;
 
 }, {
     requires:['./base', './toggleRender']

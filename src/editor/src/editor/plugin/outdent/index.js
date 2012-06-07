@@ -11,20 +11,20 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
             var queryOutdent = Editor.Utils.getQueryCmd("outdent");
 
-            editor.addButton({
-                title:"减少缩进量 ",
-                mode:Editor.WYSIWYG_MODE,
-                contentCls:"ks-editor-toolbar-outdent"
+            editor.addButton("outdent",{
+                tooltip:"减少缩进量 ",
+                mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {
                     editor.execCommand("outdent");
+                    editor.focus();
                 },
                 selectionChange:function (e) {
                     var self = this;
                     if (editor.execCommand(queryOutdent, e.path)) {
-                        self.enable();
+                        self.set("disabled",false);
                     } else {
-                        self.disable();
+                        self.set("disabled",true);
                     }
                 }
             });

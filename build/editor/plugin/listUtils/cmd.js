@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.
@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
             // 3. Recreate the whole list by converting the array to a list.
             // 4. Replace the original list with the recreated list.
             var listArray = ListUtils.listToArray(groupObj.root, database,
-                undefined, undefined, undefined),
+                    undefined, undefined, undefined),
                 selectedListItems = [];
 
             for (var i = 0; i < groupObj.contents.length; i++) {
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                 if (child.nodeName() == this.type)
                     listsCreated.push(child);
             }
-            newList.listNode.insertBefore(groupObj.root);
+            groupObj.root.before(newList.listNode);
             groupObj.root.remove();
         },
 
@@ -106,7 +106,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
 
             // Insert the list to the DOM tree.
             var insertAnchor = new Node(
-                listContents[ listContents.length - 1 ][0].nextSibling),
+                    listContents[ listContents.length - 1 ][0].nextSibling),
                 listNode = new Node(doc.createElement(this.type));
 
             listsCreated.push(listNode);
@@ -139,7 +139,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
             // This is very much like the change list type operation.
             // Except that we're changing the selected items' indent to -1 in the list array.
             var listArray = ListUtils.listToArray(groupObj.root, database,
-                undefined, undefined, undefined),
+                    undefined, undefined, undefined),
                 selectedListItems = [];
 
             for (var i = 0; i < groupObj.contents.length; i++) {
@@ -188,7 +188,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
-                    (Walker.whitespaces(true),1) )
+                    (Walker.whitespaces(true), 1) )
                     && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
                     siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
@@ -331,7 +331,7 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
                 // listNode._4e_mergeSiblings();
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
-                        'prev' : 'next' ](Walker.whitespaces(true),1);
+                        'prev' : 'next' ](Walker.whitespaces(true), 1);
                     if (sibling && sibling[0] &&
                         sibling.nodeName() == self.type) {
                         sibling.remove();
@@ -382,46 +382,6 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
         ListCommand:ListCommand,
         queryActive:queryActive
     };
-
-    return {
-        init:function (editor) {
-            if (!editor.hasCommand(insertUnorderedList)) {
-                editor.addCommand(insertUnorderedList, {
-                    exec:function (editor) {
-                        ulCmd.exec(editor);
-                    }
-                });
-            }
-
-            if (!editor.hasCommand(insertOrderedList)) {
-                editor.addCommand(insertOrderedList, {
-                    exec:function (editor) {
-                        olCmd.exec(editor);
-                    }
-                });
-            }
-
-            var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
-
-            if (!editor.hasCommand(queryUl)) {
-                editor.addCommand(queryUl, {
-                    exec:function (editor, elementPath) {
-                        return queryActive("ul", elementPath);
-                    }
-                });
-            }
-
-            var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
-
-            if (!editor.hasCommand(queryOl)) {
-                editor.addCommand(queryOl, {
-                    exec:function (editor, elementPath) {
-                        return queryActive("ol", elementPath);
-                    }
-                });
-            }
-        }
-    }
 
 }, {
     requires:['editor', '../listUtils/']

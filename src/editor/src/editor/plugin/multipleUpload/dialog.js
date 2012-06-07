@@ -88,7 +88,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                         "</div>").appendTo(bangpaiUploaderHolder, undefined),
                 listWrap = new Node("<div style='display:none'>")
                     .appendTo(bangpaiUploaderHolder, undefined),
-                btn = new Node("<a class='ks-editor-button'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
+                btn = new Node("<a class='ks-editor-button ks-inline-block'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
                     .appendTo(btnHolder, undefined),
 
                 listTableWrap = new Node("<div>" +
@@ -127,8 +127,8 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                     "cursor:pointer;" +
                     "margin-left:40px;" +
                     "'>清空列表</a>" +
-                    "<a class='ks-editor-button ks-editor-bangpaiupload-ok'>确定上传</a>" +
-                    "<a class='ks-editor-button ks-editor-bangpaiupload-insertall'" +
+                    "<a class='ks-editor-button ks-editor-bangpaiupload-ok ks-inline-block'>确定上传</a>" +
+                    "<a class='ks-editor-button ks-editor-bangpaiupload-insertall ks-inline-block'" +
                     " style='margin-left:20px;'>全部插入</a>" +
                     "</p>")
                     .appendTo(listWrap, undefined),

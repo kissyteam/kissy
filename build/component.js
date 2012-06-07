@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:43
+build time: Jun 7 00:49
 */
 /**
  * Setup component namespace.
@@ -172,7 +172,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             c = self.constructor,
             attrs,
             cfg = {},
-            Render=self.get('xrender');
+            Render = self.get('xrender');
 
         if (Render) {
             /**
@@ -565,6 +565,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleFocus:function (ev) {
                 this.set("focused", !!ev);
+                this.fire("focus");
             },
 
             /**
@@ -574,6 +575,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleBlur:function (ev) {
                 this.set("focused", !ev);
+                this.fire("blur");
             },
 
             /**
@@ -1768,7 +1770,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                     // 自动绑定事件到对应函数
                     (function (attr, m) {
                         self.on('after' + ucfirst(attr) + 'Change', function (ev) {
-                            self[m](ev.newVal, ev);
+                            // fix! 防止冒泡过来的
+                            if (ev.target === self) {
+                                self[m](ev.newVal, ev);
+                            }
                         });
                     })(attr, m);
                 }
@@ -1961,15 +1966,14 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 S.extend(C, base, px, sx);
 
                 if (extensions) {
-
                     C.__ks_exts = extensions;
 
                     var desc = {
                         // ATTRS:
-                        // HMTL_PARSER:
+                        // HTML_PARSER:
                     }, constructors = extensions['concat'](C);
 
-                    // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+                    // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                     // 主类最优先
                     S.each(constructors, function (ext) {
                         if (ext) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * preview for kissy editor
@@ -11,9 +11,9 @@ KISSY.add("editor/plugin/preview/index", function () {
     var win = window;
     return {
         init:function (editor) {
-            editor.addButton({
-                title:"预览",
-                contentCls:"ks-editor-toolbar-preview"}, {
+            editor.addButton("preview",{
+                tooltip:"预览"
+            }, {
                 offClick:function () {
                     var self = this,
                         editor = self.get("editor");

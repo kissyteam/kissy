@@ -63,9 +63,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 });
 
             if (pluginConfig.btn !== false) {
-                editor.addButton({
-                    contentCls:"ks-editor-toolbar-flash",
-                    title:"插入Flash",
+                editor.addButton("flash",{
+                    tooltip:"插入Flash",
                     mode:Editor.WYSIWYG_MODE
                 }, {
                     offClick:function () {

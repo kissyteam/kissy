@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 KISSY.add("editor/core/meta", function () {
 
@@ -17,8 +17,8 @@ KISSY.add("editor/core/meta", function () {
             "heading":['./cmd'],
             "image":['../button/', '../bubbleview/', '../contextmenu/', '../dialogLoader/'],
             "indent":['./cmd'],
-            "insertOrderedList":['../listUtils/btn', './cmd'],
-            "insertUnorderedList":['../listUtils/btn', './cmd'],
+            "orderedList":['../listUtils/btn', './cmd'],
+            "unorderedList":['../listUtils/btn', './cmd'],
             "italic":['../font/ui', './cmd'],
             "justifyCenter":['./cmd'],
             "justifyLeft":['./cmd'],
@@ -56,8 +56,8 @@ KISSY.add("editor/core/meta", function () {
             "foreColor/cmd":['../color/cmd'],
             "image/dialog":['../overlay/', 'switchable', '../select/'],
             "indent/cmd":['../dentUtils/cmd'],
-            "insertOrderedList/cmd":['../listUtils/cmd'],
-            "insertUnorderedList/cmd":['../listUtils/cmd'],
+            "orderedList/cmd":['../listUtils/cmd'],
+            "unorderedList/cmd":['../listUtils/cmd'],
             "italic/cmd":['../font/cmd'],
             "justifyCenter/cmd":['../justifyUtils/cmd'],
             "justifyLeft/cmd":['../justifyUtils/cmd'],

@@ -1,4 +1,9 @@
-KISSY.add("editor/plugin/insertOrderedList/cmd", function (S, Editor, listCmd) {
+﻿/*
+Copyright 2012, KISSY UI Library v1.30dev
+MIT Licensed
+build time: Jun 7 00:48
+*/
+KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
 
     var insertOrderedList = "insertOrderedList",
         ListCommand = listCmd.ListCommand,

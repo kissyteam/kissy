@@ -7,7 +7,11 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
     var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
             'ks-menu-button-caption">{content}<' + '/div>' +
             '<div class="ks-inline-block ' +
-            'ks-menu-button-dropdown"><' + '/div>',
+            'ks-menu-button-dropdown">' +
+            '<div class=' +
+            '"ks-menu-button-dropdown-inner">' +
+            '<' + '/div>' +
+            '<' + '/div>',
         CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 

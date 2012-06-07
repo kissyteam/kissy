@@ -1,20 +1,19 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, TripleButton) {
-    function ListButton() {
-        ListButton.superclass.constructor.apply(this, arguments);
-    }
+KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
+
 
     function onClick() {
         var editor = this.get("editor");
         var cmd = this.get("cmdType");
         editor.execCommand(cmd);
+        editor.focus();
     }
 
-    S.extend(ListButton, TripleButton, {
+    var ListButton = Button.Toggle.extend({
         offClick:onClick,
         onClick:onClick,
         selectionChange:function (e) {
@@ -22,9 +21,15 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, TripleButton) {
                 editor = self.get("editor"),
                 cmd = Editor.Utils.getQueryCmd(self.get("cmdType"));
             if (editor.execCommand(cmd, e.path)) {
-                self.bon();
+                this.set("checked", true);
             } else {
-                self.boff();
+                this.set("checked", false);
+            }
+        }
+    }, {
+        ATTRS:{
+            mode:{
+                value:Editor.WYSIWYG_MODE
             }
         }
     });

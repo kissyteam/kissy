@@ -28,9 +28,8 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-image",
-                title:"插入图片",
+            editor.addButton("image",{
+                tooltip:"插入图片",
                 mode:Editor.WYSIWYG_MODE
             }, {
                 offClick:function () {

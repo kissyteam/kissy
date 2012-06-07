@@ -1,26 +1,23 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font/ui", function (S, Editor, TripleButton, Select) {
+KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, Select) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;
 
-    function FontSelect() {
-        FontSelect.superclass.constructor.apply(this, arguments);
-    }
+    var FontSelect = Select.extend({
 
-    S.extend(FontSelect, Select, {
         click:function (ev) {
             var self = this,
-                v = ev.newVal,
+                v = ev.target.get("value"),
                 cmdType = self.get("cmdType"),
-                pre = ev.prevVal,
+                pre = ev.prevTarget && ev.prevTarget.get("value"),
                 editor = self.get("editor");
             editor.focus();
             if (v == pre) {
@@ -36,39 +33,33 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, TripleButton, Select) {
             var self = this,
                 elementPath = ev.path,
                 cmdType = getQueryCmd(self.get("cmdType")),
-                items = self.get("items"),
+                menu = self.get("menu"),
+                children = menu.get && menu.get("children"),
                 editor = self.get("editor"),
                 elements = elementPath.elements;
 
-            // For each element into the elements path.
-            for (var i = 0, element; i < elements.length; i++) {
-                element = elements[i];
-                // Check if the element is removable by any of
-                // the styles.
-                for (var j = 0; j < items.length; j++) {
-                    var item = items[j];
-                    var value = item.value;
-                    if (editor.execCommand(cmdType, value, element)) {
-                        self.set("value", value);
-                        return;
+            if (children) {
+                // For each element into the elements path.
+                for (var i = 0, element; i < elements.length; i++) {
+                    element = elements[i];
+                    // Check if the element is removable by any of
+                    // the styles.
+                    for (var j = 0; j < children.length; j++) {
+                        var item = children[j];
+                        var value = item.get("value");
+                        if (editor.execCommand(cmdType, value, element)) {
+                            self.set("value", value);
+                            return;
+                        }
                     }
                 }
-            }
-
-            var defaultValue = self.get("defaultValue");
-            if (defaultValue) {
-                self.set("value", defaultValue);
-            } else {
-                self.reset("value");
+                self.set("value", null);
             }
         }
     });
 
-    function FontButton() {
-        FontButton.superclass.constructor.apply(this, arguments);
-    }
 
-    S.extend(FontButton, TripleButton, {
+    var FontButton = Button.Toggle.extend({
         offClick:function () {
             var self = this,
                 cmdType = self.get("cmdType"),
@@ -89,9 +80,9 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, TripleButton, Select) {
                 cmdType = getQueryCmd(self.get("cmdType")),
                 elementPath = ev.path;
             if (editor.execCommand(cmdType, elementPath)) {
-                self.set("state", TripleButton.ON);
+                self.set("checked", true);
             } else {
-                self.set("state", TripleButton.OFF);
+                self.set("checked", false);
             }
         }
     }, {
@@ -101,6 +92,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, TripleButton, Select) {
             }
         }
     });
+
     return {
         Button:FontButton,
         Select:FontSelect

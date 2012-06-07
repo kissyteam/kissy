@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
-KISSY.add("editor/plugin/listUtils/btn",function(d,e,f){function a(){a.superclass.constructor.apply(this,arguments)}function b(){var a=this.get("editor"),c=this.get("cmdType");a.execCommand(c)}d.extend(a,f,{offClick:b,onClick:b,selectionChange:function(a){var c=this.get("editor"),b=e.Utils.getQueryCmd(this.get("cmdType"));c.execCommand(b,a.path)?this.bon():this.boff()}});return a},{requires:["editor","../button/"]});
+KISSY.add("editor/plugin/listUtils/btn",function(f,d,e){function a(){var b=this.get("editor"),c=this.get("cmdType");b.execCommand(c);b.focus()}return e.Toggle.extend({offClick:a,onClick:a,selectionChange:function(b){var c=this.get("editor"),a=d.Utils.getQueryCmd(this.get("cmdType"));c.execCommand(a,b.path)?this.set("checked",!0):this.set("checked",!1)}},{ATTRS:{mode:{value:d.WYSIWYG_MODE}}})},{requires:["editor","../button/"]});

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:38
+build time: Jun 6 10:53
 */
 /**
  * @fileOverview accordion aria support
@@ -2512,7 +2512,7 @@ KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
                 container = self.container,
                 effect = config.effect;
 
-            if (config.steps == 1 && panels.length) {
+            if (config.steps == 1 && panels.length && config.circular) {
                 var realStep = 1,
                     offsetXX,
                     prop,

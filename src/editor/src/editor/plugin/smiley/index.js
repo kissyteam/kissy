@@ -8,30 +8,26 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
     smiley_markup += "</div>";
 
-
     return {
         init:function (editor) {
-            editor.addButton({
-                contentCls:"ks-editor-toolbar-smiley",
-                title:"插入表情",
-                keepFocus:false,
+            editor.addButton("smiley", {
+                tooltip:"插入表情",
+                checkable:true,
                 mode:Editor.WYSIWYG_MODE
             }, {
                 init:function () {
                     var self = this;
-                    self.get("el").on("blur", function () {
-                        if (self.smiley) {
-                            // make click event fire
-                            setTimeout(function () {
-                                self.smiley.hide();
-                            }, 100);
-                        }
+                    self.on("blur", function () {
+                        // make click event fire
+                        setTimeout(function () {
+                            self.onClick();
+                        }, 150);
                     });
                 },
                 offClick:function () {
-                    var self = this;
-                    if (!self.smiley) {
-                        self.smiley = new Overlay4E({
+                    var self = this, smiley;
+                    if (!(smiley = self.smiley)) {
+                        smiley = self.smiley = new Overlay4E({
                             content:smiley_markup,
                             focus4e:false,
                             width:"297px",
@@ -40,7 +36,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                             zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                             mask:false
                         });
-                        self.smiley.get("el").on("click", function (ev) {
+                        smiley.get("el").on("click", function (ev) {
                             var t = new S.Node(ev.target),
                                 icon;
                             if (t.nodeName() == "a" &&
@@ -52,15 +48,18 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                 editor.insertElement(img);
                             }
                         });
+                        smiley.on("hide", function () {
+                            self.set("checked", false);
+                        });
                     }
-                    self.smiley.set("align", {
+                    smiley.set("align", {
                         node:this.get("el"),
                         points:["bl", "tl"]
                     });
-                    self.smiley.show();
+                    smiley.show();
                 },
                 onClick:function () {
-                    this.smiley.hide();
+                    this.smiley && this.smiley.hide();
                 },
                 destructor:function () {
                     if (this.smiley) {

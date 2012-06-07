@@ -6,9 +6,9 @@ KISSY.add("editor/plugin/preview/index", function () {
     var win = window;
     return {
         init:function (editor) {
-            editor.addButton({
-                title:"预览",
-                contentCls:"ks-editor-toolbar-preview"}, {
+            editor.addButton("preview",{
+                tooltip:"预览"
+            }, {
                 offClick:function () {
                     var self = this,
                         editor = self.get("editor");

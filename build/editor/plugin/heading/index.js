@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:37
+build time: Jun 7 00:48
 */
 /**
  * Heading plugin for KISSY.
@@ -36,25 +36,28 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
             for (var p in FORMATS) {
                 if (FORMATS.hasOwnProperty(p)) {
                     FORMAT_SELECTION_ITEMS.push({
-                        name:p,
+                        content:p,
                         value:FORMATS[p],
-                        attrs:{
+                        elAttrs:{
                             style:"font-size:" + FORMAT_SIZES[FORMATS[p]]
                         }
                     });
                 }
             }
 
-            editor.addSelect({
-                items:FORMAT_SELECTION_ITEMS,
-                title:"标题",
-                width:"100px",
+            editor.addSelect("heading", {
+                defaultCaption:"标题",
+                width:"120px",
+                menu:{
+                    width:"120px",
+                    children:FORMAT_SELECTION_ITEMS
+                },
                 mode:Editor.WYSIWYG_MODE
             }, {
                 click:function (ev) {
                     var self = this,
-                        v = ev.newVal,
-                        pre = ev.prevVal;
+                        v = ev.target.get("value"),
+                        pre = ev.prevTarget && ev.prevTarget.get("value");
                     if (v != pre) {
                         editor.execCommand("heading", v);
                     } else {

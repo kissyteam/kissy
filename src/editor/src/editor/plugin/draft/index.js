@@ -102,7 +102,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             var save = new Node(
                     "<a href='#' " +
                         "onclick='return false;' " +
-                        "class='ks-editor-button ks-editor-draft-save-btn' " +
+                        "class='ks-editor-button ks-editor-draft-save-btn ks-inline-block' " +
                         "style='" +
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
@@ -121,7 +121,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                     popUpWidth:"225px",
                     align:["r", "t"],
                     emptyText:"&nbsp;&nbsp;&nbsp;尚无编辑器历史存在",
-                    title:"恢复编辑历史"
+                    tooltip:"恢复编辑历史"
                 });
             self.versions = versions;
             //点击才开始 parse

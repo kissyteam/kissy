@@ -246,7 +246,31 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                     }
                 });
 
-                self.__commands = 0;
+                S.each(self.__controls, function (control) {
+                    if (control.destroy) {
+                        control.destroy();
+                    }
+                });
+
+                self.__dialogs = {};
+                self.__commands = {};
+                self.__controls = {};
+            },
+
+            /**
+             * Retrieve control by id
+             */
+            getControl:function (id) {
+                return this.__controls[id];
+            },
+
+
+            /**
+             * Register a control to editor by id.
+             * @private
+             */
+            addControl:function (id, control) {
+                this.__controls[id] = control;
             },
 
             /**

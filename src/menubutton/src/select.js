@@ -6,7 +6,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
     function getMenuChildren(self) {
         // 需要初始化 menu
-        var m = self.getMenu(1);
+        var m = self.getMenu(1).render();
         return m && m.get("children") || [];
     }
 
@@ -60,10 +60,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * @param {Event.Object} e
              */
             handleMenuClick:function (e) {
-                var self = this;
-                self.set("selectedItem", e.target);
+                var self = this,
+                    target = e.target,
+                    prevTarget = self.get("selectedItem");
+                self.set("selectedItem", target);
                 self.set("collapsed", true);
-                Select.superclass.handleMenuClick.call(self, e);
+                self.fire("click", {
+                    target:target,
+                    prevTarget:prevTarget
+                });
             },
 
             /**
@@ -113,13 +118,16 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                         return selectedItem && selectedItem.get("value");
                     },
                     setter:function (v) {
-                        var self = this,
-                            children = getMenuChildren(self);
-                        for (var i = 0; i < children.length; i++) {
-                            var item = children[i];
-                            if (item.get("value") == v) {
-                                self.set("selectedItem", item);
-                                return;
+                        var self = this;
+                        if (v != null) {
+                            var children = getMenuChildren(self);
+                            for (var i = 0; i < children.length; i++) {
+                                var item = children[i];
+                                // item maybe a {xclass}
+                                if (item.get && item.get("value") == v) {
+                                    self.set("selectedItem", item);
+                                    return;
+                                }
                             }
                         }
                         self.set("selectedItem", null);
@@ -177,6 +185,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 cfg.elBefore = element;
 
                 var name,
+                    width = cfg.width || element.outerWidth(),
                     allItems = [],
                     selectedItem = null,
                     curValue = element.val(),
@@ -185,9 +194,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 options.each(function (option) {
                     var item = {
                         content:option.text(),
-                        prefixCls:cfg.prefixCls,
                         elCls:option.attr("class"),
-                        value:option.val()
+                        value:option.val(),
+                        xclass:'option'
                     };
                     if (curValue == option.val()) {
                         selectedItem = {
@@ -199,16 +208,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 });
 
                 S.mix(cfg, {
-                    menu:function () {
-                        var m = new Menu.PopupMenu(S.mix({
-                            prefixCls:this.get("prefixCls")
-                        }, this.get("menuCfg")));
-                        for (var i = 0; i < allItems.length; i++) {
-                            m.addChild(new Option(allItems[i]));
-                        }
-                        return m;
-                    }
+                    width:width,
+                    menu:S.mix({
+                        width:width,
+                        xclass:'popupmenu',
+                        children:allItems
+                    }, cfg.menuCfg)
                 });
+
+                delete cfg.menuCfg;
 
                 var select = new Select(S.mix(cfg, selectedItem));
 

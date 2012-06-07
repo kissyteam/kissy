@@ -1,56 +1,76 @@
 KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
-    function Common() {
-        var self = this,
-            editor = self.get("editor");
+    function Common(self) {
+        var editor = self.get("editor");
         /**
          * save,restore完，更新工具栏状态
          */
         editor.on("afterSave afterRestore", self._respond, self);
-        self.disable();
     }
 
 
-    function UndoBtn() {
-        UndoBtn.superclass.constructor.apply(this, arguments);
-        Common.call(this);
-    }
+    var UndoBtn = Button.extend({
 
-    S.extend(UndoBtn, Button, {
+        bindUI:function () {
+            Common(this);
+        },
+
         offClick:function () {
             this.get("editor").execCommand("undo");
         },
+
         _respond:function (ev) {
             var self = this,
                 index = ev.index;
 
             //有状态可退
             if (index > 0) {
-                self.boff();
+                self.set("disabled", false);
             } else {
-                self.disable();
+                self.set("disabled", true);
+            }
+        }
+    }, {
+        ATTRS:{
+            mode:{
+                value:Editor.WYSIWYG_MODE
+            },
+            disabled:{
+                // 默认 disabled
+                value:true
             }
         }
     });
 
 
-    function RedoBtn() {
-        RedoBtn.superclass.constructor.apply(this, arguments);
-        Common.call(this);
-    }
+    var RedoBtn = Button.extend({
 
-    S.extend(RedoBtn, Button, {
+        bindUI:function () {
+            Common(this);
+        },
+
         offClick:function () {
             this.get("editor").execCommand("redo");
         },
+
         _respond:function (ev) {
             var self = this,
                 history = ev.history,
                 index = ev.index;
             //有状态可前进
             if (index < history.length - 1) {
-                self.boff();
+                self.set("disabled", false);
             } else {
-                self.disable();
+                self.set("disabled", true);
+            }
+        }
+    }, {
+        mode:{
+            value:Editor.WYSIWYG_MODE
+        },
+        ATTRS:{
+            disabled:{
+                // 默认 disabled
+                value:true
             }
         }
     });
