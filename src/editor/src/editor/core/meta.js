@@ -22,7 +22,7 @@ KISSY.add("editor/core/meta", function () {
             "maximize":['./cmd'],
             "multipleUpload":['../dialogLoader/'],
             "outdent":['./cmd'],
-            "overlay":['./focus', 'dd'],
+            "overlay":['dd'],
             "pageBreak":["../fakeObjects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],

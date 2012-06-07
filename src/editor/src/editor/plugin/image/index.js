@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
-            editor.addButton("image",{
+            editor.addButton("image", {
                 tooltip:"插入图片",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -37,33 +37,60 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                 }
             });
 
-            var handlers = {
-                "图片属性":function () {
-                    var img = checkImg(this.selectedEl);
-                    if (img) {
-                        showImageEditor($(img));
+            var handlers = [
+                {
+                    content:"图片属性",
+                    fn:function () {
+                        var img = checkImg(this.get("editorSelectedEl"));
+                        if (img) {
+                            // make editor restore focus
+                            this.hide();
+                            showImageEditor($(img));
+                        }
                     }
                 },
-                "插入新行":function () {
-                    var doc = editor.get("document")[0],
-                        p = new Node(doc.createElement("p"));
-                    if (!UA['ie']) {
-                        p._4e_appendBogus(undefined);
+                {
+                    content:"插入新行",
+                    fn:function () {
+                        this.hide();
+                        var doc = editor.get("document")[0],
+                            p = new Node(doc.createElement("p"));
+                        if (!UA['ie']) {
+                            p._4e_appendBogus(undefined);
+                        }
+                        var r = new Editor.Range(doc);
+                        r.setStartAfter(this.get("editorSelectedEl"));
+                        r.select();
+                        editor.insertElement(p);
+                        r.moveToElementEditablePosition(p, 1);
+                        r.select();
                     }
-                    var r = new Editor.Range(doc);
-                    r.setStartAfter(this.selectedEl);
-                    r.select();
-                    editor.insertElement(p);
-                    r.moveToElementEditablePosition(p, 1);
-                    r.select();
                 }
-            };
+            ];
 
-            ContextMenu.register({
-                editor:editor,
-                filter:checkImg,
-                width:"120px",
-                handlers:handlers
+            var children = [];
+
+            S.each(handlers, function (h) {
+                children.push({
+                    content:h.content
+                })
+            });
+
+            editor.addContextMenu("image-contextmenu", checkImg, {
+                width:120,
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function (e) {
+                            var self = this, content = e.target.get('content');
+                            S.each(handlers, function (h) {
+                                if (h.content == content) {
+                                    h.fn.call(self);
+                                }
+                            });
+                        }
+                    }
+                }
             });
 
             editor.docReady(function () {

@@ -1,49 +1,48 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
-    var $ = S.all,
-        MENUITEM_DISABLED_CLS = "ks-editor-menuitem-disable",
-        Event = S.Event;
+KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix) {
 
-    /**
-     * 组合使用 overlay
-     */
-    function ContextMenu() {
-        ContextMenu.superclass.constructor.apply(this, arguments);
-    }
+    Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
-    /**
-     * 多菜单管理
-     */
-    ContextMenu.register = function (cfg) {
-        var cm = new ContextMenu(cfg),
-            editor = cfg.editor;
+        var self = this;
 
-        cm.editor = editor;
+        cfg = cfg || {};
 
-        editor.on("destroy", function () {
-            cm.destroy();
-        });
+        cfg.prefixCls = self.get("prefixCls") + "editor-";
+        cfg.editor = self;
+        cfg.focusable = 1;
+        cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
+        cfg.elAttrs = {
+            hideFocus:'hideFocus'
+        };
 
-        function hideContextMenu() {
-            cm.hide();
+        if (cfg.children) {
+            S.each(cfg.children, function (c) {
+                c.xclass = 'menuitem';
+            });
         }
 
-        editor.on("sourceMode", hideContextMenu);
+        var menu = new Menu.PopupMenu(cfg);
+
+        focusFix.init(menu);
 
         editor.docReady(function () {
-            var doc = editor.get("document")[0];
-            Event.on(doc, "mousedown", hideContextMenu);
-            Event.delegate(doc, "contextmenu", cfg.filter, function (ev) {
-                ContextMenu.hide(editor);
-                var t = $(ev.target);
+            var doc = editor.get("document");
+            // 编辑器获得焦点，不会触发 menu el blur？
+            doc.on("mousedown", function (e) {
+                if (e.button == 1) {
+                    menu.hide();
+                }
+            });
+            doc.delegate("contextmenu", filter, function (ev) {
+                var t = S.all(ev.target);
                 ev.halt();
                 // ie 右键作用中，不会发生焦点转移，光标移动
                 // 只能右键作用完后才能，才会发生光标移动,range变化
@@ -52,123 +51,35 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
                 var x = ev.pageX,
                     y = ev.pageY;
                 if (!x) {
-                    var xy = t._4e_getOffset(undefined);
+                    var xy = t.offset(document);
                     x = xy.left;
                     y = xy.top;
+                } else {
+                    var translate = Editor.Utils.getXY(x, y, doc[0], document);
+                    x = translate.left;
+                    y = translate.top;
                 }
                 setTimeout(function () {
-                    cm.selectedEl = t;
-                    cm.show(Editor.Utils.getXY(x, y, doc, document));
-                    ContextMenu.show(cm);
+                    menu.set("editorSelectedEl", t, {
+                        silent:1
+                    });
+                    menu.set("xy", [x, y]);
+                    menu.show();
+                    Editor.fire("contextmenu", {
+                        contextmenu:menu
+                    });
+                    window.focus();
+                    document.body.focus();
+                    // 防止焦点一直在 el，focus 无效
+                    menu.get("el")[0].focus();
                 }, 30);
             });
         });
 
-        return cm;
+        editor.addControl(id, menu);
+
+        return menu;
     };
-
-    /**
-     * last visible menu of each editor
-     */
-    var visibleContextMenus = {
-        /**
-         * editorStamp:menu
-         */
-    };
-
-    ContextMenu.hide = function (editor) {
-        var last = visibleContextMenus[S.stamp(editor)];
-        if (last) {
-            last.hide();
-        }
-    };
-
-    ContextMenu.show = function (cm) {
-        visibleContextMenus[S.stamp(cm.editor)] = cm;
-    };
-
-    S.extend(ContextMenu, S.Base, {
-        /**
-         * 根据配置构造右键菜单内容
-         */
-        _init:function () {
-            var self = this,
-                handlers = self.get("handlers");
-            self.menu = new Overlay({
-                autoRender:true,
-                width:self.get("width"),
-                elCls:'ks-editor-menu',
-                prefixCls:"ks-editor-"
-            });
-            var el = self.menu.get("contentEl");
-            for (var f in handlers) {
-                var a = $("<a href='#' class='ks-editor-menuitem'>" + f + "</a>");
-                el.append(a);
-                if (handlers.hasOwnProperty(f)) {
-                    (function (a, handler) {
-                        a.unselectable(undefined);
-                        a.on("click", function (ev) {
-                            ev.halt();
-                            if (a.hasClass(MENUITEM_DISABLED_CLS, undefined)) {
-                                return;
-                            }
-                            //先 hide 还原编辑器内焦点
-                            self.hide();
-
-                            //给 ie 一点 hide() 中的事件触发 handler 运行机会，原编辑器获得焦点后再进行下步操作
-                            S.later(handler, 30, false, self);
-                        });
-                    })(a, handlers[f]);
-                }
-            }
-
-        },
-        destroy:function () {
-            var t;
-            if (t = this.menu) {
-                t.destroy();
-            }
-        },
-        hide:function () {
-            var t;
-            if (t = this.menu) {
-                t.hide();
-            }
-        },
-        _realShow:function (offset) {
-            var self = this,
-                menu = self.menu;
-            //防止ie 失去焦点，取不到复制等状态
-            Editor.fire("contextmenu", {
-                contextmenu:self
-            });
-            menu.set("xy", [offset.left, offset.top]);
-            var statusChecker = self.get("statusChecker"),
-                editor = self.editor;
-            if (statusChecker) {
-                var as = menu.get("contentEl").children("a");
-                as.each(function (a) {
-                    var func = statusChecker[S.trim(a.text())];
-                    if (func) {
-                        if (func(editor)) {
-                            a.removeClass(MENUITEM_DISABLED_CLS, undefined);
-                        } else {
-                            a.addClass(MENUITEM_DISABLED_CLS, undefined);
-                        }
-                    }
-                });
-            }
-            menu.show();
-        },
-        show:function (offset) {
-            var self = this;
-            self._init();
-            self.show = self._realShow;
-            self.show(offset);
-        }
-    });
-
-    return ContextMenu;
 }, {
-    requires:['editor', 'overlay']
+    requires:['editor', 'menu', '../focusFix/']
 });

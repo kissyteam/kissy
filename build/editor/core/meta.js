@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 KISSY.add("editor/core/meta", function () {
 
@@ -27,7 +27,7 @@ KISSY.add("editor/core/meta", function () {
             "maximize":['./cmd'],
             "multipleUpload":['../dialogLoader/'],
             "outdent":['./cmd'],
-            "overlay":['./focus', 'dd'],
+            "overlay":['dd'],
             "pageBreak":["../fakeObjects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],

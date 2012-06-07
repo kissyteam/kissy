@@ -448,7 +448,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) 
                 d.get("el")
                     .all(".ks-editor-table-create-only")
                     .attr("disabled", "disabled");
-                d.thead.disable();
+                d.thead.set('disabled', true);
             } else {
                 d.get("el").all(".ks-editor-table-create-only")
                     .removeAttr("disabled");

@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
- * Encapsulate triple state button for kissy editor
+ * Encapsulate KISSY toggle button for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {

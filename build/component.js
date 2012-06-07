@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:49
+build time: Jun 7 15:10
 */
 /**
  * Setup component namespace.
@@ -125,10 +125,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
-            var value = ev.newVal,
-                self = this,
-                view = self.get("view");
-            view && view.set(attrName, value);
+            var self = this;
+            // in case bubbled from sub component
+            if (self == ev.target) {
+                var value = ev.newVal,
+                    view = self.get("view");
+                view && view.set(attrName, value);
+            }
         };
     }
 
@@ -2178,14 +2181,20 @@ KISSY.add('component/uibase/box', function (S) {
          * show component
          */
         show:function () {
-            var self = this;
+            var self = this, view;
             if (!self.get("rendered")) {
                 // 防止初始设置 false，导致触发 hide 事件
                 // show 里面的初始一定是 true，触发 show 事件
                 // 2012-03-28 : 用 set 而不是 __set :
                 // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
                 // - 也要设置 view
-                self.set("visible", true);
+                //self.set("visible", true);
+                // 2012-06-07 ，不能 set
+                // 初始监听 visible ，得不到 el
+                self.__set("visible", true);
+                if (view = self.get("view")) {
+                    view.set("visible", true);
+                }
                 self.render();
             } else {
                 self.set("visible", true);
@@ -2197,7 +2206,7 @@ KISSY.add('component/uibase/box', function (S) {
          * hide component
          */
         hide:function () {
-            var self=this;
+            var self = this;
             self.set("visible", false);
             return self;
         }

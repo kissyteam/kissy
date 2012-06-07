@@ -155,7 +155,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                     " target='_blank'>点此升级</a>";
             }
 
-            btn.addClass("ks-editor-triplebutton-disabled", undefined);
+            btn.addClass("ks-editor-button-disabled", undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
             if (!UA.fpvGEQ(FLASH_VERSION_REQUIRED)) {
@@ -505,7 +505,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         ddisable:function () {
             var self = this;
             self.uploader['lock']();
-            self.btn.addClass("ks-editor-triplebutton-disabled", undefined);
+            self.btn.addClass("ks-editor-button-disabled", undefined);
             self.flashPos.offset({
                 left:-9999,
                 top:-9999
@@ -514,7 +514,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
         denable:function () {
             var self = this;
             self.uploader['unlock']();
-            self.btn.removeClass("ks-editor-triplebutton-disabled", undefined);
+            self.btn.removeClass("ks-editor-button-disabled", undefined);
             self.flashPos.offset(self.btn.offset());
         },
         _syncStatus:function () {
@@ -750,7 +750,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 });
                 return;
             }
-            btn.removeClass("ks-editor-triplebutton-disabled", undefined);
+            btn.removeClass("ks-editor-button-disabled", undefined);
             flashPos.offset(btn.offset());
             uploader['setAllowMultipleFiles'](true);
             uploader['setFileFilters']([

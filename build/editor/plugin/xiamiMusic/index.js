@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
     var CLS_XIAMI = "ke_xiami",
@@ -92,16 +92,16 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
+                contextMenuId:"xiami-contextmenu",
                 contextMenuHandlers:{
                     "虾米属性":function () {
-                        var selectedEl = this.selectedEl;
+                        var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             xiamiMusic.show(selectedEl);
                         }
                     }
                 }
             });
-
 
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",

@@ -291,7 +291,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         var td = startElement.closest(function (n) {
             var name = DOM.nodeName(n);
             return table.contains(n) && (name == "td" || name == "th");
-        },undefined);
+        }, undefined);
         var tr = startElement.closest(function (n) {
             var name = DOM.nodeName(n);
             return table.contains(n) && name == "tr";
@@ -383,7 +383,6 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
     return {
         init:function (editor) {
-
             /**
              * 动态加入显表格border css，便于编辑
              */
@@ -399,6 +398,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             var handlers = {
 
                 "表格属性":function () {
+                    this.hide();
                     var info = getSel(editor);
                     if (info) {
                         DialogLoader.useDialog(editor, "table/dialog", {
@@ -409,6 +409,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 },
 
                 "删除表格":function () {
+                    this.hide();
                     var selection = editor.getSelection(),
                         startElement = selection && selection.getStartElement(),
                         table = startElement && startElement.closest('table', undefined);
@@ -436,51 +437,87 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 },
 
                 '删除行 ':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     placeCursorInCell(deleteRows(selection), undefined);
                 },
 
                 '删除列 ':function () {
+                    this.hide();
                     var selection = editor.getSelection(),
                         element = deleteColumns(selection);
                     element && placeCursorInCell(element, true);
                 },
 
                 '在上方插入行':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertRow(selection, true);
                 },
 
                 '在下方插入行':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertRow(selection, undefined);
                 },
 
                 '在左侧插入列':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertColumn(selection, true);
                 },
 
                 '在右侧插入列':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertColumn(selection, undefined);
                 }
             };
 
-            ContextMenu.register({
-                editor:editor,
-                filter:function (node) {
-                    if (S.inArray(DOM.nodeName(node), tableRules)) {
-                        return true;
-                    }
-                },
-                statusChecker:statusChecker,
-                width:"120px",
-                handlers:handlers
+            var children = [];
+            S.each(handlers, function (h, name) {
+                children.push({
+                    content:name
+                });
             });
 
+            editor.addContextMenu("table-contextmenu", function (node) {
+                if (S.inArray(DOM.nodeName(node), tableRules)) {
+                    return true;
+                }
+            }, {
+                width:"120px",
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function (e) {
+                            var content = e.target.get("content");
+                            if (handlers[content]) {
+                                handlers[content].apply(this);
+                            }
+                        }
+                    },
+                    beforeVisibleChange:{
+                        fn:function (e) {
+                            if (e.newVal) {
+                                var self = this, children = self.get("children");
+                                var editor = self.get("editor");
+                                S.each(children, function (c) {
+                                    var content = c.get("content");
+                                    if (!statusChecker[content] ||
+                                        statusChecker[content].call(self, editor)) {
+                                        c.set("disabled", false);
+                                    } else {
+                                        c.set("disabled", true);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            });
 
-            editor.addButton("table",{
+            editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"插入表格"
             }, {

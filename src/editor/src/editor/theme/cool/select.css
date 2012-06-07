@@ -14,7 +14,7 @@ select style for kissy editor
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
-    outline: none;
+    /*outline: none;*/
 }
 
 .ks-editor-tools .ks-editor-select {

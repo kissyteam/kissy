@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * flash dialog
@@ -169,7 +169,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             self.dAlign = Select.decorate(el.one(".ks-editor-flash-align"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
-                  hideFocus:"hideFocus"
+                    hideFocus:"hideFocus"
                 },
                 width:80,
                 menuCfg:{
