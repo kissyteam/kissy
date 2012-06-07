@@ -1,3 +1,7 @@
+/**
+ * italic command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
 
     var ITALIC_STYLE = new Editor.Style({

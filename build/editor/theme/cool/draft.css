@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 .ks-editor-draft {
     position: absolute;
@@ -9,20 +9,30 @@ build time: Jun 7 15:13
     height: 22px;
     bottom: 4px;
     width: 650px;
-    _bottom: 0;
-    text-align: right;
+    _bottom: 0;    text-align: right;
+
 }
 
-.ks-editor-draft .ks-editor-select {
+.ks-editor-draft .ks-editor-menu-button {
+    background: none;
     background-color: #ffffff;
     text-align: left;
+    padding: 0;
+    margin-right: 2px;
+}
+
+.ks-editor-draft .ks-menu-button-caption {
+    padding-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
 }
 
 .ks-editor-draft-save-btn span {
     vertical-align: middle;
 }
 
-.ks-editor-draft-mansave {
+.ks-editor-draft-save {
     background: no-repeat scroll 0 1px transparent;
     background-image: url("icon_save.png"); /** sprite-ref: cool; */
     width: 18px;

@@ -1,3 +1,7 @@
+/**
+ * ElementPath for debug.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
     var CLASS = "ks-editor-element-path";

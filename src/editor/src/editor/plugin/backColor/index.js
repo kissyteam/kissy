@@ -1,3 +1,7 @@
+/**
+ * backColor button.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
     return {
@@ -6,7 +10,7 @@ KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
             editor.addButton("backColor",{
                 cmdType:'backColor',
                 tooltip:"背景颜色"
-            }, undefined, Button);
+            }, Button);
         }
     };
 }, {

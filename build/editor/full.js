@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * Set up editor constructor
@@ -2766,19 +2766,23 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
 }, {
     requires:['editor']
 });
+/**
+ * Module meta require info for KISSY Editor.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/core/meta", function () {
 
     var map = {
             "backColor":['../color/btn', './cmd'],
             "localStorage":["../flashBridge/"],
             "bold":['../font/ui', './cmd'],
-            "draft":["../localStorage/", '../select/'],
+            "draft":["../localStorage/", '../menubutton/'],
             "flash":['../flashCommon/baseClass', '../flashCommon/utils'],
             "fontFamily":['../font/ui', './cmd'],
             "fontSize":['../font/ui', './cmd'],
             "foreColor":['../color/btn', './cmd'],
             "heading":['./cmd'],
-            "image":['../button/', '../bubbleview/', '../contextmenu/', '../dialogLoader/'],
+            "image":['../button/', '../bubble/', '../contextmenu/', '../dialogLoader/'],
             "indent":['./cmd'],
             "orderedList":['../listUtils/btn', './cmd'],
             "unorderedList":['../listUtils/btn', './cmd'],
@@ -2786,20 +2790,22 @@ KISSY.add("editor/core/meta", function () {
             "justifyCenter":['./cmd'],
             "justifyLeft":['./cmd'],
             "justifyRight":['./cmd'],
-            "link":['../bubbleview/', './utils', '../dialogLoader/'],
+            "link":['../bubble/', './utils', '../dialogLoader/'],
             "maximize":['./cmd'],
             "multipleUpload":['../dialogLoader/'],
             "outdent":['./cmd'],
-            "overlay":['dd'],
+            "overlay":['dd', '../focusFix/'],
             "pageBreak":["../fakeObjects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],
+            "menubutton":['menubutton'],
             "smiley":['../overlay/'],
             "sourceArea":['../button/'],
             "strikeThrough":['../font/ui', './cmd'],
             "table":['../dialogLoader/', '../contextmenu/'],
             "underline":['../font/ui', './cmd'],
             "undo":['./btn', './cmd'],
+            "contextmenu":['menu', '../focusFix/'],
             "video":['../flashCommon/utils', '../flashCommon/baseClass'],
             "xiamiMusic":['../flashCommon/baseClass', '../flashCommon/utils']
         },
@@ -2811,13 +2817,13 @@ KISSY.add("editor/core/meta", function () {
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
             "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
-            "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
-            "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],
-            "font/ui":['../button/', '../select/'],
+            "flash/dialog":['../flashCommon/utils', '../overlay/', '../menubutton/'],
+            "flashCommon/baseClass":['../contextmenu/', '../bubble/', '../dialogLoader/', './utils'],
+            "font/ui":['../button/', '../menubutton/'],
             "fontFamily/cmd":['../font/cmd'],
             "fontSize/cmd":['../font/cmd'],
             "foreColor/cmd":['../color/cmd'],
-            "image/dialog":['../overlay/', 'switchable', '../select/'],
+            "image/dialog":['../overlay/', 'switchable', '../menubutton/'],
             "indent/cmd":['../dentUtils/cmd'],
             "orderedList/cmd":['../listUtils/cmd'],
             "unorderedList/cmd":['../listUtils/cmd'],
@@ -2831,11 +2837,11 @@ KISSY.add("editor/core/meta", function () {
             "multipleUpload/dialog":['../progressbar/', '../overlay/', '../flashBridge/', '../localStorage/'],
             "outdent/cmd":['../dentUtils/cmd'],
             "strikeThrough/cmd":['../font/cmd'],
-            "table/dialog":['../overlay/', '../select/'],
+            "table/dialog":['../overlay/', '../menubutton/'],
             "underline/cmd":['../font/cmd'],
             "undo/btn":['../button/'],
-            "video/dialog":['../flash/dialog', '../select/'],
-            "xiamiMusic/dialog":['../flash/dialog', '../select/']
+            "video/dialog":['../flash/dialog', '../menubutton/'],
+            "xiamiMusic/dialog":['../flash/dialog', '../menubutton/']
         }, newMap = {};
 
     for (m in map) {
@@ -9280,7 +9286,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
- */KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
+ *//**
+ * backColor command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
 
     var BACKCOLOR_STYLE = {
         element:'span',
@@ -9311,7 +9321,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
 }, {
     requires:['../color/cmd']
-});KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
+});/**
+ * backColor button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
     return {
         init:function (editor) {
@@ -9319,12 +9333,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             editor.addButton("backColor",{
                 cmdType:'backColor',
                 tooltip:"背景颜色"
-            }, undefined, Button);
+            }, Button);
         }
     };
 }, {
     requires:['editor', '../color/btn', './cmd']
-});KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
+});/**
+ * bold command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
     var BOLD_STYLE = new Editor.Style({
         element:'strong',
         overrides:[
@@ -9346,14 +9364,18 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
     }
 }, {
     requires:['editor', '../font/cmd']
-});KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
+});/**
+ * bold command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
             editor.addButton("bold", {
                 cmdType:'bold',
                 tooltip:"粗体 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {
@@ -9362,29 +9384,19 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
+KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Overlay.extend({}, {
-            ATTRS:{
-                zIndex:{
-                    value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
-                },
-                elCls:{
-                    value:"ks-editor-bubbleview-bubble"
-                },
-                prefixCls:{
-                    value:"ks-editor-"
-                },
-                effect:{
-                    value:{
-                        effect:"fade",
-                        duration:0.3
-                    }
-                }
+        BUBBLE_CFG = {
+            zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
+            elCls:"ks-editor-bubble",
+            prefixCls:"ks-editor-",
+            effect:{
+                effect:"fade",
+                duration:0.3
             }
-        });
+        };
 
     function inRange(t, b, r) {
         return t <= r && b >= r;
@@ -9399,25 +9411,20 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
             b2_top = b2.get("y"),
             b2_bottom = b2_top + b2.get("el").outerHeight();
 
-        return inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top);
+        return inRange(b1_top, b1_bottom, b2_bottom) ||
+            inRange(b1_top, b1_bottom, b2_top);
     }
 
     /**
-     * bubbles group by editor
-     */
-    var bubbles = {
-        /*editorStamp:[]*/
-    };
-
-    /**
-     * 得到依附在同一个节点上的所有 bubbleview 中的最下面一个
+     * 得到依附在同一个节点上的所有 bubble 中的最下面一个
      */
     function getTopPosition(self) {
         var archor = null,
-            editor = self.editor,
-            myBubbles = bubbles[S.stamp(editor)];
+            editor = self.get("editor"),
+            myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if (bubble !== self &&
+            if ((bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+                bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {
                 if (!archor) {
@@ -9432,14 +9439,15 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
 
     function getXy(bubble) {
 
-        var el = bubble.selectedEl,
-            editor = bubble.editor;
+        var el = bubble.get("editorSelectedEl");
+
 
         if (!el) {
             return undefined;
         }
 
-        var editorWin = editor.get("window")[0],
+        var editor = bubble.get("editor"),
+            editorWin = editor.get("window")[0],
             iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
@@ -9477,30 +9485,19 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         return undefined;
     }
 
-    BubbleView.register = function (cfg) {
-        var filter = cfg.filter,
-            editor = cfg.editor,
-            bubble = new BubbleView({
-                editor:editor
-            }),
-            stamp = S.stamp(editor),
-            myBubbles = bubbles[stamp] = bubbles[stamp] || [];
+    Editor.prototype.addBubble = function (id, filter, cfg) {
+        var editor = this,
+            bubble;
 
-        bubble.init = cfg.init;
+        cfg = cfg || {};
 
-        if (bubble.init) {
-            bubble.on('afterRenderUI', function () {
-                bubble.init();
-            });
-        }
+        cfg.editor = editor;
 
-        myBubbles.push(bubble);
-        bubble.editor = editor;
+        S.mix(cfg, BUBBLE_CFG);
 
-        editor.on("destroy", function () {
-            delete bubbles[stamp];
-            bubble.destroy();
-        });
+        bubble = new Overlay(cfg);
+
+        editor.addControl(id, bubble);
 
         // 借鉴google doc tip提示显示
         editor.on("selectionChange", function (ev) {
@@ -9515,12 +9512,12 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
                 }
                 a = filter(lastElement);
                 if (a) {
-                    bubble.selectedEl = a;
-                    // 重新触发 bubble show事件
+                    bubble.set("editorSelectedEl", a);
+                    // 重新触发 bubble show 事件
                     bubble.hide();
-                    // 等所有bubble hide 再show
+                    // 等所有 bubble hide 再show
                     S.later(onShow, 10);
-                } else if (bubble) {
+                } else {
                     onHide();
                 }
             }
@@ -9529,10 +9526,8 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         // 代码模式下就消失
         // !TODO 耦合---
         function onHide() {
-            if (bubble) {
-                bubble.hide();
-                Event.remove(editorWin, "scroll", onScroll);
-            }
+            bubble.hide();
+            Event.remove(editorWin, "scroll", onScroll);
         }
 
         editor.on("sourceMode", onHide);
@@ -9560,13 +9555,11 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         var bufferScroll = S.buffer(showImmediately, 350);
 
         function onScroll() {
-            if (!bubble.selectedEl) {
+            if (!bubble.get("editorSelectedEl")) {
                 return;
             }
-            if (bubble) {
-                var el = bubble.get("el");
-                bubble.hide();
-            }
+            var el = bubble.get("el");
+            bubble.hide();
             bufferScroll();
         }
 
@@ -9575,8 +9568,6 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
             showImmediately();
         }
     };
-
-    return BubbleView;
 }, {
     requires:['overlay', 'editor']
 });/**
@@ -9587,7 +9578,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
     /**
      * 将 button ui 和点击功能分离
      */
-    Editor.prototype.addButton = function (id, cfg, methods, ButtonType) {
+    Editor.prototype.addButton = function (id, cfg, ButtonType) {
 
         if (ButtonType === undefined) {
             if (cfg.checkable) {
@@ -9623,32 +9614,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             contentEl[0].className = prefixCls + 'toolbar-item ' +
                 prefixCls + 'toolbar-' + e.newVal;
         });
-
-        S.mix(b, methods);
-
-        if (b.init) {
-            b.init();
-        }
-
-        if (b.selectionChange) {
-            self.on("selectionChange", function (ev) {
-                if (self.get("mode") == Editor.SOURCE_MODE) {
-                    return;
-                }
-                b.selectionChange(ev);
-            });
-        }
-
-        if (b.onClick || b.offClick) {
-            b.on("click", function (ev) {
-                var t = b.get("checked"),
-                // note! 反过来
-                    action = t === true || t === undefined ? "offClick" : "onClick";
-                if (b[action]) {
-                    b[action](ev);
-                }
-            });
-        }
 
         if (b.get("mode") == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
@@ -9732,6 +9697,10 @@ KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, Editor) {
 }, {
     requires:["editor"]
 });
+/**
+ * color button.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
 
     var Node = S.Node,
@@ -9833,24 +9802,24 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    var ColorButton = Button.Toggle.extend({
+    return Button.Toggle.extend({
 
-        init:function () {
+        initializer:function () {
             var self = this;
             self.on("blur", function () {
                 // make select color works
                 setTimeout(function () {
-                    self.onClick();
+                    self.colorWin && self.colorWin.hide();
                 }, 150);
             });
-        },
-
-        offClick:function () {
-            this._prepare();
-        },
-
-        onClick:function () {
-            this.colorWin && this.colorWin.hide();
+            self.on('click', function () {
+                var checked = self.get("checked");
+                if (checked) {
+                    self._prepare();
+                } else {
+                    self.colorWin && self.colorWin.hide();
+                }
+            });
         },
 
         _prepare:function () {
@@ -9903,7 +9872,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         },
 
-        destroy:function () {
+        destructor:function () {
             var self = this;
             if (self.colorWin) {
                 self.colorWin.destroy();
@@ -9917,11 +9886,13 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         }
     });
 
-    return ColorButton;
-
 }, {
     requires:['editor', '../button/', '../overlay/', '../dialogLoader/']
-});KISSY.add("editor/plugin/color/cmd", function (S, Editor) {
+});/**
+ * color command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/color/cmd", function (S, Editor) {
     function applyColor(editor, c, styles) {
         var doc = editor.get("document")[0];
         editor.execCommand("save");
@@ -9979,7 +9950,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
             var doc = editor.get("document");
             // 编辑器获得焦点，不会触发 menu el blur？
             doc.on("mousedown", function (e) {
-                if (e.button == 1) {
+                if (e.which == 1) {
                     menu.hide();
                 }
             });
@@ -10358,7 +10329,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overlay, Select) {
+KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overlay, MenuButton) {
     var Node = S.Node,
         LIMIT = 5,
         Event = S.Event,
@@ -10463,27 +10434,31 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
                         "'>" +
-                        "<span class='ks-editor-draft-mansave'>" +
+                        "<span class='ks-editor-draft-save'>" +
                         "</span>" +
                         "<span>立即保存</span>" +
                         "</a>"
-                ).unselectable()
-                    .appendTo(holder),
-                versions = new Select({
-                    container:holder,
-                    menuContainer:document.body,
-                    doc:editor.get("document")[0],
-                    width:"85px",
-                    popUpWidth:"225px",
-                    align:["r", "t"],
-                    emptyText:"&nbsp;&nbsp;&nbsp;尚无编辑器历史存在",
-                    tooltip:"恢复编辑历史"
+                ).unselectable().appendTo(holder),
+                versions = new MenuButton({
+                    render:holder,
+                    width:"100px",
+                    prefixCls:"ks-editor-",
+                    menuCfg:{
+                        width:"225px",
+                        align:{
+                            points:['tr', 'br']
+                        }
+                    },
+                    autoRender:true,
+                    content:"恢复编辑历史"
                 });
             self.versions = versions;
-            //点击才开始 parse
-            versions.on("select", function () {
-                versions.detach("select", arguments.callee);
-                self.sync();
+            // 点击才开始 parse
+            versions.on("beforeCollapsedChange", function (e) {
+                if (!e.newValue) {
+                    versions.detach("beforeCollapsedChange", arguments.callee);
+                    self.sync();
+                }
             });
             save.on("click", function (ev) {
                 self.save(false);
@@ -10492,7 +10467,6 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
 
             addRes.call(self, save);
-
 
             /*
              监控form提交，每次提交前保存一次，防止出错
@@ -10618,23 +10592,28 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         },
         sync:function () {
             var self = this,
+                i,
                 draftLimit = self.draftLimit,
                 timeTip = self.timeTip,
                 versions = self.versions,
-                drafts = self._getDrafts();
-            if (drafts.length > draftLimit)
+                drafts = self._getDrafts(),
+                draft, tip
+
+            if (drafts.length > draftLimit) {
                 drafts.splice(0, drafts.length - draftLimit);
-            var items = [], draft, tip;
-            for (var i = 0; i < drafts.length; i++) {
+            }
+
+            for (i = 0; i < drafts.length; i++) {
                 draft = drafts[i];
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
-                items.push({
-                    name:tip,
+                versions.addItem({
+                    xclass:'menuitem',
+                    content:tip,
                     value:i
                 });
             }
-            versions.set("items", items.reverse());
+
             timeTip.html(tip);
             localStorage.setItem(self._getSaveKey(),
                 (localStorage == window.localStorage) ?
@@ -10673,17 +10652,17 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         recover:function (ev) {
             var self = this,
                 editor = self.editor,
-                versions = self.versions,
                 drafts = self._getDrafts(),
-                v = ev.newVal;
-            versions.reset("value");
+                v = ev.target.get("value");
             if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
                 editor.execCommand("save");
                 editor.set("data", drafts[v].content);
                 editor.execCommand("save");
             }
+            self.versions.set("collapsed", true);
             ev.halt();
         },
+
         destroy:function () {
             destroyRes.call(this);
         }
@@ -10708,7 +10687,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         }
     };
 }, {
-    "requires":["editor", "../localStorage/", "overlay", '../select/']
+    "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
 });/**
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
@@ -10888,7 +10867,11 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
 
 }, {
     requires:['editor']
-});KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
+});/**
+ * ElementPath for debug.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
     var Node = S.Node;
     var CLASS = "ks-editor-element-path";
 
@@ -11367,7 +11350,7 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, Editor, flashUtils) {
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, BubbleView, DialogLoader, flashUtils) {
+KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, Bubble, DialogLoader, flashUtils) {
 
     var Node = S.Node;
 
@@ -11381,11 +11364,11 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     }
 
     var tipHtml = ' <a ' +
-        'class="ks-editor-bubbleview-url" ' +
+        'class="ks-editor-bubble-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-change">编辑</span>   |   '
-        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">删除</span>';
+        + ' <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |   '
+        + ' <span class="ks-editor-bubble-link ks-editor-bubble-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -11393,6 +11376,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         label:{
             value:"在新窗口查看"
         },
+        bubbleId:{},
         contextMenuId:{},
         contextMenuHandlers:{}
     };
@@ -11402,24 +11386,25 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
-                children=[],
-                contextMenuId=self.get("contextMenuId"),
+                children = [],
+                bubbleId = self.get("bubbleId"),
+                contextMenuId = self.get("contextMenuId"),
                 contextMenuHandlers = self.get("contextMenuHandlers");
 
-            S.each(contextMenuHandlers,function(h,content){
+            S.each(contextMenuHandlers, function (h, content) {
                 children.push({
                     content:content
                 })
             });
 
-            editor.addContextMenu(contextMenuId,"." + cls,{
+            editor.addContextMenu(contextMenuId, "." + cls, {
                 width:"120px",
                 children:children,
                 listeners:{
                     click:{
-                        fn:function(e){
-                            var content= e.target.get("content");
-                            if(contextMenuHandlers[content]){
+                        fn:function (e) {
+                            var content = e.target.get("content");
+                            if (contextMenuHandlers[content]) {
                                 contextMenuHandlers[content].call(this);
                             }
                         }
@@ -11427,57 +11412,61 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 }
             });
 
-            //注册泡泡，selectionChange时检测
-            BubbleView.register({
-                filter:function (el) {
-                    return el.hasClass(cls, undefined) && el;
-                },
-                editor:editor,
-                init:function () {
-                    var bubble = this,
-                        el = bubble.get("contentEl");
-                    el.html(S.substitute(tipHtml, {
-                        label:self.get("label")
-                    }));
-                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
-                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
-                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
-                    //ie focus not lose
-                    Editor.Utils.preventFocus(el);
+            editor.addBubble(bubbleId, function (el) {
+                return el.hasClass(cls, undefined) && el;
+            }, {
+                listeners:{
+                    afterRenderUI:{
+                        // 注册泡泡，selectionChange时检测
+                        fn:function () {
+                            var bubble = this,
+                                el = bubble.get("contentEl");
+                            el.html(S.substitute(tipHtml, {
+                                label:self.get("label")
+                            }));
+                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
+                                tipChangeEl = el.one(".ks-editor-bubble-change"),
+                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
 
-                    tipChangeEl.on("click", function (ev) {
-                        //回调show，传入选中元素
-                        self.show(bubble.selectedEl);
-                        ev.halt();
-                    });
+                            // ie focus not lose
+                            Editor.Utils.preventFocus(el);
 
-                    tipRemoveEl.on("click", function (ev) {
-                        // chrome remove 后会没有焦点
-                        if (S.UA['webkit']) {
-                            var r = editor.getSelection().getRanges(),
-                                r0 = r && r[0];
-                            if (r0) {
-                                r0.collapse(true);
-                                r0.select();
-                            }
+                            tipChangeEl.on("click", function (ev) {
+                                // 回调show，传入选中元素
+                                self.show(bubble.get("editorSelectedEl"));
+                                ev.halt();
+                            });
+
+                            tipRemoveEl.on("click", function (ev) {
+                                // chrome remove 后会没有焦点
+                                if (S.UA['webkit']) {
+                                    var r = editor.getSelection().getRanges(),
+                                        r0 = r && r[0];
+                                    if (r0) {
+                                        r0.collapse(true);
+                                        r0.select();
+                                    }
+                                }
+                                bubble.get("editorSelectedEl").remove();
+                                bubble.hide();
+                                editor.notifySelectionChange();
+                                ev.halt();
+                            });
+
+                            /*
+                             位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
+                             */
+                            bubble.on("show", function () {
+                                var a = bubble.get("editorSelectedEl");
+                                if (a) {
+                                    self._updateTip(tipUrlEl, a);
+                                }
+                            });
                         }
-                        bubble.selectedEl.remove();
-                        bubble.hide();
-                        editor.notifySelectionChange();
-                        ev.halt();
-                    });
-
-                    /*
-                     位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
-                     */
-                    bubble.on("show", function () {
-                        var a = bubble.selectedEl;
-                        if (a) {
-                            self._updateTip(tipUrlEl, a);
-                        }
-                    });
+                    }
                 }
-            });
+            })
+
 
             editor.docReady(function () {
                 //注册双击，双击时检测
@@ -11530,7 +11519,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     return Flash;
 
 }, {
-    requires:['editor', '../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils']
+    requires:['editor', '../contextmenu/', '../bubble/', '../dialogLoader/', './utils']
 });/**
  * flash utilities
  * @author yiminghe@gmail.com
@@ -11788,6 +11777,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
+                    bubbleId:"flash-bubble",
                     contextMenuId:'flash-contextmenu',
                     contextMenuHandlers:{
                         "Flash属性":function () {
@@ -11802,11 +11792,14 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
             if (pluginConfig.btn !== false) {
                 editor.addButton("flash", {
                     tooltip:"插入Flash",
+                    listeners:{
+                        click:{
+                            fn:function () {
+                                flashControl.show();
+                            }
+                        }
+                    },
                     mode:Editor.WYSIWYG_MODE
-                }, {
-                    offClick:function () {
-                        flashControl.show();
-                    }
                 });
             }
         }
@@ -11880,7 +11873,11 @@ KISSY.add("editor/plugin/focusFix/index", function (S, Editor) {
 
 }, {
     requires:['editor']
-});KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
+});/**
+ * fontFamily command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
     var fontFamilyStyle = {
         element:'span',
         styles:{
@@ -11991,11 +11988,15 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
                     width:fontFamilies.width,
                     children:fontFamilies.children
                 }
-            }, undefined, ui.Select);
+            }, ui.Select);
         }};
 }, {
     requires:['editor', '../font/ui', './cmd']
 });
+/**
+ * fontSize command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
     var fontSizeStyle = {
         element:'span',
@@ -12067,11 +12068,15 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     width:fontSizes.width,
                     children:fontSizes.children
                 }
-            }, undefined, ui.Select);
+            }, ui.Select);
         }};
 }, {
     requires:['editor', '../font/ui', './cmd']
 });
+/**
+ * font command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;
@@ -12137,83 +12142,90 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, Select) {
+KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;
 
-    var FontSelect = Select.extend({
+    var FontSelect = MenuButton.Select.extend({
 
-        click:function (ev) {
+        initializer:function () {
             var self = this,
-                v = ev.target.get("value"),
-                cmdType = self.get("cmdType"),
-                pre = ev.prevTarget && ev.prevTarget.get("value"),
                 editor = self.get("editor");
-            editor.focus();
-            if (v == pre) {
-                // 清除,wildcard pls
-                // !TODO inherit 小问题，在中间点 inherit
-                editor.execCommand(cmdType, v, false);
-            } else {
-                editor.execCommand(cmdType, v);
-            }
-        },
+            self.on("click", function (ev) {
+                var v = ev.target.get("value"),
+                    cmdType = self.get("cmdType"),
+                    pre = ev.prevTarget && ev.prevTarget.get("value");
+                editor.focus();
+                if (v == pre) {
+                    // 清除,wildcard pls
+                    // !TODO inherit 小问题，在中间点 inherit
+                    editor.execCommand(cmdType, v, false);
+                } else {
+                    editor.execCommand(cmdType, v);
+                }
+            });
 
-        selectionChange:function (ev) {
-            var self = this,
-                elementPath = ev.path,
-                cmdType = getQueryCmd(self.get("cmdType")),
-                menu = self.get("menu"),
-                children = menu.get && menu.get("children"),
-                editor = self.get("editor"),
-                elements = elementPath.elements;
+            editor.on("selectionChange", function (ev) {
+                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                    return;
+                }
 
-            if (children) {
-                // For each element into the elements path.
-                for (var i = 0, element; i < elements.length; i++) {
-                    element = elements[i];
-                    // Check if the element is removable by any of
-                    // the styles.
-                    for (var j = 0; j < children.length; j++) {
-                        var item = children[j];
-                        var value = item.get("value");
-                        if (editor.execCommand(cmdType, value, element)) {
-                            self.set("value", value);
-                            return;
+                var elementPath = ev.path,
+                    cmdType = getQueryCmd(self.get("cmdType")),
+                    menu = self.get("menu"),
+                    children = menu.get && menu.get("children"),
+                    elements = elementPath.elements;
+
+                if (children) {
+                    // For each element into the elements path.
+                    for (var i = 0, element; i < elements.length; i++) {
+                        element = elements[i];
+                        // Check if the element is removable by any of
+                        // the styles.
+                        for (var j = 0; j < children.length; j++) {
+                            var item = children[j];
+                            var value = item.get("value");
+                            if (editor.execCommand(cmdType, value, element)) {
+                                self.set("value", value);
+                                return;
+                            }
                         }
                     }
+                    self.set("value", null);
                 }
-                self.set("value", null);
-            }
+            });
         }
     });
 
 
     var FontButton = Button.Toggle.extend({
-        offClick:function () {
-            var self = this,
-                cmdType = self.get("cmdType"),
-                editor = self.get("editor");
-            editor.execCommand(cmdType);
-            editor.focus();
-        },
-        onClick:function () {
-            var self = this,
-                cmdType = self.get("cmdType"),
-                editor = self.get("editor");
-            editor.execCommand(cmdType, false);
-            editor.focus();
-        },
-        selectionChange:function (ev) {
-            var self = this,
-                editor = self.get("editor"),
-                cmdType = getQueryCmd(self.get("cmdType")),
-                elementPath = ev.path;
-            if (editor.execCommand(cmdType, elementPath)) {
-                self.set("checked", true);
-            } else {
-                self.set("checked", false);
-            }
+
+        initializer:function () {
+            var self = this, editor = self.get("editor"),
+                cmdType = self.get("cmdType");
+            self.on("click", function () {
+                var checked = self.get("checked");
+                if (checked) {
+                    editor.execCommand(cmdType);
+                    editor.focus();
+                } else {
+                    editor.execCommand(cmdType, false);
+                    editor.focus();
+                }
+            });
+            editor.on("selectionChange", function (ev) {
+
+                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                    return;
+                }
+                var cmdType = getQueryCmd(self.get("cmdType"));
+                var elementPath = ev.path;
+                if (editor.execCommand(cmdType, elementPath)) {
+                    self.set("checked", true);
+                } else {
+                    self.set("checked", false);
+                }
+            });
         }
     }, {
         ATTRS:{
@@ -12228,8 +12240,12 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, Select) {
         Select:FontSelect
     };
 }, {
-    requires:['editor', '../button/', '../select/']
+    requires:['editor', '../button/', '../menubutton/']
 });
+/**
+ * foreColor command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
 
     var COLOR_STYLES = {
@@ -12261,7 +12277,11 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
 
 }, {
     requires:['../color/cmd']
-});KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
+});/**
+ * foreColor button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
 
     return {
         init:function (editor) {
@@ -12269,7 +12289,7 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
             editor.addButton("foreColor",{
                 cmdType:'foreColor',
                 tooltip:"文本颜色"
-            }, undefined, Button);
+            }, Button);
         }
     };
 }, {
@@ -12358,31 +12378,41 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                     width:"120px",
                     children:FORMAT_SELECTION_ITEMS
                 },
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                click:function (ev) {
-                    var self = this,
-                        v = ev.target.get("value"),
-                        pre = ev.prevTarget && ev.prevTarget.get("value");
-                    if (v != pre) {
-                        editor.execCommand("heading", v);
-                    } else {
-                        editor.execCommand("heading", "p");
-                        self.set("value", "p");
-                    }
-                },
-                selectionChange:function (ev) {
-                    var self = this,
-                        elementPath = ev.path;
-                    // For each element into the elements path.
-                    // Check if the element is removable by any of
-                    // the styles.
-                    var queryCmd = Editor.Utils.getQueryCmd("heading");
-                    for (var value in FORMAT_SIZES) {
-                        if (FORMAT_SIZES.hasOwnProperty(value) &&
-                            editor.execCommand(queryCmd, elementPath, value)) {
-                            self.set("value", value);
-                            return;
+                mode:Editor.WYSIWYG_MODE,
+                listeners:{
+                    click:{
+                        fn:function (ev) {
+                            var self = this,
+                                v = ev.target.get("value"),
+                                pre = ev.prevTarget && ev.prevTarget.get("value");
+                            if (v != pre) {
+                                editor.execCommand("heading", v);
+                            } else {
+                                editor.execCommand("heading", "p");
+                                self.set("value", "p");
+                            }
+                        }
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            editor.on("selectionChange", function (ev) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                var self = this,
+                                    elementPath = ev.path;
+                                // For each element into the elements path.
+                                // Check if the element is removable by any of
+                                // the styles.
+                                var queryCmd = Editor.Utils.getQueryCmd("heading");
+                                for (var value in FORMAT_SIZES) {
+                                    if (FORMAT_SIZES.hasOwnProperty(value) &&
+                                        editor.execCommand(queryCmd, elementPath, value)) {
+                                        self.set("value", value);
+                                        return;
+                                    }
+                                }
+                            });
                         }
                     }
                 }
@@ -12395,7 +12425,7 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
  * insert image for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, ContextMenu, DialogLoader) {
+KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
 
     var UA = S.UA,
         Node = S.Node,
@@ -12403,15 +12433,18 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
         Event = S.Event,
         checkImg = function (node) {
             node = $(node);
-            return node.nodeName(node) === 'img' &&
+            if (node.nodeName() === 'img' &&
                 // prevent collision with fake objects
-                (!/(^|\s+)ke_/.test(node[0].className)) &&
-                node;
+                (!/(^|\s+)ke_/.test(node[0].className))) {
+                return node;
+            }
         },
-        tipHtml = '<a class="ks-editor-bubbleview-url" target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-change" href="#">编辑</a>  |  '
-            + '<a class="ks-editor-bubbleview-link ks-editor-bubbleview-remove" href="#">删除</a>'
-            + '';
+        tipHtml = '<a class="ks-editor-bubble-url" ' +
+            'target="_blank" href="#">在新窗口查看</a>  |  '
+            + '<a class="ks-editor-bubble-link ' +
+            'ks-editor-bubble-change" href="#">编辑</a>  |  '
+            + '<a class="ks-editor-bubble-link ' +
+            'ks-editor-bubble-remove" href="#">删除</a>';
 
     return {
         init:function (editor) {
@@ -12423,11 +12456,14 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
             editor.addButton("image", {
                 tooltip:"插入图片",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            showImageEditor(null);
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    showImageEditor(null);
-                }
             });
 
             var handlers = [
@@ -12496,41 +12532,43 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                 });
             });
 
-            BubbleView.register({
-                editor:editor,
-                filter:checkImg,
-                init:function () {
-                    var bubble = this,
-                        el = bubble.get("contentEl");
-                    el.html(tipHtml);
-                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
-                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
-                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
-                    Editor.Utils.preventFocus(el);
-                    tipChangeEl.on("click", function (ev) {
-                        showImageEditor(bubble.selectedEl);
-                        ev.halt();
-                    });
-                    tipRemoveEl.on("click", function (ev) {
-                        if (UA['webkit']) {
-                            var r = editor.getSelection().getRanges();
-                            if (r && r[0]) {
-                                r[0].collapse();
-                                r[0].select();
-                            }
+            editor.addBubble("image-bubble", checkImg, {
+                listeners:{
+                    afterRenderUI:{
+                        fn:function () {
+                            var bubble = this,
+                                el = bubble.get("contentEl");
+                            el.html(tipHtml);
+                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
+                                tipChangeEl = el.one(".ks-editor-bubble-change"),
+                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                            Editor.Utils.preventFocus(el);
+                            tipChangeEl.on("click", function (ev) {
+                                showImageEditor(bubble.get("editorSelectedEl"));
+                                ev.halt();
+                            });
+                            tipRemoveEl.on("click", function (ev) {
+                                if (UA['webkit']) {
+                                    var r = editor.getSelection().getRanges();
+                                    if (r && r[0]) {
+                                        r[0].collapse();
+                                        r[0].select();
+                                    }
+                                }
+                                bubble.get("editorSelectedEl").remove();
+                                bubble.hide();
+                                editor.notifySelectionChange();
+                                ev.halt();
+                            });
+                            bubble.on("show", function () {
+                                var a = bubble.get("editorSelectedEl");
+                                if (a) {
+                                    var src = a.attr("_ke_saved_src") || a.attr("src");
+                                    tipUrlEl.attr("href", src);
+                                }
+                            });
                         }
-                        bubble.selectedEl.remove();
-                        bubble.hide();
-                        editor.notifySelectionChange();
-                        ev.halt();
-                    });
-                    bubble.on("show", function () {
-                        var a = bubble.selectedEl;
-                        if (a) {
-                            var src = a.attr("_ke_saved_src") || a.attr("src");
-                            tipUrlEl.attr("href", src);
-                        }
-                    });
+                    }
                 }
             });
         }
@@ -12538,7 +12576,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
 }, {
     requires:['editor',
         '../button/',
-        '../bubbleview/',
+        '../bubble/',
         '../contextmenu/',
         '../dialogLoader/']
 });/**
@@ -12566,19 +12604,26 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
             indexCmd.init(editor);
             editor.addButton("indent",{
                 tooltip:"增加缩进量 ",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            editor.execCommand("indent");
+                            editor.focus();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    editor.execCommand("indent");
-                    editor.focus();
-                }
             });
         }
     };
 
 }, {
     requires:['editor', './cmd']
-});KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
+});/**
+ * italic command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
 
     var ITALIC_STYLE = new Editor.Style({
         element:'em',
@@ -12601,14 +12646,18 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
     }
 }, {
     requires:['editor', '../font/cmd']
-});KISSY.add("editor/plugin/italic/index", function (S, Editor, ui,cmd) {
+});/**
+ * italic button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/italic/index", function (S, Editor, ui,cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
             editor.addButton("italic",{
                 cmdType:'italic',
                 tooltip:"斜体 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {
@@ -12627,9 +12676,13 @@ KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
 
 }, {
     requires:['../justifyUtils/cmd']
-});KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCenterCmd) {
+});/**
+ * justifyCenter button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
-        var editor=this.get("editor");
+        var editor = this.get("editor");
         editor.execCommand("justifyCenter");
         editor.focus();
     }
@@ -12640,18 +12693,27 @@ KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",
                 checkable:true,
+                listeners:{
+                    click:{
+                        fn:exec
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            editor.on("selectionChange", function (e) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
+                                if (editor.execCommand(queryCmd, e.path)) {
+                                    self.set("checked", true);
+                                } else {
+                                    self.set("checked", false);
+                                }
+                            });
+                        }}
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                onClick:exec,
-                offClick:exec,
-                selectionChange:function (e) {
-                    var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
-                    if (editor.execCommand(queryCmd, e.path)) {
-                        this.set("checked", true);
-                    } else {
-                        this.set("checked", false);
-                    }
-                }
             });
         }
     };
@@ -12671,9 +12733,13 @@ KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
 
 }, {
     requires:['../justifyUtils/cmd']
-});KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterCmd) {
+});/**
+ * justifyLeft button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
-        var editor=this.get("editor");
+        var editor = this.get("editor");
         editor.execCommand("justifyLeft");
         editor.focus();
     }
@@ -12681,21 +12747,31 @@ KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
     return {
         init:function (editor) {
             justifyCenterCmd.init(editor);
-            editor.addButton("justifyLeft",{
+            editor.addButton("justifyLeft", {
                 tooltip:"左对齐",
                 checkable:true,
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                onClick:exec,
-                offClick:exec,
-                selectionChange:function (e) {
-                    var queryCmd = Editor.Utils.getQueryCmd("justifyLeft");
-                    if (editor.execCommand(queryCmd, e.path)) {
-                        this.set("checked",true);
-                    } else {
-                        this.set("checked",false);
+                listeners:{
+                    click:{
+                        fn:exec
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            editor.on("selectionChange", function (e) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                var queryCmd = Editor.Utils.getQueryCmd("justifyLeft");
+                                if (editor.execCommand(queryCmd, e.path)) {
+                                    self.set("checked", true);
+                                } else {
+                                    self.set("checked", false);
+                                }
+                            });
+                        }
                     }
-                }
+                },
+                mode:Editor.WYSIWYG_MODE
             });
         }
     };
@@ -12715,7 +12791,11 @@ KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
 
 }, {
     requires:['../justifyUtils/cmd']
-});KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenterCmd) {
+});/**
+ * justifyRight button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyRight");
@@ -12728,18 +12808,28 @@ KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
             editor.addButton("justifyRight", {
                 tooltip:"右对齐",
                 checkable:true,
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                onClick:exec,
-                offClick:exec,
-                selectionChange:function (e) {
-                    var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
-                    if (editor.execCommand(queryCmd, e.path)) {
-                        this.set("checked", true);
-                    } else {
-                        this.set("checked", false);
+                listeners:{
+                    click:{
+                        fn:exec
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            editor.on("selectionChange", function (e) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
+                                if (editor.execCommand(queryCmd, e.path)) {
+                                    self.set("checked", true);
+                                } else {
+                                    self.set("checked", false);
+                                }
+                            });
+                        }
                     }
-                }
+                },
+                mode:Editor.WYSIWYG_MODE
             });
         }
     };
@@ -12814,21 +12904,21 @@ KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
  * link editor support for kissy editor ,innovation from google doc and ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, DialogLoader) {
+KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, DialogLoader) {
 
     var $ = S.all,
         tipHtml = '<a ' +
             'href="" '
             + ' target="_blank" ' +
-            'class="ks-editor-bubbleview-url">' +
+            'class="ks-editor-bubble-url">' +
             '在新窗口查看' +
             '</a>  –  '
             + ' <span ' +
-            'class="ks-editor-bubbleview-link ks-editor-bubbleview-change">' +
+            'class="ks-editor-bubble-link ks-editor-bubble-change">' +
             '编辑' +
             '</span>   |   '
             + ' <span ' +
-            'class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">' +
+            'class="ks-editor-bubble-link ks-editor-bubble-remove">' +
             '去除' +
             '</span>';
 
@@ -12841,56 +12931,70 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
         init:function (editor) {
             editor.addButton("link", {
                 tooltip:"插入链接",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            showLinkEditDialog();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    showLinkEditDialog();
-                }
             });
 
             function showLinkEditDialog(selectedEl) {
                 DialogLoader.useDialog(editor, "link/dialog", selectedEl);
             }
 
-            BubbleView.register({
-                editor:editor,
-                filter:checkLink,
-                init:function () {
-                    var bubble = this,
-                        el = bubble.get("contentEl");
-                    el.html(tipHtml);
-                    var tipUrl = el.one(".ks-editor-bubbleview-url"),
-                        tipChange = el.one(".ks-editor-bubbleview-change"),
-                        tipRemove = el.one(".ks-editor-bubbleview-remove");
-                    //ie focus not lose
-                    Editor.Utils.preventFocus(el);
-                    tipChange.on("click", function (ev) {
-                        showLinkEditDialog(bubble.selectedEl);
-                        ev.halt();
-                    });
+            editor.addBubble("link-bubble", checkLink, {
+                listeners:{
+                    afterRenderUI:{
+                        fn:function () {
+                            var bubble = this,
+                                el = bubble.get("contentEl");
 
-                    tipRemove.on("click", function (ev) {
-                        Utils.removeLink(editor, bubble.selectedEl);
-                        ev.halt();
-                    });
+                            el.html(tipHtml);
 
-                    bubble.on("show", function () {
-                        var a = bubble.selectedEl;
-                        if (!a) {
-                            return;
+                            var tipUrl = el.one(".ks-editor-bubble-url"),
+                                tipChange = el.one(".ks-editor-bubble-change"),
+                                tipRemove = el.one(".ks-editor-bubble-remove");
+
+                            //ie focus not lose
+                            Editor.Utils.preventFocus(el);
+
+                            tipChange.on("click", function (ev) {
+                                showLinkEditDialog(bubble.get("editorSelectedEl"));
+                                ev.halt();
+                            });
+
+                            tipRemove.on("click", function (ev) {
+                                Utils.removeLink(editor, bubble.get("editorSelectedEl"));
+                                ev.halt();
+                            });
+
+                            bubble.on("show", function () {
+                                var a = bubble.get("editorSelectedEl");
+                                if (!a) {
+                                    return;
+                                }
+                                var href = a.attr(Utils._ke_saved_href) ||
+                                    a.attr("href");
+                                tipUrl.html(href);
+                                tipUrl.attr("href", href);
+                            });
                         }
-                        var href = a.attr(Utils._ke_saved_href) ||
-                            a.attr("href");
-                        tipUrl.html(href);
-                        tipUrl.attr("href", href);
-                    });
+                    }
                 }
             });
         }
     };
 }, {
-    requires:['editor', '../bubbleview/', './utils', '../dialogLoader/']
-});KISSY.add("editor/plugin/link/utils", function (S, Editor) {
+    requires:['editor', '../bubble/',
+        './utils', '../dialogLoader/', '../button/']
+});/**
+ * link utils
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/link/utils", function (S, Editor) {
 
     var Node = S.Node,
         KEStyle = Editor.Style,
@@ -12976,8 +13080,11 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
     }
 }, {
     requires:['editor']
-});KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
-
+});/**
+ * Common btn for list.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
 
     function onClick() {
         var editor = this.get("editor");
@@ -12986,18 +13093,19 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
         editor.focus();
     }
 
-    var ListButton = Button.Toggle.extend({
-        offClick:onClick,
-        onClick:onClick,
-        selectionChange:function (e) {
-            var self = this,
-                editor = self.get("editor"),
-                cmd = Editor.Utils.getQueryCmd(self.get("cmdType"));
-            if (editor.execCommand(cmd, e.path)) {
-                this.set("checked", true);
-            } else {
-                this.set("checked", false);
-            }
+    return Button.Toggle.extend({
+        initializer:function () {
+            var self = this;
+            self.on("click", onClick, self);
+            var editor = self.get("editor");
+            editor.on("selectionChange", function (e) {
+                var cmd = Editor.Utils.getQueryCmd(self.get("cmdType"));
+                if (editor.execCommand(cmd, e.path)) {
+                    self.set("checked", true);
+                } else {
+                    self.set("checked", false);
+                }
+            })
         }
     }, {
         ATTRS:{
@@ -13006,8 +13114,6 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, BubbleView, Utils, Di
             }
         }
     });
-
-    return ListButton;
 }, {
     requires:['editor', '../button/']
 });/**
@@ -13392,7 +13498,11 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
 
 }, {
     requires:['editor', '../listUtils/']
-});KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
+});/**
+ * list Utils
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
     var listNodeNames = {ol:1, ul:1},
         Node = S.Node,
         DOM = S.DOM,
@@ -14011,45 +14121,113 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
-                checkable:true
-            }, {
-                onClick:function () {
-                    var self = this;
-                    editor.execCommand("restoreWindow");
-                    self.set("tooltip", MAXIMIZE_TIP);
-                    self.set("contentCls", MAXIMIZE_CLASS);
-                    editor.focus();
+                listeners:{
+                    click:{
+                        fn:function () {
+                            var self = this;
+                            var checked = self.get("checked");
+                            if (checked) {
+                                editor.execCommand("maximizeWindow");
+                                self.set("tooltip", RESTORE_TIP);
+                                self.set("contentCls", RESTORE_CLASS);
+                            } else {
+                                editor.execCommand("restoreWindow");
+                                self.set("tooltip", MAXIMIZE_TIP);
+                                self.set("contentCls", MAXIMIZE_CLASS);
+                            }
+
+                            editor.focus();
+                        }
+                    }
                 },
-                offClick:function () {
-                    var self = this;
-                    editor.execCommand("maximizeWindow");
-                    self.set("tooltip", RESTORE_TIP);
-                    self.set("contentCls", RESTORE_CLASS);
-                    editor.focus();
-                }
+                checkable:true
             });
         }
     };
 }, {
     requires:['editor', './cmd']
-});KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoader) {
+});/**
+ * select component for kissy editor.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
+    /**
+     * 将button ui 和点击功能分离
+     * 按钮必须立刻显示出来，功能可以慢慢加载
+     */
+    Editor.prototype.addSelect = function (id, cfg, SelectType) {
+
+        SelectType = SelectType || MenuButton.Select;
+
+        var self = this, prefixCls = self.get("prefixCls") + "editor-";
+
+        if (cfg) {
+            cfg.editor = self;
+            if (cfg.menu) {
+                cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
+                cfg.menu.xclass = 'popupmenu';
+                S.each(cfg.menu.children, function (child) {
+                    child.xclass = 'option';
+                });
+            }
+        }
+
+        var s = new SelectType(S.mix({
+            elAttrs:{
+                hideFocus:'hideFocus'
+            },
+            render:self.get("toolBarEl"),
+            prefixCls:prefixCls,
+            autoRender:true
+        }, cfg));
+
+        s.get("el").unselectable();
+
+        if (cfg.mode == Editor.WYSIWYG_MODE) {
+            self.on("wysiwygMode", function () {
+                s.set('disabled', false);
+            });
+            self.on("sourceMode", function () {
+                s.set('disabled', true);
+            });
+        }
+        self.addControl(id, s);
+        return s;
+
+    };
+
+    return MenuButton;
+}, {
+    requires:['editor', 'menubutton']
+});/**
+ * multipleUpload button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoader) {
 
     return {
         init:function (editor) {
-            editor.addButton("multipleUpload",{
+            editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            DialogLoader.useDialog(editor, "multipleUpload/dialog");
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    DialogLoader.useDialog(editor,"multipleUpload/dialog");
-                }
             });
         }
     };
 
 }, {
     requires:['editor', '../dialogLoader/']
-});KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
+});/**
+ * orderedList command
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
 
     var insertOrderedList = "insertOrderedList",
         ListCommand = listCmd.ListCommand,
@@ -14092,7 +14270,7 @@ KISSY.add("editor/plugin/orderedList/index", function (S, Editor, ListButton, Li
             editor.addButton("orderedList",{
                 cmdType:"insertOrderedList",
                 mode:Editor.WYSIWYG_MODE
-            }, undefined, ListButton);
+            }, ListButton);
         }
     };
 }, {
@@ -14133,22 +14311,32 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
             var queryOutdent = Editor.Utils.getQueryCmd("outdent");
 
-            editor.addButton("outdent",{
+            editor.addButton("outdent", {
                 tooltip:"减少缩进量 ",
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    editor.execCommand("outdent");
-                    editor.focus();
-                },
-                selectionChange:function (e) {
-                    var self = this;
-                    if (editor.execCommand(queryOutdent, e.path)) {
-                        self.set("disabled",false);
-                    } else {
-                        self.set("disabled",true);
+                listeners:{
+                    click:{
+                        fn:function () {
+                            editor.execCommand("outdent");
+                            editor.focus();
+                        }
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            editor.on("selectionChange", function (e) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                if (editor.execCommand(queryOutdent, e.path)) {
+                                    self.set("disabled", false);
+                                } else {
+                                    self.set("disabled", true);
+                                }
+                            });
+                        }
                     }
-                }
+                },
+                mode:Editor.WYSIWYG_MODE
             });
         }
     };
@@ -14268,42 +14456,45 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                 }
             });
 
-            editor.addButton("pageBreak",{
+            editor.addButton("pageBreak", {
                 tooltip:"分页",
+                listeners:{
+                    click:{
+                        fn:function () {
+
+                            var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
+                                substitute = editor.createFakeElement(real, CLS, TYPE,
+                                    //不可缩放，也不用
+                                    false,
+                                    PAGE_BREAK_MARKUP);
+
+                            var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
+
+                            if (!range) {
+                                return;
+                            }
+
+                            editor.execCommand("save");
+
+                            var start = range.startContainer,
+                                pre = start;
+
+                            while (start.nodeName() !== "body") {
+                                pre = start;
+                                start = start.parent();
+                            }
+
+                            range.collapse(true);
+
+                            range.splitElement(pre);
+
+                            substitute.insertAfter(pre);
+
+                            editor.execCommand("save");
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    var editor = this.get("editor"),
-                        real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
-                        substitute = editor.createFakeElement(real, CLS, TYPE,
-                            //不可缩放，也不用
-                            false,
-                            PAGE_BREAK_MARKUP);
-
-                    var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
-
-                    if (!range) {
-                        return;
-                    }
-
-                    editor.execCommand("save");
-
-                    var start = range.startContainer,
-                        pre = start;
-
-                    while (start.nodeName() !== "body") {
-                        pre = start;
-                        start = start.parent();
-                    }
-
-                    range.collapse(true);
-
-                    range.splitElement(pre);
-
-                    substitute.insertAfter(pre);
-
-                    editor.execCommand("save");
-                }
             });
         }
     };
@@ -14317,46 +14508,46 @@ KISSY.add("editor/plugin/preview/index", function () {
     var win = window;
     return {
         init:function (editor) {
-            editor.addButton("preview",{
-                tooltip:"预览"
-            }, {
-                offClick:function () {
-                    var self = this,
-                        editor = self.get("editor");
-
-                    try {
-                        var screen = win.screen,
-                            iWidth = Math.round(screen.width * 0.8),
-                            iHeight = Math.round(screen.height * 0.7),
-                            iLeft = Math.round(screen.width * 0.1);
-                    } catch (e) {
-                        iWidth = 640; // 800 * 0.8,
-                        iHeight = 420; // 600 * 0.7,
-                        iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
+            editor.addButton("preview", {
+                tooltip:"预览",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            try {
+                                var screen = win.screen,
+                                    iWidth = Math.round(screen.width * 0.8),
+                                    iHeight = Math.round(screen.height * 0.7),
+                                    iLeft = Math.round(screen.width * 0.1);
+                            } catch (e) {
+                                iWidth = 640; // 800 * 0.8,
+                                iHeight = 420; // 600 * 0.7,
+                                iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
+                            }
+                            var sHTML = editor.getDocHtml()
+                                    .replace(/\${title}/, "预览"),
+                                sOpenUrl = '',
+                                oWindow = win.open(sOpenUrl,
+                                    // 每次都弹出新窗口
+                                    '',
+                                    'toolbar=yes,' +
+                                        'location=no,' +
+                                        'status=yes,' +
+                                        'menubar=yes,' +
+                                        'scrollbars=yes,' +
+                                        'resizable=yes,' +
+                                        'width=' +
+                                        iWidth +
+                                        ',height='
+                                        + iHeight
+                                        + ',left='
+                                        + iLeft), winDoc = oWindow.document;
+                            winDoc.open();
+                            winDoc.write(sHTML);
+                            winDoc.close();
+                            //ie 重新显示
+                            oWindow.focus();
+                        }
                     }
-                    var sHTML = editor.getDocHtml()
-                            .replace(/\${title}/, "预览"),
-                        sOpenUrl = '',
-                        oWindow = win.open(sOpenUrl,
-                            // 每次都弹出新窗口
-                            '',
-                            'toolbar=yes,' +
-                                'location=no,' +
-                                'status=yes,' +
-                                'menubar=yes,' +
-                                'scrollbars=yes,' +
-                                'resizable=yes,' +
-                                'width=' +
-                                iWidth +
-                                ',height='
-                                + iHeight
-                                + ',left='
-                                + iLeft), winDoc = oWindow.document;
-                    winDoc.open();
-                    winDoc.write(sHTML);
-                    winDoc.close();
-                    //ie 重新显示
-                    oWindow.focus();
                 }
             });
         }};
@@ -14569,13 +14760,16 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
     return {
         init:function (editor) {
             formatCmd.init(editor);
-            editor.addButton("removeFormat",{
+            editor.addButton("removeFormat", {
                 tooltip:"清除格式",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            editor.execCommand("removeFormat");
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    editor.execCommand("removeFormat");
-                }
             });
         }
     };
@@ -14655,98 +14849,25 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
 }, {
     requires:['editor', 'dd']
 });/**
- * select component for kissy editor,need refactor to KISSY MenuButton
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/select/index", function (S, Editor, MenuButton, undefined) {
-    /**
-     * 将button ui 和点击功能分离
-     * 按钮必须立刻显示出来，功能可以慢慢加载
-     */
-    Editor.prototype.addSelect = function (id, cfg, methods, SelectType) {
-
-        SelectType = SelectType || MenuButton.Select;
-
-        var self = this, prefixCls = self.get("prefixCls") + "editor-";
-
-        if (cfg) {
-            cfg.editor = self;
-            if (cfg.menu) {
-                cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
-                cfg.menu.xclass = 'popupmenu';
-                S.each(cfg.menu.children, function (child) {
-                    child.xclass = 'option';
-                });
-            }
-        }
-
-        var s = new SelectType(S.mix({
-            elAttrs:{
-                hideFocus:'hideFocus'
-            },
-            render:self.get("toolBarEl"),
-            prefixCls:prefixCls,
-            autoRender:true
-        }, cfg));
-
-        s.get("el").unselectable();
-
-        S.mix(s, methods);
-
-        if (s.selectionChange) {
-            self.on("selectionChange", function () {
-                if (self.get("mode") == Editor.SOURCE_MODE) {
-                    return;
-                }
-                s.selectionChange.apply(s, arguments);
-            });
-        }
-
-        if (s.click) {
-            s.on("click", function (ev) {
-                s.click.apply(s, arguments);
-                ev.halt();
-            });
-        }
-
-        if (cfg.mode == Editor.WYSIWYG_MODE) {
-            self.on("wysiwygMode", function () {
-                s.set('disabled', false);
-            });
-            self.on("sourceMode", function () {
-                s.set('disabled', true);
-            });
-        }
-
-        s.init && s.init();
-
-        self.addControl(id, s);
-        return s;
-
-    };
-
-    return MenuButton.Select;
-}, {
-    requires:['editor', 'menubutton']
-});/**
  * separator for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/separator/index", function (S, Editor) {
+KISSY.add("editor/plugin/separator/index", function (S) {
     return {
         init:function (editor) {
-            var s = new S.Node('<span ' +
+            new S.Node('<span ' +
                 'class="ks-editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
-            editor.on("destroy", function () {
-                s.remove();
-            });
         }
     };
 }, {
     requires:['editor']
-});KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
+});/**
+ * smiley button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
     var smiley_markup = "<div class='ks-editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
@@ -14761,59 +14882,67 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                init:function () {
-                    var self = this;
-                    self.on("blur", function () {
-                        // make click event fire
-                        setTimeout(function () {
-                            self.onClick();
-                        }, 150);
-                    });
-                },
-                offClick:function () {
-                    var self = this, smiley;
-                    if (!(smiley = self.smiley)) {
-                        smiley = self.smiley = new Overlay4E({
-                            content:smiley_markup,
-                            focus4e:false,
-                            width:"297px",
-                            autoRender:true,
-                            elCls:"ks-editor-popup",
-                            zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
-                            mask:false
-                        });
-                        smiley.get("el").on("click", function (ev) {
-                            var t = new S.Node(ev.target),
-                                icon;
-                            if (t.nodeName() == "a" &&
-                                (icon = t.attr("data-icon"))) {
-                                var img = new S.Node("<img " +
-                                    "alt='' src='" +
-                                    icon + "'/>", null,
-                                    editor.get("document")[0]);
-                                editor.insertElement(img);
+                listeners:{
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            self.on("blur", function () {
+                                // make click event fire
+                                setTimeout(function () {
+                                    self.smiley && self.smiley.hide();
+                                }, 150);
+                            });
+                        }
+                    },
+                    click:{
+                        fn:function () {
+                            var self = this, smiley, checked = self.get("checked");
+                            if (checked) {
+                                if (!(smiley = self.smiley)) {
+                                    smiley = self.smiley = new Overlay4E({
+                                        content:smiley_markup,
+                                        focus4e:false,
+                                        width:"297px",
+                                        autoRender:true,
+                                        elCls:"ks-editor-popup",
+                                        zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                        mask:false
+                                    });
+                                    smiley.get("el").on("click", function (ev) {
+                                        var t = new S.Node(ev.target),
+                                            icon;
+                                        if (t.nodeName() == "a" &&
+                                            (icon = t.attr("data-icon"))) {
+                                            var img = new S.Node("<img " +
+                                                "alt='' src='" +
+                                                icon + "'/>", null,
+                                                editor.get("document")[0]);
+                                            editor.insertElement(img);
+                                        }
+                                    });
+                                    smiley.on("hide", function () {
+                                        self.set("checked", false);
+                                    });
+                                }
+                                smiley.set("align", {
+                                    node:this.get("el"),
+                                    points:["bl", "tl"]
+                                });
+                                smiley.show();
+                            } else {
+                                self.smiley && self.smiley.hide();
                             }
-                        });
-                        smiley.on("hide", function () {
-                            self.set("checked", false);
-                        });
+                        }
+                    },
+                    destroy:{
+                        fn:function () {
+                            if (this.smiley) {
+                                this.smiley.destroy();
+                            }
+                        }
                     }
-                    smiley.set("align", {
-                        node:this.get("el"),
-                        points:["bl", "tl"]
-                    });
-                    smiley.show();
                 },
-                onClick:function () {
-                    this.smiley && this.smiley.hide();
-                },
-                destructor:function () {
-                    if (this.smiley) {
-                        this.smiley.destroy();
-                    }
-                }
+                mode:Editor.WYSIWYG_MODE
             });
         }
     };
@@ -14823,7 +14952,7 @@ KISSY.add("editor/plugin/separator/index", function (S, Editor) {
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
+KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
@@ -14831,29 +14960,43 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor, B) {
         init:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
+                listeners:{
+                    afterSyncUI:{
+                        fn:function () {
+                            var self = this;
+                            editor.on("wysiwygMode", function () {
+                                self.set("checked", false);
+                            });
+                            editor.on("sourceMode", function () {
+                                self.set("checked", true);
+                            });
+                        }
+                    },
+                    click:{
+                        fn:function () {
+                            var self = this;
+                            var checked = self.get("checked");
+                            if (checked) {
+                                editor.set("mode", SOURCE_MODE);
+                            } else {
+                                editor.set("mode", WYSIWYG_MODE);
+                            }
+
+                            editor.focus();
+                        }
+                    }
+                },
                 checkable:true
-            }, {
-                init:function () {
-                    var self = this;
-                    editor.on("wysiwygMode", function () {
-                        self.set("checked", false);
-                    });
-                    editor.on("sourceMode", function () {
-                        self.set("checked", true);
-                    });
-                },
-                offClick:function () {
-                    editor.set("mode", SOURCE_MODE);
-                },
-                onClick:function () {
-                    editor.set("mode", WYSIWYG_MODE);
-                }
             });
         }
     };
 }, {
     requires:['editor', '../button/']
 });
+/**
+ * strikeThrough command
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
 
     var STRIKE_STYLE = new Editor.Style({
@@ -14880,14 +15023,18 @@ KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
     }
 }, {
     requires:['editor', '../font/cmd']
-});KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui,cmd) {
+});/**
+ * strikeThrough button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui,cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
             editor.addButton("strikeThrough",{
                 cmdType:"strikeThrough",
                 tooltip:"删除线 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {
@@ -15413,21 +15560,28 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
             editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
+                listeners:{
+                    click:{
+                        fn:function () {
+                            DialogLoader.useDialog(editor, "table/dialog", {
+                                selectedTable:0,
+                                selectedTd:0
+                            });
+                        }
+                    }
+                },
                 tooltip:"插入表格"
-            }, {
-                offClick:function () {
-                    DialogLoader.useDialog(editor, "table/dialog", {
-                        selectedTable:0,
-                        selectedTd:0
-                    });
-                }
             });
 
         }
     }
 }, {
     requires:['editor', '../dialogLoader/', '../contextmenu/']
-});KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
+});/**
+ * underline command
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
 
     var UNDERLINE_STYLE = new Editor.Style({
         element:'u',
@@ -15446,19 +15600,27 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         }};
 }, {
     requires:['editor', '../font/cmd']
-});KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
+});/**
+ * underline button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
             cmd.init(editor);
             editor.addButton("underline",{
                 cmdType:"underline",
                 tooltip:"下划线 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {
     requires:['editor', '../font/ui', './cmd']
-});KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
+});/**
+ * undo button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     function Common(self) {
         var editor = self.get("editor");
         /**
@@ -15472,10 +15634,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
         bindUI:function () {
             Common(this);
-        },
-
-        offClick:function () {
-            this.get("editor").execCommand("undo");
+            this.on("click", function () {
+                this.get("editor").execCommand("undo");
+            });
         },
 
         _respond:function (ev) {
@@ -15506,10 +15667,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
         bindUI:function () {
             Common(this);
-        },
-
-        offClick:function () {
-            this.get("editor").execCommand("redo");
+            this.on("click", function () {
+                this.get("editor").execCommand("redo");
+            });
         },
 
         _respond:function (ev) {
@@ -15789,6 +15949,10 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 }, {
     requires:['editor']
 });
+/**
+ * undo button
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
     return {
         init:function (editor) {
@@ -15798,18 +15962,22 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"撤销",
                 editor:editor
-            }, undefined, Btn.UndoBtn);
+            },  Btn.UndoBtn);
 
             editor.addButton("redo",{
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"重做",
                 editor:editor
-            }, undefined, Btn.RedoBtn);
+            },  Btn.RedoBtn);
         }
     };
 }, {
     requires:['editor', './btn', './cmd']
-});KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
+});/**
+ * ol command
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
 
     var insertUnorderedList = "insertUnorderedList",
         ListCommand = listCmd.ListCommand,
@@ -15852,12 +16020,16 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
             editor.addButton("unorderedList",{
                 cmdType:"insertUnorderedList",
                 mode:Editor.WYSIWYG_MODE
-            }, undefined, ListButton);
+            }, ListButton);
         }
     };
 }, {
     requires:['editor', '../listUtils/btn', './cmd']
-});KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
+});/**
+ * video button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
@@ -15943,6 +16115,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                bubbleId:"video-bubble",
                 contextMenuId:"video-contextmenu",
                 contextMenuHandlers:{
                     "视频属性":function () {
@@ -15956,11 +16129,14 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
 
             editor.addButton("video", {
                 tooltip:"插入视频",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            flashControl.show();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    flashControl.show();
-                }
             });
         }
     };
@@ -15968,7 +16144,11 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
 
 }, {
     requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']
-});KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
+});/**
+ * xiamiMusic button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic";
 
@@ -16057,6 +16237,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
+                bubbleId:"xiami-bubble",
                 contextMenuId:"xiami-contextmenu",
                 contextMenuHandlers:{
                     "虾米属性":function () {
@@ -16070,11 +16251,14 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
 
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            xiamiMusic.show();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    xiamiMusic.show();
-                }
             });
 
         }
@@ -16082,7 +16266,11 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
 
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
-});KISSY.add("editor/full", function (S, Editor) {
+});/**
+ * For package Editor full.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/full", function (S, Editor) {
     return Editor;
 }, {
     requires:['editor']

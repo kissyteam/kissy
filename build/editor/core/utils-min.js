@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 KISSY.add("editor/core/utils",function(e){var g=e.Node,h=e.DOM,f=e.UA,i={debugUrl:function(a){var b=e.Config;b.debug||(a=a.replace(/\.(js|css)/i,"-min.$1"));-1==a.indexOf("?t")&&(a=-1!=a.indexOf("?")?a+"&":a+"?",a+="t="+encodeURIComponent(b.tag));return b.base+"editor/"+a},lazyRun:function(a,b,c){var d=a[b],e=a[c];a[b]=function(){d.apply(this,arguments);a[b]=a[c];return e.apply(this,arguments)}},getXY:function(a,b,c,d){c=c.defaultView||c.parentWindow;a-=h.scrollLeft(c);b-=h.scrollTop(c);d&&(d=d.defaultView||
 d.parentWindow,c!=d&&c.frameElement&&(d=h.offset(c.frameElement,void 0,d),a+=d.left,b+=d.top));return{left:a,top:b}},tryThese:function(a){for(var b,c=0,d=arguments.length;c<d;c++){var e=arguments[c];try{b=e();break}catch(f){}}return b},arrayCompare:function(a,b){if(!a&&!b)return!0;if(!a||!b||a.length!=b.length)return!1;for(var c=0;c<a.length;c++)if(a[c]!==b[c])return!1;return!0},clearAllMarkers:function(a){for(var b in a)a.hasOwnProperty(b)&&a[b]._4e_clearMarkers(a,!0,void 0)},ltrim:function(a){return a.replace(/^\s+/,

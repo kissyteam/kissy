@@ -1,3 +1,7 @@
+/**
+ * underline command
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
 
     var UNDERLINE_STYLE = new Editor.Style({

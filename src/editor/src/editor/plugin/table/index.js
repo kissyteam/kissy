@@ -519,14 +519,17 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
             editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
+                listeners:{
+                    click:{
+                        fn:function () {
+                            DialogLoader.useDialog(editor, "table/dialog", {
+                                selectedTable:0,
+                                selectedTd:0
+                            });
+                        }
+                    }
+                },
                 tooltip:"插入表格"
-            }, {
-                offClick:function () {
-                    DialogLoader.useDialog(editor, "table/dialog", {
-                        selectedTable:0,
-                        selectedTd:0
-                    });
-                }
             });
 
         }

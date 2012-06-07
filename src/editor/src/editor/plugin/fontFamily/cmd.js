@@ -1,3 +1,7 @@
+/**
+ * fontFamily command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
     var fontFamilyStyle = {
         element:'span',

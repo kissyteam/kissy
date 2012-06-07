@@ -2,7 +2,7 @@
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, BubbleView, DialogLoader, flashUtils) {
+KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, Bubble, DialogLoader, flashUtils) {
 
     var Node = S.Node;
 
@@ -16,11 +16,11 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     }
 
     var tipHtml = ' <a ' +
-        'class="ks-editor-bubbleview-url" ' +
+        'class="ks-editor-bubble-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-change">编辑</span>   |   '
-        + ' <span class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">删除</span>';
+        + ' <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |   '
+        + ' <span class="ks-editor-bubble-link ks-editor-bubble-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -28,6 +28,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         label:{
             value:"在新窗口查看"
         },
+        bubbleId:{},
         contextMenuId:{},
         contextMenuHandlers:{}
     };
@@ -37,24 +38,25 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
-                children=[],
-                contextMenuId=self.get("contextMenuId"),
+                children = [],
+                bubbleId = self.get("bubbleId"),
+                contextMenuId = self.get("contextMenuId"),
                 contextMenuHandlers = self.get("contextMenuHandlers");
 
-            S.each(contextMenuHandlers,function(h,content){
+            S.each(contextMenuHandlers, function (h, content) {
                 children.push({
                     content:content
                 })
             });
 
-            editor.addContextMenu(contextMenuId,"." + cls,{
+            editor.addContextMenu(contextMenuId, "." + cls, {
                 width:"120px",
                 children:children,
                 listeners:{
                     click:{
-                        fn:function(e){
-                            var content= e.target.get("content");
-                            if(contextMenuHandlers[content]){
+                        fn:function (e) {
+                            var content = e.target.get("content");
+                            if (contextMenuHandlers[content]) {
                                 contextMenuHandlers[content].call(this);
                             }
                         }
@@ -62,57 +64,61 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 }
             });
 
-            //注册泡泡，selectionChange时检测
-            BubbleView.register({
-                filter:function (el) {
-                    return el.hasClass(cls, undefined) && el;
-                },
-                editor:editor,
-                init:function () {
-                    var bubble = this,
-                        el = bubble.get("contentEl");
-                    el.html(S.substitute(tipHtml, {
-                        label:self.get("label")
-                    }));
-                    var tipUrlEl = el.one(".ks-editor-bubbleview-url"),
-                        tipChangeEl = el.one(".ks-editor-bubbleview-change"),
-                        tipRemoveEl = el.one(".ks-editor-bubbleview-remove");
-                    //ie focus not lose
-                    Editor.Utils.preventFocus(el);
+            editor.addBubble(bubbleId, function (el) {
+                return el.hasClass(cls, undefined) && el;
+            }, {
+                listeners:{
+                    afterRenderUI:{
+                        // 注册泡泡，selectionChange时检测
+                        fn:function () {
+                            var bubble = this,
+                                el = bubble.get("contentEl");
+                            el.html(S.substitute(tipHtml, {
+                                label:self.get("label")
+                            }));
+                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
+                                tipChangeEl = el.one(".ks-editor-bubble-change"),
+                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
 
-                    tipChangeEl.on("click", function (ev) {
-                        //回调show，传入选中元素
-                        self.show(bubble.selectedEl);
-                        ev.halt();
-                    });
+                            // ie focus not lose
+                            Editor.Utils.preventFocus(el);
 
-                    tipRemoveEl.on("click", function (ev) {
-                        // chrome remove 后会没有焦点
-                        if (S.UA['webkit']) {
-                            var r = editor.getSelection().getRanges(),
-                                r0 = r && r[0];
-                            if (r0) {
-                                r0.collapse(true);
-                                r0.select();
-                            }
+                            tipChangeEl.on("click", function (ev) {
+                                // 回调show，传入选中元素
+                                self.show(bubble.get("editorSelectedEl"));
+                                ev.halt();
+                            });
+
+                            tipRemoveEl.on("click", function (ev) {
+                                // chrome remove 后会没有焦点
+                                if (S.UA['webkit']) {
+                                    var r = editor.getSelection().getRanges(),
+                                        r0 = r && r[0];
+                                    if (r0) {
+                                        r0.collapse(true);
+                                        r0.select();
+                                    }
+                                }
+                                bubble.get("editorSelectedEl").remove();
+                                bubble.hide();
+                                editor.notifySelectionChange();
+                                ev.halt();
+                            });
+
+                            /*
+                             位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
+                             */
+                            bubble.on("show", function () {
+                                var a = bubble.get("editorSelectedEl");
+                                if (a) {
+                                    self._updateTip(tipUrlEl, a);
+                                }
+                            });
                         }
-                        bubble.selectedEl.remove();
-                        bubble.hide();
-                        editor.notifySelectionChange();
-                        ev.halt();
-                    });
-
-                    /*
-                     位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
-                     */
-                    bubble.on("show", function () {
-                        var a = bubble.selectedEl;
-                        if (a) {
-                            self._updateTip(tipUrlEl, a);
-                        }
-                    });
+                    }
                 }
-            });
+            })
+
 
             editor.docReady(function () {
                 //注册双击，双击时检测
@@ -165,5 +171,5 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     return Flash;
 
 }, {
-    requires:['editor', '../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils']
+    requires:['editor', '../contextmenu/', '../bubble/', '../dialogLoader/', './utils']
 });

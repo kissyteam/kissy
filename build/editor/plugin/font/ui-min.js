@@ -1,8 +1,8 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
-KISSY.add("editor/plugin/font/ui",function(d,e,j,k){var i=e.Utils.getQueryCmd,d=k.extend({click:function(b){var a=b.target.get("value"),c=this.get("cmdType"),b=b.prevTarget&&b.prevTarget.get("value"),f=this.get("editor");f.focus();a==b?f.execCommand(c,a,!1):f.execCommand(c,a)},selectionChange:function(b){var a=b.path,b=i(this.get("cmdType")),c=this.get("menu"),c=c.get&&c.get("children"),f=this.get("editor"),a=a.elements;if(c){for(var g=0,d;g<a.length;g++){d=a[g];for(var h=0;h<c.length;h++){var e=
-c[h].get("value");if(f.execCommand(b,e,d)){this.set("value",e);return}}}this.set("value",null)}}});return{Button:j.Toggle.extend({offClick:function(){var b=this.get("cmdType"),a=this.get("editor");a.execCommand(b);a.focus()},onClick:function(){var b=this.get("cmdType"),a=this.get("editor");a.execCommand(b,!1);a.focus()},selectionChange:function(b){var a=this.get("editor"),c=i(this.get("cmdType"));a.execCommand(c,b.path)?this.set("checked",!0):this.set("checked",!1)}},{ATTRS:{mode:{value:e.WYSIWYG_MODE}}}),
-Select:d}},{requires:["editor","../button/","../select/"]});
+KISSY.add("editor/plugin/font/ui",function(f,g,l,m){var j=g.Utils.getQueryCmd,f=m.Select.extend({initializer:function(){var a=this,c=a.get("editor");a.on("click",function(b){var e=b.target.get("value"),d=a.get("cmdType"),b=b.prevTarget&&b.prevTarget.get("value");c.focus();e==b?c.execCommand(d,e,!1):c.execCommand(d,e)});c.on("selectionChange",function(b){if(c.get("mode")!=g.SOURCE_MODE){var e=b.path,b=j(a.get("cmdType")),d=a.get("menu"),d=d.get&&d.get("children"),e=e.elements;if(d){for(var h=0,f;h<
+e.length;h++){f=e[h];for(var i=0;i<d.length;i++){var k=d[i].get("value");if(c.execCommand(b,k,f)){a.set("value",k);return}}}a.set("value",null)}}})}});return{Button:l.Toggle.extend({initializer:function(){var a=this,c=a.get("editor"),b=a.get("cmdType");a.on("click",function(){a.get("checked")?c.execCommand(b):c.execCommand(b,!1);c.focus()});c.on("selectionChange",function(b){if(c.get("mode")!=g.SOURCE_MODE){var d=j(a.get("cmdType"));c.execCommand(d,b.path)?a.set("checked",!0):a.set("checked",!1)}})}},
+{ATTRS:{mode:{value:g.WYSIWYG_MODE}}}),Select:f}},{requires:["editor","../button/","../menubutton/"]});

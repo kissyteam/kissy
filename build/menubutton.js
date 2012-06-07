@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 14:20
+build time: Jun 7 22:44
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -21,7 +21,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 return null;
             }
         }
-        if (m.xclass) {
+        if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
                 self.__set("menu", m);
@@ -52,7 +52,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             menu.get("visible")) {
             menu.set("align", S.merge({
                 node:self.get("el")
-            }, ALIGN, self.get("menuAlign")));
+            }, ALIGN, self.get("menuCfg").align));
         }
     }
 
@@ -69,7 +69,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         if (menu && !menu.get("visible")) {
             menu.set("align", S.merge({
                 node:el
-            }, ALIGN, self.get("menuAlign")));
+            }, ALIGN, self.get("menuCfg").align));
             menu.show();
             el.attr("aria-haspopup", menu.get("el").attr("id"));
         }
@@ -330,19 +330,15 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 activeItem:{
                     view:true
                 },
-                /**
-                 * Menu align configuration.See {@link Component.UIBase.Align#align}.
-                 * Default node is menubutton 's root element.
-                 * @type Object
-                 */
-                menuAlign:{
-                    value:{}
-                },
+
                 /**
                  * Menu configuration.See {@link Menu}.
+                 * Can also set "align" to specify button's alignment with menu.
                  * @type Object
                  */
-                menuCfg:{},
+                menuCfg:{
+                    value:{}
+                },
                 /**
                  * @private
                  */

@@ -81,6 +81,7 @@ History:
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件
  - [!] autoHideDelay 单位变更为秒
+ - [!] menuAlign 移到 menuCfg.align 配置
 
  - [+] datalazyload 增加 autoDestroy 配置
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口

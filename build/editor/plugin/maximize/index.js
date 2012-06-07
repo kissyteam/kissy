@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * Maximize plugin
@@ -18,22 +18,26 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
-                checkable:true
-            }, {
-                onClick:function () {
-                    var self = this;
-                    editor.execCommand("restoreWindow");
-                    self.set("tooltip", MAXIMIZE_TIP);
-                    self.set("contentCls", MAXIMIZE_CLASS);
-                    editor.focus();
+                listeners:{
+                    click:{
+                        fn:function () {
+                            var self = this;
+                            var checked = self.get("checked");
+                            if (checked) {
+                                editor.execCommand("maximizeWindow");
+                                self.set("tooltip", RESTORE_TIP);
+                                self.set("contentCls", RESTORE_CLASS);
+                            } else {
+                                editor.execCommand("restoreWindow");
+                                self.set("tooltip", MAXIMIZE_TIP);
+                                self.set("contentCls", MAXIMIZE_CLASS);
+                            }
+
+                            editor.focus();
+                        }
+                    }
                 },
-                offClick:function () {
-                    var self = this;
-                    editor.execCommand("maximizeWindow");
-                    self.set("tooltip", RESTORE_TIP);
-                    self.set("contentCls", RESTORE_CLASS);
-                    editor.focus();
-                }
+                checkable:true
             });
         }
     };

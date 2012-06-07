@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:38
+build time: Jun 7 22:36
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -1185,7 +1185,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     menu.set("align", S.mix({
                         node:self.get("el"),
                         points:['tr', 'tl']
-                    }, self.get("menuAlign")));
+                    }, self.get("menuCfg").align));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -1377,7 +1377,21 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 externalSubMenu:{
                     value:false
                 },
-                menuAlign:{},
+                /**
+                 * Can set "align" to specify alignment submenu with current menuitem
+                 * @type Object
+                 * @example
+                 * <code>
+                 * {
+                 *   align:{
+                 *      points:['cc','cc']
+                 *   }
+                 * }
+                 * </code>
+                 */
+                menuCfg:{
+                    value:{}
+                },
                 menu:{
                 },
                 decorateChildCls:{

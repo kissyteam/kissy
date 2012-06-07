@@ -1,3 +1,7 @@
+/**
+ * color button.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
 
     var Node = S.Node,
@@ -99,24 +103,24 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    var ColorButton = Button.Toggle.extend({
+    return Button.Toggle.extend({
 
-        init:function () {
+        initializer:function () {
             var self = this;
             self.on("blur", function () {
                 // make select color works
                 setTimeout(function () {
-                    self.onClick();
+                    self.colorWin && self.colorWin.hide();
                 }, 150);
             });
-        },
-
-        offClick:function () {
-            this._prepare();
-        },
-
-        onClick:function () {
-            this.colorWin && this.colorWin.hide();
+            self.on('click', function () {
+                var checked = self.get("checked");
+                if (checked) {
+                    self._prepare();
+                } else {
+                    self.colorWin && self.colorWin.hide();
+                }
+            });
         },
 
         _prepare:function () {
@@ -169,7 +173,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         },
 
-        destroy:function () {
+        destructor:function () {
             var self = this;
             if (self.colorWin) {
                 self.colorWin.destroy();
@@ -182,8 +186,6 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         }
     });
-
-    return ColorButton;
 
 }, {
     requires:['editor', '../button/', '../overlay/', '../dialogLoader/']

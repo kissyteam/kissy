@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
             editor.addButton("unorderedList",{
                 cmdType:"insertUnorderedList",
                 mode:Editor.WYSIWYG_MODE
-            }, undefined, ListButton);
+            }, ListButton);
         }
     };
 }, {

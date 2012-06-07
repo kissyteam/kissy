@@ -22,9 +22,11 @@ KISSY.use("menu", function (S, Menu) {
     var b = new Menu.SubMenu({
         prefixCls:prefixCls,
         content:'<span class="title">更多</span>',
-        menuAlign:{
-            offset:[-1, -1],
-            points:['bl', 'tl']
+        menuCfg:{
+            align:{
+                offset:[-1, -1],
+                points:['bl', 'tl']
+            }
         },
         menu:sb
     });

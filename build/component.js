@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:10
+build time: Jun 7 22:35
 */
 /**
  * Setup component namespace.
@@ -146,7 +146,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
     function initChild(self, c, elBefore) {
         // 生成父组件的 dom 结构
         self.create();
-        var contentEl = self.getContentElement(), childConstructor;
+        var contentEl = self.getContentElement();
         c = create(c, self);
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
@@ -160,7 +160,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
         // 子组件和 parent 组件一起渲染
         else {
             // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-            c.create();
+            c.create(undefined);
         }
         return c;
     }
@@ -172,7 +172,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
     function getDefaultView() {
         // 逐层找默认渲染器
         var self = this,
-            c = self.constructor,
             attrs,
             cfg = {},
             Render = self.get('xrender');
@@ -246,10 +245,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             initializer:function () {
                 // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
+                    listener,
+                    n,
+                    attrName,
+                    attrCfg,
+                    listeners = self.get("listeners"),
                     attrs = self.getAttrs();
-                for (var attrName in attrs) {
+                for (attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
+                        attrCfg = attrs[attrName];
                         if (attrCfg.view) {
                             // setter 不应该有实际操作，仅用于正规化比较好
                             // attrCfg.setter = wrapperViewSetter(attrName);
@@ -261,6 +265,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                             attrCfg.getter = wrapperViewGetter(attrName);
                         }
                     }
+                }
+                for (n in listeners) {
+                    listener = listeners[n];
+                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -309,9 +317,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             bindUI:function () {
                 var self = this,
-                    n,
-                    listener,
-                    listeners = self.get("listeners"),
                     focusable = self.get("focusable"),
                     handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
@@ -327,10 +332,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
-                }
-                for (n in listeners) {
-                    listener = listeners[n];
-                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -517,7 +518,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleMouseDown:function (ev) {
                 var self = this,
-                    isMouseActionButton = ev.which == 1,
+                    isMouseActionButton = ev['which'] == 1,
                     el;
                 if (self.get("disabled")) {
                     return true;
@@ -1455,7 +1456,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            if (v) {
+            if (v && ("node" in v)) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
         },
@@ -2475,6 +2476,13 @@ KISSY.add("component/uibase/close", function () {
         },
 
         /**
+         * Close button.
+         */
+        closeBtn:{
+            view:true
+        },
+
+        /**
          * Whether to destroy or hide current element when click close button.
          * Default: "hide". Can set "destroy" to destroy it when click close button.
          * @type String
@@ -2490,13 +2498,19 @@ KISSY.add("component/uibase/close", function () {
     };
 
     Close.prototype = {
-        __bindUI:function () {
-            var self = this,
-                closeBtn = self.get("view").get("closeBtn");
-            closeBtn && closeBtn.on("click", function (ev) {
-                self[actions[self.get("closeAction")] || HIDE]();
-                ev.preventDefault();
-            });
+        _uiSetClosable:function (v) {
+            var self = this;
+            if (v && !self.__bindCloseEvent) {
+                self.__bindCloseEvent = 1;
+                self.get("closeBtn").on("click", function (ev) {
+                    self[actions[self.get("closeAction")] || HIDE]();
+                    ev.preventDefault();
+                });
+            }
+        },
+        __destructor:function () {
+            var btn = this.get("closeAction");
+            btn && btn.detach();
         }
     };
     return Close;
@@ -2508,6 +2522,18 @@ KISSY.add("component/uibase/close", function () {
 KISSY.add("component/uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ks-ext-';
+
+    function getCloseBtn() {
+        return new Node("<a " +
+            "tabindex='0' " +
+            "href='javascript:void(\"关闭\")' " +
+            "role='button' " +
+            "class='" + CLS_PREFIX + "close" + "'>" +
+            "<span class='" +
+            CLS_PREFIX + "close-x" +
+            "'>关闭<" + "/span>" +
+            "<" + "/a>");
+    }
 
     function Close() {
     }
@@ -2521,40 +2547,24 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     Close.HTML_PARSER = {
         closeBtn:function (el) {
-            return el.one("."+ CLS_PREFIX + 'close');
+            return el.one("." + CLS_PREFIX + 'close');
         }
     };
 
     Close.prototype = {
         _uiSetClosable:function (v) {
-            this.get("closeBtn")[v ? "show" : "hide"]();
-        },
-        __createDom:function () {
             var self = this,
-                closeBtn = self.get("closeBtn"),
-                closable = self.get("closable"),
-                el = self.get("el");
-            if (!closeBtn) {
-                closeBtn = new Node("<a " +
-                    "tabindex='0' " +
-                    (closable ? "" : "style='display:none'") +
-                    "href='javascript:void(\"关闭\")' " +
-                    "role='button' " +
-                    "class='" + CLS_PREFIX + "close" + "'>" +
-                    "<span class='" +
-                    CLS_PREFIX + "close-x" +
-                    "'>关闭<" + "/span>" +
-                    "<" + "/a>").appendTo(el);
-                self.__set("closeBtn", closeBtn);
+                btn = self.get("closeBtn");
+            if (v) {
+                if (!btn) {
+                    self.__set("closeBtn", btn = getCloseBtn());
+                }
+                btn.appendTo(self.get("el"), undefined);
             } else {
-                closeBtn[closable ? "show" : "hide"]();
+                if (btn) {
+                    btn.remove();
+                }
             }
-        },
-
-        __destructor:function () {
-            var self = this,
-                closeBtn = self.get("closeBtn");
-            closeBtn && closeBtn.detach();
         }
     };
 

@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
+/**
+ * strikeThrough button
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui,cmd) {
     return {
         init:function (editor) {
@@ -10,7 +14,7 @@ KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui,cmd) {
             editor.addButton("strikeThrough",{
                 cmdType:"strikeThrough",
                 tooltip:"删除线 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {

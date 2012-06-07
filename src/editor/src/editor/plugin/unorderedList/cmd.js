@@ -1,3 +1,7 @@
+/**
+ * ol command
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
 
     var insertUnorderedList = "insertUnorderedList",

@@ -1,3 +1,7 @@
+/**
+ * bold command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
@@ -5,7 +9,7 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
             editor.addButton("bold", {
                 cmdType:'bold',
                 tooltip:"粗体 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {

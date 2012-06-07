@@ -27,7 +27,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
     function initChild(self, c, elBefore) {
         // 生成父组件的 dom 结构
         self.create();
-        var contentEl = self.getContentElement(), childConstructor;
+        var contentEl = self.getContentElement();
         c = create(c, self);
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
@@ -41,7 +41,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
         // 子组件和 parent 组件一起渲染
         else {
             // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-            c.create();
+            c.create(undefined);
         }
         return c;
     }
@@ -53,7 +53,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
     function getDefaultView() {
         // 逐层找默认渲染器
         var self = this,
-            c = self.constructor,
             attrs,
             cfg = {},
             Render = self.get('xrender');
@@ -127,10 +126,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             initializer:function () {
                 // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
+                    listener,
+                    n,
+                    attrName,
+                    attrCfg,
+                    listeners = self.get("listeners"),
                     attrs = self.getAttrs();
-                for (var attrName in attrs) {
+                for (attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
+                        attrCfg = attrs[attrName];
                         if (attrCfg.view) {
                             // setter 不应该有实际操作，仅用于正规化比较好
                             // attrCfg.setter = wrapperViewSetter(attrName);
@@ -142,6 +146,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                             attrCfg.getter = wrapperViewGetter(attrName);
                         }
                     }
+                }
+                for (n in listeners) {
+                    listener = listeners[n];
+                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -190,9 +198,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             bindUI:function () {
                 var self = this,
-                    n,
-                    listener,
-                    listeners = self.get("listeners"),
                     focusable = self.get("focusable"),
                     handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
@@ -208,10 +213,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
-                }
-                for (n in listeners) {
-                    listener = listeners[n];
-                    self.on(n, listener.fn, listener.scope);
                 }
             },
 
@@ -398,7 +399,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              */
             handleMouseDown:function (ev) {
                 var self = this,
-                    isMouseActionButton = ev.which == 1,
+                    isMouseActionButton = ev['which'] == 1,
                     el;
                 if (self.get("disabled")) {
                     return true;

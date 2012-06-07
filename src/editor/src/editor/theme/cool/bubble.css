@@ -2,7 +2,7 @@
 google tip or bubble style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ks-editor-bubbleview-bubble {
+.ks-editor-bubble {
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
@@ -21,13 +21,13 @@ google tip or bubble style for kissy editor
     border-color: #BBB #BBB #A8A8A8;
 }
 
-.ks-editor-bubbleview-link, .ks-editor-bubbleview-url {
+.ks-editor-bubble-link, .ks-editor-bubble-url {
     cursor: pointer;
     text-decoration: none;
     color: #15C;
 }
 
-.ks-editor-bubbleview-link:hover, .ks-editor-bubbleview-url:hover {
+.ks-editor-bubble-link:hover, .ks-editor-bubble-url:hover {
     color: #15C;
     text-decoration: underline;
 }

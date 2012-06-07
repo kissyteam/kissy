@@ -115,7 +115,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     menu.set("align", S.mix({
                         node:self.get("el"),
                         points:['tr', 'tl']
-                    }, self.get("menuAlign")));
+                    }, self.get("menuCfg").align));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -307,7 +307,21 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 externalSubMenu:{
                     value:false
                 },
-                menuAlign:{},
+                /**
+                 * Can set "align" to specify alignment submenu with current menuitem
+                 * @type Object
+                 * @example
+                 * <code>
+                 * {
+                 *   align:{
+                 *      points:['cc','cc']
+                 *   }
+                 * }
+                 * </code>
+                 */
+                menuCfg:{
+                    value:{}
+                },
                 menu:{
                 },
                 decorateChildCls:{

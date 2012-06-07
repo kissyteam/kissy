@@ -30,6 +30,13 @@ KISSY.add("component/uibase/close", function () {
         },
 
         /**
+         * Close button.
+         */
+        closeBtn:{
+            view:true
+        },
+
+        /**
          * Whether to destroy or hide current element when click close button.
          * Default: "hide". Can set "destroy" to destroy it when click close button.
          * @type String
@@ -45,13 +52,19 @@ KISSY.add("component/uibase/close", function () {
     };
 
     Close.prototype = {
-        __bindUI:function () {
-            var self = this,
-                closeBtn = self.get("view").get("closeBtn");
-            closeBtn && closeBtn.on("click", function (ev) {
-                self[actions[self.get("closeAction")] || HIDE]();
-                ev.preventDefault();
-            });
+        _uiSetClosable:function (v) {
+            var self = this;
+            if (v && !self.__bindCloseEvent) {
+                self.__bindCloseEvent = 1;
+                self.get("closeBtn").on("click", function (ev) {
+                    self[actions[self.get("closeAction")] || HIDE]();
+                    ev.preventDefault();
+                });
+            }
+        },
+        __destructor:function () {
+            var btn = this.get("closeAction");
+            btn && btn.detach();
         }
     };
     return Close;

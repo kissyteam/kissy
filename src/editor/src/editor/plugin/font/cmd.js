@@ -1,3 +1,7 @@
+/**
+ * font command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;

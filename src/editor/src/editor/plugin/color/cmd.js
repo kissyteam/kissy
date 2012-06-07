@@ -1,3 +1,7 @@
+/**
+ * color command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/color/cmd", function (S, Editor) {
     function applyColor(editor, c, styles) {
         var doc = editor.get("document")[0];
