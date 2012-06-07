@@ -84,9 +84,10 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                contextMenuId:"video-contextmenu",
                 contextMenuHandlers:{
                     "视频属性":function () {
-                        var selectedEl = this.selectedEl;
+                        var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             flashControl.show(selectedEl);
                         }
@@ -94,7 +95,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 }
             });
 
-            editor.addButton("video",{
+            editor.addButton("video", {
                 tooltip:"插入视频",
                 mode:Editor.WYSIWYG_MODE
             }, {

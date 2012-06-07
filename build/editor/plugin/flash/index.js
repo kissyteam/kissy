@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * Add flash plugin.
@@ -57,9 +57,10 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
+                    contextMenuId:'flash-contextmenu',
                     contextMenuHandlers:{
                         "Flash属性":function () {
-                            var selectedEl = this.selectedEl;
+                            var selectedEl = this.get("editorSelectedEl");
                             if (selectedEl) {
                                 flashControl.show(selectedEl);
                             }
@@ -68,7 +69,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 });
 
             if (pluginConfig.btn !== false) {
-                editor.addButton("flash",{
+                editor.addButton("flash", {
                     tooltip:"插入Flash",
                     mode:Editor.WYSIWYG_MODE
                 }, {

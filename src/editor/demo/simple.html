@@ -318,6 +318,9 @@ KISSY.use('editor', function (S, Editor) {
                 this.on("blur", function () {
                     S.log("editor blur");
                 });
+                this.on("focus", function () {
+                    S.log("editor focus");
+                });
                 this.on("selectionChange", function (e) {
                     S.log("selectionChange : " + e.path.toString());
                 });

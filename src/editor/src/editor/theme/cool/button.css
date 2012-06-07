@@ -1,5 +1,5 @@
 /**
-triple state button style for kissy editor
+KISSY toggle button style for kissy editor
 LoVe F HAte
 @author yiminghe@gmail.com
 **/
@@ -28,7 +28,7 @@ LoVe F HAte
     /*透明边框 ie6 不支持 ,_hack*/
     _border-color: tomato;
     _filter: chroma(color = tomato);
-    outline: none;
+    /*outline: none;*/
 }
 
 .ks-editor-button {

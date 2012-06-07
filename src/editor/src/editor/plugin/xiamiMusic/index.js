@@ -87,16 +87,16 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
+                contextMenuId:"xiami-contextmenu",
                 contextMenuHandlers:{
                     "虾米属性":function () {
-                        var selectedEl = this.selectedEl;
+                        var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             xiamiMusic.show(selectedEl);
                         }
                     }
                 }
             });
-
 
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",

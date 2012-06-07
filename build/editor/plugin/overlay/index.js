@@ -1,14 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
-    var Overlay4E = Overlay.extend([Focus], {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix) {
+    var Overlay4E = Overlay.extend({
+        bindUI:function () {
+            focusFix.init(this);
+        }
     }, {
         ATTRS:{
             prefixCls:{
@@ -20,7 +23,10 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
         }
     });
 
-    Overlay4E.Dialog = Overlay.Dialog.extend([Focus], {
+    Overlay4E.Dialog = Overlay.Dialog.extend({
+        bindUI:function () {
+            focusFix.init(this);
+        },
         show:function () {
             var self = this;
             //在 show 之前调用
@@ -35,8 +41,16 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
         }
     }, {
         ATTRS:{
+            elAttrs:{
+                value:{
+                    hideFocus:'hideFocus'
+                }
+            },
             prefixCls:{
                 value:"ks-editor-"
+            },
+            "zIndex":{
+                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
             draggable:{
                 value:true
@@ -46,14 +60,11 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
             },
             aria:{
                 value:true
-            },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', './focus', 'dd']
+    requires:["editor", 'overlay', '../focusFix/', 'dd']
 });

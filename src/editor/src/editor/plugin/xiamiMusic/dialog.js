@@ -164,7 +164,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
             self._xiamia_list = del.one(".ks-editor-xiami-list");
             self._xiami_submit = del.one(".ks-editor-xiami-submit");
             self._xiami_submit.on("click", function (ev) {
-                if (!self._xiami_submit.hasClass("ks-editor-triplebutton-disabled", undefined))
+                if (!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined))
                     loadRecordsByPage(1);
                 ev.halt();
             });
@@ -212,7 +212,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                     alert("不能为空！");
                     return;
                 }
-                self._xiami_submit.addClass("ks-editor-triplebutton-disabled", undefined);
+                self._xiami_submit.addClass("ks-editor-button-disabled", undefined);
                 var req = S.substitute(XIAMI_URL, {
                     key:encodeURIComponent(input.val()),
                     page:page
@@ -235,7 +235,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                         self._listSearch(data);
                     },
                     error:function () {
-                        self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
+                        self._xiami_submit.removeClass("ks-editor-button-disabled", undefined);
                         var html = "<p style='text-align:center;margin:10px 0;'>" +
                             "不好意思，超时了，请重试！" +
                             "</p>";
@@ -284,8 +284,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 html = "";
             // xiami 返回结果自动trim了
             if (data.key == S.trim(self._xiami_input.val())) {
-                self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
-                //self._xiami_submit.enable();
+                self._xiami_submit.removeClass("ks-editor-button-disabled", undefined);
                 if (re && re.length) {
                     html = "<ul>";
                     for (i = 0; i < re.length; i++) {
@@ -375,8 +374,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 self._xiami_url_wrap.show();
                 self.dialog.get("footer").hide();
                 self._xiamia_title.hide();
-                self._xiami_submit.removeClass("ks-editor-triplebutton-disabled", undefined);
-                //self._xiami_submit.enable();
+                self._xiami_submit.removeClass("ks-editor-button-disabled", undefined);
             }
             self._xiamia_list.hide();
             self._xiamia_list.html("");

@@ -258,12 +258,19 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             },
 
             /**
-             * Retrieve control by id
+             * Retrieve control by id.
              */
             getControl:function (id) {
                 return this.__controls[id];
             },
 
+            /**
+             * Retrieve all controls.
+             * @return {*}
+             */
+            getControls:function () {
+                return this.__controls;
+            },
 
             /**
              * Register a control to editor by id.

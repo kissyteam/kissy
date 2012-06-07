@@ -13,6 +13,8 @@ menu style for kissy editor ,include contextmenu and select menu
     outline: medium none; /*padding: 4px 0;*/
     position: absolute;
     overflow: hidden;
+    left: -9999px;
+    top: -9999px;
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
     /*

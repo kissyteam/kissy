@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * draft for kissy editor
@@ -179,7 +179,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ks-editor-draft-help ks-editor-triplebutton-off" ' +
+                    'class="ks-editor-draft-help" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()

@@ -28,6 +28,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         label:{
             value:"在新窗口查看"
         },
+        contextMenuId:{},
         contextMenuHandlers:{}
     };
 
@@ -36,14 +37,29 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
+                children=[],
+                contextMenuId=self.get("contextMenuId"),
                 contextMenuHandlers = self.get("contextMenuHandlers");
 
-            //注册右键，contextmenu时检测
-            ContextMenu.register({
-                editor:editor,
-                filter:"." + cls,
+            S.each(contextMenuHandlers,function(h,content){
+                children.push({
+                    content:content
+                })
+            });
+
+            editor.addContextMenu(contextMenuId,"." + cls,{
                 width:"120px",
-                handlers:contextMenuHandlers
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function(e){
+                            var content= e.target.get("content");
+                            if(contextMenuHandlers[content]){
+                                contextMenuHandlers[content].call(this);
+                            }
+                        }
+                    }
+                }
             });
 
             //注册泡泡，selectionChange时检测

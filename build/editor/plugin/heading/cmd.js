@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * Adds a heading tag around a selection or insertion point line.

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 KISSY.add("editor/core/domIterator",function(n){function q(f){1>arguments.length||(this.range=f,this.forceBrBreak=k,this.enlargeBr=e,this.enforceRealBlocks=k,this._||(this._={}))}var e=!0,k=!1,o=n.Editor,v=n.UA,s=o.Walker,t=o.Range,f=o.RANGE,u=o.ElementPath,r=n.Node,h=n.DOM,w=/^[\r\n\t ]*$/;n.augment(q,{getNextParagraph:function(o){var c,a,i,g,p;if(!this._.lastNode){a=this.range.clone();a.shrink(f.SHRINK_ELEMENT,e);a.enlarge(this.forceBrBreak||!this.enlargeBr?f.ENLARGE_LIST_ITEM_CONTENTS:f.ENLARGE_BLOCK_CONTENTS);
 var d=new s(a),b=s.bookmark(e,e);d.evaluator=b;this._.nextNode=d.next();d=new s(a);d.evaluator=b;d=d.previous();this._.lastNode=d._4e_nextSourceNode(e);this._.lastNode&&this._.lastNode[0].nodeType==h.TEXT_NODE&&!n.trim(this._.lastNode[0].nodeValue)&&this._.lastNode.parent()._4e_isBlockBoundary()&&(b=new t(a.document),b.moveToPosition(this._.lastNode,f.POSITION_AFTER_END),b.checkEndOfBlock()&&(b=new u(b.endContainer),this._.lastNode=(b.block||b.blockLimit)._4e_nextSourceNode(e)));this._.lastNode||

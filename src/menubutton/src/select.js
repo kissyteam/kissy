@@ -191,6 +191,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                     curValue = element.val(),
                     options = element.all("option");
 
+                cfg.width = width;
+
                 options.each(function (option) {
                     var item = {
                         content:option.text(),
@@ -208,7 +210,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 });
 
                 S.mix(cfg, {
-                    width:width,
                     menu:S.mix({
                         width:width,
                         xclass:'popupmenu',

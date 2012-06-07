@@ -6,10 +6,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
-            var value = ev.newVal,
-                self = this,
-                view = self.get("view");
-            view && view.set(attrName, value);
+            var self = this;
+            // in case bubbled from sub component
+            if (self == ev.target) {
+                var value = ev.newVal,
+                    view = self.get("view");
+                view && view.set(attrName, value);
+            }
         };
     }
 

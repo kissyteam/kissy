@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:30
+build time: Jun 7 14:20
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -684,6 +684,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                     curValue = element.val(),
                     options = element.all("option");
 
+                cfg.width = width;
+
                 options.each(function (option) {
                     var item = {
                         content:option.text(),
@@ -701,7 +703,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 });
 
                 S.mix(cfg, {
-                    width:width,
                     menu:S.mix({
                         width:width,
                         xclass:'popupmenu',

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * Set up editor constructor
@@ -216,7 +216,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
  */
 KISSY.add("editor/plugin/clipboard/index", function (S) {
     var Editor = S.Editor,
-        Node = S.Node,
+        $ = S.all,
         UA = S.UA,
         KERange = Editor.Range,
         KER = Editor.RANGE,
@@ -283,7 +283,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = new Node(UA['webkit'] ? '<body></body>' : '<div></div>', null, doc);
+            var pastebin = $(UA['webkit'] ? '<body></body>' : '<div></div>', null, doc);
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
@@ -370,7 +370,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
     // boolean indicating that the operation succeeded.
     var execIECommand = function (editor, command) {
         var doc = editor.get("document")[0],
-            body = new Node(doc.body);
+            body = $(doc.body);
 
         var enabled = false;
         var onExec = function () {
@@ -440,7 +440,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
         var control;
         if (( sel.getType() == KES.SELECTION_ELEMENT ) && ( control = sel.getSelectedElement() )) {
             var range = sel.getRanges()[ 0 ];
-            var dummy = new Node(editor.get("document")[0].createTextNode(''));
+            var dummy = $(editor.get("document")[0].createTextNode(''));
             dummy.insertBefore(control);
             range.setStartBefore(dummy);
             range.setEndAfter(control);
@@ -469,34 +469,38 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
      * 给所有右键都加入复制粘贴
      */
     Editor.on("contextmenu", function (ev) {
-        var contextmenu = ev.contextmenu,
-            editor = contextmenu.get("editor"),
-            // 原始内容
-            el = contextmenu.menu.get("contentEl"),
-            pastes = {"copy":0, "cut":0, "paste":0};
+        var contextmenu = ev.contextmenu;
+
+        if (contextmenu.__copy_fix) {
+            return;
+        }
+
+        contextmenu.__copy_fix = 1;
+
+        var editor = contextmenu.get("editor"),
+            pastes = {"copy":1, "cut":1, "paste":1};
+
         for (var i in pastes) {
             if (pastes.hasOwnProperty(i)) {
-                pastes[i] = el.one(".ks-editor-paste-" + i);
-                if (!pastes[i]) {
-                    (function (cmd) {
-                        var cmdObj = new Node("<a href='#'" +
-                            "class='ks-editor-paste-" + cmd + "'>"
-                            + lang[cmd]
-                            + "</a>").appendTo(el);
-                        cmdObj.on("click", function (ev) {
-                            ev.halt();
-                            contextmenu.hide();
-                            //给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                            // 原编辑器获得焦点后再进行下步操作
-                            setTimeout(function () {
-                                editor.execCommand(cmd);
-                            }, 30);
-                        });
-                        pastes[cmd] = cmdObj;
-                    })(i);
-                }
+                contextmenu.addChild({
+                    xclass:'menuitem',
+                    content:lang[i],
+                    value:i
+                });
             }
         }
+
+        contextmenu.on('click', function (e) {
+            var value = e.target.get("value");
+            if (pastes[value]) {
+                this.hide();
+                // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                // 原编辑器获得焦点后再进行下步操作
+                setTimeout(function () {
+                    editor.execCommand(value);
+                }, 30);
+            }
+        });
     });
 
     return {
@@ -2786,7 +2790,7 @@ KISSY.add("editor/core/meta", function () {
             "maximize":['./cmd'],
             "multipleUpload":['../dialogLoader/'],
             "outdent":['./cmd'],
-            "overlay":['./focus', 'dd'],
+            "overlay":['dd'],
             "pageBreak":["../fakeObjects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],
@@ -8359,12 +8363,19 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             },
 
             /**
-             * Retrieve control by id
+             * Retrieve control by id.
              */
             getControl:function (id) {
                 return this.__controls[id];
             },
 
+            /**
+             * Retrieve all controls.
+             * @return {*}
+             */
+            getControls:function () {
+                return this.__controls;
+            },
 
             /**
              * Register a control to editor by id.
@@ -9569,7 +9580,7 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
 }, {
     requires:['overlay', 'editor']
 });/**
- * Encapsulate triple state button for kissy editor
+ * Encapsulate KISSY toggle button for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
@@ -9938,43 +9949,42 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
-    var $ = S.all,
-        MENUITEM_DISABLED_CLS = "ks-editor-menuitem-disable",
-        Event = S.Event;
+KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix) {
 
-    /**
-     * 组合使用 overlay
-     */
-    function ContextMenu() {
-        ContextMenu.superclass.constructor.apply(this, arguments);
-    }
+    Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
-    /**
-     * 多菜单管理
-     */
-    ContextMenu.register = function (cfg) {
-        var cm = new ContextMenu(cfg),
-            editor = cfg.editor;
+        var self = this;
 
-        cm.editor = editor;
+        cfg = cfg || {};
 
-        editor.on("destroy", function () {
-            cm.destroy();
-        });
+        cfg.prefixCls = self.get("prefixCls") + "editor-";
+        cfg.editor = self;
+        cfg.focusable = 1;
+        cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
+        cfg.elAttrs = {
+            hideFocus:'hideFocus'
+        };
 
-        function hideContextMenu() {
-            cm.hide();
+        if (cfg.children) {
+            S.each(cfg.children, function (c) {
+                c.xclass = 'menuitem';
+            });
         }
 
-        editor.on("sourceMode", hideContextMenu);
+        var menu = new Menu.PopupMenu(cfg);
+
+        focusFix.init(menu);
 
         editor.docReady(function () {
-            var doc = editor.get("document")[0];
-            Event.on(doc, "mousedown", hideContextMenu);
-            Event.delegate(doc, "contextmenu", cfg.filter, function (ev) {
-                ContextMenu.hide(editor);
-                var t = $(ev.target);
+            var doc = editor.get("document");
+            // 编辑器获得焦点，不会触发 menu el blur？
+            doc.on("mousedown", function (e) {
+                if (e.button == 1) {
+                    menu.hide();
+                }
+            });
+            doc.delegate("contextmenu", filter, function (ev) {
+                var t = S.all(ev.target);
                 ev.halt();
                 // ie 右键作用中，不会发生焦点转移，光标移动
                 // 只能右键作用完后才能，才会发生光标移动,range变化
@@ -9983,125 +9993,37 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Overlay) {
                 var x = ev.pageX,
                     y = ev.pageY;
                 if (!x) {
-                    var xy = t._4e_getOffset(undefined);
+                    var xy = t.offset(document);
                     x = xy.left;
                     y = xy.top;
+                } else {
+                    var translate = Editor.Utils.getXY(x, y, doc[0], document);
+                    x = translate.left;
+                    y = translate.top;
                 }
                 setTimeout(function () {
-                    cm.selectedEl = t;
-                    cm.show(Editor.Utils.getXY(x, y, doc, document));
-                    ContextMenu.show(cm);
+                    menu.set("editorSelectedEl", t, {
+                        silent:1
+                    });
+                    menu.set("xy", [x, y]);
+                    menu.show();
+                    Editor.fire("contextmenu", {
+                        contextmenu:menu
+                    });
+                    window.focus();
+                    document.body.focus();
+                    // 防止焦点一直在 el，focus 无效
+                    menu.get("el")[0].focus();
                 }, 30);
             });
         });
 
-        return cm;
+        editor.addControl(id, menu);
+
+        return menu;
     };
-
-    /**
-     * last visible menu of each editor
-     */
-    var visibleContextMenus = {
-        /**
-         * editorStamp:menu
-         */
-    };
-
-    ContextMenu.hide = function (editor) {
-        var last = visibleContextMenus[S.stamp(editor)];
-        if (last) {
-            last.hide();
-        }
-    };
-
-    ContextMenu.show = function (cm) {
-        visibleContextMenus[S.stamp(cm.editor)] = cm;
-    };
-
-    S.extend(ContextMenu, S.Base, {
-        /**
-         * 根据配置构造右键菜单内容
-         */
-        _init:function () {
-            var self = this,
-                handlers = self.get("handlers");
-            self.menu = new Overlay({
-                autoRender:true,
-                width:self.get("width"),
-                elCls:'ks-editor-menu',
-                prefixCls:"ks-editor-"
-            });
-            var el = self.menu.get("contentEl");
-            for (var f in handlers) {
-                var a = $("<a href='#' class='ks-editor-menuitem'>" + f + "</a>");
-                el.append(a);
-                if (handlers.hasOwnProperty(f)) {
-                    (function (a, handler) {
-                        a.unselectable(undefined);
-                        a.on("click", function (ev) {
-                            ev.halt();
-                            if (a.hasClass(MENUITEM_DISABLED_CLS, undefined)) {
-                                return;
-                            }
-                            //先 hide 还原编辑器内焦点
-                            self.hide();
-
-                            //给 ie 一点 hide() 中的事件触发 handler 运行机会，原编辑器获得焦点后再进行下步操作
-                            S.later(handler, 30, false, self);
-                        });
-                    })(a, handlers[f]);
-                }
-            }
-
-        },
-        destroy:function () {
-            var t;
-            if (t = this.menu) {
-                t.destroy();
-            }
-        },
-        hide:function () {
-            var t;
-            if (t = this.menu) {
-                t.hide();
-            }
-        },
-        _realShow:function (offset) {
-            var self = this,
-                menu = self.menu;
-            //防止ie 失去焦点，取不到复制等状态
-            Editor.fire("contextmenu", {
-                contextmenu:self
-            });
-            menu.set("xy", [offset.left, offset.top]);
-            var statusChecker = self.get("statusChecker"),
-                editor = self.editor;
-            if (statusChecker) {
-                var as = menu.get("contentEl").children("a");
-                as.each(function (a) {
-                    var func = statusChecker[S.trim(a.text())];
-                    if (func) {
-                        if (func(editor)) {
-                            a.removeClass(MENUITEM_DISABLED_CLS, undefined);
-                        } else {
-                            a.addClass(MENUITEM_DISABLED_CLS, undefined);
-                        }
-                    }
-                });
-            }
-            menu.show();
-        },
-        show:function (offset) {
-            var self = this;
-            self._init();
-            self.show = self._realShow;
-            self.show(offset);
-        }
-    });
-
-    return ContextMenu;
 }, {
-    requires:['editor', 'overlay']
+    requires:['editor', 'menu', '../focusFix/']
 });
 /**
  * Add indent and outdent command identifier for KISSY Editor.Modified from CKEditor
@@ -10413,8 +10335,13 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
 
     return {
         useDialog:function (editor, name, args) {
+            // restore focus in editor
+            // make dialog remember
+            editor.focus();
             if (editor.hasDialog(name)) {
-                editor.showDialog(name, args);
+                setTimeout(function () {
+                    editor.showDialog(name, args);
+                }, 0);
                 return;
             }
             loadMask.loading();
@@ -10603,7 +10530,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ks-editor-draft-help ks-editor-triplebutton-off" ' +
+                    'class="ks-editor-draft-help" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -11466,6 +11393,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         label:{
             value:"在新窗口查看"
         },
+        contextMenuId:{},
         contextMenuHandlers:{}
     };
 
@@ -11474,14 +11402,29 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
+                children=[],
+                contextMenuId=self.get("contextMenuId"),
                 contextMenuHandlers = self.get("contextMenuHandlers");
 
-            //注册右键，contextmenu时检测
-            ContextMenu.register({
-                editor:editor,
-                filter:"." + cls,
+            S.each(contextMenuHandlers,function(h,content){
+                children.push({
+                    content:content
+                })
+            });
+
+            editor.addContextMenu(contextMenuId,"." + cls,{
                 width:"120px",
-                handlers:contextMenuHandlers
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function(e){
+                            var content= e.target.get("content");
+                            if(contextMenuHandlers[content]){
+                                contextMenuHandlers[content].call(this);
+                            }
+                        }
+                    }
+                }
             });
 
             //注册泡泡，selectionChange时检测
@@ -11845,9 +11788,10 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
+                    contextMenuId:'flash-contextmenu',
                     contextMenuHandlers:{
                         "Flash属性":function () {
-                            var selectedEl = this.selectedEl;
+                            var selectedEl = this.get("editorSelectedEl");
                             if (selectedEl) {
                                 flashControl.show(selectedEl);
                             }
@@ -11856,7 +11800,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 });
 
             if (pluginConfig.btn !== false) {
-                editor.addButton("flash",{
+                editor.addButton("flash", {
                     tooltip:"插入Flash",
                     mode:Editor.WYSIWYG_MODE
                 }, {
@@ -11870,6 +11814,72 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
 
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
+});/**
+ * save and restore focus when overlay shows or hides
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/focusFix/index", function (S, Editor) {
+    var UA = S.UA,
+        focusManager = Editor.focusManager;
+
+    function _show4FocusExt() {
+        var self = this;
+        // 保存当前焦点editor
+
+        self._focusEditor = focusManager.currentInstance();
+        var editor = self._focusEditor;
+        /*
+         * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
+         * then IE would still leave the caret inside the editing area.
+         */
+        // ie9 图片resize框，仍然会突出
+        if (UA['ie'] && editor) {
+            // 聚焦到当前窗口
+            // 使得编辑器失去焦点，促使ie保存当前选择区域（位置）
+            // chrome 需要下面两句
+            window['focus']();
+            document.body.focus();
+
+            var $selection = editor.get("document")[0].selection,
+                $range = $selection.createRange();
+            if ($range) {
+                if (
+                // 如果单纯选择文字就不用管了
+                // $range.parentElement &&
+                // $range.parentElement().ownerDocument == editor.document
+                // ||
+                // 缩放图片那个框在ie下会突出浮动层来
+                    $range.item
+                        && $range.item(0).ownerDocument == editor.get("document")[0]) {
+                    var $myRange = document.body.createTextRange();
+                    $myRange.moveToElementText(self.get("el").first()[0]);
+                    $myRange.collapse(true);
+                    $myRange.select();
+                }
+            }
+        }
+    }
+
+    function _hide4FocusExt() {
+        var editor = this._focusEditor;
+        editor && editor.focus();
+    }
+
+    return {
+        init:function (self) {
+            self.on("beforeVisibleChange", function (e) {
+                if (e.newVal) {
+                    _show4FocusExt.call(self);
+                }
+            });
+            self.on("hide", function () {
+                _hide4FocusExt.call(self);
+            });
+        }
+    };
+
+}, {
+    requires:['editor']
 });KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
     var fontFamilyStyle = {
         element:'span',
@@ -12411,7 +12421,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
-            editor.addButton("image",{
+            editor.addButton("image", {
                 tooltip:"插入图片",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -12420,33 +12430,60 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, BubbleView, 
                 }
             });
 
-            var handlers = {
-                "图片属性":function () {
-                    var img = checkImg(this.selectedEl);
-                    if (img) {
-                        showImageEditor($(img));
+            var handlers = [
+                {
+                    content:"图片属性",
+                    fn:function () {
+                        var img = checkImg(this.get("editorSelectedEl"));
+                        if (img) {
+                            // make editor restore focus
+                            this.hide();
+                            showImageEditor($(img));
+                        }
                     }
                 },
-                "插入新行":function () {
-                    var doc = editor.get("document")[0],
-                        p = new Node(doc.createElement("p"));
-                    if (!UA['ie']) {
-                        p._4e_appendBogus(undefined);
+                {
+                    content:"插入新行",
+                    fn:function () {
+                        this.hide();
+                        var doc = editor.get("document")[0],
+                            p = new Node(doc.createElement("p"));
+                        if (!UA['ie']) {
+                            p._4e_appendBogus(undefined);
+                        }
+                        var r = new Editor.Range(doc);
+                        r.setStartAfter(this.get("editorSelectedEl"));
+                        r.select();
+                        editor.insertElement(p);
+                        r.moveToElementEditablePosition(p, 1);
+                        r.select();
                     }
-                    var r = new Editor.Range(doc);
-                    r.setStartAfter(this.selectedEl);
-                    r.select();
-                    editor.insertElement(p);
-                    r.moveToElementEditablePosition(p, 1);
-                    r.select();
                 }
-            };
+            ];
 
-            ContextMenu.register({
-                editor:editor,
-                filter:checkImg,
-                width:"120px",
-                handlers:handlers
+            var children = [];
+
+            S.each(handlers, function (h) {
+                children.push({
+                    content:h.content
+                })
+            });
+
+            editor.addContextMenu("image-contextmenu", checkImg, {
+                width:120,
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function (e) {
+                            var self = this, content = e.target.get('content');
+                            S.each(handlers, function (h) {
+                                if (h.content == content) {
+                                    h.fn.call(self);
+                                }
+                            });
+                        }
+                    }
+                }
             });
 
             editor.docReady(function () {
@@ -14119,88 +14156,14 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 }, {
     requires:['editor', './cmd']
 });/**
- * save and restore focus when overlay shows or hides
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/overlay/focus", function (S, Editor) {
-    var UA = S.UA,
-        focusManager = Editor.focusManager;
-
-    function FocusExt() {
-    }
-
-    FocusExt.ATTRS = {
-        focus4e:{
-            value:true
-        }
-    };
-
-    FocusExt.prototype = {
-        _uiSetFocus4e:function (v) {
-            var self = this;
-            if (v) {
-                self.on("show", self._show4FocusExt, self);
-                self.on("hide", self._hide4FocusExt, self);
-            } else {
-                self.detach("show", self._show4FocusExt, self);
-                self.detach("hide", self._hide4FocusExt, self);
-            }
-        },
-        _show4FocusExt:function () {
-            var self = this;
-            //保存当前焦点editor
-            self._focusEditor = focusManager.currentInstance();
-            var editor = self._focusEditor;
-            /*
-             * IE BUG: If the initial focus went into a non-text element (e.g. button,image),
-             * then IE would still leave the caret inside the editing area.
-             */
-            //ie9 图片resize框，仍然会突出
-            if (UA['ie'] && editor) {
-
-                //聚焦到当前窗口
-                //使得编辑器失去焦点，促使ie保存当前选择区域（位置）
-                //chrome 需要下面两句
-                window['focus']();
-                document.body.focus();
-
-                var $selection = editor.get("document")[0].selection,
-                    $range = $selection.createRange();
-                if ($range) {
-                    if (
-                    // 如果单纯选择文字就不用管了
-                    // $range.parentElement &&
-                    // $range.parentElement().ownerDocument == editor.document
-                    //||
-                    //缩放图片那个框在ie下会突出浮动层来
-                        $range.item
-                            && $range.item(0).ownerDocument == editor.get("document")[0]) {
-                        var $myRange = document.body.createTextRange();
-                        $myRange.moveToElementText(self.get("el").first()[0]);
-                        $myRange.collapse(true);
-                        $myRange.select();
-                    }
-                }
-            }
-
-
-        },
-        _hide4FocusExt:function () {
-            var editor = this._focusEditor;
-            editor && editor.focus();
-        }
-    };
-
-    return FocusExt;
-
-}, {
-    requires:['editor']
-});/**
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
-    var Overlay4E = Overlay.extend([Focus], {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix) {
+    var Overlay4E = Overlay.extend({
+        bindUI:function () {
+            focusFix.init(this);
+        }
     }, {
         ATTRS:{
             prefixCls:{
@@ -14212,7 +14175,10 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
         }
     });
 
-    Overlay4E.Dialog = Overlay.Dialog.extend([Focus], {
+    Overlay4E.Dialog = Overlay.Dialog.extend({
+        bindUI:function () {
+            focusFix.init(this);
+        },
         show:function () {
             var self = this;
             //在 show 之前调用
@@ -14227,8 +14193,16 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
         }
     }, {
         ATTRS:{
+            elAttrs:{
+                value:{
+                    hideFocus:'hideFocus'
+                }
+            },
             prefixCls:{
                 value:"ks-editor-"
+            },
+            "zIndex":{
+                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
             draggable:{
                 value:true
@@ -14238,16 +14212,13 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, Focus) {
             },
             aria:{
                 value:true
-            },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', './focus', 'dd']
+    requires:["editor", 'overlay', '../focusFix/', 'dd']
 });/**
  * pagebreak functionality
  * @author yiminghe@gmail.com
@@ -15214,7 +15185,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         var td = startElement.closest(function (n) {
             var name = DOM.nodeName(n);
             return table.contains(n) && (name == "td" || name == "th");
-        },undefined);
+        }, undefined);
         var tr = startElement.closest(function (n) {
             var name = DOM.nodeName(n);
             return table.contains(n) && name == "tr";
@@ -15306,7 +15277,6 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
 
     return {
         init:function (editor) {
-
             /**
              * 动态加入显表格border css，便于编辑
              */
@@ -15322,6 +15292,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             var handlers = {
 
                 "表格属性":function () {
+                    this.hide();
                     var info = getSel(editor);
                     if (info) {
                         DialogLoader.useDialog(editor, "table/dialog", {
@@ -15332,6 +15303,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 },
 
                 "删除表格":function () {
+                    this.hide();
                     var selection = editor.getSelection(),
                         startElement = selection && selection.getStartElement(),
                         table = startElement && startElement.closest('table', undefined);
@@ -15359,51 +15331,87 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 },
 
                 '删除行 ':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     placeCursorInCell(deleteRows(selection), undefined);
                 },
 
                 '删除列 ':function () {
+                    this.hide();
                     var selection = editor.getSelection(),
                         element = deleteColumns(selection);
                     element && placeCursorInCell(element, true);
                 },
 
                 '在上方插入行':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertRow(selection, true);
                 },
 
                 '在下方插入行':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertRow(selection, undefined);
                 },
 
                 '在左侧插入列':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertColumn(selection, true);
                 },
 
                 '在右侧插入列':function () {
+                    this.hide();
                     var selection = editor.getSelection();
                     insertColumn(selection, undefined);
                 }
             };
 
-            ContextMenu.register({
-                editor:editor,
-                filter:function (node) {
-                    if (S.inArray(DOM.nodeName(node), tableRules)) {
-                        return true;
-                    }
-                },
-                statusChecker:statusChecker,
-                width:"120px",
-                handlers:handlers
+            var children = [];
+            S.each(handlers, function (h, name) {
+                children.push({
+                    content:name
+                });
             });
 
+            editor.addContextMenu("table-contextmenu", function (node) {
+                if (S.inArray(DOM.nodeName(node), tableRules)) {
+                    return true;
+                }
+            }, {
+                width:"120px",
+                children:children,
+                listeners:{
+                    click:{
+                        fn:function (e) {
+                            var content = e.target.get("content");
+                            if (handlers[content]) {
+                                handlers[content].apply(this);
+                            }
+                        }
+                    },
+                    beforeVisibleChange:{
+                        fn:function (e) {
+                            if (e.newVal) {
+                                var self = this, children = self.get("children");
+                                var editor = self.get("editor");
+                                S.each(children, function (c) {
+                                    var content = c.get("content");
+                                    if (!statusChecker[content] ||
+                                        statusChecker[content].call(self, editor)) {
+                                        c.set("disabled", false);
+                                    } else {
+                                        c.set("disabled", true);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            });
 
-            editor.addButton("table",{
+            editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"插入表格"
             }, {
@@ -15935,9 +15943,10 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                contextMenuId:"video-contextmenu",
                 contextMenuHandlers:{
                     "视频属性":function () {
-                        var selectedEl = this.selectedEl;
+                        var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             flashControl.show(selectedEl);
                         }
@@ -15945,7 +15954,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 }
             });
 
-            editor.addButton("video",{
+            editor.addButton("video", {
                 tooltip:"插入视频",
                 mode:Editor.WYSIWYG_MODE
             }, {
@@ -16048,16 +16057,16 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
+                contextMenuId:"xiami-contextmenu",
                 contextMenuHandlers:{
                     "虾米属性":function () {
-                        var selectedEl = this.selectedEl;
+                        var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             xiamiMusic.show(selectedEl);
                         }
                     }
                 }
             });
-
 
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",

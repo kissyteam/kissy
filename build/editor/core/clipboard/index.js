@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:48
+build time: Jun 7 15:13
 */
 /**
  * monitor user's paste key ,clear user input,modified from ckeditor
@@ -9,7 +9,7 @@ build time: Jun 7 00:48
  */
 KISSY.add("editor/plugin/clipboard/index", function (S) {
     var Editor = S.Editor,
-        Node = S.Node,
+        $ = S.all,
         UA = S.UA,
         KERange = Editor.Range,
         KER = Editor.RANGE,
@@ -76,7 +76,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = new Node(UA['webkit'] ? '<body></body>' : '<div></div>', null, doc);
+            var pastebin = $(UA['webkit'] ? '<body></body>' : '<div></div>', null, doc);
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
@@ -163,7 +163,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
     // boolean indicating that the operation succeeded.
     var execIECommand = function (editor, command) {
         var doc = editor.get("document")[0],
-            body = new Node(doc.body);
+            body = $(doc.body);
 
         var enabled = false;
         var onExec = function () {
@@ -233,7 +233,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
         var control;
         if (( sel.getType() == KES.SELECTION_ELEMENT ) && ( control = sel.getSelectedElement() )) {
             var range = sel.getRanges()[ 0 ];
-            var dummy = new Node(editor.get("document")[0].createTextNode(''));
+            var dummy = $(editor.get("document")[0].createTextNode(''));
             dummy.insertBefore(control);
             range.setStartBefore(dummy);
             range.setEndAfter(control);
@@ -262,34 +262,38 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
      * 给所有右键都加入复制粘贴
      */
     Editor.on("contextmenu", function (ev) {
-        var contextmenu = ev.contextmenu,
-            editor = contextmenu.get("editor"),
-            // 原始内容
-            el = contextmenu.menu.get("contentEl"),
-            pastes = {"copy":0, "cut":0, "paste":0};
+        var contextmenu = ev.contextmenu;
+
+        if (contextmenu.__copy_fix) {
+            return;
+        }
+
+        contextmenu.__copy_fix = 1;
+
+        var editor = contextmenu.get("editor"),
+            pastes = {"copy":1, "cut":1, "paste":1};
+
         for (var i in pastes) {
             if (pastes.hasOwnProperty(i)) {
-                pastes[i] = el.one(".ks-editor-paste-" + i);
-                if (!pastes[i]) {
-                    (function (cmd) {
-                        var cmdObj = new Node("<a href='#'" +
-                            "class='ks-editor-paste-" + cmd + "'>"
-                            + lang[cmd]
-                            + "</a>").appendTo(el);
-                        cmdObj.on("click", function (ev) {
-                            ev.halt();
-                            contextmenu.hide();
-                            //给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                            // 原编辑器获得焦点后再进行下步操作
-                            setTimeout(function () {
-                                editor.execCommand(cmd);
-                            }, 30);
-                        });
-                        pastes[cmd] = cmdObj;
-                    })(i);
-                }
+                contextmenu.addChild({
+                    xclass:'menuitem',
+                    content:lang[i],
+                    value:i
+                });
             }
         }
+
+        contextmenu.on('click', function (e) {
+            var value = e.target.get("value");
+            if (pastes[value]) {
+                this.hide();
+                // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                // 原编辑器获得焦点后再进行下步操作
+                setTimeout(function () {
+                    editor.execCommand(value);
+                }, 30);
+            }
+        });
     });
 
     return {

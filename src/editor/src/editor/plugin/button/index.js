@@ -1,5 +1,5 @@
 /**
- * Encapsulate triple state button for kissy editor
+ * Encapsulate KISSY toggle button for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
