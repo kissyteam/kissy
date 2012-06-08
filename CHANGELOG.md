@@ -91,6 +91,7 @@ History:
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
  - [+] switchable 增加 add/remove/destroy
+ - [!] switchable _switchView 参数变化，覆盖注意（不推荐覆盖）
 
  - [+] waterfall 增加方法 adjustItem/removeItem/start 以及配置 adjustEffect。支持调整时的动画。
  - [+] waterfall item class 支持配置 ks-waterfall-item-fixed-right/left 固定列。
