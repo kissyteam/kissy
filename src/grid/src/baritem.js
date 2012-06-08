@@ -70,11 +70,14 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 			*/
 			focusable : {
 				value : false
+			},
+			/**
+			* @private
+			*/
+			xrender : {
+				value : BarItemRender	
 			}
-		},
-		
-		
-		DefaultRender : BarItemRender
+		}
 	},{
 		xclass : 'bar-item',
 		priority : 1	

@@ -17,7 +17,7 @@ KISSY.use('grid/header',function(S,Header){
 		}];
 		header = new Header({
 			render : '#J_Header',
-			tableCls : 'table table-bordered table-striped',
+			tableCls : '',
 			children: S.clone(columns)
 		});
 
@@ -25,6 +25,13 @@ KISSY.use('grid/header',function(S,Header){
 	var headerEl = header.get('el');
 	function getTitle(colEl){
 		return 	colEl.one('.ks-grid-hd-title').text();
+	}
+
+	function getSetWidth(el){
+		var dom = el[0];
+		if(dom){
+			return dom.style.width;
+		}
 	}
 	describe("测试 header 生成", function () {
 		var container = headerEl.one('tr'),
@@ -83,6 +90,31 @@ KISSY.use('grid/header',function(S,Header){
 			var index = 2,
 				text = getTitle(S.one(children[index]));
 			expect(columns[index].dataIndex).toBe(text);
+		});
+
+		it('测试表头宽度',function(){
+			var width = 700,
+				tableEl = headerEl.one('table'),
+				columsWidth = header.getColumnsWidth();
+			header.set('width',width);
+			if(columsWidth > width){
+				expect(tableEl.width()).toBe(columsWidth);
+			}else{
+				expect(getSetWidth(tableEl)).toBe(width + 'px');
+			}
+		});
+
+		it('更改列宽度',function(){
+			var index = 2,
+				colObj = header.getColumnByIndex(index),
+				callBack = jasmine.createSpy();
+			var tableEl = headerEl.one('table');
+			colObj.on('afterWidthChange',function(){
+				callBack();
+			});
+			colObj.set('width',200);
+			expect(callBack).toHaveBeenCalled();
+			
 		});
 	});
 

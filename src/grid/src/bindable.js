@@ -25,7 +25,7 @@ KISSY.add('grid/bindable',function(S){
 		*/
 		loadMask : {
 			value : true
-		},
+		}
 	}
 	S.augment(bindable,
 	/**

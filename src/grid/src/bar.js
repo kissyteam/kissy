@@ -82,10 +82,15 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 			*/
 			focusable : {
 				value : false
+			},
+			/**
+			* @private
+			*/
+			xrender : {
+				value : BarRender	
 			}
 		},
-		BarItem : BarItem,
-		DefaultRender : BarRender
+		BarItem : BarItem
 	},{
 		xclass : 'bar',
 		priority : 1	

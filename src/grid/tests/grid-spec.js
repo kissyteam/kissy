@@ -1,103 +1,201 @@
-KISSY.use('grid/base',function(S,Grid){
+KISSY.use('grid/base,grid/store',function(S,Grid,Store){
+	var columns = [{
+				title : 'è¡¨å¤´1',
+				dataIndex :'a',
+				sortState :'ASC'
+			},{
+				id: '123',
+				title : 'è¡¨å¤´2',
+				dataIndex :'b',
+				sortable:false
+			},{
+				title : 'è¡¨å¤´3',
+				dataIndex : 'c'
+		},{
+			id : 'colhide',
+			title : 'éšè—',
+			dataIndex : 'd',
+			hide : true
+		}],
+		data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}],
+		store = new Store({
+			
+		});
+	var grid = new Grid({
+		render:'#J_Grid',
+		columns : columns,
+		tableCls : '',//'table table-bordered table-striped',
+		//width : 900,
+		store : store
+	});
+	grid.render();
+	var gridEl = grid.get('el'),
+		header = grid.get('header'),
+		body = grid.get('body');
 
-	describe("²âÊÔGrid Éú³É", function () {
-		it('²âÊÔGrid ÔªËØÉú³É',function(){
+	function getSetWidth(el){
+		var dom = el[0];
+		if(dom){
+			return dom.style.width;
+		}
+	}
+	describe("æµ‹è¯•Grid ç”Ÿæˆ", function () {
+		it('æµ‹è¯•Grid å…ƒç´ ç”Ÿæˆ',function(){
+			expect(gridEl).not.toBe(null);
+			expect(gridEl.hasClass('ks-grid')).toBeTruthy();
+		});
+
+		it('æµ‹è¯•Grid è¡¨å¤´ç”Ÿæˆ',function(){
+			var headerEl = gridEl.one('.ks-grid-header');
+			expect(headerEl).not.toBe(null);
+		});
+
+		it('æµ‹è¯•Grid Bodyç”Ÿæˆ',function(){
+			var bodyEl = gridEl.one('.ks-grid-body');
+			expect(bodyEl).not.toBe(null);
+		});
+
+		it('æµ‹è¯•Grid å‘½ä»¤æ çš„ç”Ÿæˆ',function(){
 			
 		});
 
-		it('²âÊÔGrid ÁÐÔªËØµÄÉú³É',function(){
+		it('æµ‹è¯•Grid åˆ†é¡µæ çš„ç”Ÿæˆ',function(){
+			
+		});
+		it('æµ‹è¯•Gridæ˜¾ç¤ºæ•°æ®',function(){
+			store.setResult(data);
+			expect(gridEl.all('.ks-grid-row').length).toBe(data.length);
+		});
+	});
+
+	describe("æµ‹è¯• å­æ¨¡å—ä¹‹é—´çš„è”åŠ¨", function () {
+		describe("æµ‹è¯•è¡¨å¤´å’Œå†…å®¹ä¹‹é—´çš„è”åŠ¨", function () {
+			it('æŽ’åº',function(){
+				var index = 0,
+					colObj = header.getColumnByIndex(index);
+				spyOn(body, 'onLocalSort');
+				colObj.set('sortState','DESC');
+				expect(body.onLocalSort).toHaveBeenCalled();
+			});
+
+			it('æµ‹è¯•æ›´æ”¹åˆ—å®½åº¦',function(){
+				var index = 2,
+					colObj = header.getColumnByIndex(index),
+					bodyEl = body.get('el'),
+					firstRowEl = bodyEl.one('.ks-grid-header-row'),
+					width = 150,
+					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
+
+				colObj.set('width',width);
+				expect(getSetWidth(cellEl)).toBe(width + 'px');
+			});
+
+			it('æ˜¾ç¤ºã€éšè—åˆ—',function(){
+				var index = 2,
+					colObj = header.getColumnById('colhide'),
+					bodyEl = body.get('el'),
+					firstRowEl = bodyEl.one('.ks-grid-header-row'),
+					width = 150,
+					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
+				expect(cellEl.css('display')).toBe('none');
+				colObj.set('hide',false);
+				expect(cellEl.css('display')).toBe('table-cell');
+			});
+		});
+
+		describe("æµ‹è¯•åˆ†é¡µç½®é¡¹", function () {
 			
 		});
 
-		it('²âÊÔGrid ·ÖÒ³À¸µÄÉú³É',function(){
-			
-		});
+		describe("æµ‹è¯•ç»´åº¦é…ç½®é¡¹", function () {
+			it('æµ‹è¯•Gridï¼Œè®¾ç½®å®½åº¦',function(){
+				var width = 500;
+				grid.set('width',width);
+				expect(header.get('width')).toBe(width);
+				expect(body.get('width')).toBe(width);
+			});/**/
 
-		it('²âÊÔGrid ÃüÁîÀ¸µÄÉú³É',function(){
+			it('æµ‹è¯•forceFit = falseæ—¶,Gridæœ‰å®½åº¦ï¼Œè°ƒæ•´åˆ—çš„å®½åº¦',function(){
+				var width = 300;
+				grid.set('width',width);
+				var index = 2,
+					colObj = header.getColumnByIndex(index),
+					bodyEl = body.get('el'),
+					tableEl = bodyEl.one('table'),
+					formColWidth = colObj.get('width'),
+					formTableWidth = tableEl.width();
+				
+				colObj.set('width',formColWidth + 100);
+				if(header.getColumnsWidth() > width){
+					expect(tableEl.width()).toBe(formTableWidth + 100);
+				}else{
+					expect(getSetWidth(tableEl)).toBe(width + 'px');
+				}/**/
+			});
+			it('æµ‹è¯•forceFit = trueæ—¶ï¼ŒGridå®½åº¦è®¾ç½®',function(){
+				
+			});
+
+			it('æµ‹è¯•è¡¨æ ¼é«˜åº¦è®¾ç½®',function(){
+				var height = 300;
+				grid.set('height',height);
+				expect(gridEl.hasClass('ks-grid-height')).toBeTruthy();
+			});
+
+			it('æµ‹è¯•è¡¨æ ¼é«˜åº¦è®¾ç½®',function(){
+				var bodyEl = body.get('el'),
+					tableEl = bodyEl.one('table'),
+					width = grid.get('width'),
+					height =  400;//tableEl.height();
+				grid.set('height',height);
+				if(header.getColumnsWidth() <= width){
+					expect(getSetWidth(tableEl)).toBe((width - 17) + 'px');
+				}else{
+					expect(getSetWidth(tableEl)).toBe(header.getColumnsWidth() + 'px');	
+				}
+				expect(gridEl.hasClass('ks-grid-height')).toBeTruthy();
+			});
 			
 		});
 	});
 
-	describe("²âÊÔGridÅäÖÃÏî", function () {
-		describe("²âÊÔÁÐÅäÖÃÏî", function () {
-			it('²âÊÔÁÐ¿í¶È',function(){
-				
-			});
-
-			it('²âÊÔ¸ü¸ÄÁÐ¿í¶È',function(){
-				
-			});
-
-			it('²âÊÔÁÐ±êÌâ',function(){
-				
-			});
-
-			it('ÏÔÊ¾¡¢Òþ²ØÁÐ',function(){
-				
-			});
-
-		});
-
-		describe("²âÊÔ·ÖÒ³ÖÃÏî", function () {
-		
-		});
-
-		describe("²âÊÔÎ¬¶ÈÅäÖÃÏî", function () {
-			it('²âÊÔGrid£¬forceFitÅäÖÃÏî',function(){
-				
-			});
-
-			it('²âÊÔforceFit = falseÊ±£¬Grid¿í¶ÈÉèÖÃ',function(){
-				
-			});
-			it('²âÊÔforceFit = trueÊ±£¬Grid¿í¶ÈÉèÖÃ',function(){
-				
-			});
-
-			it('²âÊÔ±í¸ñ¸ß¶ÈÉèÖÃ',function(){
-				
-			});
-			
-		});
-	});
-
-	describe("²âÊÔGrid ÏÔÊ¾Êý¾Ý", function () {
-		it('²âÊÔGridÖ±½ÓÏÔÊ¾Êý¾Ý£¬²»Í¨¹ýstore',function(){
+	describe("æµ‹è¯•Grid æ˜¾ç¤ºæ•°æ®", function () {
+		it('æµ‹è¯•Gridç›´æŽ¥æ˜¾ç¤ºæ•°æ®ï¼Œä¸é€šè¿‡store',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬Í¨¹ýstoreÏÔÊ¾Êý¾Ý',function(){
+		it('æµ‹è¯•Gridï¼Œé€šè¿‡storeæ˜¾ç¤ºæ•°æ®',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬Í¨¹ýstoreÒì²½¼ÓÔØÊý¾Ý',function(){
+		it('æµ‹è¯•Gridï¼Œé€šè¿‡storeå¼‚æ­¥åŠ è½½æ•°æ®',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬·ÖÒ³',function(){
+		it('æµ‹è¯•Gridï¼Œåˆ†é¡µ',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬Ç°¶ËÅÅÐò',function(){
+		it('æµ‹è¯•Gridï¼Œå‰ç«¯æŽ’åº',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬Ô¶³ÌÅÅÐò',function(){
+		it('æµ‹è¯•Gridï¼Œè¿œç¨‹æŽ’åº',function(){
 			
 		});
 	});
 
 	
-	describe("²âÊÔGrid ÊÂ¼þ", function () {
-		it('²âÊÔGrid£¬µã»÷ÁÐ',function(){
+	describe("æµ‹è¯•Grid äº‹ä»¶", function () {
+		it('æµ‹è¯•Gridï¼Œç‚¹å‡»åˆ—',function(){
 			
 		});
 
-		it('²âÊÔGrid£¬ÁÐÑ¡ÖÐ£¬È¡ÏûÑ¡ÖÐ£¬È«Ñ¡£¬È«²¿È¡ÏûÑ¡ÖÐ',function(){
+		it('æµ‹è¯•Gridï¼Œåˆ—é€‰ä¸­ï¼Œå–æ¶ˆé€‰ä¸­ï¼Œå…¨é€‰ï¼Œå…¨éƒ¨å–æ¶ˆé€‰ä¸­',function(){
 			
 		});
 		
-		it('²âÊÔGrid£¬È«Ñ¡£¬È«²¿È¡ÏûÑ¡ÖÐ',function(){
+		it('æµ‹è¯•Gridï¼Œå…¨é€‰ï¼Œå…¨éƒ¨å–æ¶ˆé€‰ä¸­',function(){
 			
 		});
 	});

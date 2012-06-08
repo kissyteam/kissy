@@ -9,6 +9,8 @@ KISSY.add('grid/column',function(S,Component,Template){
 		SORT_ASC = 'ASC',
 		SORT_DESC = 'DESC',
 		CLS_HD_TRIGGER = 'grid-hd-menu-trigger';
+
+
 	/**
 	* render of column
 	*/
@@ -95,7 +97,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			}
 		}
 	});
-
+	
 	/**
 	 * This class specifies the definition for a column inside a {@link Grid}. 
 	 * It encompasses both the grid header configuration as well as displaying data within the grid itself. 
@@ -127,7 +129,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			var _self = this,
 				events = _self.get('events');
 			S.each(events,function(event){
-				_self.publish("click",{
+				_self.publish(event,{
 					bubbles:1
 				});
 				_self.addTarget(_self.get('parent'));
@@ -169,6 +171,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 	},{
 		ATTRS:/*** @lends Grid.Column.prototype*/	
 		{	
+			
 			/**
 			* The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
 			* @type String
@@ -216,6 +219,14 @@ KISSY.add('grid/column',function(S,Component,Template){
 			id : {
 				
 			},
+			/**
+			* A renderer is an 'interceptor' method which can be used transform data (value, appearance, etc.) before it is rendered. the function prototype is "function(value,obj,index){return value;}"
+			* @type {Function} 
+			* @default 
+			*/
+			renderer : {
+				
+			},
 			/* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort. 
 			 * @type Bealoon
 			 * @Default true.
@@ -250,7 +261,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* @default {Number} 80
 			*/
 			width : {
-				view:true,
+				view : true,
 				value : 100
 			},
 			/**
@@ -274,6 +285,24 @@ KISSY.add('grid/column',function(S,Component,Template){
 			*/
 			events : {
 				value : [
+					/**
+					 * @event afterWithChange
+					 * Fires when this column's width changed
+					 * @param {Grid.Column} this
+					 */
+					'afterWidthChange',
+					/**
+					 * @event afterSortStateChange
+					 * Fires when this column's sort changed
+					 * @param {Grid.Column} this
+					 */
+					'afterSortStateChange',
+					/**
+					 * @event afterVisibleChange
+					 * Fires when this column's hide or show
+					 * @param {Grid.Column} this
+					 */
+					'afterVisibleChange',
 					/**
 					 * @event click
 					 * Fires when use clicks the column
@@ -324,15 +353,41 @@ KISSY.add('grid/column',function(S,Component,Template){
 					 */
 					'move'
 				]
+			},
+			/**
+			* @private
+			*/
+			xrender : {
+				value : columnRender	
 			}
 			
-		},
-		DefaultRender : columnRender
+		}
 	},{
 		xclass : 'grid-hd',
 		priority : 1	
 	});
 	
+	var emptyColumn = column.extend({
+		
+	},{
+		ATTRS : {
+			type : {
+				value : 'empty'
+			},
+			width : {
+				view : true,
+				value :  null
+			},
+			template : {
+				value : ''
+			}
+		}
+	},{
+		xclass : 'grid-hd-empty',
+		priority : 1	
+	});
+
+	column.Empty = emptyColumn;
 	return column;
 
 },{
