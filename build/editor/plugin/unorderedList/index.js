@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * Add ul/ol button.
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
             editor.addButton("unorderedList",{
                 cmdType:"insertUnorderedList",
                 mode:Editor.WYSIWYG_MODE
-            }, undefined, ListButton);
+            }, ListButton);
         }
     };
 }, {

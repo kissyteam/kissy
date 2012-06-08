@@ -2,7 +2,7 @@
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Switchable, Select) {
+KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Switchable, MenuButton) {
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
         Node = S.Node,
@@ -218,7 +218,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgHeight = content.one(".ks-editor-img-height");
             self.imgWidth = content.one(".ks-editor-img-width");
             self.imgRatio = content.one(".ks-editor-img-ratio");
-            self.imgAlign = Select.decorate(content.one(".ks-editor-img-align"), {
+            self.imgAlign = MenuButton.Select.decorate(content.one(".ks-editor-img-align"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -575,5 +575,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
 
     return ImageDialog;
 }, {
-    requires:['ajax', 'editor', '../overlay/', 'switchable', '../select/']
+    requires:['ajax', 'editor', '../overlay/', 'switchable', '../menubutton/']
 });

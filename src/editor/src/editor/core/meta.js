@@ -1,16 +1,20 @@
+/**
+ * Module meta require info for KISSY Editor.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/core/meta", function () {
 
     var map = {
             "backColor":['../color/btn', './cmd'],
             "localStorage":["../flashBridge/"],
             "bold":['../font/ui', './cmd'],
-            "draft":["../localStorage/", '../select/'],
+            "draft":["../localStorage/", '../menubutton/'],
             "flash":['../flashCommon/baseClass', '../flashCommon/utils'],
             "fontFamily":['../font/ui', './cmd'],
             "fontSize":['../font/ui', './cmd'],
             "foreColor":['../color/btn', './cmd'],
             "heading":['./cmd'],
-            "image":['../button/', '../bubbleview/', '../contextmenu/', '../dialogLoader/'],
+            "image":['../button/', '../bubble/', '../contextmenu/', '../dialogLoader/'],
             "indent":['./cmd'],
             "orderedList":['../listUtils/btn', './cmd'],
             "unorderedList":['../listUtils/btn', './cmd'],
@@ -18,20 +22,22 @@ KISSY.add("editor/core/meta", function () {
             "justifyCenter":['./cmd'],
             "justifyLeft":['./cmd'],
             "justifyRight":['./cmd'],
-            "link":['../bubbleview/', './utils', '../dialogLoader/'],
+            "link":['../bubble/', './utils', '../dialogLoader/'],
             "maximize":['./cmd'],
             "multipleUpload":['../dialogLoader/'],
             "outdent":['./cmd'],
-            "overlay":['dd'],
+            "overlay":['dd', '../focusFix/'],
             "pageBreak":["../fakeObjects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],
+            "menubutton":['menubutton'],
             "smiley":['../overlay/'],
             "sourceArea":['../button/'],
             "strikeThrough":['../font/ui', './cmd'],
             "table":['../dialogLoader/', '../contextmenu/'],
             "underline":['../font/ui', './cmd'],
             "undo":['./btn', './cmd'],
+            "contextmenu":['menu', '../focusFix/'],
             "video":['../flashCommon/utils', '../flashCommon/baseClass'],
             "xiamiMusic":['../flashCommon/baseClass', '../flashCommon/utils']
         },
@@ -43,13 +49,13 @@ KISSY.add("editor/core/meta", function () {
             "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
             "color/colorPicker/dialog":['../../overlay/'],
             "dentUtils/cmd":['../listUtils/'],
-            "flash/dialog":['../flashCommon/utils', '../overlay/', '../select/'],
-            "flashCommon/baseClass":['../contextmenu/', '../bubbleview/', '../dialogLoader/', './utils'],
-            "font/ui":['../button/', '../select/'],
+            "flash/dialog":['../flashCommon/utils', '../overlay/', '../menubutton/'],
+            "flashCommon/baseClass":['../contextmenu/', '../bubble/', '../dialogLoader/', './utils'],
+            "font/ui":['../button/', '../menubutton/'],
             "fontFamily/cmd":['../font/cmd'],
             "fontSize/cmd":['../font/cmd'],
             "foreColor/cmd":['../color/cmd'],
-            "image/dialog":['../overlay/', 'switchable', '../select/'],
+            "image/dialog":['../overlay/', 'switchable', '../menubutton/'],
             "indent/cmd":['../dentUtils/cmd'],
             "orderedList/cmd":['../listUtils/cmd'],
             "unorderedList/cmd":['../listUtils/cmd'],
@@ -63,11 +69,11 @@ KISSY.add("editor/core/meta", function () {
             "multipleUpload/dialog":['../progressbar/', '../overlay/', '../flashBridge/', '../localStorage/'],
             "outdent/cmd":['../dentUtils/cmd'],
             "strikeThrough/cmd":['../font/cmd'],
-            "table/dialog":['../overlay/', '../select/'],
+            "table/dialog":['../overlay/', '../menubutton/'],
             "underline/cmd":['../font/cmd'],
             "undo/btn":['../button/'],
-            "video/dialog":['../flash/dialog', '../select/'],
-            "xiamiMusic/dialog":['../flash/dialog', '../select/']
+            "video/dialog":['../flash/dialog', '../menubutton/'],
+            "xiamiMusic/dialog":['../flash/dialog', '../menubutton/']
         }, newMap = {};
 
     for (m in map) {

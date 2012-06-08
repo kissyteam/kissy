@@ -85,9 +85,11 @@
         var b = new Menu.SubMenu({
             prefixCls:"goog-",
             content:"submenu",
-            menuAlign:{
-                offset:[-1, 4],
-                points:['bl', 'tl']
+            menuCfg:{
+                align:{
+                    offset:[-1, 4],
+                    points:['bl', 'tl']
+                }
             },
             menu:sb
         });

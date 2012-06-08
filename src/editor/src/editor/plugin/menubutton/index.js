@@ -1,13 +1,13 @@
 /**
- * select component for kissy editor,need refactor to KISSY MenuButton
+ * select component for kissy editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/select/index", function (S, Editor, MenuButton, undefined) {
+KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
     /**
      * 将button ui 和点击功能分离
      * 按钮必须立刻显示出来，功能可以慢慢加载
      */
-    Editor.prototype.addSelect = function (id, cfg, methods, SelectType) {
+    Editor.prototype.addSelect = function (id, cfg, SelectType) {
 
         SelectType = SelectType || MenuButton.Select;
 
@@ -35,24 +35,6 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, MenuButton, undefin
 
         s.get("el").unselectable();
 
-        S.mix(s, methods);
-
-        if (s.selectionChange) {
-            self.on("selectionChange", function () {
-                if (self.get("mode") == Editor.SOURCE_MODE) {
-                    return;
-                }
-                s.selectionChange.apply(s, arguments);
-            });
-        }
-
-        if (s.click) {
-            s.on("click", function (ev) {
-                s.click.apply(s, arguments);
-                ev.halt();
-            });
-        }
-
         if (cfg.mode == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
                 s.set('disabled', false);
@@ -61,15 +43,12 @@ KISSY.add("editor/plugin/select/index", function (S, Editor, MenuButton, undefin
                 s.set('disabled', true);
             });
         }
-
-        s.init && s.init();
-
         self.addControl(id, s);
         return s;
 
     };
 
-    return MenuButton.Select;
+    return MenuButton;
 }, {
     requires:['editor', 'menubutton']
 });

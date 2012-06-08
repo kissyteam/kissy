@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
     /**
      * 将 button ui 和点击功能分离
      */
-    Editor.prototype.addButton = function (id, cfg, methods, ButtonType) {
+    Editor.prototype.addButton = function (id, cfg, ButtonType) {
 
         if (ButtonType === undefined) {
             if (cfg.checkable) {
@@ -42,32 +42,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             contentEl[0].className = prefixCls + 'toolbar-item ' +
                 prefixCls + 'toolbar-' + e.newVal;
         });
-
-        S.mix(b, methods);
-
-        if (b.init) {
-            b.init();
-        }
-
-        if (b.selectionChange) {
-            self.on("selectionChange", function (ev) {
-                if (self.get("mode") == Editor.SOURCE_MODE) {
-                    return;
-                }
-                b.selectionChange(ev);
-            });
-        }
-
-        if (b.onClick || b.offClick) {
-            b.on("click", function (ev) {
-                var t = b.get("checked"),
-                // note! 反过来
-                    action = t === true || t === undefined ? "offClick" : "onClick";
-                if (b[action]) {
-                    b[action](ev);
-                }
-            });
-        }
 
         if (b.get("mode") == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {

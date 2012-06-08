@@ -1,3 +1,7 @@
+/**
+ * orderedList command
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
 
     var insertOrderedList = "insertOrderedList",

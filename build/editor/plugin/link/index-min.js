@@ -1,7 +1,8 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
-KISSY.add("editor/plugin/link/index",function(e,g,f,h,i){function k(b){b=l(b);return b.closest("a",void 0)}var l=e.all;return{init:function(b){b.addButton("link",{tooltip:"插入链接",mode:g.WYSIWYG_MODE},{offClick:function(){i.useDialog(b,"link/dialog",void 0)}});f.register({editor:b,filter:k,init:function(){var c=this,d=c.get("contentEl");d.html('<a href=""  target="_blank" class="ks-editor-bubbleview-url">在新窗口查看</a>  –   <span class="ks-editor-bubbleview-link ks-editor-bubbleview-change">编辑</span>   |    <span class="ks-editor-bubbleview-link ks-editor-bubbleview-remove">去除</span>');
-var j=d.one(".ks-editor-bubbleview-url"),e=d.one(".ks-editor-bubbleview-change"),f=d.one(".ks-editor-bubbleview-remove");g.Utils.preventFocus(d);e.on("click",function(a){i.useDialog(b,"link/dialog",c.selectedEl);a.halt()});f.on("click",function(a){h.removeLink(b,c.selectedEl);a.halt()});c.on("show",function(){var a=c.selectedEl;a&&(a=a.attr(h._ke_saved_href)||a.attr("href"),j.html(a),j.attr("href",a))})}})}}},{requires:["editor","../bubbleview/","./utils","../dialogLoader/"]});
+KISSY.add("editor/plugin/link/index",function(e,g,l,h,i){function f(b){b=k(b);return b.closest("a",void 0)}var k=e.all;return{init:function(b){b.addButton("link",{tooltip:"插入链接",listeners:{click:{fn:function(){i.useDialog(b,"link/dialog",void 0)}}},mode:g.WYSIWYG_MODE});b.addBubble("link-bubble",f,{listeners:{afterRenderUI:{fn:function(){var d=this,c=d.get("contentEl");c.html('<a href=""  target="_blank" class="ks-editor-bubble-url">在新窗口查看</a>  –   <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |    <span class="ks-editor-bubble-link ks-editor-bubble-remove">去除</span>');
+var j=c.one(".ks-editor-bubble-url"),e=c.one(".ks-editor-bubble-change"),f=c.one(".ks-editor-bubble-remove");g.Utils.preventFocus(c);e.on("click",function(a){var c=d.get("editorSelectedEl");i.useDialog(b,"link/dialog",c);a.halt()});f.on("click",function(a){h.removeLink(b,d.get("editorSelectedEl"));a.halt()});d.on("show",function(){var a=d.get("editorSelectedEl");a&&(a=a.attr(h._ke_saved_href)||a.attr("href"),j.html(a),j.attr("href",a))})}}}})}}},{requires:["editor","../bubble/","./utils","../dialogLoader/",
+"../button/"]});

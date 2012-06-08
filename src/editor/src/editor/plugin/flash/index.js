@@ -52,6 +52,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
+                    bubbleId:"flash-bubble",
                     contextMenuId:'flash-contextmenu',
                     contextMenuHandlers:{
                         "Flash属性":function () {
@@ -66,11 +67,14 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
             if (pluginConfig.btn !== false) {
                 editor.addButton("flash", {
                     tooltip:"插入Flash",
+                    listeners:{
+                        click:{
+                            fn:function () {
+                                flashControl.show();
+                            }
+                        }
+                    },
                     mode:Editor.WYSIWYG_MODE
-                }, {
-                    offClick:function () {
-                        flashControl.show();
-                    }
                 });
             }
         }

@@ -75,19 +75,19 @@
                     (function (i) {
 
                         function constructMenu(self) {
-                           return new Menu.PopupMenu(S.mix({
+                            return new Menu.PopupMenu(S.mix({
                                 prefixCls:self.get("prefixCls")
                             }, self.get("menuCfg")));
                         }
 
-                        var b=new MenuButton.Select({
+                        var b = new MenuButton.Select({
                             defaultCaption:"请选择",
                             prefixCls:"c2c-",
                             render:holder,
-                            menuAlign:{
-                                offset:[0, -1]
-                            },
                             menuCfg:{
+                                align:{
+                                    offset:[0, -1]
+                                },
                                 width:82,
                                 height:150,
                                 elStyle:{

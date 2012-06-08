@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -294,7 +294,7 @@ switch to default
 google tip or bubble style for kissy editor
 @author yiminghe@gmail.com
 **/
-.ks-editor-bubbleview-bubble {
+.ks-editor-bubble {
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
@@ -313,13 +313,13 @@ google tip or bubble style for kissy editor
     border-color: #BBB #BBB #A8A8A8;
 }
 
-.ks-editor-bubbleview-link, .ks-editor-bubbleview-url {
+.ks-editor-bubble-link, .ks-editor-bubble-url {
     cursor: pointer;
     text-decoration: none;
     color: #15C;
 }
 
-.ks-editor-bubbleview-link:hover, .ks-editor-bubbleview-url:hover {
+.ks-editor-bubble-link:hover, .ks-editor-bubble-url:hover {
     color: #15C;
     text-decoration: underline;
 }
@@ -412,20 +412,30 @@ active
     height: 22px;
     bottom: 4px;
     width: 650px;
-    _bottom: 0;
-    text-align: right;
+    _bottom: 0;    text-align: right;
+
 }
 
-.ks-editor-draft .ks-editor-select {
+.ks-editor-draft .ks-editor-menu-button {
+    background: none;
     background-color: #ffffff;
     text-align: left;
+    padding: 0;
+    margin-right: 2px;
+}
+
+.ks-editor-draft .ks-menu-button-caption {
+    padding-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
 }
 
 .ks-editor-draft-save-btn span {
     vertical-align: middle;
 }
 
-.ks-editor-draft-mansave {
+.ks-editor-draft-save {
     background: no-repeat scroll 0 1px transparent;
     background-image: url("icon_save.png"); /** sprite-ref: cool; */
     width: 18px;
@@ -877,7 +887,7 @@ select style for kissy editor
 @author yiminghe@gmail.com
 **/
 
-.ks-editor-select, .ks-editor-big-select {
+.ks-editor-menu-button, .ks-editor-big-select {
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
@@ -891,22 +901,22 @@ select style for kissy editor
     /*outline: none;*/
 }
 
-.ks-editor-tools .ks-editor-select {
+.ks-editor-tools .ks-editor-menu-button {
     margin: 0 2px;
 }
 
-.ks-editor-tools .ks-editor-select-hover {
+.ks-editor-tools .ks-editor-menu-button-hover {
     color: black;
     text-decoration: none;
     border-color: #729BD1;
 }
 
-.ks-editor-tools .ks-editor-select-active {
+.ks-editor-tools .ks-editor-menu-button-active {
     color: #000;
     background-color: #ffffff;
 }
 
-.ks-editor-tools .ks-menu-button-dropdown,
+.ks-menu-button-dropdown,
 .ks-editor-big-select .ks-menu-button-dropdown-inner {
     background: no-repeat scroll center center transparent;
     background-image: url("arrow.png"); /** sprite-ref: cool; */
@@ -919,13 +929,18 @@ select style for kissy editor
     margin-right: 5px;
 }
 
-.ks-ie7 .ks-editor-tools .ks-menu-button-dropdown {
+.ks-editor-big-select .ks-menu-button-dropdown {
+    margin-top: 0;
+    margin-right: 0;
+}
+
+.ks-ie7 .ks-menu-button-dropdown {
     margin-top: -10px;
 }
 
-.ks-editor-select-disabled,
-.ks-editor-select-disabled .ks-editor-select-hover,
-.ks-editor-select-disabled .ks-editor-select {
+.ks-editor-menu-button-disabled,
+.ks-editor-menu-button-disabled .ks-editor-menu-button-hover,
+.ks-editor-menu-button-disabled .ks-editor-menu-button {
     cursor: default;
     opacity: 0.7;
     filter: alpha(opacity = 70);
@@ -933,7 +948,7 @@ select style for kissy editor
     border-color: rgb(193, 200, 209);
 }
 
-.ks-ie9 .ks-editor-select-disabled .ks-editor-select {
+.ks-ie9 .ks-editor-menu-button-disabled .ks-editor-menu-button {
     filter: none;
 }
 
@@ -955,10 +970,10 @@ select style for kissy editor
     background-image: url("ks-editor-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
     -background-image: none;
     height: 24px;
-    width:14px;
+    width: 14px;
     padding-top: 1px;
     float: right;
-    border-left:1px solid #C1C8D1;
+    border-left: 1px solid #C1C8D1;
 }
 
 .ks-ie7 .ks-editor-big-select .ks-menu-button-dropdown {
@@ -970,11 +985,11 @@ select style for kissy editor
     background-image: url("text-bg.png");
 }
 
-.ks-editor-big-select .ks-menu-button-caption{
+.ks-editor-big-select .ks-menu-button-caption {
     padding-left: 5px;
 }
 
-.ks-ie7 .ks-editor-big-select .ks-menu-button-caption{
+.ks-ie7 .ks-editor-big-select .ks-menu-button-caption {
     padding-left: 5px;
     padding-top: 5px;
 }.ks-editor-smiley-sprite {

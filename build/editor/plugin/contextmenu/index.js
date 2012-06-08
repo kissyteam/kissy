@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * contextmenu for kissy editor
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
             var doc = editor.get("document");
             // 编辑器获得焦点，不会触发 menu el blur？
             doc.on("mousedown", function (e) {
-                if (e.button == 1) {
+                if (e.which == 1) {
                     menu.hide();
                 }
             });

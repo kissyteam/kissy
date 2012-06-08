@@ -2,7 +2,7 @@
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overlay, Select) {
+KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overlay, MenuButton) {
     var Node = S.Node,
         LIMIT = 5,
         Event = S.Event,
@@ -107,27 +107,31 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
                         "'>" +
-                        "<span class='ks-editor-draft-mansave'>" +
+                        "<span class='ks-editor-draft-save'>" +
                         "</span>" +
                         "<span>立即保存</span>" +
                         "</a>"
-                ).unselectable()
-                    .appendTo(holder),
-                versions = new Select({
-                    container:holder,
-                    menuContainer:document.body,
-                    doc:editor.get("document")[0],
-                    width:"85px",
-                    popUpWidth:"225px",
-                    align:["r", "t"],
-                    emptyText:"&nbsp;&nbsp;&nbsp;尚无编辑器历史存在",
-                    tooltip:"恢复编辑历史"
+                ).unselectable().appendTo(holder),
+                versions = new MenuButton({
+                    render:holder,
+                    width:"100px",
+                    prefixCls:"ks-editor-",
+                    menuCfg:{
+                        width:"225px",
+                        align:{
+                            points:['tr', 'br']
+                        }
+                    },
+                    autoRender:true,
+                    content:"恢复编辑历史"
                 });
             self.versions = versions;
-            //点击才开始 parse
-            versions.on("select", function () {
-                versions.detach("select", arguments.callee);
-                self.sync();
+            // 点击才开始 parse
+            versions.on("beforeCollapsedChange", function (e) {
+                if (!e.newValue) {
+                    versions.detach("beforeCollapsedChange", arguments.callee);
+                    self.sync();
+                }
             });
             save.on("click", function (ev) {
                 self.save(false);
@@ -136,7 +140,6 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
 
             addRes.call(self, save);
-
 
             /*
              监控form提交，每次提交前保存一次，防止出错
@@ -262,23 +265,28 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         },
         sync:function () {
             var self = this,
+                i,
                 draftLimit = self.draftLimit,
                 timeTip = self.timeTip,
                 versions = self.versions,
-                drafts = self._getDrafts();
-            if (drafts.length > draftLimit)
+                drafts = self._getDrafts(),
+                draft, tip
+
+            if (drafts.length > draftLimit) {
                 drafts.splice(0, drafts.length - draftLimit);
-            var items = [], draft, tip;
-            for (var i = 0; i < drafts.length; i++) {
+            }
+
+            for (i = 0; i < drafts.length; i++) {
                 draft = drafts[i];
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
-                items.push({
-                    name:tip,
+                versions.addItem({
+                    xclass:'menuitem',
+                    content:tip,
                     value:i
                 });
             }
-            versions.set("items", items.reverse());
+
             timeTip.html(tip);
             localStorage.setItem(self._getSaveKey(),
                 (localStorage == window.localStorage) ?
@@ -317,17 +325,17 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         recover:function (ev) {
             var self = this,
                 editor = self.editor,
-                versions = self.versions,
                 drafts = self._getDrafts(),
-                v = ev.newVal;
-            versions.reset("value");
+                v = ev.target.get("value");
             if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
                 editor.execCommand("save");
                 editor.set("data", drafts[v].content);
                 editor.execCommand("save");
             }
+            self.versions.set("collapsed", true);
             ev.halt();
         },
+
         destroy:function () {
             destroyRes.call(this);
         }
@@ -352,5 +360,5 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         }
     };
 }, {
-    "requires":["editor", "../localStorage/", "overlay", '../select/']
+    "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
 });

@@ -1,3 +1,7 @@
+/**
+ * fontSize command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
     var fontSizeStyle = {
         element:'span',

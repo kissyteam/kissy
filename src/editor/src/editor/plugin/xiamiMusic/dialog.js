@@ -1,4 +1,8 @@
-KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, Select) {
+/**
+ * xiamiMusic dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, MenuButton) {
     var UA = S.UA,
         DOM = S.DOM,
         Node = S.Node,
@@ -146,7 +150,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
                 del = d.get("el"),
                 dfoot = d.get("footer"),
                 input = del.one(".ks-editor-xiami-url");
-            self.dAlign = Select.decorate(del.one(".ks-editor-xiami-align"), {
+            self.dAlign = MenuButton.Select.decorate(del.one(".ks-editor-xiami-align"), {
                 prefixCls:'ks-editor-big-',
                 width:80,
                 elAttrs:{
@@ -407,5 +411,5 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, S
     return XiamiMusicDialog;
 
 }, {
-    requires:['editor', '../flash/dialog', '../select/']
+    requires:['editor', '../flash/dialog', '../menubutton/']
 });

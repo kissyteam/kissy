@@ -45,7 +45,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     width:fontSizes.width,
                     children:fontSizes.children
                 }
-            }, undefined, ui.Select);
+            }, ui.Select);
         }};
 }, {
     requires:['editor', '../font/ui', './cmd']

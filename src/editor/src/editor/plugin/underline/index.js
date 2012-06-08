@@ -1,3 +1,7 @@
+/**
+ * underline button
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     return {
         init:function (editor) {
@@ -5,7 +9,7 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
             editor.addButton("underline",{
                 cmdType:"underline",
                 tooltip:"下划线 "
-            }, undefined, ui.Button);
+            }, ui.Button);
         }
     };
 }, {

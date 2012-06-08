@@ -1,3 +1,7 @@
+/**
+ * link utils
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/link/utils", function (S, Editor) {
 
     var Node = S.Node,

@@ -2,7 +2,7 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) {
+KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButton) {
     var Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
@@ -177,7 +177,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) 
             d.theight = dbody.one(".ks-editor-table-height");
             d.tborder = dbody.one(".ks-editor-table-border");
             d.tcaption = dbody.one(".ks-editor-table-caption");
-            d.talign = Select.decorate(dbody.one(".ks-editor-table-align"), {
+            d.talign = MenuButton.Select.decorate(dbody.one(".ks-editor-table-align"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -190,7 +190,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) 
             });
             d.trows = dbody.one(".ks-editor-table-rows");
             d.tcols = dbody.one(".ks-editor-table-cols");
-            d.thead = Select.decorate(dbody.one(".ks-editor-table-head"), {
+            d.thead = MenuButton.Select.decorate(dbody.one(".ks-editor-table-head"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -206,7 +206,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) 
             d.tcollapse = dbody.one(".ks-editor-table-collapse");
             var tok = foot.one(".ks-editor-table-ok"),
                 tclose = foot.one(".ks-editor-table-cancel");
-            d.twidthunit = Select.decorate(dbody.one(".ks-editor-table-width-unit"), {
+            d.twidthunit = MenuButton.Select.decorate(dbody.one(".ks-editor-table-width-unit"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -477,5 +477,5 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, Select) 
 
     return TableDialog;
 }, {
-    requires:['editor', '../overlay/', '../select/']
+    requires:['editor', '../overlay/', '../menubutton/']
 });

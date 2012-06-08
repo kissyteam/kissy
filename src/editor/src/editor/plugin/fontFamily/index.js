@@ -85,7 +85,7 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
                     width:fontFamilies.width,
                     children:fontFamilies.children
                 }
-            }, undefined, ui.Select);
+            }, ui.Select);
         }};
 }, {
     requires:['editor', '../font/ui', './cmd']

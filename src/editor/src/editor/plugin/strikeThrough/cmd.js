@@ -1,3 +1,7 @@
+/**
+ * strikeThrough command
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
 
     var STRIKE_STYLE = new Editor.Style({

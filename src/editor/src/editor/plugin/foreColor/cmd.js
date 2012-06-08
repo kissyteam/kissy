@@ -1,3 +1,7 @@
+/**
+ * foreColor command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
 
     var COLOR_STYLES = {

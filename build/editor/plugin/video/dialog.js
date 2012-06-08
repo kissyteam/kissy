@@ -1,9 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
-KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select) {
+/**
+ * video dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuButton) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video",
         DTIP = "自动",
@@ -95,7 +99,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
                 d = self.dialog,
                 el = d.get("el");
             self.dUrl = el.one(".ks-editor-video-url");
-            self.dAlign = Select.decorate(el.one(".ks-editor-video-align"),{
+            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"),{
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -211,5 +215,5 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, Select
 
     return VideoDialog;
 }, {
-    requires:['editor', '../flash/dialog', '../select/']
+    requires:['editor', '../flash/dialog', '../menubutton/']
 });

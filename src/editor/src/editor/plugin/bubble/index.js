@@ -1,35 +1,20 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
-MIT Licensed
-build time: Jun 7 15:13
-*/
 /**
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
+KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
     var Event = S.Event,
         undefined = {}['a'],
         DOM = S.DOM,
-        BubbleView = Overlay.extend({}, {
-            ATTRS:{
-                zIndex:{
-                    value:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW)
-                },
-                elCls:{
-                    value:"ks-editor-bubbleview-bubble"
-                },
-                prefixCls:{
-                    value:"ks-editor-"
-                },
-                effect:{
-                    value:{
-                        effect:"fade",
-                        duration:0.3
-                    }
-                }
+        BUBBLE_CFG = {
+            zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
+            elCls:"ks-editor-bubble",
+            prefixCls:"ks-editor-",
+            effect:{
+                effect:"fade",
+                duration:0.3
             }
-        });
+        };
 
     function inRange(t, b, r) {
         return t <= r && b >= r;
@@ -44,25 +29,20 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
             b2_top = b2.get("y"),
             b2_bottom = b2_top + b2.get("el").outerHeight();
 
-        return inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top);
+        return inRange(b1_top, b1_bottom, b2_bottom) ||
+            inRange(b1_top, b1_bottom, b2_top);
     }
 
     /**
-     * bubbles group by editor
-     */
-    var bubbles = {
-        /*editorStamp:[]*/
-    };
-
-    /**
-     * 得到依附在同一个节点上的所有 bubbleview 中的最下面一个
+     * 得到依附在同一个节点上的所有 bubble 中的最下面一个
      */
     function getTopPosition(self) {
         var archor = null,
-            editor = self.editor,
-            myBubbles = bubbles[S.stamp(editor)];
+            editor = self.get("editor"),
+            myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if (bubble !== self &&
+            if ((bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+                bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {
                 if (!archor) {
@@ -77,14 +57,15 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
 
     function getXy(bubble) {
 
-        var el = bubble.selectedEl,
-            editor = bubble.editor;
+        var el = bubble.get("editorSelectedEl");
+
 
         if (!el) {
             return undefined;
         }
 
-        var editorWin = editor.get("window")[0],
+        var editor = bubble.get("editor"),
+            editorWin = editor.get("window")[0],
             iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
@@ -122,30 +103,19 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         return undefined;
     }
 
-    BubbleView.register = function (cfg) {
-        var filter = cfg.filter,
-            editor = cfg.editor,
-            bubble = new BubbleView({
-                editor:editor
-            }),
-            stamp = S.stamp(editor),
-            myBubbles = bubbles[stamp] = bubbles[stamp] || [];
+    Editor.prototype.addBubble = function (id, filter, cfg) {
+        var editor = this,
+            bubble;
 
-        bubble.init = cfg.init;
+        cfg = cfg || {};
 
-        if (bubble.init) {
-            bubble.on('afterRenderUI', function () {
-                bubble.init();
-            });
-        }
+        cfg.editor = editor;
 
-        myBubbles.push(bubble);
-        bubble.editor = editor;
+        S.mix(cfg, BUBBLE_CFG);
 
-        editor.on("destroy", function () {
-            delete bubbles[stamp];
-            bubble.destroy();
-        });
+        bubble = new Overlay(cfg);
+
+        editor.addControl(id, bubble);
 
         // 借鉴google doc tip提示显示
         editor.on("selectionChange", function (ev) {
@@ -160,12 +130,12 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
                 }
                 a = filter(lastElement);
                 if (a) {
-                    bubble.selectedEl = a;
-                    // 重新触发 bubble show事件
+                    bubble.set("editorSelectedEl", a);
+                    // 重新触发 bubble show 事件
                     bubble.hide();
-                    // 等所有bubble hide 再show
+                    // 等所有 bubble hide 再show
                     S.later(onShow, 10);
-                } else if (bubble) {
+                } else {
                     onHide();
                 }
             }
@@ -174,10 +144,8 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         // 代码模式下就消失
         // !TODO 耦合---
         function onHide() {
-            if (bubble) {
-                bubble.hide();
-                Event.remove(editorWin, "scroll", onScroll);
-            }
+            bubble.hide();
+            Event.remove(editorWin, "scroll", onScroll);
         }
 
         editor.on("sourceMode", onHide);
@@ -205,13 +173,11 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
         var bufferScroll = S.buffer(showImmediately, 350);
 
         function onScroll() {
-            if (!bubble.selectedEl) {
+            if (!bubble.get("editorSelectedEl")) {
                 return;
             }
-            if (bubble) {
-                var el = bubble.get("el");
-                bubble.hide();
-            }
+            var el = bubble.get("el");
+            bubble.hide();
             bufferScroll();
         }
 
@@ -220,8 +186,6 @@ KISSY.add("editor/plugin/bubbleview/index", function (S, Overlay, Editor) {
             showImmediately();
         }
     };
-
-    return BubbleView;
 }, {
     requires:['overlay', 'editor']
 });

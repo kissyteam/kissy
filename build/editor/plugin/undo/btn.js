@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
+/**
+ * undo button
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     function Common(self) {
         var editor = self.get("editor");
@@ -17,10 +21,9 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
         bindUI:function () {
             Common(this);
-        },
-
-        offClick:function () {
-            this.get("editor").execCommand("undo");
+            this.on("click", function () {
+                this.get("editor").execCommand("undo");
+            });
         },
 
         _respond:function (ev) {
@@ -51,10 +54,9 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
         bindUI:function () {
             Common(this);
-        },
-
-        offClick:function () {
-            this.get("editor").execCommand("redo");
+            this.on("click", function () {
+                this.get("editor").execCommand("redo");
+            });
         },
 
         _respond:function (ev) {

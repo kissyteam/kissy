@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
+/**
+ * font command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;

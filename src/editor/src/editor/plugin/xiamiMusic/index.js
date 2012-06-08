@@ -1,3 +1,7 @@
+/**
+ * xiamiMusic button
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic";
@@ -87,6 +91,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
+                bubbleId:"xiami-bubble",
                 contextMenuId:"xiami-contextmenu",
                 contextMenuHandlers:{
                     "虾米属性":function () {
@@ -100,11 +105,14 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            xiamiMusic.show();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    xiamiMusic.show();
-                }
             });
 
         }

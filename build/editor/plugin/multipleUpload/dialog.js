@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
+/**
+ * multipleUpload dialog
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
     var UA = S.UA,

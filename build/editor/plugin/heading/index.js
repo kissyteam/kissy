@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * Heading plugin for KISSY.
@@ -52,31 +52,41 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                     width:"120px",
                     children:FORMAT_SELECTION_ITEMS
                 },
-                mode:Editor.WYSIWYG_MODE
-            }, {
-                click:function (ev) {
-                    var self = this,
-                        v = ev.target.get("value"),
-                        pre = ev.prevTarget && ev.prevTarget.get("value");
-                    if (v != pre) {
-                        editor.execCommand("heading", v);
-                    } else {
-                        editor.execCommand("heading", "p");
-                        self.set("value", "p");
-                    }
-                },
-                selectionChange:function (ev) {
-                    var self = this,
-                        elementPath = ev.path;
-                    // For each element into the elements path.
-                    // Check if the element is removable by any of
-                    // the styles.
-                    var queryCmd = Editor.Utils.getQueryCmd("heading");
-                    for (var value in FORMAT_SIZES) {
-                        if (FORMAT_SIZES.hasOwnProperty(value) &&
-                            editor.execCommand(queryCmd, elementPath, value)) {
-                            self.set("value", value);
-                            return;
+                mode:Editor.WYSIWYG_MODE,
+                listeners:{
+                    click:{
+                        fn:function (ev) {
+                            var self = this,
+                                v = ev.target.get("value"),
+                                pre = ev.prevTarget && ev.prevTarget.get("value");
+                            if (v != pre) {
+                                editor.execCommand("heading", v);
+                            } else {
+                                editor.execCommand("heading", "p");
+                                self.set("value", "p");
+                            }
+                        }
+                    },
+                    afterSyncUI:{
+                        fn:function () {
+                            editor.on("selectionChange", function (ev) {
+                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                    return;
+                                }
+                                var self = this,
+                                    elementPath = ev.path;
+                                // For each element into the elements path.
+                                // Check if the element is removable by any of
+                                // the styles.
+                                var queryCmd = Editor.Utils.getQueryCmd("heading");
+                                for (var value in FORMAT_SIZES) {
+                                    if (FORMAT_SIZES.hasOwnProperty(value) &&
+                                        editor.execCommand(queryCmd, elementPath, value)) {
+                                        self.set("value", value);
+                                        return;
+                                    }
+                                }
+                            });
                         }
                     }
                 }

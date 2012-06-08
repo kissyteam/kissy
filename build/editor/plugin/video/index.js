@@ -1,8 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
+/**
+ * video button.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
@@ -89,6 +93,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                bubbleId:"video-bubble",
                 contextMenuId:"video-contextmenu",
                 contextMenuHandlers:{
                     "视频属性":function () {
@@ -102,11 +107,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
             editor.addButton("video", {
                 tooltip:"插入视频",
+                listeners:{
+                    click:{
+                        fn:function () {
+                            flashControl.show();
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    flashControl.show();
-                }
             });
         }
     };

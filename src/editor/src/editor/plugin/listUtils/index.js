@@ -1,3 +1,7 @@
+/**
+ * list Utils
+ * @author yiminghe@gmail.com
+ */
 KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
     var listNodeNames = {ol:1, ul:1},
         Node = S.Node,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:35
+build time: Jun 8 11:09
 */
 /**
  * @fileOverview KISSY Calendar
@@ -1497,7 +1497,7 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                     var cls = '';
                     var date = new Date(cc.year, cc.month, i);
                     //minDate 和 maxDate都包含当天
-                    if ((cc.father.minDate && new Date(cc.year, cc.month, i + 1) < cc.father.minDate) || (cc.father.maxDate && date > cc.father.maxDate) || cc._isDisabled(cc.father.disabled, date)) {
+                    if ((cc.father.minDate && new Date(cc.year, cc.month, i + 1) <= cc.father.minDate) || (cc.father.maxDate && date > cc.father.maxDate) || cc._isDisabled(cc.father.disabled, date)) {
                         cls = 'ks-disabled';
                     }
                     else if (cc.father.range && date >= cc.father.range.start && date <= cc.father.range.end) {

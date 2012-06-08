@@ -89,9 +89,11 @@
                     return generatePopupMenu(item.children);
                 }
             }, top ? {
-                menuAlign:{
-                    offset:[-1, 4],
-                    points:['bl', 'tl']
+                menuCfg:{
+                    align:{
+                        offset:[-1, 4],
+                        points:['bl', 'tl']
+                    }
                 }
             } : {
 

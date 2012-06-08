@@ -81,6 +81,7 @@ History:
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件
  - [!] autoHideDelay 单位变更为秒
+ - [!] menuAlign 移到 menuCfg.align 配置
 
  - [+] datalazyload 增加 autoDestroy 配置
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口
@@ -90,6 +91,7 @@ History:
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
  - [+] switchable 增加 add/remove/destroy
+ - [!] switchable _switchView 参数变化，覆盖注意（不推荐覆盖）
 
  - [+] waterfall 增加方法 adjustItem/removeItem/start 以及配置 adjustEffect。支持调整时的动画。
  - [+] waterfall item class 支持配置 ks-waterfall-item-fixed-right/left 固定列。

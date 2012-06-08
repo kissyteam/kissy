@@ -1,3 +1,7 @@
+/**
+ * backColor command.
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
 
     var BACKCOLOR_STYLE = {

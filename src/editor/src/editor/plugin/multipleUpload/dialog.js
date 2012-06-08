@@ -1,3 +1,7 @@
+/**
+ * multipleUpload dialog
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
     var UA = S.UA,

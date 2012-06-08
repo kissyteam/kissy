@@ -1,6 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
-KISSY.add("editor/plugin/justifyLeft/index",function(e,d,c){function b(){var a=this.get("editor");a.execCommand("justifyLeft");a.focus()}return{init:function(a){c.init(a);a.addButton("justifyLeft",{tooltip:"左对齐",checkable:!0,mode:d.WYSIWYG_MODE},{onClick:b,offClick:b,selectionChange:function(b){var c=d.Utils.getQueryCmd("justifyLeft");a.execCommand(c,b.path)?this.set("checked",!0):this.set("checked",!1)}})}}},{requires:["editor","./cmd"]});
+KISSY.add("editor/plugin/justifyLeft/index",function(f,b,c){function d(){var a=this.get("editor");a.execCommand("justifyLeft");a.focus()}return{init:function(a){c.init(a);a.addButton("justifyLeft",{tooltip:"左对齐",checkable:!0,listeners:{click:{fn:d},afterSyncUI:{fn:function(){var e=this;a.on("selectionChange",function(c){if(a.get("mode")!=b.SOURCE_MODE){var d=b.Utils.getQueryCmd("justifyLeft");a.execCommand(d,c.path)?e.set("checked",!0):e.set("checked",!1)}})}}},mode:b.WYSIWYG_MODE})}}},{requires:["editor",
+"./cmd"]});

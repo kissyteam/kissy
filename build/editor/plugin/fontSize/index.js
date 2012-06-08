@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * font formatting for kissy editor
@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     width:fontSizes.width,
                     children:fontSizes.children
                 }
-            }, undefined, ui.Select);
+            }, ui.Select);
         }};
 }, {
     requires:['editor', '../font/ui', './cmd']

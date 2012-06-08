@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * flash dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E, Select) {
+KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E, MenuButton) {
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         Dialog = Overlay4E.Dialog,
@@ -166,7 +166,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             self.dHeight = el.one(".ks-editor-flash-height");
             self.dWidth = el.one(".ks-editor-flash-width");
             self.dUrl = el.one(".ks-editor-flash-url");
-            self.dAlign = Select.decorate(el.one(".ks-editor-flash-align"), {
+            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-flash-align"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -243,5 +243,5 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
     return FlashDialog;
 }, {
-    requires:['editor', '../flashCommon/utils', '../overlay/', '../select/']
+    requires:['editor', '../flashCommon/utils', '../overlay/', '../menubutton/']
 });

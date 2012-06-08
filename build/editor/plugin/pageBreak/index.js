@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 15:13
+build time: Jun 8 00:39
 */
 /**
  * pagebreak functionality
@@ -52,42 +52,45 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                 }
             });
 
-            editor.addButton("pageBreak",{
+            editor.addButton("pageBreak", {
                 tooltip:"分页",
+                listeners:{
+                    click:{
+                        fn:function () {
+
+                            var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
+                                substitute = editor.createFakeElement(real, CLS, TYPE,
+                                    //不可缩放，也不用
+                                    false,
+                                    PAGE_BREAK_MARKUP);
+
+                            var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
+
+                            if (!range) {
+                                return;
+                            }
+
+                            editor.execCommand("save");
+
+                            var start = range.startContainer,
+                                pre = start;
+
+                            while (start.nodeName() !== "body") {
+                                pre = start;
+                                start = start.parent();
+                            }
+
+                            range.collapse(true);
+
+                            range.splitElement(pre);
+
+                            substitute.insertAfter(pre);
+
+                            editor.execCommand("save");
+                        }
+                    }
+                },
                 mode:Editor.WYSIWYG_MODE
-            }, {
-                offClick:function () {
-                    var editor = this.get("editor"),
-                        real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
-                        substitute = editor.createFakeElement(real, CLS, TYPE,
-                            //不可缩放，也不用
-                            false,
-                            PAGE_BREAK_MARKUP);
-
-                    var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
-
-                    if (!range) {
-                        return;
-                    }
-
-                    editor.execCommand("save");
-
-                    var start = range.startContainer,
-                        pre = start;
-
-                    while (start.nodeName() !== "body") {
-                        pre = start;
-                        start = start.parent();
-                    }
-
-                    range.collapse(true);
-
-                    range.splitElement(pre);
-
-                    substitute.insertAfter(pre);
-
-                    editor.execCommand("save");
-                }
             });
         }
     };
