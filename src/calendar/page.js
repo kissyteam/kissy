@@ -364,7 +364,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					today = new Date(),
                     i, _td_s;
 
-				
+
 				for(var i=0;i<startOffset;i++){
 					s += '<a href="javascript:void(0);" class="ks-null">0</a>';
 				}
@@ -373,7 +373,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					var cls = '';
 					var date = new Date(cc.year,cc.month, i);
 					//minDate 和 maxDate都包含当天
-					if((cc.father.minDate&&new Date(cc.year,cc.month, i+1)<cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate)){
+					if((cc.father.minDate&&new Date(cc.year,cc.month, i+1)<=cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate)){
 						cls = 'ks-disabled';
 					}
 					else if(cc.father.range&&date>=cc.father.range.start&&date<=cc.father.range.end){
@@ -382,11 +382,11 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					else if(selected&&selected.getFullYear() == cc.year&&selected.getMonth() == cc.month&&selected.getDate()==i){
 						cls = 'ks-selected';
 					}
-					
+
 					if(today.getFullYear() == cc.year&&today.getMonth() == cc.month&&today.getDate()==i){
 						cls += ' ks-today';
 					}
-					
+
 					s += '<a '+(cls?'class='+cls:'')+' href="javascript:void(0);">' + i + '</a>';
 				}
                 cc.ds = s;
