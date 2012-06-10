@@ -51,10 +51,6 @@
     <script src="../../../build/kissy.js"></script>
 
     <script>
-        KISSY.Config.tag = Math.random();
-    </script>
-
-    <script>
         KISSY.ready(function (S) {
             var $ = S.all;
             var s = S.one("#decorateSelect");
@@ -65,6 +61,7 @@
                 var select = MenuButton.Select.decorate('#decorateSelect', {
                     defaultCaption:"请选择",
                     prefixCls:"pix-",
+                    width:280,
                     menuCfg:{
                         align:{
                             points:['tl', 'tl'],

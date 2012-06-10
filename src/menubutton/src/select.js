@@ -185,7 +185,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 cfg.elBefore = element;
 
                 var name,
-                    width = cfg.width || element.outerWidth(),
+                    width = cfg.width,
                     allItems = [],
                     selectedItem = null,
                     curValue = element.val(),

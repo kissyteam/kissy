@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 20:39
+build time: Jun 10 20:47
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -654,7 +654,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 cfg.elBefore = element;
 
                 var name,
-                    width = cfg.width || element.outerWidth(),
+                    width = cfg.width,
                     allItems = [],
                     selectedItem = null,
                     curValue = element.val(),
