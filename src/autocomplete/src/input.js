@@ -2,7 +2,7 @@
  * @fileOverview Input wrapper for AutoComplete component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoCompleteRender, _, undefined) {
+KISSY.add("autocomplete/input", function (S, Event, Component, AutoCompleteMenu, AutoCompleteRender, _, undefined) {
     var AutoComplete,
         KeyCodes = Event.KeyCodes;
 
@@ -13,6 +13,31 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
             adjustY:1
         }
     };
+
+    function getMenu(self, init) {
+        var m = self.get("menu");
+        if (m && m.xclass) {
+            if (init) {
+                m = Component.create(m, self);
+                self.__set("menu", m);
+            } else {
+                return null;
+            }
+        }
+        return m;
+    }
+
+    function constructMenu(self) {
+        var menuCfg = self.get("menuCfg");
+        if (menuCfg.width == null) {
+            menuCfg.width = self.get("el").width();
+        }
+        var m = new AutoCompleteMenu(S.mix({
+            prefixCls:self.get("prefixCls")
+        }, self.get("menuCfg")));
+        self.__set("menu", m);
+        return m;
+    }
 
     function alignMenuImmediately(self) {
         var menu = self.get("menu"),
@@ -44,8 +69,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
     }
 
     function alignImmediately(self) {
-        if (self.get("multiple") &&
-            self.get("alignWithCursor")) {
+        if (self.get("multiple") && self.get("alignWithCursor")) {
             alignWithTokenImmediately(self);
         } else {
             alignMenuImmediately(self);
@@ -74,6 +98,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     el = self.get("el");
                 el.on("valuechange", self._onValueChange, self);
             },
+
             /**
              * fetch autoComplete list by value and show autoComplete list
              * @param {String} value value for fetching autoComplete list
@@ -83,15 +108,15 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     dataSource = self.get("dataSource");
                 dataSource.fetchData(value, self._renderData, self);
             },
+
             _onValueChange:function () {
                 var self = this;
                 if (self._stopNotify) {
                     return;
                 }
                 var value = self._getValue();
-
                 if (value === undefined) {
-                    var autoCompleteMenu = self.get("menu");
+                    var autoCompleteMenu = getMenu(self);
                     if (autoCompleteMenu) {
                         autoCompleteMenu.hide();
                     }
@@ -103,8 +128,9 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
             },
 
             handleBlur:function () {
-                AutoComplete.superclass.handleBlur.apply(this, arguments);
-                var autoCompleteMenu = this.get("menu");
+                var self = this;
+                AutoComplete.superclass.handleBlur.apply(self, arguments);
+                var autoCompleteMenu = getMenu(self);
                 // S.log("input blur!!!!!!!");
                 if (autoCompleteMenu) {
                     // 通知 menu
@@ -114,64 +140,32 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
 
             _renderData:function (data) {
                 var self = this,
-                    autoCompleteMenu = self.get("menu");
+                    v,
+                    contents,
+                    i,
+                    autoCompleteMenu = getMenu(self, 1) || constructMenu(self);
+
                 autoCompleteMenu.removeChildren(true);
+
                 if (data && data.length) {
                     data = data.slice(0, self.get("maxItemCount"));
-                    var menuCfg = self.get("menuCfg") || {};
-                    var v;
-                    // 同步当前 width
-                    autoCompleteMenu.set("width",
-                        menuCfg.width === undefined ?
-                            self.get("el").css("width") :
-                            menuCfg.width);
-                    var contents;
                     if (self.get("format")) {
-                        contents = self.get("format").call(self,
-                            self._getValue(),
-                            data);
+                        contents = self.get("format").call(self, self._getValue(), data);
                     } else {
                         contents = [];
                     }
-                    for (var i = 0; i < data.length; i++) {
+                    for (i = 0; i < data.length; i++) {
                         v = data[i];
-                        autoCompleteMenu.addChild(new Menu.Item(S.mix({
-                            prefixCls:self.get("prefixCls"),
+                        autoCompleteMenu.addChild(S.mix({
+                            xclass:'menuitem',
                             content:v,
                             textContent:v,
                             value:v
-                        }, contents[i])))
+                        }, contents[i]))
                     }
-                    self._showMenu();
+                    _showMenu(self);
                 } else {
                     autoCompleteMenu.hide();
-                }
-            },
-
-            _showMenu:function () {
-                var self = this;
-                var menu = self.get("menu");
-                menu._input = self;
-                menu._clearDismissTimer();
-                alignImmediately(self);
-                menu.show();
-                // make menu item (which textContent is same as input) active
-                var children = menu.get("children"),
-                    val = self._getValue();
-                for (var i = 0; i < children.length; i++) {
-                    if (children[i].get("textContent") == val) {
-                        menu.set("highlightedItem", children[i]);
-                        return;
-                    }
-                }
-                // Whether or not the first row should be highlighted by default.
-                if (self.get("autoHighlightFirst")) {
-                    for (i = 0; i < children.length; i++) {
-                        if (!children[i].get("disabled")) {
-                            menu.set("highlightedItem", children[i]);
-                            break;
-                        }
-                    }
                 }
             },
 
@@ -182,10 +176,12 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
             handleKeyEventInternal:function (e) {
                 var self = this,
                     el = self.get("el"),
-                    autoCompleteMenu = self.get("menu");
+                    autoCompleteMenu = getMenu(self);
+
                 if (!autoCompleteMenu) {
                     return;
                 }
+
                 var updateInputOnDownUp = self.get("updateInputOnDownUp");
 
                 if (updateInputOnDownUp) {
@@ -201,7 +197,9 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                         self._stopNotify = 0;
                     }
                 }
+
                 var activeItem;
+
                 if (autoCompleteMenu.get("visible")) {
                     var handledByMenu = autoCompleteMenu.handleKeydown(e);
 
@@ -233,8 +231,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                         }
                     }
                     return handledByMenu;
-                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) &&
-                    self.get("reFetchOnDownUp")) {
+                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
                     // re-fetch , consider multiple input
                     S.log("refetch : " + self._getValue());
                     self.sendRequest(self._getValue());
@@ -249,13 +246,13 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     self._setValue(textContent + self.get("strAppendedOnComplete"));
                     self._savedInputValue = textContent;
                     /**
-                     * @name AutoComplete#select
+                     * @name AutoComplete#click
                      * @description fired when user select from suggestion list
                      * @event
                      * @param e
                      * @param e.target Selected menuItem
                      */
-                    self.fire("select", {
+                    self.fire("click", {
                         target:item
                     });
                 }
@@ -270,7 +267,8 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     inputVal = el.val();
                 if (self.get("multiple")) {
                     var inputDesc = self._getInputDesc();
-                    var tokens = inputDesc.tokens, tokenIndex = inputDesc.tokenIndex;
+                    var tokens = inputDesc.tokens,
+                        tokenIndex = inputDesc.tokenIndex;
                     var separator = self.get("separator");
                     var token = tokens[tokenIndex] || "";
                     // only if token starts with separator , then token has meaning!
@@ -383,13 +381,6 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                     cursorPosition:cursorPosition,
                     tokenIndex:tokenIndex
                 };
-            },
-
-            destructor:function () {
-                var self = this,
-                    autoCompleteMenu = self.get("menu");
-                autoCompleteMenu.detachInput(self, self.get("destroyMenu"));
-                self.__set("menu", null);
             }
         },
         {
@@ -403,21 +394,13 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                 },
 
                 /**
-                 * Whether destroy menu when this destroys.Default false
-                 * @type Boolean
-                 */
-                destroyMenu:{
-                    value:false
-                },
-
-                /**
                  * AutoComplete dropDown menuList
                  * @type AutoComplete.Menu
                  */
                 menu:{
                     setter:function (m) {
-                        if (m) {
-                            m.attachInput(this);
+                        if (m instanceof AutoCompleteMenu) {
+                            m.__set("parent", this);
                         }
                     }
                 },
@@ -425,6 +408,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                 /**
                  * aria-owns.ReadOnly.
                  * @type String
+                 * @private
                  */
                 ariaOwns:{
                     view:true
@@ -434,7 +418,7 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                  * aria-expanded.ReadOnly.
                  * @type String
                  */
-                ariaExpanded:{
+                collapsed:{
                     view:true
                 },
 
@@ -532,16 +516,6 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
                 },
 
                 /**
-                 * Whether stop keydown and up to re-fetch autoComplete menu
-                 * based on current value.
-                 * Default : true
-                 * @type Boolean
-                 */
-                reFetchOnDownUp:{
-                    value:true
-                },
-
-                /**
                  * If separator wrapped by literal chars,separator become normal chars.
                  * Default : "
                  * @type String
@@ -593,12 +567,45 @@ KISSY.add("autocomplete/input", function (S, Event, Component, Menu, AutoComplet
         }
     );
 
+
+    // #----------------------- private start
+
+    function _showMenu(self) {
+        var children,
+            val,
+            i,
+            menu = self.get("menu");
+        menu._clearDismissTimer();
+        alignImmediately(self);
+        menu.show();
+        // make menu item (which textContent is same as input) active
+        children = menu.get("children");
+        val = self._getValue();
+        for (i = 0; i < children.length; i++) {
+            if (children[i].get("textContent") == val) {
+                menu.set("highlightedItem", children[i]);
+                return;
+            }
+        }
+        // Whether or not the first row should be highlighted by default.
+        if (self.get("autoHighlightFirst")) {
+            for (i = 0; i < children.length; i++) {
+                if (!children[i].get("disabled")) {
+                    menu.set("highlightedItem", children[i]);
+                    break;
+                }
+            }
+        }
+    }
+
+    // #------------------------private end
+
     return AutoComplete;
 }, {
     requires:[
         'event',
         'component',
-        'menu',
+        './menu',
         './inputRender',
         'input-selection'
     ]

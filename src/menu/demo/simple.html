@@ -8,7 +8,7 @@
 <link href="../assets/menuitem.css" rel="stylesheet"/>
 <link href="../assets/submenu.css" rel="stylesheet"/>
 <style>
-    .goog-menuitem-delete {
+    .ks-menuitem-delete {
         color: #000000;
         left: auto;
         padding-right: 6px;
@@ -20,7 +20,7 @@
         padding: 0 5px;
     }
 
-    .goog-menu-disabled .goog-menuitem-delete {
+    .ks-menu-disabled .ks-menuitem-delete {
         color: #ccc;
         border: #ccc;
     }
@@ -70,7 +70,7 @@
                     //view as a parameter
 
                     var sb = new Menu.PopupMenu({
-                        prefixCls:"goog-",
+
                         // boolean，是否鼠标脱离菜单后自动隐藏
                         autoHideOnMouseLeave:true,
                         // ms，鼠标脱离菜单多长时间后自动隐藏
@@ -80,26 +80,24 @@
                         }
                     });
                     sb.addChild(new Menu.Item({
-                        prefixCls:"goog-",
+
                         content:"submenuitem1"}));
                     sb.addChild(new Menu.Item({
-                        prefixCls:"goog-",
+
                         content:"submenuitem2"}));
 
-                    sb.addChild(new Menu.Separator({
-                        prefixCls:"goog-"
-                    }));
+                    sb.addChild(new Menu.Separator());
 
                     if (true) {
                         var sb2 = new Menu.PopupMenu({
-                            prefixCls:"goog-",
+
                             // boolean，是否鼠标脱离菜单后自动隐藏
                             autoHideOnMouseLeave:true,
                             // ms，鼠标脱离菜单多长时间后自动隐藏
                             autoHideDelay:0.3,
                             children:[
                                 new Menu.Item({
-                                    prefixCls:"goog-",
+
                                     content:"submenuitem141"})
                             ],
                             // bug elStyle 无效
@@ -108,10 +106,10 @@
                             }
                         });
                         sb2.addChild(new Menu.Item({
-                            prefixCls:"goog-",
+
                             content:"submenuitem22"}));
                         var b2 = new Menu.SubMenu({
-                            prefixCls:"goog-",
+
                             content:"sub-sub-menu",
                             menu:sb2
                         });
@@ -119,21 +117,21 @@
                     }
 
                     var b = new Menu.SubMenu({
-                        prefixCls:"goog-",
+
                         content:"submenu",
                         menu:sb
                     });
 
                     var menu = new Menu({
-                        prefixCls:"goog-",
+
                         render:"#menuitem_container",
                         children:[b, new Menu.Item({
-                            prefixCls:"goog-",
+
                             content:"alone"})]
                     });
 
                     menu.addChild(new DelMenuItem({
-                        prefixCls:"goog-",
+
                         content:"可删除"
                     }));
 

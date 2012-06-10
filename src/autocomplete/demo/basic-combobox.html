@@ -88,9 +88,9 @@
             });
             basicAutoComplete.render();
 
-            basicAutoComplete.on("select", function (e) {
+            basicAutoComplete.on("click", function (e) {
                 var item = e.target;
-                alert(item.get("value") + "\n" + item.get("content") +
+                S.log(item.get("value") + "\n" + item.get("content") +
                         "\n" + item.get("textContent"));
             });
         })();

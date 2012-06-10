@@ -6,43 +6,43 @@
 <link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../assets/tree.css" rel="stylesheet"/>
 <style>
-    .goog-tree-children {
+    .ks-tree-children {
         padding-left: 19px;
     }
 
-    .goog-tree-lchildren {
+    .ks-tree-lchildren {
         padding-left: 19px;
     }
 
-    .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-selected .ks-tree-item-label {
         background: buttonface;
         color: buttontext;
     }
 
-    .goog-tree-item-focused {
+    .ks-tree-item-focused {
         outline: none;
     }
 
-    .goog-tree-item-focused .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-label {
         background: highlight;
         color: highlighttext;
     }
 
-    .goog-tree-item-checked0 {
+    .ks-tree-item-checked0 {
         background: url(../assets/check0.gif) 0 -2px;
         width: 16px;
         height: 16px;
         vertical-align: middle;
     }
 
-    .goog-tree-item-checked1 {
+    .ks-tree-item-checked1 {
         background: url(../assets/check1.gif) 0 -2px;
         width: 16px;
         height: 16px;
         vertical-align: middle;
     }
 
-    .goog-tree-item-checked2 {
+    .ks-tree-item-checked2 {
         background: url(../assets/check2.gif) 0 -2px;
         width: 16px;
         height: 16px;
@@ -90,49 +90,49 @@
             var $ = S.all;
             var tree = new Tree.CheckTree({
                 content:"淘宝网",
-                prefixCls:"goog-",
+
                 expanded:true,
                 // showRootNode:false,
                 render:"#treeContainer"
             });
 
             var favorates = new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"收藏夹",
                 tree:tree
             });
 
             favorates.addChild(new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"收藏的宝贝"
             }));
 
             favorates.addChild(new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"收藏的店铺"
             }));
 
             tree.addChild(favorates);
 
             tree.addChild(new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"我要买"
             }));
 
 
             var one = new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"我的淘宝",
                 tree:tree
             });
 
             one.addChild(new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"已买到的宝贝"
             }));
 
             one.addChild(new Tree.CheckNode({
-                prefixCls:"goog-",
+
                 content:"已卖出的宝贝"
             }));
 

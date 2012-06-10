@@ -42,7 +42,6 @@
             srcNode:'#inp',
             data:data,
             multiple:true,
-            reFetchOnDownUp:false,
             updateInputOnDownUp:false,
             format:function (query, data) {
                 var ret = [];
@@ -86,9 +85,9 @@
             basicAutoCompleteEl.css("height", basicAutoCompleteEl[0].scrollHeight);
         });
 
-        basicAutoComplete.on("select", function (e) {
+        basicAutoComplete.on("click", function (e) {
             var item = e.target;
-            alert(item.get("value") + "\n" + item.get("content") +
+            S.log(item.get("value") + "\n" + item.get("content") +
                     "\n" + item.get("textContent"));
         });
 

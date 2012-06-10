@@ -5,7 +5,8 @@
 KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender) {
 
 
-    var AutoCompleteMenu;
+    var AutoCompleteMenu,
+        window = S.Env.host;
 
     /**
      * DropDown menu for autoComplete input.
@@ -19,59 +20,28 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
          * @lends AutoComplete.Menu#
          */
         {
-
-            // current input which causes this menu to show
-            _input:null,
-
-            // 所以注册过的 input，为 0 时可能会删除整个 menu
-            _inputs:null,
-
             /**
-             * attach one input or textarea to this autoComplete logic
-             * @param {AutoComplete} input input or textarea wrapper instance
+             * Bind event once after menu initialize and before menu shows.
+             * Bind only one time!
+             * @protected
              */
-            attachInput:function (input) {
-                var self = this;
-                self._inputs = self._inputs || [];
-                if (!S.inArray(input, self._inputs)) {
-                    self._inputs.push(input);
-                }
-            },
-
-            /**
-             * detach existing input or textarea from this autoComplete logic
-             * @param {AutoComplete} input previous attached input or textarea instance
-             */
-            detachInput:function (input, destroy) {
-                var self = this,
-                    _inputs = self._inputs,
-                    index = S.indexOf(input, _inputs || []);
-                if (index != -1) {
-                    _inputs.splice(index, 1);
-                }
-                if (destroy && (!_inputs || _inputs.length == 0)) {
-                    self.destroy();
-                }
-            },
-
             bindUI:function () {
                 var self = this;
 
                 self.on("show", function () {
-                    var input = self._input;
+                    var input = self.get("parent");
                     input.set("ariaOwns", self.get("el").attr("id"));
-                    input.set("ariaExpanded", true);
+                    input.set("collapsed", false);
                 });
 
                 self.on("hide", function () {
-                    var input = self._input;
-                    input.set("ariaOwns", self.get("el").attr("id"));
-                    input.set("ariaExpanded", false);
+                    var input = self.get("parent");
+                    input.set("collapsed", true);
                 });
 
                 self.on("click", function (e) {
                     var item = e.target;
-                    var input = self._input;
+                    var input = self.get("parent");
                     // stop valuechange event
                     input._stopNotify = 1;
                     input.set("selectedItem", item);
@@ -86,10 +56,9 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                 });
 
                 var reAlign = S.buffer(function () {
-                    var self = this,
-                        _input = self._input;
-                    if (_input && self.get("visible")) {
-                        _input._onWindowResize();
+                    var self = this;
+                    if (self.get("visible")) {
+                        self.get("parent")._onWindowResize();
                     }
                 }, 50);
 
@@ -109,7 +78,7 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                 });
 
                 contentEl.on("mouseover", function () {
-                    var input = self._input;
+                    var input = self.get("parent");
                     // trigger el focusous
                     input.get("el")[0].focus();
                     // prevent menu from hiding
@@ -134,17 +103,12 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
 
             _immediateHideForAutoComplete:function () {
                 var self = this;
-                self.removeChildren(true);
                 self.hide();
             },
 
             destructor:function () {
                 var self = this;
                 Event.remove(window, "resize", self.__reAlign, self);
-                S.each(self._inputs, function (inp) {
-                    inp.__set("menu", null);
-                });
-                self._inputs = null;
             }
         }, {
             ATTRS:{
@@ -158,6 +122,9 @@ KISSY.add("autocomplete/menu", function (S, Event, Menu, AutoCompleteMenuRender)
                     value:AutoCompleteMenuRender
                 }
             }
+        }, {
+            xclass:'autocomplete-menu',
+            priority:40
         });
 
     return AutoCompleteMenu;

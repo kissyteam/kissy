@@ -74,38 +74,41 @@
                 for (var i = 0; i < 50; i++) {
                     (function (i) {
 
-                        function constructMenu(self) {
-                            return new Menu.PopupMenu(S.mix({
-                                prefixCls:self.get("prefixCls")
-                            }, self.get("menuCfg")));
+                        var menuCfg = {
+                            align:{
+                                offset:[0, -1]
+                            },
+                            width:82,
+                            height:150,
+                            elStyle:{
+                                overflow:"auto",
+                                overflowX:"hidden"
+                            }
+                        };
+
+                        function constructMenu(menuCfg) {
+                            return S.mix({
+                                xclass:'popupmenu',
+                                children:[]
+                            }, menuCfg);
                         }
 
                         var b = new MenuButton.Select({
                             defaultCaption:"请选择",
                             prefixCls:"c2c-",
                             render:holder,
-                            menuCfg:{
-                                align:{
-                                    offset:[0, -1]
-                                },
-                                width:82,
-                                height:150,
-                                elStyle:{
-                                    overflow:"auto",
-                                    overflowX:"hidden"
-                                }
-                            },
-                            menu:function () {
-                                var m = constructMenu(b);
+                            menuCfg:menuCfg,
+                            menu:(function () {
+                                var m = constructMenu(menuCfg);
                                 for (var j = 0; j < 10; j++) {
-                                    m.addChild(new MenuButton.Option({
-                                        prefixCls:"c2c-",
+                                    m.children.push({
+                                        xclass:'option',
                                         content:"item-" + i + "-" + j,
                                         value:i + "-" + j
-                                    }));
+                                    });
                                 }
                                 return m;
-                            }
+                            })()
                         }).render();
                     })(i);
                 }

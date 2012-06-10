@@ -6,24 +6,24 @@
 <link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../assets/tree.css" rel="stylesheet"/>
 <style>
-    .goog-tree-children {
+    .ks-tree-children {
         padding-left: 19px;
     }
 
-    .goog-tree-lchildren {
+    .ks-tree-lchildren {
         padding-left: 19px;
     }
 
-    .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-selected .ks-tree-item-label {
         background: buttonface;
         color: buttontext;
     }
 
-    .goog-tree-item-focused {
+    .ks-tree-item-focused {
         outline: none;
     }
 
-    .goog-tree-item-focused .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-label {
         background: highlight;
         color: highlighttext;
     }
@@ -61,23 +61,23 @@
     <a href="javascript:void(0)" id="collapseAll">关闭全部</a>
     <div id="treeContainer" style="width: 200px;">
 
-        <div id='root' class="goog-tree-root">
-            <span class="goog-tree-item-label">淘宝网</span>
-            <div class="goog-tree-children">
-                <div class="goog-tree-item">
-                    <span class="goog-tree-item-label">收藏夹</span>
-                    <div class="goog-tree-children">
-                        <div class="goog-tree-item">
-                            <span class="goog-tree-item-label">收藏的宝贝</span>
+        <div id='root' class="ks-tree-root">
+            <span class="ks-tree-item-label">淘宝网</span>
+            <div class="ks-tree-children">
+                <div class="ks-tree-item">
+                    <span class="ks-tree-item-label">收藏夹</span>
+                    <div class="ks-tree-children">
+                        <div class="ks-tree-item">
+                            <span class="ks-tree-item-label">收藏的宝贝</span>
                         </div>
                         <!-- 标记为强制 folder 样式 -->
-                        <div class="goog-tree-item goog-tree-item-folder">
-                            <span class="goog-tree-item-label">收藏的店铺</span>
+                        <div class="ks-tree-item ks-tree-item-folder">
+                            <span class="ks-tree-item-label">收藏的店铺</span>
                         </div>
                     </div>
                 </div>
-                <div class="goog-tree-item">
-                    <span class="goog-tree-item-label">我要买</span>
+                <div class="ks-tree-item">
+                    <span class="ks-tree-item-label">我要买</span>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
 
             var tree = new Tree({
                 content:"淘宝网",
-                prefixCls:"goog-",
+
                 expanded:true,
                 // showRootNode:false,
                 srcNode:"#root"

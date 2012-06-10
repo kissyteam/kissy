@@ -8,14 +8,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (S.isFunction(m)) {
-            if (init) {
-                m = m.call(self);
-                self.__set("menu", m);
-            } else {
-                return null;
-            }
-        }
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
@@ -23,10 +15,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             } else {
                 return null;
             }
-        }
-        if (m && m.get("parent") !== self) {
-            m.__set("parent", self);
-            self.bindMenu();
         }
         return m;
     }
@@ -36,15 +24,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             prefixCls:self.get("prefixCls")
         }, self.get("menuCfg")));
         self.__set("menu", m);
-        self.bindMenu();
         return m;
     }
 
     function reposition() {
         var self = this,
             menu = getMenu(self);
-        if (menu &&
-            menu.get("visible")) {
+        if (menu && menu.get("visible")) {
             menu.set("align", S.merge({
                 node:self.get("el")
             }, ALIGN, self.get("menuCfg").align));
@@ -61,6 +47,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
     function showMenu(self) {
         var el = self.get("el"),
             menu = getMenu(self, 1);
+        // 保证显示前已经 bind 好 menu 事件
+        self.bindMenu();
         if (menu && !menu.get("visible")) {
             menu.set("align", S.merge({
                 node:el
@@ -119,7 +107,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              */
             bindMenu:function () {
                 var self = this,
-                    menu = getMenu(self);
+                    menu = self.get("menu");
                 if (menu) {
                     menu.on("afterActiveItemChange", function (ev) {
                         self.set("activeItem", ev.newVal);
@@ -131,7 +119,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     $(win).on("resize", self._reposition, self);
 
                     /*
-                     bind 与 getMenu 都可能调用，时序不定
+                     只绑定事件一次
                      */
                     self.bindMenu = S.noop;
                 }
@@ -148,16 +136,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 self.fire("click", {
                     target:e.target
                 });
-            },
-
-            /**
-             * Bind drop menu event.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             **/
-            bindUI:function () {
-                this.bindMenu();
             },
 
             /**
@@ -303,12 +281,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             },
 
             destructor:function () {
-                var self = this,
-                    menu = self.get("menu")
+                var self = this;
                 $(win).detach("resize", self._reposition, self);
-                if (menu && menu.destroy) {
-                    menu.destroy();
-                }
             }
 
         },
@@ -344,7 +318,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * Drop down menu associated with this menubutton.
                  * @type Menu
                  */
-                menu:{},
+                menu:{
+                    setter:function (v) {
+                        if (v instanceof Menu) {
+                            v.__set("parent", this);
+                        }
+                    }
+                },
                 /**
                  * Whether drop menu is shown.
                  * @type Boolean

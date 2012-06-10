@@ -115,57 +115,49 @@
 
         KISSY.ready(function (S) {
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
-                var sb = new Menu.PopupMenu({
-                    prefixCls:"goog-"
-                });
+                var sb = new Menu.PopupMenu();
                 sb.addChild(new Menu.Item({
                     content:"submenuitem1",
-                    checkable:true,
-                    prefixCls:"goog-"}));
+                    checkable:true}));
                 sb.addChild(new Menu.Item({
                     content:"submenuitem2",
-                    checkable:true,
-                    prefixCls:"goog-"}));
+                    checkable:true}));
 
 
-                var sb2 = new Menu.PopupMenu({
-                    prefixCls:"goog-"
-                });
+                var sb2 = new Menu.PopupMenu();
                 sb2.addChild(new Menu.Item({
                     content:"submenuitem11",
-                    checkable:true,
-                    prefixCls:"goog-"}));
+                    checkable:true}));
                 sb2.addChild(new Menu.Item({
                     content:"submenuitem22",
-                    checkable:true,
-                    prefixCls:"goog-"}));
+                    checkable:true}));
                 var b2 = new Menu.SubMenu({
                     content:"sub-sub-menu",
-                    prefixCls:"goog-",
+
                     menu:sb2
                 });
                 sb.addChild(b2);
 
                 var b = new Menu.SubMenu({
                     content:"submenu",
-                    prefixCls:"goog-",
+
                     menu:sb
                 });
 
                 var menu = new Menu.PopupMenu({
-                    prefixCls:"goog-",
+
                     children:[
                         b,
                         new Menu.Item({content:"alone",
-                            checkable:true,
-                            prefixCls:"goog-"})
+                            checkable:true
+                        })
                     ]
                 });
 
                 var exist = new MenuButton({
                     render:"#exist",
                     content:"多选菜单",
-                    prefixCls:"goog-",
+
                     menu:menu
                 });
                 exist.render();

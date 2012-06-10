@@ -30,7 +30,6 @@
 <script>
     KISSY.use("autocomplete", function (S, AutoComplete) {
 
-
         var data = [
             'yiminghe',
             'kissyteam',
@@ -55,7 +54,6 @@
             strAppendedOnComplete:" ",
             separator:"@",
             alignWithCursor:true,
-            reFetchOnDownUp:false,
             updateInputOnDownUp:false,
             format:function (query, data) {
                 var ret = [];
@@ -73,7 +71,7 @@
                         };
                     }
                 }
-                ret[0]={
+                ret[0] = {
                     disabled:true
                 };
                 if (!query) {
@@ -105,14 +103,13 @@
                     return ret;
                 }
             }
-
         });
 
         basicAutoComplete.render();
 
         var basicAutoCompleteEl = basicAutoComplete.get("el");
 
-        basicAutoComplete.on("select", function (e) {
+        basicAutoComplete.on("click", function (e) {
             var item = e.target;
             S.log(item.get("value") + "\n" + item.get("content") +
                     "\n" + item.get("textContent"));

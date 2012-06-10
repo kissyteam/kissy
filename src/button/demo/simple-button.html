@@ -56,8 +56,7 @@
         var b = new Button({
             content:"by new",
             describedby:"describe",
-            render:"#button_container",
-            prefixCls:"goog-"
+            render:"#button_container"
         });
 
         b.render();
@@ -85,8 +84,7 @@
         }
 
         var exist = new Button({
-            srcNode:"#exist",
-            prefixCls:"goog-"
+            srcNode:"#exist"
         });
         exist.render();
         exist.on("click", function () {
@@ -95,7 +93,6 @@
 
         Component.create({
             xclass:'button',
-            prefixCls:"goog-",
             content:'json',
             render:"#button_container2",
             listeners:{

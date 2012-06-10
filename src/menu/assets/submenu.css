@@ -23,11 +23,11 @@
 }
 
 /* State: disabled. */
-.goog-menuitem-disabled .ks-submenu-arrow {
+.ks-menuitem-disabled .ks-submenu-arrow {
   color: #ccc;
 }
 
 
-.goog-submenu {
+.ks-submenu {
     position: relative;
 }

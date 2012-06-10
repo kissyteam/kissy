@@ -3,20 +3,15 @@ KISSY.use("anim,node,button",function(S,Anim,Node,Button){
 
     // 创建几个状态的按钮
     var start = new Button({
-        content: "开始",
-        prefixCls: "goog-"
+        content: "开始"
     }), endCurrent = new Button({
-        content: "停止当前动画并继续下一个动画",
-        prefixCls: "goog-"
+        content: "停止当前动画并继续下一个动画"
     }), endCurrentNext = new Button({
-        content: "停止当前动画到终态并继续下一个动画",
-        prefixCls: "goog-"
+        content: "停止当前动画到终态并继续下一个动画"
     }), endCurrentNextStop = new Button({
-        content: "停止当前动画并停止所有动画",
-        prefixCls: "goog-"
+        content: "停止当前动画并停止所有动画"
     }), endAll = new Button({
-        content: "停止当前动画到终态后停止所有动画",
-        prefixCls: "goog-"
+        content: "停止当前动画到终态后停止所有动画"
     });
     start.render();endCurrent.render();endCurrentNext.render();endCurrentNextStop.render();endAll.render();
 

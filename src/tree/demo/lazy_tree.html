@@ -6,24 +6,24 @@
 <link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../assets/tree.css" rel="stylesheet"/>
 <style>
-    .goog-tree-children {
+    .ks-tree-children {
         padding-left: 19px;
     }
 
-    .goog-tree-lchildren {
+    .ks-tree-lchildren {
         padding-left: 19px;
     }
 
-    .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-selected .ks-tree-item-label {
         background: buttonface;
         color: buttontext;
     }
 
-    .goog-tree-item-focused {
+    .ks-tree-item-focused {
         outline: none;
     }
 
-    .goog-tree-item-focused .goog-tree-item-selected .goog-tree-item-label {
+    .ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-label {
         background: highlight;
         color: highlighttext;
     }
@@ -112,7 +112,7 @@
 
             var tree = new Tree({
                 content:"淘宝网",
-                prefixCls:"goog-",
+
                 isLeaf:false,
                 // showRootNode:false,
                 render:"#treeContainer"
@@ -123,7 +123,7 @@
                     var c = getNode(data, node.get("content")).children;
                     S.each(c, function (v) {
                         node.addChild(new Tree.Node({
-                            prefixCls:"goog-",
+
                             isLeaf:!(v.children && v.children.length),
                             content:v.content
                         }));

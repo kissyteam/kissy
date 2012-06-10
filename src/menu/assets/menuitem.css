@@ -13,7 +13,7 @@
 
 
 /* State: resting. */
-.goog-menuitem {
+.ks-menuitem {
   color: #000;
   font: normal 13px Arial, sans-serif;
   list-style: none;
@@ -24,8 +24,8 @@
 }
 
 /* If a menu doesn't have checkable items or items with icons, remove padding. */
-.goog-menu-nocheckbox .goog-menuitem,
-.goog-menu-noicon .goog-menuitem {
+.ks-menu-nocheckbox .ks-menuitem,
+.ks-menu-noicon .ks-menuitem {
   padding-left: 12px;
 }
 
@@ -33,29 +33,29 @@
  * If a menu doesn't have items with shortcuts, leave just enough room for
  * submenu arrows, if they are rendered.
  */
-.goog-menu-noaccel .goog-menuitem {
+.ks-menu-noaccel .ks-menuitem {
   padding-right: 20px;
 }
 
-.goog-menuitem-content {
+.ks-menuitem-content {
   color: #000;
   font: normal 13px Arial, sans-serif;
 }
 
 /* State: disabled. */
-.goog-menuitem-disabled .goog-menuitem-accel,
-.goog-menuitem-disabled{
+.ks-menuitem-disabled .ks-menuitem-accel,
+.ks-menuitem-disabled{
   color: #ccc !important;
 }
-.goog-menuitem-disabled .goog-menuitem-icon {
+.ks-menuitem-disabled .ks-menuitem-icon {
   opacity: 0.3;
   -moz-opacity: 0.3;
   filter: alpha(opacity=30);
 }
 
 /* State: hover. */
-.goog-menuitem-highlight,
-.goog-menuitem-hover {
+.ks-menuitem-highlight,
+.ks-menuitem-hover {
   background-color: #d6e9f8;
   /* Use an explicit top and bottom border so that the selection is visible
    * in high contrast mode. */
@@ -67,8 +67,8 @@
 }
 
 /* State: selected/checked. */
-.goog-menuitem-checkbox,
-.goog-menuitem-icon {
+.ks-menuitem-checkbox,
+.ks-menuitem-icon {
   background-repeat: no-repeat;
   height: 16px;
   left: 6px;
@@ -77,14 +77,14 @@
   vertical-align: middle;
   width: 16px;
 }
-.goog-menuitem-checked .goog-menuitem-checkbox,
-.goog-menuitem-checked.goog-menuitem-icon {
+.ks-menuitem-checked .ks-menuitem-checkbox,
+.ks-menuitem-checked.ks-menuitem-icon {
   /* Client apps may override the URL at which they serve the sprite. */
   background: url(https://ssl.gstatic.com/editor/editortoolbar.png) no-repeat -512px 0;
 }
 
 /* Keyboard shortcut ("accelerator") style. */
-.goog-menuitem-accel {
+.ks-menuitem-accel {
   color: #999;
   /* Keyboard shortcuts are untranslated; always left-to-right. */
   /* @noflip */ direction: ltr;

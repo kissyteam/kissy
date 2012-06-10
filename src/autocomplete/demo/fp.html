@@ -142,12 +142,13 @@
                     'type="submit" onclick="return false">搜索</button>' +
                     '</div>';
 
-            basicAutoComplete.get("menu").on("beforeVisibleChange", function (e) {
+            basicAutoComplete.on("beforeCollapsedChange", function (e) {
                 var self = this;
-                if (e.newVal) {
-                    if (!self.get("foot").children().length) {
-                        self.get("foot").append(html);
-                        var el = self.get("foot").one(".tdg-input"),
+                if (!e.newVal) {
+                    var menu=self.get("menu");
+                    if (!menu.get("foot").children().length) {
+                        menu.get("foot").append(html);
+                        var el = menu.get("foot").one(".tdg-input"),
                                 oel = basicAutoComplete.get("el");
                         oel.on("keyup", function (e) {
                             if (e.keyCode != Event.KeyCodes.DOWN &&
@@ -156,7 +157,7 @@
                             }
                         });
                     }
-                    self.get("foot").one(".tdg-input")
+                    menu.get("foot").one(".tdg-input")
                             .val(basicAutoComplete.get("el").val())
                 }
             });

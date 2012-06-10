@@ -47,7 +47,6 @@
                 width:""
             },
             alignWithCursor:true,
-            reFetchOnDownUp:false,
             updateInputOnDownUp:false,
             format:function (query, data) {
                 var ret = [];
@@ -85,9 +84,9 @@
 
         var basicAutoCompleteEl = basicAutoComplete.get("el");
 
-        basicAutoComplete.on("select", function (e) {
+        basicAutoComplete.on("click", function (e) {
             var item = e.target;
-            alert(item.get("value") + "\n" + item.get("content") +
+            S.log(item.get("value") + "\n" + item.get("content") +
                     "\n" + item.get("textContent"));
         });
 

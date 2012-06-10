@@ -11,7 +11,7 @@
  * @author attila@google.com (Attila Bodis)
  */
 
-.goog-button {
+.ks-button {
     margin: 2px;
     font-family: Arial, sans-serif;
     color: #000;
@@ -34,7 +34,7 @@
 }
 
 /* State: disabled. */
-.goog-button-disabled {
+.ks-button-disabled {
     background-image: none !important;
     opacity: 0.3;
     cursor: default !important;
@@ -45,41 +45,41 @@
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-button-disabled {
+* html .ks-button-disabled {
     margin: 2px 1px !important;
     padding: 0 1px !important;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-button-disabled {
+*:first-child+html .ks-button-disabled {
     margin: 2px 1px !important;
     padding: 0 1px !important;
 }
 
 /* State: hover. */
-.goog-button-hover {
+.ks-button-hover {
     border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
 
 /* State: active, checked. */
-.goog-button-active,
-.goog-button-checked {
+.ks-button-active,
+.ks-button-checked {
     background-color: #bbb;
     background-position: bottom left;
 }
 
 /* State: focused. */
-.goog-button-focused {
+.ks-button-focused {
     border-color: orange;
 }
 
-.goog-button-collapse-left {
+.ks-button-collapse-left {
     margin-left: 0 !important;
     border-radius: 0 2px 2px 0;
     border-left: none;
 }
 
-.goog-button-collapse-right {
+.ks-button-collapse-right {
     border-right: none !important;
     border-radius: 2px 0 0 2px;
     margin-right: 0 !important;

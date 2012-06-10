@@ -8,7 +8,7 @@
 <link href="../assets/menuitem.css" rel="stylesheet"/>
 <link href="../assets/submenu.css" rel="stylesheet"/>
 <style>
-    .goog-menuitem-delete {
+    .ks-menuitem-delete {
         color: #000000;
         left: auto;
         padding-right: 6px;
@@ -36,7 +36,7 @@
             function (S, Node, Menu) {
                 var start = S.now();
                 var menu = new Menu({
-                    prefixCls:"goog-",
+
                     render:"#menuitem_container"
                 });
 
@@ -44,22 +44,21 @@
                 for (var i = 0; i < 10; i++) {
                     (function (i) {
                         menu.addChild(new Menu.SubMenu({
-                            prefixCls:"goog-",
+
                             content:"submenu-" + i,
-                            menu:function () {
-                                var start = S.now();
-                                var sb = new Menu.PopupMenu({
-                                    prefixCls:"goog-"
-                                });
+                            menu:(function () {
+                                var sb = {
+                                    xclass:'popupmenu',
+                                    children:[]
+                                };
                                 for (var j = 0; j < 10; j++) {
-                                    sb.addChild(new Menu.Item({
-                                        prefixCls:"goog-",
+                                    sb.children.push({
+                                        xclass:'menuitem',
                                         content:"submenu-" + i + "-" + j
-                                    }));
+                                    });
                                 }
-                                S.log(i + " create ok :" + (S.now() - start));
                                 return sb;
-                            }
+                            })()
                         }));
                     })(i);
                 }

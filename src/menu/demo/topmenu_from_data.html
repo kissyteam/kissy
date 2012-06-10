@@ -12,7 +12,7 @@
         width: 300px;
     }
 
-    .horizonal .goog-menuitem {
+    .horizonal .ks-menuitem {
         float: left;
         width: 100px;
         overflow: hidden;
@@ -70,24 +70,25 @@
         var context = S.all("#context");
 
         function generatePopupMenu(items) {
-            var sb = new Menu.PopupMenu({
+            var sb = {
                 // boolean，是否鼠标脱离菜单后自动隐藏
                 autoHideOnMouseLeave:true,
                 // ms，鼠标脱离菜单多长时间后自动隐藏
                 autoHideDelay:0.3,
-                prefixCls:"goog-"
-            });
+                xclass:'popupmenu',
+                children:[]
+            };
             generateMenu(sb, items);
             return sb;
         }
 
         function generateSubMenu(item, top) {
-            return new Menu.SubMenu(S.mix({
-                prefixCls:"goog-",
+            return S.mix({
+                xclass:'submenu',
                 content:item.content,
-                menu:function () {
+                menu:(function () {
                     return generatePopupMenu(item.children);
-                }
+                })()
             }, top ? {
                 menuCfg:{
                     align:{
@@ -97,36 +98,39 @@
                 }
             } : {
 
-            }));
+            });
         }
 
         function generateMenu(sb, items, top) {
             S.each(items, function (item) {
                 if (item.children) {
-                    sb.addChild(generateSubMenu(item, top));
+                    sb.children.push(generateSubMenu(item, top));
                 } else {
                     if (item.sep) {
-                        sb.addChild(new Menu.Separator({
-                            prefixCls:"goog-"
-                        }));
+                        sb.children.push({
+                            xclass:'menuseparator'
+                        });
                     } else {
-                        sb.addChild(new Menu.Item({
-                            prefixCls:"goog-",
+                        sb.children.push({
+                            xclass:'menuitem',
                             content:item.content
-                        }));
+                        });
                     }
                 }
             });
         }
 
-        var menu = new Menu({
-            prefixCls:"goog-",
+        var menu = {
+
             width:440,
             render:'#context',
+            children:[],
             elCls:"horizonal"
-        });
+        };
 
         generateMenu(menu, data, 1);
+
+        menu = new Menu(menu);
 
         menu.render();
 

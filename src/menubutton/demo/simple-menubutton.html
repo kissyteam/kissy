@@ -122,54 +122,47 @@
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var $ = S.all;
 
-                var sb = new Menu.PopupMenu({
-                    prefixCls:"goog-"
-                });
+                var sb = new Menu.PopupMenu();
 
-                sb.addChild(new Menu.Item({content:"已买到的宝贝",
-                    prefixCls:"goog-"}));
+                sb.addChild(new Menu.Item({content:"已买到的宝贝"}));
                 sb.addChild(new Menu.Item({content:"已卖出的宝贝",
-                    prefixCls:"goog-", disabled:true}));
+                     disabled:true}));
 
 
-                var sb2 = new Menu.PopupMenu({
-                    prefixCls:"goog-"
-                });
-                sb2.addChild(new Menu.Item({content:"收藏的宝贝",
-                    prefixCls:"goog-"}));
-                sb2.addChild(new Menu.Item({content:"收藏的店铺",
-                    prefixCls:"goog-"}));
+                var sb2 = new Menu.PopupMenu();
+                sb2.addChild(new Menu.Item({content:"收藏的宝贝"}));
+                sb2.addChild(new Menu.Item({content:"收藏的店铺"}));
                 var b2 = new Menu.SubMenu({
                     content:"收藏夹",
-                    prefixCls:"goog-",
+
                     menu:sb2
                 });
                 sb.addChild(b2);
 
                 var b = new Menu.SubMenu({
                     content:"我的淘宝",
-                    menu:sb,
-                    prefixCls:"goog-"
+                    menu:sb
                 });
 
-                var alone = new Menu.Item({content:"我要买", prefixCls:"goog-"});
-                var menu = new Menu.PopupMenu({
-                    prefixCls:"goog-",
-                    children:[b,
-                        new Menu.Separator({prefixCls:"goog-"}),
-                        alone,
-                        new Menu.Item({content:"我要卖", prefixCls:"goog-"})]
-                });
+                var alone = new Menu.Item({content:"我要买"});
 
                 //model and control
                 //view as a parameter
                 var bbbbb = new MenuButton({
-                    prefixCls:"goog-",
+
                     content:"淘宝网",
                     describedby:"describe",
-                    menu:function () {
-                        return menu;
-                    },
+                    menu:(function () {
+                        return {
+                            xclass:'popupmenu',
+                            children:[
+                                b,
+                                new Menu.Separator(),
+                                alone,
+                                new Menu.Item({content:"我要卖")
+                            ]
+                        };
+                    })(),
                     render:"#button_container"
                 });
 

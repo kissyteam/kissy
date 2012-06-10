@@ -70,8 +70,7 @@
 
     var b1 = new Button({
         content:"停止加载",
-        render:"#button_container",
-        prefixCls:"goog-"
+        render:"#button_container"
     });
 
     // 点击按钮后, 停止瀑布图效果

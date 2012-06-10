@@ -18,14 +18,14 @@ KISSY.add("autocomplete/inputRender", function (S, Component) {
             this.get("el").attr("aria-owns", v);
         },
 
-        _uiSetAriaExpanded:function (v) {
+        _uiSetCollapsed:function (v) {
             this.get("el").attr("aria-expanded", v);
         }
     }, {
         ATTRS:{
             ariaOwns:{
             },
-            ariaExpanded:{
+            collapsed:{
             },
             elTagName:{
                 value:'input'

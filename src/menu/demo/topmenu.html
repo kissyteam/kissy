@@ -11,7 +11,7 @@
         width: 300px;
     }
 
-    .horizonal .goog-menuitem {
+    .horizonal .ks-menuitem {
         float: left;
         width: 100px;
         overflow: hidden;
@@ -41,30 +41,27 @@
             // boolean，是否鼠标脱离菜单后自动隐藏
             autoHideOnMouseLeave:true,
             // ms，鼠标脱离菜单多长时间后自动隐藏
-            autoHideDelay:0.3,
-            prefixCls:"goog-"
+            autoHideDelay:0.3
         });
 
         sb.addChild(new Menu.Item({
-            prefixCls:"goog-",
+
             content:"submenuitem1"}));
         sb.addChild(new Menu.Item({
-            prefixCls:"goog-",
+
             content:"submenuitem2"}));
 
-        sb.addChild(new Menu.Separator({
-            prefixCls:"goog-"
-        }));
+        sb.addChild(new Menu.Separator());
 
         var sb2 = new Menu.PopupMenu({
-            prefixCls:"goog-",
+
             // boolean，是否鼠标脱离菜单后自动隐藏
             autoHideOnMouseLeave:true,
             // ms，鼠标脱离菜单多长时间后自动隐藏
             autoHideDelay:0.3,
             children:[
                 new Menu.Item({
-                    prefixCls:"goog-",
+
                     content:"submenuitem141"})
             ],
             // bug elStyle 无效
@@ -73,17 +70,17 @@
             }
         });
         sb2.addChild(new Menu.Item({
-            prefixCls:"goog-",
+
             content:"submenuitem22"}));
         var b2 = new Menu.SubMenu({
-            prefixCls:"goog-",
+
             content:"sub-sub-menu",
             menu:sb2
         });
         sb.addChild(b2);
 
         var b = new Menu.SubMenu({
-            prefixCls:"goog-",
+
             content:"submenu",
             menuCfg:{
                 align:{
@@ -95,12 +92,12 @@
         });
 
         var menu = new Menu({
-            prefixCls:"goog-",
+
             width:440,
             render:'#context',
             elCls:"horizonal",
             children:[b, new Menu.Item({
-                prefixCls:"goog-",
+
                 content:"alone"})]
         });
 

@@ -16,7 +16,6 @@ KISSY.add("autocomplete/basic", function (S, AutoComplete, AutoCompleteMenu, Loc
         initializer:function () {
             var self = this,
                 dataSource,
-                autoCompleteMenu,
                 data;
             if (!self.get("dataSource")) {
                 if (data = self.get("data")) {
@@ -32,27 +31,12 @@ KISSY.add("autocomplete/basic", function (S, AutoComplete, AutoCompleteMenu, Loc
                 }
                 self.__set('dataSource', dataSource);
             }
-
-            if (!self.get("menu")) {
-                autoCompleteMenu = new AutoCompleteMenu({
-                    prefixCls:self.get("prefixCls")
-                });
-                self.__set("menu", autoCompleteMenu);
-            }
         }
     }, {
         ATTRS:/**
          * @lends AutoComplete.Basic
          */
         {
-
-            /**
-             * Whether destroy menu when this destroys.Default true
-             * @type Boolean
-             */
-            destroyMenu:{
-                value:true
-            },
 
             /**
              * Array of static data. data and xhrCfg are mutually exclusive.

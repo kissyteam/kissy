@@ -9,7 +9,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
         var self = this,
             menu = self.get("menu"),
             domEl = self.get("el")[0];
-        if (menu.get("visible")) {
+        if (menu && menu.get && menu.get("visible")) {
             menu.hide();
         } else {
             domEl.focus();
@@ -26,7 +26,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
                 button = self.get("button");
             container.on('click', onBtn, self);
             var menuCfg = this.get("menuCfg");
-            if (!menuCfg.width) {
+            if (menuCfg.width==null) {
                 // drop down menu width should add button width!
                 menuCfg.width = container.width();
             }
@@ -43,7 +43,7 @@ KISSY.add("autocomplete/BasicComboBox", function (S, BasicAutoComplete, BasicCom
                 value:BasicComboBoxRender
             }
         }
-    },{
+    }, {
         xclass:"autocomplete-combobox",
         priority:30
     });

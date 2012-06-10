@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 22:36
+build time: Jun 10 20:39
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -885,8 +885,8 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                     item = cs[i];
                     // 递归清除子菜单
                     if ((menu = item.get("menu")) &&
-                        // 不是懒加载函数
-                        !S.isFunction(menu) &&
+                        // 不是懒加载
+                        menu.get &&
                         menu.get(autoHideOnMouseLeave)) {
                         menu._clearLeaveHideTimers();
                     }
@@ -1076,66 +1076,15 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     /* or precisely submenuitem */
 
-
-    function bindMenu(self, menu) {
-        /**
-         * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
-         */
-        var parentMenu = self.get("parent");
-
-        //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-        if (parentMenu) {
-
-            parentMenu.on("hide", self._onParentHide, self);
-
-            // 子菜单选中后也要通知父级菜单
-            // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-            // 单个 menu 来看可能 selectedItem没有变化
-            menu.on("click", function (ev) {
-                parentMenu.fire("click", {
-                    target:ev.target
-                });
-            });
-
-            // if not bind doc click for parent menu
-            // if already bind, then if parent menu hide, menu will hide too
-            if (!parentMenu.__bindDocClickToHide) {
-                Event.on(doc, "click", _onDocClick, self);
-                parentMenu.__bindDocClickToHide = 1;
-                menu.__bindDocClickToHide = 1;
-            }
-
-            // 通知父级菜单
-            menu.on("afterActiveItemChange", function (ev) {
-                parentMenu.set("activeItem", ev.newVal);
-            });
-        }
-        // 访问子菜单，当前 submenu 不隐藏 menu
-        // leave submenuitem -> enter menuitem -> menu item highlight ->
-        // -> menu highlight -> onChildHighlight_ ->
-
-        // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
-        // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
-        // 保险点用 beforeHighlightedItemChange
-        menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
-    }
-
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (S.isFunction(m)) {
+        if (m && m.xclass) {
             if (init) {
-                m = m.call(self);
+                m = Component.create(m, self);
                 self.__set("menu", m);
             } else {
                 return null;
             }
-        } else {
-            m = Component.create(m, self);
-            self.__set("menu", m);
-        }
-        if (m && m.get("parent") !== self) {
-            m.__set("parent", self);
-            bindMenu(self, m);
         }
         return m;
     }
@@ -1163,6 +1112,58 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
+            /**
+             * Bind sub menu events.
+             * @protected
+             */
+            bindSubMenu:function () {
+                /**
+                 * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
+                 */
+                var self = this,
+                    menu = self.get("menu"),
+                    parentMenu = self.get("parent");
+
+                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                if (parentMenu) {
+
+                    parentMenu.on("hide", self._onParentHide, self);
+
+                    // 子菜单选中后也要通知父级菜单
+                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+                    // 单个 menu 来看可能 selectedItem没有变化
+                    menu.on("click", function (ev) {
+                        parentMenu.fire("click", {
+                            target:ev.target
+                        });
+                    });
+
+                    // if not bind doc click for parent menu
+                    // if already bind, then if parent menu hide, menu will hide too
+                    if (!parentMenu.__bindDocClickToHide) {
+                        Event.on(doc, "click", _onDocClick, self);
+                        parentMenu.__bindDocClickToHide = 1;
+                        menu.__bindDocClickToHide = 1;
+                    }
+
+                    // 通知父级菜单
+                    menu.on("afterActiveItemChange", function (ev) {
+                        parentMenu.set("activeItem", ev.newVal);
+                    });
+                    // 只绑定一次
+                    self.bindSubMenu = S.noop;
+                }
+
+                // 访问子菜单，当前 submenu 不隐藏 menu
+                // leave submenuitem -> enter menuitem -> menu item highlight ->
+                // -> menu highlight -> onChildHighlight_ ->
+
+                // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
+                // 保险点用 beforeHighlightedItemChange
+                menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
+            },
+
             _onParentHide:function () {
                 var menu = getMenu(this);
                 menu && menu.hide();
@@ -1182,6 +1183,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 var self = this,
                     menu = getMenu(self, 1);
                 if (menu) {
+                    // 保证显示前已经绑定好事件
+                    self.bindSubMenu();
                     menu.set("align", S.mix({
                         node:self.get("el"),
                         points:['tr', 'tl']
@@ -1393,6 +1396,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     value:{}
                 },
                 menu:{
+                    setter:function (m) {
+                        if (m instanceof  Component.Controller) {
+                            m.__set("parent", this);
+                        }
+                    }
                 },
                 decorateChildCls:{
                     value:"popupmenu"
