@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
                 s.set('disabled', true);
             });
         }
-        self.addControl(id, s);
+        self.addControl(id + "/select", s);
         return s;
 
     };

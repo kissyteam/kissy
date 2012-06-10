@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor
@@ -45,10 +45,10 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             });
 
             function showLinkEditDialog(selectedEl) {
-                DialogLoader.useDialog(editor, "link/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "link", selectedEl);
             }
 
-            editor.addBubble("link-bubble", checkLink, {
+            editor.addBubble("link", checkLink, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {

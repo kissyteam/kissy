@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * Set up editor constructor
@@ -25,7 +25,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             initializer:function () {
                 var self = this;
                 self.__commands = {};
-                self.__dialogs = {};
                 self.__controls={};
             },
 
@@ -8351,19 +8350,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
                 Event.remove([doc, doc.documentElement, doc.body, win[0]]);
 
-                S.each(self.__dialogs, function (d) {
-                    if (d.destroy) {
-                        d.destroy();
-                    }
-                });
-
                 S.each(self.__controls, function (control) {
                     if (control.destroy) {
                         control.destroy();
                     }
                 });
 
-                self.__dialogs = {};
                 self.__commands = {};
                 self.__controls = {};
             },
@@ -8392,36 +8384,20 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             },
 
             /**
-             * Add a kind of dialog instance to editor.
-             * @param {String} name Dialog name
-             * @param {Overlay} d Dialog instance
-             */
-            addDialog:function (name, d) {
-                this.__dialogs[name] = d;
-            },
-
-            /**
              * Show dialog
              * @param {String} name Dialog name
              * @param args Arguments passed to show
              */
             showDialog:function (name, args) {
+                name += "/dialog";
                 var self = this,
-                    d = self.__dialogs[name];
+                    d = self.__controls[name];
                 d.show(args);
                 self.fire("dialogShow", {
                     dialog:d.dialog,
                     "pluginDialog":d,
                     "dialogName":name
                 });
-            },
-
-            /**
-             * Whether current editor has specified dialog instance.
-             * @param {String} name Dialog name.
-             */
-            hasDialog:function (name) {
-                return !!this.__dialogs[name];
             },
 
             /**
@@ -9497,7 +9473,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
         bubble = new Overlay(cfg);
 
-        editor.addControl(id, bubble);
+        editor.addControl(id + "/bubble", bubble);
 
         // 借鉴google doc tip提示显示
         editor.on("selectionChange", function (ev) {
@@ -9589,6 +9565,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             delete  cfg.checkable;
         }
 
+
         var self = this,
             prefixCls = self.get("prefixCls") + "editor-",
             b = new ButtonType(S.mix({
@@ -9624,7 +9601,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             });
         }
 
-        self.addControl(id, b);
+        self.addControl(id + "/button", b);
 
         return b;
     };
@@ -9849,7 +9826,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorPicker/dialog", self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/colorPicker", self.get("cmdType"));
             });
             self._prepare = self._show;
             self._show();
@@ -9989,7 +9966,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
             });
         });
 
-        editor.addControl(id, menu);
+        editor.addControl(id + "/contextmenu", menu);
 
         return menu;
     };
@@ -10309,16 +10286,16 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
-            if (editor.hasDialog(name)) {
+            if (editor.getControl(name + "/dialog")) {
                 setTimeout(function () {
                     editor.showDialog(name, args);
                 }, 0);
                 return;
             }
             loadMask.loading();
-            S.use("editor/plugin/" + name, function (S, Dialog) {
+            S.use("editor/plugin/" + name + "/dialog", function (S, Dialog) {
                 loadMask.unloading();
-                editor.addDialog(name, new Dialog(editor));
+                editor.addControl(name + "/dialog", new Dialog(editor));
                 editor.showDialog(name, args);
             });
         }
@@ -11512,7 +11489,7 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         show:function (selectedEl) {
             var self = this,
                 editor = self.get("editor");
-            DialogLoader.useDialog(editor, self.get("type") + "/dialog", selectedEl);
+            DialogLoader.useDialog(editor, self.get("type"), selectedEl);
         }
     });
 
@@ -11777,8 +11754,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
-                    bubbleId:"flash-bubble",
-                    contextMenuId:'flash-contextmenu',
+                    bubbleId:"flash",
+                    contextMenuId:'flash',
                     contextMenuHandlers:{
                         "Flash属性":function () {
                             var selectedEl = this.get("editorSelectedEl");
@@ -12450,7 +12427,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         init:function (editor) {
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "image", selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
@@ -12505,7 +12482,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 })
             });
 
-            editor.addContextMenu("image-contextmenu", checkImg, {
+            editor.addContextMenu("image", checkImg, {
                 width:120,
                 children:children,
                 listeners:{
@@ -12532,7 +12509,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 });
             });
 
-            editor.addBubble("image-bubble", checkImg, {
+            editor.addBubble("image", checkImg, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {
@@ -12942,10 +12919,10 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             });
 
             function showLinkEditDialog(selectedEl) {
-                DialogLoader.useDialog(editor, "link/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "link", selectedEl);
             }
 
-            editor.addBubble("link-bubble", checkLink, {
+            editor.addBubble("link", checkLink, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {
@@ -14191,7 +14168,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
                 s.set('disabled', true);
             });
         }
-        self.addControl(id, s);
+        self.addControl(id + "/select", s);
         return s;
 
     };
@@ -14212,7 +14189,7 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
                 listeners:{
                     click:{
                         fn:function () {
-                            DialogLoader.useDialog(editor, "multipleUpload/dialog");
+                            DialogLoader.useDialog(editor, "multipleUpload");
                         }
                     }
                 },
@@ -15442,7 +15419,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                     this.hide();
                     var info = getSel(editor);
                     if (info) {
-                        DialogLoader.useDialog(editor, "table/dialog", {
+                        DialogLoader.useDialog(editor, "table", {
                             selectedTable:info.table,
                             selectedTd:info.td
                         });
@@ -15522,7 +15499,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 });
             });
 
-            editor.addContextMenu("table-contextmenu", function (node) {
+            editor.addContextMenu("table", function (node) {
                 if (S.inArray(DOM.nodeName(node), tableRules)) {
                     return true;
                 }
@@ -15563,7 +15540,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 listeners:{
                     click:{
                         fn:function () {
-                            DialogLoader.useDialog(editor, "table/dialog", {
+                            DialogLoader.useDialog(editor, "table", {
                                 selectedTable:0,
                                 selectedTd:0
                             });
@@ -16115,8 +16092,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
-                bubbleId:"video-bubble",
-                contextMenuId:"video-contextmenu",
+                bubbleId:"video",
+                contextMenuId:"video",
                 contextMenuHandlers:{
                     "视频属性":function () {
                         var selectedEl = this.get("editorSelectedEl");
@@ -16237,8 +16214,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
-                bubbleId:"xiami-bubble",
-                contextMenuId:"xiami-contextmenu",
+                bubbleId:"xiami",
+                contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {
                         var selectedEl = this.get("editorSelectedEl");

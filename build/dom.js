@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:35
+build time: Jun 10 21:02
 */
 /**
  * @fileOverview dom-attr
@@ -1507,7 +1507,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
     var win = S.Env.host,
-        EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        EXPANDO = '__ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
 

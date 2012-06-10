@@ -91,8 +91,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
-                bubbleId:"xiami-bubble",
-                contextMenuId:"xiami-contextmenu",
+                bubbleId:"xiami",
+                contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {
                         var selectedEl = this.get("editorSelectedEl");

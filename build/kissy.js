@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 7 00:45
+build time: Jun 10 21:02
 */
 /*
- * @fileOverview a seed where KISSY grows up from , KISS Yeah !
+ * @fileOverview A seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -496,7 +496,7 @@ build time: Jun 7 00:45
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120607004533';
+        S.__BUILD_TIME = '20120610210214';
     })();
 
     return S;
@@ -4061,7 +4061,7 @@ build time: Jun 7 00:45
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120607004533'
+        tag:'20120610210214'
     }, getBaseInfo()));
 
     /**
@@ -4708,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:35
+build time: Jun 10 21:02
 */
 /**
  * @fileOverview dom-attr
@@ -6214,7 +6214,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
     var win = S.Env.host,
-        EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        EXPANDO = '__ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
 

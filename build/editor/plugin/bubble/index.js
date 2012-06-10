@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * bubble or tip view for kissy editor
@@ -120,7 +120,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
         bubble = new Overlay(cfg);
 
-        editor.addControl(id, bubble);
+        editor.addControl(id + "/bubble", bubble);
 
         // 借鉴google doc tip提示显示
         editor.on("selectionChange", function (ev) {

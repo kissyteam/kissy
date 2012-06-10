@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
                 listeners:{
                     click:{
                         fn:function () {
-                            DialogLoader.useDialog(editor, "multipleUpload/dialog");
+                            DialogLoader.useDialog(editor, "multipleUpload");
                         }
                     }
                 },

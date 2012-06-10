@@ -40,10 +40,10 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             });
 
             function showLinkEditDialog(selectedEl) {
-                DialogLoader.useDialog(editor, "link/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "link", selectedEl);
             }
 
-            editor.addBubble("link-bubble", checkLink, {
+            editor.addBubble("link", checkLink, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {

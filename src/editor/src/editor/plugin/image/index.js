@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         init:function (editor) {
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "image", selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
@@ -82,7 +82,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 })
             });
 
-            editor.addContextMenu("image-contextmenu", checkImg, {
+            editor.addContextMenu("image", checkImg, {
                 width:120,
                 children:children,
                 listeners:{
@@ -109,7 +109,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 });
             });
 
-            editor.addBubble("image-bubble", checkImg, {
+            editor.addBubble("image", checkImg, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {

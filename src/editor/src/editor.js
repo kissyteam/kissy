@@ -240,19 +240,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
                 Event.remove([doc, doc.documentElement, doc.body, win[0]]);
 
-                S.each(self.__dialogs, function (d) {
-                    if (d.destroy) {
-                        d.destroy();
-                    }
-                });
-
                 S.each(self.__controls, function (control) {
                     if (control.destroy) {
                         control.destroy();
                     }
                 });
 
-                self.__dialogs = {};
                 self.__commands = {};
                 self.__controls = {};
             },
@@ -281,36 +274,20 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
             },
 
             /**
-             * Add a kind of dialog instance to editor.
-             * @param {String} name Dialog name
-             * @param {Overlay} d Dialog instance
-             */
-            addDialog:function (name, d) {
-                this.__dialogs[name] = d;
-            },
-
-            /**
              * Show dialog
              * @param {String} name Dialog name
              * @param args Arguments passed to show
              */
             showDialog:function (name, args) {
+                name += "/dialog";
                 var self = this,
-                    d = self.__dialogs[name];
+                    d = self.__controls[name];
                 d.show(args);
                 self.fire("dialogShow", {
                     dialog:d.dialog,
                     "pluginDialog":d,
                     "dialogName":name
                 });
-            },
-
-            /**
-             * Whether current editor has specified dialog instance.
-             * @param {String} name Dialog name.
-             */
-            hasDialog:function (name) {
-                return !!this.__dialogs[name];
             },
 
             /**

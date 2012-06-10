@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * xiamiMusic button
@@ -96,8 +96,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 editor:editor,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
-                bubbleId:"xiami-bubble",
-                contextMenuId:"xiami-contextmenu",
+                bubbleId:"xiami",
+                contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {
                         var selectedEl = this.get("editorSelectedEl");

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * multipleUpload button
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
                 listeners:{
                     click:{
                         fn:function () {
-                            DialogLoader.useDialog(editor, "multipleUpload/dialog");
+                            DialogLoader.useDialog(editor, "multipleUpload");
                         }
                     }
                 },

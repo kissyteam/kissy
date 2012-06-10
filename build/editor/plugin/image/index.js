@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * insert image for kissy editor
@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         init:function (editor) {
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image/dialog", selectedEl);
+                DialogLoader.useDialog(editor, "image", selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 })
             });
 
-            editor.addContextMenu("image-contextmenu", checkImg, {
+            editor.addContextMenu("image", checkImg, {
                 width:120,
                 children:children,
                 listeners:{
@@ -114,7 +114,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 });
             });
 
-            editor.addBubble("image-bubble", checkImg, {
+            editor.addBubble("image", checkImg, {
                 listeners:{
                     afterRenderUI:{
                         fn:function () {

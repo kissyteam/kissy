@@ -115,7 +115,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
         bubble = new Overlay(cfg);
 
-        editor.addControl(id, bubble);
+        editor.addControl(id + "/bubble", bubble);
 
         // 借鉴google doc tip提示显示
         editor.on("selectionChange", function (ev) {

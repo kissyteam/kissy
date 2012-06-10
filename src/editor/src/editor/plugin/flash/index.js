@@ -52,8 +52,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                     editor:editor,
                     cls:CLS_FLASH,
                     type:TYPE_FLASH,
-                    bubbleId:"flash-bubble",
-                    contextMenuId:'flash-contextmenu',
+                    bubbleId:"flash",
+                    contextMenuId:'flash',
                     contextMenuHandlers:{
                         "Flash属性":function () {
                             var selectedEl = this.get("editorSelectedEl");

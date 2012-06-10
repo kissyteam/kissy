@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
             });
         });
 
-        editor.addControl(id, menu);
+        editor.addControl(id + "/contextmenu", menu);
 
         return menu;
     };

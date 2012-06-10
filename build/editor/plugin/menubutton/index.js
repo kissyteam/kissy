@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * select component for kissy editor.
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
                 s.set('disabled', true);
             });
         }
-        self.addControl(id, s);
+        self.addControl(id + "/select", s);
         return s;
 
     };

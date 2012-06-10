@@ -17,6 +17,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             delete  cfg.checkable;
         }
 
+
         var self = this,
             prefixCls = self.get("prefixCls") + "editor-",
             b = new ButtonType(S.mix({
@@ -52,7 +53,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             });
         }
 
-        self.addControl(id, b);
+        self.addControl(id + "/button", b);
 
         return b;
     };

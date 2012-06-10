@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 KISSY.add("editor/plugin/undo/cmd",function(f,g){function h(a){var b=a.get("document")[0].body.innerHTML,c;b&&(c=a.getSelection());this.contents=b;this.bookmarks=c&&c.createBookmarks2(!0)}function i(a){this.history=[];this.index=-1;this.editor=a;this.bufferRunner=f.buffer(this.save,500,this);this._init()}var j=g.Utils.arrayCompare,k=f.UA;f.augment(h,{equals:function(a){if(this.contents!=a.contents)return!1;var b=this.bookmarks,a=a.bookmarks;if(b||a){if(!b||!a||b.length!=a.length)return!1;for(var c=
 0;c<b.length;c++){var d=b[c],e=a[c];if(d.startOffset!=e.startOffset||d.endOffset!=e.endOffset||!j(d.start,e.start)||!j(d.end,e.end))return!1}}return!0}});var l={16:1,17:1,18:1},m={37:1,38:1,39:1,40:1,33:1,34:1};f.augment(i,{_keyMonitor:function(){var a=this,b=a.editor;b.docReady(function(){b.get("document").on("keydown",function(c){var d=c.keyCode;d in m||d in l||(90===d&&(c.ctrlKey||c.metaKey)?(!1!==b.fire("restore",{direction:-1})&&a.restore(-1),c.halt()):89===d&&(c.ctrlKey||c.metaKey)?(!1!==b.fire("restore",

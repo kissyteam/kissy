@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * Encapsulate KISSY toggle button for kissy editor
@@ -21,6 +21,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             }
             delete  cfg.checkable;
         }
+
 
         var self = this,
             prefixCls = self.get("prefixCls") + "editor-",
@@ -57,7 +58,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             });
         }
 
-        self.addControl(id, b);
+        self.addControl(id + "/button", b);
 
         return b;
     };

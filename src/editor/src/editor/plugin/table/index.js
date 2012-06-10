@@ -401,7 +401,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                     this.hide();
                     var info = getSel(editor);
                     if (info) {
-                        DialogLoader.useDialog(editor, "table/dialog", {
+                        DialogLoader.useDialog(editor, "table", {
                             selectedTable:info.table,
                             selectedTd:info.td
                         });
@@ -481,7 +481,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 });
             });
 
-            editor.addContextMenu("table-contextmenu", function (node) {
+            editor.addContextMenu("table", function (node) {
                 if (S.inArray(DOM.nodeName(node), tableRules)) {
                     return true;
                 }
@@ -522,7 +522,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 listeners:{
                     click:{
                         fn:function () {
-                            DialogLoader.useDialog(editor, "table/dialog", {
+                            DialogLoader.useDialog(editor, "table", {
                                 selectedTable:0,
                                 selectedTd:0
                             });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 00:39
+build time: Jun 10 21:07
 */
 /**
  * video button.
@@ -93,8 +93,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
-                bubbleId:"video-bubble",
-                contextMenuId:"video-contextmenu",
+                bubbleId:"video",
+                contextMenuId:"video",
                 contextMenuHandlers:{
                     "视频属性":function () {
                         var selectedEl = this.get("editorSelectedEl");
