@@ -292,7 +292,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            if (v && ("node" in v)) {
+            if (v) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
         },
