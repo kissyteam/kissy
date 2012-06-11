@@ -8,9 +8,7 @@
 <link rel="stylesheet" href="../../assets/cool.css"/>
 </head>
 <body>
-
-
-<div style="height:800px;width: 950px;margin: 20px auto;">
+<div style="height:800px;width: 950px;margin: 0px auto;padding: 20px;">
     <button id="t2">open dialog with mask anim</button>
 </div>
 <script>
@@ -26,12 +24,20 @@
 
             o.on("afterBindUI", function () {
                 o.on("show", function () {
-                    o.get("maskNode").hide();
-                    o.get("maskNode").fadeIn();
+                    o.get("maskNode").css('opacity', 0);
+                    o.get("maskNode").animate({
+                        opacity:.5
+                    });
                 });
                 o.on("hide", function () {
                     o.get("maskNode").show();
-                    o.get("maskNode").fadeOut();
+                    o.get("maskNode").animate({
+                        opacity:0
+                    }, {
+                        complete:function () {
+                            o.get("maskNode").hide();
+                        }
+                    });
                 });
             });
 
