@@ -105,7 +105,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
             easing:easing,
             complete:function () {
                 self.__effectGhost = null;
-                ghost.remove();
+                ghost[0].parentNode.removeChild(ghost[0]);
                 el.show();
             }
         });

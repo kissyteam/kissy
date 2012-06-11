@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 22:09
+build time: Jun 11 22:55
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -444,7 +444,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
             easing:easing,
             complete:function () {
                 self.__effectGhost = null;
-                ghost.remove();
+                ghost[0].parentNode.removeChild(ghost[0]);
                 el.show();
             }
         });
