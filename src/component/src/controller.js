@@ -654,10 +654,16 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
      */
     function create(component, self) {
         if (!(component instanceof Controller )) {
+            var childConstructor, xclass;
+            if (!(xclass = component['xclass'])) {
+                S.log('no xclass in : ');
+                S.log(component);
+                S.error("create component error !");
+            }
             if (self && !component.prefixCls) {
                 component.prefixCls = self.get("prefixCls");
             }
-            var childConstructor = UIStore.getUIConstructorByCssClass(component['xclass']);
+            childConstructor = UIStore.getUIConstructorByCssClass(xclass);
             component = new childConstructor(component);
         }
         return component;
