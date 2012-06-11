@@ -9,6 +9,7 @@ build time: Jun 11 22:55
  */
 KISSY.add("overlay/aria", function (S, Event) {
     function Aria() {
+        
     }
 
     Aria.ATTRS =
