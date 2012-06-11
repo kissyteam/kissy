@@ -36,7 +36,6 @@ History:
 
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
- - [+] Event.on 支持 data 绑定
  - [x] Event.delegate 重构，fix #76
  - [*] valuechange 透明支持 webkitspeechchange 事件
  - [*] publish 支持空格分隔的多个事件名字符串
@@ -70,6 +69,8 @@ History:
 
  - [!] 删除 uibase 模块，合并 uibase 到 component 模块
  - [!] 所有组件设置 prefixCls 只作用于组件最外层根节点 class
+ - [+] Component children 可配置带有 xclass 的组件描述 json 对象
+ - [+] Component 可配置 listeners，直接绑定事件
 
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
 
@@ -78,7 +79,6 @@ History:
  - [+] Dialog draggable 扩展配置支持 dd proxy 以及 dd scroll.
  - [+] Overlay 增加 maskShared 配置以及 maskNode 属性，可以控制是否共享以及操纵 mask 层.
 
- - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
  - [*] SubMenu 支持 click 事件
  - [!] autoHideDelay 单位变更为秒
  - [!] menuAlign 移到 menuCfg.align 配置
