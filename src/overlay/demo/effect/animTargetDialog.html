@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Anim Target</title>
+<link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
+<script src="../../../../build/kissy.js"></script>
+<link rel="stylesheet" href="../../assets/cool.css"/>
+<style>
+    .ks-overlay-ghost {
+        opacity: .65;
+    }
+
+    .ks-ie6 .ks-overlay-ghost, .ks-ie7 .ks-overlay-ghost {
+        filter: alpha(opacity = 65);
+    }
+</style>
+</head>
+<body>
+
+
+<div style="height:800px;width: 950px;margin: 20px auto;">
+    <button id="t2">open dialog with animTarget</button>
+</div>
+<script>
+    KISSY.ready(function (S) {
+        S.use("overlay", function (S, Overlay) {
+            var o = new Overlay.Dialog({
+                width:500,
+                height:500,
+                mask:true,
+                maskShared:false,
+                zIndex:1000,
+                closable:true,
+                //elStyle:{border:"1px solid red"},
+                bodyContent:'<div style="height: 200px">test</div>',
+                effect:{
+                    duration:.2,
+                    easing:'easingStrong',
+                    animTarget:S.all('#t2')
+                }
+            });
+            S.all("#t2").on("click", function () {
+                o.center().show();
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

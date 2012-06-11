@@ -631,6 +631,17 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
                 xrender:{
                     value:Render
+                },
+
+                /**
+                 * Get xclass of current component instance.
+                 * Readonly and only for json config.
+                 * @type String
+                 */
+                xclass:{
+                    valueFn:function () {
+                        return UIStore.getCssClassByUIConstructor(this.constructor);
+                    }
                 }
             }
         });
