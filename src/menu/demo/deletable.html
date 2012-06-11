@@ -55,12 +55,14 @@
 
 </div>
 <script src="../../../build/kissy.js"></script>
+<script src=".././demo/delmenuitemrender.js"></script>
+<script src=".././demo/delmenuitem.js"></script>
 <script>
 
 
     (function () {
-        KISSY.use("node,menu",
-                function (S, Node, Menu) {
+        KISSY.use("node,menu,menu/delmenuitem",
+                function (S, Node, Menu, DelMenuItem) {
                     //view
                     //render to container : button_container
 
@@ -128,11 +130,21 @@
                             content:"alone"})]
                     });
 
+                    menu.addChild(new DelMenuItem({
+
+                        content:"可删除"
+                    }));
+
                     menu.render();
 
                     menu.on("click", function (ev) {
                         S.log("selected : " + ev.target.get("content"));
                     });
+
+                    menu.on("delete", function (e) {
+                        S.log("deleted : " + e.target.get("content"));
+                    });
+
 
                     var dis = Node.one("#dis");
 

@@ -4,33 +4,7 @@
  */
 KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
 
-    function getParentMenu(self) {
-        var subMenuItem = self.get("parent"),
-            parentMenu;
-        if (subMenuItem && subMenuItem.get("menu") == self) {
-            parentMenu = subMenuItem.get("parent");
-        }
-        return parentMenu;
-    }
-
-    function getAutoHideParentMenu(self) {
-        var parentMenu = getParentMenu(self);
-        if (parentMenu && parentMenu.get(autoHideOnMouseLeave)) {
-            return parentMenu;
-        }
-        return 0;
-    }
-
     var autoHideOnMouseLeave = "autoHideOnMouseLeave";
-
-    function clearOwn(self) {
-        var l;
-        if (l = self._leaveHideTimer) {
-            clearTimeout(l);
-            self._leaveHideTimer = 0;
-        }
-    }
-
 
     var UIBase = Component.UIBase;
 
@@ -52,25 +26,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
          * @lends Menu.PopupMenu#
          */
         {
-            _clearLeaveHideTimers:function () {
-                var self = this, i, item, menu;
-                if (!self.get(autoHideOnMouseLeave)) {
-                    return;
-                }
-                // 清除自身
-                clearOwn(self);
-                var cs = self.get("children");
-                for (i = 0; i < cs.length; i++) {
-                    item = cs[i];
-                    // 递归清除子菜单
-                    if ((menu = item.get("menu")) &&
-                        // 不是懒加载
-                        menu.get &&
-                        menu.get(autoHideOnMouseLeave)) {
-                        menu._clearLeaveHideTimers();
-                    }
-                }
-            },
 
             /**
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
@@ -79,38 +34,12 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * @override
              */
             handleMouseLeave:function () {
-                var self = this,
-                    parent;
+                var self = this;
                 if (!self.get(autoHideOnMouseLeave)) {
                     return;
                 }
-                self._leaveHideTimer = setTimeout(function () {
-                    self.hide();
-                    var subMenuItem = self.get("parent"), m;
-                    if (subMenuItem) {
-                        m = getParentMenu(self);
-                        // 过段时间仍然是父亲 submenu 仍然是他的兄弟中高亮，证明已经离开
-                        // 否则
-                        // 1.鼠标移到 submenu 的话，submenu mouseenter clearTimers,
-                        //   这个 timer 执行不了！
-                        //
-                        // 2.鼠标移到了 submenu 并列的其他 menuitem，
-                        //   导致其他 menuitem highlighted
-                        //   那么 当前所属 submenu unhighlighted
-                        //   执行 clearTimers ，这个 timer 仍然不执行
-
-                        // 那么只剩下一种情况，移除了整个嵌套的 menu，
-                        // 那么执行该 timer
-                        // menu hide 并且将其所属的 submenu 高亮去掉！
-                        if (m && m.get("highlightedItem") === subMenuItem) {
-                            m.set("highlightedItem", null);
-                        }
-                    }
-                }, self.get("autoHideDelay"));
-                parent = getAutoHideParentMenu(self);
-                if (parent) {
-                    parent.handleMouseLeave();
-                }
+                // 通知 submenu item buffer 层层检查，是否隐藏掉改子菜单以及子菜单的祖先菜单
+                self.get("parent").hideParentMenusBuffer();
             },
 
             /**
@@ -124,11 +53,8 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 if (!self.get(autoHideOnMouseLeave)) {
                     return;
                 }
-                var parent = getAutoHideParentMenu(self);
-                if (parent) {
-                    parent.handleMouseEnter();
-                }
-                self._clearLeaveHideTimers();
+                // 防止从子菜单项移到子菜单，停止子菜单项将要隐藏子菜单的任务
+                self.get("parent").clearSubMenuTimers();
             },
 
 
@@ -162,6 +88,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 },
                 /**
                  * Whether the popup menu hides when mouseleave.
+                 * Only valid for submenu.
                  * Default : false.
                  * @type Boolean
                  */
@@ -169,11 +96,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 /**
                  * After how much time the popup menu hides when mouseleave.
                  * Unit : second.
-                 * Default : 0.1.
+                 * Default : .1
                  * @type Number
                  */
                 autoHideDelay:{
-                    value:0.1
+                    value:.1
                 },
                 xrender:{
                     value:PopupMenuRender

@@ -6,7 +6,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
     function onMenuHide() {
-        this.set("highlightedItem", undefined);
+        this.set("highlightedItem", null);
     }
 
     /**
@@ -28,7 +28,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             handleBlur:function (e) {
                 Menu.superclass.handleBlur.call(this, e);
-                this.set("highlightedItem", undefined);
+                this.set("highlightedItem", null);
             },
 
 
