@@ -20,7 +20,7 @@
 
 
 <div style="height:800px;width: 950px;margin: 20px auto;">
-    <button id="t2">open dialog with animTarget</button>
+    <button id="t2">open dialog with target</button>
 </div>
 <script>
     KISSY.ready(function (S) {
@@ -37,7 +37,7 @@
                 effect:{
                     duration:.2,
                     easing:'easingStrong',
-                    animTarget:S.all('#t2')
+                    target:S.all('#t2')
                 }
             });
             S.all("#t2").on("click", function () {

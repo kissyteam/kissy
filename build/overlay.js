@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 22:07
+build time: Jun 11 22:09
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -358,7 +358,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         /**
          * Set v as overlay 's show effect <br>
          * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
-         * v.animTarget (String|KISS.Node): The target node from which overlay should animate from while showing. <br>
+         * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
          * v.duration (Number): in seconds. Default:0.5. <br>
          * v.easing (String): see {@link Anim.Easing} <br>
          * @type Object
@@ -366,7 +366,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         effect:{
             value:{
                 effect:'',
-                animTarget:null,
+                target:null,
                 duration:DURATION,
                 easing:'easeOut'
             },
@@ -408,11 +408,11 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         var el = self.get("el"),
             $ = S.all,
             effectCfg = self.get("effect"),
-            animTarget = $(effectCfg.animTarget),
+            target = $(effectCfg.target),
             duration = effectCfg.duration,
-            targetBox = S.mix(animTarget.offset(), {
-                width:animTarget.width(),
-                height:animTarget.height()
+            targetBox = S.mix(target.offset(), {
+                width:target.width(),
+                height:target.height()
             }),
             elBox = S.mix(el.offset(), {
                 width:el.width(),
@@ -455,12 +455,12 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         var el = self.get("el"),
             effectCfg = self.get("effect"),
             effect = effectCfg.effect || NONE,
-            animTarget = effectCfg.animTarget;
+            target = effectCfg.target;
 
-        if (effect == NONE && !animTarget) {
+        if (effect == NONE && !target) {
             return;
         }
-        if (animTarget) {
+        if (target) {
             processTarget(self, show);
             return;
         }
