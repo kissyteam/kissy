@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * xiamiMusic button
@@ -111,10 +111,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",
                 listeners:{
-                    click:{
-                        fn:function () {
-                            xiamiMusic.show();
-                        }
+                    click:function () {
+                        xiamiMusic.show();
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

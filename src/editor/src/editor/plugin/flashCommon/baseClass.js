@@ -53,12 +53,10 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 width:"120px",
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
-                            var content = e.target.get("content");
-                            if (contextMenuHandlers[content]) {
-                                contextMenuHandlers[content].call(this);
-                            }
+                    click:function (e) {
+                        var content = e.target.get("content");
+                        if (contextMenuHandlers[content]) {
+                            contextMenuHandlers[content].call(this);
                         }
                     }
                 }
@@ -68,9 +66,8 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 return el.hasClass(cls, undefined) && el;
             }, {
                 listeners:{
-                    afterRenderUI:{
-                        // 注册泡泡，selectionChange时检测
-                        fn:function () {
+                    afterRenderUI:// 注册泡泡，selectionChange时检测
+                        function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
                             el.html(S.substitute(tipHtml, {
@@ -115,7 +112,6 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                                 }
                             });
                         }
-                    }
                 }
             })
 

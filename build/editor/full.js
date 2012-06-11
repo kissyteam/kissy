@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * Set up editor constructor
@@ -11378,12 +11378,10 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 width:"120px",
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
-                            var content = e.target.get("content");
-                            if (contextMenuHandlers[content]) {
-                                contextMenuHandlers[content].call(this);
-                            }
+                    click:function (e) {
+                        var content = e.target.get("content");
+                        if (contextMenuHandlers[content]) {
+                            contextMenuHandlers[content].call(this);
                         }
                     }
                 }
@@ -11393,9 +11391,8 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                 return el.hasClass(cls, undefined) && el;
             }, {
                 listeners:{
-                    afterRenderUI:{
-                        // 注册泡泡，selectionChange时检测
-                        fn:function () {
+                    afterRenderUI:// 注册泡泡，selectionChange时检测
+                        function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
                             el.html(S.substitute(tipHtml, {
@@ -11440,7 +11437,6 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
                                 }
                             });
                         }
-                    }
                 }
             })
 
@@ -11770,10 +11766,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 editor.addButton("flash", {
                     tooltip:"插入Flash",
                     listeners:{
-                        click:{
-                            fn:function () {
-                                flashControl.show();
-                            }
+                        click:function () {
+                            flashControl.show();
                         }
                     },
                     mode:Editor.WYSIWYG_MODE
@@ -12357,41 +12351,38 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 },
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
-                    click:{
-                        fn:function (ev) {
-                            var self = this,
-                                v = ev.target.get("value"),
-                                pre = ev.prevTarget && ev.prevTarget.get("value");
-                            if (v != pre) {
-                                editor.execCommand("heading", v);
-                            } else {
-                                editor.execCommand("heading", "p");
-                                self.set("value", "p");
-                            }
+                    click:function (ev) {
+                        var self = this,
+                            v = ev.target.get("value"),
+                            pre = ev.prevTarget && ev.prevTarget.get("value");
+                        if (v != pre) {
+                            editor.execCommand("heading", v);
+                        } else {
+                            editor.execCommand("heading", "p");
+                            self.set("value", "p");
                         }
                     },
-                    afterSyncUI:{
-                        fn:function () {
-                            editor.on("selectionChange", function (ev) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                    afterSyncUI:function () {
+                        editor.on("selectionChange", function (ev) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            var self = this,
+                                elementPath = ev.path;
+                            // For each element into the elements path.
+                            // Check if the element is removable by any of
+                            // the styles.
+                            var queryCmd = Editor.Utils.getQueryCmd("heading");
+                            for (var value in FORMAT_SIZES) {
+                                if (FORMAT_SIZES.hasOwnProperty(value) &&
+                                    editor.execCommand(queryCmd, elementPath, value)) {
+                                    self.set("value", value);
                                     return;
                                 }
-                                var self = this,
-                                    elementPath = ev.path;
-                                // For each element into the elements path.
-                                // Check if the element is removable by any of
-                                // the styles.
-                                var queryCmd = Editor.Utils.getQueryCmd("heading");
-                                for (var value in FORMAT_SIZES) {
-                                    if (FORMAT_SIZES.hasOwnProperty(value) &&
-                                        editor.execCommand(queryCmd, elementPath, value)) {
-                                        self.set("value", value);
-                                        return;
-                                    }
-                                }
-                            });
-                        }
+                            }
+                        });
                     }
+
                 }
             });
         }
@@ -12434,10 +12425,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             editor.addButton("image", {
                 tooltip:"插入图片",
                 listeners:{
-                    click:{
-                        fn:function () {
-                            showImageEditor(null);
-                        }
+                    click:function () {
+                        showImageEditor(null);
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -12486,15 +12476,14 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 width:120,
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
-                            var self = this, content = e.target.get('content');
-                            S.each(handlers, function (h) {
-                                if (h.content == content) {
-                                    h.fn.call(self);
-                                }
-                            });
-                        }
+                    click:function (e) {
+                        var self = this, content = e.target.get('content');
+                        S.each(handlers, function (h) {
+                            if (h.content == content) {
+                                h.fn.call(self);
+                            }
+                        });
+
                     }
                 }
             });
@@ -12511,40 +12500,38 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             editor.addBubble("image", checkImg, {
                 listeners:{
-                    afterRenderUI:{
-                        fn:function () {
-                            var bubble = this,
-                                el = bubble.get("contentEl");
-                            el.html(tipHtml);
-                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                                tipChangeEl = el.one(".ks-editor-bubble-change"),
-                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
-                            Editor.Utils.preventFocus(el);
-                            tipChangeEl.on("click", function (ev) {
-                                showImageEditor(bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
-                            tipRemoveEl.on("click", function (ev) {
-                                if (UA['webkit']) {
-                                    var r = editor.getSelection().getRanges();
-                                    if (r && r[0]) {
-                                        r[0].collapse();
-                                        r[0].select();
-                                    }
+                    afterRenderUI:function () {
+                        var bubble = this,
+                            el = bubble.get("contentEl");
+                        el.html(tipHtml);
+                        var tipUrlEl = el.one(".ks-editor-bubble-url"),
+                            tipChangeEl = el.one(".ks-editor-bubble-change"),
+                            tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                        Editor.Utils.preventFocus(el);
+                        tipChangeEl.on("click", function (ev) {
+                            showImageEditor(bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
+                        tipRemoveEl.on("click", function (ev) {
+                            if (UA['webkit']) {
+                                var r = editor.getSelection().getRanges();
+                                if (r && r[0]) {
+                                    r[0].collapse();
+                                    r[0].select();
                                 }
-                                bubble.get("editorSelectedEl").remove();
-                                bubble.hide();
-                                editor.notifySelectionChange();
-                                ev.halt();
-                            });
-                            bubble.on("show", function () {
-                                var a = bubble.get("editorSelectedEl");
-                                if (a) {
-                                    var src = a.attr("_ke_saved_src") || a.attr("src");
-                                    tipUrlEl.attr("href", src);
-                                }
-                            });
-                        }
+                            }
+                            bubble.get("editorSelectedEl").remove();
+                            bubble.hide();
+                            editor.notifySelectionChange();
+                            ev.halt();
+                        });
+                        bubble.on("show", function () {
+                            var a = bubble.get("editorSelectedEl");
+                            if (a) {
+                                var src = a.attr("_ke_saved_src") || a.attr("src");
+                                tipUrlEl.attr("href", src);
+                            }
+                        });
                     }
                 }
             });
@@ -12579,14 +12566,12 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
     return {
         init:function (editor) {
             indexCmd.init(editor);
-            editor.addButton("indent",{
+            editor.addButton("indent", {
                 tooltip:"增加缩进量 ",
                 listeners:{
-                    click:{
-                        fn:function () {
-                            editor.execCommand("indent");
-                            editor.focus();
-                        }
+                    click:function () {
+                        editor.execCommand("indent");
+                        editor.focus();
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -12671,24 +12656,21 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 tooltip:"居中对齐",
                 checkable:true,
                 listeners:{
-                    click:{
-                        fn:exec
-                    },
-                    afterSyncUI:{
-                        fn:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
-                                if (editor.execCommand(queryCmd, e.path)) {
-                                    self.set("checked", true);
-                                } else {
-                                    self.set("checked", false);
-                                }
-                            });
-                        }}
+                    click:exec,
+                    afterSyncUI:function () {
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
+                            if (editor.execCommand(queryCmd, e.path)) {
+                                self.set("checked", true);
+                            } else {
+                                self.set("checked", false);
+                            }
+                        });
+                    }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -12728,24 +12710,20 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
                 tooltip:"左对齐",
                 checkable:true,
                 listeners:{
-                    click:{
-                        fn:exec
-                    },
-                    afterSyncUI:{
-                        fn:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                var queryCmd = Editor.Utils.getQueryCmd("justifyLeft");
-                                if (editor.execCommand(queryCmd, e.path)) {
-                                    self.set("checked", true);
-                                } else {
-                                    self.set("checked", false);
-                                }
-                            });
-                        }
+                    click:exec,
+                    afterSyncUI:function () {
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            var queryCmd = Editor.Utils.getQueryCmd("justifyLeft");
+                            if (editor.execCommand(queryCmd, e.path)) {
+                                self.set("checked", true);
+                            } else {
+                                self.set("checked", false);
+                            }
+                        });
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -12786,11 +12764,8 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                 tooltip:"右对齐",
                 checkable:true,
                 listeners:{
-                    click:{
-                        fn:exec
-                    },
-                    afterSyncUI:{
-                        fn:function () {
+                    click:exec,
+                    afterSyncUI:function () {
                             var self = this;
                             editor.on("selectionChange", function (e) {
                                 if (editor.get("mode") == Editor.SOURCE_MODE) {
@@ -12804,7 +12779,7 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                                 }
                             });
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -12909,10 +12884,9 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             editor.addButton("link", {
                 tooltip:"插入链接",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             showLinkEditDialog();
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -12924,8 +12898,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
 
             editor.addBubble("link", checkLink, {
                 listeners:{
-                    afterRenderUI:{
-                        fn:function () {
+                    afterRenderUI:function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
 
@@ -12959,7 +12932,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
                                 tipUrl.attr("href", href);
                             });
                         }
-                    }
+
                 }
             });
         }
@@ -14099,8 +14072,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this;
                             var checked = self.get("checked");
                             if (checked) {
@@ -14115,7 +14087,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
 
                             editor.focus();
                         }
-                    }
+
                 },
                 checkable:true
             });
@@ -14187,10 +14159,9 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             DialogLoader.useDialog(editor, "multipleUpload");
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -14291,14 +14262,12 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
             editor.addButton("outdent", {
                 tooltip:"减少缩进量 ",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             editor.execCommand("outdent");
                             editor.focus();
-                        }
+
                     },
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             editor.on("selectionChange", function (e) {
                                 if (editor.get("mode") == Editor.SOURCE_MODE) {
@@ -14310,7 +14279,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
                                     self.set("disabled", true);
                                 }
                             });
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -14436,8 +14405,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             editor.addButton("pageBreak", {
                 tooltip:"分页",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
 
                             var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
                                 substitute = editor.createFakeElement(real, CLS, TYPE,
@@ -14469,7 +14437,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
 
                             editor.execCommand("save");
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -14488,8 +14456,7 @@ KISSY.add("editor/plugin/preview/index", function () {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             try {
                                 var screen = win.screen,
                                     iWidth = Math.round(screen.width * 0.8),
@@ -14524,7 +14491,7 @@ KISSY.add("editor/plugin/preview/index", function () {
                             //ie 重新显示
                             oWindow.focus();
                         }
-                    }
+
                 }
             });
         }};
@@ -14740,11 +14707,10 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             editor.execCommand("removeFormat");
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -14860,8 +14826,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                 tooltip:"插入表情",
                 checkable:true,
                 listeners:{
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             self.on("blur", function () {
                                 // make click event fire
@@ -14869,10 +14834,9 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                     self.smiley && self.smiley.hide();
                                 }, 150);
                             });
-                        }
+
                     },
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this, smiley, checked = self.get("checked");
                             if (checked) {
                                 if (!(smiley = self.smiley)) {
@@ -14910,14 +14874,13 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                 self.smiley && self.smiley.hide();
                             }
                         }
-                    },
-                    destroy:{
-                        fn:function () {
+                    ,
+                    destroy:function () {
                             if (this.smiley) {
                                 this.smiley.destroy();
                             }
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -14938,8 +14901,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             editor.on("wysiwygMode", function () {
                                 self.set("checked", false);
@@ -14947,10 +14909,9 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                             editor.on("sourceMode", function () {
                                 self.set("checked", true);
                             });
-                        }
+
                     },
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this;
                             var checked = self.get("checked");
                             if (checked) {
@@ -14960,7 +14921,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                             }
 
                             editor.focus();
-                        }
+
                     }
                 },
                 checkable:true
@@ -15507,16 +15468,14 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 width:"120px",
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
+                    click:function (e) {
                             var content = e.target.get("content");
                             if (handlers[content]) {
                                 handlers[content].apply(this);
                             }
-                        }
+
                     },
-                    beforeVisibleChange:{
-                        fn:function (e) {
+                    beforeVisibleChange:function (e) {
                             if (e.newVal) {
                                 var self = this, children = self.get("children");
                                 var editor = self.get("editor");
@@ -15529,7 +15488,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                                         c.set("disabled", true);
                                     }
                                 });
-                            }
+
                         }
                     }
                 }
@@ -15538,13 +15497,12 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             DialogLoader.useDialog(editor, "table", {
                                 selectedTable:0,
                                 selectedTd:0
                             });
-                        }
+
                     }
                 },
                 tooltip:"插入表格"
@@ -16107,10 +16065,9 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             editor.addButton("video", {
                 tooltip:"插入视频",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             flashControl.show();
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -16229,10 +16186,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             editor.addButton("xiamiMusic", {
                 tooltip:"插入虾米音乐",
                 listeners:{
-                    click:{
-                        fn:function () {
-                            xiamiMusic.show();
-                        }
+                    click:function () {
+                        xiamiMusic.show();
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

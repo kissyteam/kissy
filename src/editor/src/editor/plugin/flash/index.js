@@ -68,10 +68,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 editor.addButton("flash", {
                     tooltip:"插入Flash",
                     listeners:{
-                        click:{
-                            fn:function () {
-                                flashControl.show();
-                            }
+                        click:function () {
+                            flashControl.show();
                         }
                     },
                     mode:Editor.WYSIWYG_MODE

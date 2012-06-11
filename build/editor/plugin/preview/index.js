@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * preview for kissy editor
@@ -14,8 +14,7 @@ KISSY.add("editor/plugin/preview/index", function () {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             try {
                                 var screen = win.screen,
                                     iWidth = Math.round(screen.width * 0.8),
@@ -50,7 +49,7 @@ KISSY.add("editor/plugin/preview/index", function () {
                             //ie 重新显示
                             oWindow.focus();
                         }
-                    }
+
                 }
             });
         }};

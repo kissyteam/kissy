@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 KISSY.add("editor/plugin/clipboard/index",function(g){function m(a){this.editor=a;this._init()}function p(a){if(f.ie&&"BackCompat"!=a.get("document")[0].compatMode){var b=a.getSelection(),e;if(b.getType()==q.SELECTION_ELEMENT&&(e=b.getSelectedElement())){var c=b.getRanges()[0],d=k(a.get("document")[0].createTextNode(""));d.insertBefore(e);c.setStartBefore(d);c.setEndAfter(e);b.selectRanges([c]);setTimeout(function(){e.parent()&&(d.remove(),b.selectElement(e))},0)}}}var h=g.Editor,k=g.all,f=g.UA,r=
 h.Range,n=h.RANGE,o=g.Event;g.augment(m,{_init:function(){var a=this.editor;o.on(a.get("document")[0].body,f.webkit?"paste":f.gecko?"paste":"beforepaste",this._paste,this);o.on(a.get("document")[0].body,"contextmenu",function(){l=1;setTimeout(function(){l=0},10)});a.addCommand("copy",new i("copy"));a.addCommand("cut",new i("cut"));a.addCommand("paste",new i("paste"))},_paste:function(){if(!l){var a=this.editor,b=a.get("document")[0];if(!b.getElementById("ke_pastebin")){var e=a.getSelection(),c=new r(b),

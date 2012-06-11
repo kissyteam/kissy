@@ -14,8 +14,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this;
                             var checked = self.get("checked");
                             if (checked) {
@@ -30,7 +29,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
 
                             editor.focus();
                         }
-                    }
+
                 },
                 checkable:true
             });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * video button.
@@ -108,10 +108,9 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             editor.addButton("video", {
                 tooltip:"插入视频",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             flashControl.show();
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

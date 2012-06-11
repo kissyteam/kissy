@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * removeFormat for selection.
@@ -14,11 +14,10 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             editor.execCommand("removeFormat");
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });

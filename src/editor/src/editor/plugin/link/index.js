@@ -30,10 +30,9 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             editor.addButton("link", {
                 tooltip:"插入链接",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             showLinkEditDialog();
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -45,8 +44,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
 
             editor.addBubble("link", checkLink, {
                 listeners:{
-                    afterRenderUI:{
-                        fn:function () {
+                    afterRenderUI:function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
 
@@ -80,7 +78,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
                                 tipUrl.attr("href", href);
                             });
                         }
-                    }
+
                 }
             });
         }

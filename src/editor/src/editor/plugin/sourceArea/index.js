@@ -11,8 +11,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             editor.on("wysiwygMode", function () {
                                 self.set("checked", false);
@@ -20,10 +19,9 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                             editor.on("sourceMode", function () {
                                 self.set("checked", true);
                             });
-                        }
+
                     },
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this;
                             var checked = self.get("checked");
                             if (checked) {
@@ -33,7 +31,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                             }
 
                             editor.focus();
-                        }
+
                     }
                 },
                 checkable:true

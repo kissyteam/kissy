@@ -489,16 +489,14 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 width:"120px",
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
+                    click:function (e) {
                             var content = e.target.get("content");
                             if (handlers[content]) {
                                 handlers[content].apply(this);
                             }
-                        }
+
                     },
-                    beforeVisibleChange:{
-                        fn:function (e) {
+                    beforeVisibleChange:function (e) {
                             if (e.newVal) {
                                 var self = this, children = self.get("children");
                                 var editor = self.get("editor");
@@ -511,7 +509,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                                         c.set("disabled", true);
                                     }
                                 });
-                            }
+
                         }
                     }
                 }
@@ -520,13 +518,12 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             editor.addButton("table", {
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             DialogLoader.useDialog(editor, "table", {
                                 selectedTable:0,
                                 selectedTd:0
                             });
-                        }
+
                     }
                 },
                 tooltip:"插入表格"

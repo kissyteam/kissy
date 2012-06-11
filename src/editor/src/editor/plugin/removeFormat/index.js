@@ -9,11 +9,10 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             editor.execCommand("removeFormat");
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });

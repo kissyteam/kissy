@@ -103,10 +103,9 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             editor.addButton("video", {
                 tooltip:"插入视频",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             flashControl.show();
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

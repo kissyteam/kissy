@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * insert image for kissy editor
@@ -39,10 +39,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             editor.addButton("image", {
                 tooltip:"插入图片",
                 listeners:{
-                    click:{
-                        fn:function () {
-                            showImageEditor(null);
-                        }
+                    click:function () {
+                        showImageEditor(null);
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
@@ -91,15 +90,14 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 width:120,
                 children:children,
                 listeners:{
-                    click:{
-                        fn:function (e) {
-                            var self = this, content = e.target.get('content');
-                            S.each(handlers, function (h) {
-                                if (h.content == content) {
-                                    h.fn.call(self);
-                                }
-                            });
-                        }
+                    click:function (e) {
+                        var self = this, content = e.target.get('content');
+                        S.each(handlers, function (h) {
+                            if (h.content == content) {
+                                h.fn.call(self);
+                            }
+                        });
+
                     }
                 }
             });
@@ -116,40 +114,38 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             editor.addBubble("image", checkImg, {
                 listeners:{
-                    afterRenderUI:{
-                        fn:function () {
-                            var bubble = this,
-                                el = bubble.get("contentEl");
-                            el.html(tipHtml);
-                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                                tipChangeEl = el.one(".ks-editor-bubble-change"),
-                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
-                            Editor.Utils.preventFocus(el);
-                            tipChangeEl.on("click", function (ev) {
-                                showImageEditor(bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
-                            tipRemoveEl.on("click", function (ev) {
-                                if (UA['webkit']) {
-                                    var r = editor.getSelection().getRanges();
-                                    if (r && r[0]) {
-                                        r[0].collapse();
-                                        r[0].select();
-                                    }
+                    afterRenderUI:function () {
+                        var bubble = this,
+                            el = bubble.get("contentEl");
+                        el.html(tipHtml);
+                        var tipUrlEl = el.one(".ks-editor-bubble-url"),
+                            tipChangeEl = el.one(".ks-editor-bubble-change"),
+                            tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                        Editor.Utils.preventFocus(el);
+                        tipChangeEl.on("click", function (ev) {
+                            showImageEditor(bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
+                        tipRemoveEl.on("click", function (ev) {
+                            if (UA['webkit']) {
+                                var r = editor.getSelection().getRanges();
+                                if (r && r[0]) {
+                                    r[0].collapse();
+                                    r[0].select();
                                 }
-                                bubble.get("editorSelectedEl").remove();
-                                bubble.hide();
-                                editor.notifySelectionChange();
-                                ev.halt();
-                            });
-                            bubble.on("show", function () {
-                                var a = bubble.get("editorSelectedEl");
-                                if (a) {
-                                    var src = a.attr("_ke_saved_src") || a.attr("src");
-                                    tipUrlEl.attr("href", src);
-                                }
-                            });
-                        }
+                            }
+                            bubble.get("editorSelectedEl").remove();
+                            bubble.hide();
+                            editor.notifySelectionChange();
+                            ev.halt();
+                        });
+                        bubble.on("show", function () {
+                            var a = bubble.get("editorSelectedEl");
+                            if (a) {
+                                var src = a.attr("_ke_saved_src") || a.attr("src");
+                                tipUrlEl.attr("href", src);
+                            }
+                        });
                     }
                 }
             });

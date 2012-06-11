@@ -149,7 +149,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                 }
                 for (n in listeners) {
                     listener = listeners[n];
-                    self.on(n, listener.fn, listener.scope);
+                    self.on(n, listener.fn || listener, listener.scope);
                 }
             },
 

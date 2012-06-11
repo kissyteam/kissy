@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * smiley button
@@ -23,8 +23,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                 tooltip:"插入表情",
                 checkable:true,
                 listeners:{
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             self.on("blur", function () {
                                 // make click event fire
@@ -32,10 +31,9 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                     self.smiley && self.smiley.hide();
                                 }, 150);
                             });
-                        }
+
                     },
-                    click:{
-                        fn:function () {
+                    click:function () {
                             var self = this, smiley, checked = self.get("checked");
                             if (checked) {
                                 if (!(smiley = self.smiley)) {
@@ -73,14 +71,13 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                 self.smiley && self.smiley.hide();
                             }
                         }
-                    },
-                    destroy:{
-                        fn:function () {
+                    ,
+                    destroy:function () {
                             if (this.smiley) {
                                 this.smiley.destroy();
                             }
                         }
-                    }
+
                 },
                 mode:Editor.WYSIWYG_MODE
             });

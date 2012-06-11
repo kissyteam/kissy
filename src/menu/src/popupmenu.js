@@ -49,9 +49,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * @override
              */
             handleMouseEnter:function () {
-                var self = this;
+                var self = this, parent = self.get("parent");
                 // 防止从子菜单项移到子菜单，停止子菜单项将要隐藏子菜单的任务
-                self.get("parent").clearSubMenuTimers();
+                if (parent && parent.clearSubMenuTimers) {
+                    parent.clearSubMenuTimers();
+                }
             },
 
 

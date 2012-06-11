@@ -9,8 +9,7 @@ KISSY.add("editor/plugin/preview/index", function () {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             try {
                                 var screen = win.screen,
                                     iWidth = Math.round(screen.width * 0.8),
@@ -45,7 +44,7 @@ KISSY.add("editor/plugin/preview/index", function () {
                             //ie 重新显示
                             oWindow.focus();
                         }
-                    }
+
                 }
             });
         }};

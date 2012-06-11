@@ -9,10 +9,9 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             DialogLoader.useDialog(editor, "multipleUpload");
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

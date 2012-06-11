@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:07
+build time: Jun 11 20:22
 */
 /**
  * Add indent button.
@@ -19,14 +19,12 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
             editor.addButton("outdent", {
                 tooltip:"减少缩进量 ",
                 listeners:{
-                    click:{
-                        fn:function () {
+                    click:function () {
                             editor.execCommand("outdent");
                             editor.focus();
-                        }
+
                     },
-                    afterSyncUI:{
-                        fn:function () {
+                    afterSyncUI:function () {
                             var self = this;
                             editor.on("selectionChange", function (e) {
                                 if (editor.get("mode") == Editor.SOURCE_MODE) {
@@ -38,7 +36,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
                                     self.set("disabled", true);
                                 }
                             });
-                        }
+
                     }
                 },
                 mode:Editor.WYSIWYG_MODE

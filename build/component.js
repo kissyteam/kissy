@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 15:01
+build time: Jun 11 20:18
 */
 /**
  * Setup component namespace.
@@ -268,7 +268,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                 }
                 for (n in listeners) {
                     listener = listeners[n];
-                    self.on(n, listener.fn, listener.scope);
+                    self.on(n, listener.fn || listener, listener.scope);
                 }
             },
 
