@@ -50,9 +50,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              */
             handleMouseEnter:function () {
                 var self = this;
-                if (!self.get(autoHideOnMouseLeave)) {
-                    return;
-                }
                 // 防止从子菜单项移到子菜单，停止子菜单项将要隐藏子菜单的任务
                 self.get("parent").clearSubMenuTimers();
             },

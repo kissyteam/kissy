@@ -81,12 +81,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * accuracy when moving to sub menus.
              * @protected
              */
-            handleMouseLeave:function (e) {
+            _uiSetHighlighted:function (e) {
                 var self = this;
-                if (SubMenu.superclass.handleMouseLeave.call(self, e)) {
-                    return true;
+                if (!e) {
+                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay"), false, self);
                 }
-                self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay"), false, self);
             },
 
             /**
