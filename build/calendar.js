@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Jun 8 11:08
+build time: Jun 12 15:28
 */
 /**
  * KISSY Calendar
@@ -86,10 +86,27 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             //重置日历的个数
             self.ca.length = self.pages;
 
+            var _rangeStart = false;
+            var _rangeEnd = false;
+            if(self.range){
+                if(self.range.start){
+                    _rangeStart = true;
+                }
+                if(self.range.end){
+                    _rangeEnd = true;
+                }
+            }
+
             for (i = 0, _oym = [self.year, self.month]; i < self.pages; i++) {
                 if (i === 0) {
+                    if(_rangeStart){
+                        self._time = S.clone(self.range.start);
+                    }
                     _prev = true;
                 } else {
+                    if(_rangeEnd){
+                        self._time = S.clone(self.range.end);
+                    }
                     _prev = false;
                     _oym = self._computeNextMonth(_oym);
                 }
@@ -925,6 +942,12 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                             cc.father.hide();
                         }
                         if (cc.father.rangeSelect) {
+                            //如果包含time，这显示完整的时间
+                                if(cc.timmer){
+                                    d.setHours(cc.timmer.get('h'));
+                                    d.setMinutes(cc.timmer.get('m'));
+                                    d.setSeconds(cc.timmer.get('s'));
+                                }
                             cc.father._handleRange(d);
                         }
                         cc.father.render({selected:d});
