@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:34
+build time: Jun 13 00:25
 */
 /**
  * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function (S, undef) {
+KISSY.add('base/attribute', function (S, undefined) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -100,7 +100,7 @@ KISSY.add('base/attribute', function (S, undef) {
      */
     function getValueByPath(o, path) {
         for (var i = 0, len = path.length;
-             o != undef && i < len;
+             o != undefined && i < len;
              i++) {
             o = o[path[i]];
         }
@@ -120,10 +120,10 @@ KISSY.add('base/attribute', function (S, undef) {
             for (var i = 0; i < rlen; i++) {
                 o = o[path[i]];
             }
-            if (o != undef) {
+            if (o != undefined) {
                 o[path[i]] = val;
             } else {
-                s = undef;
+                s = undefined;
             }
         }
         return s;
@@ -151,9 +151,9 @@ KISSY.add('base/attribute', function (S, undef) {
 
         // if no change, just return
         if (!path && prevVal === value) {
-            return undef;
+            return undefined;
         } else if (path && subVal === value) {
-            return undef;
+            return undefined;
         }
 
         if (path) {
@@ -334,7 +334,7 @@ KISSY.add('base/attribute', function (S, undef) {
                     for (name in all) {
                         // bulk validation
                         // if any one failed,all values are not set
-                        if ((e = validate(self, name, all[name], all)) !== undef) {
+                        if ((e = validate(self, name, all[name], all)) !== undefined) {
                             errors.push(e);
                         }
                     }
@@ -378,10 +378,10 @@ KISSY.add('base/attribute', function (S, undef) {
             __set:function (name, value, opts) {
                 var self = this,
                     setValue,
-                    // if host does not have meta info corresponding to (name,value)
-                    // then register on demand in order to collect all data meta info
-                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                    // 因为属性在声明注册前可以直接设置值
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
                     e,
                     attrConfig = ensureNonEmpty(getAttrs(self), name, true),
                     setter = attrConfig['setter'];
@@ -389,7 +389,7 @@ KISSY.add('base/attribute', function (S, undef) {
                 // validator check
                 e = validate(self, name, value);
 
-                if (e !== undef) {
+                if (e !== undefined) {
                     if (opts.error) {
                         opts.error(e);
                     }
@@ -405,7 +405,7 @@ KISSY.add('base/attribute', function (S, undef) {
                     return false;
                 }
 
-                if (setValue !== undef) {
+                if (setValue !== undefined) {
                     value = setValue;
                 }
 
@@ -465,7 +465,7 @@ KISSY.add('base/attribute', function (S, undef) {
 
                 if (valFn && (valFn = normalFn(self, valFn))) {
                     val = valFn.call(self);
-                    if (val !== undef) {
+                    if (val !== undefined) {
                         attrConfig.value = val;
                     }
                     delete attrConfig.valueFn;
@@ -486,7 +486,7 @@ KISSY.add('base/attribute', function (S, undef) {
 
                 if (S.isString(name)) {
                     if (self.hasAttr(name)) {
-                        // if attribute does not have default value, then set to undefined.
+                        // if attribute does not have default value, then set to undefinedined.
                         return self.set(name, self.__getDefAttrVal(name), opts);
                     }
                     else {
@@ -515,16 +515,16 @@ KISSY.add('base/attribute', function (S, undef) {
             validator = attrConfig['validator'];
         if (validator && (validator = normalFn(self, validator))) {
             e = validator.call(self, value, name, all);
-            // undefined and true validate successfully
-            if (e !== undef && e !== true) {
+            // undefinedined and true validate successfully
+            if (e !== undefined && e !== true) {
                 return e;
             }
         }
-        return undef;
+        return undefined;
     }
 
-    if (undef) {
-        Attribute.prototype.addAttrs = undef;
+    if (undefined) {
+        Attribute.prototype.addAttrs = undefined;
     }
     return Attribute;
 });
@@ -552,15 +552,15 @@ KISSY.add('base', function (S, Attribute, Event) {
      * </p>
      */
     function Base(config) {
-        var c = this.constructor;
-
+        var self = this,
+            c = self.constructor;
         // define
         while (c) {
-            addAttrs(this, c['ATTRS']);
+            addAttrs(self, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
         // initial
-        initAttrs(this, config);
+        initAttrs(self, config);
     }
 
 
@@ -601,7 +601,7 @@ KISSY.add('base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                    // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 

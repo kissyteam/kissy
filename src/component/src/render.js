@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
+KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
      * Base Render class for KISSY Component.
@@ -37,7 +37,7 @@ KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
              * @return {String} class name with prefixCls
              * @private
              */
-            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
 
             createDom:function () {
                 var self = this;
@@ -136,5 +136,5 @@ KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
             }
         });
 }, {
-    requires:['./base', './uibase', './uistore']
+    requires:['./base', './uibase', './manager']
 });

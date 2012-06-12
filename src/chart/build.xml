@@ -5,7 +5,7 @@
     <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/build-xml/common.xml"/>
-
+    <!--
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/chart-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="**/*.js"/>
@@ -14,7 +14,8 @@
             </filterchain>
         </concat>
     </target>
-
-    <target name="build" depends="concat,common.build">
+-->
+    <target name="build">
+        <!--depends="concat,common.build"-->
     </target>
 </project>

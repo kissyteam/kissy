@@ -10,7 +10,7 @@
 <span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
 <span id='line4' class='line'>  4</span>  * @see http://martinfowler.com/eaaDev/uiArchs.html
 <span id='line5' class='line'>  5</span>  */</span><span class="WHIT">
-<span id='line6' class='line'>  6</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"component/render"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">UIStore</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"component/render"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">UIBase</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Manager</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line7' class='line'>  7</span> 
 <span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line9' class='line'>  9</span>      * Base Render class for KISSY Component.
@@ -44,7 +44,7 @@
 <span id='line37' class='line'> 37</span>              * @return {String} class name with prefixCls
 <span id='line38' class='line'> 38</span>              * @private
 <span id='line39' class='line'> 39</span>              */</span><span class="WHIT">
-<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">UIStore.getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">Manager.getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line41' class='line'> 41</span> 
 <span id='line42' class='line'> 42</span> </span><span class="WHIT">            </span><span class="NAME">createDom</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line43' class='line'> 43</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
@@ -143,5 +143,5 @@
 <span id='line136' class='line'>136</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line137' class='line'>137</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line138' class='line'>138</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line139' class='line'>139</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./uibase'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./uistore'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line139' class='line'>139</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./uibase'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./manager'</span><span class="PUNC">]</span><span class="WHIT">
 <span id='line140' class='line'>140</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

@@ -1,19 +1,19 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 12 14:01
+build time: Jun 13 00:25
 */
 /**
  * Setup component namespace.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base", function (S, UIBase, UIStore) {
+KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
      * @name Component
      * @namespace
      */
     var Component = {
-        UIStore:UIStore,
+        Manager:Manager,
         UIBase:UIBase
     };
 
@@ -28,8 +28,8 @@ KISSY.add("component/base", function (S, UIBase, UIStore) {
         }
         ret = UIBase.create.apply(UIBase, args);
         if (last.xclass) {
-            UIStore.setUIConstructorByCssClass(last.xclass, {
-                ui:ret,
+            Manager.setConstructorByXClass(last.xclass, {
+                constructor:ret,
                 priority:last.priority
             });
         }
@@ -49,7 +49,7 @@ KISSY.add("component/base", function (S, UIBase, UIStore) {
 
     return Component;
 }, {
-    requires:['./uibase', './uistore']
+    requires:['./uibase', './manager']
 });/**
  * @fileOverview mvc based component framework for kissy
  * @author yiminghe@gmail.com
@@ -121,7 +121,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore, Render, undefined) {
+KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager, Render, undefined) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -200,7 +200,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
         var constructor = self.constructor,
             re = [];
         while (constructor && constructor != Controller) {
-            var cls = UIStore.getCssClassByUIConstructor(constructor);
+            var cls = Manager.getXClassByConstructor(constructor);
             if (cls) {
                 re.push(cls);
             }
@@ -219,6 +219,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     /**
      * Base Controller class for KISSY Component.
+     * xclass: 'controller' .
      * @class
      * @memberOf Component
      * @name Controller
@@ -235,7 +236,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              * @function
              * @return {String} class name with prefixCls
              */
-            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
 
             /**
              * From UIBase, Initialize this component.
@@ -742,6 +743,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  *      }
                  *  }
                  * }
+                 * or
+                 * {
+                 *  click:function(){
+                 *          alert(this.x);
+                 *        }
+                 * }
                  * </code>
                  */
                 listeners:{
@@ -759,18 +766,21 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  */
                 xclass:{
                     valueFn:function () {
-                        return UIStore.getCssClassByUIConstructor(this.constructor);
+                        return Manager.getXClassByConstructor(this.constructor);
                     }
                 }
             }
+        }, {
+            xclass:'controller'
         });
 
     /**
-     * Create a component instance using json with xclass
+     * Create a component instance using json with xclass.
      * @param {Object} component Component's json notation with xclass attribute.
+     * @param {String} component.xclass Component to be newed 's xclass.
      * @param {Controller} self Component From which new component generated will inherit prefixCls
      * if component 's prefixCls is undefined.
-     * @memberOf Component.Controller
+     * @memberOf Component
      * @example
      * <code>
      *  create({
@@ -793,7 +803,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             if (self && !component.prefixCls) {
                 component.prefixCls = self.get("prefixCls");
             }
-            childConstructor = UIStore.getUIConstructorByCssClass(xclass);
+            childConstructor = Manager.getConstructorByXClass(xclass);
             component = new childConstructor(component);
         }
         return component;
@@ -803,7 +813,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     return Controller;
 }, {
-    requires:['event', './base', './uibase', './uistore', './render']
+    requires:['event', './base', './uibase', './manager', './render']
 });
 /**
  * observer synchronization, model 分成两类：
@@ -870,7 +880,7 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decorateChildren", function (S, UIStore) {
+KISSY.add("component/decorateChildren", function (S, Manager) {
 
 
     function DecorateChildren() {
@@ -896,7 +906,7 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
                 prefixCls = self.get("prefixCls");
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = UIStore.getUIConstructorByCssClass(cls);
+            var UI = Manager.getConstructorByXClass(cls);
             if (!UI) {
                 S.log(childNode);
                 S.log("can not find ui " + cls + " from this markup");
@@ -927,7 +937,7 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
     return DecorateChildren;
 
 }, {
-    requires:['./uistore']
+    requires:['./manager']
 });/**
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
@@ -991,11 +1001,107 @@ KISSY.add("component/delegateChildren", function (S) {
 
     return DelegateChildren;
 });/**
+ * @fileOverview storage for component's css
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/manager", function (S) {
+    var uis = {
+        // 不带前缀 prefixCls
+        /*
+         "menu" :{
+         priority:0,
+         constructor:Menu
+         }
+         */
+    };
+
+    function getConstructorByXClass(cls) {
+        var cs = cls.split(/\s+/), p = -1, t, ui = null;
+        for (var i = 0; i < cs.length; i++) {
+            var uic = uis[cs[i]];
+            if (uic && (t = uic.priority) > p) {
+                p = t;
+                ui = uic.constructor;
+            }
+        }
+        return ui;
+    }
+
+    function getXClassByConstructor(constructor) {
+        for (var u in uis) {
+            var ui = uis[u];
+            if (ui.constructor == constructor) {
+                return u;
+            }
+        }
+        return 0;
+    }
+
+    function setConstructorByXClass(cls, uic) {
+        if (S.isFunction(uic)) {
+            uis[cls] = {
+                constructor:uic,
+                priority:0
+            };
+        } else {
+            uic.priority = uic.priority || 0;
+            uis[cls] = uic;
+        }
+    }
+
+
+    function getCssClassWithPrefix(cls) {
+        var cs = S.trim(cls).split(/\s+/);
+        for (var i = 0; i < cs.length; i++) {
+            if (cs[i]) {
+                cs[i] = this.get("prefixCls") + cs[i];
+            }
+        }
+        return cs.join(" ");
+    }
+
+    /**
+     * @name Manager
+     * @namespace
+     * @memberOf Component
+     */
+    var Manager = /** @lends Component.Manager */{
+        getCssClassWithPrefix:getCssClassWithPrefix,
+        /**
+         * Get css class name for this component constructor.
+         * @param {Function} constructor Component's constructor.
+         * @type {Function}
+         * @return {String}
+         * @function
+         */
+        getXClassByConstructor:getXClassByConstructor,
+        /**
+         * Get component constructor by css class name.
+         * @param {String} classNames Class names separated by space.
+         * @type {Function}
+         * @return {Function}
+         * @function
+         */
+        getConstructorByXClass:getConstructorByXClass,
+        /**
+         * Associate css class with component constructor.
+         * @type {Function}
+         * @param {String} className Component's class name.
+         * @param {Function} componentConstructor Component's constructor.
+         * @function
+         */
+        setConstructorByXClass:setConstructorByXClass
+    };
+
+    Manager.getCssClassWithPrefix = getCssClassWithPrefix;
+
+    return Manager;
+});/**
  * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
+KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
      * Base Render class for KISSY Component.
@@ -1029,7 +1135,7 @@ KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
              * @return {String} class name with prefixCls
              * @private
              */
-            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
 
             createDom:function () {
                 var self = this;
@@ -1128,7 +1234,7 @@ KISSY.add("component/render", function (S, Component, UIBase, UIStore) {
             }
         });
 }, {
-    requires:['./base', './uibase', './uistore']
+    requires:['./base', './uibase', './manager']
 });/**
  * @fileOverview uibase
  * @author yiminghe@gmail.com
@@ -3694,92 +3800,4 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
 }, {
     requires:['node']
-});/**
- * @fileOverview storage for component's css
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/uistore", function (S) {
-    var uis = {
-        // 不带前缀 prefixCls
-        /*
-         "menu" :{
-         priority:0,
-         ui:Menu
-         }
-         */
-    };
-
-    function getUIConstructorByCssClass(cls) {
-        var cs = cls.split(/\s+/), p = -1, t, ui = null;
-        for (var i = 0; i < cs.length; i++) {
-            var uic = uis[cs[i]];
-            if (uic && (t = uic.priority) > p) {
-                p = t;
-                ui = uic.ui;
-            }
-        }
-        return ui;
-    }
-
-    function getCssClassByUIConstructor(constructor) {
-        for (var u in uis) {
-            var ui = uis[u];
-            if (ui.ui == constructor) {
-                return u;
-            }
-        }
-        return 0;
-    }
-
-    function setUIConstructorByCssClass(cls, uic) {
-        uis[cls] = uic;
-    }
-
-
-    function getCssClassWithPrefix(cls) {
-        var cs = S.trim(cls).split(/\s+/);
-        for (var i = 0; i < cs.length; i++) {
-            if (cs[i]) {
-                cs[i] = this.get("prefixCls") + cs[i];
-            }
-        }
-        return cs.join(" ");
-    }
-
-    /**
-     * @name UIStore
-     * @namespace
-     * @memberOf Component
-     */
-    var UIStore = /** @lends Component.UIStore */{
-        getCssClassWithPrefix:getCssClassWithPrefix,
-        /**
-         * Get css class name for this component constructor.
-         * @param {Function} constructor Component's constructor.
-         * @type {Function}
-         * @return {String}
-         * @function
-         */
-        getCssClassByUIConstructor:getCssClassByUIConstructor,
-        /**
-         * Get component constructor by css class name.
-         * @param {String} classNames Class names separated by space.
-         * @type {Function}
-         * @return {Function}
-         * @function
-         */
-        getUIConstructorByCssClass:getUIConstructorByCssClass,
-        /**
-         * Associate css class with component constructor.
-         * @type {Function}
-         * @param {String} className Component's class name.
-         * @param {Function} componentConstructor Component's constructor.
-         * @function
-         */
-        setUIConstructorByCssClass:setUIConstructorByCssClass
-    };
-
-    UIStore.getCssClassWithPrefix = getCssClassWithPrefix;
-
-    return UIStore;
 });

@@ -2,7 +2,7 @@
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore, Render, undefined) {
+KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager, Render, undefined) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -81,7 +81,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
         var constructor = self.constructor,
             re = [];
         while (constructor && constructor != Controller) {
-            var cls = UIStore.getCssClassByUIConstructor(constructor);
+            var cls = Manager.getXClassByConstructor(constructor);
             if (cls) {
                 re.push(cls);
             }
@@ -100,6 +100,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     /**
      * Base Controller class for KISSY Component.
+     * xclass: 'controller' .
      * @class
      * @memberOf Component
      * @name Controller
@@ -116,7 +117,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
              * @function
              * @return {String} class name with prefixCls
              */
-            getCssClassWithPrefix:UIStore.getCssClassWithPrefix,
+            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
 
             /**
              * From UIBase, Initialize this component.
@@ -623,6 +624,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  *      }
                  *  }
                  * }
+                 * or
+                 * {
+                 *  click:function(){
+                 *          alert(this.x);
+                 *        }
+                 * }
                  * </code>
                  */
                 listeners:{
@@ -640,18 +647,21 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
                  */
                 xclass:{
                     valueFn:function () {
-                        return UIStore.getCssClassByUIConstructor(this.constructor);
+                        return Manager.getXClassByConstructor(this.constructor);
                     }
                 }
             }
+        }, {
+            xclass:'controller'
         });
 
     /**
-     * Create a component instance using json with xclass
+     * Create a component instance using json with xclass.
      * @param {Object} component Component's json notation with xclass attribute.
+     * @param {String} component.xclass Component to be newed 's xclass.
      * @param {Controller} self Component From which new component generated will inherit prefixCls
      * if component 's prefixCls is undefined.
-     * @memberOf Component.Controller
+     * @memberOf Component
      * @example
      * <code>
      *  create({
@@ -674,7 +684,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
             if (self && !component.prefixCls) {
                 component.prefixCls = self.get("prefixCls");
             }
-            childConstructor = UIStore.getUIConstructorByCssClass(xclass);
+            childConstructor = Manager.getConstructorByXClass(xclass);
             component = new childConstructor(component);
         }
         return component;
@@ -684,7 +694,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, UIStore
 
     return Controller;
 }, {
-    requires:['event', './base', './uibase', './uistore', './render']
+    requires:['event', './base', './uibase', './manager', './render']
 });
 /**
  * observer synchronization, model 分成两类：

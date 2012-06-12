@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:38
+build time: Jun 13 00:29
 */
 /**
  * @fileOverview anim-node-plugin
@@ -298,7 +298,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 /**
  * @fileOverview definition for node and nodelist
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add("node/base", function (S, DOM, undefined) {
 

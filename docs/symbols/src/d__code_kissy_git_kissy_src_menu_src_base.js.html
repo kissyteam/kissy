@@ -13,7 +13,7 @@
 <span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">KeyCodes</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Event.KeyCodes</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line7' class='line'>  7</span> 
 <span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onMenuHide</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="NAME">this.set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="NAME">this.set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line10' class='line'> 10</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line11' class='line'> 11</span> 
 <span id='line12' class='line'> 12</span> </span><span class="WHIT">    </span><span class="COMM">/**
@@ -35,7 +35,7 @@
 <span id='line28' class='line'> 28</span> 
 <span id='line29' class='line'> 29</span> </span><span class="WHIT">            </span><span class="NAME">handleBlur</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line30' class='line'> 30</span> </span><span class="WHIT">                </span><span class="NAME">Menu.superclass.handleBlur.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line31' class='line'> 31</span> </span><span class="WHIT">                </span><span class="NAME">this.set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">                </span><span class="NAME">this.set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line32' class='line'> 32</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line33' class='line'> 33</span> 
 <span id='line34' class='line'> 34</span> 
@@ -198,24 +198,26 @@
 <span id='line191' class='line'>191</span>                  */</span><span class="WHIT">
 <span id='line192' class='line'>192</span> </span><span class="WHIT">                </span><span class="NAME">activeItem</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line193' class='line'>193</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
-<span id='line194' class='line'>194</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line195' class='line'>195</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line196' class='line'>196</span> </span><span class="WHIT">            </span><span class="NAME">DefaultRender</span><span class="PUNC">:</span><span class="NAME">MenuRender</span><span class="WHIT">
-<span id='line197' class='line'>197</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line198' class='line'>198</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'menu'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line199' class='line'>199</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
-<span id='line200' class='line'>200</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line201' class='line'>201</span> 
-<span id='line202' class='line'>202</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Menu</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line194' class='line'>194</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line195' class='line'>195</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line196' class='line'>196</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">MenuRender</span><span class="WHIT">
+<span id='line197' class='line'>197</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line198' class='line'>198</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line199' class='line'>199</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line200' class='line'>200</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'menu'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line201' class='line'>201</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line202' class='line'>202</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line203' class='line'>203</span> 
-<span id='line204' class='line'>204</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line205' class='line'>205</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'event'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuRender'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./submenu'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line206' class='line'>206</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line207' class='line'>207</span> 
-<span id='line208' class='line'>208</span> </span><span class="COMM">/**
-<span id='line209' class='line'>209</span>  * 普通菜单可聚焦
-<span id='line210' class='line'>210</span>  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-<span id='line211' class='line'>211</span>  *
-<span id='line212' class='line'>212</span>  * TODO
-<span id='line213' class='line'>213</span>  *  - 去除 activeItem
-<span id='line214' class='line'>214</span>  **/</span></pre></body></html>
+<span id='line204' class='line'>204</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Menu</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line205' class='line'>205</span> 
+<span id='line206' class='line'>206</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line207' class='line'>207</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'event'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuRender'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./submenu'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line208' class='line'>208</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line209' class='line'>209</span> 
+<span id='line210' class='line'>210</span> </span><span class="COMM">/**
+<span id='line211' class='line'>211</span>  * 普通菜单可聚焦
+<span id='line212' class='line'>212</span>  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+<span id='line213' class='line'>213</span>  *
+<span id='line214' class='line'>214</span>  * TODO
+<span id='line215' class='line'>215</span>  *  - 去除 activeItem
+<span id='line216' class='line'>216</span>  **/</span></pre></body></html>

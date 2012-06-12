@@ -2,7 +2,7 @@
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decorateChildren", function (S, UIStore) {
+KISSY.add("component/decorateChildren", function (S, Manager) {
 
 
     function DecorateChildren() {
@@ -28,7 +28,7 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
                 prefixCls = self.get("prefixCls");
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = UIStore.getUIConstructorByCssClass(cls);
+            var UI = Manager.getConstructorByXClass(cls);
             if (!UI) {
                 S.log(childNode);
                 S.log("can not find ui " + cls + " from this markup");
@@ -59,5 +59,5 @@ KISSY.add("component/decorateChildren", function (S, UIStore) {
     return DecorateChildren;
 
 }, {
-    requires:['./uistore']
+    requires:['./manager']
 });

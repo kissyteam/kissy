@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:38
+build time: Jun 13 00:31
 */
 /**
  * @fileOverview normalize selection getter/setter in textarea/input

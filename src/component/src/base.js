@@ -2,13 +2,13 @@
  * Setup component namespace.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base", function (S, UIBase, UIStore) {
+KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
      * @name Component
      * @namespace
      */
     var Component = {
-        UIStore:UIStore,
+        Manager:Manager,
         UIBase:UIBase
     };
 
@@ -23,8 +23,8 @@ KISSY.add("component/base", function (S, UIBase, UIStore) {
         }
         ret = UIBase.create.apply(UIBase, args);
         if (last.xclass) {
-            UIStore.setUIConstructorByCssClass(last.xclass, {
-                ui:ret,
+            Manager.setConstructorByXClass(last.xclass, {
+                constructor:ret,
                 priority:last.priority
             });
         }
@@ -44,5 +44,5 @@ KISSY.add("component/base", function (S, UIBase, UIStore) {
 
     return Component;
 }, {
-    requires:['./uibase', './uistore']
+    requires:['./uibase', './manager']
 });

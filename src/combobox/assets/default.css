@@ -1,0 +1,87 @@
+.ks-menu {
+    background: #fff;
+    border-color: #999;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    margin: 0;
+    outline: none;
+    padding: 4px 0;
+    position: absolute;
+    z-index: 99999;
+}
+
+.ks-menuitem {
+    color: #404040;
+    list-style: none;
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 1px 0 2px;
+    white-space: nowrap;
+}
+
+.ks-menuitem-disabled .ks-menuitem-content {
+    color: #ccc !important;
+}
+
+.ks-menuitem-highlight,
+.ks-menuitem-hover {
+    background-color: #39F;
+    color: white;
+}
+
+.ks-combobox {
+    border: 1px solid #B5B6B5;
+    background-color: #ddd;
+    display: inline-block;
+    /*clear float*/
+    overflow: hidden;
+    zoom: 1;
+    *display: inline;
+    font-size: 12px;
+}
+
+.ks-combobox-trigger {
+    text-decoration: none;
+    color: #000000;
+    float: right;
+    text-align: center;
+}
+
+.ks-combobox-trigger-inner {
+    float: left;
+    line-height: 16px;
+    height: 16px;
+    margin: 0 4px;
+    vertical-align: middle;
+}
+
+.ks-combobox-input-wrap {
+    overflow: hidden;
+    vertical-align: middle;
+    position: relative;
+}
+
+.ks-combobox-input {
+    font-size: 12px;
+    float: left;
+    width: 100%;
+    vertical-align: middle;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 0;
+    border-right: 1px solid #b5b6b5;
+    color: #000;
+}
+
+.ks-ie .ks-combobox-input {
+    line-height: 18px;
+    height: 18px;
+    overflow-y: visible;
+    font-size: 100%;
+}
+
+.ks-menuitem-disabled {
+    color: #808080;
+}

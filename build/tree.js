@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:38
+build time: Jun 13 00:30
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -445,9 +445,9 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             }
         });
 
-    Component.UIStore.setUIConstructorByCssClass(ITEM_CLS, {
+    Component.Manager.setConstructorByXClass(ITEM_CLS, {
         priority:10,
-        ui:BaseNode
+        constructor:BaseNode
     });
 
     return BaseNode;

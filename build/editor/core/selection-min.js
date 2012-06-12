@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 20:22
+build time: Jun 13 00:29
 */
 KISSY.add("editor/core/selection",function(o){function r(b){this.document=b;this._={cache:{}};if(j){var a=this.getNative().createRange();if(!a||a.item&&a.item(0).ownerDocument!=b||a.parentElement&&a.parentElement().ownerDocument!=b)this.isInvalid=n}}function t(b){b=new r(b);return!b||b.isInvalid?u:b}var l=o.Editor;l.SELECTION={SELECTION_NONE:1,SELECTION_TEXT:2,SELECTION_ELEMENT:3};var n=!0,u=null,m=o.UA,g=o.DOM,i=o.Node,k=l.SELECTION,s=l.RANGE,j=m.ie,x=l.Walker,p=l.Range,v={img:1,hr:1,li:1,table:1,
 tr:1,td:1,th:1,embed:1,object:1,ol:1,ul:1,a:1,input:1,form:1,select:1,textarea:1,button:1,fieldset:1,thead:1,tfoot:1};o.augment(r,{getNative:!j?function(){var b=this._.cache;return b.nativeSel||(b.nativeSel=g._getWin(this.document).getSelection())}:function(){var b=this._.cache;return b.nativeSel||(b.nativeSel=this.document.selection)},getType:!j?function(){var b=this._.cache;if(b.type)return b.type;var a=k.SELECTION_TEXT,d=this.getNative();if(d){if(1==d.rangeCount){var d=d.getRangeAt(0),c=d.startContainer;

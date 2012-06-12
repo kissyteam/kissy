@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:35
+build time: Jun 13 00:25
 */
 /**
  * @fileOverview 数据延迟加载组件

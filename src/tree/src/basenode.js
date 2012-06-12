@@ -387,9 +387,9 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             }
         });
 
-    Component.UIStore.setUIConstructorByCssClass(ITEM_CLS, {
+    Component.Manager.setConstructorByXClass(ITEM_CLS, {
         priority:10,
-        ui:BaseNode
+        constructor:BaseNode
     });
 
     return BaseNode;

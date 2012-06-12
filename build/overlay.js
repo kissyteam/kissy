@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 22:55
+build time: Jun 13 00:29
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -9,7 +9,6 @@ build time: Jun 11 22:55
  */
 KISSY.add("overlay/aria", function (S, Event) {
     function Aria() {
-        
     }
 
     Aria.ATTRS =
