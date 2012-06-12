@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 8 11:09
+build time: Jun 12 15:27
 */
 /**
  * @fileOverview KISSY Calendar
@@ -38,7 +38,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
                 self.trigger = trigger;
                 self.con = new Node('<div>');
                 $(document.body).append(self.con);
-                
+
                 self.con.css({
                     'top':'0px',
                     'position':'absolute',
@@ -48,12 +48,12 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
                 });
             }
 			self.C_Id = self._stamp(self.con);
-			
+
             self.render();
             self._buildEvent();
             return this;
         },
-		
+
 		/**
          * 日历构造渲染,增加对多日历不联动的处理
          * @param { object }    o
@@ -67,7 +67,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
             self._parseParam(o);
 
             self.con.addClass('ks-cal-call ks-clearfix ks-cal-call-multi-' + self.pages);
-			
+
 			self.ca = self.ca ||[];
 			for(var i=0;i<self.ca.length;i++){
 				self.ca[i].detachEvent();
@@ -77,7 +77,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
                 delete self.__shimEl;
 			}
             self.con.empty();
-			
+
 			//重置日历的个数
 			self.ca.length = self.pages;
 			var _rangeStart = false;
@@ -91,16 +91,23 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 				}
 			}
 			if(_rangeStart&&!self.rangeLinkage){
+
 				_oym = [self.range.start.getFullYear(),self.range.start.getMonth()];
 			}
 			else{
 				_oym = [self.year,self.month];
 			}
-			
+
             for (i = 0; i < self.pages; i++) {
                 if (i === 0) {
+                    if(_rangeStart){
+                        self._time = S.clone(self.range.start);
+                    }
                     _prev = true;
                 } else if(!self.rangeLinkage){
+                    if(_rangeEnd){
+                        self._time = S.clone(self.range.end);
+                    }
 					_prev = true;
 					if(_rangeEnd&&(i+1)==self.pages){
 						_oym = [self.range.end.getFullYear(),self.range.end.getMonth()];
@@ -110,6 +117,9 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 					}
 				}
 				else{
+                    if(_rangeEnd){
+                        self._time = S.clone(self.range.end);
+                    }
 					_prev = false;
 					_oym = self._computeNextMonth(_oym);
 				}
@@ -119,12 +129,12 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 				else{
 					_next = i == (self.pages - 1);
 				}
-                
+
 				var cal = self.ca[i];
 				if(!self.rangeLinkage&&cal&&(cal.year!=_oym[0]||cal.month!=_oym[1])){
 					_oym = [cal.year,cal.month];
 				}
-				
+
                 self.ca[i] = new self.Page({
                     year:_oym[0],
                     month:_oym[1],
@@ -154,7 +164,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 			for(var i=0;i<self.ca.length;i++){
 				self.ca[i].detachEvent();
 			}
-			
+
 			S.each(self.EV, function(tev) {
                 if (tev) {
                     tev.target.detach(tev.type, tev.fn);
@@ -216,7 +226,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
                 if (self.con.css('visibility') == 'hidden') {
                     return;
                 }
-                
+
                 // bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
                 if (self.con.contains(target) &&
                     (target[0].nodeName.toLowerCase() === 'option' ||
@@ -277,7 +287,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
             }
             return this;
         },
-		
+
 		//处理对齐
 		__getAlignOffset:function(node,align){
 			var self = this;
@@ -312,7 +322,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 			}
 
 			return { left: x, top: y };
-			
+
 		},
         /**
          * 改变日历是否显示的状态
@@ -333,7 +343,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
          */
         show: function() {
             var self = this;
-            self.con.css('visibility', '');  
+            self.con.css('visibility', '');
 			var points = self.align.points,
 				offset = self.align.offset || [0,0],
 				xy = self.con.offset(),
@@ -342,7 +352,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 				diff = [p2.left - p1.left, p2.top - p1.top],
 				_x = xy.left - diff[0] + offset[0],
 				_y = xy.top - diff[1] + offset[1];
-				
+
 			self.con.css('left', _x.toString() + 'px');
 			self.con.css('top', _y.toString() + 'px');
 			self.fire("show");
@@ -402,10 +412,10 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 				},//对齐方式
 				notLimited:	false// 是否出现不限的按钮
             }, setParam);
-			
-			
 
-            
+
+
+
             return this;
         },
 
@@ -422,21 +432,21 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
             for (i in o) {
                 self[i] = o[i];
             }
-			
+
 			// 支持用户传进来一个string
             if (typeof self.triggerType === 'string') {
                 self.triggerType = [self.triggerType];
             }
-			
+
 			self.startDay = self.startDay%7;
 			if(self.startDay<0){
 				self.startDay+=7;
 			}
-			
+
             self.EV = [];
             self._handleDate();
-			
-			
+
+
 			//对multiSelect的处理
 			if(self.multiSelect){
 				self.rangeSelect = false;
@@ -606,7 +616,6 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
             if ((self.range.start === null && self.range.end === null ) || (self.range.start !== null && self.range.end !== null)) {
                 self.range.start = d;
                 self.range.end = null;
-                self.render();
             } else if (self.range.start !== null && self.range.end === null) {
                 self.range.end = d;
                 if (self.range.start.getTime() > self.range.end.getTime()) {
@@ -615,8 +624,6 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
                     self.range.end = t;
                 }
                 self.fire('rangeSelect', self.range);
-				
-                self.render();
 				if(self.popup && self.closable){
 					self.hide();
 				}
@@ -627,10 +634,10 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 		_handleMultiSelectStart:function(d){
 			var self = this;
 			self.multiStart = d;
-			
+
 		},
 		_handleMultiSelectEnd:function(d){
-			
+
 			var self = this;
 			if(!self.multiStart){
 				return;
@@ -643,17 +650,17 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 			else{
 				self.multiEnd = d;
 			}
-			
+
 			//对min和max的处理
 			if(self.minDate&&self.multiStart<self.minDate){
 				self.multiStart = new Date(self.minDate.getFullYear(),self.minDate.getMonth(),self.minDate.getDate());//这里需要重新创建对象
 			}
 			if(self.maxDate&&self.multiEnd>self.maxDate){
-				self.multiEnd =new Date( self.maxDate.getFullYear(),self.maxDate.getMonth(),self.maxDate.getDate()); 
+				self.multiEnd =new Date( self.maxDate.getFullYear(),self.maxDate.getMonth(),self.maxDate.getDate());
 			}
-			
+
 			while(self.multiStart<=self.multiEnd){
-				
+
 				var isDisabled = false;
 				//需要处理disabled
 				if(self.disabled&&self.disabled.length>0){
@@ -688,12 +695,12 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 			for(var i=0;i<self.multi.length;i++){
 				self.multi[i] = self._handleString2Date(self.multi[i])
 			}
-			
+
 			self.fire('multiSelect', {multi:self.multi});
 			if(self.popup && self.closable){
 				self.hide();
 			}
-			
+
 		}
     });
 
@@ -701,7 +708,7 @@ KISSY.add('calendar/base', function(S, Node, Event, UA, undefined) {
 }, { requires: ['node',"event", "ua"] });
 
 /**
- * 
+ *
  * 2011-12-27 by keyapril@gmail.com
 	1.新增配置参数：
  		disabled:null, //禁止点击的日期数组[new Date(),new Date(2011,11,26)]
@@ -1177,6 +1184,12 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                                 cc.father.hide();
                             }
                             if (cc.father.rangeSelect) {
+                                //如果包含time，这显示完整的时间
+                                if(cc.timmer){
+                                    d.setHours(cc.timmer.get('h'));
+                                    d.setMinutes(cc.timmer.get('m'));
+                                    d.setSeconds(cc.timmer.get('s'));
+                                }
                                 cc.father._handleRange(d);
                             }
                             cc.father.render({selected:d});
