@@ -235,6 +235,12 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                                 cc.father.hide();
                             }
                             if (cc.father.rangeSelect) {
+                                //如果包含time，这显示完整的时间
+                                if(cc.timmer){
+                                    d.setHours(cc.timmer.get('h'));
+                                    d.setMinutes(cc.timmer.get('m'));
+                                    d.setSeconds(cc.timmer.get('s'));
+                                }
                                 cc.father._handleRange(d);
                             }
                             cc.father.render({selected:d});
