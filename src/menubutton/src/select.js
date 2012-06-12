@@ -48,7 +48,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
-                self.set("html", item ? item.get("html") : self.get("defaultCaption"));
+                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
 
             /**

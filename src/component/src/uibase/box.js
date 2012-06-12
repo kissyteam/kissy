@@ -23,7 +23,7 @@ KISSY.add('component/uibase/box', function (S) {
          * component's html content
          * @type String
          */
-        html:{
+        content:{
             view:true
         },
         /**

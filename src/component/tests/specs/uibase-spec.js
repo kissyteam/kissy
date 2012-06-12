@@ -151,6 +151,8 @@ KISSY.use("component", function (S, Component) {
                 }
             });
 
+            var BoxRender = UIBase.create([UIBase.Box.Render]);
+
             it("will get attribute from node", function () {
 
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
@@ -180,6 +182,110 @@ KISSY.use("component", function (S, Component) {
                 node.remove();
 
             });
+
+            it("should get html", function () {
+                var node = $("<div>123</div>").appendTo("body");
+                var n = new BoxRender({
+                    srcNode:node
+                });
+                expect(n.get("content")).toBe('123');
+                node.remove();
+
+            });
+
+            it("should override html", function () {
+                var node = $("<div>123</div>").appendTo("body");
+                var n = new BoxRender({
+                    el:node,
+                    srcNode:node,
+                    content:'4',
+                    autoRender:true
+                });
+                expect(n.get("content")).toBe('4');
+                expect(node.html().toLowerCase()).toBe('4');
+                node.remove();
+
+            });
+
+            it("html can be node", function () {
+                var node = $("<div>123</div>").appendTo("body");
+                var n = new BoxRender({
+                    el:node,
+                    srcNode:node,
+                    content:$('<span>4</span>'),
+                    autoRender:true
+                });
+                expect(n.get("content").html()).toBe('4');
+                expect(node.html().toLowerCase()).toBe('<span>4</span>');
+                node.remove();
+            });
+        });
+
+        describe("contentEl", function () {
+
+            var ContentEl = UIBase.create([UIBase.Box.Render, UIBase.ContentBox.Render]);
+
+            describe("srcNode", function () {
+
+                it('transform el', function () {
+
+                    var el = $("<div>23</div>").appendTo("body");
+
+                    var content = new ContentEl({
+                        srcNode:el,
+                        el:el
+                    }).render();
+
+                    expect(content.get("content")).toBe("23");
+
+                    expect(el.html().toLowerCase())
+                        .toBe("<div class=\"ks-contentbox \">23</div>");
+
+                    el.remove();
+
+                });
+
+                it('transform el with string content', function () {
+
+                    var el = $("<div>23</div>").appendTo("body");
+
+                    var content = new ContentEl({
+                        srcNode:el,
+                        el:el,
+                        content:'4'
+                    }).render();
+
+                    expect(content.get("content")).toBe("4");
+
+                    expect(el.html().toLowerCase())
+                        .toBe("<div class=\"ks-contentbox \">4</div>");
+
+                    el.remove();
+                });
+
+
+                it('transform el with node content', function () {
+
+                    var el = $("<div>23</div>").appendTo("body");
+
+                    var content = new ContentEl({
+                        srcNode:el,
+                        el:el,
+                        content:$('<s>4</s>')
+                    }).render();
+
+                    expect(content.get("content").html()).toBe("4");
+
+                    expect(el.html().toLowerCase())
+                        .toBe("<div class=\"ks-contentbox \"><s>4</s></div>");
+
+                    el.remove();
+
+                });
+
+            });
+
+
         });
 
     });

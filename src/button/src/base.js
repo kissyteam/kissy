@@ -64,18 +64,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                 collapseSide:{
                     view:true
                 },
-                /**
-                 * Please use {@link Component.UIBase.Box#html} attribute instead!
-                 * @deprecated 1.3
-                 */
-                content:{
-                    getter:function () {
-                        return this.get("html");
-                    },
-                    setter:function (v) {
-                        return this.set("html", v);
-                    }
-                },
+
                 xrender:{
                     value:ButtonRender
                 }

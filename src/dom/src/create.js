@@ -331,7 +331,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-                _nl2frag:nl2frag
+                nodeListToFragment:nl2frag
             });
 
         function processAll(fn, elem, clone) {

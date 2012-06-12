@@ -2,8 +2,7 @@
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender) {
-
+KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM) {
 
     function ContentBoxRender() {
     }
@@ -15,21 +14,12 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender) {
         contentElStyle:{},
         contentTagName:{
             value:"div"
-        },
-        content:{
-            sync:false
         }
     };
 
     /*
      ! contentEl 只能由组件动态生成
      */
-    ContentBoxRender.HTML_PARSER = {
-        content:function (el) {
-            return el[0].innerHTML;
-        }
-    };
-
     var constructEl = BoxRender.construct;
 
     ContentBoxRender.prototype = {
@@ -42,39 +32,31 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender) {
             var self = this,
                 contentEl,
                 c = self.get("content"),
-                el = self.get("el"),
-                html = "",
-                elChildren = S.makeArray(el[0].childNodes);
+                el = self.get("el");
 
-            if (elChildren.length) {
-                html = el[0].innerHTML
+            // 从已有节点生成
+            if (self.get("srcNode")) {
+                // 用户没有设置 content，直接把 el 的所有子节点移过去
+                if (c == el.html()) {
+                    c = DOM.nodeListToFragment(el[0].childNodes);
+                } else {
+                    // 用户设置了 content，清空原来 el 的子节点
+                    el.empty();
+                }
             }
 
-            // el html 和 c 相同，直接 append el的子节点
-            if (c == html) {
-                c = "";
-            }
-
-            contentEl = new Node(constructEl("ks-contentbox "
+            // 产生新的 contentEl
+            contentEl = constructEl("ks-contentbox "
                 + (self.get("contentElCls") || ""),
                 self.get("contentElStyle"),
                 undefined,
                 undefined,
                 self.get("contentTagName"),
-                self.get("contentElAttrs"),
-                c));
+                self.get("contentElAttrs"), c);
 
             contentEl.appendTo(el);
 
             self.__set("contentEl", contentEl);
-            // on content,then read from box el
-            if (!c) {
-                for (var i = 0, l = elChildren.length; i < l; i++) {
-                    contentEl.append(elChildren[i]);
-                }
-            } else if (typeof c !== 'string') {
-                contentEl.append(c);
-            }
         },
 
         _uiSetContentElCls:function (cls) {
@@ -90,15 +72,16 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender) {
         },
 
         _uiSetContent:function (c) {
+            var contentEl = this.get("contentEl");
             if (typeof c == "string") {
-                this.get("contentEl").html(c);
+                contentEl.html(c);
             } else {
-                this.get("contentEl").empty().append(c);
+                contentEl.empty().append(c);
             }
         }
     };
 
     return ContentBoxRender;
 }, {
-    requires:["node", "./boxrender"]
+    requires:["node", "./boxrender", 'dom']
 });

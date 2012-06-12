@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 11 20:16
+build time: Jun 12 13:29
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -302,7 +302,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem"),
-                                content = item && item.get("html");
+                                content = item && item.get("content");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1
                                 && lastWord) {
@@ -338,7 +338,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
-                    var content = c.get("html");
+                    var content = c.get("content");
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容
@@ -718,18 +718,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 selected:{
                     view:true
                 },
-                /**
-                 * Please use {@link Component.UIBase.Box#html} attribute instead!
-                 * @deprecated 1.3
-                 */
-                content:{
-                    getter:function () {
-                        return this.get("html");
-                    },
-                    setter:function (v) {
-                        return this.set("html", v);
-                    }
-                },
+
                 xrender:{
                     value:MenuItemRender
                 }
@@ -1382,9 +1371,9 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
                 el = self.get("el");
             el.attr("aria-haspopup", "true").append(ARROW_TMPL);
         },
-        _uiSetHtml:function (v) {
+        _uiSetContent:function (v) {
             var self = this;
-            SubMenuRender.superclass._uiSetHtml.call(self, v);
+            SubMenuRender.superclass._uiSetContent.call(self, v);
             self.get("el").append(ARROW_TMPL);
         }
     });

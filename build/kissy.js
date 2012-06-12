@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:02
+build time: Jun 12 13:30
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 10 21:02
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120610210214';
+        S.__BUILD_TIME = '20120612133018';
     })();
 
     return S;
@@ -4061,7 +4061,7 @@ build time: Jun 10 21:02
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120610210214'
+        tag:'20120612133018'
     }, getBaseInfo()));
 
     /**
@@ -4708,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 10 21:02
+build time: Jun 12 13:02
 */
 /**
  * @fileOverview dom-attr
@@ -5987,7 +5987,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-                _nl2frag:nl2frag
+                nodeListToFragment:nl2frag
             });
 
         function processAll(fn, elem, clone) {
@@ -6522,7 +6522,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 fixChecked(el.childNodes);
             } else if (getNodeName(el) == "input") {
                 fixCheckedInternal(el);
-            } else if (el.nodeType==DOM.ELEMENT_NODE) {
+            } else if (el.nodeType == DOM.ELEMENT_NODE) {
                 var cs = el.getElementsByTagName("input");
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
@@ -6561,7 +6561,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                     scripts.push(el);
                 }
             } else {
-                if (el.nodeType==DOM.ELEMENT_NODE &&
+                if (el.nodeType == DOM.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !rformEls.test(nodeName)) {
                     var tmp = [],
@@ -6619,7 +6619,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         // fragment 插入速度快点
         // 而且能够一个操作达到批量插入
         // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
-        var newNode = DOM._nl2frag(newNodes),
+        var newNode = DOM.nodeListToFragment(newNodes),
             clonedNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength > 1) {
@@ -14552,7 +14552,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 5 21:34
+build time: Jun 11 21:51
 */
 /**
  * @fileOverview anim

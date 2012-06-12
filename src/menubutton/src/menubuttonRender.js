@@ -21,14 +21,14 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
             var self = this,
                 el = self.get("el"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:self.get("html")
+                    content:self.get("content")
                 });
             el.html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetHtml:function (v) {
+        _uiSetContent:function (v) {
             var caption = this.get("el").one("." + CAPTION_CLS);
             caption.html("");
             v && caption.append(v);

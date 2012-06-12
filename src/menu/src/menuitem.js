@@ -153,18 +153,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 selected:{
                     view:true
                 },
-                /**
-                 * Please use {@link Component.UIBase.Box#html} attribute instead!
-                 * @deprecated 1.3
-                 */
-                content:{
-                    getter:function () {
-                        return this.get("html");
-                    },
-                    setter:function (v) {
-                        return this.set("html", v);
-                    }
-                },
+
                 xrender:{
                     value:MenuItemRender
                 }

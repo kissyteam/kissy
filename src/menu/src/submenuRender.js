@@ -12,9 +12,9 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
                 el = self.get("el");
             el.attr("aria-haspopup", "true").append(ARROW_TMPL);
         },
-        _uiSetHtml:function (v) {
+        _uiSetContent:function (v) {
             var self = this;
-            SubMenuRender.superclass._uiSetHtml.call(self, v);
+            SubMenuRender.superclass._uiSetContent.call(self, v);
             self.get("el").append(ARROW_TMPL);
         }
     });
