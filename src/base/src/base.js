@@ -16,15 +16,15 @@ KISSY.add('base', function (S, Attribute, Event) {
      * </p>
      */
     function Base(config) {
-        var c = this.constructor;
-
+        var self = this,
+            c = self.constructor;
         // define
         while (c) {
-            addAttrs(this, c['ATTRS']);
+            addAttrs(self, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
         // initial
-        initAttrs(this, config);
+        initAttrs(self, config);
     }
 
 
@@ -65,7 +65,7 @@ KISSY.add('base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                    // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 

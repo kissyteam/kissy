@@ -1,6 +1,6 @@
 /**
  * @fileOverview UIBase
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
 
@@ -59,7 +59,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
                 if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
-                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                    applyParser.call(host, config, c.HTML_PARSER);
                 }
             }
 
@@ -150,14 +150,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         }
     }
 
-    function applyParser(srcNode, parser) {
-        var host = this, p, v;
+    function applyParser(config, parser) {
+        var host = this, p, v, srcNode = config[SRC_NODE];
 
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
-            if (parser.hasOwnProperty(p)) {
+            if (parser.hasOwnProperty(p) &&
+                // 用户设置过那么这里不从 dom 节点取
+                config[p] === undefined) {
                 v = parser[p];
-
                 // 函数
                 if (S.isFunction(v)) {
                     host.__set(p, v.call(host, srcNode));

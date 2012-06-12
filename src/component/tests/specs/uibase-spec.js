@@ -4,7 +4,7 @@
  */
 KISSY.use("component", function (S, Component) {
 
-    var UIBase = Component.UIBase;
+    var UIBase = Component.UIBase, $ = S.all;
 
     describe('uibase', function () {
         it(" will works as multi-inheritance", function () {
@@ -139,7 +139,47 @@ KISSY.use("component", function (S, Component) {
 
             });
 
+        });
 
+        describe("srcNode", function () {
+
+            var SrcNode = UIBase.create([], {}, {
+                HTML_PARSER:{
+                    contentAttr:function (el) {
+                        return el.attr("data-contentAttr")
+                    }
+                }
+            });
+
+            it("will get attribute from node", function () {
+
+                var node = $("<div data-contentAttr='x'></div>").appendTo("body");
+
+                var n = new SrcNode({
+                    srcNode:node
+                });
+
+                expect(n.get("contentAttr")).toBe('x');
+
+                node.remove();
+
+            });
+
+
+            it("will override attribute from node", function () {
+
+                var node = $("<div data-contentAttr='x'></div>").appendTo("body");
+
+                var n = new SrcNode({
+                    srcNode:node,
+                    "contentAttr":'y'
+                });
+
+                expect(n.get("contentAttr")).toBe('y');
+
+                node.remove();
+
+            });
         });
 
     });
