@@ -67,7 +67,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
         var htmlStr = html || "", styleStr = '';
 
-        if (!S.isString(html)) {
+        if (typeof html != 'string') {
             htmlStr = '';
         }
 
@@ -221,11 +221,11 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
     function _uiSetContent(c) {
         var el = this.get("el");
-        if (S.isString(c)) {
+        if (typeof c == "string") {
             el.html(c);
         } else if (c) {
-            el.empty();
-            el.append(c);
+            el.empty()
+                .append(c);
         }
     }
 

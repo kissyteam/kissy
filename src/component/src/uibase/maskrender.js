@@ -118,7 +118,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
             var self = this,
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (self.get("mask")) {
+            if (self.get("maskNode")) {
                 if (maskShared) {
                     if (self.get("visible")) {
                         self._maskExtHide();

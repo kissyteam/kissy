@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 12 13:30
+build time: Jun 12 13:40
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 12 13:30
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120612133018';
+        S.__BUILD_TIME = '20120612134054';
     })();
 
     return S;
@@ -4061,7 +4061,7 @@ build time: Jun 12 13:30
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120612133018'
+        tag:'20120612134054'
     }, getBaseInfo()));
 
     /**
@@ -4708,7 +4708,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 12 13:02
+build time: Jun 12 13:40
 */
 /**
  * @fileOverview dom-attr
@@ -5765,7 +5765,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
-                            ret = nl2frag(nodes);
+                            ret = nodeListToFragment(nodes);
                         } else {
                             S.error(html + " : create node error");
                         }
@@ -5987,7 +5987,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-                nodeListToFragment:nl2frag
+                nodeListToFragment:nodeListToFragment
             });
 
         function processAll(fn, elem, clone) {
@@ -6110,7 +6110,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         // 将 nodeList 转换为 fragment
-        function nl2frag(nodes) {
+        function nodeListToFragment(nodes) {
             var ret = null,
                 i,
                 ownerDoc,

@@ -109,7 +109,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
-                            ret = nl2frag(nodes);
+                            ret = nodeListToFragment(nodes);
                         } else {
                             S.error(html + " : create node error");
                         }
@@ -331,7 +331,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-                nodeListToFragment:nl2frag
+                nodeListToFragment:nodeListToFragment
             });
 
         function processAll(fn, elem, clone) {
@@ -454,7 +454,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         // 将 nodeList 转换为 fragment
-        function nl2frag(nodes) {
+        function nodeListToFragment(nodes) {
             var ret = null,
                 i,
                 ownerDoc,

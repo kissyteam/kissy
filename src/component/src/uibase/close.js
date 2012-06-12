@@ -63,7 +63,7 @@ KISSY.add("component/uibase/close", function () {
             }
         },
         __destructor:function () {
-            var btn = this.get("closeAction");
+            var btn = this.get("closeBtn");
             btn && btn.detach();
         }
     };

@@ -18,14 +18,6 @@ KISSY.add("component/uibase/contentbox", function () {
      * @lends Component.UIBase.ContentBox#
      */
     {
-        /**
-         * content of component's content box
-         * @type NodeList|String
-         */
-        content:{
-            view:true,
-            sync:false
-        },
 
         /**
          * readonly! content box's element of component

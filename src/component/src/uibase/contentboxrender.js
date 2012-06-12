@@ -31,19 +31,9 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
         __createDom:function () {
             var self = this,
                 contentEl,
-                c = self.get("content"),
-                el = self.get("el");
-
-            // 从已有节点生成
-            if (self.get("srcNode")) {
-                // 用户没有设置 content，直接把 el 的所有子节点移过去
-                if (c == el.html()) {
-                    c = DOM.nodeListToFragment(el[0].childNodes);
-                } else {
-                    // 用户设置了 content，清空原来 el 的子节点
-                    el.empty();
-                }
-            }
+                el = self.get("el"),
+                childNodes = el[0].childNodes,
+                c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
             contentEl = constructEl("ks-contentbox "
@@ -54,7 +44,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
                 self.get("contentTagName"),
                 self.get("contentElAttrs"), c);
 
-            contentEl.appendTo(el);
+            el.append(contentEl);
 
             self.__set("contentEl", contentEl);
         },
@@ -75,7 +65,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
             var contentEl = this.get("contentEl");
             if (typeof c == "string") {
                 contentEl.html(c);
-            } else {
+            } else if (c) {
                 contentEl.empty().append(c);
             }
         }

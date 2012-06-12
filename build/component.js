@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 12 13:30
+build time: Jun 12 14:01
 */
 /**
  * Setup component namespace.
@@ -2076,10 +2076,11 @@ KISSY.add('component/uibase/box', function (S) {
     {
         /**
          * component's html content
-         * @type String
+         * @type String|NodeList
          */
         content:{
-            view:true
+            view:true,
+            sync:false
         },
         /**
          * component's width
@@ -2207,17 +2208,19 @@ KISSY.add('component/uibase/box', function (S) {
                 // 2012-03-28 : 用 set 而不是 __set :
                 // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
                 // - 也要设置 view
-                //self.set("visible", true);
+                // self.set("visible", true);
                 // 2012-06-07 ，不能 set
                 // 初始监听 visible ，得不到 el
-                self.__set("visible", true);
+
+                // 2012-06-12
+                // 复位 undefined，防止之前设置过
+                self.__set("visible", undefined);
                 if (view = self.get("view")) {
-                    view.set("visible", true);
+                    view.__set("visible", undefined);
                 }
                 self.render();
-            } else {
-                self.set("visible", true);
             }
+            self.set("visible", true);
             return self;
         },
 
@@ -2302,7 +2305,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
         var htmlStr = html || "", styleStr = '';
 
-        if (!S.isString(html)) {
+        if (typeof html != 'string') {
             htmlStr = '';
         }
 
@@ -2456,11 +2459,11 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
     function _uiSetContent(c) {
         var el = this.get("el");
-        if (S.isString(c)) {
+        if (typeof c == "string") {
             el.html(c);
         } else if (c) {
-            el.empty();
-            el.append(c);
+            el.empty()
+                .append(c);
         }
     }
 
@@ -2533,7 +2536,7 @@ KISSY.add("component/uibase/close", function () {
             }
         },
         __destructor:function () {
-            var btn = this.get("closeAction");
+            var btn = this.get("closeBtn");
             btn && btn.detach();
         }
     };
@@ -2732,14 +2735,6 @@ KISSY.add("component/uibase/contentbox", function () {
      * @lends Component.UIBase.ContentBox#
      */
     {
-        /**
-         * content of component's content box
-         * @type NodeList|String
-         */
-        content:{
-            view:true,
-            sync:false
-        },
 
         /**
          * readonly! content box's element of component
@@ -2809,19 +2804,9 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
         __createDom:function () {
             var self = this,
                 contentEl,
-                c = self.get("content"),
-                el = self.get("el");
-
-            // 从已有节点生成
-            if (self.get("srcNode")) {
-                // 用户没有设置 content，直接把 el 的所有子节点移过去
-                if (c == el.html()) {
-                    c = DOM.nodeListToFragment(el[0].childNodes);
-                } else {
-                    // 用户设置了 content，清空原来 el 的子节点
-                    el.empty();
-                }
-            }
+                el = self.get("el"),
+                childNodes = el[0].childNodes,
+                c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
             contentEl = constructEl("ks-contentbox "
@@ -2832,7 +2817,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
                 self.get("contentTagName"),
                 self.get("contentElAttrs"), c);
 
-            contentEl.appendTo(el);
+            el.append(contentEl);
 
             self.__set("contentEl", contentEl);
         },
@@ -2853,7 +2838,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
             var contentEl = this.get("contentEl");
             if (typeof c == "string") {
                 contentEl.html(c);
-            } else {
+            } else if (c) {
                 contentEl.empty().append(c);
             }
         }
@@ -3225,7 +3210,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
             var self = this,
                 maskShared = self.get("maskShared"),
                 mask = self.get("maskNode");
-            if (self.get("mask")) {
+            if (self.get("maskNode")) {
                 if (maskShared) {
                     if (self.get("visible")) {
                         self._maskExtHide();

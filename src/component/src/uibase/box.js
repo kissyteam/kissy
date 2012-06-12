@@ -21,10 +21,11 @@ KISSY.add('component/uibase/box', function (S) {
     {
         /**
          * component's html content
-         * @type String
+         * @type String|NodeList
          */
         content:{
-            view:true
+            view:true,
+            sync:false
         },
         /**
          * component's width
@@ -152,17 +153,19 @@ KISSY.add('component/uibase/box', function (S) {
                 // 2012-03-28 : 用 set 而不是 __set :
                 // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
                 // - 也要设置 view
-                //self.set("visible", true);
+                // self.set("visible", true);
                 // 2012-06-07 ，不能 set
                 // 初始监听 visible ，得不到 el
-                self.__set("visible", true);
+
+                // 2012-06-12
+                // 复位 undefined，防止之前设置过
+                self.__set("visible", undefined);
                 if (view = self.get("view")) {
-                    view.set("visible", true);
+                    view.__set("visible", undefined);
                 }
                 self.render();
-            } else {
-                self.set("visible", true);
             }
+            self.set("visible", true);
             return self;
         },
 
