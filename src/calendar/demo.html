@@ -149,7 +149,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             selected:showdate(-2, new Date()),
             popup:false
         });
-		
+
         S.log(++i);
         //静态三月日历
         new Calendar('#J_MultiPage_2', {
@@ -199,7 +199,8 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             triggerType:['click'],
             closable:false,
             pages:2,
-            rangeSelect:true
+            rangeSelect:true,
+            showTime:true
         }).on('rangeSelect', function(e) {
             alert(e.start + ' ' + e.end);
             k.hide();
