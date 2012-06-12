@@ -162,7 +162,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             selected:showdate(-2, new Date()),
             popup:false
         });
-		
+
         // S.log(++i);
         //静态三月日历
         new Calendar('#J_MultiPage_2', {
@@ -207,19 +207,20 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         });
         // S.log(++i);
         //Popup日历,默认点击触发,选择范围
-        var k = new Calendar('#J_Popup2', {
+        var k3 = new Calendar('#J_Popup2', {
             popup:true,
             triggerType:['click'],
             closable:false,
             pages:2,
-            rangeSelect:true
+            rangeSelect:true,
+            showTime:true
         }).on('rangeSelect', function(e) {
             alert(e.start + ' ' + e.end);
-            k.hide();
+            k3.hide();
             //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
         });
         // S.log(++i);
-		
+
 		//Popup日历,默认点击触发,选择范围,日历不联动
         var k2 = new Calendar('#J_Popup22', {
             popup:true,
@@ -248,7 +249,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
         });
         // S.log(++i);
-		
+
         //Popup日历,单选关闭
         new Calendar('#J_PopupClosable', {
             popup:true,
