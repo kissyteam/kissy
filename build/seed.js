@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:30
+build time: Jun 13 11:38
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 13 00:30
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120613003025';
+        S.__BUILD_TIME = '20120613113828';
     })();
 
     return S;
@@ -4061,7 +4061,7 @@ build time: Jun 13 00:30
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120613003025'
+        tag:'20120613113828'
     }, getBaseInfo()));
 
     /**
@@ -4357,6 +4357,9 @@ build time: Jun 13 00:30
 
                 "input-selection":{
                     requires:['dom']
+                },
+                "combobox":{
+                  requires:['input-selection','menu']
                 },
                 "button":{
                     requires:["component", "node"]
