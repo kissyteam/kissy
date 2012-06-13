@@ -165,5 +165,26 @@ KISSY.use("base", function(S, Base) {
         });
 
 
+        it("set sub attr differently if declared previously", function () {
+            function A() {
+                A.superclass.constructor.apply(this, S.makeArray(arguments));
+            }
+
+            A.ATTRS = {
+                "x.y":{}
+            };
+
+            S.extend(A, Base);
+
+            var a = new A();
+
+            a.set("x.y", 1);
+
+            expect(a.get("x")).toBeUndefined();
+
+            expect(a.get("x.y")).toBe(1);
+        });
+
+
     });
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 25 11:22
+build time: Jun 13 20:26
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: May 25 11:22
          */
         version:'1.20',
 
-        buildTime:'20120525112239',
+        buildTime:'20120613202636',
 
         /**
          * Returns a new object containing all of the properties of
@@ -12802,7 +12802,7 @@ KISSY.add("ajax", function(S, serializer, io) {
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function(S, undef) {
+KISSY.add('base/attribute', function (S, undef) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -12829,10 +12829,10 @@ KISSY.add('base/attribute', function(S, undef) {
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
         return self.fire(when + capitalFirst(name) + 'Change', {
-            attrName: attrName,
+            attrName:attrName,
             subAttrName:subAttrName,
-            prevVal: prevVal,
-            newVal: newVal
+            prevVal:prevVal,
+            newVal:newVal
         });
     }
 
@@ -12894,7 +12894,7 @@ KISSY.add('base/attribute', function(S, undef) {
      * @param path
      */
     function getValueByPath(o, path) {
-        for (var i = 0,len = path.length;
+        for (var i = 0, len = path.length;
              o != undef && i < len;
              i++) {
             o = o[path[i]];
@@ -12931,9 +12931,11 @@ KISSY.add('base/attribute', function(S, undef) {
             path,
             subVal,
             prevVal,
+            declare = self.hasAttr(name),
             fullName = name;
 
-        if (name.indexOf(dot) !== -1) {
+        if (!declare &&
+            name.indexOf(dot) !== -1) {
             path = name.split(dot);
             name = path.shift();
         }
@@ -13004,14 +13006,14 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * @return un-cloned attr config collections
          */
-        getAttrs: function() {
+        getAttrs:function () {
             return getAttrs(this);
         },
 
         /**
          * @return un-cloned attr value collections
          */
-        getAttrVals:function() {
+        getAttrVals:function () {
             var self = this,
                 o = {},
                 a,
@@ -13034,7 +13036,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * }
          * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig, override) {
+        addAttr:function (name, attrConfig, override) {
             var self = this,
                 attrs = getAttrs(self),
                 cfg = S.clone(attrConfig);
@@ -13051,9 +13053,9 @@ KISSY.add('base/attribute', function(S, undef) {
          * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
          * @param {Object} initialValues user defined initial values
          */
-        addAttrs: function(attrConfigs, initialValues) {
+        addAttrs:function (attrConfigs, initialValues) {
             var self = this;
-            S.each(attrConfigs, function(attrConfig, name) {
+            S.each(attrConfigs, function (attrConfig, name) {
                 self.addAttr(name, attrConfig);
             });
             if (initialValues) {
@@ -13065,14 +13067,14 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Checks if the given attribute has been added to the host.
          */
-        hasAttr: function(name) {
+        hasAttr:function (name) {
             return name && getAttrs(this).hasOwnProperty(name);
         },
 
         /**
          * Removes an attribute from the host object.
          */
-        removeAttr: function(name) {
+        removeAttr:function (name) {
             var self = this;
 
             if (self.hasAttr(name)) {
@@ -13086,8 +13088,8 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Sets the value of an attribute.
          */
-        set: function(name, value, opts) {
-            var ret,self = this;
+        set:function (name, value, opts) {
+            var ret, self = this;
             if (S.isPlainObject(name)) {
                 var all = name;
                 name = 0;
@@ -13104,7 +13106,7 @@ KISSY.add('base/attribute', function(S, undef) {
                     prevVals = [],
                     newVals = [],
                     subAttrNames = [];
-                S.each(attrs, function(attr) {
+                S.each(attrs, function (attr) {
                     prevVals.push(attr.prevVal);
                     newVals.push(attr.newVal);
                     attrNames.push(attr.attrName);
@@ -13131,13 +13133,13 @@ KISSY.add('base/attribute', function(S, undef) {
          * internal use, no event involved, just set.
          * @protected overriden by mvc/model
          */
-        __set: function(name, value) {
+        __set:function (name, value) {
             var self = this,
                 setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
+            // if host does not have meta info corresponding to (name,value)
+            // then register on demand in order to collect all data meta info
+            // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+            // 因为属性在声明注册前可以直接设置值
                 attrConfig = ensureNonEmpty(getAttrs(self), name, true),
                 validator = attrConfig['validator'],
                 setter = attrConfig['setter'];
@@ -13169,14 +13171,15 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Gets the current value of the attribute.
          */
-        get: function(name) {
+        get:function (name) {
             var self = this,
                 dot = ".",
                 path,
+                declared = self.hasAttr(name),
                 attrConfig,
                 getter, ret;
 
-            if (name.indexOf(dot) !== -1) {
+            if (!declared && name.indexOf(dot) !== -1) {
                 path = name.split(dot);
                 name = path.shift();
             }
@@ -13207,7 +13210,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * @private
          * @param name
          */
-        __getDefAttrVal: function(name) {
+        __getDefAttrVal:function (name) {
             var self = this,
                 attrConfig = ensureNonEmpty(getAttrs(self), name),
                 valFn,
@@ -13229,7 +13232,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
          * @param {String} name name of attribute
          */
-        reset: function (name, opts) {
+        reset:function (name, opts) {
             var self = this;
 
             if (S.isString(name)) {
@@ -21071,7 +21074,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 22 14:18
+build time: Jun 6 13:51
 */
 /**
  * Switchable
@@ -22222,7 +22225,12 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
                     Event.on(btn, 'mousedown', function(ev) {
                         ev.preventDefault();
-                        if (!DOM.hasClass(btn, disableCls)) {
+                        var activeIndex = self.activeIndex;
+
+                        if (d == "prev" && (activeIndex != 0 || cfg.circular)) {
+                            self[d](DOM_EVENT);
+                        }
+                        if (d == "next" && (activeIndex != self.length - 1 || cfg.circular)) {
                             self[d](DOM_EVENT);
                         }
                     });
@@ -26010,7 +26018,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Apr 26 14:02
+build time: Jun 12 15:28
 */
 /**
  * KISSY Calendar
@@ -26095,10 +26103,27 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
             //重置日历的个数
             self.ca.length = self.pages;
 
+            var _rangeStart = false;
+            var _rangeEnd = false;
+            if(self.range){
+                if(self.range.start){
+                    _rangeStart = true;
+                }
+                if(self.range.end){
+                    _rangeEnd = true;
+                }
+            }
+
             for (i = 0, _oym = [self.year, self.month]; i < self.pages; i++) {
                 if (i === 0) {
+                    if(_rangeStart){
+                        self._time = S.clone(self.range.start);
+                    }
                     _prev = true;
                 } else {
+                    if(_rangeEnd){
+                        self._time = S.clone(self.range.end);
+                    }
                     _prev = false;
                     _oym = self._computeNextMonth(_oym);
                 }
@@ -26934,6 +26959,12 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                             cc.father.hide();
                         }
                         if (cc.father.rangeSelect) {
+                            //如果包含time，这显示完整的时间
+                                if(cc.timmer){
+                                    d.setHours(cc.timmer.get('h'));
+                                    d.setMinutes(cc.timmer.get('m'));
+                                    d.setSeconds(cc.timmer.get('s'));
+                                }
                             cc.father._handleRange(d);
                         }
                         cc.father.render({selected:d});
@@ -27078,7 +27109,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					today = new Date(),
                     i, _td_s;
 
-				
+
 				for(var i=0;i<startOffset;i++){
 					s += '<a href="javascript:void(0);" class="ks-null">0</a>';
 				}
@@ -27087,7 +27118,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					var cls = '';
 					var date = new Date(cc.year,cc.month, i);
 					//minDate 和 maxDate都包含当天
-					if((cc.father.minDate&&new Date(cc.year,cc.month, i+1)<cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate)){
+					if((cc.father.minDate&&new Date(cc.year,cc.month, i+1)<=cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate)){
 						cls = 'ks-disabled';
 					}
 					else if(cc.father.range&&date>=cc.father.range.start&&date<=cc.father.range.end){
@@ -27096,11 +27127,11 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 					else if(selected&&selected.getFullYear() == cc.year&&selected.getMonth() == cc.month&&selected.getDate()==i){
 						cls = 'ks-selected';
 					}
-					
+
 					if(today.getFullYear() == cc.year&&today.getMonth() == cc.month&&today.getDate()==i){
 						cls += ' ks-today';
 					}
-					
+
 					s += '<a '+(cls?'class='+cls:'')+' href="javascript:void(0);">' + i + '</a>';
 				}
                 cc.ds = s;

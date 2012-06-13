@@ -1,13 +1,13 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:38
+build time: Jun 13 20:26
 */
 /**
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function(S, undef) {
+KISSY.add('base/attribute', function (S, undef) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -34,10 +34,10 @@ KISSY.add('base/attribute', function(S, undef) {
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
         return self.fire(when + capitalFirst(name) + 'Change', {
-            attrName: attrName,
+            attrName:attrName,
             subAttrName:subAttrName,
-            prevVal: prevVal,
-            newVal: newVal
+            prevVal:prevVal,
+            newVal:newVal
         });
     }
 
@@ -99,7 +99,7 @@ KISSY.add('base/attribute', function(S, undef) {
      * @param path
      */
     function getValueByPath(o, path) {
-        for (var i = 0,len = path.length;
+        for (var i = 0, len = path.length;
              o != undef && i < len;
              i++) {
             o = o[path[i]];
@@ -136,9 +136,11 @@ KISSY.add('base/attribute', function(S, undef) {
             path,
             subVal,
             prevVal,
+            declare = self.hasAttr(name),
             fullName = name;
 
-        if (name.indexOf(dot) !== -1) {
+        if (!declare &&
+            name.indexOf(dot) !== -1) {
             path = name.split(dot);
             name = path.shift();
         }
@@ -209,14 +211,14 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * @return un-cloned attr config collections
          */
-        getAttrs: function() {
+        getAttrs:function () {
             return getAttrs(this);
         },
 
         /**
          * @return un-cloned attr value collections
          */
-        getAttrVals:function() {
+        getAttrVals:function () {
             var self = this,
                 o = {},
                 a,
@@ -239,7 +241,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * }
          * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig, override) {
+        addAttr:function (name, attrConfig, override) {
             var self = this,
                 attrs = getAttrs(self),
                 cfg = S.clone(attrConfig);
@@ -256,9 +258,9 @@ KISSY.add('base/attribute', function(S, undef) {
          * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
          * @param {Object} initialValues user defined initial values
          */
-        addAttrs: function(attrConfigs, initialValues) {
+        addAttrs:function (attrConfigs, initialValues) {
             var self = this;
-            S.each(attrConfigs, function(attrConfig, name) {
+            S.each(attrConfigs, function (attrConfig, name) {
                 self.addAttr(name, attrConfig);
             });
             if (initialValues) {
@@ -270,14 +272,14 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Checks if the given attribute has been added to the host.
          */
-        hasAttr: function(name) {
+        hasAttr:function (name) {
             return name && getAttrs(this).hasOwnProperty(name);
         },
 
         /**
          * Removes an attribute from the host object.
          */
-        removeAttr: function(name) {
+        removeAttr:function (name) {
             var self = this;
 
             if (self.hasAttr(name)) {
@@ -291,8 +293,8 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Sets the value of an attribute.
          */
-        set: function(name, value, opts) {
-            var ret,self = this;
+        set:function (name, value, opts) {
+            var ret, self = this;
             if (S.isPlainObject(name)) {
                 var all = name;
                 name = 0;
@@ -309,7 +311,7 @@ KISSY.add('base/attribute', function(S, undef) {
                     prevVals = [],
                     newVals = [],
                     subAttrNames = [];
-                S.each(attrs, function(attr) {
+                S.each(attrs, function (attr) {
                     prevVals.push(attr.prevVal);
                     newVals.push(attr.newVal);
                     attrNames.push(attr.attrName);
@@ -336,13 +338,13 @@ KISSY.add('base/attribute', function(S, undef) {
          * internal use, no event involved, just set.
          * @protected overriden by mvc/model
          */
-        __set: function(name, value) {
+        __set:function (name, value) {
             var self = this,
                 setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
+            // if host does not have meta info corresponding to (name,value)
+            // then register on demand in order to collect all data meta info
+            // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+            // 因为属性在声明注册前可以直接设置值
                 attrConfig = ensureNonEmpty(getAttrs(self), name, true),
                 validator = attrConfig['validator'],
                 setter = attrConfig['setter'];
@@ -374,14 +376,15 @@ KISSY.add('base/attribute', function(S, undef) {
         /**
          * Gets the current value of the attribute.
          */
-        get: function(name) {
+        get:function (name) {
             var self = this,
                 dot = ".",
                 path,
+                declared = self.hasAttr(name),
                 attrConfig,
                 getter, ret;
 
-            if (name.indexOf(dot) !== -1) {
+            if (!declared && name.indexOf(dot) !== -1) {
                 path = name.split(dot);
                 name = path.shift();
             }
@@ -412,7 +415,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * @private
          * @param name
          */
-        __getDefAttrVal: function(name) {
+        __getDefAttrVal:function (name) {
             var self = this,
                 attrConfig = ensureNonEmpty(getAttrs(self), name),
                 valFn,
@@ -434,7 +437,7 @@ KISSY.add('base/attribute', function(S, undef) {
          * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
          * @param {String} name name of attribute
          */
-        reset: function (name, opts) {
+        reset:function (name, opts) {
             var self = this;
 
             if (S.isString(name)) {
