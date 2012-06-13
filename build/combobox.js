@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:25
+build time: Jun 13 22:52
 */
 /**
  * @fileOverview Local dataSource for ComboBox
@@ -229,6 +229,23 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         }
     }
 
+    function onTriggerClick() {
+        var self = this,
+            input = self.get("input"),
+            menu = getMenu(self);
+
+        if (menu && menu.get("visible")) {
+            self.set('collapsed', true);
+        } else {
+            input[0].focus();
+            self.sendRequest('');
+        }
+    }
+
+    function onTriggerMouseDown(e) {
+        e.preventDefault();
+    }
+
     /**
      * Input/Textarea Wrapper for comboBox.
      * xclass: 'combobox'.
@@ -249,24 +266,20 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
             bindUI:function () {
                 var self = this,
-                    trigger = self.get("trigger"),
                     input = self.get("input");
                 input.on("valuechange", self._onValueChange, self);
-                trigger.on("click", function () {
-                    S.log("xx");
-                    var menu = getMenu(self);
+            },
 
-                    S.log(menu && menu.get("visible") || "ai");
-                    if (menu && menu.get("visible")) {
-                        self.set('collapsed', true);
-                    } else {
-                        input[0].focus();
-                        self.sendRequest('');
-                    }
-                });
-                trigger.on("mousedown", function (e) {
-                    e.preventDefault();
-                });
+            _uiSetHasTrigger:function (v) {
+                var self = this,
+                    trigger = self.get("trigger");
+                if (v) {
+                    trigger.on("click", onTriggerClick, self);
+                    trigger.on("mousedown", onTriggerMouseDown);
+                } else {
+                    trigger.detach("click", onTriggerClick, self);
+                    trigger.detach("mousedown", onTriggerMouseDown);
+                }
             },
 
             /**
@@ -834,10 +847,10 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
  */
 KISSY.add("combobox/baseRender", function (S, Component) {
 
-    var tpl = '<div class="ks-combobox-trigger">' +
+    var tpl = '<div class="ks-combobox-input-wrap">' +
+            '</div>',
+        triggerTpl = '<div class="ks-combobox-trigger">' +
             '<div class="ks-combobox-trigger-inner">&#x25BC;</div>' +
-            '</div>' +
-            '<div class="ks-combobox-input-wrap">' +
             '</div>',
         inputTpl = '<input ' +
             'aria-haspopup="true" ' +
@@ -850,15 +863,23 @@ KISSY.add("combobox/baseRender", function (S, Component) {
     return Component.Render.extend({
 
         createDom:function () {
-            var self = this, el = self.get("el");
+            var self = this,
+                wrap,
+                input,
+                el = self.get("el"),
+                trigger = self.get("trigger");
+
             if (!self.get("srcNode")) {
                 el.append(tpl);
-                var wrap = el.one(".ks-combobox-input-wrap");
-                var input = self.get("input") || S.all(inputTpl);
+                wrap = el.one(".ks-combobox-input-wrap");
+                input = self.get("input") || S.all(inputTpl);
                 wrap.append(input);
                 self.__set("input", input);
-                self.__set("trigger", el.one(".ks-combobox-trigger"));
             }
+            if (!trigger) {
+                self.__set("trigger", S.all(triggerTpl));
+            }
+
             self.get("trigger").unselectable();
         },
 
@@ -875,7 +896,12 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         },
 
         _uiSetHasTrigger:function (t) {
-            this.get("trigger")[t ? 'show' : 'hide']();
+            var trigger = this.get("trigger");
+            if (t) {
+                this.get("el").prepend(trigger);
+            } else {
+                trigger.remove();
+            }
         }
     }, {
         ATTRS:{

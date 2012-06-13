@@ -72,6 +72,23 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         }
     }
 
+    function onTriggerClick() {
+        var self = this,
+            input = self.get("input"),
+            menu = getMenu(self);
+
+        if (menu && menu.get("visible")) {
+            self.set('collapsed', true);
+        } else {
+            input[0].focus();
+            self.sendRequest('');
+        }
+    }
+
+    function onTriggerMouseDown(e) {
+        e.preventDefault();
+    }
+
     /**
      * Input/Textarea Wrapper for comboBox.
      * xclass: 'combobox'.
@@ -92,24 +109,20 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
             bindUI:function () {
                 var self = this,
-                    trigger = self.get("trigger"),
                     input = self.get("input");
                 input.on("valuechange", self._onValueChange, self);
-                trigger.on("click", function () {
-                    S.log("xx");
-                    var menu = getMenu(self);
+            },
 
-                    S.log(menu && menu.get("visible") || "ai");
-                    if (menu && menu.get("visible")) {
-                        self.set('collapsed', true);
-                    } else {
-                        input[0].focus();
-                        self.sendRequest('');
-                    }
-                });
-                trigger.on("mousedown", function (e) {
-                    e.preventDefault();
-                });
+            _uiSetHasTrigger:function (v) {
+                var self = this,
+                    trigger = self.get("trigger");
+                if (v) {
+                    trigger.on("click", onTriggerClick, self);
+                    trigger.on("mousedown", onTriggerMouseDown);
+                } else {
+                    trigger.detach("click", onTriggerClick, self);
+                    trigger.detach("mousedown", onTriggerMouseDown);
+                }
             },
 
             /**

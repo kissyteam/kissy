@@ -29,6 +29,10 @@
     </h2>
 </div>
 
+<div style="margin:10px auto; width:800px;text-align: center">
+    <label>trigger : <input type="checkbox" checked id="t"/></label>
+</div>
+
 <script src="../../../build/kissy.js"></script>
 <script src="../src/baseRender.js"></script>
 <script src="../src/base.js"></script>
@@ -48,6 +52,7 @@
             var data = ["a123456", "b12345", "c3464356", "d23434"];
 
             var basicComboBox = new ComboBox({
+                width:200,
                 render:"#newNew",
                 dataSource:{
                     xclass:'combobox-LocalDataSource',
@@ -68,6 +73,10 @@
                 }
             });
             basicComboBox.render();
+            var t;
+            t = S.all('#t').on("click", function () {
+                basicComboBox.set("hasTrigger", t.prop("checked"));
+            });
 
             basicComboBox.on("click", function (e) {
                 var item = e.target;

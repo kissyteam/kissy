@@ -47,12 +47,13 @@
     color: #000000;
     float: right;
     text-align: center;
+    border-left: 1px solid #b5b6b5;
 }
 
 .ks-combobox-trigger-inner {
     float: left;
-    line-height: 16px;
-    height: 16px;
+    line-height: 18px;
+    height: 18px;
     margin: 0 4px;
     vertical-align: middle;
 }
@@ -71,11 +72,10 @@
     vertical-align: middle;
     background-color: #fff;
     border: 0;
-    border-right: 1px solid #b5b6b5;
     color: #000;
 }
 
-.ks-ie .ks-combobox-input {
+.ks-combobox-input {
     line-height: 18px;
     height: 18px;
     overflow-y: visible;
