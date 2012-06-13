@@ -308,30 +308,34 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
 
         it("should support stopping any queue and set value to end right away", function () {
 
+            test.css({
+                width:10,
+                height:10
+            });
 
             test.animate({
                 width:200
             }, {
-                duration:0.1,
+                duration:0.2,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.1,
+                    duration:0.2,
                     queue:"before"
                 }).animate({
                     width:300
                 }, {
-                    duration:0.1,
+                    duration:0.2,
                     queue:"now"
                 }).animate({
                     height:300
                 }, {
-                    duration:0.1,
+                    duration:0.2,
                     queue:"before"
                 });
 
-            waits(100);
+            waits(120);
 
             runs(function () {
                 test.stop(1, 1);

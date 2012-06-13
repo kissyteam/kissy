@@ -674,13 +674,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      * </code>
      */
     function create(component, self) {
-        if (!(component instanceof Controller )) {
-            var childConstructor, xclass;
-            if (!(xclass = component['xclass'])) {
-                S.log('no xclass in : ');
-                S.log(component);
-                S.error("create component error !");
-            }
+        var childConstructor, xclass;
+        if (component && (xclass = component.xclass)) {
             if (self && !component.prefixCls) {
                 component.prefixCls = self.get("prefixCls");
             }

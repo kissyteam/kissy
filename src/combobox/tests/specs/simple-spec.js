@@ -4,6 +4,9 @@
  */
 KISSY.use("combobox", function (S, ComboBox) {
 
+    window.focus();
+    document.body.focus();
+
     var $ = S.all;
 
     describe("simple combobox", function () {
@@ -21,9 +24,13 @@ KISSY.use("combobox", function (S, ComboBox) {
         var Event = S.Event;
         var KeyCodes = Event.KeyCodes;
 
-        var comboBox = new ComboBox.Basic({
-            srcNode:'#t',
-            data:data,
+        var comboBox = new ComboBox({
+            width:200,
+            render:'#container',
+            dataSource:{
+                xclass:'combobox-LocalDataSource',
+                data:data
+            },
             format:function (q, data) {
                 var ret = [];
                 S.each(data, function (d) {
@@ -37,7 +44,7 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
         comboBox.render();
 
-        var t = S.get("#t");
+        var t = comboBox.get("input")[0];
 
         it("show menu with right alignment when input value " +
             "and hide when lose focus", function () {
@@ -118,7 +125,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(children[0].get("textContent")).toBe("21");
                 expect(children[0].get("value")).toBe("21");
                 // 输入项和提示项 textContent 不一样，默认不高亮
-                expect(menu.get("activeItem")).toBe(undefined);
+                expect(menu.get("activeItem")).toBeFalsy();
                 t.blur();
             });
             waits(100);

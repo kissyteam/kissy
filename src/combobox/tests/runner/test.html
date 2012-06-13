@@ -18,25 +18,23 @@
 <script src="../../src/menuRender.js"></script>
 <script src="../../src/LocalDataSource.js"></script>
 <script src="../../src/RemoteDataSource.js"></script>
-<script src="../../src/basic.js"></script>
-<script src="../../src/ComboBox.js"></script>
-<script src="../../src/ComboBoxRender.js"></script>
 <script src="../../../input-selection/src/input-selection.js"></script>
 <link rel="stylesheet" href="../../assets/default.css">
 </head>
 <body>
 <h1>KISSY ComboBox TC</h1>
 
-<div>
+<div id="container">
 
-    <input id="t"/>
 
 </div>
 <script src="../specs/simple-spec.js"></script>
 <script>
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function () {
-        jasmine.kissyNext(this.results().failedCount);
+    KISSY.use("combobox", function (S, ComboBox) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function () {
+            jasmine.kissyNext(this.results().failedCount);
+        });
     });
 </script>
 </body>

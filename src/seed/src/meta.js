@@ -53,6 +53,9 @@
                 "input-selection":{
                     requires:['dom']
                 },
+                "combobox":{
+                  requires:['input-selection','menu']
+                },
                 "button":{
                     requires:["component", "node"]
                 },
