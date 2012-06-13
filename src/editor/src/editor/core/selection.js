@@ -52,10 +52,17 @@ KISSY.add("editor/core/selection", function (S) {
          * editor document. Return NULL if that's the case.
          */
         if (OLD_IE) {
-            var range = self.getNative().createRange();
-            if (!range
-                || ( range.item && range.item(0).ownerDocument != document )
-                || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+            try {
+                var range = self.getNative().createRange();
+                if (!range
+                    || ( range.item && range.item(0).ownerDocument != document )
+                    || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+                    self.isInvalid = TRUE;
+                }
+            }
+                // 2012-06-13 发布页 bug
+                // 当焦点在一个跨域的 iframe 内，调用该操作抛拒绝访问异常
+            catch (e) {
                 self.isInvalid = TRUE;
             }
         }
