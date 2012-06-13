@@ -292,7 +292,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            if (v) {
+            if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
         },
@@ -396,7 +396,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|NodeList} node Same as node config of {@link Component.UIBase.Align#align} .
+         * @param {undefined|String|HTMLElement|NodeList} node
+         * Same as node config of {@link Component.UIBase.Align#align} .
          */
         center:function (node) {
             var self = this;

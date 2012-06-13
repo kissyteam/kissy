@@ -248,16 +248,16 @@
                 S.each(modNames, function (modName) {
                     var mod = self.getModInfo(modName);
                     var packageInfo = mod.getPackageInfo();
-                    var packageBase = packageInfo.base;
+                    var packageBase = packageInfo.getBase();
                     var type = utils.isCss(mod.path) ? "css" : "js", mods;
-                    var packageName = packageInfo.name;
+                    var packageName = packageInfo.getName();
                     combos[packageBase] = combos[packageBase] || {};
                     mods = combos[packageBase][type] = combos[packageBase][type] || [];
                     mods.combine = 1;
-                    if (packageInfo.combine === false) {
+                    if (packageInfo.isCombine() === false) {
                         mods.combine = 0;
                     }
-                    mods.tag = packageInfo.tag;
+                    mods.tag = packageInfo.getTag();
                     mods.charset = mod.getCharset();
                     mods.name = packageName;
                     mods.push(mod);
@@ -297,7 +297,8 @@
                             res[type][packageBase].mods.push(jss[i]);
                             if (!jss.combine) {
                                 tag = jss[i].getTag();
-                                res[type][packageBase].push(utils.getMappedPath(SS, prefix + path + (tag ? ("?t=" + tag) : "")));
+                                res[type][packageBase].push(utils.getMappedPath(SS,
+                                    prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
                                 continue;
                             }
                             t.push(path);
@@ -330,7 +331,8 @@
             getComboUrl:function (prefix, t, comboSep, tag) {
                 return utils.getMappedPath(
                     this.SS,
-                    prefix + t.join(comboSep) + (tag ? ("?t=" + tag) : "")
+                    prefix + t.join(comboSep) + (tag ? ("?t=" +
+                        encodeURIComponent(tag)) : "")
                 );
             },
 

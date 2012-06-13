@@ -50,9 +50,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         // 保证显示前已经 bind 好 menu 事件
         self.bindMenu();
         if (menu && !menu.get("visible")) {
+            var menuCfg = self.get("menuCfg");
+            // 根据 el 自动调整大小
+            if (menuCfg.width == null) {
+                menu.set("width", el.width());
+            }
             menu.set("align", S.merge({
                 node:el
-            }, ALIGN, self.get("menuCfg").align));
+            }, ALIGN, menuCfg.align));
             menu.show();
             el.attr("aria-haspopup", menu.get("el").attr("id"));
         }
@@ -301,8 +306,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
 
                 /**
-                 * Menu configuration.See {@link Menu}.
-                 * Can also set "align" to specify button's alignment with menu.
+                 * Extra Menu configuration.See {@link Menu}.
+                 * Can set "align" to specify button's alignment with menu.
+                 * Can set "width" to specify button's menu width.
+                 * If not set "width" , menu's width will be same with menubutton.
                  * @type Object
                  */
                 menuCfg:{

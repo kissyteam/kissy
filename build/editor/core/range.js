@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 13 14:40
 */
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -124,12 +124,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             doc = self.document,
             removeEndNode;
 
-        if (self.collapsed) {
-            return docFrag;
-        }
-
         if (action > 0) {
             docFrag = doc.createDocumentFragment();
+        }
+
+        if (self.collapsed) {
+            return docFrag;
         }
 
         // 将 bookmark 包含在选区内
@@ -1636,6 +1636,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Place the extracted contents into the duplicated element.
                 clone[0].appendChild(documentFragment);
+
                 clone.insertAfter(toSplit);
                 self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
                 return clone;

@@ -26,12 +26,52 @@
     KISSY.Loader = Loader;
 
     /**
+     * @class KISSY Package constructor
+     * This class should not be instantiated manually.
+     * @memberOf KISSY.Loader
+     */
+    function Package(cfg) {
+        S.mix(this, cfg);
+    }
+
+    S.augment(Package, {
+        getTag:function () {
+            return this.tag || this.SS.Config.tag;
+        },
+
+        getName:function () {
+            return this.name;
+        },
+
+        getBase:function () {
+            return this.base || this.SS.Config.base;
+        },
+
+        isDebug:function () {
+            var debug = this.debug;
+            return debug === undefined ? this.SS.Config.debug : debug;
+        },
+
+        getCharset:function () {
+            return this.charset || this.SS.Config.charset;
+        },
+
+        isCombine:function () {
+            var combine = this.combine;
+            return combine === undefined ? this.SS.Config.combine : combine;
+        }
+    });
+
+    Loader.Package = Package;
+
+
+    /**
      * @class KISSY Module constructor
      * This class should not be instantiated manually.
      * @memberOf KISSY.Loader
      */
-    function Module(ps) {
-        S.mix(this, ps);
+    function Module(cfg) {
+        S.mix(this, cfg);
     }
 
     S.augment(Module,
@@ -54,9 +94,9 @@
                 var self = this, t;
                 return self.fullpath || (self.fullpath =
                     Loader.Utils.getMappedPath(self.SS,
-                        self.packageInfo.base +
+                        self.packageInfo.getBase() +
                             self.path +
-                            ((t = self.getTag()) ? ("?t=" + t) : "")));
+                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
             },
 
             /**
@@ -87,7 +127,7 @@
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.packageInfo.tag;
+                return (this.tag || this.packageInfo.getTag());
             },
 
             /**
@@ -95,7 +135,7 @@
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.charset;
+                return this.charset || this.packageInfo.getCharset();
             }
         });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 11:38
+build time: Jun 13 12:52
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 13 11:38
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120613113828';
+        S.__BUILD_TIME = '20120613125206';
     })();
 
     return S;
@@ -2002,12 +2002,52 @@ build time: Jun 13 11:38
     KISSY.Loader = Loader;
 
     /**
+     * @class KISSY Package constructor
+     * This class should not be instantiated manually.
+     * @memberOf KISSY.Loader
+     */
+    function Package(cfg) {
+        S.mix(this, cfg);
+    }
+
+    S.augment(Package, {
+        getTag:function () {
+            return this.tag || this.SS.Config.tag;
+        },
+
+        getName:function () {
+            return this.name;
+        },
+
+        getBase:function () {
+            return this.base || this.SS.Config.base;
+        },
+
+        isDebug:function () {
+            var debug = this.debug;
+            return debug === undefined ? this.SS.Config.debug : debug;
+        },
+
+        getCharset:function () {
+            return this.charset || this.SS.Config.charset;
+        },
+
+        isCombine:function () {
+            var combine = this.combine;
+            return combine === undefined ? this.SS.Config.combine : combine;
+        }
+    });
+
+    Loader.Package = Package;
+
+
+    /**
      * @class KISSY Module constructor
      * This class should not be instantiated manually.
      * @memberOf KISSY.Loader
      */
-    function Module(ps) {
-        S.mix(this, ps);
+    function Module(cfg) {
+        S.mix(this, cfg);
     }
 
     S.augment(Module,
@@ -2030,9 +2070,9 @@ build time: Jun 13 11:38
                 var self = this, t;
                 return self.fullpath || (self.fullpath =
                     Loader.Utils.getMappedPath(self.SS,
-                        self.packageInfo.base +
+                        self.packageInfo.getBase() +
                             self.path +
-                            ((t = self.getTag()) ? ("?t=" + t) : "")));
+                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
             },
 
             /**
@@ -2063,7 +2103,7 @@ build time: Jun 13 11:38
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.packageInfo.tag;
+                return (this.tag || this.packageInfo.getTag());
             },
 
             /**
@@ -2071,7 +2111,7 @@ build time: Jun 13 11:38
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.charset;
+                return this.charset || this.packageInfo.getCharset();
             }
         });
 
@@ -2210,7 +2250,6 @@ build time: Jun 13 11:38
     function getPackageInfo(self, mod) {
 
         var modName = mod.name,
-            Config = self.Config,
             Env = self.Env,
             packages = Env.packages || {},
             pName = "",
@@ -2225,18 +2264,9 @@ build time: Jun 13 11:38
             }
         }
 
-        packageDesc = packages[pName] || {
-            // 无包，kissy 自身模块
-            "__kissy":1
-        };
-
-        S.mix(packageDesc, {
-            name:pName,
-            tag:encodeURIComponent(Config.tag),
-            base:Config.base,
-            debug:Config.debug,
-            charset:"utf-8"
-        }, false);
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
 
         mod.packageInfo = packageDesc;
 
@@ -2574,7 +2604,7 @@ build time: Jun 13 11:38
             m = match[1];
         }
         var min = "-min";
-        if (packageInfo.debug) {
+        if (packageInfo.isDebug()) {
             min = "";
         }
         return m + min + suffix;
@@ -2909,17 +2939,17 @@ build time: Jun 13 11:38
     if (typeof require !== 'undefined') {
         return;
     }
-    var utils = S.Loader.Utils;
+    var Loader = S.Loader, utils = Loader.Utils;
     /*
-      modify current module path
-      <code>
-           [
-               [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
-               [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-                   return m1+m2;
-               }]
-           ]
-      </code>
+     modify current module path
+     <code>
+     [
+     [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
+     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
+     return m1+m2;
+     }]
+     ]
+     </code>
      */
     S.configs.map = function (rules) {
         var self = this;
@@ -2927,17 +2957,16 @@ build time: Jun 13 11:38
     };
 
     /*
-      包声明
-      biz -> .
-      表示遇到 biz/x
-      在当前网页路径找 biz/x.js
-      @private
+     包声明
+     biz -> .
+     表示遇到 biz/x
+     在当前网页路径找 biz/x.js
+     @private
      */
     S.configs.packages = function (cfgs) {
         var self = this,
             name,
             base,
-            tag,
             Env = self.Env,
             ps = Env.packages = Env.packages || {};
         if (cfgs) {
@@ -2946,43 +2975,44 @@ build time: Jun 13 11:38
                 name = cfg.name || key;
                 // 兼容 path
                 base = cfg.base || cfg.path;
-                tag = cfg.tag;
-                ps[ name ] = cfg;
+
                 // 注意正则化
                 cfg.name = name;
                 cfg.base = base && utils.normalBasePath(base);
-                cfg.tag = tag && encodeURIComponent(tag);
+                cfg.SS = S;
                 delete cfg.path;
+
+                ps[ name ] = new Loader.Package(cfg);
             });
         }
     };
 
     /*
      只用来指定模块依赖信息.
-      <code>
+     <code>
 
-      KISSY.config({
-       base:'',
-       // dom-min.js
-       debug:'',
-       combine:true,
-       tag:'',
-       packages:{
-           "biz1": {
-               // path change to base
-               base: "haha",
-               // x.js
-               debug:'',
-               tag:'',
-               combine:false,
-           }
-       },
-       modules:{
-           "biz1/main" : {
-               requires: [ "biz1/part1" , "biz1/part2" ]
-           }
-       }
-      });
+     KISSY.config({
+     base:'',
+     // dom-min.js
+     debug:'',
+     combine:true,
+     tag:'',
+     packages:{
+     "biz1": {
+     // path change to base
+     base: "haha",
+     // x.js
+     debug:'',
+     tag:'',
+     combine:false,
+     }
+     },
+     modules:{
+     "biz1/main" : {
+     requires: [ "biz1/part1" , "biz1/part2" ]
+     }
+     }
+     });
      */
     S.configs.modules = function (modules) {
         var self = this;
@@ -2998,7 +3028,7 @@ build time: Jun 13 11:38
     S.configs.modules.order = 10;
 
     /*
-      KISSY 's base path.
+     KISSY 's base path.
      */
     S.configs.base = function (base) {
         var self = this;
@@ -3073,9 +3103,10 @@ build time: Jun 13 11:38
 
                     if (config) {
                         requires = utils.normalizeModNames(SS, config.requires, name);
-                        if (config && utils.isAttached(SS, requires)) {
-                            utils.attachMod(SS, mod);
-                        }
+                    }
+
+                    if (!requires || utils.isAttached(SS, requires)) {
+                        utils.attachMod(SS, mod);
                     }
 
                     return;
@@ -3760,16 +3791,16 @@ build time: Jun 13 11:38
                 S.each(modNames, function (modName) {
                     var mod = self.getModInfo(modName);
                     var packageInfo = mod.getPackageInfo();
-                    var packageBase = packageInfo.base;
+                    var packageBase = packageInfo.getBase();
                     var type = utils.isCss(mod.path) ? "css" : "js", mods;
-                    var packageName = packageInfo.name;
+                    var packageName = packageInfo.getName();
                     combos[packageBase] = combos[packageBase] || {};
                     mods = combos[packageBase][type] = combos[packageBase][type] || [];
                     mods.combine = 1;
-                    if (packageInfo.combine === false) {
+                    if (packageInfo.isCombine() === false) {
                         mods.combine = 0;
                     }
-                    mods.tag = packageInfo.tag;
+                    mods.tag = packageInfo.getTag();
                     mods.charset = mod.getCharset();
                     mods.name = packageName;
                     mods.push(mod);
@@ -3809,7 +3840,8 @@ build time: Jun 13 11:38
                             res[type][packageBase].mods.push(jss[i]);
                             if (!jss.combine) {
                                 tag = jss[i].getTag();
-                                res[type][packageBase].push(utils.getMappedPath(SS, prefix + path + (tag ? ("?t=" + tag) : "")));
+                                res[type][packageBase].push(utils.getMappedPath(SS,
+                                    prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
                                 continue;
                             }
                             t.push(path);
@@ -3842,7 +3874,8 @@ build time: Jun 13 11:38
             getComboUrl:function (prefix, t, comboSep, tag) {
                 return utils.getMappedPath(
                     this.SS,
-                    prefix + t.join(comboSep) + (tag ? ("?t=" + tag) : "")
+                    prefix + t.join(comboSep) + (tag ? ("?t=" +
+                        encodeURIComponent(tag)) : "")
                 );
             },
 
@@ -4061,7 +4094,8 @@ build time: Jun 13 11:38
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
-        tag:'20120613113828'
+        charset:'utf-8',
+        tag:'20120613125206'
     }, getBaseInfo()));
 
     /**

@@ -1,22 +1,22 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 13 14:40
 */
 /**
  * multipleUpload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
+KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor, ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
     var UA = S.UA,
         DOM = S.DOM,
+        $ = S.all,
         JSON = S.JSON,
         PIC_NUM_LIMIT = 15,
         PIC_NUM_LIMIT_WARNING = "系统将只保留 n 张",
         PIC_SIZE_LIMIT = 1000,
         PIC_SIZE_LIMIT_WARNING = "图片太大，请压缩至 n M以下",
-        Node = S.Node,
         Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
         movie = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             self.addRes(d);
 
             var bangpaiUploaderHolder = d.get("body"),
-                btnHolder = new Node(
+                btnHolder = $(
                     "<div class='ks-editor-upload-btn-wrap'>" +
                         "<span " +
                         "style='" +
@@ -95,12 +95,12 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                         "width:450px;" +
                         "'></span>" +
                         "</div>").appendTo(bangpaiUploaderHolder, undefined),
-                listWrap = new Node("<div style='display:none'>")
+                listWrap = $("<div style='display:none'>")
                     .appendTo(bangpaiUploaderHolder, undefined),
-                btn = new Node("<a class='ks-editor-button ks-inline-block'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
+                btn = $("<a class='ks-editor-button ks-inline-block'>浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>")
                     .appendTo(btnHolder, undefined),
 
-                listTableWrap = new Node("<div>" +
+                listTableWrap = $("<div>" +
                     "<table class='ks-editor-upload-list'>" +
                     "<thead>" +
                     "<tr>" +
@@ -126,7 +126,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                     "</table>" +
                     "</div>").appendTo(listWrap, undefined),
                 list = listTableWrap.one("tbody"),
-                upHolder = new Node("<p " +
+                upHolder = $("<p " +
                     "style='" +
                     "margin:15px 15px 30px 6px;" +
                     "'>" +
@@ -145,7 +145,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 insertAll = upHolder.one(".ks-editor-bangpaiupload-insertall"),
                 delAll = upHolder.one(".ks-editor-bangpaiupload-delall"),
                 fid = S.guid(name),
-                statusText = new Node("<span>")
+                statusText = $("<span>")
                     .prependTo(upHolder, undefined);
 
 
@@ -189,7 +189,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 boffset = bel.offset(),
                 fwidth = bel.width() * 2,
                 fheight = bel.height() * 1.5,
-                flashPos = new Node("<div style='" +
+                flashPos = $("<div style='" +
                     ("position:absolute;" +
                         "width:" + fwidth + "px;" +
                         "height:" + fheight + "px;" +
@@ -235,16 +235,19 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 bel.removeClass("ks-editor-button-hover", undefined);
             });
             self.addRes(uploader);
+
+            var editorDoc = editor.get("document")[0];
+
             insertAll.on("click", function (ev) {
                 var trs = list.all("tr");
                 for (var i = 0; i < trs.length; i++) {
-                    var tr = new Node(trs[i]),
+                    var tr = $(trs[i]),
                         url = tr.attr("url");
                     if (url) {
                         // chrome refer empty in empty src iframe
                         new Image().src = url;
-                        editor.insertElement(new Node("<p>&nbsp;<img src='" +
-                            url + "'/>&nbsp;</p>", null, editor.get("document")[0]));
+                        editor.insertElement($("<p>&nbsp;<img src='" +
+                            url + "'/>&nbsp;</p>", editorDoc));
                         self._removeTrFile(tr);
                     }
                 }
@@ -259,7 +262,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             delAll.on("click", function (ev) {
                 var trs = list.all("tr");
                 for (var i = 0; i < trs.length; i++) {
-                    var tr = new Node(trs[i]);
+                    var tr = $(trs[i]);
                     self._removeTrFile(tr);
                 }
                 listWrap.hide();
@@ -268,13 +271,13 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             self.addRes(delAll);
 
             list.on("click", function (ev) {
-                var target = new Node(ev.target), tr;
+                var target = $(ev.target), tr;
                 ev.halt();
                 if (target.hasClass("ks-editor-upload-insert", undefined)) {
                     tr = target.parent("tr");
                     var url = tr.attr("url");
                     new Image().src = url;
-                    editor.insertElement(new Node("<img src='" +
+                    editor.insertElement($("<img src='" +
                         url + "'/>", null, editor.get("document")[0]));
                 }
                 if (
@@ -346,6 +349,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
 
                 var previewWin = new (S.require("overlay"))({
                     mask:false,
+                    prefixCls:'ks-editor-',
                     autoRender:true,
                     width:previewWidth,
                     render:listWrap
@@ -356,7 +360,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
 
                 var currentFid = 0;
                 listWrap.on("mouseover", function (ev) {
-                    var t = new Node(ev.target),
+                    var t = $(ev.target),
                         td = t.parent(".ks-editor-upload-filename");
                     if (td) {
                         var tr = td.parent("tr");
@@ -452,7 +456,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 list = self._list,
                 trs = list.all("tr");
             for (var i = 0; i < trs.length; i++) {
-                var tr = new Node(trs[i]);
+                var tr = $(trs[i]);
                 if (tr.attr("fid") == id) {
                     return tr;
                 }
@@ -539,7 +543,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 });
                 var wait = 0;
                 for (var i = 0; i < trs.length; i++) {
-                    var tr = new Node(trs[i]);
+                    var tr = $(trs[i]);
                     if (!tr.attr("url")) wait++;
                 }
                 self.statusText.html("队列中剩余" + wait + "张图片"
@@ -578,7 +582,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 trs = list.all("tr"),
                 data = [];
             for (var i = 0; i < trs.length; i++) {
-                var tr = new Node(trs[i]),
+                var tr = $(trs[i]),
                     url = tr.attr("url");
                 if (url) {
                     var size = tr.one(".ks-editor-upload-filesize").html(),
@@ -607,7 +611,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
             /*
              chrome not work !
              kissy bug?
-             var row = new Node("<tr fid='" + id + "'>"
+             var row = $("<tr fid='" + id + "'>"
              + "<td class='ks-editor-upload-seq'>"
              + "</td>"
              + "<td>"
@@ -661,9 +665,9 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 "<a href='#' class='ks-editor-upload-delete'>" +
                 "[删除]" +
                 "</a> &nbsp;");
-            var rowNode = new Node(row);
 
-            var prog = rowNode.one(".ks-editor-upload-progress");
+            var rowNode = $(row);
+
             if (parseInt(f.size) > self._sizeLimit) {
                 self._uploadError({
                     id:id,
@@ -691,7 +695,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor,ProgressBar
                 uploader = self.uploader,
                 list = self._list,
                 curNum = 0,
-                //当前队列的所有文件，连续选择的话累计！！！
+            //当前队列的所有文件，连续选择的话累计！！！
                 files = ev['fileList'],
                 available = self._numberLimit, i;
 

@@ -6,17 +6,17 @@
     if (typeof require !== 'undefined') {
         return;
     }
-    var utils = S.Loader.Utils;
+    var Loader = S.Loader, utils = Loader.Utils;
     /*
-      modify current module path
-      <code>
-           [
-               [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
-               [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-                   return m1+m2;
-               }]
-           ]
-      </code>
+     modify current module path
+     <code>
+     [
+     [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
+     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
+     return m1+m2;
+     }]
+     ]
+     </code>
      */
     S.configs.map = function (rules) {
         var self = this;
@@ -24,17 +24,16 @@
     };
 
     /*
-      包声明
-      biz -> .
-      表示遇到 biz/x
-      在当前网页路径找 biz/x.js
-      @private
+     包声明
+     biz -> .
+     表示遇到 biz/x
+     在当前网页路径找 biz/x.js
+     @private
      */
     S.configs.packages = function (cfgs) {
         var self = this,
             name,
             base,
-            tag,
             Env = self.Env,
             ps = Env.packages = Env.packages || {};
         if (cfgs) {
@@ -43,43 +42,44 @@
                 name = cfg.name || key;
                 // 兼容 path
                 base = cfg.base || cfg.path;
-                tag = cfg.tag;
-                ps[ name ] = cfg;
+
                 // 注意正则化
                 cfg.name = name;
                 cfg.base = base && utils.normalBasePath(base);
-                cfg.tag = tag && encodeURIComponent(tag);
+                cfg.SS = S;
                 delete cfg.path;
+
+                ps[ name ] = new Loader.Package(cfg);
             });
         }
     };
 
     /*
      只用来指定模块依赖信息.
-      <code>
+     <code>
 
-      KISSY.config({
-       base:'',
-       // dom-min.js
-       debug:'',
-       combine:true,
-       tag:'',
-       packages:{
-           "biz1": {
-               // path change to base
-               base: "haha",
-               // x.js
-               debug:'',
-               tag:'',
-               combine:false,
-           }
-       },
-       modules:{
-           "biz1/main" : {
-               requires: [ "biz1/part1" , "biz1/part2" ]
-           }
-       }
-      });
+     KISSY.config({
+     base:'',
+     // dom-min.js
+     debug:'',
+     combine:true,
+     tag:'',
+     packages:{
+     "biz1": {
+     // path change to base
+     base: "haha",
+     // x.js
+     debug:'',
+     tag:'',
+     combine:false,
+     }
+     },
+     modules:{
+     "biz1/main" : {
+     requires: [ "biz1/part1" , "biz1/part2" ]
+     }
+     }
+     });
      */
     S.configs.modules = function (modules) {
         var self = this;
@@ -95,7 +95,7 @@
     S.configs.modules.order = 10;
 
     /*
-      KISSY 's base path.
+     KISSY 's base path.
      */
     S.configs.base = function (base) {
         var self = this;

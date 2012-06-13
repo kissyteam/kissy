@@ -38,6 +38,7 @@
 <script src="../../../build/component.js"></script>
 <script src="../../../build/overlay.js"></script>
 <script src="../../../build/button.js"></script>
+<script src="../../../build/switchable.js"></script>
 <script src="../../../build/menu.js"></script>
 <script src="../../../build/menubutton.js"></script>
 <!--
@@ -160,7 +161,7 @@ KISSY.use('editor', function (S, Editor) {
                 width:"115px"
             },
             "multipleUpload":{
-                serverUrl:"upload.php",
+                serverUrl:"http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
                 serverParams:{
                     waterMark:function () {
                         return S.one("#ke_img_up_watermark_2")[0].checked;
@@ -313,7 +314,7 @@ KISSY.use('editor', function (S, Editor) {
             ",video" +
             ",dragUpload";
 
-    window.editor = new Editor(cfg)
+    window.editorNew = new Editor(cfg)
             .use(plugins, function () {
                 this.on("blur", function () {
                     S.log("editor blur");

@@ -127,7 +127,7 @@
 
     </div>
 
-    <h2>可删除的下拉菜单</h2>
+    <h2>下拉菜单</h2>
 
     <div id="selectDel">
 
@@ -135,12 +135,6 @@
 
 
     <script src="../../../build/kissy.js"></script>
-    <script src="../../menu/demo/delmenuitem.js"></script>
-    <script src="../../menu/demo/delmenuitemRender.js"></script>
-    <script>
-
-        KISSY.Config.tag = Math.random();
-    </script>
     <!--
 <script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
 -->
@@ -152,7 +146,7 @@
             for (var i = 0; i < 20; i++) {
                 s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
             }
-            KISSY.use("menubutton,menu,menu/delmenuitem", function (S, MenuButton, Menu, DelMenuItem) {
+            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var select = MenuButton.Select.decorate('#decorateSelect', {
                     defaultCaption:"请选择",
                     prefixCls:"c2c-",
@@ -197,30 +191,18 @@
                     menuCfg:{
                         align:{
                             offset:[0, -1]
-                        },
-                        width:150
+                        }
+                    },
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                xclass:'menuitem',
+                                content:"漩涡"
+                            }
+                        ]
                     },
                     defaultCaption:"常用项"
-                });
-
-                delSelect.addItem(new DelMenuItem({
-                    content:"可以删除我",
-                    prefixCls:"c2c-",
-                    value:1
-                }));
-
-
-                delSelect.addItem(new DelMenuItem({
-                    content:"可以删除你",
-                    prefixCls:"c2c-",
-                    value:2
-                }));
-
-                delSelect.get("menu").on("delete", function (e) {
-                    S.log(e.target.get("content") + ":" + e.target.get("value") + "  " + "deleted");
-                    if (!delSelect.get("menu").get("children").length) {
-                        delSelect.set("selectedItem", null);
-                    }
                 });
 
                 delSelect.render();

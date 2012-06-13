@@ -1,5 +1,5 @@
-var editor={};
-editor.addCustomLink("");
-editor.removeCustomLink("");
-editor.removeCustomStyle("");
-editor._uiSetMode("");
+var editorXX={};
+editorXX.addCustomLink("");
+editorXX.removeCustomLink("");
+editorXX.removeCustomStyle("");
+editorXX._uiSetMode("");

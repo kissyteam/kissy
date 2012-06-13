@@ -64,9 +64,10 @@
 
                     if (config) {
                         requires = utils.normalizeModNames(SS, config.requires, name);
-                        if (config && utils.isAttached(SS, requires)) {
-                            utils.attachMod(SS, mod);
-                        }
+                    }
+
+                    if (!requires || utils.isAttached(SS, requires)) {
+                        utils.attachMod(SS, mod);
                     }
 
                     return;

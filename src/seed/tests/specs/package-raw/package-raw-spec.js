@@ -29,7 +29,10 @@ describe("loader", function () {
 
             runs(function () {
                 KISSY.config({
-                    combine:true
+                    combine:true,
+                    map:[
+                        [/\?t=.+/, ""]
+                    ]
                 });
                 KISSY.use("t/t2", function () {
                     ok1 = 2;
@@ -45,6 +48,7 @@ describe("loader", function () {
             });
 
             runs(function () {
+                KISSY.Config.mappedRules = [];
                 KISSY.config({
                     debug:true,
                     combine:false

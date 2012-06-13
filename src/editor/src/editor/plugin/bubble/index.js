@@ -41,7 +41,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             editor = self.get("editor"),
             myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if ((bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+            if (bubble.get && (bubble.get("elCls") || "").indexOf("bubble") != -1 &&
                 bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {

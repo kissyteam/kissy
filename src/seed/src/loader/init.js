@@ -150,6 +150,7 @@
 
     S.config(S.mix({
         comboMaxUrlLength:1024,
+        charset:'utf-8',
         tag:'@TIMESTAMP@'
     }, getBaseInfo()));
 

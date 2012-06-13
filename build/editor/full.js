@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 13 14:40
 */
 /**
  * Set up editor constructor
@@ -2980,12 +2980,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             doc = self.document,
             removeEndNode;
 
-        if (self.collapsed) {
-            return docFrag;
-        }
-
         if (action > 0) {
             docFrag = doc.createDocumentFragment();
+        }
+
+        if (self.collapsed) {
+            return docFrag;
         }
 
         // 将 bookmark 包含在选区内
@@ -4492,6 +4492,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Place the extracted contents into the duplicated element.
                 clone[0].appendChild(documentFragment);
+
                 clone.insertAfter(toSplit);
                 self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
                 return clone;
@@ -9399,7 +9400,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             editor = self.get("editor"),
             myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if ((bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+            if (bubble.get && (bubble.get("elCls") || "").indexOf("bubble") != -1 &&
                 bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {
@@ -9923,8 +9924,8 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
 
         focusFix.init(menu);
 
-        editor.docReady(function () {
-            var doc = editor.get("document");
+        self.docReady(function () {
+            var doc = self.get("document");
             // 编辑器获得焦点，不会触发 menu el blur？
             doc.on("mousedown", function (e) {
                 if (e.which == 1) {
@@ -9966,7 +9967,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
             });
         });
 
-        editor.addControl(id + "/contextmenu", menu);
+        self.addControl(id + "/contextmenu", menu);
 
         return menu;
     };

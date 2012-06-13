@@ -48,7 +48,6 @@
     function getPackageInfo(self, mod) {
 
         var modName = mod.name,
-            Config = self.Config,
             Env = self.Env,
             packages = Env.packages || {},
             pName = "",
@@ -63,18 +62,9 @@
             }
         }
 
-        packageDesc = packages[pName] || {
-            // 无包，kissy 自身模块
-            "__kissy":1
-        };
-
-        S.mix(packageDesc, {
-            name:pName,
-            tag:encodeURIComponent(Config.tag),
-            base:Config.base,
-            debug:Config.debug,
-            charset:"utf-8"
-        }, false);
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
 
         mod.packageInfo = packageDesc;
 
@@ -412,7 +402,7 @@
             m = match[1];
         }
         var min = "-min";
-        if (packageInfo.debug) {
+        if (packageInfo.isDebug()) {
             min = "";
         }
         return m + min + suffix;

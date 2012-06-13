@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 11:06
+build time: Jun 13 13:47
 */
 /**
  * Setup component namespace.
@@ -1574,7 +1574,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            if (v) {
+            if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
         },

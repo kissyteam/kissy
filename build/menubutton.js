@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 13 14:30
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -55,9 +55,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         // 保证显示前已经 bind 好 menu 事件
         self.bindMenu();
         if (menu && !menu.get("visible")) {
+            var menuCfg = self.get("menuCfg");
+            // 根据 el 自动调整大小
+            if (menuCfg.width == null) {
+                menu.set("width", el.width());
+            }
             menu.set("align", S.merge({
                 node:el
-            }, ALIGN, self.get("menuCfg").align));
+            }, ALIGN, menuCfg.align));
             menu.show();
             el.attr("aria-haspopup", menu.get("el").attr("id"));
         }
@@ -306,8 +311,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
 
                 /**
-                 * Menu configuration.See {@link Menu}.
-                 * Can also set "align" to specify button's alignment with menu.
+                 * Extra Menu configuration.See {@link Menu}.
+                 * Can set "align" to specify button's alignment with menu.
+                 * Can set "width" to specify button's menu width.
+                 * If not set "width" , menu's width will be same with menubutton.
                  * @type Object
                  */
                 menuCfg:{
@@ -475,7 +482,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
     function getMenuChildren(self) {
         // 需要初始化 menu
-        var m = self.getMenu(1).render();
+        var m = self.getMenu(1).render().hide();
         return m && m.get("children") || [];
     }
 
@@ -654,13 +661,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 cfg.elBefore = element;
 
                 var name,
-                    width = cfg.width,
                     allItems = [],
                     selectedItem = null,
                     curValue = element.val(),
                     options = element.all("option");
-
-                cfg.width = width;
 
                 options.each(function (option) {
                     var item = {
@@ -680,7 +684,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 S.mix(cfg, {
                     menu:S.mix({
-                        width:width,
                         xclass:'popupmenu',
                         children:allItems
                     }, cfg.menuCfg)

@@ -119,12 +119,12 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             doc = self.document,
             removeEndNode;
 
-        if (self.collapsed) {
-            return docFrag;
-        }
-
         if (action > 0) {
             docFrag = doc.createDocumentFragment();
+        }
+
+        if (self.collapsed) {
+            return docFrag;
         }
 
         // 将 bookmark 包含在选区内
@@ -1631,6 +1631,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
                 // Place the extracted contents into the duplicated element.
                 clone[0].appendChild(documentFragment);
+
                 clone.insertAfter(toSplit);
                 self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
                 return clone;

@@ -11,7 +11,7 @@
 
 
 <div id="container" style="width: 90%;margin: 20px auto;">
-    <button onclick="window.editor.destroy();">destroy</button>
+    <button onclick="window.editorNew.destroy();">destroy</button>
 </div>
 <script src="../../../../build/kissy.js"></script>
 <script src="../../../../build/htmlparser.js"></script>
@@ -225,7 +225,7 @@ KISSY.use('editor/full', function (S, Editor) {
         height:"400px"
     };
 
-    window.editor = new Editor(cfg)
+    window.editorNew = new Editor(cfg)
             .use(
             "sourceArea" +
                     ",separator" +

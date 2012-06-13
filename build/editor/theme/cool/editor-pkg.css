@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 13 14:40
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -747,25 +747,20 @@ menu style for kissy editor ,include contextmenu and select menu
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
 }
 
-.ks-editor-menuitem-hover, .ks-editor-option-selected {
-    background: #D6E9F8;
-    text-decoration: none;
-    color: black;
-}
-
-.ks-editor-popupmenu ks-editor-menuitem-disable {
-    color: gray;
-}
-
-.ks-editor-popupmenu .ks-editor-menuitem-disable.ks-editor-menuitem-hover {
-    background: #fcfcfc;
-}
-
-.ks-editor-menu .ks-editor-menuitem {
+.ks-editor-menuitem {
     margin: 0;
     border-width: 0;
     padding: 4px 12px 4px 20px;
     white-space: nowrap;
+    /*ie6 can hover*/
+    position: relative;
+    zoom:1;
+}
+
+.ks-editor-menuitem-hover, .ks-editor-option-selected {
+    background: #D6E9F8;
+    text-decoration: none;
+    color: black;
 }.ks-editor-dialog, .ks-editor-overlay {
     position: absolute;
     /*防止移位带来的闪烁*/
@@ -934,7 +929,8 @@ select style for kissy editor
     margin-right: 0;
 }
 
-.ks-ie7 .ks-menu-button-dropdown {
+.ks-ie7 .ks-menu-button-dropdown,
+.ks-ie6 .ks-menu-button-dropdown {
     margin-top: -10px;
 }
 
@@ -976,7 +972,8 @@ select style for kissy editor
     border-left: 1px solid #C1C8D1;
 }
 
-.ks-ie7 .ks-editor-big-select .ks-menu-button-dropdown {
+.ks-ie7 .ks-editor-big-select .ks-menu-button-dropdown,
+.ks-ie6 .ks-editor-big-select .ks-menu-button-dropdown{
     margin-top: -23px;
 }
 
@@ -989,7 +986,8 @@ select style for kissy editor
     padding-left: 5px;
 }
 
-.ks-ie7 .ks-editor-big-select .ks-menu-button-caption {
+.ks-ie7 .ks-editor-big-select .ks-menu-button-caption,
+.ks-ie6 .ks-editor-big-select .ks-menu-button-caption{
     padding-left: 5px;
     padding-top: 5px;
 }.ks-editor-smiley-sprite {

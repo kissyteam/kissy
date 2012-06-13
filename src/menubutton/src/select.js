@@ -6,7 +6,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
     function getMenuChildren(self) {
         // 需要初始化 menu
-        var m = self.getMenu(1).render();
+        var m = self.getMenu(1).render().hide();
         return m && m.get("children") || [];
     }
 
@@ -185,13 +185,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 cfg.elBefore = element;
 
                 var name,
-                    width = cfg.width,
                     allItems = [],
                     selectedItem = null,
                     curValue = element.val(),
                     options = element.all("option");
-
-                cfg.width = width;
 
                 options.each(function (option) {
                     var item = {
@@ -211,7 +208,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 S.mix(cfg, {
                     menu:S.mix({
-                        width:width,
                         xclass:'popupmenu',
                         children:allItems
                     }, cfg.menuCfg)
