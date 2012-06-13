@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 12:52
+build time: Jun 13 20:19
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 13 12:52
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120613125206';
+        S.__BUILD_TIME = '20120613201940';
     })();
 
     return S;
@@ -4095,7 +4095,7 @@ build time: Jun 13 12:52
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120613125206'
+        tag:'20120613201940'
     }, getBaseInfo()));
 
     /**
@@ -13968,7 +13968,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:25
+build time: Jun 13 20:19
 */
 /**
  * @fileOverview attribute management
@@ -14096,21 +14096,52 @@ KISSY.add('base/attribute', function (S, undefined) {
         return s;
     }
 
-    function setInternal(self, name, value, opts, attrs) {
-        var ret;
-        opts = opts || {};
-        var dot = ".",
-            path,
-            subVal,
-            prevVal,
-            fullName = name;
+    function getPathNameValue(self, name) {
+        var declared = self.hasAttr(name), path, value;
 
-        if (name.indexOf(dot) !== -1) {
-            path = name.split(dot);
+        if (
+        // 声明过，那么 xx.yy 当做普通属性
+            !declared &&
+                name.indexOf(".") !== -1) {
+            path = name.split(".");
             name = path.shift();
         }
 
-        prevVal = self.get(name);
+        value = self.get(name);
+
+        return {
+            path:path,
+            name:name,
+            value:value
+        };
+    }
+
+    function getValueBySubValue(prevVal, path, value) {
+        var tmp = value;
+        if (path) {
+            if (prevVal === undefined) {
+                tmp = {};
+            } else {
+                tmp = S.clone(prevVal);
+            }
+            setValueByPath(tmp, path, value);
+        }
+        return tmp;
+    }
+
+    function setInternal(self, name, value, opts, attrs) {
+        opts = opts || {};
+
+        var ret,
+            path,
+            subVal,
+            prevVal,
+            pathNameValue = getPathNameValue(self, name),
+            fullName = name;
+
+        name = pathNameValue.name;
+        path = pathNameValue.path;
+        prevVal = pathNameValue.value;
 
         if (path) {
             subVal = getValueByPath(prevVal, path);
@@ -14123,11 +14154,7 @@ KISSY.add('base/attribute', function (S, undefined) {
             return undefined;
         }
 
-        if (path) {
-            var tmp = S.clone(prevVal);
-            setValueByPath(tmp, path, value);
-            value = tmp;
-        }
+        value = getValueBySubValue(prevVal, path, value);
 
         // check before event
         if (!opts['silent']) {
@@ -14306,7 +14333,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                         }
                     }
                     if (errors.length) {
-                        if (opts.error) {
+                        if (opts && opts.error) {
                             opts.error(errors);
                         }
                         return false;
@@ -14388,11 +14415,12 @@ KISSY.add('base/attribute', function (S, undefined) {
                 var self = this,
                     dot = ".",
                     path,
+                    declared = self.hasAttr(name),
                     attrVals = getAttrVals(self),
                     attrConfig,
                     getter, ret;
 
-                if (name.indexOf(dot) !== -1) {
+                if (!declared && name.indexOf(dot) !== -1) {
                     path = name.split(dot);
                     name = path.shift();
                 }
@@ -14477,12 +14505,22 @@ KISSY.add('base/attribute', function (S, undefined) {
         });
 
     function validate(self, name, value, all) {
+        var path, prevVal, pathNameValue;
+
+        pathNameValue = getPathNameValue(self, name);
+
+        name = pathNameValue.name;
+        path = pathNameValue.path;
+        prevVal = pathNameValue.value;
+
+        value = getValueBySubValue(prevVal, path, value);
+
         var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
             e,
             validator = attrConfig['validator'];
         if (validator && (validator = normalFn(self, validator))) {
             e = validator.call(self, value, name, all);
-            // undefinedined and true validate successfully
+            // undefined and true validate successfully
             if (e !== undefined && e !== true) {
                 return e;
             }

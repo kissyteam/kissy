@@ -1,5 +1,5 @@
 /**
- *  complext tc for base and attribute
+ *  complex tc for base and attribute
  *  @author yiminghe@gmail.com
  */
 KISSY.use("base", function (S, Base) {
@@ -76,7 +76,7 @@ KISSY.use("base", function (S, Base) {
 
             Aa.ATTRS = {
                 tt:{
-                    validator:function (v, name,all) {
+                    validator:function (v, name, all) {
                         if (all && (v > all["t"])) {
                             return "tt>t!";
                         }
@@ -148,7 +148,7 @@ KISSY.use("base", function (S, Base) {
                     // do not  use this in real world code
                     // forbid changing value in getter
                     getter:function (v) {
-                        v.x.y++;
+                        this.__getter=1;
                         return v;
                     },
                     setter:function (v) {
@@ -161,31 +161,146 @@ KISSY.use("base", function (S, Base) {
             S.extend(a, Base);
 
             var t = new a({
-
                 tt:{
                     x:{
                         y:1
                     }
                 }
             });
-            var ret = [], getterVal, setterVal;
+
+            var ret = [];
+
             t.on("beforeTtChange", function (e) {
                 ret.push(e.prevVal.x.y);
                 ret.push(e.newVal.x.y);
             });
+
             t.on("afterTtChange", function (e) {
                 ret.push(e.prevVal.x.y);
                 ret.push(e.newVal.x.y);
             });
 
             // only can when tt is  a object (not custom object newed from custom clz)
-            expect(t.get("tt.x.y")).toBe(3);
+            expect(t.get("tt.x.y")).toBe(2);
+
+            expect(t.__getter).toBe(1);
 
             t.set("tt.x.y", 3);
+            t.__getter=0;
+            expect(t.get("tt.x.y")).toBe(4);
+            expect(t.__getter).toBe(1);
 
-            expect(t.get("tt.x.y")).toBe(5);
+            expect(ret).toEqual([2,3,2,4]);
+        });
 
-            expect(ret).toEqual([4, 3, 4, 4]);
+        it("set sub attr even if not exist attr", function () {
+            function A() {
+                A.superclass.constructor.apply(this, S.makeArray(arguments));
+            }
+
+            S.extend(A, Base);
+
+            var a = new A();
+
+            a.set("x.y", 1);
+
+            expect(a.get("x")).toEqual({y:1});
+
+            expect(a.get("x.y")).toBe(1);
+
+        });
+
+        it("set sub attr differently if declared previously", function () {
+            function A() {
+                A.superclass.constructor.apply(this, S.makeArray(arguments));
+            }
+
+            A.ATTRS = {
+                "x.y":{}
+            };
+
+            S.extend(A, Base);
+
+            var a = new A();
+
+            a.set("x.y", 1);
+
+            expect(a.get("x")).toBeUndefined();
+
+            expect(a.get("x.y")).toBe(1);
+        });
+
+        it("validator works for subAttrs", function () {
+            (function () {
+                function A() {
+                    A.superclass.constructor.apply(this, S.makeArray(arguments));
+                }
+
+                A.ATTRS = {
+                    "x.y":{
+                        validator:function (v) {
+                            return v > 1;
+                        }
+                    }
+                };
+
+                S.extend(A, Base);
+
+                var a = new A();
+
+                a.set("x.y", 2);
+
+                expect(a.get("x.y")).toBe(2);
+
+                a.set("x.y", -1);
+
+                expect(a.get("x.y")).toBe(2);
+
+
+                a = new A();
+
+                a.set({"x.y":2});
+
+                expect(a.get("x.y")).toBe(2);
+
+                a.set({"x.y":-1});
+
+                expect(a.get("x.y")).toBe(2);
+            })();
+
+            (function () {
+                function A() {
+                    A.superclass.constructor.apply(this, S.makeArray(arguments));
+                }
+
+                A.ATTRS = {
+                    "x":{
+                        validator:function (v) {
+                            return v.y > 10;
+                        }
+                    }
+                };
+
+                S.extend(A, Base);
+
+                var a = new A();
+
+                a.set("x.y", 20);
+
+                expect(a.get("x.y")).toBe(20);
+
+                a = new A();
+
+                a.set({
+                    "x.y":20
+                });
+
+                expect(a.get("x.y")).toBe(20);
+
+                a.set({"x.y":9});
+
+                expect(a.get("x.y")).toBe(20);
+            })();
         });
 
         it("should fire *Change once for set({})", function () {
