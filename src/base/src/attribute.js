@@ -431,6 +431,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                     value = setValue;
                 }
 
+
                 // finally set
                 getAttrVals(self)[name] = value;
             },
