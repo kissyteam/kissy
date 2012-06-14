@@ -2,9 +2,8 @@
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/clipboard/index", function (S) {
-    var Editor = S.Editor,
-        $ = S.all,
+KISSY.add("editor/core/clipboard", function (S, Editor) {
+    var $ = S.all,
         UA = S.UA,
         KERange = Editor.Range,
         KER = Editor.RANGE,
@@ -24,6 +23,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             // beforepaste not fire on webkit and firefox
             // paste fire too later in ie ,cause error
             // 奇怪哦
+            // http://help.dottoro.com/ljxqbxkf.php
             // refer : http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
             Event.on(editor.get("document")[0].body,
                 UA['webkit'] ? 'paste' : (UA.gecko ? 'paste' : 'beforepaste'),
@@ -253,51 +253,50 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
 
     var depressBeforeEvent;
 
-    /**
-     * 给所有右键都加入复制粘贴
-     */
-    Editor.on("contextmenu", function (ev) {
-        var contextmenu = ev.contextmenu;
-
-        if (contextmenu.__copy_fix) {
-            return;
-        }
-
-        contextmenu.__copy_fix = 1;
-
-        var editor = contextmenu.get("editor"),
-            pastes = {"copy":1, "cut":1, "paste":1};
-
-        for (var i in pastes) {
-            if (pastes.hasOwnProperty(i)) {
-                contextmenu.addChild({
-                    xclass:'menuitem',
-                    content:lang[i],
-                    value:i
-                });
-            }
-        }
-
-        contextmenu.on('click', function (e) {
-            var value = e.target.get("value");
-            if (pastes[value]) {
-                this.hide();
-                // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                // 原编辑器获得焦点后再进行下步操作
-                setTimeout(function () {
-                    editor.execCommand(value);
-                }, 30);
-            }
-        });
-    });
-
     return {
         init:function (editor) {
             editor.docReady(function () {
                 new Paste(editor);
             });
+
+            var pastes = {"copy":1, "cut":1, "paste":1};
+
+            /**
+             * 给所有右键都加入复制粘贴
+             */
+            editor.on("contextmenu", function (ev) {
+                var contextmenu = ev.contextmenu;
+
+                if (contextmenu.__copy_fix) {
+                    return;
+                }
+
+                contextmenu.__copy_fix = 1;
+
+                for (var i in pastes) {
+                    if (pastes.hasOwnProperty(i)) {
+                        contextmenu.addChild({
+                            xclass:'menuitem',
+                            content:lang[i],
+                            value:i
+                        });
+                    }
+                }
+
+                contextmenu.on('click', function (e) {
+                    var value = e.target.get("value");
+                    if (pastes[value]) {
+                        this.hide();
+                        // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                        // 原编辑器获得焦点后再进行下步操作
+                        setTimeout(function () {
+                            editor.execCommand(value);
+                        }, 30);
+                    }
+                });
+            });
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });

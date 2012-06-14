@@ -60,10 +60,10 @@ core
 <!--
 core plugins
 -->
-<script src="../src/editor/core/clipboard/index.js"></script>
-<script src="../src/editor/core/enterKey/index.js"></script>
-<script src="../src/editor/core/htmlDataProcessor/index.js"></script>
-<script src="../src/editor/core/selection/index.js"></script>
+<script src="../src/editor/core/clipboard.js"></script>
+<script src="../src/editor/core/enterKey.js"></script>
+<script src="../src/editor/core/htmlDataProcessor.js"></script>
+<script src="../src/editor/core/selectionFix.js"></script>
 <!--
 other plugins
 -->
@@ -276,7 +276,7 @@ KISSY.use('editor', function (S, Editor) {
         height:"400px"
     };
 
-    var plugins = "sourceArea" +
+    var plugins = ("sourceArea" +
             ",separator" +
             ",bold" +
             ",italic," +
@@ -312,20 +312,28 @@ KISSY.use('editor', function (S, Editor) {
             ",xiamiMusic" +
             ",multipleUpload" +
             ",video" +
-            ",dragUpload";
+            ",dragUpload").split(",");
 
-    window.editorNew = new Editor(cfg)
-            .use(plugins, function () {
-                this.on("blur", function () {
-                    S.log("editor blur");
-                });
-                this.on("focus", function () {
-                    S.log("editor focus");
-                });
-                this.on("selectionChange", function (e) {
-                    S.log("selectionChange : " + e.path.toString());
-                });
-            });
+    S.each(plugins, function (p, i) {
+        plugins[i] = "editor/plugin/" + p+"/";
+    });
+
+
+    KISSY.use(plugins, function (S) {
+        var args = S.makeArray(arguments);
+        args.shift();
+        cfg.plugins = args;
+        var editor = new Editor(cfg);
+        editor.on("blur", function () {
+            S.log("editor blur");
+        });
+        editor.on("focus", function () {
+            S.log("editor focus");
+        });
+        editor.on("selectionChange", function (e) {
+            S.log("selectionChange : " + e.path.toString());
+        });
+    });
 
 });
 </script>

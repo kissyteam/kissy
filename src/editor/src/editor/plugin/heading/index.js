@@ -3,9 +3,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
-    return {
-        init:function (editor) {
 
+    function HeadingPlugin() {
+
+    }
+
+    S.augment(HeadingPlugin, {
+        renderUI:function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],
@@ -84,7 +88,9 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 }
             });
         }
-    };
+    });
+
+    return HeadingPlugin;
 }, {
     requires:['editor', './cmd']
 });

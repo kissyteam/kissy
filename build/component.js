@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 13:47
+build time: Jun 15 00:05
 */
 /**
  * Setup component namespace.
@@ -36,6 +36,38 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
         ret.extend = extend;
         return ret;
     }
+
+    /**
+     * Create a component instance using json with xclass.
+     * @param {Object} component Component's json notation with xclass attribute.
+     * @param {String} component.xclass Component to be newed 's xclass.
+     * @param {Controller} self Component From which new component generated will inherit prefixCls
+     * if component 's prefixCls is undefined.
+     * @memberOf Component
+     * @example
+     * <code>
+     *  create({
+     *     xclass:'menu',
+     *     children:[{
+     *        xclass:'menuitem',
+     *        content:"1"
+     *     }]
+     *  })
+     * </code>
+     */
+    function create(component, self) {
+        var childConstructor, xclass;
+        if (component && (xclass = component.xclass)) {
+            if (self && !component.prefixCls) {
+                component.prefixCls = self.get("prefixCls");
+            }
+            childConstructor = Manager.getConstructorByXClass(xclass);
+            component = new childConstructor(component);
+        }
+        return component;
+    }
+
+    Component.create = create;
 
     /**
      * Shortcut for {@link Component.UIBase.create}.
@@ -147,7 +179,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         // 生成父组件的 dom 结构
         self.create();
         var contentEl = self.getContentElement();
-        c = create(c, self);
+        c = Component.create(c, self);
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
@@ -169,11 +201,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
      */
-    function getDefaultView() {
+    function constructView(self) {
         // 逐层找默认渲染器
-        var self = this,
-            attrs,
+        var attrs,
+            attrCfg,
+            attrName,
             cfg = {},
+            v,
             Render = self.get('xrender');
 
         if (Render) {
@@ -181,13 +215,27 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             attrs = self.getAttrs();
-            for (var attrName in attrs) {
+
+            // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+            for (attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName], v;
+                    attrCfg = attrs[attrName];
                     if (attrCfg.view) {
+
+                        // 先取后 getter
+                        // 防止死循环
                         if (( v = self.get(attrName) ) !== undefined) {
                             cfg[attrName] = v;
                         }
+
+                        // setter 不应该有实际操作，仅用于正规化比较好
+                        // attrCfg.setter = wrapperViewSetter(attrName);
+                        self.on("after" + S.ucfirst(attrName) + "Change",
+                            wrapperViewSetter(attrName));
+                        // 逻辑层读值直接从 view 层读
+                        // 那么如果存在默认值也设置在 view 层
+                        // 逻辑层不要设置 getter
+                        attrCfg.getter = wrapperViewGetter(attrName);
                     }
                 }
             }
@@ -244,33 +292,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              */
             initializer:function () {
-                // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
-                var self = this,
-                    listener,
-                    n,
-                    attrName,
-                    attrCfg,
-                    listeners = self.get("listeners"),
-                    attrs = self.getAttrs();
-                for (attrName in attrs) {
-                    if (attrs.hasOwnProperty(attrName)) {
-                        attrCfg = attrs[attrName];
-                        if (attrCfg.view) {
-                            // setter 不应该有实际操作，仅用于正规化比较好
-                            // attrCfg.setter = wrapperViewSetter(attrName);
-                            self.on("after" + S.ucfirst(attrName) + "Change",
-                                wrapperViewSetter(attrName));
-                            // 逻辑层读值直接从 view 层读
-                            // 那么如果存在默认值也设置在 view 层
-                            // 逻辑层不要设置 getter
-                            attrCfg.getter = wrapperViewGetter(attrName);
-                        }
-                    }
-                }
-                for (n in listeners) {
-                    listener = listeners[n];
-                    self.on(n, listener.fn || listener, listener.scope);
-                }
+                // initialize view
+                this.get("view");
             },
 
             /**
@@ -280,7 +303,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             createDom:function () {
                 var self = this,
-                    view = self.get("view") || getDefaultView.call(self);
+                    view = self.get("view");
                 setViewCssClassByHierarchy(self, view);
                 view.create();
                 var el = view.getKeyEventTarget();
@@ -335,7 +358,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         .on("dblclick", self.handleDblClick, self);
                 }
             },
-
 
             _uiSetFocused:function (v) {
                 if (v) {
@@ -655,8 +677,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 focusable:{
-                    view:true,
-                    value:true
+                    view:1
                 },
 
                 /**
@@ -673,7 +694,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 focused:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -681,7 +702,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 active:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -689,7 +710,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 highlighted:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -705,8 +726,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type String
                  */
                 prefixCls:{
-                    view:true,
-                    value:"ks-"
+                    value:'ks-', // box srcNode need
+                    view:1
                 },
 
                 /**
@@ -721,6 +742,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Component.Render
                  */
                 view:{
+                    valueFn:function () {
+                        return constructView(this);
+                    }
                 },
 
                 /**
@@ -728,31 +752,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 disabled:{
-                    view:true
-                },
-
-                /**
-                 * Config listener on created.
-                 * @example
-                 * <code>
-                 * {
-                 *  click:{
-                 *      scope:{x:1},
-                 *      fn:function(){
-                 *          alert(this.x);
-                 *      }
-                 *  }
-                 * }
-                 * or
-                 * {
-                 *  click:function(){
-                 *          alert(this.x);
-                 *        }
-                 * }
-                 * </code>
-                 */
-                listeners:{
-                    value:{}
+                    view:1
                 },
 
                 xrender:{
@@ -773,38 +773,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }, {
             xclass:'controller'
         });
-
-    /**
-     * Create a component instance using json with xclass.
-     * @param {Object} component Component's json notation with xclass attribute.
-     * @param {String} component.xclass Component to be newed 's xclass.
-     * @param {Controller} self Component From which new component generated will inherit prefixCls
-     * if component 's prefixCls is undefined.
-     * @memberOf Component
-     * @example
-     * <code>
-     *  create({
-     *     xclass:'menu',
-     *     children:[{
-     *        xclass:'menuitem',
-     *        content:"1"
-     *     }]
-     *  })
-     * </code>
-     */
-    function create(component, self) {
-        var childConstructor, xclass;
-        if (component && (xclass = component.xclass)) {
-            if (self && !component.prefixCls) {
-                component.prefixCls = self.get("prefixCls");
-            }
-            childConstructor = Manager.getConstructorByXClass(xclass);
-            component = new childConstructor(component);
-        }
-        return component;
-    }
-
-    Component.create = create;
 
     return Controller;
 }, {
@@ -853,7 +821,7 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
             // 不用 __set , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
-                child = element.one("." + self.getCssClassWithPrefix(ui));
+                child = element.one("." + ui);
             // 可以装饰?
             if (child) {
                 var UI = self.findUIConstructorByNode(child);
@@ -1146,15 +1114,6 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             },
 
             /**
-             * Return the dom element into which child component to be rendered.
-             * @return {NodeList}
-             */
-            getContentElement:function () {
-                var self = this;
-                return self.get("contentEl") || self.get("el");
-            },
-
-            /**
              * @protected
              */
             _uiSetHighlighted:function (v) {
@@ -1195,6 +1154,14 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                     el = self.get("el"),
                     componentCls = self.getComponentCssClassWithState("-focused");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            /**
+             * Return the dom element into which child component to be rendered.
+             * @return {NodeList}
+             */
+            getContentElement:function () {
+                return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
@@ -1205,11 +1172,15 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                 /**
                  * see {@link Component.Controller#prefixCls}
                  */
-                prefixCls:{},
+                prefixCls:{
+                    value:"ks-"
+                },
                 /**
                  * see {@link Component.Controller#focusable}
                  */
-                focusable:{},
+                focusable:{
+                    value:true
+                },
                 /**
                  * see {@link Component.Controller#focused}
                  */
@@ -1519,7 +1490,9 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
          *     }
          * </code>
          */
-        align:{}
+        align:{
+            value:{}
+        }
     };
 
     function getRegion(node) {
@@ -1678,7 +1651,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|NodeList} node Same as node config of {@link Component.UIBase.Align#align} .
+         * @param {undefined|String|HTMLElement|NodeList} node
+         * Same as node config of {@link Component.UIBase.Align#align} .
          */
         center:function (node) {
             var self = this;
@@ -1715,6 +1689,23 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         ucfirst = S.ucfirst,
         noop = S.noop;
 
+    function constructPlugins(plugins) {
+        S.each(plugins, function (plugin, i) {
+            if (S.isFunction(plugin)) {
+                plugins[i] = new plugin();
+            }
+        });
+    }
+
+
+    function actionPlugins(self, plugins, action) {
+        S.each(plugins, function (plugin) {
+            if (plugin[action]) {
+                plugin[action](self);
+            }
+        });
+    }
+
     /**
      * UIBase for class-based component.
      * @class
@@ -1729,6 +1720,22 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
+
+        var listener,
+            n,
+            plugins = self.get("plugins"),
+            listeners = self.get("listeners");
+
+        constructPlugins(plugins);
+
+        actionPlugins(self, plugins, "initializer");
+
+        for (n in listeners) {
+            listener = listeners[n];
+            self.on(n, listener.fn || listener, listener.scope);
+        }
+
+
         // 是否自动渲染
         config && config.autoRender && self.render();
 
@@ -1957,6 +1964,38 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
          */
         created:{
             value:false
+        },
+
+        /**
+         * Config listener on created.
+         * @example
+         * <code>
+         * {
+         *  click:{
+         *      scope:{x:1},
+         *      fn:function(){
+         *          alert(this.x);
+         *      }
+         *  }
+         * }
+         * or
+         * {
+         *  click:function(){
+         *          alert(this.x);
+         *        }
+         * }
+         * </code>
+         */
+        listeners:{
+            value:{}
+        },
+
+        /**
+         * Plugins
+         * @type Function[]|Object[]
+         */
+        plugins:{
+            value:[]
         }
     };
 
@@ -1977,6 +2016,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                     callMethodByHierarchy(self, "createDom", "__createDom");
                     self.__set("created", true);
                     self.fire('afterCreateDom');
+                    actionPlugins(self, self.get("plugins"), "createDom");
                 }
                 return self;
             },
@@ -1988,18 +2028,22 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
+                    var plugins = self.get("plugins");
                     self.create(undefined);
                     self.fire('beforeRenderUI');
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
                     self.fire('afterRenderUI');
+                    actionPlugins(self, plugins, "renderUI");
                     self.fire('beforeBindUI');
                     bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
                     self.fire('afterBindUI');
+                    actionPlugins(self, plugins, "bindUI");
                     self.fire('beforeSyncUI');
                     syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
                     self.fire('afterSyncUI');
+                    actionPlugins(self, plugins, "syncUI");
                     self.__set("rendered", true);
                 }
                 return self;
@@ -2176,11 +2220,12 @@ KISSY.add('component/uibase/box', function (S) {
      */
     {
         /**
-         * component's html content
+         * component's html content.
+         * Note: content and srcNode can not be set both!
          * @type String|NodeList
          */
         content:{
-            view:true,
+            view:1,
             sync:false
         },
         /**
@@ -2189,49 +2234,55 @@ KISSY.add('component/uibase/box', function (S) {
          */
         width:{
             // 没有 _uiSetWidth，所以不需要设置 sync:false
-            view:true
+            view:1,
+            sync:false
         },
         /**
          * component's height
          * @type Number|String
          */
         height:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * css class of component's root element
          * @type String
          */
         elCls:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * name-value pair css style of component's root element
          * @type Object
          */
         elStyle:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * name-value pair attribute of component's root element
          * @type Object
          */
         elAttrs:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * archor element where component insert before
          * @type NodeList
          */
         elBefore:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * readonly. root element of current component
          * @type NodeList
          */
         el:{
-            view:true
+            view:1
         },
 
         /**
@@ -2239,7 +2290,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         render:{
-            view:true
+            view:1
         },
 
         /**
@@ -2247,8 +2298,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String
          */
         visibleMode:{
-            value:"display",
-            view:true
+            view:1
         },
 
         /**
@@ -2256,7 +2306,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Boolean
          */
         visible:{
-            view:true
+            view:1
         },
 
         /**
@@ -2264,7 +2314,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         srcNode:{
-            view:true
+            view:1
         }
     };
 
@@ -2356,24 +2406,30 @@ KISSY.add('component/uibase/boxrender', function (S) {
                 return $(v);
             }
         },
+
         // 构建时批量生成，不需要执行单个
         elCls:{
             sync:false
         },
+
         elStyle:{
             sync:false
         },
+
         width:{
             sync:false
         },
+
         height:{
             sync:false
         },
+
         elTagName:{
             sync:false,
             // 生成标签名字
             value:"div"
         },
+
         elAttrs:{
             sync:false
         },
@@ -2381,13 +2437,33 @@ KISSY.add('component/uibase/boxrender', function (S) {
         content:{
             sync:false
         },
+
         elBefore:{},
+
         render:{},
+
         visible:{},
-        visibleMode:{}
+
+        visibleMode:{
+            value:"display"
+        },
+        // content 设置的内容节点,默认根节点
+        contentEl:{
+            valueFn:function () {
+                return this.get("el");
+            }
+        }
     };
 
-    BoxRender.construct = constructEl;
+    BoxRender.HTML_PARSER = {
+        content:function (el) {
+            // 从 contentElCls 的标志中读取
+            var contentElCls = this.get("contentElCls");
+            return (contentElCls ? el.one("." + contentElCls) : el).html();
+        }
+    };
+
+    BoxRender.constructEl = constructEl;
 
     function wrapWH(v) {
         return typeof v == "number" ? (v + "px") : v;
@@ -2435,16 +2511,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
         return node;
     }
 
-    BoxRender.HTML_PARSER =
-    /**
-     * @ignore
-     */
-    {
-        content:function (el) {
-            return el.html();
-        }
-    };
-
     BoxRender.prototype =
     /**
      * @lends Component.UIBase.Box.Render#
@@ -2459,11 +2525,11 @@ KISSY.add('component/uibase/boxrender', function (S) {
                     el = self.get("el"),
                     elBefore = self.get("elBefore");
                 if (elBefore) {
-                    el.insertBefore(elBefore);
+                    el.insertBefore(elBefore, undefined);
                 } else if (render) {
-                    el.appendTo(render);
+                    el.appendTo(render, undefined);
                 } else {
-                    el.appendTo(doc.body);
+                    el.appendTo(doc.body, undefined);
                 }
             }
         },
@@ -2473,15 +2539,22 @@ KISSY.add('component/uibase/boxrender', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom:function () {
-            var self = this,
-                elCls = self.get("elCls"),
-                elStyle = self.get("elStyle"),
-                width = self.get("width"),
-                height = self.get("height"),
-                content = self.get("content"),
-                elAttrs = self.get("elAttrs"),
-                el = self.get("el");
-            if (!el) {
+            var self = this;
+            if (!self.get("srcNode")) {
+                var elCls = self.get("elCls"),
+                    elStyle = self.get("elStyle"),
+                    width = self.get("width"),
+                    height = self.get("height"),
+                    content = self.get("content"),
+                    elAttrs = self.get("elAttrs"),
+                    el,
+                    contentEl = self.get("contentEl");
+
+                // 内容容器，content 需要设置到的容器
+                if (contentEl) {
+                    contentEl.html(content);
+                    content = "";
+                }
                 el = constructEl(elCls,
                     elStyle,
                     width,
@@ -2489,31 +2562,36 @@ KISSY.add('component/uibase/boxrender', function (S) {
                     self.get("elTagName"),
                     elAttrs,
                     content);
+                if (contentEl) {
+                    el.append(contentEl);
+                }
                 self.__set("el", el);
+                if (!contentEl) {
+                    // 没取到,这里设下值, uiSet 时可以 set("content")  取到
+                    self.__set("contentEl", el);
+                }
             }
-            // 通过 srcNode 过来的
-            else {
-                if (elCls) {
-                    el.addClass(elCls);
-                }
-                if (elStyle) {
-                    el.css(elStyle);
-                }
-                if (width !== undefined) {
-                    el.width(width);
-                }
-                if (height !== undefined) {
-                    el.height(height);
-                }
+        },
 
-                // 防止冲掉 el 原来的子元素引用 !!
-                if (content !== el.html()) {
-                    _uiSetContent.call(self, content);
-                }
-
-                if (elAttrs) {
-                    el.attr(elAttrs);
-                }
+        __syncUI:function () {
+            var self = this;
+            // 通过 srcNode 过来的，最后调整，防止 plugin render 又改过!
+            if (self.get("srcNode")) {
+                var el = self.get("el"),
+                    content = self.get("content"),
+                    attrs = [
+                        "elCls",
+                        "elStyle",
+                        "width",
+                        "height",
+                        "elAttrs"
+                    ];
+                S.each(attrs, function (attr) {
+                    var v;
+                    if (v = self.get(attr)) {
+                        self["_uiSet" + S.ucfirst(attr)](v);
+                    }
+                });
             }
         },
 
@@ -2538,7 +2616,15 @@ KISSY.add('component/uibase/boxrender', function (S) {
             self.get("el").height(h);
         },
 
-        _uiSetContent:_uiSetContent,
+        _uiSetContent:function (c) {
+            var self = this,
+                el = self.get("contentEl");
+            if (typeof c == "string") {
+                el.html(c);
+            } else if (c) {
+                el.empty().append(c);
+            }
+        },
 
         _uiSetVisible:function (isVisible) {
             var el = this.get("el"),
@@ -2557,16 +2643,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             }
         }
     };
-
-    function _uiSetContent(c) {
-        var el = this.get("el");
-        if (typeof c == "string") {
-            el.html(c);
-        } else if (c) {
-            el.empty()
-                .append(c);
-        }
-    }
 
     return BoxRender;
 }, {
@@ -2599,15 +2675,14 @@ KISSY.add("component/uibase/close", function () {
          * @type Boolean
          */
         closable:{
-            value:true,
-            view:true
+            view:1
         },
 
         /**
          * Close button.
          */
         closeBtn:{
-            view:true
+            view:1
         },
 
         /**
@@ -2668,6 +2743,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     Close.ATTRS = {
         closable:{
+            value:true
         },
         closeBtn:{
         }
@@ -2842,7 +2918,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type NodeList
          */
         contentEl:{
-            view:true
+            view:1
         },
 
         /**
@@ -2850,7 +2926,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type Object
          */
         contentElAttrs:{
-            view:true
+            view:1
         },
 
         /**
@@ -2858,7 +2934,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type Object
          */
         contentElStyle:{
-            view:true
+            view:1
         },
 
         /**
@@ -2867,7 +2943,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type String
          */
         contentTagName:{
-            view:true
+            view:1
         }
     };
 
@@ -2882,9 +2958,10 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     }
 
     ContentBoxRender.ATTRS = {
-        contentEl:{},
+        contentEl:{
+            // 不写 valueFn,留待 createDom 处理
+        },
         contentElAttrs:{},
-        contentElCls:{},
         contentElStyle:{},
         contentTagName:{
             value:"div"
@@ -2894,13 +2971,9 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     /*
      ! contentEl 只能由组件动态生成
      */
-    var constructEl = BoxRender.construct;
+    var constructEl = BoxRender.constructEl;
 
     ContentBoxRender.prototype = {
-
-        // no need ,shift create work to __createDom
-        __renderUI:function () {
-        },
 
         __createDom:function () {
             var self = this,
@@ -2933,15 +3006,6 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
         _uiSetContentElStyle:function (v) {
             this.get("contentEl").css(v);
-        },
-
-        _uiSetContent:function (c) {
-            var contentEl = this.get("contentEl");
-            if (typeof c == "string") {
-                contentEl.html(c);
-            } else if (c) {
-                contentEl.empty().append(c);
-            }
         }
     };
 
@@ -3162,7 +3226,7 @@ KISSY.add("component/uibase/mask", function () {
          * @type {NodeList}
          */
         maskNode:{
-            view:true
+            view:1
         },
         /**
          * Whether to share mask with other overlays.
@@ -3170,8 +3234,7 @@ KISSY.add("component/uibase/mask", function () {
          * @type {Boolean}
          */
         maskShared:{
-            value:true,
-            view:true
+            view:1
         }
     };
 
@@ -3256,6 +3319,12 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     }
 
     function Mask() {
+    }
+
+    Mask.ATTRS = {
+        maskShared:{
+            value:true
+        }
     }
 
     Mask.prototype = {
@@ -3357,14 +3426,14 @@ KISSY.add("component/uibase/position", function (S) {
          * @type Number
          */
         x:{
-            view:true
+            view:1
         },
         /**
          * Vertical axis
          * @type Number
          */
         y:{
-            view:true
+            view:1
         },
         /**
          * Horizontal and vertical axis.
@@ -3397,7 +3466,7 @@ KISSY.add("component/uibase/position", function (S) {
          * @type Number
          */
         zIndex:{
-            view:true
+            view:1
         }
     };
 
@@ -3598,63 +3667,63 @@ KISSY.add("component/uibase/stdmod", function () {
          * @type Node
          */
         header:{
-            view:true
+            view:1
         },
         /**
          * Body element of dialog. Readonly
          * @type Node
          */
         body:{
-            view:true
+            view:1
         },
         /**
          * Footer element of dialog. Readonly
          * @type Node
          */
         footer:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of body element's style.
          * @type Object
          */
         bodyStyle:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of footer element's style.
          * @type Object
          */
         footerStyle:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of header element's style.
          * @type Object
          */
         headerStyle:{
-            view:true
+            view:1
         },
         /**
          * Html content of header element.
          * @type NodeList|String
          */
         headerContent:{
-            view:true
+            view:1
         },
         /**
          * Html content of body element.
          * @type NodeList|String
          */
         bodyContent:{
-            view:true
+            view:1
         },
         /**
          * Html content of footer element.
          * @type NodeList|String
          */
         footerContent:{
-            view:true
+            view:1
         }
     };
 

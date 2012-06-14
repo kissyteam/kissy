@@ -6,8 +6,11 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
-    return {
-        init:function (editor) {
+    function video() {
+    }
+
+    S.augment(video, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
@@ -104,15 +107,17 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 tooltip:"插入视频",
                 listeners:{
                     click:function () {
-                            flashControl.show();
+                        flashControl.show();
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
 
+
+    return video;
 
 }, {
     requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']

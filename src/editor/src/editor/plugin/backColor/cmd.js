@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
 
-    var BACKCOLOR_STYLE = {
+    var BACK_COLOR_STYLE = {
         element:'span',
         styles:{ 'background-color':'#(color)' },
         overrides:[
@@ -23,7 +23,7 @@ KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
                 editor.addCommand("backColor", {
                     exec:function (editor, c) {
                         editor.execCommand("save");
-                        cmd.applyColor(editor, c, BACKCOLOR_STYLE);
+                        cmd.applyColor(editor, c, BACK_COLOR_STYLE);
                         editor.execCommand("save");
                     }
                 });

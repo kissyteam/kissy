@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("restoreWindow");
+                editor.fire("afterRestoreWindow");
             }, 30);
         },
 
@@ -266,7 +266,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             if (!self._resize) {
                 self._resize = S.buffer(function () {
                     self._maximize();
-                    editor.fire("maximizeWindow");
+                    editor.fire("afterMaximizeWindow");
                 }, 100);
             }
 
@@ -275,7 +275,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("maximizeWindow");
+                editor.fire("afterMaximizeWindow");
             }, 30);
         },
         maximizeWindow:function () {

@@ -104,7 +104,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     }
                     // ctrl+z，撤销
                     if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("restore", {direction:-1})) {
+                        if (false !== editor.fire("beforeRedo")) {
                             self.restore(-1);
                         }
                         ev.halt();
@@ -112,13 +112,13 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     }
                     // ctrl+y，重做
                     if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("restore", {direction:1})) {
+                        if (false !== editor.fire("beforeUndo")) {
                             self.restore(1);
                         }
                         ev.halt();
                         return;
                     }
-                    if (editor.fire("save", {buffer:1}) !== false) {
+                    if (editor.fire("beforeSave", {buffer:1}) !== false) {
                         self.save(1);
                     }
                 });
@@ -141,8 +141,15 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
          * 保存历史
          */
         save:function (buffer) {
+            var editor = this.editor;
+
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
+            if (editor.get("mode") != Editor.WYSIWYG_MODE) {
+                return;
+            }
+
+
+            if (!editor.get("document")) {
                 return;
             }
 
@@ -159,8 +166,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             if (history.length > index + 1)
                 history.splice(index + 1, history.length - index - 1);
 
-            var editor = self.editor,
-                last = history[history.length - 1],
+            var last = history[history.length - 1],
                 current = new Snapshot(editor);
 
             if (!last || !last.equals(current)) {
@@ -207,7 +213,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     selection.scrollIntoView();
                 }
                 self.index += d;
-                editor.fire("afterRestore", {
+                editor.fire(d > 0 ? "afterUndo" : "afterRedo", {
                     history:history,
                     index:self.index
                 });

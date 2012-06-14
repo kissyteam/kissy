@@ -121,7 +121,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 selectable:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -130,7 +130,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 checkable:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -143,7 +143,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 checked:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -151,18 +151,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 selected:{
-                    view:true
+                    view:1
                 },
 
                 xrender:{
                     value:MenuItemRender
-                }
-            },
-
-            HTML_PARSER:{
-                selectable:function (el) {
-                    var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                    return el.hasClass(cls);
                 }
             }
         }, {

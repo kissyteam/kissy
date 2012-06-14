@@ -381,7 +381,10 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             }
         };
 
-    return {
+    function TablePlugin() {
+    }
+
+    S.augment(TablePlugin, {
         init:function (editor) {
             /**
              * 动态加入显表格border css，便于编辑
@@ -490,25 +493,25 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 children:children,
                 listeners:{
                     click:function (e) {
-                            var content = e.target.get("content");
-                            if (handlers[content]) {
-                                handlers[content].apply(this);
-                            }
+                        var content = e.target.get("content");
+                        if (handlers[content]) {
+                            handlers[content].apply(this);
+                        }
 
                     },
                     beforeVisibleChange:function (e) {
-                            if (e.newVal) {
-                                var self = this, children = self.get("children");
-                                var editor = self.get("editor");
-                                S.each(children, function (c) {
-                                    var content = c.get("content");
-                                    if (!statusChecker[content] ||
-                                        statusChecker[content].call(self, editor)) {
-                                        c.set("disabled", false);
-                                    } else {
-                                        c.set("disabled", true);
-                                    }
-                                });
+                        if (e.newVal) {
+                            var self = this, children = self.get("children");
+                            var editor = self.get("editor");
+                            S.each(children, function (c) {
+                                var content = c.get("content");
+                                if (!statusChecker[content] ||
+                                    statusChecker[content].call(self, editor)) {
+                                    c.set("disabled", false);
+                                } else {
+                                    c.set("disabled", true);
+                                }
+                            });
 
                         }
                     }
@@ -519,10 +522,10 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function () {
-                            DialogLoader.useDialog(editor, "table", {
-                                selectedTable:0,
-                                selectedTd:0
-                            });
+                        DialogLoader.useDialog(editor, "table", {
+                            selectedTable:0,
+                            selectedTd:0
+                        });
 
                     }
                 },
@@ -530,7 +533,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             });
 
         }
-    }
+    });
+
+    return TablePlugin;
 }, {
     requires:['editor', '../dialogLoader/', '../contextmenu/']
 });

@@ -13,8 +13,7 @@ KISSY.add('button/toggle', function (S, Button, ToggleRender) {
     }, {
         ATTRS:{
             checked:{
-                value:false,
-                view:true
+                view:1
             },
             xrender:{
                 value:ToggleRender

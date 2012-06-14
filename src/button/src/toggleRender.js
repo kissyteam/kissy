@@ -12,7 +12,9 @@ KISSY.add("button/toggleRender", function (S, ButtonRender) {
         }
     }, {
         ATTRS:{
-            checked:{}
+            checked:{
+                value:false
+            }
         }
     });
 

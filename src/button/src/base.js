@@ -47,14 +47,14 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                  * @type String
                  */
                 describedby:{
-                    view:true
+                    view:1
                 },
                 /**
                  * Tooltip for button.
                  * @type String
                  */
                 tooltip:{
-                    view:true
+                    view:1
                 },
                 /**
                  * Add collapse-right/left css class to root element.
@@ -62,7 +62,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                  * @type String
                  */
                 collapseSide:{
-                    view:true
+                    view:1
                 },
 
                 xrender:{

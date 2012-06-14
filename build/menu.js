@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 13:57
+build time: Jun 14 23:41
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -195,7 +195,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                  * @type Menu.Item
                  */
                 activeItem:{
-                    view:true
+                    view:1
                 },
                 xrender:{
                     value:MenuRender
@@ -224,7 +224,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  */
 KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
-    var HIT_CLS = "menuitem-hit";
+    var HIT_CLS = "ks-menuitem-hit";
 
     // 转义正则特殊字符,返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -334,7 +334,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
                 var children = self.get("children"),
                     strExp = str && new RegExp(regExpEscape(str), "ig"),
                 // 匹配项样式类
-                    hit = this.getCssClassWithPrefix(HIT_CLS);
+                    hit = HIT_CLS;
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -366,7 +366,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
             decorateInternal:function (el) {
                 var self = this;
                 self.set("el", el);
-                var menuContent = el.one("." + self.getCssClassWithPrefix("menu-content"));
+                var menuContent = el.one("." + "ks-menu-content");
                 self.decorateChildren(menuContent);
             },
 
@@ -392,7 +392,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
         {
             ATTRS:{
                 label:{
-                    view:true
+                    view:1
                 },
 
                 filterStr:{
@@ -426,9 +426,9 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
  */
 KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     var $ = Node.all,
-        MENU_FILTER = "menu-filter",
-        MENU_FILTER_LABEL = "menu-filter-label",
-        MENU_CONTENT = "menu-content";
+        MENU_FILTER = "ks-menu-filter",
+        MENU_FILTER_LABEL = "ks-menu-filter-label",
+        MENU_CONTENT = "ks-menu-content";
 
     return MenuRender.extend({
         getContentElement:function () {
@@ -444,22 +444,22 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER) + "'/>")
-                        .appendTo(contentEl));
+                    filterWrap = $("<div class='" + MENU_FILTER + "'/>")
+                        .appendTo(contentEl, undefined));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER_LABEL) + "'/>")
-                        .appendTo(filterWrap));
+                    $("<div class='" + MENU_FILTER_LABEL + "'/>")
+                        .appendTo(filterWrap, undefined));
             }
             if (!self.get("filterInput")) {
                 self.set("filterInput", $("<input autocomplete='off'/>")
-                    .appendTo(filterWrap));
+                    .appendTo(filterWrap, undefined));
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + this.getCssClassWithPrefix(MENU_CONTENT) + "'/>")
-                        .appendTo(contentEl));
+                    $("<div class='" + MENU_CONTENT + "'/>")
+                        .appendTo(contentEl, undefined));
             }
         },
 
@@ -475,17 +475,16 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER))
-                    .one("." + this.getCssClassWithPrefix(MENU_FILTER_LABEL))
+                return el.one("." + MENU_FILTER).one("." + MENU_FILTER_LABEL)
             },
             filterWrap:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER));
+                return el.one("." + MENU_FILTER);
             },
             menuContent:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_CONTENT));
+                return el.one("." + MENU_CONTENT);
             },
             filterInput:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
+                return el.one("." + MENU_FILTER).one("input");
             }
         }
     });
@@ -686,7 +685,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 selectable:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -695,7 +694,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 checkable:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -708,7 +707,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 checked:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -716,18 +715,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * @type Boolean
                  */
                 selected:{
-                    view:true
+                    view:1
                 },
 
                 xrender:{
                     value:MenuItemRender
-                }
-            },
-
-            HTML_PARSER:{
-                selectable:function (el) {
-                    var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                    return el.hasClass(cls);
                 }
             }
         }, {
@@ -744,14 +736,13 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
  */
 KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
-    var CHECK_CLS = "menuitem-checkbox";
+    var CHECK_CLS = "ks-menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = self.getCssClassWithPrefix(CHECK_CLS),
-            checkEl = el.one("." + cls);
+            checkEl = el.one("." + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
+            checkEl = new Node("<div class='" + CHECK_CLS + "'/>").prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();
         }
@@ -804,6 +795,12 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
+        },
+        HTML_PARSER:{
+            selectable:function (el) {
+                var cls = this.getCssClassWithPrefix("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 }, {
@@ -1232,21 +1229,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 externalSubMenu:{
                     value:false
                 },
-                /**
-                 * Can set "align" to specify alignment submenu with current menuitem
-                 * @type Object
-                 * @example
-                 * <code>
-                 * {
-                 *   align:{
-                 *      points:['cc','cc']
-                 *   }
-                 * }
-                 * </code>
-                 */
-                menuCfg:{
-                    value:{}
-                },
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
@@ -1255,7 +1237,9 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     }
                 },
                 decorateChildCls:{
-                    value:"popupmenu"
+                    valueFn:function () {
+                        return this.get("prefixCls") + "popupmenu"
+                    }
                 },
                 xrender:{
                     value:SubMenuRender
@@ -1302,11 +1286,12 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (menu) {
             // 保证显示前已经绑定好事件
             self.bindSubMenu();
-            menu.set("align", S.mix({
-                node:self.get("el"),
-                points:['tr', 'tl']
-            }, self.get("menuCfg").align));
-            menu.render();
+
+            var align = S.clone(menu.get("align"));
+            align.node = self.get("el");
+            align.points = align.points || ['tr', 'tl'];
+            menu.set("align", align);
+            menu.show();
             /**
              * If activation of your menuitem produces a popup menu,
              then the menuitem should have aria-haspopup set to the ID of the corresponding menu
@@ -1315,7 +1300,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              */
             self.get("el").attr("aria-haspopup",
                 menu.get("el").attr("id"));
-            menu.show();
         }
     }
 
@@ -1363,18 +1347,27 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
  */
 KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
     var SubMenuRender,
+        CONTENT_TMPL = '<span class="ks-submenu-content"><' + '/span>',
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
-        renderUI:function () {
+        createDom:function () {
             var self = this,
                 el = self.get("el");
-            el.attr("aria-haspopup", "true").append(ARROW_TMPL);
-        },
-        _uiSetContent:function (v) {
-            var self = this;
-            SubMenuRender.superclass._uiSetContent.call(self, v);
-            self.get("el").append(ARROW_TMPL);
+            el.attr("aria-haspopup", "true")
+                .append(ARROW_TMPL);
+        }
+    }, {
+        ATTRS:{
+            arrowEl:{},
+            contentElCls:{
+                value:"ks-submenu-content"
+            },
+            contentEl:{
+                valueFn:function () {
+                    return S.all(CONTENT_TMPL);
+                }
+            }
         }
     });
 

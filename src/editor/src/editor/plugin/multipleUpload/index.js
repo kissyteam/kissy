@@ -4,20 +4,26 @@
  */
 KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoader) {
 
-    return {
-        init:function (editor) {
+    function multipleUpload() {
+
+    }
+
+    S.augment(multipleUpload, {
+        renderUI:function (editor) {
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
                 listeners:{
                     click:function () {
-                            DialogLoader.useDialog(editor, "multipleUpload");
+                        DialogLoader.useDialog(editor, "multipleUpload");
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return multipleUpload;
 
 }, {
     requires:['editor', '../dialogLoader/']

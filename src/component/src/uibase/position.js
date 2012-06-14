@@ -23,14 +23,14 @@ KISSY.add("component/uibase/position", function (S) {
          * @type Number
          */
         x:{
-            view:true
+            view:1
         },
         /**
          * Vertical axis
          * @type Number
          */
         y:{
-            view:true
+            view:1
         },
         /**
          * Horizontal and vertical axis.
@@ -63,7 +63,7 @@ KISSY.add("component/uibase/position", function (S) {
          * @type Number
          */
         zIndex:{
-            view:true
+            view:1
         }
     };
 

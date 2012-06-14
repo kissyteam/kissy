@@ -121,12 +121,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                  * @type Number
                  */
                 checkState:{
-                    view:true,
-                    // check 的三状态
-                    // 0 一个不选
-                    // 1 儿子有选择
-                    // 2 全部都选了
-                    value:0
+                    view:1
                 },
 
                 xrender:{

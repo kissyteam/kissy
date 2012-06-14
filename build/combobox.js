@@ -1,161 +1,9 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 22:52
+build time: Jun 14 18:11
 */
 /**
- * @fileOverview Local dataSource for ComboBox
- * @author yiminghe@gmail.com
- */
-KISSY.add("combobox/LocalDataSource", function (S, Component) {
-
-    /**
-     * Local dataSource for comboBox
-     * @memberOf ComboBox
-     * @class
-     * @param {Object} cfg config
-     * @param {Array} cfg.data array of static data for comboBox
-     * @param {Function} cfg.parse parse data
-     */
-    function LocalDataSource(cfg) {
-        LocalDataSource.superclass.constructor.apply(this, arguments);
-    }
-
-    function parser(inputVal, data) {
-        var ret = [],
-            count = 0;
-        if (!inputVal) {
-            return data;
-        }
-        S.each(data, function (d) {
-            if (d.indexOf(inputVal) != -1) {
-                ret.push(d);
-            }
-            count++;
-        });
-
-        return ret;
-    }
-
-    LocalDataSource.ATTRS = {
-        data:{
-            value:[]
-        },
-        parse:{
-            value:parser
-        }
-    };
-
-    S.extend(LocalDataSource, S.Base, {
-        /**
-         * Datasource interface. How to get data for comboBox
-         * @function
-         * @name ComboBox.LocalDataSource#fetchData
-         * @param {String} inputVal current active input's value
-         * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback's execution context
-         */
-        fetchData:function (inputVal, callback, context) {
-            var parse = this.get("parse"),
-                data = this.get("data");
-            data = parse(inputVal, data);
-            callback.call(context, data);
-        }
-    });
-
-    Component.Manager.setConstructorByXClass("combobox-LocalDataSource", LocalDataSource);
-
-    return LocalDataSource;
-}, {
-    requires:['component']
-});/**
- * @fileOverview Remote datasource for ComboBox
- * @author yiminghe@gmail.com
- */
-KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
-
-    /**
-     * dataSource which wrap {@link IO} utility.
-     * @class
-     * @memberOf ComboBox
-     * @param {Object} cfg configs
-     * @param {Object} cfg.xhrCfg IO configuration.same as {@link} IO
-     * @param {String} cfg.paramName
-     * Used as parameter name to send autoS=Complete input's value to server
-     * @param {String} cfg.cache Whether server response data is cached
-     * @param {Boolean} cfg.allowEmpty whether send empty to server when input val is empty.default:false
-     * @param {Function} cfg.parse Serve as a parse function to parse server
-     * response to return a valid array of data for comboBox.
-     */
-    function RemoteDataSource(cfg) {
-        var self = this;
-        RemoteDataSource.superclass.constructor.apply(self, arguments);
-        self.io = null;
-        self.caches = {};
-    }
-
-    RemoteDataSource.ATTRS = {
-        paramName:{},
-        allowEmpty:{},
-        cache:{},
-        parse:{},
-        xhrCfg:{
-            value:{}
-        }
-    };
-
-    S.extend(RemoteDataSource, S.Base, {
-        /**
-         * Datasource interface. How to get data for comboBox
-         * @function
-         * @name ComboBox.RemoteDataSource#fetchData
-         * @param {String} inputVal current active input's value
-         * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback 's execution context
-         */
-        fetchData:function (inputVal, callback, context) {
-            var self = this,
-                v,
-                paramName = self.get("paramName"),
-                parse = self.get("parse"),
-                cache = self.get("cache"),
-                allowEmpty = self.get("allowEmpty");
-            if (self.io) {
-                // abort previous request
-                self.io.abort();
-                self.io = null;
-            }
-            if (!inputVal && allowEmpty !== true) {
-                return callback.call(context, []);
-            }
-            if (cache) {
-                if (v = self.caches[inputVal]) {
-                    return callback.call(context, v);
-                }
-            }
-            var xhrCfg = self.get("xhrCfg");
-            xhrCfg.data = xhrCfg.data || {};
-            xhrCfg.data[paramName] = inputVal;
-            xhrCfg.success = function (data) {
-                if (parse) {
-                    data = parse(inputVal, data);
-                }
-                self.__set("data", data);
-                if (cache) {
-                    self.caches[inputVal] = data;
-                }
-                callback.call(context, data);
-            };
-            self.io = IO(xhrCfg);
-        }
-    });
-
-    Component.Manager.setConstructorByXClass("combobox-RemoteDataSource", RemoteDataSource);
-
-    return RemoteDataSource;
-}, {
-    requires:['ajax', 'component']
-});/**
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
@@ -317,7 +165,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     } else {
                         comboBoxMenu.show();
                         if (menuCfg.width == null) {
-                            comboBoxMenu.set("width", self.get("el").width());
+                            comboBoxMenu.set("width", self.get("el").innerWidth());
                         }
                         if (!self.get("ariaOwns")) {
                             self.set("ariaOwns", comboBoxMenu.get("el")[0].id)
@@ -939,6 +787,71 @@ KISSY.add("combobox", function (S, Menu, ComboBox, LocalDataSource, RemoteDataSo
         'combobox/RemoteDataSource'
     ]
 })/**
+ * @fileOverview Local dataSource for ComboBox
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("combobox/LocalDataSource", function (S, Component) {
+
+    /**
+     * Local dataSource for comboBox
+     * @memberOf ComboBox
+     * @class
+     * @param {Object} cfg config
+     * @param {Array} cfg.data array of static data for comboBox
+     * @param {Function} cfg.parse parse data
+     */
+    function LocalDataSource(cfg) {
+        LocalDataSource.superclass.constructor.apply(this, arguments);
+    }
+
+    function parser(inputVal, data) {
+        var ret = [],
+            count = 0;
+        if (!inputVal) {
+            return data;
+        }
+        S.each(data, function (d) {
+            if (d.indexOf(inputVal) != -1) {
+                ret.push(d);
+            }
+            count++;
+        });
+
+        return ret;
+    }
+
+    LocalDataSource.ATTRS = {
+        data:{
+            value:[]
+        },
+        parse:{
+            value:parser
+        }
+    };
+
+    S.extend(LocalDataSource, S.Base, {
+        /**
+         * Datasource interface. How to get data for comboBox
+         * @function
+         * @name ComboBox.LocalDataSource#fetchData
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify comboBox when data is ready
+         * @param {Object} context callback's execution context
+         */
+        fetchData:function (inputVal, callback, context) {
+            var parse = this.get("parse"),
+                data = this.get("data");
+            data = parse(inputVal, data);
+            callback.call(context, data);
+        }
+    });
+
+    Component.Manager.setConstructorByXClass("combobox-LocalDataSource", LocalDataSource);
+
+    return LocalDataSource;
+}, {
+    requires:['component']
+});/**
  * @fileOverview ComboBox menu constroller.
  * @author yiminghe@gmail.com
  */
@@ -1090,4 +1003,91 @@ KISSY.add("combobox/menuRender", function (S, Menu) {
     });
 }, {
     requires:['menu']
+});/**
+ * @fileOverview Remote datasource for ComboBox
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
+
+    /**
+     * dataSource which wrap {@link IO} utility.
+     * @class
+     * @memberOf ComboBox
+     * @param {Object} cfg configs
+     * @param {Object} cfg.xhrCfg IO configuration.same as {@link} IO
+     * @param {String} cfg.paramName
+     * Used as parameter name to send autoS=Complete input's value to server
+     * @param {String} cfg.cache Whether server response data is cached
+     * @param {Boolean} cfg.allowEmpty whether send empty to server when input val is empty.default:false
+     * @param {Function} cfg.parse Serve as a parse function to parse server
+     * response to return a valid array of data for comboBox.
+     */
+    function RemoteDataSource(cfg) {
+        var self = this;
+        RemoteDataSource.superclass.constructor.apply(self, arguments);
+        self.io = null;
+        self.caches = {};
+    }
+
+    RemoteDataSource.ATTRS = {
+        paramName:{},
+        allowEmpty:{},
+        cache:{},
+        parse:{},
+        xhrCfg:{
+            value:{}
+        }
+    };
+
+    S.extend(RemoteDataSource, S.Base, {
+        /**
+         * Datasource interface. How to get data for comboBox
+         * @function
+         * @name ComboBox.RemoteDataSource#fetchData
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify comboBox when data is ready
+         * @param {Object} context callback 's execution context
+         */
+        fetchData:function (inputVal, callback, context) {
+            var self = this,
+                v,
+                paramName = self.get("paramName"),
+                parse = self.get("parse"),
+                cache = self.get("cache"),
+                allowEmpty = self.get("allowEmpty");
+            if (self.io) {
+                // abort previous request
+                self.io.abort();
+                self.io = null;
+            }
+            if (!inputVal && allowEmpty !== true) {
+                return callback.call(context, []);
+            }
+            if (cache) {
+                if (v = self.caches[inputVal]) {
+                    return callback.call(context, v);
+                }
+            }
+            var xhrCfg = self.get("xhrCfg");
+            xhrCfg.data = xhrCfg.data || {};
+            xhrCfg.data[paramName] = inputVal;
+            xhrCfg.success = function (data) {
+                if (parse) {
+                    data = parse(inputVal, data);
+                }
+                self.__set("data", data);
+                if (cache) {
+                    self.caches[inputVal] = data;
+                }
+                callback.call(context, data);
+            };
+            self.io = IO(xhrCfg);
+        }
+    });
+
+    Component.Manager.setConstructorByXClass("combobox-RemoteDataSource", RemoteDataSource);
+
+    return RemoteDataSource;
+}, {
+    requires:['ajax', 'component']
 });

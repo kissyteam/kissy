@@ -20,10 +20,10 @@ KISSY.add("combobox/menuRender", function (S, Menu) {
     }, {
         ATTRS:{
             head:{
-                view:true
+                view:1
             },
             foot:{
-                view:true
+                view:1
             }
         }
     });

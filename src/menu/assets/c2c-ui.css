@@ -8,7 +8,7 @@
     cursor: default;
     outline: none;
     background-color: #FFF;
-    line-height: 18px;
+    line-height: 24px;
     border-style: solid;
     border-color: #8ab6dd;
     white-space: nowrap;
@@ -21,6 +21,10 @@
     background-image: none !important;
     opacity: 0.3;
     filter: alpha(opacity = 30);
+}
+
+.c2c-menu-button {
+    position: relative;
 }
 
 .c2c-button-disabled {
@@ -79,7 +83,6 @@
 .ks-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: top;
-    margin: 0 4px;
 }
 
 /* Dropdown arrow style. */

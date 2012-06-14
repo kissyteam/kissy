@@ -4,8 +4,12 @@
  */
 KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
-    return {
-        init:function (editor) {
+    function outdent() {
+
+    }
+
+    S.augment(outdent, {
+        renderUI:function (editor) {
 
             indexCmd.init(editor);
 
@@ -15,29 +19,31 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
                 tooltip:"减少缩进量 ",
                 listeners:{
                     click:function () {
-                            editor.execCommand("outdent");
-                            editor.focus();
+                        editor.execCommand("outdent");
+                        editor.focus();
 
                     },
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                if (editor.execCommand(queryOutdent, e.path)) {
-                                    self.set("disabled", false);
-                                } else {
-                                    self.set("disabled", true);
-                                }
-                            });
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            if (editor.execCommand(queryOutdent, e.path)) {
+                                self.set("disabled", false);
+                            } else {
+                                self.set("disabled", true);
+                            }
+                        });
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return outdent;
 
 }, {
     requires:['editor', './cmd']

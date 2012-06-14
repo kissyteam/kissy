@@ -9,8 +9,11 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+    function justifyLeft() {
+    }
+
+    S.augment(justifyLeft, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyLeft", {
                 tooltip:"左对齐",
@@ -35,7 +38,9 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyLeft;
 }, {
     requires:['editor', './cmd']
 });

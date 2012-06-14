@@ -64,7 +64,9 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         ATTRS:{
             ariaOwns:{},
             collapsed:{},
-            hasTrigger:{},
+            hasTrigger:{
+                value:true
+            },
             input:{},
             trigger:{}
         },

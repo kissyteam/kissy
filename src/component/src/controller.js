@@ -28,7 +28,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         // 生成父组件的 dom 结构
         self.create();
         var contentEl = self.getContentElement();
-        c = create(c, self);
+        c = Component.create(c, self);
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
@@ -50,11 +50,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
      */
-    function getDefaultView() {
+    function constructView(self) {
         // 逐层找默认渲染器
-        var self = this,
-            attrs,
+        var attrs,
+            attrCfg,
+            attrName,
             cfg = {},
+            v,
             Render = self.get('xrender');
 
         if (Render) {
@@ -62,13 +64,27 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             attrs = self.getAttrs();
-            for (var attrName in attrs) {
+
+            // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+            for (attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName], v;
+                    attrCfg = attrs[attrName];
                     if (attrCfg.view) {
+
+                        // 先取后 getter
+                        // 防止死循环
                         if (( v = self.get(attrName) ) !== undefined) {
                             cfg[attrName] = v;
                         }
+
+                        // setter 不应该有实际操作，仅用于正规化比较好
+                        // attrCfg.setter = wrapperViewSetter(attrName);
+                        self.on("after" + S.ucfirst(attrName) + "Change",
+                            wrapperViewSetter(attrName));
+                        // 逻辑层读值直接从 view 层读
+                        // 那么如果存在默认值也设置在 view 层
+                        // 逻辑层不要设置 getter
+                        attrCfg.getter = wrapperViewGetter(attrName);
                     }
                 }
             }
@@ -125,33 +141,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              */
             initializer:function () {
-                // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
-                var self = this,
-                    listener,
-                    n,
-                    attrName,
-                    attrCfg,
-                    listeners = self.get("listeners"),
-                    attrs = self.getAttrs();
-                for (attrName in attrs) {
-                    if (attrs.hasOwnProperty(attrName)) {
-                        attrCfg = attrs[attrName];
-                        if (attrCfg.view) {
-                            // setter 不应该有实际操作，仅用于正规化比较好
-                            // attrCfg.setter = wrapperViewSetter(attrName);
-                            self.on("after" + S.ucfirst(attrName) + "Change",
-                                wrapperViewSetter(attrName));
-                            // 逻辑层读值直接从 view 层读
-                            // 那么如果存在默认值也设置在 view 层
-                            // 逻辑层不要设置 getter
-                            attrCfg.getter = wrapperViewGetter(attrName);
-                        }
-                    }
-                }
-                for (n in listeners) {
-                    listener = listeners[n];
-                    self.on(n, listener.fn || listener, listener.scope);
-                }
+                // initialize view
+                this.get("view");
             },
 
             /**
@@ -161,7 +152,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             createDom:function () {
                 var self = this,
-                    view = self.get("view") || getDefaultView.call(self);
+                    view = self.get("view");
                 setViewCssClassByHierarchy(self, view);
                 view.create();
                 var el = view.getKeyEventTarget();
@@ -216,7 +207,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         .on("dblclick", self.handleDblClick, self);
                 }
             },
-
 
             _uiSetFocused:function (v) {
                 if (v) {
@@ -536,8 +526,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 focusable:{
-                    view:true,
-                    value:true
+                    view:1
                 },
 
                 /**
@@ -554,7 +543,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 focused:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -562,7 +551,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 active:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -570,7 +559,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 highlighted:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -586,8 +575,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type String
                  */
                 prefixCls:{
-                    view:true,
-                    value:"ks-"
+                    value:'ks-', // box srcNode need
+                    view:1
                 },
 
                 /**
@@ -602,6 +591,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Component.Render
                  */
                 view:{
+                    valueFn:function () {
+                        return constructView(this);
+                    }
                 },
 
                 /**
@@ -609,31 +601,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Boolean
                  */
                 disabled:{
-                    view:true
-                },
-
-                /**
-                 * Config listener on created.
-                 * @example
-                 * <code>
-                 * {
-                 *  click:{
-                 *      scope:{x:1},
-                 *      fn:function(){
-                 *          alert(this.x);
-                 *      }
-                 *  }
-                 * }
-                 * or
-                 * {
-                 *  click:function(){
-                 *          alert(this.x);
-                 *        }
-                 * }
-                 * </code>
-                 */
-                listeners:{
-                    value:{}
+                    view:1
                 },
 
                 xrender:{
@@ -654,38 +622,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }, {
             xclass:'controller'
         });
-
-    /**
-     * Create a component instance using json with xclass.
-     * @param {Object} component Component's json notation with xclass attribute.
-     * @param {String} component.xclass Component to be newed 's xclass.
-     * @param {Controller} self Component From which new component generated will inherit prefixCls
-     * if component 's prefixCls is undefined.
-     * @memberOf Component
-     * @example
-     * <code>
-     *  create({
-     *     xclass:'menu',
-     *     children:[{
-     *        xclass:'menuitem',
-     *        content:"1"
-     *     }]
-     *  })
-     * </code>
-     */
-    function create(component, self) {
-        var childConstructor, xclass;
-        if (component && (xclass = component.xclass)) {
-            if (self && !component.prefixCls) {
-                component.prefixCls = self.get("prefixCls");
-            }
-            childConstructor = Manager.getConstructorByXClass(xclass);
-            component = new childConstructor(component);
-        }
-        return component;
-    }
-
-    Component.create = create;
 
     return Controller;
 }, {

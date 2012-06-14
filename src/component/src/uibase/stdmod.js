@@ -24,63 +24,63 @@ KISSY.add("component/uibase/stdmod", function () {
          * @type Node
          */
         header:{
-            view:true
+            view:1
         },
         /**
          * Body element of dialog. Readonly
          * @type Node
          */
         body:{
-            view:true
+            view:1
         },
         /**
          * Footer element of dialog. Readonly
          * @type Node
          */
         footer:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of body element's style.
          * @type Object
          */
         bodyStyle:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of footer element's style.
          * @type Object
          */
         footerStyle:{
-            view:true
+            view:1
         },
         /**
          * Key-value map of header element's style.
          * @type Object
          */
         headerStyle:{
-            view:true
+            view:1
         },
         /**
          * Html content of header element.
          * @type NodeList|String
          */
         headerContent:{
-            view:true
+            view:1
         },
         /**
          * Html content of body element.
          * @type NodeList|String
          */
         bodyContent:{
-            view:true
+            view:1
         },
         /**
          * Html content of footer element.
          * @type NodeList|String
          */
         footerContent:{
-            view:true
+            view:1
         }
     };
 

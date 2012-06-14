@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:30
+build time: Jun 15 00:09
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -24,23 +24,18 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         return m;
     }
 
-    function constructMenu(self) {
-        var m = new Menu.PopupMenu(S.mix({
-            prefixCls:self.get("prefixCls")
-        }, self.get("menuCfg")));
-        self.__set("menu", m);
-        return m;
-    }
-
     function reposition() {
         var self = this,
             menu = getMenu(self);
         if (menu && menu.get("visible")) {
-            menu.set("align", S.merge({
-                node:self.get("el")
-            }, ALIGN, self.get("menuCfg").align));
+            var align = S.clone(menu.get("align"));
+            align.node = self.get("el");
+            S.mix(align, ALIGN, false);
+            menu.set("align", align);
         }
     }
+
+    var repositionBuffer = S.buffer(reposition, 50);
 
     function hideMenu(self) {
         var menu = getMenu(self);
@@ -55,15 +50,12 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         // 保证显示前已经 bind 好 menu 事件
         self.bindMenu();
         if (menu && !menu.get("visible")) {
-            var menuCfg = self.get("menuCfg");
             // 根据 el 自动调整大小
-            if (menuCfg.width == null) {
-                menu.set("width", el.width());
+            if (self.get("matchElWidth")) {
+                menu.set("width", el.innerWidth());
             }
-            menu.set("align", S.merge({
-                node:el
-            }, ALIGN, menuCfg.align));
             menu.show();
+            reposition.call(self);
             el.attr("aria-haspopup", menu.get("el").attr("id"));
         }
     }
@@ -98,10 +90,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 return getMenu(this, initByCallFunction);
             },
 
-            initializer:function () {
-                this._reposition = S.buffer(reposition, 50, this);
-            },
-
             _uiSetCollapsed:function (v) {
                 if (v) {
                     hideMenu(this);
@@ -126,7 +114,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     menu.on("click", self.handleMenuClick, self);
 
                     // 窗口改变大小，重新调整
-                    $(win).on("resize", self._reposition, self);
+                    $(win).on("resize", repositionBuffer, self);
 
                     /*
                      只绑定事件一次
@@ -226,7 +214,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Menu.Item} item Menu item to add to the menu.
              */
             addItem:function (item, index) {
-                var menu = getMenu(this, 1) || constructMenu(this);
+                var menu = getMenu(this, 1);
                 menu.addChild(item, index);
             },
 
@@ -279,20 +267,19 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             decorateChildrenInternal:function (UI, el) {
                 // 不能用 diaplay:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                el.css("visibility", "hidden");
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new UI(S.mix({
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
-                }, self.get("menuCfg")));
+                }));
                 self.__set("menu", menu);
             },
 
             destructor:function () {
                 var self = this;
-                $(win).detach("resize", self._reposition, self);
+                $(win).detach("resize", repositionBuffer, self);
             }
 
         },
@@ -307,30 +294,34 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @type Menu.Item
                  */
                 activeItem:{
-                    view:true
+                    view:1
                 },
 
                 /**
-                 * Extra Menu configuration.See {@link Menu}.
-                 * Can set "align" to specify button's alignment with menu.
-                 * Can set "width" to specify button's menu width.
-                 * If not set "width" , menu's width will be same with menubutton.
-                 * @type Object
+                 * Whether drop down menu is same width with button.
+                 * Default: true.
+                 * @type {Boolean}
                  */
-                menuCfg:{
-                    value:{}
+                matchElWidth:{
+                    value:true
                 },
+
                 /**
                  * @private
                  */
                 decorateChildCls:{
-                    value:"popupmenu"
+                    valueFn:function () {
+                        return this.get("prefixCls") + "popupmenu"
+                    }
                 },
                 /**
                  * Drop down menu associated with this menubutton.
                  * @type Menu
                  */
                 menu:{
+                    value:{
+                        xclass:'popupmenu'
+                    },
                     setter:function (v) {
                         if (v instanceof Menu) {
                             v.__set("parent", this);
@@ -342,8 +333,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @type Boolean
                  */
                 collapsed:{
-                    value:true,
-                    view:true
+                    view:1
                 },
                 xrender:{
                     value:MenuButtonRender
@@ -356,35 +346,23 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     return MenuButton;
 }, {
-    requires:[ "node", "button", "./menubuttonRender", "menu", "component"]
-});/**
- * @fileOverview menubutton
- * @author yiminghe@gmail.com
- */
-KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
-    MenuButton.Render = MenuButtonRender;
-    MenuButton.Select = Select;
-    MenuButton.Option = Option;
-    return MenuButton;
-}, {
-    requires:['menubutton/base',
-        'menubutton/menubuttonRender',
-        'menubutton/select',
-        'menubutton/option']
+    requires:[ "node", "button", "./baseRender", "menu", "component"]
 });/**
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, Button) {
+KISSY.add("menubutton/baseRender", function (S, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
-            'ks-menu-button-caption">{content}<' + '/div>' +
+    var CAPTION_TMPL = '<div class="ks-inline-block ' +
+            'ks-menu-button-caption"><' + '/div>',
+
+        DROP_TMPL =
             '<div class="ks-inline-block ' +
-            'ks-menu-button-dropdown">' +
-            '<div class=' +
-            '"ks-menu-button-dropdown-inner">' +
-            '<' + '/div>' +
-            '<' + '/div>',
+                'ks-menu-button-dropdown">' +
+                '<div class=' +
+                '"ks-menu-button-dropdown-inner">' +
+                '<' + '/div>' +
+                '<' + '/div>',
         CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
@@ -392,19 +370,10 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
 
         createDom:function () {
             var self = this,
-                el = self.get("el"),
-                html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:self.get("content")
-                });
-            el.html(html)
+                el = self.get("el");
+            el.append(DROP_TMPL)
                 //带有 menu
                 .attr("aria-haspopup", true);
-        },
-
-        _uiSetContent:function (v) {
-            var caption = this.get("el").one("." + CAPTION_CLS);
-            caption.html("");
-            v && caption.append(v);
         },
 
         _uiSetCollapsed:function (v) {
@@ -420,14 +389,37 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
         }
     }, {
         ATTRS:{
+            contentEl:{
+                valueFn:function () {
+                    return S.all(CAPTION_TMPL);
+                }
+            },
+            contentElCls:{
+                value:"ks-menu-button-caption"
+            },
             activeItem:{
             },
             collapsed:{
+                value:true
             }
         }
     });
 }, {
     requires:['button']
+});/**
+ * @fileOverview menubutton
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
+    MenuButton.Render = MenuButtonRender;
+    MenuButton.Select = Select;
+    MenuButton.Option = Option;
+    return MenuButton;
+}, {
+    requires:['menubutton/base',
+        'menubutton/baseRender',
+        'menubutton/select',
+        'menubutton/option']
 });/**
  * @fileOverview represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com

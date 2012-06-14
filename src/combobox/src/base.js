@@ -26,21 +26,12 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         return m;
     }
 
-    function constructMenu(self) {
-        var menuCfg = self.get("menuCfg");
-        var m = new ComboBoxMenu(S.mix({
-            prefixCls:self.get("prefixCls")
-        }, self.get("menuCfg")));
-        self.__set("menu", m);
-        return m;
-    }
-
     function alignMenuImmediately(self) {
-        var menu = self.get("menu"),
-            menuCfg = self.get("menuCfg") || {};
-        menu.set("align", S.merge({
-            node:self.get("el")
-        }, ALIGN, menuCfg.align));
+        var menu = self.get("menu");
+        var align = S.clone(menu.get("align"));
+        align.node = self.get("el");
+        S.mix(align, ALIGN, false);
+        menu.set("align", align);
     }
 
     function alignWithTokenImmediately(self) {
@@ -152,15 +143,14 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
             _uiSetCollapsed:function (v) {
                 var self = this,
-                    menuCfg = self.get("menuCfg"),
                     comboBoxMenu = getMenu(self);
                 if (comboBoxMenu) {
                     if (v) {
                         comboBoxMenu.hide();
                     } else {
                         comboBoxMenu.show();
-                        if (menuCfg.width == null) {
-                            comboBoxMenu.set("width", self.get("el").width());
+                        if (self.get("matchElWidth")) {
+                            comboBoxMenu.set("width", self.get("el").innerWidth());
                         }
                         if (!self.get("ariaOwns")) {
                             self.set("ariaOwns", comboBoxMenu.get("el")[0].id)
@@ -185,7 +175,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     v,
                     contents,
                     i,
-                    comboBoxMenu = getMenu(self, 1) || constructMenu(self);
+                    comboBoxMenu = getMenu(self, 1);
 
                 comboBoxMenu.removeChildren(true);
 
@@ -433,11 +423,11 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             {
 
                 input:{
-                    view:true
+                    view:1
                 },
 
                 trigger:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -446,8 +436,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type Boolean
                  */
                 hasTrigger:{
-                    value:true,
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -455,6 +444,9 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type ComboBox.Menu
                  */
                 menu:{
+                    value:{
+                        xclass:'combobox-menu'
+                    },
                     setter:function (m) {
                         if (m instanceof ComboBoxMenu) {
                             m.__set("parent", this);
@@ -468,7 +460,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @private
                  */
                 ariaOwns:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -476,7 +468,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type Boolean
                  */
                 collapsed:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -499,23 +491,14 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 },
 
                 /**
-                 * Config comboBox menu list.For Configuration when new.
-                 * {Number} menuCfg.width :
-                 * Config comboBox menu list's alignment.
-                 * Default to current active input's width.<br/>
-                 * {Object} menuCfg.align :
-                 * Config comboBox menu list's alignment.
-                 * Same with {@link Component.UIBase.Align#align} .
-                 * Default : align current input's bottom left edge
-                 * with comboBox list's top left edge.
-                 * @type Object
+                 * Whether drop down menu is same width with input.
+                 * Default: true.
+                 * @type {Boolean}
                  */
-                menuCfg:{
-                    value:{
-                        // width
-                        // align
-                    }
+                matchElWidth:{
+                  value:true
                 },
+
                 /**
                  * Format function to return array of
                  * html/text/menu item attributes from array of data.

@@ -6,9 +6,9 @@
  */
 KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     var $ = Node.all,
-        MENU_FILTER = "menu-filter",
-        MENU_FILTER_LABEL = "menu-filter-label",
-        MENU_CONTENT = "menu-content";
+        MENU_FILTER = "ks-menu-filter",
+        MENU_FILTER_LABEL = "ks-menu-filter-label",
+        MENU_CONTENT = "ks-menu-content";
 
     return MenuRender.extend({
         getContentElement:function () {
@@ -24,22 +24,22 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER) + "'/>")
-                        .appendTo(contentEl));
+                    filterWrap = $("<div class='" + MENU_FILTER + "'/>")
+                        .appendTo(contentEl, undefined));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + this.getCssClassWithPrefix(MENU_FILTER_LABEL) + "'/>")
-                        .appendTo(filterWrap));
+                    $("<div class='" + MENU_FILTER_LABEL + "'/>")
+                        .appendTo(filterWrap, undefined));
             }
             if (!self.get("filterInput")) {
                 self.set("filterInput", $("<input autocomplete='off'/>")
-                    .appendTo(filterWrap));
+                    .appendTo(filterWrap, undefined));
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + this.getCssClassWithPrefix(MENU_CONTENT) + "'/>")
-                        .appendTo(contentEl));
+                    $("<div class='" + MENU_CONTENT + "'/>")
+                        .appendTo(contentEl, undefined));
             }
         },
 
@@ -55,17 +55,16 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER))
-                    .one("." + this.getCssClassWithPrefix(MENU_FILTER_LABEL))
+                return el.one("." + MENU_FILTER).one("." + MENU_FILTER_LABEL)
             },
             filterWrap:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER));
+                return el.one("." + MENU_FILTER);
             },
             menuContent:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_CONTENT));
+                return el.one("." + MENU_CONTENT);
             },
             filterInput:function (el) {
-                return el.one("." + this.getCssClassWithPrefix(MENU_FILTER)).one("input");
+                return el.one("." + MENU_FILTER).one("input");
             }
         }
     });

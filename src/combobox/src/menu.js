@@ -98,10 +98,10 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
         }, {
             ATTRS:{
                 head:{
-                    view:true
+                    view:1
                 },
                 foot:{
-                    view:true
+                    view:1
                 },
                 xrender:{
                     value:ComboBoxMenuRender

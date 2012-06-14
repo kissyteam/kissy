@@ -4,15 +4,21 @@
  */
 KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function ForeColorPlugin(){
+
+    }
+
+    S.augment(ForeColorPlugin,{
+        renderUI:function(editor){
             cmd.init(editor);
             editor.addButton("foreColor",{
                 cmdType:'foreColor',
                 tooltip:"文本颜色"
             }, Button);
         }
-    };
+    });
+
+    return ForeColorPlugin;
 }, {
     requires:['editor', '../color/btn', './cmd']
 });

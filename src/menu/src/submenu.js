@@ -247,21 +247,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 externalSubMenu:{
                     value:false
                 },
-                /**
-                 * Can set "align" to specify alignment submenu with current menuitem
-                 * @type Object
-                 * @example
-                 * <code>
-                 * {
-                 *   align:{
-                 *      points:['cc','cc']
-                 *   }
-                 * }
-                 * </code>
-                 */
-                menuCfg:{
-                    value:{}
-                },
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
@@ -270,7 +255,9 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     }
                 },
                 decorateChildCls:{
-                    value:"popupmenu"
+                    valueFn:function () {
+                        return this.get("prefixCls") + "popupmenu"
+                    }
                 },
                 xrender:{
                     value:SubMenuRender
@@ -317,11 +304,12 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (menu) {
             // 保证显示前已经绑定好事件
             self.bindSubMenu();
-            menu.set("align", S.mix({
-                node:self.get("el"),
-                points:['tr', 'tl']
-            }, self.get("menuCfg").align));
-            menu.render();
+
+            var align = S.clone(menu.get("align"));
+            align.node = self.get("el");
+            align.points = align.points || ['tr', 'tl'];
+            menu.set("align", align);
+            menu.show();
             /**
              * If activation of your menuitem produces a popup menu,
              then the menuitem should have aria-haspopup set to the ID of the corresponding menu
@@ -330,7 +318,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              */
             self.get("el").attr("aria-haspopup",
                 menu.get("el").attr("id"));
-            menu.show();
         }
     }
 

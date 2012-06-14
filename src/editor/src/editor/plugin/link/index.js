@@ -25,13 +25,17 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
         return lastElement.closest('a', undefined);
     }
 
-    return {
-        init:function (editor) {
+    function LinkPlugin() {
+
+    }
+
+    S.augment(LinkPlugin, {
+        renderUI:function (editor) {
             editor.addButton("link", {
                 tooltip:"插入链接",
                 listeners:{
                     click:function () {
-                            showLinkEditDialog();
+                        showLinkEditDialog();
 
                     }
                 },
@@ -45,44 +49,46 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
             editor.addBubble("link", checkLink, {
                 listeners:{
                     afterRenderUI:function () {
-                            var bubble = this,
-                                el = bubble.get("contentEl");
+                        var bubble = this,
+                            el = bubble.get("contentEl");
 
-                            el.html(tipHtml);
+                        el.html(tipHtml);
 
-                            var tipUrl = el.one(".ks-editor-bubble-url"),
-                                tipChange = el.one(".ks-editor-bubble-change"),
-                                tipRemove = el.one(".ks-editor-bubble-remove");
+                        var tipUrl = el.one(".ks-editor-bubble-url"),
+                            tipChange = el.one(".ks-editor-bubble-change"),
+                            tipRemove = el.one(".ks-editor-bubble-remove");
 
-                            //ie focus not lose
-                            Editor.Utils.preventFocus(el);
+                        //ie focus not lose
+                        Editor.Utils.preventFocus(el);
 
-                            tipChange.on("click", function (ev) {
-                                showLinkEditDialog(bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
+                        tipChange.on("click", function (ev) {
+                            showLinkEditDialog(bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
 
-                            tipRemove.on("click", function (ev) {
-                                Utils.removeLink(editor, bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
+                        tipRemove.on("click", function (ev) {
+                            Utils.removeLink(editor, bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
 
-                            bubble.on("show", function () {
-                                var a = bubble.get("editorSelectedEl");
-                                if (!a) {
-                                    return;
-                                }
-                                var href = a.attr(Utils._ke_saved_href) ||
-                                    a.attr("href");
-                                tipUrl.html(href);
-                                tipUrl.attr("href", href);
-                            });
-                        }
+                        bubble.on("show", function () {
+                            var a = bubble.get("editorSelectedEl");
+                            if (!a) {
+                                return;
+                            }
+                            var href = a.attr(Utils._ke_saved_href) ||
+                                a.attr("href");
+                            tipUrl.html(href);
+                            tipUrl.attr("href", href);
+                        });
+                    }
 
                 }
             });
         }
-    };
+    });
+
+    return LinkPlugin;
 }, {
     requires:['editor', '../bubble/',
         './utils', '../dialogLoader/', '../button/']

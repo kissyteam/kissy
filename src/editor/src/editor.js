@@ -3,7 +3,10 @@
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, Editor, Utils, focusManager) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager,
+                              Styles,
+                              zIndexManger,
+                              meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
     var TRUE = true,
 
         undefined = undefined,
@@ -189,6 +192,15 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 if (v && this.__docReady) {
                     this.focus();
                 }
+            },
+
+            // 在插件运行前,运行核心兼容
+            renderUI:function () {
+                var self=this;
+                clipboard.init(self);
+                enterKey.init(self);
+                htmlDataProcessor.init(self);
+                selectionFix.init(self);
             },
 
             bindUI:function () {
@@ -958,14 +970,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         control = sel.getSelectedElement();
                     if (control) {
                         // Make undo snapshot.
-                        self.fire('save');
+                        self.execCommand('save');
                         // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
                         // break up the selection, safely manage it here. (#4795)
                         var bookmark = sel.getRanges()[ 0 ].createBookmark();
                         // Remove the control manually.
                         control.remove();
                         sel.selectBookmarks([ bookmark ]);
-                        self.fire('save');
+                        self.execCommand('save');
                         evt.preventDefault();
                     }
                 }
@@ -1144,8 +1156,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         'editor/core/focusManager',
         'editor/core/styles',
         'editor/core/zIndexManager',
-        'editor/core/focusManager',
-        'editor/core/meta'
+        'editor/core/meta',
+        'editor/core/clipboard',
+        'editor/core/enterKey',
+        'editor/core/htmlDataProcessor',
+        'editor/core/selectionFix'
     ]
 });
 /**

@@ -14,7 +14,7 @@
         padding-left: 19px;
     }
 
-    .ks-tree-item-selected .ks-tree-item-label {
+    .ks-tree-item-selected .ks-tree-item-content {
         background: buttonface;
         color: buttontext;
     }
@@ -23,7 +23,7 @@
         outline: none;
     }
 
-    .ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-label {
+    .ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-content {
         background: highlight;
         color: highlighttext;
     }
@@ -62,22 +62,22 @@
     <div id="treeContainer" style="width: 200px;">
 
         <div id='root' class="ks-tree-root">
-            <span class="ks-tree-item-label">淘宝网</span>
+            <span class="ks-tree-item-content">淘宝网</span>
             <div class="ks-tree-children">
                 <div class="ks-tree-item">
-                    <span class="ks-tree-item-label">收藏夹</span>
+                    <span class="ks-tree-item-content">收藏夹</span>
                     <div class="ks-tree-children">
                         <div class="ks-tree-item">
-                            <span class="ks-tree-item-label">收藏的宝贝</span>
+                            <span class="ks-tree-item-content">收藏的宝贝</span>
                         </div>
-                        <!-- 标记为强制 folder 样式 -->
+
                         <div class="ks-tree-item ks-tree-item-folder">
-                            <span class="ks-tree-item-label">收藏的店铺</span>
+                            <span class="ks-tree-item-content">收藏的店铺</span>
                         </div>
                     </div>
                 </div>
                 <div class="ks-tree-item">
-                    <span class="ks-tree-item-label">我要买</span>
+                    <span class="ks-tree-item-content">我要买</span>
                 </div>
             </div>
         </div>
@@ -93,8 +93,6 @@
             var $ = S.all;
 
             var tree = new Tree({
-                content:"淘宝网",
-
                 expanded:true,
                 // showRootNode:false,
                 srcNode:"#root"

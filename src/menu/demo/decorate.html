@@ -20,7 +20,7 @@
 <div id="menuTest">
     <div class="ks-menuitem">菜单1</div>
     <div class="ks-submenu">
-        菜单2
+        <span class="ks-submenu-content">菜单2</span>
         <div class="ks-popupmenu ks-ext-position">
             <div class="ks-menuitem">子菜单1</div>
             <div class="ks-menuitem">子菜单2</div>
@@ -33,7 +33,7 @@
 
     KISSY.ready(function(S) {
         S.use("menu", function(S, Menu) {
-            new Menu({
+            window.menuTest=new Menu({
                 srcNode:"#menuTest"
             }).render();
         });

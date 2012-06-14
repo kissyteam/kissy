@@ -18,7 +18,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
          * @type Boolean
          */
         showRootNode:{
-            view:true
+            view:1
         },
         /**
          * Current selected tree node.

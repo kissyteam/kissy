@@ -51,14 +51,21 @@ KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, Editor) {
         }
     });
 
-    return {
-        init:function (editor) {
+    function CheckboxSourceAreaPlugin(){
+
+    }
+
+    S.augment(CheckboxSourceAreaPlugin,{
+        renderUI:function(editor){
+
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {
                 c.destroy();
             });
         }
-    }
+    });
+
+    return CheckboxSourceAreaPlugin;
 }, {
     requires:["editor"]
 });

@@ -7,8 +7,12 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
 
-    return {
-        init:function (editor) {
+    function FlashPlugin() {
+
+    }
+
+    S.augment(FlashPlugin, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor.dataFilter;
 
@@ -76,7 +80,9 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 });
             }
         }
-    };
+    });
+
+    return FlashPlugin;
 
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']

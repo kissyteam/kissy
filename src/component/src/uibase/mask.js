@@ -30,7 +30,7 @@ KISSY.add("component/uibase/mask", function () {
          * @type {NodeList}
          */
         maskNode:{
-            view:true
+            view:1
         },
         /**
          * Whether to share mask with other overlays.
@@ -38,8 +38,7 @@ KISSY.add("component/uibase/mask", function () {
          * @type {Boolean}
          */
         maskShared:{
-            value:true,
-            view:true
+            view:1
         }
     };
 

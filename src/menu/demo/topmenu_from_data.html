@@ -69,7 +69,7 @@
     KISSY.use("menu", function (S, Menu) {
         var context = S.all("#context");
 
-        function generatePopupMenu(items) {
+        function generatePopupMenu(items, cfg) {
             var sb = {
                 // boolean，是否鼠标脱离菜单后自动隐藏
                 autoHideOnMouseLeave:true,
@@ -78,6 +78,7 @@
                 xclass:'popupmenu',
                 children:[]
             };
+            S.mix(sb, cfg);
             generateMenu(sb, items);
             return sb;
         }
@@ -87,17 +88,13 @@
                 xclass:'submenu',
                 content:item.content,
                 menu:(function () {
-                    return generatePopupMenu(item.children);
+                    return generatePopupMenu(item.children, top ? {
+                        align:{
+                            offset:[-1, 4],
+                            points:['bl', 'tl']
+                        }
+                    } : {});
                 })()
-            }, top ? {
-                menuCfg:{
-                    align:{
-                        offset:[-1, 4],
-                        points:['bl', 'tl']
-                    }
-                }
-            } : {
-
             });
         }
 

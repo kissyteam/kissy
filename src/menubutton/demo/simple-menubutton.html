@@ -105,7 +105,7 @@
     <script src="../../../build/kissy.js"></script>
     <script src="../src/base.js"></script>
     <script src="../src/menubutton.js"></script>
-    <script src="../src/menubuttonRender.js"></script>
+    <script src="../src/baseRender.js"></script>
     <script src="../src/option.js"></script>
     <script src="../src/select.js"></script>
 
@@ -126,7 +126,7 @@
 
                 sb.addChild(new Menu.Item({content:"已买到的宝贝"}));
                 sb.addChild(new Menu.Item({content:"已卖出的宝贝",
-                     disabled:true}));
+                    disabled:true}));
 
 
                 var sb2 = new Menu.PopupMenu();
@@ -149,20 +149,19 @@
                 //model and control
                 //view as a parameter
                 var bbbbb = new MenuButton({
-
                     content:"淘宝网",
                     describedby:"describe",
-                    menu:(function () {
-                        return {
-                            xclass:'popupmenu',
-                            children:[
-                                b,
-                                new Menu.Separator(),
-                                alone,
-                                new Menu.Item({content:"我要卖"})
-                            ]
-                        };
-                    })(),
+                    matchElWidth:false,
+                    menu:{
+                        width:200,
+                        xclass:'popupmenu',
+                        children:[
+                            b,
+                            new Menu.Separator(),
+                            alone,
+                            new Menu.Item({content:"我要卖"})
+                        ]
+                    },
                     render:"#button_container"
                 });
 

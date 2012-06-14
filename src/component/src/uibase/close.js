@@ -25,15 +25,14 @@ KISSY.add("component/uibase/close", function () {
          * @type Boolean
          */
         closable:{
-            value:true,
-            view:true
+            view:1
         },
 
         /**
          * Close button.
          */
         closeBtn:{
-            view:true
+            view:1
         },
 
         /**

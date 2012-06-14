@@ -20,11 +20,12 @@ KISSY.add('component/uibase/box', function (S) {
      */
     {
         /**
-         * component's html content
+         * component's html content.
+         * Note: content and srcNode can not be set both!
          * @type String|NodeList
          */
         content:{
-            view:true,
+            view:1,
             sync:false
         },
         /**
@@ -33,49 +34,55 @@ KISSY.add('component/uibase/box', function (S) {
          */
         width:{
             // 没有 _uiSetWidth，所以不需要设置 sync:false
-            view:true
+            view:1,
+            sync:false
         },
         /**
          * component's height
          * @type Number|String
          */
         height:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * css class of component's root element
          * @type String
          */
         elCls:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * name-value pair css style of component's root element
          * @type Object
          */
         elStyle:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * name-value pair attribute of component's root element
          * @type Object
          */
         elAttrs:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * archor element where component insert before
          * @type NodeList
          */
         elBefore:{
-            view:true
+            sync:false,
+            view:1
         },
         /**
          * readonly. root element of current component
          * @type NodeList
          */
         el:{
-            view:true
+            view:1
         },
 
         /**
@@ -83,7 +90,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         render:{
-            view:true
+            view:1
         },
 
         /**
@@ -91,8 +98,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String
          */
         visibleMode:{
-            value:"display",
-            view:true
+            view:1
         },
 
         /**
@@ -100,7 +106,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Boolean
          */
         visible:{
-            view:true
+            view:1
         },
 
         /**
@@ -108,7 +114,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         srcNode:{
-            view:true
+            view:1
         }
     };
 

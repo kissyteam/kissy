@@ -11,8 +11,12 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             '<span style="DISPLAY:none">&nbsp;</span>' +
             '</div>';
 
-    return {
-        init:function (editor) {
+    function pageBreak() {
+
+    }
+
+    S.augment(pageBreak, {
+        renderUI:function (editor) {
 
             fakeObjects.init(editor);
 
@@ -52,42 +56,44 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                 listeners:{
                     click:function () {
 
-                            var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
-                                substitute = editor.createFakeElement(real, CLS, TYPE,
-                                    //不可缩放，也不用
-                                    false,
-                                    PAGE_BREAK_MARKUP);
+                        var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
+                            substitute = editor.createFakeElement(real, CLS, TYPE,
+                                //不可缩放，也不用
+                                false,
+                                PAGE_BREAK_MARKUP);
 
-                            var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
+                        var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
 
-                            if (!range) {
-                                return;
-                            }
-
-                            editor.execCommand("save");
-
-                            var start = range.startContainer,
-                                pre = start;
-
-                            while (start.nodeName() !== "body") {
-                                pre = start;
-                                start = start.parent();
-                            }
-
-                            range.collapse(true);
-
-                            range.splitElement(pre);
-
-                            substitute.insertAfter(pre);
-
-                            editor.execCommand("save");
+                        if (!range) {
+                            return;
                         }
+
+                        editor.execCommand("save");
+
+                        var start = range.startContainer,
+                            pre = start;
+
+                        while (start.nodeName() !== "body") {
+                            pre = start;
+                            start = start.parent();
+                        }
+
+                        range.collapse(true);
+
+                        range.splitElement(pre);
+
+                        substitute.insertAfter(pre);
+
+                        editor.execCommand("save");
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return pageBreak;
 }, {
     "requires":["editor", "../fakeObjects/"]
 });

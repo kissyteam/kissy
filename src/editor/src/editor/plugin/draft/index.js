@@ -348,8 +348,12 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         });
     }
 
-    return {
-        init:function (editor) {
+    function DraftPlugin() {
+
+    }
+
+    S.augment(DraftPlugin, {
+        renderUI:function (editor) {
             if (localStorage.ready) {
                 localStorage.ready(function () {
                     init(editor);
@@ -358,7 +362,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 init(editor);
             }
         }
-    };
+    });
+
+    return DraftPlugin;
+
 }, {
     "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
 });

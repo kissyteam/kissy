@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 12:10
+build time: Jun 14 23:53
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 14 12:10
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120614121053';
+        S.__BUILD_TIME = '20120614235302';
     })();
 
     return S;
@@ -523,7 +523,7 @@ build time: Jun 14 12:10
         filter = AP.filter,
         every = AP.every,
         some = AP.some,
-        //reduce = AP.reduce,
+    //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
@@ -531,17 +531,17 @@ build time: Jun 14 12:10
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
         STAMP_MARKER = '__~ks_stamped',
-        // IE doesn't include non-breaking-space (0xa0) in their \s character
-        // class (as required by section 7.2 of the ECMAScript spec), we explicitly
-        // include it in the regexp to enforce consistent cross-browser behavior.
+    // IE doesn't include non-breaking-space (0xa0) in their \s character
+    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+    // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         SEP = '&',
         EQ = '=',
-        // [[Class]] -> type pairs
+    // [[Class]] -> type pairs
         class2type = {},
-        // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+    // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;':'&',
             '&gt;':'>',
@@ -554,7 +554,7 @@ build time: Jun 14 12:10
         reverseEntities = {},
         escapeReg,
         unEscapeReg,
-        // - # $ ^ * ( ) + [ ] { } | \ , . ?
+    // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
@@ -1379,9 +1379,9 @@ build time: Jun 14 12:10
                 ms = ms || 150;
 
                 if (ms === -1) {
-                    return (function () {
+                    return function () {
                         fn.apply(context || this, arguments);
-                    });
+                    };
                 }
                 var bufferTimer = null;
 
@@ -4095,7 +4095,7 @@ build time: Jun 14 12:10
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120614121053'
+        tag:'20120614235302'
     }, getBaseInfo()));
 
     /**

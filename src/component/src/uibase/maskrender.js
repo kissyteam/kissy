@@ -65,6 +65,12 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     function Mask() {
     }
 
+    Mask.ATTRS = {
+        maskShared:{
+            value:true
+        }
+    }
+
     Mask.prototype = {
 
         _maskExtShow:function () {

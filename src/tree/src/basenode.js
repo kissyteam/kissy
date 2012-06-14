@@ -299,12 +299,6 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                         return id;
                     }
                 },
-                /**
-                 * Can used For config.
-                 * Content of current tree node.
-                 * @type String
-                 */
-                content:{view:true},
 
                 /**
                  * Only For Config.
@@ -314,35 +308,38 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Boolean
                  */
                 isLeaf:{
-                    view:true
+                    view:1
                 },
 
                 /**
                  * Element for expand icon.
                  * @type {NodeList}
                  */
-                expandIconEl:{ view:true},
+                expandIconEl:{
+                    view:1
+                },
 
                 /**
                  * Element for icon.
                  * @type {NodeList}
                  */
-                iconEl:{ view:true},
+                iconEl:{
+                    view:1
+                },
 
                 /**
                  * Whether current tree node is selected.
                  * @type Boolean
                  */
                 selected:{
-                    view:true
+                    view:1
                 },
 
                 /**
                  * Whether current tree node is expanded.
                  */
                 expanded:{
-                    value:false,
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -350,7 +347,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type String
                  */
                 tooltip:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -365,24 +362,13 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Number
                  */
                 depth:{
-                    value:0,
-                    view:true
+                    view:1
                 },
                 focusable:{
                     value:false
                 },
                 decorateChildCls:{
-                    value:"tree-children"
-                }
-            },
-
-            HTML_PARSER:{
-                expanded:function (el) {
-                    var children = el.one("." + this.getCssClassWithPrefix("tree-children"));
-                    if (!children) {
-                        return false;
-                    }
-                    return children.css("display") != "none";
+                    value:"ks-tree-children"
                 }
             }
         });

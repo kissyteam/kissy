@@ -5,8 +5,12 @@
 KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
     var Node = S.Node;
 
-    return {
-        init:function (editor) {
+    function Resize() {
+
+    }
+
+    S.augment(Resize, {
+        renderUI:function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
@@ -68,7 +72,9 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 resizer.remove();
             });
         }
-    };
+    });
+
+    return Resize;
 }, {
     requires:['editor', 'dd']
 });

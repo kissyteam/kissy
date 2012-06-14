@@ -23,9 +23,13 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             + '<a class="ks-editor-bubble-link ' +
             'ks-editor-bubble-remove" href="#">删除</a>';
 
-    return {
-        init:function (editor) {
 
+    function ImagePlugin() {
+
+    }
+
+    S.augment(ImagePlugin, {
+        renderUI:function (editor) {
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image", selectedEl);
             }
@@ -145,7 +149,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 }
             });
         }
-    };
+    });
+
+    return ImagePlugin;
 }, {
     requires:['editor',
         '../button/',

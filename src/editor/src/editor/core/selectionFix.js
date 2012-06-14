@@ -7,14 +7,14 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/selection/index", function (S, Editor) {
+KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        DOM= S.DOM,
+        DOM = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 
@@ -139,8 +139,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
 
         var savedRange,
             saveEnabled,
-            // 2010-10-08 import from ckeditor 3.4.1
-            // 点击(mousedown-focus-mouseup)，不保留原有的 selection
+        // 2010-10-08 import from ckeditor 3.4.1
+        // 点击(mousedown-focus-mouseup)，不保留原有的 selection
             restoreEnabled = TRUE;
 
         // Listening on document element ensures that
@@ -331,8 +331,6 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
      * @param editor
      */
     function monitorSelectionChange(editor) {
-        var doc = editor.get("document")[0];
-
         // Matching an empty paragraph at the end of document.
         // 注释也要排除掉
         var emptyParagraphRegexp =
@@ -406,14 +404,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock.next(nextValidEl,1);
+                        var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
                             element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock.prev(nextValidEl,1);
+                            element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
                                 element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
@@ -436,7 +434,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
              *  当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              *  解决：增加新的 p
              */
-            var lastRange = new Editor.Range(doc),
+            var doc = editor.get("document")[0],
+                lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方
             lastRange
@@ -470,5 +469,5 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });

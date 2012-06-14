@@ -4,8 +4,13 @@
  */
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
-    return {
-        init:function (editor) {
+    function FontFamilyPlugin() {
+
+    }
+
+    S.augment(FontFamilyPlugin, {
+        renderUI:function (editor) {
+
             cmd.init(editor);
 
             var pluginConfig = editor.get("pluginConfig"),
@@ -86,7 +91,10 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
                     children:fontFamilies.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontFamilyPlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });

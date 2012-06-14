@@ -60,7 +60,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
                     });
                     menu.set("xy", [x, y]);
                     menu.show();
-                    Editor.fire("contextmenu", {
+                    self.fire("contextmenu", {
                         contextmenu:menu
                     });
                     window.focus();

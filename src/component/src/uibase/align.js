@@ -237,7 +237,9 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
          *     }
          * </code>
          */
-        align:{}
+        align:{
+            value:{}
+        }
     };
 
     function getRegion(node) {

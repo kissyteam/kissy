@@ -2,9 +2,9 @@
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknodeRender", function (S, Node,BaseNodeRender) {
+KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
     var $ = Node.all,
-        ICON_CLS = "tree-icon",
+        ICON_CLS = "ks-tree-icon",
         CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = " ks-inline-block";
@@ -13,7 +13,7 @@ KISSY.add("tree/checknodeRender", function (S, Node,BaseNodeRender) {
         createDom:function () {
             var self = this;
             var expandIconEl = self.get("expandIconEl"),
-                checkEl = $("<div class='" + self.getCssClassWithPrefix(ICON_CLS) + INLINE_BLOCK + "'/>").insertAfter(expandIconEl);
+                checkEl = $("<div class='" + ICON_CLS + INLINE_BLOCK + "'/>").insertAfter(expandIconEl);
             self.__set("checkEl", checkEl);
         },
 
@@ -27,7 +27,13 @@ KISSY.add("tree/checknodeRender", function (S, Node,BaseNodeRender) {
     }, {
         ATTRS:{
             checkEl:{},
-            checkState:{}
+            checkState:{
+                // check 的三状态
+                // 0 一个不选
+                // 1 儿子有选择
+                // 2 全部都选了
+                value:0
+            }
         },
 
         CHECK_CLS:CHECK_CLS

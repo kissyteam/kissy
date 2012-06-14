@@ -22,8 +22,12 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
         }
     });
 
-    return {
-        init:function (editor) {
+
+    function XiamiMusicPlugin() {
+    }
+
+    S.augment(XiamiMusicPlugin, {
+        renderUI:function (editor) {
 
 
             var dataProcessor = editor.htmlDataProcessor,
@@ -114,8 +118,10 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             });
 
         }
-    };
+    });
 
+
+    return XiamiMusicPlugin;
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
 });

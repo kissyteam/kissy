@@ -3,15 +3,21 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
-    return {
-        init:function (editor) {
+
+    function Underline() {
+    }
+
+    S.augment(Underline, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("underline",{
+            editor.addButton("underline", {
                 cmdType:"underline",
                 tooltip:"下划线 "
             }, ui.Button);
         }
-    };
+    });
+
+    return Underline;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });

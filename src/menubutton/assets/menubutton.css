@@ -27,6 +27,7 @@
     border-style: solid;
     border-color: #aaa;
     padding: 3px 4px;
+    position: relative;
 }
 
 /* State: disabled. */
@@ -66,6 +67,7 @@
 .ks-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: top;
+    margin-right: 20px;
 }
 
 /* Dropdown arrow style. */
@@ -75,6 +77,9 @@
     /* Client apps may override the URL at which they serve the sprite. */
     background: url(editortoolbar.png) no-repeat -388px 0;
     vertical-align: top;
+    position: absolute;
+    right: 3px;
+    top:2px;
 }
 
 /* Pill (collapsed border) styles. */

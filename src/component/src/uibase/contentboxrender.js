@@ -8,9 +8,10 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     }
 
     ContentBoxRender.ATTRS = {
-        contentEl:{},
+        contentEl:{
+            // 不写 valueFn,留待 createDom 处理
+        },
         contentElAttrs:{},
-        contentElCls:{},
         contentElStyle:{},
         contentTagName:{
             value:"div"
@@ -20,13 +21,9 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     /*
      ! contentEl 只能由组件动态生成
      */
-    var constructEl = BoxRender.construct;
+    var constructEl = BoxRender.constructEl;
 
     ContentBoxRender.prototype = {
-
-        // no need ,shift create work to __createDom
-        __renderUI:function () {
-        },
 
         __createDom:function () {
             var self = this,
@@ -59,15 +56,6 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
         _uiSetContentElStyle:function (v) {
             this.get("contentEl").css(v);
-        },
-
-        _uiSetContent:function (c) {
-            var contentEl = this.get("contentEl");
-            if (typeof c == "string") {
-                contentEl.html(c);
-            } else if (c) {
-                contentEl.empty().append(c);
-            }
         }
     };
 

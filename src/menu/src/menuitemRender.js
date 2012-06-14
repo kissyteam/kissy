@@ -4,14 +4,13 @@
  */
 KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
-    var CHECK_CLS = "menuitem-checkbox";
+    var CHECK_CLS = "ks-menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = self.getCssClassWithPrefix(CHECK_CLS),
-            checkEl = el.one("." + cls);
+            checkEl = el.one("." + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
+            checkEl = new Node("<div class='" + CHECK_CLS + "'/>").prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();
         }
@@ -64,6 +63,12 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
             checked:{}
+        },
+        HTML_PARSER:{
+            selectable:function (el) {
+                var cls = this.getCssClassWithPrefix("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 }, {

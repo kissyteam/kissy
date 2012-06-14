@@ -6,12 +6,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
+KISSY.add("editor/core/htmlDataProcessor", function (S,Editor) {
 
     return {
         init:function (editor) {
             var undefined = undefined,
-                Editor = S.Editor,
                 Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -568,5 +567,5 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });

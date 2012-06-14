@@ -23,6 +23,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     Close.ATTRS = {
         closable:{
+            value:true
         },
         closeBtn:{
         }

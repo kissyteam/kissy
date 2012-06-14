@@ -24,7 +24,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type NodeList
          */
         contentEl:{
-            view:true
+            view:1
         },
 
         /**
@@ -32,7 +32,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type Object
          */
         contentElAttrs:{
-            view:true
+            view:1
         },
 
         /**
@@ -40,7 +40,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type Object
          */
         contentElStyle:{
-            view:true
+            view:1
         },
 
         /**
@@ -49,7 +49,7 @@ KISSY.add("component/uibase/contentbox", function () {
          * @type String
          */
         contentTagName:{
-            view:true
+            view:1
         }
     };
 

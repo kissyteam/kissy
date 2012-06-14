@@ -8,6 +8,10 @@ KISSY.use("menu", function (S, Menu) {
         autoHideOnMouseLeave:true,
         // ms，鼠标脱离菜单多长时间后自动隐藏
         autoHideDelay:0.3,
+        align:{
+            offset:[-1, -1],
+            points:['bl', 'tl']
+        },
         prefixCls:prefixCls
     });
 
@@ -22,12 +26,6 @@ KISSY.use("menu", function (S, Menu) {
     var b = new Menu.SubMenu({
         prefixCls:prefixCls,
         content:'<span class="title">更多</span>',
-        menuCfg:{
-            align:{
-                offset:[-1, -1],
-                points:['bl', 'tl']
-            }
-        },
         menu:sb
     });
 

@@ -4,3 +4,8 @@ editorXX.removeCustomLink("");
 editorXX.removeCustomStyle("");
 editorXX._uiSetMode("");
 editorXX.addAttrs({},{});
+editorXX._uiSetElAttrs();
+editorXX._uiSetElCls();
+editorXX._uiSetElStyle();
+editorXX._uiSetElAttrs();
+editorXX._uiSetElAttrs();

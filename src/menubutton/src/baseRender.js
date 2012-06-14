@@ -2,16 +2,18 @@
  * @fileOverview render aria and drop arrow for menubutton
  * @author  yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubuttonRender", function (S, Button) {
+KISSY.add("menubutton/baseRender", function (S, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="ks-inline-block ' +
-            'ks-menu-button-caption">{content}<' + '/div>' +
+    var CAPTION_TMPL = '<div class="ks-inline-block ' +
+            'ks-menu-button-caption"><' + '/div>',
+
+        DROP_TMPL =
             '<div class="ks-inline-block ' +
-            'ks-menu-button-dropdown">' +
-            '<div class=' +
-            '"ks-menu-button-dropdown-inner">' +
-            '<' + '/div>' +
-            '<' + '/div>',
+                'ks-menu-button-dropdown">' +
+                '<div class=' +
+                '"ks-menu-button-dropdown-inner">' +
+                '<' + '/div>' +
+                '<' + '/div>',
         CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
@@ -19,19 +21,10 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
 
         createDom:function () {
             var self = this,
-                el = self.get("el"),
-                html = S.substitute(MENU_BUTTON_TMPL, {
-                    content:self.get("content")
-                });
-            el.html(html)
+                el = self.get("el");
+            el.append(DROP_TMPL)
                 //带有 menu
                 .attr("aria-haspopup", true);
-        },
-
-        _uiSetContent:function (v) {
-            var caption = this.get("el").one("." + CAPTION_CLS);
-            caption.html("");
-            v && caption.append(v);
         },
 
         _uiSetCollapsed:function (v) {
@@ -47,9 +40,18 @@ KISSY.add("menubutton/menubuttonRender", function (S, Button) {
         }
     }, {
         ATTRS:{
+            contentEl:{
+                valueFn:function () {
+                    return S.all(CAPTION_TMPL);
+                }
+            },
+            contentElCls:{
+                value:"ks-menu-button-caption"
+            },
             activeItem:{
             },
             collapsed:{
+                value:true
             }
         }
     });

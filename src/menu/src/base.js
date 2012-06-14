@@ -190,7 +190,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                  * @type Menu.Item
                  */
                 activeItem:{
-                    view:true
+                    view:1
                 },
                 xrender:{
                     value:MenuRender

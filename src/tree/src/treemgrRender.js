@@ -2,7 +2,7 @@
  * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgrRender", function(S) {
+KISSY.add("tree/treemgrRender", function (S) {
     var FOCUSED_CLS = "tree-item-focused";
 
     function TreeMgrRender() {
@@ -16,17 +16,17 @@ KISSY.add("tree/treemgrRender", function(S) {
     };
 
     S.augment(TreeMgrRender, {
-        __renderUI:function() {
-            var self=this;
+        __renderUI:function () {
+            var self = this;
             self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
-            self.get("rowEl").addClass(self.getCssClassWithPrefix("tree-root-row"));
+            self.get("rowEl").addClass("ks-tree-root-row");
         },
 
-        _uiSetShowRootNode:function(v) {
+        _uiSetShowRootNode:function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         },
 
-        _uiSetFocused:function(v) {
+        _uiSetFocused:function (v) {
             this.get("el")[v ? "addClass" : "removeClass"](this.getCssClassWithPrefix(FOCUSED_CLS));
         }
     });

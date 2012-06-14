@@ -68,7 +68,6 @@
                     //view as a parameter
 
                     var sb = new Menu.PopupMenu({
-
                         // boolean，是否鼠标脱离菜单后自动隐藏
                         autoHideOnMouseLeave:true,
                         // ms，鼠标脱离菜单多长时间后自动隐藏
@@ -77,12 +76,14 @@
                             color:"red"
                         }
                     });
-                    sb.addChild(new Menu.Item({
 
-                        content:"submenuitem1"}));
                     sb.addChild(new Menu.Item({
+                        content:"submenuitem1"
+                    }));
 
-                        content:"submenuitem2"}));
+                    sb.addChild(new Menu.Item({
+                        content:"submenuitem2"
+                    }));
 
                     sb.addChild(new Menu.Separator());
 
@@ -103,29 +104,29 @@
                                 color:"red"
                             }
                         });
+
                         sb2.addChild(new Menu.Item({
+                            content:"submenuitem22"
+                        }));
 
-                            content:"submenuitem22"}));
                         var b2 = new Menu.SubMenu({
-
                             content:"sub-sub-menu",
                             menu:sb2
                         });
+
                         sb.addChild(b2);
                     }
 
                     var b = new Menu.SubMenu({
-
                         content:"submenu",
                         menu:sb
                     });
 
                     var menu = new Menu({
-
                         render:"#menuitem_container",
                         children:[b, new Menu.Item({
-
-                            content:"alone"})]
+                            content:"alone"
+                        })]
                     });
 
                     menu.render();
@@ -143,6 +144,7 @@
                             child.set("disabled", !!dis[0].checked);
                         });
                     });
+
                     dis[0].checked = false;
                 });
     })();

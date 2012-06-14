@@ -72,8 +72,12 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
         }
     });
 
-    return {
-        init:function (editor) {
+    function ElementPathPlugin() {
+
+    }
+
+    S.augment(ElementPathPlugin, {
+        renderUI:function (editor) {
             var elemPath = new ElementPaths({
                 editor:editor
             });
@@ -81,7 +85,9 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
                 elemPath.destroy();
             });
         }
-    };
+    });
+
+    return ElementPathPlugin;
 
 }, {
     requires:['editor']

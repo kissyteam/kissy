@@ -4,9 +4,13 @@
  */
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
+    function FontSizePlugin() {
 
-    return {
-        init:function (editor) {
+    }
+
+    S.augment(FontSizePlugin, {
+        renderUI:function (editor) {
+
 
             cmd.init(editor);
 
@@ -46,7 +50,10 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     children:fontSizes.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontSizePlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });

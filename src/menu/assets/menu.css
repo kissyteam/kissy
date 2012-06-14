@@ -33,3 +33,9 @@
     margin: 4px 0;
     padding: 0;
 }
+
+.ks-popupmenu {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+}

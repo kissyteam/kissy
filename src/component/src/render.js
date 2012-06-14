@@ -53,15 +53,6 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             },
 
             /**
-             * Return the dom element into which child component to be rendered.
-             * @return {NodeList}
-             */
-            getContentElement:function () {
-                var self = this;
-                return self.get("contentEl") || self.get("el");
-            },
-
-            /**
              * @protected
              */
             _uiSetHighlighted:function (v) {
@@ -102,6 +93,14 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                     el = self.get("el"),
                     componentCls = self.getComponentCssClassWithState("-focused");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+            /**
+             * Return the dom element into which child component to be rendered.
+             * @return {NodeList}
+             */
+            getContentElement:function () {
+                return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
@@ -112,11 +111,15 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                 /**
                  * see {@link Component.Controller#prefixCls}
                  */
-                prefixCls:{},
+                prefixCls:{
+                    value:"ks-"
+                },
                 /**
                  * see {@link Component.Controller#focusable}
                  */
-                focusable:{},
+                focusable:{
+                    value:true
+                },
                 /**
                  * see {@link Component.Controller#focused}
                  */

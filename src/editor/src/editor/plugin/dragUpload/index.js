@@ -7,16 +7,14 @@
 KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
-        UA = S.UA,
         Utils = Editor.Utils,
         DOM = S.DOM;
 
-    if (UA['ie']) {
-        return;
+    function dragUpload() {
     }
 
-    return {
-        init:function (editor) {
+    S.augment(dragUpload, {
+        renderUI:function (editor) {
             var cfg = editor.get("pluginConfig")['dragUpload'] || {},
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,
@@ -24,7 +22,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                 serverUrl = cfg['serverUrl'] || "",
                 suffix = cfg['suffix'] || "png,jpg,jpeg,gif",
                 suffix_reg = new RegExp(suffix.split(/,/).join("|") + "$", "i"),
-                document = editor.get("document")[0],
+
                 inserted = {}, startMonitor = false;
 
             function nodeInsert(ev) {
@@ -35,68 +33,72 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                 }
             }
 
-            Event.on(document, "dragenter", function () {
-                //firefox 会插入伪数据
-                if (!startMonitor) {
-                    Event.on(document, "DOMNodeInserted", nodeInsert);
-                    startMonitor = true;
-                }
-            });
+            editor.docReady(function () {
+                var document = editor.get("document")[0];
+                Event.on(document, "dragenter", function () {
+                    //firefox 会插入伪数据
+                    if (!startMonitor) {
+                        Event.on(document, "DOMNodeInserted", nodeInsert);
+                        startMonitor = true;
+                    }
+                });
 
-            Event.on(document, "drop", function (ev) {
-                Event.remove(document, "DOMNodeInserted", nodeInsert);
-                startMonitor = false;
-                ev.halt();
-                ev = ev['originalEvent'];
+                Event.on(document, "drop", function (ev) {
+                    Event.remove(document, "DOMNodeInserted", nodeInsert);
+                    startMonitor = false;
+                    ev.halt();
+                    ev = ev['originalEvent'];
 
-                var archor, ap;
-                /**
-                 * firefox 会自动添加节点
-                 */
-                if (!S.isEmptyObject(inserted)) {
-                    S.each(inserted, function (el) {
-                        if (DOM.nodeName(el) == "img") {
-                            archor = el.nextSibling;
-                            ap = el.parentNode;
-                            DOM.remove(el);
+                    var archor, ap;
+                    /**
+                     * firefox 会自动添加节点
+                     */
+                    if (!S.isEmptyObject(inserted)) {
+                        S.each(inserted, function (el) {
+                            if (DOM.nodeName(el) == "img") {
+                                archor = el.nextSibling;
+                                ap = el.parentNode;
+                                DOM.remove(el);
+                            }
+                        });
+                        inserted = {};
+                    } else {
+                        // 空行里拖放肯定没问题，其他在文字中间可能不准确
+                        ap = document.elementFromPoint(ev.clientX, ev.clientY);
+                        archor = ap.lastChild;
+                    }
+
+                    var dt = ev['dataTransfer'];
+                    dt.dropEffect = "copy";
+                    var files = dt['files'];
+                    if (!files) {
+                        return;
+                    }
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i], name = file.name, size = file.size;
+                        if (!name.match(suffix_reg)) {
+                            continue;
                         }
-                    });
-                    inserted = {};
-                } else {
-                    // 空行里拖放肯定没问题，其他在文字中间可能不准确
-                    ap = document.elementFromPoint(ev.clientX, ev.clientY);
-                    archor = ap.lastChild;
-                }
+                        if (size / 1000 > sizeLimit) {
+                            continue;
+                        }
+                        var img = new Node("<img " + "src='" +
+                            Utils.debugUrl("theme/tao-loading.gif")
+                            + "'" + "/>");
+                        var nakeImg = img[0];
+                        ap.insertBefore(nakeImg, archor);
+                        var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
+                        // 防止拖放导致插入到 body 以外
+                        if (np_name == "head"
+                            || np_name == "html") {
+                            DOM.insertBefore(nakeImg, document.body.firstChild);
+                        }
 
-                var dt = ev['dataTransfer'];
-                dt.dropEffect = "copy";
-                var files = dt['files'];
-                if (!files) {
-                    return;
-                }
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i], name = file.name, size = file.size;
-                    if (!name.match(suffix_reg)) {
-                        continue;
+                        fileUpload(file, img);
                     }
-                    if (size / 1000 > sizeLimit) {
-                        continue;
-                    }
-                    var img = new Node("<img " + "src='" +
-                        Utils.debugUrl("theme/tao-loading.gif")
-                        + "'" + "/>");
-                    var nakeImg = img[0];
-                    ap.insertBefore(nakeImg, archor);
-                    var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
-                    // 防止拖放导致插入到 body 以外
-                    if (np_name == "head"
-                        || np_name == "html") {
-                        DOM.insertBefore(nakeImg, document.body.firstChild);
-                    }
-
-                    fileUpload(file, img);
-                }
+                });
             });
+
 
             if (window['XMLHttpRequest'] && !XMLHttpRequest.prototype.sendAsBinary) {
                 XMLHttpRequest.prototype.sendAsBinary = function (dataStr, contentType) {
@@ -173,8 +175,9 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                 reader['readAsBinaryString'](file);
             }
         }
-    };
+    });
 
+    return dragUpload;
 }, {
     requires:['editor']
 });

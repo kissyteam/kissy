@@ -4,8 +4,12 @@
  */
 KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
 
-    return {
-        init:function (editor) {
+    function Indent() {
+
+    }
+
+    S.augment(Indent, {
+        renderUI:function (editor) {
             indexCmd.init(editor);
             editor.addButton("indent", {
                 tooltip:"增加缩进量 ",
@@ -18,7 +22,9 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return Indent;
 
 }, {
     requires:['editor', './cmd']

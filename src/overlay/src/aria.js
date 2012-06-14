@@ -18,7 +18,7 @@ KISSY.add("overlay/aria", function (S, Event) {
          * @type Boolean
          */
         aria:{
-            view:true
+            view:1
         }
     };
 

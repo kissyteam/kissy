@@ -145,12 +145,13 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         // !TODO 耦合---
         function onHide() {
             bubble.hide();
+            var editorWin = editor.get("window")[0];
             Event.remove(editorWin, "scroll", onScroll);
         }
 
         editor.on("sourceMode", onHide);
 
-        var editorWin = editor.get("window")[0];
+
 
         function showImmediately() {
 
@@ -182,6 +183,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         function onShow() {
+            var editorWin = editor.get("window")[0];
             Event.on(editorWin, "scroll", onScroll);
             showImmediately();
         }

@@ -74,7 +74,7 @@
                 for (var i = 0; i < 50; i++) {
                     (function (i) {
 
-                        var menuCfg = {
+                        var menuConfig = {
                             align:{
                                 offset:[0, -1]
                             },
@@ -86,20 +86,19 @@
                             }
                         };
 
-                        function constructMenu(menuCfg) {
+                        function constructMenu(menuConfig) {
                             return S.mix({
                                 xclass:'popupmenu',
                                 children:[]
-                            }, menuCfg);
+                            }, menuConfig);
                         }
 
                         var b = new MenuButton.Select({
                             defaultCaption:"请选择",
                             prefixCls:"c2c-",
-                            render:holder,
-                            menuCfg:menuCfg,
+                            render:holder,                          
                             menu:(function () {
-                                var m = constructMenu(menuCfg);
+                                var m = constructMenu(menuConfig);
                                 for (var j = 0; j < 10; j++) {
                                     m.children.push({
                                         xclass:'option',

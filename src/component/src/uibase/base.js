@@ -11,6 +11,23 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         ucfirst = S.ucfirst,
         noop = S.noop;
 
+    function constructPlugins(plugins) {
+        S.each(plugins, function (plugin, i) {
+            if (S.isFunction(plugin)) {
+                plugins[i] = new plugin();
+            }
+        });
+    }
+
+
+    function actionPlugins(self, plugins, action) {
+        S.each(plugins, function (plugin) {
+            if (plugin[action]) {
+                plugin[action](self);
+            }
+        });
+    }
+
     /**
      * UIBase for class-based component.
      * @class
@@ -25,6 +42,22 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
+
+        var listener,
+            n,
+            plugins = self.get("plugins"),
+            listeners = self.get("listeners");
+
+        constructPlugins(plugins);
+
+        actionPlugins(self, plugins, "initializer");
+
+        for (n in listeners) {
+            listener = listeners[n];
+            self.on(n, listener.fn || listener, listener.scope);
+        }
+
+
         // 是否自动渲染
         config && config.autoRender && self.render();
 
@@ -253,6 +286,38 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
          */
         created:{
             value:false
+        },
+
+        /**
+         * Config listener on created.
+         * @example
+         * <code>
+         * {
+         *  click:{
+         *      scope:{x:1},
+         *      fn:function(){
+         *          alert(this.x);
+         *      }
+         *  }
+         * }
+         * or
+         * {
+         *  click:function(){
+         *          alert(this.x);
+         *        }
+         * }
+         * </code>
+         */
+        listeners:{
+            value:{}
+        },
+
+        /**
+         * Plugins
+         * @type Function[]|Object[]
+         */
+        plugins:{
+            value:[]
         }
     };
 
@@ -273,6 +338,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                     callMethodByHierarchy(self, "createDom", "__createDom");
                     self.__set("created", true);
                     self.fire('afterCreateDom');
+                    actionPlugins(self, self.get("plugins"), "createDom");
                 }
                 return self;
             },
@@ -284,18 +350,22 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
+                    var plugins = self.get("plugins");
                     self.create(undefined);
                     self.fire('beforeRenderUI');
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
                     self.fire('afterRenderUI');
+                    actionPlugins(self, plugins, "renderUI");
                     self.fire('beforeBindUI');
                     bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
                     self.fire('afterBindUI');
+                    actionPlugins(self, plugins, "bindUI");
                     self.fire('beforeSyncUI');
                     syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
                     self.fire('afterSyncUI');
+                    actionPlugins(self, plugins, "syncUI");
                     self.__set("rendered", true);
                 }
                 return self;

@@ -4,15 +4,21 @@
  */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function backColor() {
+    }
+
+    S.augment(backColor, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("backColor",{
+            editor.addButton("backColor", {
                 cmdType:'backColor',
                 tooltip:"背景颜色"
             }, Button);
         }
-    };
+    });
+
+    return backColor;
+
 }, {
     requires:['editor', '../color/btn', './cmd']
 });
