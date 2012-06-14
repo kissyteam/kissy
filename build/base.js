@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 20:19
+build time: Jun 14 12:10
 */
 /**
  * @fileOverview attribute management
@@ -129,8 +129,8 @@ KISSY.add('base/attribute', function (S, undefined) {
         return s;
     }
 
-    function getPathNameValue(self, name) {
-        var declared = self.hasAttr(name), path, value;
+    function getPathNamePair(self, name) {
+        var declared = self.hasAttr(name), path;
 
         if (
         // 声明过，那么 xx.yy 当做普通属性
@@ -140,12 +140,9 @@ KISSY.add('base/attribute', function (S, undefined) {
             name = path.shift();
         }
 
-        value = self.get(name);
-
         return {
             path:path,
-            name:name,
-            value:value
+            name:name
         };
     }
 
@@ -169,12 +166,12 @@ KISSY.add('base/attribute', function (S, undefined) {
             path,
             subVal,
             prevVal,
-            pathNameValue = getPathNameValue(self, name),
+            pathNamePair = getPathNamePair(self, name),
             fullName = name;
 
-        name = pathNameValue.name;
-        path = pathNameValue.path;
-        prevVal = pathNameValue.value;
+        name = pathNamePair.name;
+        path = pathNamePair.path;
+        prevVal = self.get(name);
 
         if (path) {
             subVal = getValueByPath(prevVal, path);
@@ -436,6 +433,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                     value = setValue;
                 }
 
+
                 // finally set
                 getAttrVals(self)[name] = value;
             },
@@ -538,16 +536,17 @@ KISSY.add('base/attribute', function (S, undefined) {
         });
 
     function validate(self, name, value, all) {
-        var path, prevVal, pathNameValue;
+        var path, prevVal, pathNamePair;
 
-        pathNameValue = getPathNameValue(self, name);
+        pathNamePair = getPathNamePair(self, name);
 
-        name = pathNameValue.name;
-        path = pathNameValue.path;
-        prevVal = pathNameValue.value;
+        name = pathNamePair.name;
+        path = pathNamePair.path;
 
-        value = getValueBySubValue(prevVal, path, value);
-
+        if (path) {
+            prevVal = self.get(name);
+            value = getValueBySubValue(prevVal, path, value);
+        }
         var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
             e,
             validator = attrConfig['validator'];
@@ -561,9 +560,6 @@ KISSY.add('base/attribute', function (S, undefined) {
         return undefined;
     }
 
-    if (undefined) {
-        Attribute.prototype.addAttrs = undefined;
-    }
     return Attribute;
 });
 
