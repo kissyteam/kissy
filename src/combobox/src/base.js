@@ -89,7 +89,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
      */
     ComboBox = Component.Controller.extend(
         /**
-         * @lends ComboBox
+         * @lends ComboBox#
          */
         {
 
@@ -418,7 +418,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         },
         {
             ATTRS:/**
-             * @lends ComboBox
+             * @lends ComboBox#
              */
             {
 

@@ -58,15 +58,22 @@
 <span id='line51' class='line'> 51</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line52' class='line'> 52</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line53' class='line'> 53</span> 
-<span id='line54' class='line'> 54</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line55' class='line'> 55</span> </span><span class="WHIT">        </span><span class="NAME">init</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">editor</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line56' class='line'> 56</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">CheckboxSourceArea</span><span class="PUNC">(</span><span class="NAME">editor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line57' class='line'> 57</span> </span><span class="WHIT">            </span><span class="NAME">editor.on</span><span class="PUNC">(</span><span class="STRN">"destroy"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line58' class='line'> 58</span> </span><span class="WHIT">                </span><span class="NAME">c.destroy</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line59' class='line'> 59</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line60' class='line'> 60</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line62' class='line'> 62</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line63' class='line'> 63</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"editor"</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line64' class='line'> 64</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line65' class='line'> 65</span> </span></pre></body></html>
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">CheckboxSourceAreaPlugin</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> 
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> 
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">    </span><span class="NAME">S.augment</span><span class="PUNC">(</span><span class="NAME">CheckboxSourceAreaPlugin</span><span class="PUNC">,</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">        </span><span class="NAME">renderUI</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">editor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> 
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">c</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">CheckboxSourceArea</span><span class="PUNC">(</span><span class="NAME">editor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">            </span><span class="NAME">editor.on</span><span class="PUNC">(</span><span class="STRN">"destroy"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">                </span><span class="NAME">c.destroy</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> 
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckboxSourceAreaPlugin</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"editor"</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span></pre></body></html>

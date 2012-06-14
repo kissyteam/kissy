@@ -128,7 +128,7 @@
 <span id='line121' class='line'>121</span>                  * @type Boolean
 <span id='line122' class='line'>122</span>                  */</span><span class="WHIT">
 <span id='line123' class='line'>123</span> </span><span class="WHIT">                </span><span class="NAME">selectable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line124' class='line'>124</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line124' class='line'>124</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line125' class='line'>125</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line126' class='line'>126</span> 
 <span id='line127' class='line'>127</span> </span><span class="WHIT">                </span><span class="COMM">/**
@@ -137,7 +137,7 @@
 <span id='line130' class='line'>130</span>                  * @type Boolean
 <span id='line131' class='line'>131</span>                  */</span><span class="WHIT">
 <span id='line132' class='line'>132</span> </span><span class="WHIT">                </span><span class="NAME">checkable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line133' class='line'>133</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line133' class='line'>133</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line134' class='line'>134</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line135' class='line'>135</span> 
 <span id='line136' class='line'>136</span> </span><span class="WHIT">                </span><span class="COMM">/**
@@ -150,7 +150,7 @@
 <span id='line143' class='line'>143</span>                  * @type Boolean
 <span id='line144' class='line'>144</span>                  */</span><span class="WHIT">
 <span id='line145' class='line'>145</span> </span><span class="WHIT">                </span><span class="NAME">checked</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line146' class='line'>146</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line146' class='line'>146</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line147' class='line'>147</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line148' class='line'>148</span> 
 <span id='line149' class='line'>149</span> </span><span class="WHIT">                </span><span class="COMM">/**
@@ -158,26 +158,19 @@
 <span id='line151' class='line'>151</span>                  * @type Boolean
 <span id='line152' class='line'>152</span>                  */</span><span class="WHIT">
 <span id='line153' class='line'>153</span> </span><span class="WHIT">                </span><span class="NAME">selected</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line154' class='line'>154</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line154' class='line'>154</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line155' class='line'>155</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line156' class='line'>156</span> 
 <span id='line157' class='line'>157</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line158' class='line'>158</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">MenuItemRender</span><span class="WHIT">
 <span id='line159' class='line'>159</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line160' class='line'>160</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line161' class='line'>161</span> 
-<span id='line162' class='line'>162</span> </span><span class="WHIT">            </span><span class="NAME">HTML_PARSER</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line163' class='line'>163</span> </span><span class="WHIT">                </span><span class="NAME">selectable</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">el</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line164' class='line'>164</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cls</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.getCssClassWithPrefix</span><span class="PUNC">(</span><span class="STRN">"menuitem-selectable"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line165' class='line'>165</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">el.hasClass</span><span class="PUNC">(</span><span class="NAME">cls</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line166' class='line'>166</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line167' class='line'>167</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line168' class='line'>168</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line169' class='line'>169</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">"menuitem"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line170' class='line'>170</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
-<span id='line171' class='line'>171</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line172' class='line'>172</span> 
-<span id='line173' class='line'>173</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line174' class='line'>174</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line175' class='line'>175</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line176' class='line'>176</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line160' class='line'>160</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line161' class='line'>161</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line162' class='line'>162</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">"menuitem"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line163' class='line'>163</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line164' class='line'>164</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line165' class='line'>165</span> 
+<span id='line166' class='line'>166</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line167' class='line'>167</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line168' class='line'>168</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line169' class='line'>169</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
