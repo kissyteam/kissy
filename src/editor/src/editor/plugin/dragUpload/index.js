@@ -10,12 +10,13 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
         Utils = Editor.Utils,
         DOM = S.DOM;
 
-    function dragUpload() {
+    function dragUpload(config) {
+        this.config=config||{};
     }
 
     S.augment(dragUpload, {
         renderUI:function (editor) {
-            var cfg = editor.get("pluginConfig")['dragUpload'] || {},
+            var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,
                 serverParams = cfg['serverParams'] || {},

@@ -4,8 +4,8 @@
  */
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
-    function FontSizePlugin() {
-
+    function FontSizePlugin(config) {
+this.config=config||{};
     }
 
     S.augment(FontSizePlugin, {
@@ -25,8 +25,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                 return v;
             }
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontSizes = pluginConfig["fontSize"];
+            var fontSizes = this.config;
 
             fontSizes = fontSizes || {};
 

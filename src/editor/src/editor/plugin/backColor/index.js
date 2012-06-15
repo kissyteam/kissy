@@ -4,7 +4,8 @@
  */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
-    function backColor() {
+    function backColor(config) {
+        this.config=config||{};
     }
 
     S.augment(backColor, {
@@ -12,7 +13,8 @@ KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
             cmd.init(editor);
             editor.addButton("backColor", {
                 cmdType:'backColor',
-                tooltip:"背景颜色"
+                tooltip:"背景颜色",
+                pluginConfig:this.config
             }, Button);
         }
     });

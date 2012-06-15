@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * justifyCenter button.
@@ -14,8 +14,12 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+
+    function justifyCenter() {
+    }
+
+    S.augment(justifyCenter, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",
@@ -40,7 +44,9 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyCenter;
 }, {
     requires:['editor', './cmd']
 });

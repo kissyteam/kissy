@@ -3,34 +3,24 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
-    function Common(self) {
-        var editor = self.get("editor");
-        /**
-         * save,restore完，更新工具栏状态
-         */
-        editor.on("afterSave afterRestore", self._respond, self);
-    }
-
 
     var UndoBtn = Button.extend({
 
         bindUI:function () {
-            Common(this);
-            this.on("click", function () {
-                this.get("editor").execCommand("undo");
-            });
-        },
-
-        _respond:function (ev) {
             var self = this,
-                index = ev.index;
-
-            //有状态可退
-            if (index > 0) {
-                self.set("disabled", false);
-            } else {
-                self.set("disabled", true);
-            }
+                editor = self.get("editor");
+            self.on("click", function () {
+                editor.execCommand("undo");
+            });
+            editor.on("afterUndo afterRedo afterSave", function (ev) {
+                var index = ev.index;
+                //有状态可后退
+                if (index > 0) {
+                    self.set("disabled", false);
+                } else {
+                    self.set("disabled", true);
+                }
+            });
         }
     }, {
         ATTRS:{
@@ -48,22 +38,21 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     var RedoBtn = Button.extend({
 
         bindUI:function () {
-            Common(this);
-            this.on("click", function () {
-                this.get("editor").execCommand("redo");
-            });
-        },
-
-        _respond:function (ev) {
             var self = this,
-                history = ev.history,
-                index = ev.index;
-            //有状态可前进
-            if (index < history.length - 1) {
-                self.set("disabled", false);
-            } else {
-                self.set("disabled", true);
-            }
+                editor = self.get("editor");
+            self.on("click", function () {
+                editor.execCommand("redo");
+            });
+            editor.on("afterUndo afterRedo afterSave", function (ev) {
+                var history = ev.history,
+                    index = ev.index;
+                //有状态可前进
+                if (index < history.length - 1) {
+                    self.set("disabled", false);
+                } else {
+                    self.set("disabled", true);
+                }
+            });
         }
     }, {
         mode:{

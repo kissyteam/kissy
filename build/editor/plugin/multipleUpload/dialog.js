@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * multipleUpload dialog
@@ -23,9 +23,10 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor, ProgressBa
         name = "ks-editor-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 
-    function MultiUploadDialog(editor) {
+    function MultiUploadDialog(editor, config) {
         this.editor = editor;
         this.progressBars = {};
+        this.config = config;
         Editor.Utils.lazyRun(this, "_prepareShow", "_realShow");
     }
 
@@ -50,7 +51,7 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor, ProgressBa
         _prepareShow:function () {
             var self = this,
                 editor = self.editor,
-                uploadCfg = editor.get("pluginConfig")["multipleUpload"];
+                uploadCfg = self.config;
 
             self.addRes(function () {
                 var progressBars = self.progressBars;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * insert image for kissy editor
@@ -28,11 +28,20 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             + '<a class="ks-editor-bubble-link ' +
             'ks-editor-bubble-remove" href="#">删除</a>';
 
-    return {
-        init:function (editor) {
+
+    function ImagePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(ImagePlugin, {
+        renderUI:function (editor) {
+
+            var self=this;
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image", selectedEl);
+                DialogLoader.useDialog(editor, "image",
+                    self.config,
+                    selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
@@ -150,7 +159,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 }
             });
         }
-    };
+    });
+
+    return ImagePlugin;
 }, {
     requires:['editor',
         '../button/',

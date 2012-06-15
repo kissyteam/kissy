@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * justifyLeft button.
@@ -14,8 +14,11 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+    function justifyLeft() {
+    }
+
+    S.augment(justifyLeft, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyLeft", {
                 tooltip:"左对齐",
@@ -40,7 +43,9 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyLeft;
 }, {
     requires:['editor', './cmd']
 });

@@ -64,6 +64,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         _restoreState:function () {
             var self = this,
                 editor = self.editor,
+                textareaEl=editor.get("textarea"),
                 //恢复父节点的position原状态 bugfix:最大化被父元素限制
                 _savedParents = self._savedParents;
             if (_savedParents) {
@@ -75,10 +76,10 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             }
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
-            editor.get("iframeWrapEl").css({
+            textareaEl.parent().css({
                 height:self.iframeHeight
             });
-            editor.get("textarea").css({
+            textareaEl.css({
                 height:self.iframeHeight
             });
             DOM.css(doc.body, {
@@ -120,7 +121,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 editor = self.editor,
                 _savedParents = [],
                 editorEl = editor.get("el");
-            self.iframeHeight = editor.get("iframeWrapEl").style("height");
+            self.iframeHeight = editor.get("textarea").parent().style("height");
             self.editorElWidth = editorEl.style("width");
             //主窗口滚动条也要保存哦
             self.scrollLeft = DOM.scrollLeft();
@@ -206,6 +207,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 editorEl = editor.get("el"),
                 viewportHeight = DOM.viewportHeight(),
                 viewportWidth = DOM.viewportWidth(),
+                textareaEl=editor.get("textarea"),
                 statusHeight = editor.get("statusBarEl") ?
                     editor.get("statusBarEl")[0].offsetHeight : 0,
                 toolHeight = editor.get("toolBarEl")[0].offsetHeight;
@@ -240,12 +242,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 top:0
             });
 
-            editor.get("iframeWrapEl").css({
+            textareaEl.parent().css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
 
 
-            editor.get("textarea").css({
+            textareaEl.css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
 

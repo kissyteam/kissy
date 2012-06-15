@@ -3,10 +3,7 @@
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, Editor, Utils, focusManager,
-                              Styles,
-                              zIndexManger,
-                              meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexManger, meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
     var TRUE = true,
 
         undefined = undefined,
@@ -112,11 +109,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager,
 
                 editorEl.html(EDITOR_TPL);
 
+                wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+
                 self._UUID = S.guid();
 
-
                 self.set({
-                    iframeWrapEl:wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS),
                     toolBarEl:editorEl.one(KE_TOOLBAR_CLASS),
                     statusBarEl:editorEl.one(KE_STATUSBAR_CLASS)
                 }, {
@@ -138,65 +135,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager,
                 // 实例集中管理
                 focusManager.register(self);
             },
-
-            /**
-             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-             * width 依然在 el 上设置
-             */
-            _uiSetHeight:function (v) {
-                var self = this,
-                    toolBarEl = self.get("toolBarEl"),
-                    statusBarEl = self.get("statusBarEl");
-                v = parseInt(v, 10);
-                // 减去顶部和底部工具条高度
-                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
-                    (statusBarEl && statusBarEl.outerHeight() || 0);
-                self.get("iframeWrapEl").css(HEIGHT, v);
-                self.get("textarea").css(HEIGHT, v);
-            },
-
-
-            adjustHeight:function () {
-                var self = this, h;
-                if (h = self.get("height")) {
-                    self._uiSetHeight(h);
-                }
-            },
-
-            _uiSetMode:function (v) {
-                var self = this,
-                    save,
-                    iframe = self.get("iframe"),
-                    textarea = self.get("textarea");
-                if (v == WYSIWYG_MODE) {
-                    self.execCommand("save");
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        self.execCommand("save");
-                        self.detach("docReady", save);
-                    });
-                    self._setData(textarea.val());
-                    self.fire("wysiwygMode");
-                } else {
-                    textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
-                    textarea.show();
-                    iframe.hide();
-                    self.fire("sourceMode");
-                }
-            },
-
-            // 覆盖 controller
-            _uiSetFocused:function (v) {
-                // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
-                }
-            },
-
             // 在插件运行前,运行核心兼容
             renderUI:function () {
-                var self=this;
+                var self = this;
                 clipboard.init(self);
                 enterKey.init(self);
                 htmlDataProcessor.init(self);
@@ -239,6 +180,69 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager,
                 self.on("focus", function () {
                     self.get("el").addClass(prefixCls + "editor-focused");
                 });
+            },
+
+            syncUI:function () {
+                var self = this,
+                    h = self.get("height")
+                if (h) {
+                    // 根据容器高度，设置内层高度
+                    self._uiSetHeight(h);
+                }
+            },
+
+            /**
+             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+             * width 依然在 el 上设置
+             */
+            _uiSetHeight:function (v) {
+                var self = this,
+                    textareaEl = self.get("textarea"),
+                    toolBarEl = self.get("toolBarEl"),
+                    statusBarEl = self.get("statusBarEl");
+                v = parseInt(v, 10);
+                // 减去顶部和底部工具条高度
+                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+                    (statusBarEl && statusBarEl.outerHeight() || 0);
+                textareaEl.parent().css(HEIGHT, v);
+                textareaEl.css(HEIGHT, v);
+            },
+
+            _uiSetMode:function (v) {
+                var self = this,
+                    save,
+                    rendered = self.get("render"),
+                    iframe = self.get("iframe"),
+                    textarea = self.get("textarea");
+                if (v == WYSIWYG_MODE) {
+                    // 初始化时不保存历史
+                    if (rendered) {
+                        self.execCommand("save");
+                    }
+                    // recreate iframe need load time
+                    self.on("docReady", save = function () {
+                        if (rendered) {
+                            self.execCommand("save");
+                        }
+                        self.detach("docReady", save);
+                    });
+                    self._setData(textarea.val());
+                    self.fire("wysiwygMode");
+                } else {
+                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    textarea[0].focus();
+                    textarea.show();
+                    iframe.hide();
+                    self.fire("sourceMode");
+                }
+            },
+
+            // 覆盖 controller
+            _uiSetFocused:function (v) {
+                // docReady 后才能调用
+                if (v && this.__docReady) {
+                    this.focus();
+                }
             },
 
             destructor:function () {
@@ -1119,7 +1123,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager,
         if (textarea.hasAttr("tabindex")) {
             iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
         }
-        self.get("iframeWrapEl").prepend(iframe);
+        textarea.parent().prepend(iframe);
         self.set("iframe", iframe);
         self.__docReady = 0;
         // With FF, it's better to load the data on iframe.load. (#3894,#4058)

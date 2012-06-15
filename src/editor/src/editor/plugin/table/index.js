@@ -381,7 +381,8 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             }
         };
 
-    function TablePlugin() {
+    function TablePlugin(config) {
+        this.config = config || {};
     }
 
     S.augment(TablePlugin, {
@@ -398,84 +399,87 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             dataFilter.addRules(extraDataFilter);
             htmlFilter.addRules(extraHtmlFilter);
 
-            var handlers = {
+            var self = this,
+                handlers = {
 
-                "表格属性":function () {
-                    this.hide();
-                    var info = getSel(editor);
-                    if (info) {
-                        DialogLoader.useDialog(editor, "table", {
-                            selectedTable:info.table,
-                            selectedTd:info.td
-                        });
+                    "表格属性":function () {
+                        this.hide();
+                        var info = getSel(editor);
+                        if (info) {
+                            DialogLoader.useDialog(editor, "table",
+                                self.config,
+                                {
+                                    selectedTable:info.table,
+                                    selectedTd:info.td
+                                });
+                        }
+                    },
+
+                    "删除表格":function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            startElement = selection && selection.getStartElement(),
+                            table = startElement && startElement.closest('table', undefined);
+
+                        if (!table) {
+                            return;
+                        }
+
+                        // Maintain the selection point at where the table was deleted.
+                        selection.selectElement(table);
+                        var range = selection.getRanges()[0];
+                        range.collapse();
+                        selection.selectRanges([ range ]);
+
+                        // If the table's parent has only one child,
+                        // remove it,except body,as well.( #5416 )
+                        var parent = table.parent();
+                        if (parent[0].childNodes.length == 1 &&
+                            parent.nodeName() != 'body' &&
+                            parent.nodeName() != 'td') {
+                            parent.remove();
+                        } else {
+                            table.remove();
+                        }
+                    },
+
+                    '删除行 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        placeCursorInCell(deleteRows(selection), undefined);
+                    },
+
+                    '删除列 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            element = deleteColumns(selection);
+                        element && placeCursorInCell(element, true);
+                    },
+
+                    '在上方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, true);
+                    },
+
+                    '在下方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, undefined);
+                    },
+
+                    '在左侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, true);
+                    },
+
+                    '在右侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, undefined);
                     }
-                },
-
-                "删除表格":function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        startElement = selection && selection.getStartElement(),
-                        table = startElement && startElement.closest('table', undefined);
-
-                    if (!table) {
-                        return;
-                    }
-
-                    // Maintain the selection point at where the table was deleted.
-                    selection.selectElement(table);
-                    var range = selection.getRanges()[0];
-                    range.collapse();
-                    selection.selectRanges([ range ]);
-
-                    // If the table's parent has only one child,
-                    // remove it,except body,as well.( #5416 )
-                    var parent = table.parent();
-                    if (parent[0].childNodes.length == 1 &&
-                        parent.nodeName() != 'body' &&
-                        parent.nodeName() != 'td') {
-                        parent.remove();
-                    } else {
-                        table.remove();
-                    }
-                },
-
-                '删除行 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    placeCursorInCell(deleteRows(selection), undefined);
-                },
-
-                '删除列 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        element = deleteColumns(selection);
-                    element && placeCursorInCell(element, true);
-                },
-
-                '在上方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, true);
-                },
-
-                '在下方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, undefined);
-                },
-
-                '在左侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, true);
-                },
-
-                '在右侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, undefined);
-                }
-            };
+                };
 
             var children = [];
             S.each(handlers, function (h, name) {
@@ -522,10 +526,12 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function () {
-                        DialogLoader.useDialog(editor, "table", {
-                            selectedTable:0,
-                            selectedTd:0
-                        });
+                        DialogLoader.useDialog(editor, "table",
+                            self.config,
+                            {
+                                selectedTable:0,
+                                selectedTd:0
+                            });
 
                     }
                 },

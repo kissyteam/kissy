@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * Add flash plugin.
@@ -12,8 +12,12 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
 
-    return {
-        init:function (editor) {
+    function FlashPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(FlashPlugin, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor.dataFilter;
 
@@ -52,36 +56,36 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 5);
 
 
-            var pluginConfig = editor.get("pluginConfig").flash || {},
-                flashControl = new FlashBaseClass({
-                    editor:editor,
-                    cls:CLS_FLASH,
-                    type:TYPE_FLASH,
-                    bubbleId:"flash",
-                    contextMenuId:'flash',
-                    contextMenuHandlers:{
-                        "Flash属性":function () {
-                            var selectedEl = this.get("editorSelectedEl");
-                            if (selectedEl) {
-                                flashControl.show(selectedEl);
-                            }
+            var flashControl = new FlashBaseClass({
+                editor:editor,
+                cls:CLS_FLASH,
+                type:TYPE_FLASH,
+                pluginConfig:this.config,
+                bubbleId:"flash",
+                contextMenuId:'flash',
+                contextMenuHandlers:{
+                    "Flash属性":function () {
+                        var selectedEl = this.get("editorSelectedEl");
+                        if (selectedEl) {
+                            flashControl.show(selectedEl);
                         }
                     }
-                });
+                }
+            });
 
-            if (pluginConfig.btn !== false) {
-                editor.addButton("flash", {
-                    tooltip:"插入Flash",
-                    listeners:{
-                        click:function () {
-                            flashControl.show();
-                        }
-                    },
-                    mode:Editor.WYSIWYG_MODE
-                });
-            }
+            editor.addButton("flash", {
+                tooltip:"插入Flash",
+                listeners:{
+                    click:function () {
+                        flashControl.show();
+                    }
+                },
+                mode:Editor.WYSIWYG_MODE
+            });
         }
-    };
+    });
+
+    return FlashPlugin;
 
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']

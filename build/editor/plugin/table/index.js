@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * Add table plugin for KISSY.
@@ -386,7 +386,11 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             }
         };
 
-    return {
+    function TablePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(TablePlugin, {
         init:function (editor) {
             /**
              * 动态加入显表格border css，便于编辑
@@ -400,84 +404,87 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             dataFilter.addRules(extraDataFilter);
             htmlFilter.addRules(extraHtmlFilter);
 
-            var handlers = {
+            var self = this,
+                handlers = {
 
-                "表格属性":function () {
-                    this.hide();
-                    var info = getSel(editor);
-                    if (info) {
-                        DialogLoader.useDialog(editor, "table", {
-                            selectedTable:info.table,
-                            selectedTd:info.td
-                        });
+                    "表格属性":function () {
+                        this.hide();
+                        var info = getSel(editor);
+                        if (info) {
+                            DialogLoader.useDialog(editor, "table",
+                                self.config,
+                                {
+                                    selectedTable:info.table,
+                                    selectedTd:info.td
+                                });
+                        }
+                    },
+
+                    "删除表格":function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            startElement = selection && selection.getStartElement(),
+                            table = startElement && startElement.closest('table', undefined);
+
+                        if (!table) {
+                            return;
+                        }
+
+                        // Maintain the selection point at where the table was deleted.
+                        selection.selectElement(table);
+                        var range = selection.getRanges()[0];
+                        range.collapse();
+                        selection.selectRanges([ range ]);
+
+                        // If the table's parent has only one child,
+                        // remove it,except body,as well.( #5416 )
+                        var parent = table.parent();
+                        if (parent[0].childNodes.length == 1 &&
+                            parent.nodeName() != 'body' &&
+                            parent.nodeName() != 'td') {
+                            parent.remove();
+                        } else {
+                            table.remove();
+                        }
+                    },
+
+                    '删除行 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        placeCursorInCell(deleteRows(selection), undefined);
+                    },
+
+                    '删除列 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            element = deleteColumns(selection);
+                        element && placeCursorInCell(element, true);
+                    },
+
+                    '在上方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, true);
+                    },
+
+                    '在下方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, undefined);
+                    },
+
+                    '在左侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, true);
+                    },
+
+                    '在右侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, undefined);
                     }
-                },
-
-                "删除表格":function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        startElement = selection && selection.getStartElement(),
-                        table = startElement && startElement.closest('table', undefined);
-
-                    if (!table) {
-                        return;
-                    }
-
-                    // Maintain the selection point at where the table was deleted.
-                    selection.selectElement(table);
-                    var range = selection.getRanges()[0];
-                    range.collapse();
-                    selection.selectRanges([ range ]);
-
-                    // If the table's parent has only one child,
-                    // remove it,except body,as well.( #5416 )
-                    var parent = table.parent();
-                    if (parent[0].childNodes.length == 1 &&
-                        parent.nodeName() != 'body' &&
-                        parent.nodeName() != 'td') {
-                        parent.remove();
-                    } else {
-                        table.remove();
-                    }
-                },
-
-                '删除行 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    placeCursorInCell(deleteRows(selection), undefined);
-                },
-
-                '删除列 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        element = deleteColumns(selection);
-                    element && placeCursorInCell(element, true);
-                },
-
-                '在上方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, true);
-                },
-
-                '在下方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, undefined);
-                },
-
-                '在左侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, true);
-                },
-
-                '在右侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, undefined);
-                }
-            };
+                };
 
             var children = [];
             S.each(handlers, function (h, name) {
@@ -495,25 +502,25 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 children:children,
                 listeners:{
                     click:function (e) {
-                            var content = e.target.get("content");
-                            if (handlers[content]) {
-                                handlers[content].apply(this);
-                            }
+                        var content = e.target.get("content");
+                        if (handlers[content]) {
+                            handlers[content].apply(this);
+                        }
 
                     },
                     beforeVisibleChange:function (e) {
-                            if (e.newVal) {
-                                var self = this, children = self.get("children");
-                                var editor = self.get("editor");
-                                S.each(children, function (c) {
-                                    var content = c.get("content");
-                                    if (!statusChecker[content] ||
-                                        statusChecker[content].call(self, editor)) {
-                                        c.set("disabled", false);
-                                    } else {
-                                        c.set("disabled", true);
-                                    }
-                                });
+                        if (e.newVal) {
+                            var self = this, children = self.get("children");
+                            var editor = self.get("editor");
+                            S.each(children, function (c) {
+                                var content = c.get("content");
+                                if (!statusChecker[content] ||
+                                    statusChecker[content].call(self, editor)) {
+                                    c.set("disabled", false);
+                                } else {
+                                    c.set("disabled", true);
+                                }
+                            });
 
                         }
                     }
@@ -524,7 +531,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function () {
-                            DialogLoader.useDialog(editor, "table", {
+                        DialogLoader.useDialog(editor, "table",
+                            self.config,
+                            {
                                 selectedTable:0,
                                 selectedTd:0
                             });
@@ -535,7 +544,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             });
 
         }
-    }
+    });
+
+    return TablePlugin;
 }, {
     requires:['editor', '../dialogLoader/', '../contextmenu/']
 });

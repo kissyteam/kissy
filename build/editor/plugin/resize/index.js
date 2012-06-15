@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * resize functionality
@@ -10,12 +10,16 @@ build time: Jun 13 14:40
 KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
     var Node = S.Node;
 
-    return {
-        init:function (editor) {
+    function Resize(config) {
+this.config=config||{};
+    }
+
+    S.augment(Resize, {
+        renderUI:function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
-                cfg = editor.get("pluginConfig")["resize"] || {},
+                cfg = this.config,
                 direction = cfg["direction"] || ["x", "y"];
 
             var cursor = 'se-resize';
@@ -73,7 +77,9 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 resizer.remove();
             });
         }
-    };
+    });
+
+    return Resize;
 }, {
     requires:['editor', 'dd']
 });

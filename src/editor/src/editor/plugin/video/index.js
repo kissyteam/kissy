@@ -6,7 +6,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
-    function video() {
+    function video(config) {
+        this.config = config;
     }
 
     S.augment(video, {
@@ -28,11 +29,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 return undefined;
             }
 
-            var cfg = editor.get("pluginConfig");
-
-            cfg["video"] = cfg["video"] || {};
-
-            var videoCfg = cfg["video"];
+            var videoCfg = this.config;
 
             if (videoCfg['providers']) {
                 provider.push.apply(provider, videoCfg['providers']);
@@ -91,6 +88,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                pluginConfig:this.config,
                 bubbleId:"video",
                 contextMenuId:"video",
                 contextMenuHandlers:{

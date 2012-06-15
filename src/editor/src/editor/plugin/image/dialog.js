@@ -180,10 +180,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
     }
 
 
-    function ImageDialog(editor) {
+    function ImageDialog(editor,config) {
         var self = this;
         self.editor = editor;
-        self.imageCfg = editor.get("pluginConfig")["image"] || {};
+        self.imageCfg = config||{};
         self.cfg = self.imageCfg["upload"] || null;
         self.suffix = self.cfg && self.cfg["suffix"] || "png,jpg,jpeg,gif";
         // 不要加g：http://yiminghe.javaeye.com/blog/581347

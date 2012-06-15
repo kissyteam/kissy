@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  *  BaseClass for Flash Based plugin.
@@ -165,7 +165,9 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         show:function (selectedEl) {
             var self = this,
                 editor = self.get("editor");
-            DialogLoader.useDialog(editor, self.get("type"), selectedEl);
+            DialogLoader.useDialog(editor, self.get("type"),
+                self.get("pluginConfig"),
+                selectedEl);
         }
     });
 

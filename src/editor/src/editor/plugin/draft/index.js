@@ -43,8 +43,9 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             return d;
     }
 
-    function Draft(editor) {
+    function Draft(editor,config) {
         this.editor = editor;
+        this.config=config;
         this._init();
     }
 
@@ -53,8 +54,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
 
         _getSaveKey:function () {
             var self = this,
-                editor = self.editor,
-                cfg = editor.get("pluginConfig");
+                cfg = this.config;
             return cfg.draft && cfg.draft['saveKey'] || DRAFT_SAVE;
         },
 
@@ -82,7 +82,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             var self = this,
                 editor = self.editor,
                 statusbar = editor.get("statusBarEl"),
-                cfg = editor.get("pluginConfig");
+                cfg = this.config;
             cfg.draft = cfg.draft || {};
             self.draftInterval = cfg.draft.interval
                 = cfg.draft.interval || INTERVAL;
@@ -203,7 +203,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         _prepareHelp:function () {
             var self = this,
                 editor = self.editor,
-                cfg = editor.get("pluginConfig"),
+                cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHtml'] || "");
             var arrowCss = "height:0;" +
@@ -341,25 +341,25 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         }
     });
 
-    function init(editor) {
-        var d = new Draft(editor);
+    function init(editor,config) {
+        var d = new Draft(editor,config);
         editor.on("destroy", function () {
             d.destroy();
         });
     }
 
-    function DraftPlugin() {
-
+    function DraftPlugin(config) {
+this.config=config||{};
     }
 
     S.augment(DraftPlugin, {
         renderUI:function (editor) {
             if (localStorage.ready) {
                 localStorage.ready(function () {
-                    init(editor);
+                    init(editor,this.config);
                 });
             } else {
-                init(editor);
+                init(editor,this.config);
             }
         }
     });

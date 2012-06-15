@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * font formatting for kissy editor
@@ -9,9 +9,13 @@ build time: Jun 13 14:40
  */
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
+    function FontSizePlugin(config) {
+this.config=config||{};
+    }
 
-    return {
-        init:function (editor) {
+    S.augment(FontSizePlugin, {
+        renderUI:function (editor) {
+
 
             cmd.init(editor);
 
@@ -26,8 +30,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                 return v;
             }
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontSizes = pluginConfig["fontSize"];
+            var fontSizes = this.config;
 
             fontSizes = fontSizes || {};
 
@@ -51,7 +54,10 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     children:fontSizes.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontSizePlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });

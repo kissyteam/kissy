@@ -47,9 +47,10 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "class='ks-editor-link-cancel ks-editor-button ks-inline-block'>取消</a>" +
             "</div>";
 
-    function LinkDialog(editor) {
+    function LinkDialog(editor,config) {
         var self = this;
         self.editor = editor;
+        self.config=config||{};
         Editor.Utils.lazyRun(self, "_prepareShow", "_real");
     }
 
@@ -102,7 +103,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
 
         _real:function () {
             var self = this,
-                cfg = self.editor.get("pluginConfig")["link"] || {},
+                cfg = self.config,
                 d = self.dialog,
                 _selectedEl = self._selectedEl;
             //是修改行为

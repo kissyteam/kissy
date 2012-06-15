@@ -1,28 +1,34 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * removeFormat for selection.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
-    return {
-        init:function (editor) {
+
+    function removeFormat() {
+    }
+
+    S.augment(removeFormat, {
+        renderUI:function (editor) {
             formatCmd.init(editor);
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
                 listeners:{
                     click:function () {
-                            editor.execCommand("removeFormat");
-                        }
+                        editor.execCommand("removeFormat");
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return removeFormat;
 }, {
     requires:['editor', './cmd', '../button/']
 });

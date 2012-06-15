@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * video button.
@@ -11,8 +11,12 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
-    return {
-        init:function (editor) {
+    function video(config) {
+        this.config = config;
+    }
+
+    S.augment(video, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
@@ -30,11 +34,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 return undefined;
             }
 
-            var cfg = editor.get("pluginConfig");
-
-            cfg["video"] = cfg["video"] || {};
-
-            var videoCfg = cfg["video"];
+            var videoCfg = this.config;
 
             if (videoCfg['providers']) {
                 provider.push.apply(provider, videoCfg['providers']);
@@ -93,6 +93,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                pluginConfig:this.config,
                 bubbleId:"video",
                 contextMenuId:"video",
                 contextMenuHandlers:{
@@ -109,15 +110,17 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 tooltip:"插入视频",
                 listeners:{
                     click:function () {
-                            flashControl.show();
+                        flashControl.show();
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
 
+
+    return video;
 
 }, {
     requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']

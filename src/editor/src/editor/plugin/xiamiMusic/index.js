@@ -23,7 +23,8 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
     });
 
 
-    function XiamiMusicPlugin() {
+    function XiamiMusicPlugin(config) {
+        this.config=config||{};
     }
 
     S.augment(XiamiMusicPlugin, {
@@ -96,6 +97,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
                 bubbleId:"xiami",
+                pluginConfig:this.config,
                 contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {

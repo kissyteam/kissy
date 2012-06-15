@@ -160,7 +160,9 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         show:function (selectedEl) {
             var self = this,
                 editor = self.get("editor");
-            DialogLoader.useDialog(editor, self.get("type"), selectedEl);
+            DialogLoader.useDialog(editor, self.get("type"),
+                self.get("pluginConfig"),
+                selectedEl);
         }
     });
 

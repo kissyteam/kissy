@@ -4,8 +4,8 @@
  */
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
-    function FontFamilyPlugin() {
-
+    function FontFamilyPlugin(config) {
+this.config=config||{};
     }
 
     S.augment(FontFamilyPlugin, {
@@ -13,8 +13,7 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
             cmd.init(editor);
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontFamilies = pluginConfig["fontFamily"];
+            var fontFamilies = this.config;
 
             fontFamilies = fontFamilies || {};
 

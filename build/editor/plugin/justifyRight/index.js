@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * justifyRight button.
@@ -14,8 +14,12 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+    function justifyRight() {
+
+    }
+
+    S.augment(justifyRight, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyRight", {
                 tooltip:"右对齐",
@@ -23,25 +27,27 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                 listeners:{
                     click:exec,
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
-                                if (editor.execCommand(queryCmd, e.path)) {
-                                    self.set("checked", true);
-                                } else {
-                                    self.set("checked", false);
-                                }
-                            });
-                        }
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
+                            if (editor.execCommand(queryCmd, e.path)) {
+                                self.set("checked", true);
+                            } else {
+                                self.set("checked", false);
+                            }
+                        });
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyRight;
 }, {
     requires:['editor', './cmd']
 });

@@ -77,8 +77,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
     S.extend(VideoDialog, FlashDialog, {
         _config:function () {
             var self = this,
-                editor = self.editor,
-                cfg = editor.get("pluginConfig");
+                cfg = self.config;
             self._cls = CLS_VIDEO;
             self._type = TYPE_VIDEO;
             self._title = "视频";//属性";
@@ -123,11 +122,8 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
 
         _getDInfo:function () {
             var self = this,
-                url = self.dUrl.val(),
-                editor = self.editor,
-                cfg = editor.get("pluginConfig");
-            cfg["video"] = cfg["video"] || {};
-            var videoCfg = cfg["video"],
+                url = self.dUrl.val();
+            var videoCfg = self.config,
                 p = videoCfg.getProvider(url);
             if (!p) {
                 alert("不支持该链接来源!");

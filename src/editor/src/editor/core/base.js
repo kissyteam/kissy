@@ -50,11 +50,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  * @type Node
                  */
                 document:{},
-                /*
-                 * iframe 's parentNode
-                 * @type Node
-                 */
-                iframeWrapEl:{},
                 /**
                  * toolbar element
                  * @type Node
@@ -129,7 +124,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(this.get("prefixCls") + ".editor-textarea");
+            return el.one(".ks-editor-textarea");
         }
 
     };

@@ -5,8 +5,8 @@
 KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
     var Node = S.Node;
 
-    function Resize() {
-
+    function Resize(config) {
+this.config=config||{};
     }
 
     S.augment(Resize, {
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
-                cfg = editor.get("pluginConfig")["resize"] || {},
+                cfg = this.config,
                 direction = cfg["direction"] || ["x", "y"];
 
             var cursor = 'se-resize';

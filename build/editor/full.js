@@ -1,14 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
-    var PREFIX = "editor/plugin/", SUFFIX = "/";
 
     /**
      * KISSY Editor
@@ -26,68 +25,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 var self = this;
                 self.__commands = {};
                 self.__controls={};
-            },
-
-            /**
-             * Use editor plugins.
-             * @param {Array<String>|String} mods Editor plugin names.
-             * @param callback
-             * @return {Editor} Current instance.
-             */
-            use:function (mods, callback) {
-                var self = this,
-                    BASIC = self.__CORE_PLUGINS || [
-                        "htmlDataProcessor",
-                        "enterKey",
-                        "clipboard",
-                        "selection"
-                    ];
-
-                if (S.isString(mods)) {
-                    mods = mods.split(",");
-                }
-
-                for (var l = mods.length - 1; l >= 0; l--) {
-                    if (!mods[l]) {
-                        mods.splice(l, 1);
-                    }
-                }
-
-                for (var i = 0; i < BASIC.length; i++) {
-                    var b = BASIC[i];
-                    if (!S.inArray(b, mods)) {
-                        mods.unshift(b);
-                    }
-                }
-
-                S.each(mods, function (m, i) {
-                    if (mods[i]) {
-                        mods[i] = PREFIX + m + SUFFIX;
-                    }
-                });
-
-                function useMods(modFns) {
-                    // 载入了插件的attach功能，现在按照顺序一个个attach
-                    for (var i = 0; i < modFns.length; i++) {
-                        if (modFns[i]) {
-                            modFns[i].init(self);
-                        }
-                    }
-                    callback && callback.call(self);
-                }
-
-                //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
-                S.use(mods, function () {
-                    var args = S.makeArray(arguments);
-                    args.shift();
-                    useMods(args);
-                    // 工具条出来后调整高度
-                    self.adjustHeight();
-                });
-
-                self.__CORE_PLUGINS = [];
-
-                return self;
             }
         },
 
@@ -118,11 +55,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  * @type Node
                  */
                 document:{},
-                /*
-                 * iframe 's parentNode
-                 * @type Node
-                 */
-                iframeWrapEl:{},
                 /**
                  * toolbar element
                  * @type Node
@@ -197,7 +129,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(this.get("prefixCls") + ".editor-textarea");
+            return el.one(".ks-editor-textarea");
         }
 
     };
@@ -213,9 +145,8 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/clipboard/index", function (S) {
-    var Editor = S.Editor,
-        $ = S.all,
+KISSY.add("editor/core/clipboard", function (S, Editor) {
+    var $ = S.all,
         UA = S.UA,
         KERange = Editor.Range,
         KER = Editor.RANGE,
@@ -235,6 +166,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             // beforepaste not fire on webkit and firefox
             // paste fire too later in ie ,cause error
             // 奇怪哦
+            // http://help.dottoro.com/ljxqbxkf.php
             // refer : http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
             Event.on(editor.get("document")[0].body,
                 UA['webkit'] ? 'paste' : (UA.gecko ? 'paste' : 'beforepaste'),
@@ -464,53 +396,52 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
 
     var depressBeforeEvent;
 
-    /**
-     * 给所有右键都加入复制粘贴
-     */
-    Editor.on("contextmenu", function (ev) {
-        var contextmenu = ev.contextmenu;
-
-        if (contextmenu.__copy_fix) {
-            return;
-        }
-
-        contextmenu.__copy_fix = 1;
-
-        var editor = contextmenu.get("editor"),
-            pastes = {"copy":1, "cut":1, "paste":1};
-
-        for (var i in pastes) {
-            if (pastes.hasOwnProperty(i)) {
-                contextmenu.addChild({
-                    xclass:'menuitem',
-                    content:lang[i],
-                    value:i
-                });
-            }
-        }
-
-        contextmenu.on('click', function (e) {
-            var value = e.target.get("value");
-            if (pastes[value]) {
-                this.hide();
-                // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                // 原编辑器获得焦点后再进行下步操作
-                setTimeout(function () {
-                    editor.execCommand(value);
-                }, 30);
-            }
-        });
-    });
-
     return {
         init:function (editor) {
             editor.docReady(function () {
                 new Paste(editor);
             });
+
+            var pastes = {"copy":1, "cut":1, "paste":1};
+
+            /**
+             * 给所有右键都加入复制粘贴
+             */
+            editor.on("contextmenu", function (ev) {
+                var contextmenu = ev.contextmenu;
+
+                if (contextmenu.__copy_fix) {
+                    return;
+                }
+
+                contextmenu.__copy_fix = 1;
+
+                for (var i in pastes) {
+                    if (pastes.hasOwnProperty(i)) {
+                        contextmenu.addChild({
+                            xclass:'menuitem',
+                            content:lang[i],
+                            value:i
+                        });
+                    }
+                }
+
+                contextmenu.on('click', function (e) {
+                    var value = e.target.get("value");
+                    if (pastes[value]) {
+                        this.hide();
+                        // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                        // 原编辑器获得焦点后再进行下步操作
+                        setTimeout(function () {
+                            editor.execCommand(value);
+                        }, 30);
+                    }
+                });
+            });
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -1890,9 +1821,8 @@ KISSY.add("editor/core/elementPath", function (S) {
  * monitor user's enter and shift enter keydown,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/enterKey/index", function (S) {
-    var Editor = S.Editor,
-        UA = S.UA,
+KISSY.add("editor/core/enterKey", function (S,Editor) {
+    var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
@@ -2094,7 +2024,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * 多实例的管理，主要是焦点控制，主要是为了
@@ -2201,12 +2131,11 @@ KISSY.add("editor/core/focusManager", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
+KISSY.add("editor/core/htmlDataProcessor", function (S,Editor) {
 
     return {
         init:function (editor) {
             var undefined = undefined,
-                Editor = S.Editor,
                 Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -2763,7 +2692,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * Module meta require info for KISSY Editor.
@@ -4713,10 +4642,17 @@ KISSY.add("editor/core/selection", function (S) {
          * editor document. Return NULL if that's the case.
          */
         if (OLD_IE) {
-            var range = self.getNative().createRange();
-            if (!range
-                || ( range.item && range.item(0).ownerDocument != document )
-                || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+            try {
+                var range = self.getNative().createRange();
+                if (!range
+                    || ( range.item && range.item(0).ownerDocument != document )
+                    || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+                    self.isInvalid = TRUE;
+                }
+            }
+                // 2012-06-13 发布页 bug
+                // 当焦点在一个跨域的 iframe 内，调用该操作抛拒绝访问异常
+            catch (e) {
                 self.isInvalid = TRUE;
             }
         }
@@ -5466,14 +5402,14 @@ KISSY.add("editor/core/selection", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/selection/index", function (S, Editor) {
+KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        DOM= S.DOM,
+        DOM = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 
@@ -5598,8 +5534,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
 
         var savedRange,
             saveEnabled,
-            // 2010-10-08 import from ckeditor 3.4.1
-            // 点击(mousedown-focus-mouseup)，不保留原有的 selection
+        // 2010-10-08 import from ckeditor 3.4.1
+        // 点击(mousedown-focus-mouseup)，不保留原有的 selection
             restoreEnabled = TRUE;
 
         // Listening on document element ensures that
@@ -5790,8 +5726,6 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
      * @param editor
      */
     function monitorSelectionChange(editor) {
-        var doc = editor.get("document")[0];
-
         // Matching an empty paragraph at the end of document.
         // 注释也要排除掉
         var emptyParagraphRegexp =
@@ -5865,14 +5799,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock.next(nextValidEl,1);
+                        var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
                             element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock.prev(nextValidEl,1);
+                            element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
                                 element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
@@ -5895,7 +5829,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
              *  当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              *  解决：增加新的 p
              */
-            var lastRange = new Editor.Range(doc),
+            var doc = editor.get("document")[0],
+                lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方
             lastRange
@@ -5929,7 +5864,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -8114,7 +8049,7 @@ KISSY.add("editor/core/zIndexManager", function (S) {
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, Editor, Utils, focusManager) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexManger, meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
     var TRUE = true,
 
         undefined = undefined,
@@ -8220,11 +8155,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
                 editorEl.html(EDITOR_TPL);
 
+                wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+
                 self._UUID = S.guid();
 
-
                 self.set({
-                    iframeWrapEl:wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS),
                     toolBarEl:editorEl.one(KE_TOOLBAR_CLASS),
                     statusBarEl:editorEl.one(KE_STATUSBAR_CLASS)
                 }, {
@@ -8246,60 +8181,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // 实例集中管理
                 focusManager.register(self);
             },
-
-            /**
-             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-             * width 依然在 el 上设置
-             */
-            _uiSetHeight:function (v) {
-                var self = this,
-                    toolBarEl = self.get("toolBarEl"),
-                    statusBarEl = self.get("statusBarEl");
-                v = parseInt(v, 10);
-                // 减去顶部和底部工具条高度
-                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
-                    (statusBarEl && statusBarEl.outerHeight() || 0);
-                self.get("iframeWrapEl").css(HEIGHT, v);
-                self.get("textarea").css(HEIGHT, v);
-            },
-
-
-            adjustHeight:function () {
-                var self = this, h;
-                if (h = self.get("height")) {
-                    self._uiSetHeight(h);
-                }
-            },
-
-            _uiSetMode:function (v) {
-                var self = this,
-                    save,
-                    iframe = self.get("iframe"),
-                    textarea = self.get("textarea");
-                if (v == WYSIWYG_MODE) {
-                    self.execCommand("save");
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        self.execCommand("save");
-                        self.detach("docReady", save);
-                    });
-                    self._setData(textarea.val());
-                    self.fire("wysiwygMode");
-                } else {
-                    textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
-                    textarea.show();
-                    iframe.hide();
-                    self.fire("sourceMode");
-                }
-            },
-
-            // 覆盖 controller
-            _uiSetFocused:function (v) {
-                // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
-                }
+            // 在插件运行前,运行核心兼容
+            renderUI:function () {
+                var self = this;
+                clipboard.init(self);
+                enterKey.init(self);
+                htmlDataProcessor.init(self);
+                selectionFix.init(self);
             },
 
             bindUI:function () {
@@ -8338,6 +8226,69 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 self.on("focus", function () {
                     self.get("el").addClass(prefixCls + "editor-focused");
                 });
+            },
+
+            syncUI:function () {
+                var self = this,
+                    h = self.get("height")
+                if (h) {
+                    // 根据容器高度，设置内层高度
+                    self._uiSetHeight(h);
+                }
+            },
+
+            /**
+             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+             * width 依然在 el 上设置
+             */
+            _uiSetHeight:function (v) {
+                var self = this,
+                    textareaEl = self.get("textarea"),
+                    toolBarEl = self.get("toolBarEl"),
+                    statusBarEl = self.get("statusBarEl");
+                v = parseInt(v, 10);
+                // 减去顶部和底部工具条高度
+                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+                    (statusBarEl && statusBarEl.outerHeight() || 0);
+                textareaEl.parent().css(HEIGHT, v);
+                textareaEl.css(HEIGHT, v);
+            },
+
+            _uiSetMode:function (v) {
+                var self = this,
+                    save,
+                    rendered = self.get("render"),
+                    iframe = self.get("iframe"),
+                    textarea = self.get("textarea");
+                if (v == WYSIWYG_MODE) {
+                    // 初始化时不保存历史
+                    if (rendered) {
+                        self.execCommand("save");
+                    }
+                    // recreate iframe need load time
+                    self.on("docReady", save = function () {
+                        if (rendered) {
+                            self.execCommand("save");
+                        }
+                        self.detach("docReady", save);
+                    });
+                    self._setData(textarea.val());
+                    self.fire("wysiwygMode");
+                } else {
+                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    textarea[0].focus();
+                    textarea.show();
+                    iframe.hide();
+                    self.fire("sourceMode");
+                }
+            },
+
+            // 覆盖 controller
+            _uiSetFocused:function (v) {
+                // docReady 后才能调用
+                if (v && this.__docReady) {
+                    this.focus();
+                }
             },
 
             destructor:function () {
@@ -9069,14 +9020,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         control = sel.getSelectedElement();
                     if (control) {
                         // Make undo snapshot.
-                        self.fire('save');
+                        self.execCommand('save');
                         // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
                         // break up the selection, safely manage it here. (#4795)
                         var bookmark = sel.getRanges()[ 0 ].createBookmark();
                         // Remove the control manually.
                         control.remove();
                         sel.selectBookmarks([ bookmark ]);
-                        self.fire('save');
+                        self.execCommand('save');
                         evt.preventDefault();
                     }
                 }
@@ -9218,7 +9169,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         if (textarea.hasAttr("tabindex")) {
             iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
         }
-        self.get("iframeWrapEl").prepend(iframe);
+        textarea.parent().prepend(iframe);
         self.set("iframe", iframe);
         self.__docReady = 0;
         // With FF, it's better to load the data on iframe.load. (#3894,#4058)
@@ -9255,8 +9206,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         'editor/core/focusManager',
         'editor/core/styles',
         'editor/core/zIndexManager',
-        'editor/core/focusManager',
-        'editor/core/meta'
+        'editor/core/meta',
+        'editor/core/clipboard',
+        'editor/core/enterKey',
+        'editor/core/htmlDataProcessor',
+        'editor/core/selectionFix'
     ]
 });
 /**
@@ -9269,7 +9223,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
  */
 KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
 
-    var BACKCOLOR_STYLE = {
+    var BACK_COLOR_STYLE = {
         element:'span',
         styles:{ 'background-color':'#(color)' },
         overrides:[
@@ -9288,7 +9242,7 @@ KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
                 editor.addCommand("backColor", {
                     exec:function (editor, c) {
                         editor.execCommand("save");
-                        cmd.applyColor(editor, c, BACKCOLOR_STYLE);
+                        cmd.applyColor(editor, c, BACK_COLOR_STYLE);
                         editor.execCommand("save");
                     }
                 });
@@ -9304,15 +9258,23 @@ KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
  */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function backColor(config) {
+        this.config=config||{};
+    }
+
+    S.augment(backColor, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("backColor",{
+            editor.addButton("backColor", {
                 cmdType:'backColor',
-                tooltip:"背景颜色"
+                tooltip:"背景颜色",
+                pluginConfig:this.config
             }, Button);
         }
-    };
+    });
+
+    return backColor;
+
 }, {
     requires:['editor', '../color/btn', './cmd']
 });/**
@@ -9346,15 +9308,21 @@ KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
-    return {
-        init:function (editor) {
+
+    function bold() {
+    }
+
+    S.augment(bold, {
+        renderUI:function (editor) {
             cmd.init(editor);
             editor.addButton("bold", {
                 cmdType:'bold',
                 tooltip:"粗体 "
             }, ui.Button);
         }
-    };
+    });
+
+    return bold;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });/**
@@ -9504,12 +9472,13 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         // !TODO 耦合---
         function onHide() {
             bubble.hide();
+            var editorWin = editor.get("window")[0];
             Event.remove(editorWin, "scroll", onScroll);
         }
 
         editor.on("sourceMode", onHide);
 
-        var editorWin = editor.get("window")[0];
+
 
         function showImmediately() {
 
@@ -9541,6 +9510,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         function onShow() {
+            var editorWin = editor.get("window")[0];
             Event.on(editorWin, "scroll", onScroll);
             showImmediately();
         }
@@ -9664,14 +9634,21 @@ KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, Editor) {
         }
     });
 
-    return {
-        init:function (editor) {
+    function CheckboxSourceAreaPlugin(){
+
+    }
+
+    S.augment(CheckboxSourceAreaPlugin,{
+        renderUI:function(editor){
+
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {
                 c.destroy();
             });
         }
-    }
+    });
+
+    return CheckboxSourceAreaPlugin;
 }, {
     requires:["editor"]
 });
@@ -9827,7 +9804,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorPicker", self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/colorPicker",
+                    self.get("pluginConfig"),
+                    self.get("cmdType"));
             });
             self._prepare = self._show;
             self._show();
@@ -9956,7 +9935,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
                     });
                     menu.set("xy", [x, y]);
                     menu.show();
-                    Editor.fire("contextmenu", {
+                    self.fire("contextmenu", {
                         contextmenu:menu
                     });
                     window.focus();
@@ -10283,7 +10262,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
         };
 
     return {
-        useDialog:function (editor, name, args) {
+        useDialog:function (editor, name,config, args) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
@@ -10296,7 +10275,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
             loadMask.loading();
             S.use("editor/plugin/" + name + "/dialog", function (S, Dialog) {
                 loadMask.unloading();
-                editor.addControl(name + "/dialog", new Dialog(editor));
+                editor.addControl(name + "/dialog", new Dialog(editor,config));
                 editor.showDialog(name, args);
             });
         }
@@ -10348,8 +10327,9 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             return d;
     }
 
-    function Draft(editor) {
+    function Draft(editor,config) {
         this.editor = editor;
+        this.config=config;
         this._init();
     }
 
@@ -10358,8 +10338,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
 
         _getSaveKey:function () {
             var self = this,
-                editor = self.editor,
-                cfg = editor.get("pluginConfig");
+                cfg = this.config;
             return cfg.draft && cfg.draft['saveKey'] || DRAFT_SAVE;
         },
 
@@ -10387,7 +10366,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             var self = this,
                 editor = self.editor,
                 statusbar = editor.get("statusBarEl"),
-                cfg = editor.get("pluginConfig");
+                cfg = this.config;
             cfg.draft = cfg.draft || {};
             self.draftInterval = cfg.draft.interval
                 = cfg.draft.interval || INTERVAL;
@@ -10508,7 +10487,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         _prepareHelp:function () {
             var self = this,
                 editor = self.editor,
-                cfg = editor.get("pluginConfig"),
+                cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHtml'] || "");
             var arrowCss = "height:0;" +
@@ -10646,24 +10625,31 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         }
     });
 
-    function init(editor) {
-        var d = new Draft(editor);
+    function init(editor,config) {
+        var d = new Draft(editor,config);
         editor.on("destroy", function () {
             d.destroy();
         });
     }
 
-    return {
-        init:function (editor) {
+    function DraftPlugin(config) {
+this.config=config||{};
+    }
+
+    S.augment(DraftPlugin, {
+        renderUI:function (editor) {
             if (localStorage.ready) {
                 localStorage.ready(function () {
-                    init(editor);
+                    init(editor,this.config);
                 });
             } else {
-                init(editor);
+                init(editor,this.config);
             }
         }
-    };
+    });
+
+    return DraftPlugin;
+
 }, {
     "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
 });/**
@@ -10675,24 +10661,23 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
 KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
-        UA = S.UA,
         Utils = Editor.Utils,
         DOM = S.DOM;
 
-    if (UA['ie']) {
-        return;
+    function dragUpload(config) {
+        this.config=config||{};
     }
 
-    return {
-        init:function (editor) {
-            var cfg = editor.get("pluginConfig")['dragUpload'] || {},
+    S.augment(dragUpload, {
+        renderUI:function (editor) {
+            var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,
                 serverParams = cfg['serverParams'] || {},
                 serverUrl = cfg['serverUrl'] || "",
                 suffix = cfg['suffix'] || "png,jpg,jpeg,gif",
                 suffix_reg = new RegExp(suffix.split(/,/).join("|") + "$", "i"),
-                document = editor.get("document")[0],
+
                 inserted = {}, startMonitor = false;
 
             function nodeInsert(ev) {
@@ -10703,68 +10688,72 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                 }
             }
 
-            Event.on(document, "dragenter", function () {
-                //firefox 会插入伪数据
-                if (!startMonitor) {
-                    Event.on(document, "DOMNodeInserted", nodeInsert);
-                    startMonitor = true;
-                }
-            });
+            editor.docReady(function () {
+                var document = editor.get("document")[0];
+                Event.on(document, "dragenter", function () {
+                    //firefox 会插入伪数据
+                    if (!startMonitor) {
+                        Event.on(document, "DOMNodeInserted", nodeInsert);
+                        startMonitor = true;
+                    }
+                });
 
-            Event.on(document, "drop", function (ev) {
-                Event.remove(document, "DOMNodeInserted", nodeInsert);
-                startMonitor = false;
-                ev.halt();
-                ev = ev['originalEvent'];
+                Event.on(document, "drop", function (ev) {
+                    Event.remove(document, "DOMNodeInserted", nodeInsert);
+                    startMonitor = false;
+                    ev.halt();
+                    ev = ev['originalEvent'];
 
-                var archor, ap;
-                /**
-                 * firefox 会自动添加节点
-                 */
-                if (!S.isEmptyObject(inserted)) {
-                    S.each(inserted, function (el) {
-                        if (DOM.nodeName(el) == "img") {
-                            archor = el.nextSibling;
-                            ap = el.parentNode;
-                            DOM.remove(el);
+                    var archor, ap;
+                    /**
+                     * firefox 会自动添加节点
+                     */
+                    if (!S.isEmptyObject(inserted)) {
+                        S.each(inserted, function (el) {
+                            if (DOM.nodeName(el) == "img") {
+                                archor = el.nextSibling;
+                                ap = el.parentNode;
+                                DOM.remove(el);
+                            }
+                        });
+                        inserted = {};
+                    } else {
+                        // 空行里拖放肯定没问题，其他在文字中间可能不准确
+                        ap = document.elementFromPoint(ev.clientX, ev.clientY);
+                        archor = ap.lastChild;
+                    }
+
+                    var dt = ev['dataTransfer'];
+                    dt.dropEffect = "copy";
+                    var files = dt['files'];
+                    if (!files) {
+                        return;
+                    }
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i], name = file.name, size = file.size;
+                        if (!name.match(suffix_reg)) {
+                            continue;
                         }
-                    });
-                    inserted = {};
-                } else {
-                    // 空行里拖放肯定没问题，其他在文字中间可能不准确
-                    ap = document.elementFromPoint(ev.clientX, ev.clientY);
-                    archor = ap.lastChild;
-                }
+                        if (size / 1000 > sizeLimit) {
+                            continue;
+                        }
+                        var img = new Node("<img " + "src='" +
+                            Utils.debugUrl("theme/tao-loading.gif")
+                            + "'" + "/>");
+                        var nakeImg = img[0];
+                        ap.insertBefore(nakeImg, archor);
+                        var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
+                        // 防止拖放导致插入到 body 以外
+                        if (np_name == "head"
+                            || np_name == "html") {
+                            DOM.insertBefore(nakeImg, document.body.firstChild);
+                        }
 
-                var dt = ev['dataTransfer'];
-                dt.dropEffect = "copy";
-                var files = dt['files'];
-                if (!files) {
-                    return;
-                }
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i], name = file.name, size = file.size;
-                    if (!name.match(suffix_reg)) {
-                        continue;
+                        fileUpload(file, img);
                     }
-                    if (size / 1000 > sizeLimit) {
-                        continue;
-                    }
-                    var img = new Node("<img " + "src='" +
-                        Utils.debugUrl("theme/tao-loading.gif")
-                        + "'" + "/>");
-                    var nakeImg = img[0];
-                    ap.insertBefore(nakeImg, archor);
-                    var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
-                    // 防止拖放导致插入到 body 以外
-                    if (np_name == "head"
-                        || np_name == "html") {
-                        DOM.insertBefore(nakeImg, document.body.firstChild);
-                    }
-
-                    fileUpload(file, img);
-                }
+                });
             });
+
 
             if (window['XMLHttpRequest'] && !XMLHttpRequest.prototype.sendAsBinary) {
                 XMLHttpRequest.prototype.sendAsBinary = function (dataStr, contentType) {
@@ -10841,8 +10830,9 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
                 reader['readAsBinaryString'](file);
             }
         }
-    };
+    });
 
+    return dragUpload;
 }, {
     requires:['editor']
 });/**
@@ -10919,8 +10909,12 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
         }
     });
 
-    return {
-        init:function (editor) {
+    function ElementPathPlugin() {
+
+    }
+
+    S.augment(ElementPathPlugin, {
+        renderUI:function (editor) {
             var elemPath = new ElementPaths({
                 editor:editor
             });
@@ -10928,7 +10922,9 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
                 elemPath.destroy();
             });
         }
-    };
+    });
+
+    return ElementPathPlugin;
 
 }, {
     requires:['editor']
@@ -11486,7 +11482,9 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
         show:function (selectedEl) {
             var self = this,
                 editor = self.get("editor");
-            DialogLoader.useDialog(editor, self.get("type"), selectedEl);
+            DialogLoader.useDialog(editor, self.get("type"),
+                self.get("pluginConfig"),
+                selectedEl);
         }
     });
 
@@ -11706,8 +11704,12 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
 
-    return {
-        init:function (editor) {
+    function FlashPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(FlashPlugin, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor.dataFilter;
 
@@ -11746,36 +11748,36 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 5);
 
 
-            var pluginConfig = editor.get("pluginConfig").flash || {},
-                flashControl = new FlashBaseClass({
-                    editor:editor,
-                    cls:CLS_FLASH,
-                    type:TYPE_FLASH,
-                    bubbleId:"flash",
-                    contextMenuId:'flash',
-                    contextMenuHandlers:{
-                        "Flash属性":function () {
-                            var selectedEl = this.get("editorSelectedEl");
-                            if (selectedEl) {
-                                flashControl.show(selectedEl);
-                            }
+            var flashControl = new FlashBaseClass({
+                editor:editor,
+                cls:CLS_FLASH,
+                type:TYPE_FLASH,
+                pluginConfig:this.config,
+                bubbleId:"flash",
+                contextMenuId:'flash',
+                contextMenuHandlers:{
+                    "Flash属性":function () {
+                        var selectedEl = this.get("editorSelectedEl");
+                        if (selectedEl) {
+                            flashControl.show(selectedEl);
                         }
                     }
-                });
+                }
+            });
 
-            if (pluginConfig.btn !== false) {
-                editor.addButton("flash", {
-                    tooltip:"插入Flash",
-                    listeners:{
-                        click:function () {
-                            flashControl.show();
-                        }
-                    },
-                    mode:Editor.WYSIWYG_MODE
-                });
-            }
+            editor.addButton("flash", {
+                tooltip:"插入Flash",
+                listeners:{
+                    click:function () {
+                        flashControl.show();
+                    }
+                },
+                mode:Editor.WYSIWYG_MODE
+            });
         }
-    };
+    });
+
+    return FlashPlugin;
 
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
@@ -11879,12 +11881,16 @@ KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
  */
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
-    return {
-        init:function (editor) {
+    function FontFamilyPlugin(config) {
+this.config=config||{};
+    }
+
+    S.augment(FontFamilyPlugin, {
+        renderUI:function (editor) {
+
             cmd.init(editor);
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontFamilies = pluginConfig["fontFamily"];
+            var fontFamilies = this.config;
 
             fontFamilies = fontFamilies || {};
 
@@ -11961,7 +11967,10 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
                     children:fontFamilies.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontFamilyPlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });
@@ -11999,9 +12008,13 @@ KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
  */
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
+    function FontSizePlugin(config) {
+this.config=config||{};
+    }
 
-    return {
-        init:function (editor) {
+    S.augment(FontSizePlugin, {
+        renderUI:function (editor) {
+
 
             cmd.init(editor);
 
@@ -12016,8 +12029,7 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                 return v;
             }
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontSizes = pluginConfig["fontSize"];
+            var fontSizes = this.config;
 
             fontSizes = fontSizes || {};
 
@@ -12041,7 +12053,10 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
                     children:fontSizes.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontSizePlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });
@@ -12255,15 +12270,22 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
  */
 KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function ForeColorPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(ForeColorPlugin, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("foreColor",{
+            editor.addButton("foreColor", {
                 cmdType:'foreColor',
-                tooltip:"文本颜色"
+                tooltip:"文本颜色",
+                pluginConfig:this.config
             }, Button);
         }
-    };
+    });
+
+    return ForeColorPlugin;
 }, {
     requires:['editor', '../color/btn', './cmd']
 });/**
@@ -12306,9 +12328,13 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
-    return {
-        init:function (editor) {
 
+    function HeadingPlugin() {
+
+    }
+
+    S.augment(HeadingPlugin, {
+        renderUI:function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],
@@ -12387,7 +12413,9 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 }
             });
         }
-    };
+    });
+
+    return HeadingPlugin;
 }, {
     requires:['editor', './cmd']
 });/**
@@ -12415,11 +12443,20 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             + '<a class="ks-editor-bubble-link ' +
             'ks-editor-bubble-remove" href="#">删除</a>';
 
-    return {
-        init:function (editor) {
+
+    function ImagePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(ImagePlugin, {
+        renderUI:function (editor) {
+
+            var self=this;
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image", selectedEl);
+                DialogLoader.useDialog(editor, "image",
+                    self.config,
+                    selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
@@ -12537,7 +12574,9 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 }
             });
         }
-    };
+    });
+
+    return ImagePlugin;
 }, {
     requires:['editor',
         '../button/',
@@ -12564,8 +12603,12 @@ KISSY.add("editor/plugin/indent/cmd", function (S, Editor, dentUtils) {
  */
 KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
 
-    return {
-        init:function (editor) {
+    function Indent() {
+
+    }
+
+    S.augment(Indent, {
+        renderUI:function (editor) {
             indexCmd.init(editor);
             editor.addButton("indent", {
                 tooltip:"增加缩进量 ",
@@ -12578,7 +12621,9 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return Indent;
 
 }, {
     requires:['editor', './cmd']
@@ -12613,18 +12658,25 @@ KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
  * italic button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/italic/index", function (S, Editor, ui,cmd) {
-    return {
-        init:function (editor) {
+KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
+
+    function italic() {
+
+    }
+
+    S.augment(italic, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("italic",{
+            editor.addButton("italic", {
                 cmdType:'italic',
                 tooltip:"斜体 "
             }, ui.Button);
         }
-    };
+    });
+
+    return italic;
 }, {
-    requires:['editor', '../font/ui','./cmd']
+    requires:['editor', '../font/ui', './cmd']
 });/**
  * Add justifyCenter command identifier for Editor.
  * @author yiminghe@gmail.com
@@ -12650,8 +12702,12 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+
+    function justifyCenter() {
+    }
+
+    S.augment(justifyCenter, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",
@@ -12676,7 +12732,9 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyCenter;
 }, {
     requires:['editor', './cmd']
 });/**
@@ -12704,8 +12762,11 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+    function justifyLeft() {
+    }
+
+    S.augment(justifyLeft, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyLeft", {
                 tooltip:"左对齐",
@@ -12730,7 +12791,9 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyLeft;
 }, {
     requires:['editor', './cmd']
 });/**
@@ -12758,8 +12821,12 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
         editor.focus();
     }
 
-    return {
-        init:function (editor) {
+    function justifyRight() {
+
+    }
+
+    S.augment(justifyRight, {
+        renderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyRight", {
                 tooltip:"右对齐",
@@ -12767,25 +12834,27 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                 listeners:{
                     click:exec,
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
-                                if (editor.execCommand(queryCmd, e.path)) {
-                                    self.set("checked", true);
-                                } else {
-                                    self.set("checked", false);
-                                }
-                            });
-                        }
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
+                            if (editor.execCommand(queryCmd, e.path)) {
+                                self.set("checked", true);
+                            } else {
+                                self.set("checked", false);
+                            }
+                        });
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return justifyRight;
 }, {
     requires:['editor', './cmd']
 });/**
@@ -12880,64 +12949,74 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
         return lastElement.closest('a', undefined);
     }
 
-    return {
-        init:function (editor) {
+    function LinkPlugin(config) {
+this.config=config||{};
+    }
+
+    S.augment(LinkPlugin, {
+        renderUI:function (editor) {
             editor.addButton("link", {
                 tooltip:"插入链接",
                 listeners:{
                     click:function () {
-                            showLinkEditDialog();
+                        showLinkEditDialog();
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
 
+            var self=this;
+
             function showLinkEditDialog(selectedEl) {
-                DialogLoader.useDialog(editor, "link", selectedEl);
+                DialogLoader.useDialog(editor, "link",
+                    self.config,
+                    selectedEl);
             }
 
             editor.addBubble("link", checkLink, {
                 listeners:{
                     afterRenderUI:function () {
-                            var bubble = this,
-                                el = bubble.get("contentEl");
+                        var bubble = this,
+                            el = bubble.get("contentEl");
 
-                            el.html(tipHtml);
+                        el.html(tipHtml);
 
-                            var tipUrl = el.one(".ks-editor-bubble-url"),
-                                tipChange = el.one(".ks-editor-bubble-change"),
-                                tipRemove = el.one(".ks-editor-bubble-remove");
+                        var tipUrl = el.one(".ks-editor-bubble-url"),
+                            tipChange = el.one(".ks-editor-bubble-change"),
+                            tipRemove = el.one(".ks-editor-bubble-remove");
 
-                            //ie focus not lose
-                            Editor.Utils.preventFocus(el);
+                        //ie focus not lose
+                        Editor.Utils.preventFocus(el);
 
-                            tipChange.on("click", function (ev) {
-                                showLinkEditDialog(bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
+                        tipChange.on("click", function (ev) {
+                            showLinkEditDialog(bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
 
-                            tipRemove.on("click", function (ev) {
-                                Utils.removeLink(editor, bubble.get("editorSelectedEl"));
-                                ev.halt();
-                            });
+                        tipRemove.on("click", function (ev) {
+                            Utils.removeLink(editor, bubble.get("editorSelectedEl"));
+                            ev.halt();
+                        });
 
-                            bubble.on("show", function () {
-                                var a = bubble.get("editorSelectedEl");
-                                if (!a) {
-                                    return;
-                                }
-                                var href = a.attr(Utils._ke_saved_href) ||
-                                    a.attr("href");
-                                tipUrl.html(href);
-                                tipUrl.attr("href", href);
-                            });
-                        }
+                        bubble.on("show", function () {
+                            var a = bubble.get("editorSelectedEl");
+                            if (!a) {
+                                return;
+                            }
+                            var href = a.attr(Utils._ke_saved_href) ||
+                                a.attr("href");
+                            tipUrl.html(href);
+                            tipUrl.attr("href", href);
+                        });
+                    }
 
                 }
             });
         }
-    };
+    });
+
+    return LinkPlugin;
 }, {
     requires:['editor', '../bubble/',
         './utils', '../dialogLoader/', '../button/']
@@ -13789,7 +13868,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("restoreWindow");
+                editor.fire("afterRestoreWindow");
             }, 30);
         },
 
@@ -13800,6 +13879,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         _restoreState:function () {
             var self = this,
                 editor = self.editor,
+                textareaEl=editor.get("textarea"),
                 //恢复父节点的position原状态 bugfix:最大化被父元素限制
                 _savedParents = self._savedParents;
             if (_savedParents) {
@@ -13811,10 +13891,10 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             }
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
-            editor.get("iframeWrapEl").css({
+            textareaEl.parent().css({
                 height:self.iframeHeight
             });
-            editor.get("textarea").css({
+            textareaEl.css({
                 height:self.iframeHeight
             });
             DOM.css(doc.body, {
@@ -13856,7 +13936,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 editor = self.editor,
                 _savedParents = [],
                 editorEl = editor.get("el");
-            self.iframeHeight = editor.get("iframeWrapEl").style("height");
+            self.iframeHeight = editor.get("textarea").parent().style("height");
             self.editorElWidth = editorEl.style("width");
             //主窗口滚动条也要保存哦
             self.scrollLeft = DOM.scrollLeft();
@@ -13942,6 +14022,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 editorEl = editor.get("el"),
                 viewportHeight = DOM.viewportHeight(),
                 viewportWidth = DOM.viewportWidth(),
+                textareaEl=editor.get("textarea"),
                 statusHeight = editor.get("statusBarEl") ?
                     editor.get("statusBarEl")[0].offsetHeight : 0,
                 toolHeight = editor.get("toolBarEl")[0].offsetHeight;
@@ -13976,12 +14057,12 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 top:0
             });
 
-            editor.get("iframeWrapEl").css({
+            textareaEl.parent().css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
 
 
-            editor.get("textarea").css({
+            textareaEl.css({
                 height:(viewportHeight - statusHeight - toolHeight ) + "px"
             });
 
@@ -14002,7 +14083,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             if (!self._resize) {
                 self._resize = S.buffer(function () {
                     self._maximize();
-                    editor.fire("maximizeWindow");
+                    editor.fire("afterMaximizeWindow");
                 }, 100);
             }
 
@@ -14011,7 +14092,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("maximizeWindow");
+                editor.fire("afterMaximizeWindow");
             }, 30);
         },
         maximizeWindow:function () {
@@ -14067,33 +14148,40 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
         MAXIMIZE_TIP = "全屏",
         RESTORE_TIP = "取消全屏";
 
-    return {
-        init:function (editor) {
+
+    function maximizePlugin() {
+
+    }
+
+    S.augment(maximizePlugin, {
+        renderUI:function (editor) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
                 listeners:{
                     click:function () {
-                            var self = this;
-                            var checked = self.get("checked");
-                            if (checked) {
-                                editor.execCommand("maximizeWindow");
-                                self.set("tooltip", RESTORE_TIP);
-                                self.set("contentCls", RESTORE_CLASS);
-                            } else {
-                                editor.execCommand("restoreWindow");
-                                self.set("tooltip", MAXIMIZE_TIP);
-                                self.set("contentCls", MAXIMIZE_CLASS);
-                            }
-
-                            editor.focus();
+                        var self = this;
+                        var checked = self.get("checked");
+                        if (checked) {
+                            editor.execCommand("maximizeWindow");
+                            self.set("tooltip", RESTORE_TIP);
+                            self.set("contentCls", RESTORE_CLASS);
+                        } else {
+                            editor.execCommand("restoreWindow");
+                            self.set("tooltip", MAXIMIZE_TIP);
+                            self.set("contentCls", MAXIMIZE_CLASS);
                         }
+
+                        editor.focus();
+                    }
 
                 },
                 checkable:true
             });
         }
-    };
+    });
+
+    return maximizePlugin;
 }, {
     requires:['editor', './cmd']
 });/**
@@ -14155,20 +14243,27 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
  */
 KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoader) {
 
-    return {
-        init:function (editor) {
+    function multipleUpload(config) {
+        this.config = config || {};
+    }
+
+    S.augment(multipleUpload, {
+        renderUI:function (editor) {
+            var self = this;
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
                 listeners:{
                     click:function () {
-                            DialogLoader.useDialog(editor, "multipleUpload");
+                        DialogLoader.useDialog(editor, "multipleUpload", self.config);
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return multipleUpload;
 
 }, {
     requires:['editor', '../dialogLoader/']
@@ -14212,16 +14307,23 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/orderedList/index", function (S, Editor, ListButton, ListCmd) {
-    return {
-        init:function (editor) {
+
+    function orderedList() {
+
+    }
+
+    S.augment(orderedList, {
+        renderUI:function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("orderedList",{
+            editor.addButton("orderedList", {
                 cmdType:"insertOrderedList",
                 mode:Editor.WYSIWYG_MODE
             }, ListButton);
         }
-    };
+    });
+
+    return orderedList;
 }, {
     requires:['editor', '../listUtils/btn', './cmd']
 });/**
@@ -14253,8 +14355,12 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
  */
 KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
-    return {
-        init:function (editor) {
+    function outdent() {
+
+    }
+
+    S.augment(outdent, {
+        renderUI:function (editor) {
 
             indexCmd.init(editor);
 
@@ -14264,29 +14370,31 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
                 tooltip:"减少缩进量 ",
                 listeners:{
                     click:function () {
-                            editor.execCommand("outdent");
-                            editor.focus();
+                        editor.execCommand("outdent");
+                        editor.focus();
 
                     },
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("selectionChange", function (e) {
-                                if (editor.get("mode") == Editor.SOURCE_MODE) {
-                                    return;
-                                }
-                                if (editor.execCommand(queryOutdent, e.path)) {
-                                    self.set("disabled", false);
-                                } else {
-                                    self.set("disabled", true);
-                                }
-                            });
+                        var self = this;
+                        editor.on("selectionChange", function (e) {
+                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                                return;
+                            }
+                            if (editor.execCommand(queryOutdent, e.path)) {
+                                self.set("disabled", false);
+                            } else {
+                                self.set("disabled", true);
+                            }
+                        });
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return outdent;
 
 }, {
     requires:['editor', './cmd']
@@ -14367,8 +14475,12 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
             '<span style="DISPLAY:none">&nbsp;</span>' +
             '</div>';
 
-    return {
-        init:function (editor) {
+    function pageBreak() {
+
+    }
+
+    S.augment(pageBreak, {
+        renderUI:function (editor) {
 
             fakeObjects.init(editor);
 
@@ -14408,94 +14520,104 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                 listeners:{
                     click:function () {
 
-                            var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
-                                substitute = editor.createFakeElement(real, CLS, TYPE,
-                                    //不可缩放，也不用
-                                    false,
-                                    PAGE_BREAK_MARKUP);
+                        var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
+                            substitute = editor.createFakeElement(real, CLS, TYPE,
+                                //不可缩放，也不用
+                                false,
+                                PAGE_BREAK_MARKUP);
 
-                            var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
+                        var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
 
-                            if (!range) {
-                                return;
-                            }
-
-                            editor.execCommand("save");
-
-                            var start = range.startContainer,
-                                pre = start;
-
-                            while (start.nodeName() !== "body") {
-                                pre = start;
-                                start = start.parent();
-                            }
-
-                            range.collapse(true);
-
-                            range.splitElement(pre);
-
-                            substitute.insertAfter(pre);
-
-                            editor.execCommand("save");
+                        if (!range) {
+                            return;
                         }
+
+                        editor.execCommand("save");
+
+                        var start = range.startContainer,
+                            pre = start;
+
+                        while (start.nodeName() !== "body") {
+                            pre = start;
+                            start = start.parent();
+                        }
+
+                        range.collapse(true);
+
+                        range.splitElement(pre);
+
+                        substitute.insertAfter(pre);
+
+                        editor.execCommand("save");
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return pageBreak;
 }, {
     "requires":["editor", "../fakeObjects/"]
 });/**
  * preview for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/preview/index", function () {
+KISSY.add("editor/plugin/preview/index", function (S) {
     var win = window;
-    return {
-        init:function (editor) {
+
+    function Preview() {
+    }
+
+    S.augment(Preview, {
+        renderUI:function (editor) {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{
                     click:function () {
-                            try {
-                                var screen = win.screen,
-                                    iWidth = Math.round(screen.width * 0.8),
-                                    iHeight = Math.round(screen.height * 0.7),
-                                    iLeft = Math.round(screen.width * 0.1);
-                            } catch (e) {
-                                iWidth = 640; // 800 * 0.8,
-                                iHeight = 420; // 600 * 0.7,
-                                iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
-                            }
-                            var sHTML = editor.getDocHtml()
-                                    .replace(/\${title}/, "预览"),
-                                sOpenUrl = '',
-                                oWindow = win.open(sOpenUrl,
-                                    // 每次都弹出新窗口
-                                    '',
-                                    'toolbar=yes,' +
-                                        'location=no,' +
-                                        'status=yes,' +
-                                        'menubar=yes,' +
-                                        'scrollbars=yes,' +
-                                        'resizable=yes,' +
-                                        'width=' +
-                                        iWidth +
-                                        ',height='
-                                        + iHeight
-                                        + ',left='
-                                        + iLeft), winDoc = oWindow.document;
-                            winDoc.open();
-                            winDoc.write(sHTML);
-                            winDoc.close();
-                            //ie 重新显示
-                            oWindow.focus();
+                        try {
+                            var screen = win.screen,
+                                iWidth = Math.round(screen.width * 0.8),
+                                iHeight = Math.round(screen.height * 0.7),
+                                iLeft = Math.round(screen.width * 0.1);
+                        } catch (e) {
+                            iWidth = 640; // 800 * 0.8,
+                            iHeight = 420; // 600 * 0.7,
+                            iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
                         }
+                        var sHTML = editor.getDocHtml()
+                                .replace(/\${title}/, "预览"),
+                            sOpenUrl = '',
+                            oWindow = win.open(sOpenUrl,
+                                // 每次都弹出新窗口
+                                '',
+                                'toolbar=yes,' +
+                                    'location=no,' +
+                                    'status=yes,' +
+                                    'menubar=yes,' +
+                                    'scrollbars=yes,' +
+                                    'resizable=yes,' +
+                                    'width=' +
+                                    iWidth +
+                                    ',height='
+                                    + iHeight
+                                    + ',left='
+                                    + iLeft), winDoc = oWindow.document;
+                        winDoc.open();
+                        winDoc.write(sHTML);
+                        winDoc.close();
+                        //ie 重新显示
+                        oWindow.focus();
+                    }
 
                 }
             });
-        }};
+        }});
+
+    return Preview;
+
+
 });
 /**
  * progressbar ui
@@ -14702,21 +14824,27 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
-    return {
-        init:function (editor) {
+
+    function removeFormat() {
+    }
+
+    S.augment(removeFormat, {
+        renderUI:function (editor) {
             formatCmd.init(editor);
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
                 listeners:{
                     click:function () {
-                            editor.execCommand("removeFormat");
-                        }
+                        editor.execCommand("removeFormat");
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return removeFormat;
 }, {
     requires:['editor', './cmd', '../button/']
 });/**
@@ -14726,12 +14854,16 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
 KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
     var Node = S.Node;
 
-    return {
-        init:function (editor) {
+    function Resize(config) {
+this.config=config||{};
+    }
+
+    S.augment(Resize, {
+        renderUI:function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
-                cfg = editor.get("pluginConfig")["resize"] || {},
+                cfg = this.config,
                 direction = cfg["direction"] || ["x", "y"];
 
             var cursor = 'se-resize';
@@ -14789,7 +14921,9 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
                 resizer.remove();
             });
         }
-    };
+    });
+
+    return Resize;
 }, {
     requires:['editor', 'dd']
 });/**
@@ -14797,14 +14931,20 @@ KISSY.add("editor/plugin/resize/index", function (S, Editor, DD) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/separator/index", function (S) {
-    return {
-        init:function (editor) {
-            new S.Node('<span ' +
+
+    function Separator() {
+    }
+
+    S.augment(Separator, {
+        renderUI:function (editor) {
+            S.all('<span ' +
                 'class="ks-editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
         }
-    };
+    });
+
+    return Separator;
 }, {
     requires:['editor']
 });/**
@@ -14821,72 +14961,76 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
     smiley_markup += "</div>";
 
-    return {
+    function Smiley() {
+    }
+
+    S.augment(Smiley, {
         init:function (editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,
                 listeners:{
                     afterSyncUI:function () {
-                            var self = this;
-                            self.on("blur", function () {
-                                // make click event fire
-                                setTimeout(function () {
-                                    self.smiley && self.smiley.hide();
-                                }, 150);
-                            });
+                        var self = this;
+                        self.on("blur", function () {
+                            // make click event fire
+                            setTimeout(function () {
+                                self.smiley && self.smiley.hide();
+                            }, 150);
+                        });
 
                     },
                     click:function () {
-                            var self = this, smiley, checked = self.get("checked");
-                            if (checked) {
-                                if (!(smiley = self.smiley)) {
-                                    smiley = self.smiley = new Overlay4E({
-                                        content:smiley_markup,
-                                        focus4e:false,
-                                        width:"297px",
-                                        autoRender:true,
-                                        elCls:"ks-editor-popup",
-                                        zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
-                                        mask:false
-                                    });
-                                    smiley.get("el").on("click", function (ev) {
-                                        var t = new S.Node(ev.target),
-                                            icon;
-                                        if (t.nodeName() == "a" &&
-                                            (icon = t.attr("data-icon"))) {
-                                            var img = new S.Node("<img " +
-                                                "alt='' src='" +
-                                                icon + "'/>", null,
-                                                editor.get("document")[0]);
-                                            editor.insertElement(img);
-                                        }
-                                    });
-                                    smiley.on("hide", function () {
-                                        self.set("checked", false);
-                                    });
-                                }
-                                smiley.set("align", {
-                                    node:this.get("el"),
-                                    points:["bl", "tl"]
+                        var self = this, smiley, checked = self.get("checked");
+                        if (checked) {
+                            if (!(smiley = self.smiley)) {
+                                smiley = self.smiley = new Overlay4E({
+                                    content:smiley_markup,
+                                    focus4e:false,
+                                    width:"297px",
+                                    autoRender:true,
+                                    elCls:"ks-editor-popup",
+                                    zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                    mask:false
                                 });
-                                smiley.show();
-                            } else {
-                                self.smiley && self.smiley.hide();
+                                smiley.get("el").on("click", function (ev) {
+                                    var t = new S.Node(ev.target),
+                                        icon;
+                                    if (t.nodeName() == "a" &&
+                                        (icon = t.attr("data-icon"))) {
+                                        var img = new S.Node("<img " +
+                                            "alt='' src='" +
+                                            icon + "'/>", null,
+                                            editor.get("document")[0]);
+                                        editor.insertElement(img);
+                                    }
+                                });
+                                smiley.on("hide", function () {
+                                    self.set("checked", false);
+                                });
                             }
+                            smiley.set("align", {
+                                node:this.get("el"),
+                                points:["bl", "tl"]
+                            });
+                            smiley.show();
+                        } else {
+                            self.smiley && self.smiley.hide();
                         }
-                    ,
+                    },
                     destroy:function () {
-                            if (this.smiley) {
-                                this.smiley.destroy();
-                            }
+                        if (this.smiley) {
+                            this.smiley.destroy();
                         }
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return Smiley;
 }, {
     requires:['editor', '../overlay/']
 });/**
@@ -14897,38 +15041,44 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
-    return {
+
+    function sourceArea() {
+    }
+
+    S.augment(sourceArea, {
         init:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("wysiwygMode", function () {
-                                self.set("checked", false);
-                            });
-                            editor.on("sourceMode", function () {
-                                self.set("checked", true);
-                            });
+                        var self = this;
+                        editor.on("wysiwygMode", function () {
+                            self.set("checked", false);
+                        });
+                        editor.on("sourceMode", function () {
+                            self.set("checked", true);
+                        });
 
                     },
                     click:function () {
-                            var self = this;
-                            var checked = self.get("checked");
-                            if (checked) {
-                                editor.set("mode", SOURCE_MODE);
-                            } else {
-                                editor.set("mode", WYSIWYG_MODE);
-                            }
+                        var self = this;
+                        var checked = self.get("checked");
+                        if (checked) {
+                            editor.set("mode", SOURCE_MODE);
+                        } else {
+                            editor.set("mode", WYSIWYG_MODE);
+                        }
 
-                            editor.focus();
+                        editor.focus();
 
                     }
                 },
                 checkable:true
             });
         }
-    };
+    });
+
+    return sourceArea;
 }, {
     requires:['editor', '../button/']
 });
@@ -14966,18 +15116,24 @@ KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
  * strikeThrough button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui,cmd) {
-    return {
-        init:function (editor) {
+KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui, cmd) {
+
+    function StrikeThrough() {
+    }
+
+    S.augment(StrikeThrough, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("strikeThrough",{
+            editor.addButton("strikeThrough", {
                 cmdType:"strikeThrough",
                 tooltip:"删除线 "
             }, ui.Button);
         }
-    };
+    });
+
+    return StrikeThrough;
 }, {
-    requires:['editor', '../font/ui','./cmd']
+    requires:['editor', '../font/ui', './cmd']
 });/**
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
@@ -15361,7 +15517,11 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             }
         };
 
-    return {
+    function TablePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(TablePlugin, {
         init:function (editor) {
             /**
              * 动态加入显表格border css，便于编辑
@@ -15375,84 +15535,87 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             dataFilter.addRules(extraDataFilter);
             htmlFilter.addRules(extraHtmlFilter);
 
-            var handlers = {
+            var self = this,
+                handlers = {
 
-                "表格属性":function () {
-                    this.hide();
-                    var info = getSel(editor);
-                    if (info) {
-                        DialogLoader.useDialog(editor, "table", {
-                            selectedTable:info.table,
-                            selectedTd:info.td
-                        });
+                    "表格属性":function () {
+                        this.hide();
+                        var info = getSel(editor);
+                        if (info) {
+                            DialogLoader.useDialog(editor, "table",
+                                self.config,
+                                {
+                                    selectedTable:info.table,
+                                    selectedTd:info.td
+                                });
+                        }
+                    },
+
+                    "删除表格":function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            startElement = selection && selection.getStartElement(),
+                            table = startElement && startElement.closest('table', undefined);
+
+                        if (!table) {
+                            return;
+                        }
+
+                        // Maintain the selection point at where the table was deleted.
+                        selection.selectElement(table);
+                        var range = selection.getRanges()[0];
+                        range.collapse();
+                        selection.selectRanges([ range ]);
+
+                        // If the table's parent has only one child,
+                        // remove it,except body,as well.( #5416 )
+                        var parent = table.parent();
+                        if (parent[0].childNodes.length == 1 &&
+                            parent.nodeName() != 'body' &&
+                            parent.nodeName() != 'td') {
+                            parent.remove();
+                        } else {
+                            table.remove();
+                        }
+                    },
+
+                    '删除行 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        placeCursorInCell(deleteRows(selection), undefined);
+                    },
+
+                    '删除列 ':function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            element = deleteColumns(selection);
+                        element && placeCursorInCell(element, true);
+                    },
+
+                    '在上方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, true);
+                    },
+
+                    '在下方插入行':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertRow(selection, undefined);
+                    },
+
+                    '在左侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, true);
+                    },
+
+                    '在右侧插入列':function () {
+                        this.hide();
+                        var selection = editor.getSelection();
+                        insertColumn(selection, undefined);
                     }
-                },
-
-                "删除表格":function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        startElement = selection && selection.getStartElement(),
-                        table = startElement && startElement.closest('table', undefined);
-
-                    if (!table) {
-                        return;
-                    }
-
-                    // Maintain the selection point at where the table was deleted.
-                    selection.selectElement(table);
-                    var range = selection.getRanges()[0];
-                    range.collapse();
-                    selection.selectRanges([ range ]);
-
-                    // If the table's parent has only one child,
-                    // remove it,except body,as well.( #5416 )
-                    var parent = table.parent();
-                    if (parent[0].childNodes.length == 1 &&
-                        parent.nodeName() != 'body' &&
-                        parent.nodeName() != 'td') {
-                        parent.remove();
-                    } else {
-                        table.remove();
-                    }
-                },
-
-                '删除行 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    placeCursorInCell(deleteRows(selection), undefined);
-                },
-
-                '删除列 ':function () {
-                    this.hide();
-                    var selection = editor.getSelection(),
-                        element = deleteColumns(selection);
-                    element && placeCursorInCell(element, true);
-                },
-
-                '在上方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, true);
-                },
-
-                '在下方插入行':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertRow(selection, undefined);
-                },
-
-                '在左侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, true);
-                },
-
-                '在右侧插入列':function () {
-                    this.hide();
-                    var selection = editor.getSelection();
-                    insertColumn(selection, undefined);
-                }
-            };
+                };
 
             var children = [];
             S.each(handlers, function (h, name) {
@@ -15470,25 +15633,25 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 children:children,
                 listeners:{
                     click:function (e) {
-                            var content = e.target.get("content");
-                            if (handlers[content]) {
-                                handlers[content].apply(this);
-                            }
+                        var content = e.target.get("content");
+                        if (handlers[content]) {
+                            handlers[content].apply(this);
+                        }
 
                     },
                     beforeVisibleChange:function (e) {
-                            if (e.newVal) {
-                                var self = this, children = self.get("children");
-                                var editor = self.get("editor");
-                                S.each(children, function (c) {
-                                    var content = c.get("content");
-                                    if (!statusChecker[content] ||
-                                        statusChecker[content].call(self, editor)) {
-                                        c.set("disabled", false);
-                                    } else {
-                                        c.set("disabled", true);
-                                    }
-                                });
+                        if (e.newVal) {
+                            var self = this, children = self.get("children");
+                            var editor = self.get("editor");
+                            S.each(children, function (c) {
+                                var content = c.get("content");
+                                if (!statusChecker[content] ||
+                                    statusChecker[content].call(self, editor)) {
+                                    c.set("disabled", false);
+                                } else {
+                                    c.set("disabled", true);
+                                }
+                            });
 
                         }
                     }
@@ -15499,7 +15662,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function () {
-                            DialogLoader.useDialog(editor, "table", {
+                        DialogLoader.useDialog(editor, "table",
+                            self.config,
+                            {
                                 selectedTable:0,
                                 selectedTd:0
                             });
@@ -15510,7 +15675,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
             });
 
         }
-    }
+    });
+
+    return TablePlugin;
 }, {
     requires:['editor', '../dialogLoader/', '../contextmenu/']
 });/**
@@ -15541,15 +15708,21 @@ KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
-    return {
-        init:function (editor) {
+
+    function Underline() {
+    }
+
+    S.augment(Underline, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("underline",{
+            editor.addButton("underline", {
                 cmdType:"underline",
                 tooltip:"下划线 "
             }, ui.Button);
         }
-    };
+    });
+
+    return Underline;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });/**
@@ -15557,34 +15730,24 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
-    function Common(self) {
-        var editor = self.get("editor");
-        /**
-         * save,restore完，更新工具栏状态
-         */
-        editor.on("afterSave afterRestore", self._respond, self);
-    }
-
 
     var UndoBtn = Button.extend({
 
         bindUI:function () {
-            Common(this);
-            this.on("click", function () {
-                this.get("editor").execCommand("undo");
-            });
-        },
-
-        _respond:function (ev) {
             var self = this,
-                index = ev.index;
-
-            //有状态可退
-            if (index > 0) {
-                self.set("disabled", false);
-            } else {
-                self.set("disabled", true);
-            }
+                editor = self.get("editor");
+            self.on("click", function () {
+                editor.execCommand("undo");
+            });
+            editor.on("afterUndo afterRedo afterSave", function (ev) {
+                var index = ev.index;
+                //有状态可后退
+                if (index > 0) {
+                    self.set("disabled", false);
+                } else {
+                    self.set("disabled", true);
+                }
+            });
         }
     }, {
         ATTRS:{
@@ -15602,22 +15765,21 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     var RedoBtn = Button.extend({
 
         bindUI:function () {
-            Common(this);
-            this.on("click", function () {
-                this.get("editor").execCommand("redo");
-            });
-        },
-
-        _respond:function (ev) {
             var self = this,
-                history = ev.history,
-                index = ev.index;
-            //有状态可前进
-            if (index < history.length - 1) {
-                self.set("disabled", false);
-            } else {
-                self.set("disabled", true);
-            }
+                editor = self.get("editor");
+            self.on("click", function () {
+                editor.execCommand("redo");
+            });
+            editor.on("afterUndo afterRedo afterSave", function (ev) {
+                var history = ev.history,
+                    index = ev.index;
+                //有状态可前进
+                if (index < history.length - 1) {
+                    self.set("disabled", false);
+                } else {
+                    self.set("disabled", true);
+                }
+            });
         }
     }, {
         mode:{
@@ -15745,7 +15907,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     }
                     // ctrl+z，撤销
                     if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("restore", {direction:-1})) {
+                        if (false !== editor.fire("beforeRedo")) {
                             self.restore(-1);
                         }
                         ev.halt();
@@ -15753,13 +15915,13 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     }
                     // ctrl+y，重做
                     if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("restore", {direction:1})) {
+                        if (false !== editor.fire("beforeUndo")) {
                             self.restore(1);
                         }
                         ev.halt();
                         return;
                     }
-                    if (editor.fire("save", {buffer:1}) !== false) {
+                    if (editor.fire("beforeSave", {buffer:1}) !== false) {
                         self.save(1);
                     }
                 });
@@ -15782,8 +15944,15 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
          * 保存历史
          */
         save:function (buffer) {
+            var editor = this.editor;
+
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
+            if (editor.get("mode") != Editor.WYSIWYG_MODE) {
+                return;
+            }
+
+
+            if (!editor.get("document")) {
                 return;
             }
 
@@ -15800,8 +15969,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             if (history.length > index + 1)
                 history.splice(index + 1, history.length - index - 1);
 
-            var editor = self.editor,
-                last = history[history.length - 1],
+            var last = history[history.length - 1],
                 current = new Snapshot(editor);
 
             if (!last || !last.equals(current)) {
@@ -15848,7 +16016,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     selection.scrollIntoView();
                 }
                 self.index += d;
-                editor.fire("afterRestore", {
+                editor.fire(d > 0 ? "afterUndo" : "afterRedo", {
                     history:history,
                     index:self.index
                 });
@@ -15890,23 +16058,30 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
-    return {
-        init:function (editor) {
+
+    function undo() {
+    }
+
+
+    S.augment(undo, {
+        renderUI:function (editor) {
             cmd.init(editor);
 
-            editor.addButton("undo",{
+            editor.addButton("undo", {
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"撤销",
                 editor:editor
-            },  Btn.UndoBtn);
+            }, Btn.UndoBtn);
 
-            editor.addButton("redo",{
+            editor.addButton("redo", {
                 mode:Editor.WYSIWYG_MODE,
                 tooltip:"重做",
                 editor:editor
-            },  Btn.RedoBtn);
+            }, Btn.RedoBtn);
         }
-    };
+    });
+
+    return undo;
 }, {
     requires:['editor', './btn', './cmd']
 });/**
@@ -15949,16 +16124,22 @@ KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, ListCmd) {
-    return {
-        init:function (editor) {
+
+    function unorderedList() {
+    }
+
+    S.augment(unorderedList, {
+        renderUI:function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("unorderedList",{
+            editor.addButton("unorderedList", {
                 cmdType:"insertUnorderedList",
                 mode:Editor.WYSIWYG_MODE
             }, ListButton);
         }
-    };
+    })
+
+    return unorderedList;
 }, {
     requires:['editor', '../listUtils/btn', './cmd']
 });/**
@@ -15969,8 +16150,12 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
-    return {
-        init:function (editor) {
+    function video(config) {
+        this.config = config;
+    }
+
+    S.augment(video, {
+        renderUI:function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
@@ -15988,11 +16173,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 return undefined;
             }
 
-            var cfg = editor.get("pluginConfig");
-
-            cfg["video"] = cfg["video"] || {};
-
-            var videoCfg = cfg["video"];
+            var videoCfg = this.config;
 
             if (videoCfg['providers']) {
                 provider.push.apply(provider, videoCfg['providers']);
@@ -16051,6 +16232,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 editor:editor,
                 cls:CLS_VIDEO,
                 type:TYPE_VIDEO,
+                pluginConfig:this.config,
                 bubbleId:"video",
                 contextMenuId:"video",
                 contextMenuHandlers:{
@@ -16067,15 +16249,17 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                 tooltip:"插入视频",
                 listeners:{
                     click:function () {
-                            flashControl.show();
+                        flashControl.show();
 
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
 
+
+    return video;
 
 }, {
     requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']
@@ -16103,8 +16287,13 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
         }
     });
 
-    return {
-        init:function (editor) {
+
+    function XiamiMusicPlugin(config) {
+        this.config=config||{};
+    }
+
+    S.augment(XiamiMusicPlugin, {
+        renderUI:function (editor) {
 
 
             var dataProcessor = editor.htmlDataProcessor,
@@ -16173,6 +16362,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
                 bubbleId:"xiami",
+                pluginConfig:this.config,
                 contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {
@@ -16195,8 +16385,10 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             });
 
         }
-    };
+    });
 
+
+    return XiamiMusicPlugin;
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
 });/**

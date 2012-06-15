@@ -1,14 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
-    var PREFIX = "editor/plugin/", SUFFIX = "/";
 
     /**
      * KISSY Editor
@@ -26,68 +25,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 var self = this;
                 self.__commands = {};
                 self.__controls={};
-            },
-
-            /**
-             * Use editor plugins.
-             * @param {Array<String>|String} mods Editor plugin names.
-             * @param callback
-             * @return {Editor} Current instance.
-             */
-            use:function (mods, callback) {
-                var self = this,
-                    BASIC = self.__CORE_PLUGINS || [
-                        "htmlDataProcessor",
-                        "enterKey",
-                        "clipboard",
-                        "selection"
-                    ];
-
-                if (S.isString(mods)) {
-                    mods = mods.split(",");
-                }
-
-                for (var l = mods.length - 1; l >= 0; l--) {
-                    if (!mods[l]) {
-                        mods.splice(l, 1);
-                    }
-                }
-
-                for (var i = 0; i < BASIC.length; i++) {
-                    var b = BASIC[i];
-                    if (!S.inArray(b, mods)) {
-                        mods.unshift(b);
-                    }
-                }
-
-                S.each(mods, function (m, i) {
-                    if (mods[i]) {
-                        mods[i] = PREFIX + m + SUFFIX;
-                    }
-                });
-
-                function useMods(modFns) {
-                    // 载入了插件的attach功能，现在按照顺序一个个attach
-                    for (var i = 0; i < modFns.length; i++) {
-                        if (modFns[i]) {
-                            modFns[i].init(self);
-                        }
-                    }
-                    callback && callback.call(self);
-                }
-
-                //编辑器实例 use 时会进行编辑器 ui 操作而不单单是功能定义，必须 ready
-                S.use(mods, function () {
-                    var args = S.makeArray(arguments);
-                    args.shift();
-                    useMods(args);
-                    // 工具条出来后调整高度
-                    self.adjustHeight();
-                });
-
-                self.__CORE_PLUGINS = [];
-
-                return self;
             }
         },
 
@@ -118,11 +55,6 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  * @type Node
                  */
                 document:{},
-                /*
-                 * iframe 's parentNode
-                 * @type Node
-                 */
-                iframeWrapEl:{},
                 /**
                  * toolbar element
                  * @type Node
@@ -197,7 +129,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(this.get("prefixCls") + ".editor-textarea");
+            return el.one(".ks-editor-textarea");
         }
 
     };
@@ -213,9 +145,8 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/clipboard/index", function (S) {
-    var Editor = S.Editor,
-        $ = S.all,
+KISSY.add("editor/core/clipboard", function (S, Editor) {
+    var $ = S.all,
         UA = S.UA,
         KERange = Editor.Range,
         KER = Editor.RANGE,
@@ -235,6 +166,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
             // beforepaste not fire on webkit and firefox
             // paste fire too later in ie ,cause error
             // 奇怪哦
+            // http://help.dottoro.com/ljxqbxkf.php
             // refer : http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
             Event.on(editor.get("document")[0].body,
                 UA['webkit'] ? 'paste' : (UA.gecko ? 'paste' : 'beforepaste'),
@@ -464,53 +396,52 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
 
     var depressBeforeEvent;
 
-    /**
-     * 给所有右键都加入复制粘贴
-     */
-    Editor.on("contextmenu", function (ev) {
-        var contextmenu = ev.contextmenu;
-
-        if (contextmenu.__copy_fix) {
-            return;
-        }
-
-        contextmenu.__copy_fix = 1;
-
-        var editor = contextmenu.get("editor"),
-            pastes = {"copy":1, "cut":1, "paste":1};
-
-        for (var i in pastes) {
-            if (pastes.hasOwnProperty(i)) {
-                contextmenu.addChild({
-                    xclass:'menuitem',
-                    content:lang[i],
-                    value:i
-                });
-            }
-        }
-
-        contextmenu.on('click', function (e) {
-            var value = e.target.get("value");
-            if (pastes[value]) {
-                this.hide();
-                // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                // 原编辑器获得焦点后再进行下步操作
-                setTimeout(function () {
-                    editor.execCommand(value);
-                }, 30);
-            }
-        });
-    });
-
     return {
         init:function (editor) {
             editor.docReady(function () {
                 new Paste(editor);
             });
+
+            var pastes = {"copy":1, "cut":1, "paste":1};
+
+            /**
+             * 给所有右键都加入复制粘贴
+             */
+            editor.on("contextmenu", function (ev) {
+                var contextmenu = ev.contextmenu;
+
+                if (contextmenu.__copy_fix) {
+                    return;
+                }
+
+                contextmenu.__copy_fix = 1;
+
+                for (var i in pastes) {
+                    if (pastes.hasOwnProperty(i)) {
+                        contextmenu.addChild({
+                            xclass:'menuitem',
+                            content:lang[i],
+                            value:i
+                        });
+                    }
+                }
+
+                contextmenu.on('click', function (e) {
+                    var value = e.target.get("value");
+                    if (pastes[value]) {
+                        this.hide();
+                        // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                        // 原编辑器获得焦点后再进行下步操作
+                        setTimeout(function () {
+                            editor.execCommand(value);
+                        }, 30);
+                    }
+                });
+            });
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -1890,9 +1821,8 @@ KISSY.add("editor/core/elementPath", function (S) {
  * monitor user's enter and shift enter keydown,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/enterKey/index", function (S) {
-    var Editor = S.Editor,
-        UA = S.UA,
+KISSY.add("editor/core/enterKey", function (S,Editor) {
+    var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
@@ -2094,7 +2024,7 @@ KISSY.add("editor/plugin/enterKey/index", function (S) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * 多实例的管理，主要是焦点控制，主要是为了
@@ -2201,12 +2131,11 @@ KISSY.add("editor/core/focusManager", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
+KISSY.add("editor/core/htmlDataProcessor", function (S,Editor) {
 
     return {
         init:function (editor) {
             var undefined = undefined,
-                Editor = S.Editor,
                 Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -2763,7 +2692,7 @@ KISSY.add("editor/plugin/htmlDataProcessor/index", function (S) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * Module meta require info for KISSY Editor.
@@ -4713,10 +4642,17 @@ KISSY.add("editor/core/selection", function (S) {
          * editor document. Return NULL if that's the case.
          */
         if (OLD_IE) {
-            var range = self.getNative().createRange();
-            if (!range
-                || ( range.item && range.item(0).ownerDocument != document )
-                || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+            try {
+                var range = self.getNative().createRange();
+                if (!range
+                    || ( range.item && range.item(0).ownerDocument != document )
+                    || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+                    self.isInvalid = TRUE;
+                }
+            }
+                // 2012-06-13 发布页 bug
+                // 当焦点在一个跨域的 iframe 内，调用该操作抛拒绝访问异常
+            catch (e) {
                 self.isInvalid = TRUE;
             }
         }
@@ -5466,14 +5402,14 @@ KISSY.add("editor/core/selection", function (S) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/selection/index", function (S, Editor) {
+KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        DOM= S.DOM,
+        DOM = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 
@@ -5598,8 +5534,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
 
         var savedRange,
             saveEnabled,
-            // 2010-10-08 import from ckeditor 3.4.1
-            // 点击(mousedown-focus-mouseup)，不保留原有的 selection
+        // 2010-10-08 import from ckeditor 3.4.1
+        // 点击(mousedown-focus-mouseup)，不保留原有的 selection
             restoreEnabled = TRUE;
 
         // Listening on document element ensures that
@@ -5790,8 +5726,6 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
      * @param editor
      */
     function monitorSelectionChange(editor) {
-        var doc = editor.get("document")[0];
-
         // Matching an empty paragraph at the end of document.
         // 注释也要排除掉
         var emptyParagraphRegexp =
@@ -5865,14 +5799,14 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
                     fixedBlock[0] != body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
-                        var element = fixedBlock.next(nextValidEl,1);
+                        var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
                             element[0].nodeType == DOM.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
-                            element = fixedBlock.prev(nextValidEl,1);
+                            element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
                                 element[0].nodeType == DOM.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
@@ -5895,7 +5829,8 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
              *  当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              *  解决：增加新的 p
              */
-            var lastRange = new Editor.Range(doc),
+            var doc = editor.get("document")[0],
+                lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方
             lastRange
@@ -5929,7 +5864,7 @@ KISSY.add("editor/plugin/selection/index", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires:['./base']
 });
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -8114,7 +8049,7 @@ KISSY.add("editor/core/zIndexManager", function (S) {
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, Editor, Utils, focusManager) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexManger, meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
     var TRUE = true,
 
         undefined = undefined,
@@ -8220,11 +8155,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
 
                 editorEl.html(EDITOR_TPL);
 
+                wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+
                 self._UUID = S.guid();
 
-
                 self.set({
-                    iframeWrapEl:wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS),
                     toolBarEl:editorEl.one(KE_TOOLBAR_CLASS),
                     statusBarEl:editorEl.one(KE_STATUSBAR_CLASS)
                 }, {
@@ -8246,60 +8181,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 // 实例集中管理
                 focusManager.register(self);
             },
-
-            /**
-             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-             * width 依然在 el 上设置
-             */
-            _uiSetHeight:function (v) {
-                var self = this,
-                    toolBarEl = self.get("toolBarEl"),
-                    statusBarEl = self.get("statusBarEl");
-                v = parseInt(v, 10);
-                // 减去顶部和底部工具条高度
-                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
-                    (statusBarEl && statusBarEl.outerHeight() || 0);
-                self.get("iframeWrapEl").css(HEIGHT, v);
-                self.get("textarea").css(HEIGHT, v);
-            },
-
-
-            adjustHeight:function () {
-                var self = this, h;
-                if (h = self.get("height")) {
-                    self._uiSetHeight(h);
-                }
-            },
-
-            _uiSetMode:function (v) {
-                var self = this,
-                    save,
-                    iframe = self.get("iframe"),
-                    textarea = self.get("textarea");
-                if (v == WYSIWYG_MODE) {
-                    self.execCommand("save");
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        self.execCommand("save");
-                        self.detach("docReady", save);
-                    });
-                    self._setData(textarea.val());
-                    self.fire("wysiwygMode");
-                } else {
-                    textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
-                    textarea.show();
-                    iframe.hide();
-                    self.fire("sourceMode");
-                }
-            },
-
-            // 覆盖 controller
-            _uiSetFocused:function (v) {
-                // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
-                }
+            // 在插件运行前,运行核心兼容
+            renderUI:function () {
+                var self = this;
+                clipboard.init(self);
+                enterKey.init(self);
+                htmlDataProcessor.init(self);
+                selectionFix.init(self);
             },
 
             bindUI:function () {
@@ -8338,6 +8226,69 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                 self.on("focus", function () {
                     self.get("el").addClass(prefixCls + "editor-focused");
                 });
+            },
+
+            syncUI:function () {
+                var self = this,
+                    h = self.get("height")
+                if (h) {
+                    // 根据容器高度，设置内层高度
+                    self._uiSetHeight(h);
+                }
+            },
+
+            /**
+             * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
+             * width 依然在 el 上设置
+             */
+            _uiSetHeight:function (v) {
+                var self = this,
+                    textareaEl = self.get("textarea"),
+                    toolBarEl = self.get("toolBarEl"),
+                    statusBarEl = self.get("statusBarEl");
+                v = parseInt(v, 10);
+                // 减去顶部和底部工具条高度
+                v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
+                    (statusBarEl && statusBarEl.outerHeight() || 0);
+                textareaEl.parent().css(HEIGHT, v);
+                textareaEl.css(HEIGHT, v);
+            },
+
+            _uiSetMode:function (v) {
+                var self = this,
+                    save,
+                    rendered = self.get("render"),
+                    iframe = self.get("iframe"),
+                    textarea = self.get("textarea");
+                if (v == WYSIWYG_MODE) {
+                    // 初始化时不保存历史
+                    if (rendered) {
+                        self.execCommand("save");
+                    }
+                    // recreate iframe need load time
+                    self.on("docReady", save = function () {
+                        if (rendered) {
+                            self.execCommand("save");
+                        }
+                        self.detach("docReady", save);
+                    });
+                    self._setData(textarea.val());
+                    self.fire("wysiwygMode");
+                } else {
+                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    textarea[0].focus();
+                    textarea.show();
+                    iframe.hide();
+                    self.fire("sourceMode");
+                }
+            },
+
+            // 覆盖 controller
+            _uiSetFocused:function (v) {
+                // docReady 后才能调用
+                if (v && this.__docReady) {
+                    this.focus();
+                }
             },
 
             destructor:function () {
@@ -9069,14 +9020,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
                         control = sel.getSelectedElement();
                     if (control) {
                         // Make undo snapshot.
-                        self.fire('save');
+                        self.execCommand('save');
                         // Delete any element that 'hasLayout' (e.g. hr,table) in IE8 will
                         // break up the selection, safely manage it here. (#4795)
                         var bookmark = sel.getRanges()[ 0 ].createBookmark();
                         // Remove the control manually.
                         control.remove();
                         sel.selectBookmarks([ bookmark ]);
-                        self.fire('save');
+                        self.execCommand('save');
                         evt.preventDefault();
                     }
                 }
@@ -9218,7 +9169,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         if (textarea.hasAttr("tabindex")) {
             iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
         }
-        self.get("iframeWrapEl").prepend(iframe);
+        textarea.parent().prepend(iframe);
         self.set("iframe", iframe);
         self.__docReady = 0;
         // With FF, it's better to load the data on iframe.load. (#3894,#4058)
@@ -9255,8 +9206,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager) {
         'editor/core/focusManager',
         'editor/core/styles',
         'editor/core/zIndexManager',
-        'editor/core/focusManager',
-        'editor/core/meta'
+        'editor/core/meta',
+        'editor/core/clipboard',
+        'editor/core/enterKey',
+        'editor/core/htmlDataProcessor',
+        'editor/core/selectionFix'
     ]
 });
 /**

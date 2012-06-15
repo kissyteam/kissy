@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
         };
 
     return {
-        useDialog:function (editor, name, args) {
+        useDialog:function (editor, name,config, args) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
@@ -40,7 +40,7 @@ KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
             loadMask.loading();
             S.use("editor/plugin/" + name + "/dialog", function (S, Dialog) {
                 loadMask.unloading();
-                editor.addControl(name + "/dialog", new Dialog(editor));
+                editor.addControl(name + "/dialog", new Dialog(editor,config));
                 editor.showDialog(name, args);
             });
         }

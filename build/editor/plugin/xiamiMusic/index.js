@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * xiamiMusic button
@@ -27,8 +27,13 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
         }
     });
 
-    return {
-        init:function (editor) {
+
+    function XiamiMusicPlugin(config) {
+        this.config=config||{};
+    }
+
+    S.augment(XiamiMusicPlugin, {
+        renderUI:function (editor) {
 
 
             var dataProcessor = editor.htmlDataProcessor,
@@ -97,6 +102,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
                 cls:CLS_XIAMI,
                 type:TYPE_XIAMI,
                 bubbleId:"xiami",
+                pluginConfig:this.config,
                 contextMenuId:"xiami",
                 contextMenuHandlers:{
                     "虾米属性":function () {
@@ -119,8 +125,10 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
             });
 
         }
-    };
+    });
 
+
+    return XiamiMusicPlugin;
 }, {
     requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
 });

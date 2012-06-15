@@ -4,16 +4,17 @@
  */
 KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
 
-    function ForeColorPlugin(){
-
+    function ForeColorPlugin(config) {
+        this.config = config || {};
     }
 
-    S.augment(ForeColorPlugin,{
-        renderUI:function(editor){
+    S.augment(ForeColorPlugin, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("foreColor",{
+            editor.addButton("foreColor", {
                 cmdType:'foreColor',
-                tooltip:"文本颜色"
+                tooltip:"文本颜色",
+                pluginConfig:this.config
             }, Button);
         }
     });

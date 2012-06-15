@@ -25,8 +25,8 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
         return lastElement.closest('a', undefined);
     }
 
-    function LinkPlugin() {
-
+    function LinkPlugin(config) {
+this.config=config||{};
     }
 
     S.augment(LinkPlugin, {
@@ -42,8 +42,12 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
                 mode:Editor.WYSIWYG_MODE
             });
 
+            var self=this;
+
             function showLinkEditDialog(selectedEl) {
-                DialogLoader.useDialog(editor, "link", selectedEl);
+                DialogLoader.useDialog(editor, "link",
+                    self.config,
+                    selectedEl);
             }
 
             editor.addBubble("link", checkLink, {

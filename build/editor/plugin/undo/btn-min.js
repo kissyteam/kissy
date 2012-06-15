@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
-KISSY.add("editor/plugin/undo/btn",function(b,c,d){function e(a){a.get("editor").on("afterSave afterRestore",a._respond,a)}b=d.extend({bindUI:function(){e(this);this.on("click",function(){this.get("editor").execCommand("undo")})},_respond:function(a){0<a.index?this.set("disabled",!1):this.set("disabled",!0)}},{ATTRS:{mode:{value:c.WYSIWYG_MODE},disabled:{value:!0}}});return{RedoBtn:d.extend({bindUI:function(){e(this);this.on("click",function(){this.get("editor").execCommand("redo")})},_respond:function(a){a.index<
-a.history.length-1?this.set("disabled",!1):this.set("disabled",!0)}},{mode:{value:c.WYSIWYG_MODE},ATTRS:{disabled:{value:!0}}}),UndoBtn:b}},{requires:["editor","../button/"]});
+KISSY.add("editor/plugin/undo/btn",function(c,d,e){c=e.extend({bindUI:function(){var b=this,a=b.get("editor");b.on("click",function(){a.execCommand("undo")});a.on("afterUndo afterRedo afterSave",function(a){0<a.index?b.set("disabled",!1):b.set("disabled",!0)})}},{ATTRS:{mode:{value:d.WYSIWYG_MODE},disabled:{value:!0}}});return{RedoBtn:e.extend({bindUI:function(){var b=this,a=b.get("editor");b.on("click",function(){a.execCommand("redo")});a.on("afterUndo afterRedo afterSave",function(a){a.index<a.history.length-
+1?b.set("disabled",!1):b.set("disabled",!0)})}},{mode:{value:d.WYSIWYG_MODE},ATTRS:{disabled:{value:!0}}}),UndoBtn:c}},{requires:["editor","../button/"]});

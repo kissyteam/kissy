@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * bubble or tip view for kissy editor
@@ -150,12 +150,13 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         // !TODO 耦合---
         function onHide() {
             bubble.hide();
+            var editorWin = editor.get("window")[0];
             Event.remove(editorWin, "scroll", onScroll);
         }
 
         editor.on("sourceMode", onHide);
 
-        var editorWin = editor.get("window")[0];
+
 
         function showImmediately() {
 
@@ -187,6 +188,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         function onShow() {
+            var editorWin = editor.get("window")[0];
             Event.on(editorWin, "scroll", onScroll);
             showImmediately();
         }

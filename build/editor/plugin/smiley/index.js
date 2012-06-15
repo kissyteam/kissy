@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * smiley button
@@ -17,72 +17,76 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
     smiley_markup += "</div>";
 
-    return {
+    function Smiley() {
+    }
+
+    S.augment(Smiley, {
         init:function (editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,
                 listeners:{
                     afterSyncUI:function () {
-                            var self = this;
-                            self.on("blur", function () {
-                                // make click event fire
-                                setTimeout(function () {
-                                    self.smiley && self.smiley.hide();
-                                }, 150);
-                            });
+                        var self = this;
+                        self.on("blur", function () {
+                            // make click event fire
+                            setTimeout(function () {
+                                self.smiley && self.smiley.hide();
+                            }, 150);
+                        });
 
                     },
                     click:function () {
-                            var self = this, smiley, checked = self.get("checked");
-                            if (checked) {
-                                if (!(smiley = self.smiley)) {
-                                    smiley = self.smiley = new Overlay4E({
-                                        content:smiley_markup,
-                                        focus4e:false,
-                                        width:"297px",
-                                        autoRender:true,
-                                        elCls:"ks-editor-popup",
-                                        zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
-                                        mask:false
-                                    });
-                                    smiley.get("el").on("click", function (ev) {
-                                        var t = new S.Node(ev.target),
-                                            icon;
-                                        if (t.nodeName() == "a" &&
-                                            (icon = t.attr("data-icon"))) {
-                                            var img = new S.Node("<img " +
-                                                "alt='' src='" +
-                                                icon + "'/>", null,
-                                                editor.get("document")[0]);
-                                            editor.insertElement(img);
-                                        }
-                                    });
-                                    smiley.on("hide", function () {
-                                        self.set("checked", false);
-                                    });
-                                }
-                                smiley.set("align", {
-                                    node:this.get("el"),
-                                    points:["bl", "tl"]
+                        var self = this, smiley, checked = self.get("checked");
+                        if (checked) {
+                            if (!(smiley = self.smiley)) {
+                                smiley = self.smiley = new Overlay4E({
+                                    content:smiley_markup,
+                                    focus4e:false,
+                                    width:"297px",
+                                    autoRender:true,
+                                    elCls:"ks-editor-popup",
+                                    zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                    mask:false
                                 });
-                                smiley.show();
-                            } else {
-                                self.smiley && self.smiley.hide();
+                                smiley.get("el").on("click", function (ev) {
+                                    var t = new S.Node(ev.target),
+                                        icon;
+                                    if (t.nodeName() == "a" &&
+                                        (icon = t.attr("data-icon"))) {
+                                        var img = new S.Node("<img " +
+                                            "alt='' src='" +
+                                            icon + "'/>", null,
+                                            editor.get("document")[0]);
+                                        editor.insertElement(img);
+                                    }
+                                });
+                                smiley.on("hide", function () {
+                                    self.set("checked", false);
+                                });
                             }
+                            smiley.set("align", {
+                                node:this.get("el"),
+                                points:["bl", "tl"]
+                            });
+                            smiley.show();
+                        } else {
+                            self.smiley && self.smiley.hide();
                         }
-                    ,
+                    },
                     destroy:function () {
-                            if (this.smiley) {
-                                this.smiley.destroy();
-                            }
+                        if (this.smiley) {
+                            this.smiley.destroy();
                         }
+                    }
 
                 },
                 mode:Editor.WYSIWYG_MODE
             });
         }
-    };
+    });
+
+    return Smiley;
 }, {
     requires:['editor', '../overlay/']
 });

@@ -1,16 +1,20 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * Heading plugin for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
-    return {
-        init:function (editor) {
 
+    function HeadingPlugin() {
+
+    }
+
+    S.augment(HeadingPlugin, {
+        renderUI:function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],
@@ -89,7 +93,9 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 }
             });
         }
-    };
+    });
+
+    return HeadingPlugin;
 }, {
     requires:['editor', './cmd']
 });

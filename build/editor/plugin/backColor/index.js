@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * backColor button.
@@ -9,15 +9,23 @@ build time: Jun 13 14:40
  */
 KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function backColor(config) {
+        this.config=config||{};
+    }
+
+    S.augment(backColor, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("backColor",{
+            editor.addButton("backColor", {
                 cmdType:'backColor',
-                tooltip:"背景颜色"
+                tooltip:"背景颜色",
+                pluginConfig:this.config
             }, Button);
         }
-    };
+    });
+
+    return backColor;
+
 }, {
     requires:['editor', '../color/btn', './cmd']
 });

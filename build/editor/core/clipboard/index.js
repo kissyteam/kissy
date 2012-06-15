@@ -1,6 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
+build time: Jun 15 12:07
+*/
+/*
+Copyright 2012, KISSY UI Library v1.30dev
+MIT Licensed
 build time: Jun 13 14:40
 */
 /**
@@ -54,7 +59,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
 
             // ie beforepaste 会触发两次，第一次 pastebin 为锚点内容，奇怪
             // chrome keydown 也会两次
-            S.log(ev.type + " : " + " paste event happen");
+
 
             var self = this,
                 editor = self.editor,
@@ -68,7 +73,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
                 // 第二次 bms 是错的，但是内容是对的
                 // 这样返回刚好，用同一个 pastebin 得到最后的正确内容
                 // bms 第一次时创建成功
-                S.log(ev.type + " : trigger more than once ...");
+
                 return;
             }
 
@@ -135,7 +140,7 @@ KISSY.add("editor/plugin/clipboard/index", function (S) {
                     return;
                 }
 
-                S.log("paster " + html);
+
 
                 var re = editor.fire("paste", {
                     html:html,

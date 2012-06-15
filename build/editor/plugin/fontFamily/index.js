@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * font formatting for kissy editor
@@ -9,12 +9,16 @@ build time: Jun 13 14:40
  */
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
-    return {
-        init:function (editor) {
+    function FontFamilyPlugin(config) {
+this.config=config||{};
+    }
+
+    S.augment(FontFamilyPlugin, {
+        renderUI:function (editor) {
+
             cmd.init(editor);
 
-            var pluginConfig = editor.get("pluginConfig"),
-                fontFamilies = pluginConfig["fontFamily"];
+            var fontFamilies = this.config;
 
             fontFamilies = fontFamilies || {};
 
@@ -91,7 +95,10 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
                     children:fontFamilies.children
                 }
             }, ui.Select);
-        }};
+        }
+    });
+
+    return FontFamilyPlugin;
 }, {
     requires:['editor', '../font/ui', './cmd']
 });

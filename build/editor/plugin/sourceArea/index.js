@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * source editor for kissy editor
@@ -11,38 +11,44 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
-    return {
+
+    function sourceArea() {
+    }
+
+    S.augment(sourceArea, {
         init:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
                     afterSyncUI:function () {
-                            var self = this;
-                            editor.on("wysiwygMode", function () {
-                                self.set("checked", false);
-                            });
-                            editor.on("sourceMode", function () {
-                                self.set("checked", true);
-                            });
+                        var self = this;
+                        editor.on("wysiwygMode", function () {
+                            self.set("checked", false);
+                        });
+                        editor.on("sourceMode", function () {
+                            self.set("checked", true);
+                        });
 
                     },
                     click:function () {
-                            var self = this;
-                            var checked = self.get("checked");
-                            if (checked) {
-                                editor.set("mode", SOURCE_MODE);
-                            } else {
-                                editor.set("mode", WYSIWYG_MODE);
-                            }
+                        var self = this;
+                        var checked = self.get("checked");
+                        if (checked) {
+                            editor.set("mode", SOURCE_MODE);
+                        } else {
+                            editor.set("mode", WYSIWYG_MODE);
+                        }
 
-                            editor.focus();
+                        editor.focus();
 
                     }
                 },
                 checkable:true
             });
         }
-    };
+    });
+
+    return sourceArea;
 }, {
     requires:['editor', '../button/']
 });

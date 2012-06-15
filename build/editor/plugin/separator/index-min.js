@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
-KISSY.add("editor/plugin/separator/index",function(a){return{init:function(b){(new a.Node('<span class="ks-editor-toolbar-separator">&nbsp;</span>')).appendTo(b.get("toolBarEl"))}}},{requires:["editor"]});
+KISSY.add("editor/plugin/separator/index",function(b){function a(){}b.augment(a,{renderUI:function(a){b.all('<span class="ks-editor-toolbar-separator">&nbsp;</span>').appendTo(a.get("toolBarEl"))}});return a},{requires:["editor"]});

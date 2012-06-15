@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * color button.
@@ -155,7 +155,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorPicker", self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/colorPicker",
+                    self.get("pluginConfig"),
+                    self.get("cmdType"));
             });
             self._prepare = self._show;
             self._show();

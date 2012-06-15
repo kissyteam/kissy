@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * foreColor button.
@@ -9,15 +9,22 @@ build time: Jun 13 14:40
  */
 KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
 
-    return {
-        init:function (editor) {
+    function ForeColorPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(ForeColorPlugin, {
+        renderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("foreColor",{
+            editor.addButton("foreColor", {
                 cmdType:'foreColor',
-                tooltip:"文本颜色"
+                tooltip:"文本颜色",
+                pluginConfig:this.config
             }, Button);
         }
-    };
+    });
+
+    return ForeColorPlugin;
 }, {
     requires:['editor', '../color/btn', './cmd']
 });

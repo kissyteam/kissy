@@ -24,14 +24,19 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             'ks-editor-bubble-remove" href="#">删除</a>';
 
 
-    function ImagePlugin() {
-
+    function ImagePlugin(config) {
+        this.config = config || {};
     }
 
     S.augment(ImagePlugin, {
         renderUI:function (editor) {
+
+            var self=this;
+
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image", selectedEl);
+                DialogLoader.useDialog(editor, "image",
+                    self.config,
+                    selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题

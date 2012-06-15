@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 14:40
+build time: Jun 15 12:07
 */
 /**
  * flash dialog
@@ -70,9 +70,10 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<a class='ks-editor-flash-cancel ks-editor-button ks-inline-block'>取消</a></div>";
 
 
-    function FlashDialog(editor) {
+    function FlashDialog(editor,config) {
         var self = this;
         self.editor = editor;
+        self.config=config||{};
         Editor.Utils.lazyRun(self, "_prepareShow", "_realShow");
         self._config();
     }
@@ -124,7 +125,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         _updateD:function () {
             var self = this,
                 editor = self.editor,
-                cfg = editor.get("pluginConfig")["flash"] || {},
+                cfg = self.config,
                 f = self.selectedFlash;
             if (f) {
                 var r = editor.restoreRealElement(f);
