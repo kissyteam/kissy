@@ -1370,8 +1370,6 @@ input[type="submit"].ks-button.ks-button-mini {
   /*display: none; // none by default, but block on "open" of the menu*/
 
   visibility: hidden;
-  min-width: 160px;
-  *width: 160px;
   padding: 4px 0;
   margin: 0;
   list-style: none;
@@ -3801,6 +3799,58 @@ a.thumbnail:hover {
 }
 .thumbnail .caption {
   padding: 9px;
+}
+.ks-combobox {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #DDD;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+.ks-combobox .ks-combobox-trigger {
+  background-color: #e6e6e6;
+  color: #333333;
+  display: block;
+  /*position: absolute;
+		right: 6px;
+		top: 5px;*/
+
+  float: right;
+  width: 20px;
+  text-align: center;
+  height: 26px;
+  cursor: pointer;
+}
+.ks-combobox .ks-combobox-trigger:hover .ks-combobox-trigger-inner {
+  border-top-color: #000000;
+}
+.ks-combobox .ks-combobox-trigger:hover {
+  background-color: #b3b3b3;
+}
+.ks-combobox .ks-combobox-trigger-inner {
+  display: block;
+  text-indent: -50px;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #404040;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.ks-combobox .ks-combobox-input-wrap {
+  float: left;
+  overflow: hidden;
+}
+.ks-combobox .ks-combobox-input {
+  margin: 0;
+  width: 100%;
+  border-width: 0;
 }
 .oi-container {
   position: relative;
