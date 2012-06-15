@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 22:32
+build time: Jun 15 17:23
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -23,7 +23,7 @@ KISSY.add("overlay/aria", function (S, Event) {
          * @type Boolean
          */
         aria:{
-            view:true
+            view:1
         }
     };
 
@@ -156,9 +156,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
     }
 
     /**
-     * KISSY Overlay Component
      * @class
-     * @namespace
+     * KISSY Overlay Component.
+     * xclass: 'overlay'.
      * @name Overlay
      * @extends Component.Controller
      * @extends Component.UIBase.ContentBox
@@ -246,8 +246,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
     }
 
     /**
-     * KISSY Dialog Component
      * @class
+     * KISSY Dialog Component.
+     * xclass: 'dialog'.
      * @name Dialog
      * @memberOf Overlay
      * @extends Overlay
@@ -554,8 +555,9 @@ KISSY.add("overlay/overlayRender", function (S, UA, Component) {
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
-     * KISSY Popup Component
      * @class
+     * KISSY Popup Component.
+     * xclass: 'popup'.
      * @memberOf Overlay
      * @extends Overlay
      * @name Popup

@@ -5,9 +5,10 @@
 KISSY.add("menubutton/option", function (S, Menu) {
     var MenuItem = Menu.Item;
     /**
-     * Option for Select component.
      * @name Option
      * @class
+     * Option for Select component.
+     * xclass: 'option'.
      * @memberOf MenuButton
      * @extends Menu.Item
      */

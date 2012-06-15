@@ -158,9 +158,10 @@ KISSY.add("editor/core/walker", function (S, Editor) {
     }
 
     /**
-     * Walker for DOM.
+     * @name Walker
      * @param {Editor.Range} range
      * @class
+     * Walker for DOM.
      * @memberOf Editor
      */
     function Walker(range) {

@@ -9,9 +9,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         RESIZE_DURATION = 50;
 
     /**
-     * Make Elements flow like waterfall.
      * @class
-     * @namespace
+     * Make Elements flow like waterfall.
      * @name Waterfall
      */
     function Waterfall() {
@@ -212,7 +211,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         // 元素保持间隔不变，居中
         var margin = align === 'left' ? 0 :
-            Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
+                Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
             colProp;
 
         if (align === 'center') {
@@ -262,8 +261,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function addItem(itemRaw) {
         var self = this,
-            // update curColHeights first
-            // because may slideDown to affect height
+        // update curColHeights first
+        // because may slideDown to affect height
             item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
         // then animate

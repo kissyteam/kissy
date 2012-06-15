@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -411,9 +411,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
 
     /**
-     * Range implementation across browsers.
      * @memberOf Editor
      * @class
+     * Range implementation across browsers.
      * @param document {Document}
      * @name Range
      */

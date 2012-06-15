@@ -5,11 +5,11 @@
 KISSY.add('component/uibase/box', function (S) {
 
     /**
+     * @name Box
+     * @memberOf Component.UIBase
+     * @class
      * Box extension class.
      * Represent a dom element.
-     * @class
-     * @memberOf Component.UIBase
-     * @namespace
      */
     function Box() {
     }

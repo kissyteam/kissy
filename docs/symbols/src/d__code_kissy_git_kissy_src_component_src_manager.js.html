@@ -67,38 +67,39 @@
 <span id='line60' class='line'> 60</span> 
 <span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line62' class='line'> 62</span>      * @name Manager
-<span id='line63' class='line'> 63</span>      * @namespace
-<span id='line64' class='line'> 64</span>      * @memberOf Component
-<span id='line65' class='line'> 65</span>      */</span><span class="WHIT">
-<span id='line66' class='line'> 66</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Manager</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lends Component.Manager */</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line67' class='line'> 67</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line69' class='line'> 69</span>          * Get css class name for this component constructor.
-<span id='line70' class='line'> 70</span>          * @param {Function} constructor Component's constructor.
-<span id='line71' class='line'> 71</span>          * @type {Function}
-<span id='line72' class='line'> 72</span>          * @return {String}
-<span id='line73' class='line'> 73</span>          * @function
-<span id='line74' class='line'> 74</span>          */</span><span class="WHIT">
-<span id='line75' class='line'> 75</span> </span><span class="WHIT">        </span><span class="NAME">getXClassByConstructor</span><span class="PUNC">:</span><span class="NAME">getXClassByConstructor</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line76' class='line'> 76</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line77' class='line'> 77</span>          * Get component constructor by css class name.
-<span id='line78' class='line'> 78</span>          * @param {String} classNames Class names separated by space.
-<span id='line79' class='line'> 79</span>          * @type {Function}
-<span id='line80' class='line'> 80</span>          * @return {Function}
-<span id='line81' class='line'> 81</span>          * @function
-<span id='line82' class='line'> 82</span>          */</span><span class="WHIT">
-<span id='line83' class='line'> 83</span> </span><span class="WHIT">        </span><span class="NAME">getConstructorByXClass</span><span class="PUNC">:</span><span class="NAME">getConstructorByXClass</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line85' class='line'> 85</span>          * Associate css class with component constructor.
-<span id='line86' class='line'> 86</span>          * @type {Function}
-<span id='line87' class='line'> 87</span>          * @param {String} className Component's class name.
-<span id='line88' class='line'> 88</span>          * @param {Function} componentConstructor Component's constructor.
-<span id='line89' class='line'> 89</span>          * @function
-<span id='line90' class='line'> 90</span>          */</span><span class="WHIT">
-<span id='line91' class='line'> 91</span> </span><span class="WHIT">        </span><span class="NAME">setConstructorByXClass</span><span class="PUNC">:</span><span class="NAME">setConstructorByXClass</span><span class="WHIT">
-<span id='line92' class='line'> 92</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line93' class='line'> 93</span> 
-<span id='line94' class='line'> 94</span> </span><span class="WHIT">    </span><span class="NAME">Manager.getCssClassWithPrefix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line95' class='line'> 95</span> 
-<span id='line96' class='line'> 96</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Manager</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line97' class='line'> 97</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line63' class='line'> 63</span>      * @memberOf Component
+<span id='line64' class='line'> 64</span>      * @namespace
+<span id='line65' class='line'> 65</span>      * Manage component metadata.
+<span id='line66' class='line'> 66</span>      */</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Manager</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lends Component.Manager */</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">:</span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line70' class='line'> 70</span>          * Get css class name for this component constructor.
+<span id='line71' class='line'> 71</span>          * @param {Function} constructor Component's constructor.
+<span id='line72' class='line'> 72</span>          * @type {Function}
+<span id='line73' class='line'> 73</span>          * @return {String}
+<span id='line74' class='line'> 74</span>          * @function
+<span id='line75' class='line'> 75</span>          */</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">        </span><span class="NAME">getXClassByConstructor</span><span class="PUNC">:</span><span class="NAME">getXClassByConstructor</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line78' class='line'> 78</span>          * Get component constructor by css class name.
+<span id='line79' class='line'> 79</span>          * @param {String} classNames Class names separated by space.
+<span id='line80' class='line'> 80</span>          * @type {Function}
+<span id='line81' class='line'> 81</span>          * @return {Function}
+<span id='line82' class='line'> 82</span>          * @function
+<span id='line83' class='line'> 83</span>          */</span><span class="WHIT">
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="NAME">getConstructorByXClass</span><span class="PUNC">:</span><span class="NAME">getConstructorByXClass</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line85' class='line'> 85</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line86' class='line'> 86</span>          * Associate css class with component constructor.
+<span id='line87' class='line'> 87</span>          * @type {Function}
+<span id='line88' class='line'> 88</span>          * @param {String} className Component's class name.
+<span id='line89' class='line'> 89</span>          * @param {Function} componentConstructor Component's constructor.
+<span id='line90' class='line'> 90</span>          * @function
+<span id='line91' class='line'> 91</span>          */</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">        </span><span class="NAME">setConstructorByXClass</span><span class="PUNC">:</span><span class="NAME">setConstructorByXClass</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> 
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">    </span><span class="NAME">Manager.getCssClassWithPrefix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">getCssClassWithPrefix</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> 
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Manager</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

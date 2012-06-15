@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * Common btn for list.
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         editor.focus();
     }
 
-    return Button.Toggle.extend({
+    return Button.extend({
         initializer:function () {
             var self = this;
             self.on("click", onClick, self);
@@ -32,6 +32,9 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }

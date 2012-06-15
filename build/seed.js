@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 23:53
+build time: Jun 15 17:23
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jun 14 23:53
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120614235302';
+        S.__BUILD_TIME = '20120615172321';
     })();
 
     return S;
@@ -1602,6 +1602,7 @@ build time: Jun 14 23:53
     /**
      * @class Defer constructor For KISSY,implement Promise specification.
      * @memberOf KISSY
+     * @name Defer
      */
     function Defer(promise) {
         var self = this;
@@ -1666,12 +1667,13 @@ build time: Jun 14 23:53
     }
 
     /**
-     * @class Promise constructor.
+     * @class
+     * Promise constructor.
      * This class should not be instantiated manually.
      * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
-     * @namespace
      * @param v promise's resolved value
      * @memberOf KISSY
+     * @name Promise
      */
     function Promise(v) {
         var self = this;
@@ -2002,6 +2004,7 @@ build time: Jun 14 23:53
     KISSY.Loader = Loader;
 
     /**
+     * @name Package
      * @class KISSY Package constructor
      * This class should not be instantiated manually.
      * @memberOf KISSY.Loader
@@ -2010,33 +2013,61 @@ build time: Jun 14 23:53
         S.mix(this, cfg);
     }
 
-    S.augment(Package, {
-        getTag:function () {
-            return this.tag || this.SS.Config.tag;
-        },
+    S.augment(Package,
+        /**
+         * @lends KISSY.Loader.Package#
+         */
+        {
+            /**
+             * Tag for package.
+             * @return {String}
+             */
+            getTag:function () {
+                return this.tag || this.SS.Config.tag;
+            },
 
-        getName:function () {
-            return this.name;
-        },
+            /**
+             * Get package name.
+             * @return {String}
+             */
+            getName:function () {
+                return this.name;
+            },
 
-        getBase:function () {
-            return this.base || this.SS.Config.base;
-        },
+            /**
+             * Get package base.
+             * @return {String}
+             */
+            getBase:function () {
+                return this.base || this.SS.Config.base;
+            },
 
-        isDebug:function () {
-            var debug = this.debug;
-            return debug === undefined ? this.SS.Config.debug : debug;
-        },
+            /**
+             * Whether is debug for this package.
+             * @return {Boolean}
+             */
+            isDebug:function () {
+                var debug = this.debug;
+                return debug === undefined ? this.SS.Config.debug : debug;
+            },
 
-        getCharset:function () {
-            return this.charset || this.SS.Config.charset;
-        },
+            /**
+             * Get charset for package.
+             * @return {String}
+             */
+            getCharset:function () {
+                return this.charset || this.SS.Config.charset;
+            },
 
-        isCombine:function () {
-            var combine = this.combine;
-            return combine === undefined ? this.SS.Config.combine : combine;
-        }
-    });
+            /**
+             * Whether modules are combined for this package.
+             * @return {Boolean}
+             */
+            isCombine:function () {
+                var combine = this.combine;
+                return combine === undefined ? this.SS.Config.combine : combine;
+            }
+        });
 
     Loader.Package = Package;
 
@@ -4095,7 +4126,7 @@ build time: Jun 14 23:53
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120614235302'
+        tag:'20120615172321'
     }, getBaseInfo()));
 
     /**

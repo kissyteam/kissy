@@ -12,15 +12,15 @@
 <span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"tree/checknode"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Node</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">BaseNode</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">CheckNodeRender</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Node.all</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">        </span><span class="NAME">PARTIAL_CHECK</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line8' class='line'>  8</span> </span><span class="WHIT">        </span><span class="NAME">CHECK_CLS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"tree-item-check"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="NAME">CHECK</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line10' class='line'> 10</span> </span><span class="WHIT">        </span><span class="NAME">EMPTY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line11' class='line'> 11</span> 
-<span id='line12' class='line'> 12</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span id='line13' class='line'> 13</span>      * Checked tree node.
-<span id='line14' class='line'> 14</span>      * @name CheckNode
-<span id='line15' class='line'> 15</span>      * @memberOf Tree
-<span id='line16' class='line'> 16</span>      * @class
+<span id='line8' class='line'>  8</span> </span><span class="WHIT">        </span><span class="NAME">CHECK</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="NAME">EMPTY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> 
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line12' class='line'> 12</span>      * @name CheckNode
+<span id='line13' class='line'> 13</span>      * @memberOf Tree
+<span id='line14' class='line'> 14</span>      * @class
+<span id='line15' class='line'> 15</span>      * Checked tree node.
+<span id='line16' class='line'> 16</span>      * xclass: 'tree-check-item'.
 <span id='line17' class='line'> 17</span>      * @extends Tree.Node
 <span id='line18' class='line'> 18</span>      */</span><span class="WHIT">
 <span id='line19' class='line'> 19</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">CheckNode</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BaseNode.extend</span><span class="PUNC">(</span><span class="WHIT">
@@ -134,33 +134,32 @@
 <span id='line127' class='line'>127</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line128' class='line'>128</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">CheckNodeRender</span><span class="WHIT">
 <span id='line129' class='line'>129</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line130' class='line'>130</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line131' class='line'>131</span> </span><span class="WHIT">            </span><span class="NAME">CHECK_CLS</span><span class="PUNC">:</span><span class="NAME">CHECK_CLS</span><span class="WHIT">
-<span id='line132' class='line'>132</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line133' class='line'>133</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="NAME">CHECK_CLS</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line134' class='line'>134</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="WHIT">
-<span id='line135' class='line'>135</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line136' class='line'>136</span> 
-<span id='line137' class='line'>137</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">CheckNode</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line138' class='line'>138</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line139' class='line'>139</span>          * @lends Tree.CheckNode
-<span id='line140' class='line'>140</span>          */</span><span class="WHIT">
-<span id='line141' class='line'>141</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line142' class='line'>142</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line143' class='line'>143</span>              * checked partly.
-<span id='line144' class='line'>144</span>              */</span><span class="WHIT">
-<span id='line145' class='line'>145</span> </span><span class="WHIT">            </span><span class="NAME">PARTIAL_CHECK</span><span class="PUNC">:</span><span class="NAME">PARTIAL_CHECK</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line146' class='line'>146</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line147' class='line'>147</span>              * checked completely.
-<span id='line148' class='line'>148</span>              */</span><span class="WHIT">
-<span id='line149' class='line'>149</span> </span><span class="WHIT">            </span><span class="NAME">CHECK</span><span class="PUNC">:</span><span class="NAME">CHECK</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line150' class='line'>150</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line151' class='line'>151</span>              * not checked at all.
-<span id='line152' class='line'>152</span>              */</span><span class="WHIT">
-<span id='line153' class='line'>153</span> </span><span class="WHIT">            </span><span class="NAME">EMPTY</span><span class="PUNC">:</span><span class="NAME">EMPTY</span><span class="WHIT">
-<span id='line154' class='line'>154</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
-<span id='line155' class='line'>155</span> 
-<span id='line156' class='line'>156</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckNode</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line157' class='line'>157</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line158' class='line'>158</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'node'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./basenode'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checknodeRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line159' class='line'>159</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line130' class='line'>130</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line131' class='line'>131</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line132' class='line'>132</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">"tree-check-item"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line133' class='line'>133</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="WHIT">
+<span id='line134' class='line'>134</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line135' class='line'>135</span> 
+<span id='line136' class='line'>136</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">CheckNode</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line137' class='line'>137</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line138' class='line'>138</span>          * @lends Tree.CheckNode
+<span id='line139' class='line'>139</span>          */</span><span class="WHIT">
+<span id='line140' class='line'>140</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line141' class='line'>141</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line142' class='line'>142</span>              * checked partly.
+<span id='line143' class='line'>143</span>              */</span><span class="WHIT">
+<span id='line144' class='line'>144</span> </span><span class="WHIT">            </span><span class="NAME">PARTIAL_CHECK</span><span class="PUNC">:</span><span class="NAME">PARTIAL_CHECK</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line145' class='line'>145</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line146' class='line'>146</span>              * checked completely.
+<span id='line147' class='line'>147</span>              */</span><span class="WHIT">
+<span id='line148' class='line'>148</span> </span><span class="WHIT">            </span><span class="NAME">CHECK</span><span class="PUNC">:</span><span class="NAME">CHECK</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line149' class='line'>149</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line150' class='line'>150</span>              * not checked at all.
+<span id='line151' class='line'>151</span>              */</span><span class="WHIT">
+<span id='line152' class='line'>152</span> </span><span class="WHIT">            </span><span class="NAME">EMPTY</span><span class="PUNC">:</span><span class="NAME">EMPTY</span><span class="WHIT">
+<span id='line153' class='line'>153</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
+<span id='line154' class='line'>154</span> 
+<span id='line155' class='line'>155</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckNode</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line156' class='line'>156</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line157' class='line'>157</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'node'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./basenode'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checknodeRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line158' class='line'>158</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

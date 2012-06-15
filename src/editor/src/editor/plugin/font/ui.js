@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
     });
 
 
-    var FontButton = Button.Toggle.extend({
+    var FontButton = Button.extend({
 
         initializer:function () {
             var self = this, editor = self.get("editor"),
@@ -89,6 +89,9 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }

@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         editor.focus();
     }
 
-    return Button.Toggle.extend({
+    return Button.extend({
         initializer:function () {
             var self = this;
             self.on("click", onClick, self);
@@ -27,6 +27,9 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }

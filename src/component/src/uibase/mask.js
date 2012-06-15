@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/mask", function () {
 
     /**
+     * @name Mask
+     * @class
      * Mask extension class.
      * Make component to be able to show with mask.
-     * @class
      * @memberOf Component.UIBase
      */
     function Mask() {

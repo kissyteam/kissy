@@ -10,7 +10,6 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
         INLINE_BLOCK = " ks-inline-block",
-        ITEM_CLS = "tree-item",
         FOLDER_ICON_EXPANDED = "ks-tree-expanded-folder-icon",
         FOLDER_ICON_COLLAPSED = "ks-tree-collapsed-folder-icon",
         CHILDREN_CLS = "ks-tree-children",
@@ -192,9 +191,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 }
                 return children.css("display") != "none";
             }
-        },
-
-        ITEM_CLS:ITEM_CLS
+        }
 
     });
 

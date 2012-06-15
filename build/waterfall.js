@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:30
+build time: Jun 15 17:23
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -14,9 +14,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         RESIZE_DURATION = 50;
 
     /**
-     * Make Elements flow like waterfall.
      * @class
-     * @namespace
+     * Make Elements flow like waterfall.
      * @name Waterfall
      */
     function Waterfall() {
@@ -217,7 +216,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         // 元素保持间隔不变，居中
         var margin = align === 'left' ? 0 :
-            Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
+                Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
             colProp;
 
         if (align === 'center') {
@@ -267,8 +266,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function addItem(itemRaw) {
         var self = this,
-            // update curColHeights first
-            // because may slideDown to affect height
+        // update curColHeights first
+        // because may slideDown to affect height
             item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
         // then animate
@@ -532,12 +531,14 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
         win = S.Env.host,
-        // > timeChunk interval to allow adjust first
+    // > timeChunk interval to allow adjust first
         SCROLL_TIMER = 50;
 
     /**
-     * Dynamic load waterfall items by monitor window scroll.
+     * @name Loader
+     * @extends Waterfall
      * @class
+     * Dynamic load waterfall items by monitor window scroll.
      * @memberOf Waterfall
      */
     function Loader() {

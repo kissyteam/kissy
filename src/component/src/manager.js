@@ -60,8 +60,9 @@ KISSY.add("component/manager", function (S) {
 
     /**
      * @name Manager
-     * @namespace
      * @memberOf Component
+     * @namespace
+     * Manage component metadata.
      */
     var Manager = /** @lends Component.Manager */{
         getCssClassWithPrefix:getCssClassWithPrefix,

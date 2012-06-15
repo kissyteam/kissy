@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:25
+build time: Jun 15 17:19
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -605,12 +605,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
  */
 KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
-    var PREFIX_CLS=DDM.PREFIX_CLS;
+    var PREFIX_CLS = DDM.PREFIX_CLS;
 
     /**
-     * drag multiple nodes under a container element using only one draggable instance as a delegate.
+     * @name DraggableDelegate
+     * @extends DD.Draggable
      * @memberOf DD
      * @class
+     * drag multiple nodes under a container element
+     * using only one draggable instance as a delegate.
      */
     function DraggableDelegate() {
         DraggableDelegate.superclass.constructor.apply(this, arguments);
@@ -1469,9 +1472,11 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     }
 
     /**
-     * make multiple nodes droppable under a container using only one droppable instance
+     * @name DroppableDelegate
      * @memberOf DD
+     * @extends DD.Droppable
      * @class
+     * make multiple nodes droppable under a container using only one droppable instance
      */
     function DroppableDelegate() {
         var self = this;
@@ -1480,7 +1485,18 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
         DDM.on("dragstart", dragStart, self);
     }
 
-    S.extend(DroppableDelegate, Droppable, {
+    S.extend(DroppableDelegate, Droppable,
+        /**
+         * @lends DD.DroppableDelegate
+         */
+        {
+
+            /**
+             * Destroy current instance
+             */
+            destroy:function(){
+                DroppableDelegate.superclass.destroy.apply(this,arguments);
+            },
 
             /**
              * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
@@ -1614,9 +1630,10 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
     var PREFIX_CLS = DDM.PREFIX_CLS;
 
     /**
-     * make a node droppable
+     * @name Droppable
      * @memberOf DD
      * @class
+     * Make a node droppable.
      */
     function Droppable() {
         var self = this;
@@ -1854,11 +1871,12 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
         MARKER = S.guid("__dd_proxy");
 
     /**
-     * provide abilities for draggable tp create a proxy drag node,
-     * instead of dragging the original node.
+     * @name Proxy
      * @memberOf DD
      * @extends Base
      * @class
+     * provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
      */
     function Proxy() {
         var self = this;
@@ -2025,9 +2043,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
         DESTRUCTORS = "__dd_scrolls";
 
     /**
-     * make parent node scroll while dragging
+     * @name Scroll
      * @memberOf DD
      * @class
+     * make parent node scroll while dragging
      */
     function Scroll() {
         var self = this;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * Set up editor constructor
@@ -10,10 +10,10 @@ build time: Jun 15 12:07
 KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
     /**
-     * KISSY Editor
      * @class
+     * KISSY Editor.
+     * xclass: 'editor'.
      * @extends Component.Controller
-     * @extends Component.UIBase.Box
      * @name Editor
      */
     var Editor = Component.Controller.extend(
@@ -24,7 +24,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             initializer:function () {
                 var self = this;
                 self.__commands = {};
-                self.__controls={};
+                self.__controls = {};
             }
         },
 

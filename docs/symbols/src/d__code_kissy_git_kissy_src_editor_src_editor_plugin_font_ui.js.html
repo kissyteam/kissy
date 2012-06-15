@@ -65,7 +65,7 @@
 <span id='line58' class='line'> 58</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line59' class='line'> 59</span> 
 <span id='line60' class='line'> 60</span> 
-<span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FontButton</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Button.Toggle.extend</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FontButton</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Button.extend</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line62' class='line'> 62</span> 
 <span id='line63' class='line'> 63</span> </span><span class="WHIT">        </span><span class="NAME">initializer</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line64' class='line'> 64</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"editor"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
@@ -96,17 +96,20 @@
 <span id='line89' class='line'> 89</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line90' class='line'> 90</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line91' class='line'> 91</span> </span><span class="WHIT">        </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line92' class='line'> 92</span> </span><span class="WHIT">            </span><span class="NAME">mode</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line93' class='line'> 93</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">Editor.WYSIWYG_MODE</span><span class="WHIT">
-<span id='line94' class='line'> 94</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line95' class='line'> 95</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line96' class='line'> 96</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line97' class='line'> 97</span> 
-<span id='line98' class='line'> 98</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line99' class='line'> 99</span> </span><span class="WHIT">        </span><span class="NAME">Button</span><span class="PUNC">:</span><span class="NAME">FontButton</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line100' class='line'>100</span> </span><span class="WHIT">        </span><span class="NAME">Select</span><span class="PUNC">:</span><span class="NAME">FontSelect</span><span class="WHIT">
-<span id='line101' class='line'>101</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line102' class='line'>102</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line103' class='line'>103</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'editor'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'../button/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'../menubutton/'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line104' class='line'>104</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line105' class='line'>105</span> </span></pre></body></html>
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">            </span><span class="NAME">checkable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">            </span><span class="NAME">mode</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">Editor.WYSIWYG_MODE</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line100' class='line'>100</span> 
+<span id='line101' class='line'>101</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line102' class='line'>102</span> </span><span class="WHIT">        </span><span class="NAME">Button</span><span class="PUNC">:</span><span class="NAME">FontButton</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line103' class='line'>103</span> </span><span class="WHIT">        </span><span class="NAME">Select</span><span class="PUNC">:</span><span class="NAME">FontSelect</span><span class="WHIT">
+<span id='line104' class='line'>104</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line105' class='line'>105</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line106' class='line'>106</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'editor'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'../button/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'../menubutton/'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line107' class='line'>107</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line108' class='line'>108</span> </span></pre></body></html>

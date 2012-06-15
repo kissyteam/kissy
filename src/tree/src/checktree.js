@@ -3,12 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, TreeMgr) {
-    var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /**
-     * KISSY Checked Tree.
      * @name CheckTree
      * @extends Tree.CheckNode
      * @class
+     * KISSY Checked Tree.
+     * xclass: 'check-tree'.
      * @memberOf Tree
      */
     var CheckTree = CheckNode.extend([Component.DelegateChildren, TreeMgr],
@@ -23,13 +23,20 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
                 return CheckTree.superclass.expandAll.apply(this, arguments);
             }
         }, {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Tree.CheckTree#
+             */
+            {
+                /**
+                 * Readonly. Render class.
+                 * @type function
+                 */
                 xrender:{
                     value:CheckTreeRender
                 }
             }
         }, {
-            xclass:CHECK_TREE_CLS,
+            xclass:'check-tree',
             priority:40
         });
     return CheckTree;

@@ -9,12 +9,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
     Editor.prototype.addButton = function (id, cfg, ButtonType) {
 
         if (ButtonType === undefined) {
-            if (cfg.checkable) {
-                ButtonType = Button.Toggle;
-            } else {
-                ButtonType = Button;
-            }
-            delete  cfg.checkable;
+            ButtonType = Button;
         }
 
 

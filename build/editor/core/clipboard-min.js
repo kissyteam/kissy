@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 KISSY.add("editor/core/clipboard",function(g,j){function m(a){this.editor=a;this._init()}function p(a){if(f.ie&&"BackCompat"!=a.get("document")[0].compatMode){var b=a.getSelection(),c;if(b.getType()==q.SELECTION_ELEMENT&&(c=b.getSelectedElement())){var e=b.getRanges()[0],d=k(a.get("document")[0].createTextNode(""));d.insertBefore(c);e.setStartBefore(d);e.setEndAfter(c);b.selectRanges([e]);setTimeout(function(){c.parent()&&(d.remove(),b.selectElement(c))},0)}}}var k=g.all,f=g.UA,r=j.Range,n=j.RANGE,
 o=g.Event;g.augment(m,{_init:function(){var a=this.editor;o.on(a.get("document")[0].body,f.webkit?"paste":f.gecko?"paste":"beforepaste",this._paste,this);o.on(a.get("document")[0].body,"contextmenu",function(){l=1;setTimeout(function(){l=0},10)});a.addCommand("copy",new h("copy"));a.addCommand("cut",new h("cut"));a.addCommand("paste",new h("paste"))},_paste:function(){if(!l){var a=this.editor,b=a.get("document")[0];if(!b.getElementById("ke_pastebin")){var c=a.getSelection(),e=new r(b),d=k(f.webkit?

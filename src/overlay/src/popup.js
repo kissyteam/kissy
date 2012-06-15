@@ -5,8 +5,9 @@
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
-     * KISSY Popup Component
      * @class
+     * KISSY Popup Component.
+     * xclass: 'popup'.
      * @memberOf Overlay
      * @extends Overlay
      * @name Popup

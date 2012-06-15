@@ -14,8 +14,9 @@ KISSY.add("mvc/model", function (S, Base) {
     ];
 
     /**
-     * Model represent a data record.
+     * @name Model
      * @class
+     * Model represent a data record.
      * @memberOf MVC
      * @extends Base
      */

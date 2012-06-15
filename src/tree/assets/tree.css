@@ -14,7 +14,7 @@
   image taller which would allow better flexibility when it comes to the height
   of a tree row.
 */
-.ks-tree-root:focus {
+.ks-tree:focus {
   -moz-outline: none;
   outline: none;
 }

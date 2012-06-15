@@ -14,8 +14,9 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     }
 
     /**
-     * View for delegating event on root element.
+     * @name View
      * @class
+     * View for delegating event on root element.
      * @memberOf MVC
      * @extends Base
      */

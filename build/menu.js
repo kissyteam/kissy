@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 23:41
+build time: Jun 15 17:22
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -16,7 +16,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
     /**
      * @name Menu
-     * @constructor
+     * @class
+     * KISSY Menu.
+     * xclass: 'menu'.
      * @extends Component.Container
      */
     var Menu = Component.Container.extend(
@@ -222,7 +224,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     var HIT_CLS = "ks-menuitem-hit";
 
@@ -232,7 +234,19 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = Menu.extend({
+    /**
+     * @class
+     * Filter Menu for KISSY.
+     * xclass: 'filtermenu'.
+     * @extends Menu
+     * @memberOf Menu
+     * @name FilterMenu
+     */
+    var FilterMenu = Menu.extend(
+        /**
+         * @lends Menu.FilterMenu#
+         */
+        {
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -270,6 +284,10 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
                 this.filterItems(v);
             },
 
+            /**
+             * For override. Specify how to filter items.
+             * @param {String} str User input.
+             */
             filterItems:function (str) {
                 var self = this,
                     view = self.get("view"),
@@ -371,7 +389,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
             },
 
             /**
-             * 重置状态,用于重用
+             * Reset user input.
              */
             reset:function () {
                 var self = this,
@@ -390,18 +408,37 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Menu.FilterMenu#
+             */
+            {
+                /**
+                 * Hit info string
+                 * @type String
+                 */
                 label:{
                     view:1
                 },
 
+                /**
+                 * Filter string
+                 * @type String
+                 */
                 filterStr:{
                 },
 
+                /**
+                 * user entered string list when allowMultiple.
+                 * @type String[]
+                 */
                 enteredItems:{
                     value:[]
                 },
 
+                /**
+                 * Whether to allow input multiple.
+                 * @type Boolean
+                 */
                 allowMultiple:{
                     value:false
                 },
@@ -571,8 +608,9 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
     var $ = S.all;
 
     /**
-     * A menu item component which menu is consisted of.
      * @class
+     * A menu item component which menu is consisted of.
+     * xclass: 'menuitem'.
      * @name Item
      * @memberOf Menu
      * @extends Component.Controller
@@ -816,10 +854,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     var UIBase = Component.UIBase;
 
     /**
-     * Popup Menu
      * @name PopupMenu
      * @memberOf Menu
-     * @constructor
+     * @class
+     * Popup Menu.
+     * xclass: 'popupmenu'.
      * @extends Menu
      * @extends Component.UIBase.Position
      * @extends Component.UIBase.Align
@@ -940,19 +979,38 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
  */
 KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
 
+    /**
+     * @extends Component.Controller
+     * @class
+     * Menu separator.
+     * xclass: 'menuseparator'.
+     * @memberOf Menu
+     * @name Separator
+     */
     var Separator = Component.Controller.extend({
     }, {
-        ATTRS:{
+        ATTRS:/**
+         * @lends Menu.Separator#
+         */
+        {
+
+            /**
+             * Un-focusable.
+             * readonly.
+             * Default: false.
+             */
             focusable:{
                 value:false
             },
-            // 分隔线禁用，不可以被键盘访问
+
             disabled:{
                 value:true
             },
+
             handleMouseEvents:{
                 value:false
             },
+
             xrender:{
                 value:SeparatorRender
             }
@@ -993,6 +1051,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         MENU_DELAY = 300;
     /**
      * Class representing a submenu that can be added as an item to other menus.
+     * xclass: 'submenu'.
+     * @constructor
+     * @extends Menu.MenuItem
+     * @memberOf Menu
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 

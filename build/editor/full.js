@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * Set up editor constructor
@@ -10,10 +10,10 @@ build time: Jun 15 12:07
 KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
     /**
-     * KISSY Editor
      * @class
+     * KISSY Editor.
+     * xclass: 'editor'.
      * @extends Component.Controller
-     * @extends Component.UIBase.Box
      * @name Editor
      */
     var Editor = Component.Controller.extend(
@@ -24,7 +24,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             initializer:function () {
                 var self = this;
                 self.__commands = {};
-                self.__controls={};
+                self.__controls = {};
             }
         },
 
@@ -3196,9 +3196,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
 
     /**
-     * Range implementation across browsers.
      * @memberOf Editor
      * @class
+     * Range implementation across browsers.
      * @param document {Document}
      * @name Range
      */
@@ -7262,8 +7262,8 @@ KISSY.add("editor/core/utils", function (S) {
         UA = S.UA,
 
         /**
-         * Utilities for Editor.
          * @namespace
+         * Utilities for Editor.
          * @name Utils
          * @memberOf Editor
          */
@@ -7782,9 +7782,10 @@ KISSY.add("editor/core/walker", function (S, Editor) {
     }
 
     /**
-     * Walker for DOM.
+     * @name Walker
      * @param {Editor.Range} range
      * @class
+     * Walker for DOM.
      * @memberOf Editor
      */
     function Walker(range) {
@@ -9528,12 +9529,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
     Editor.prototype.addButton = function (id, cfg, ButtonType) {
 
         if (ButtonType === undefined) {
-            if (cfg.checkable) {
-                ButtonType = Button.Toggle;
-            } else {
-                ButtonType = Button;
-            }
-            delete  cfg.checkable;
+            ButtonType = Button;
         }
 
 
@@ -9757,7 +9753,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    return Button.Toggle.extend({
+    return Button.extend({
 
         initializer:function () {
             var self = this;
@@ -9837,6 +9833,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }
@@ -12185,7 +12184,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
     });
 
 
-    var FontButton = Button.Toggle.extend({
+    var FontButton = Button.extend({
 
         initializer:function () {
             var self = this, editor = self.get("editor"),
@@ -12216,6 +12215,9 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }
@@ -13123,7 +13125,7 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         editor.focus();
     }
 
-    return Button.Toggle.extend({
+    return Button.extend({
         initializer:function () {
             var self = this;
             self.on("click", onClick, self);
@@ -13139,6 +13141,9 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }
@@ -15046,7 +15051,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
     }
 
     S.augment(sourceArea, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{

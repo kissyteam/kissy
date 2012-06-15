@@ -6,6 +6,7 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
      * @name Component
      * @namespace
+     * Component infrastructure.
      */
     var Component = {
         Manager:Manager,

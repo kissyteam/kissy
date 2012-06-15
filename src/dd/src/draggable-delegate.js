@@ -4,12 +4,15 @@
  */
 KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
-    var PREFIX_CLS=DDM.PREFIX_CLS;
+    var PREFIX_CLS = DDM.PREFIX_CLS;
 
     /**
-     * drag multiple nodes under a container element using only one draggable instance as a delegate.
+     * @name DraggableDelegate
+     * @extends DD.Draggable
      * @memberOf DD
      * @class
+     * drag multiple nodes under a container element
+     * using only one draggable instance as a delegate.
      */
     function DraggableDelegate() {
         DraggableDelegate.superclass.constructor.apply(this, arguments);

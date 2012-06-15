@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 00:05
+build time: Jun 15 17:19
 */
 /**
  * Setup component namespace.
@@ -11,6 +11,7 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
      * @name Component
      * @namespace
+     * Component infrastructure.
      */
     var Component = {
         Manager:Manager,
@@ -113,14 +114,14 @@ KISSY.add("component", function (S, Component, Controller, Render, Container, De
  */
 KISSY.add("component/container", function (S, Controller, DelegateChildren, DecorateChildren) {
     /**
+     * @name Container
+     * @extends Component.Controller
+     * @memberOf Component
+     * @class
      * Container class. Extend it to acquire the abilities of
      * delegating events and
      * decorate from pre-rendered dom
      * for child components.
-     * @name Container
-     * @constructor
-     * @extends Component.Controller
-     * @memberOf Component
      */
     return Controller.extend([DelegateChildren, DecorateChildren],
         /**
@@ -266,13 +267,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     }
 
     /**
-     * Base Controller class for KISSY Component.
-     * xclass: 'controller' .
-     * @class
      * @memberOf Component
      * @name Controller
      * @extends Component.UIBase
      * @extends Component.UIBase.Box
+     * @class
+     * Base Controller class for KISSY Component.
+     * xclass: 'controller'.
      */
     var Controller = Component.define([UIBase.Box],
         /** @lends Component.Controller# */
@@ -1025,8 +1026,9 @@ KISSY.add("component/manager", function (S) {
 
     /**
      * @name Manager
-     * @namespace
      * @memberOf Component
+     * @namespace
+     * Manage component metadata.
      */
     var Manager = /** @lends Component.Manager */{
         getCssClassWithPrefix:getCssClassWithPrefix,
@@ -1067,11 +1069,11 @@ KISSY.add("component/manager", function (S) {
 KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
-     * Base Render class for KISSY Component.
-     * @class
      * @memberOf Component
      * @name Render
      * @extends Component.UIBase
+     * @class
+     * Base Render class for KISSY Component.
      */
     return Component.define([UIBase.Box.Render],
         /**
@@ -1458,9 +1460,10 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
+     * @name Align
+     * @class
      * Align extension class.
      * Align component with specified element.
-     * @class
      * @memberOf Component.UIBase
      */
     function Align() {
@@ -1707,10 +1710,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     }
 
     /**
-     * UIBase for class-based component.
-     * @class
+     * @name UIBase
      * @memberOf Component
      * @extends Base
+     * @class
+     * UIBase for class-based component.
      */
     function UIBase(config) {
         var self = this;
@@ -2205,11 +2209,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
 KISSY.add('component/uibase/box', function (S) {
 
     /**
+     * @name Box
+     * @memberOf Component.UIBase
+     * @class
      * Box extension class.
      * Represent a dom element.
-     * @class
-     * @memberOf Component.UIBase
-     * @namespace
      */
     function Box() {
     }
@@ -2655,9 +2659,10 @@ KISSY.add('component/uibase/boxrender', function (S) {
 KISSY.add("component/uibase/close", function () {
 
     /**
+     * @name Close
+     * @class
      * Close extension class.
      * Represent a close button.
-     * @class
      * @memberOf Component.UIBase
      */
     function Close() {
@@ -2783,9 +2788,10 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 KISSY.add("component/uibase/constrain", function (S, DOM, Node) {
 
     /**
+     * @name Constrain
+     * @class
      * Constrain extension class.
      * Constrain component to specified region
-     * @class
      * @memberOf Component.UIBase
      */
     function Constrain() {
@@ -2899,9 +2905,10 @@ KISSY.add("component/uibase/constrain", function (S, DOM, Node) {
 KISSY.add("component/uibase/contentbox", function () {
 
     /**
+     * @name ContentBox
+     * @class
      * ContentBox extension class.
      * Represent inner element of component's root element.
-     * @class
      * @memberOf Component.UIBase
      */
     function ContentBox() {
@@ -3019,9 +3026,10 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 KISSY.add("component/uibase/drag", function (S) {
 
     /**
+     * @name Drag
+     * @class
      * Drag extension class.
      * Make element draggable.
-     * @class
      * @memberOf Component.UIBase
      */
     function Drag() {
@@ -3123,9 +3131,10 @@ KISSY.add("component/uibase/drag", function (S) {
 KISSY.add("component/uibase/loading", function () {
 
     /**
+     * @name Loading
+     * @class
      * Loading extension class.
      * Make component to be able to mask loading.
-     * @class
      * @memberOf Component.UIBase
      */
     function Loading() {
@@ -3201,9 +3210,10 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
 KISSY.add("component/uibase/mask", function () {
 
     /**
+     * @name Mask
+     * @class
      * Mask extension class.
      * Make component to be able to show with mask.
-     * @class
      * @memberOf Component.UIBase
      */
     function Mask() {
@@ -3408,9 +3418,10 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 KISSY.add("component/uibase/position", function (S) {
 
     /**
-     * Position extensiong class.
-     * Make component positionable
+     * @name Position
      * @class
+     * Position extension class.
+     * Make component positionable
      * @memberOf Component.UIBase
      */
     function Position() {
@@ -3565,9 +3576,10 @@ KISSY.add("component/uibase/positionrender", function () {
 KISSY.add("component/uibase/resize", function (S) {
 
     /**
+     * @name Resize
+     * @class
      * Resizable extension class.
      * Make component resizable
-     * @class
      * @memberOf Component.UIBase
      */
     function Resize() {
@@ -3649,9 +3661,10 @@ KISSY.add("component/uibase/stdmod", function () {
 
 
     /**
+     * @name StdMod
+     * @class
      * StdMod extension class.
      * Generate head, body, foot for component.
-     * @class
      * @memberOf Component.UIBase
      */
     function StdMod() {

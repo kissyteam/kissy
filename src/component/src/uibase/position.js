@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/position", function (S) {
 
     /**
-     * Position extensiong class.
-     * Make component positionable
+     * @name Position
      * @class
+     * Position extension class.
+     * Make component positionable
      * @memberOf Component.UIBase
      */
     function Position() {

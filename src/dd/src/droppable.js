@@ -7,9 +7,10 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
     var PREFIX_CLS = DDM.PREFIX_CLS;
 
     /**
-     * make a node droppable
+     * @name Droppable
      * @memberOf DD
      * @class
+     * Make a node droppable.
      */
     function Droppable() {
         var self = this;

@@ -2,16 +2,14 @@
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Button, Render, Split, Toggle) {
+KISSY.add("button", function (S, Button, Render, Split) {
     Button.Render = Render;
     Button.Split = Split;
-    Button.Toggle = Toggle;
     return Button;
 }, {
     requires:[
         'button/base',
         'button/buttonRender',
-        'button/split',
-        'button/toggle'
+        'button/split'
     ]
 });

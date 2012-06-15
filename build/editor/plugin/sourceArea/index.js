@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * source editor for kissy editor
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
     }
 
     S.augment(sourceArea, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{

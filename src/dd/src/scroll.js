@@ -13,9 +13,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
         DESTRUCTORS = "__dd_scrolls";
 
     /**
-     * make parent node scroll while dragging
+     * @name Scroll
      * @memberOf DD
      * @class
+     * make parent node scroll while dragging
      */
     function Scroll() {
         var self = this;

@@ -7,8 +7,9 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
     var $ = S.all;
 
     /**
-     * A menu item component which menu is consisted of.
      * @class
+     * A menu item component which menu is consisted of.
+     * xclass: 'menuitem'.
      * @name Item
      * @memberOf Menu
      * @extends Component.Controller

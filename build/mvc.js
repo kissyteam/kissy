@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 15 17:22
 */
 /**
  * @fileOverview collection of models
@@ -24,8 +24,9 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     }
 
     /**
-     * Collection. A list of model.
+     * @name Collection
      * @class
+     * Collection. A list of model.
      * @memberOf MVC
      * @extends Base
      */
@@ -326,8 +327,9 @@ KISSY.add("mvc/model", function (S, Base) {
     ];
 
     /**
-     * Model represent a data record.
+     * @name Model
      * @class
+     * Model represent a data record.
      * @memberOf MVC
      * @extends Base
      */
@@ -617,6 +619,7 @@ KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
 
     /**
      * @namespace
+     * KISSY MVC Framework.
      * @name MVC
      */
 
@@ -935,8 +938,9 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     }
 
     /**
-     * Router used to route url to responding action callbacks.
+     * @name Router
      * @class
+     * Router used to route url to responding action callbacks.
      * @memberOf MVC
      * @extends Base
      */
@@ -1179,8 +1183,9 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     }
 
     /**
-     * View for delegating event on root element.
+     * @name View
      * @class
+     * View for delegating event on root element.
      * @memberOf MVC
      * @extends Base
      */

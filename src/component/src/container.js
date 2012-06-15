@@ -4,14 +4,14 @@
  */
 KISSY.add("component/container", function (S, Controller, DelegateChildren, DecorateChildren) {
     /**
+     * @name Container
+     * @extends Component.Controller
+     * @memberOf Component
+     * @class
      * Container class. Extend it to acquire the abilities of
      * delegating events and
      * decorate from pre-rendered dom
      * for child components.
-     * @name Container
-     * @constructor
-     * @extends Component.Controller
-     * @memberOf Component
      */
     return Controller.extend([DelegateChildren, DecorateChildren],
         /**

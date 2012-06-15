@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/drag", function (S) {
 
     /**
+     * @name Drag
+     * @class
      * Drag extension class.
      * Make element draggable.
-     * @class
      * @memberOf Component.UIBase
      */
     function Drag() {

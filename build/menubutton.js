@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 00:09
+build time: Jun 15 17:22
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -70,8 +70,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             }
         };
     /**
-     * A menu button component, consist of a button and a drop down popup menu.
      * @class
+     * A menu button component, consist of a button and a drop down popup menu.
+     * xclass: 'menubutton'.
      * @name MenuButton
      * @extends Button
      */
@@ -427,9 +428,10 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
 KISSY.add("menubutton/option", function (S, Menu) {
     var MenuItem = Menu.Item;
     /**
-     * Option for Select component.
      * @name Option
      * @class
+     * Option for Select component.
+     * xclass: 'option'.
      * @memberOf MenuButton
      * @extends Menu.Item
      */
@@ -479,9 +481,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     }
 
     /**
+     * @class
      * Select component which supports single selection from a drop down menu
      * with semantics similar to native HTML select.
-     * @class
+     * xclass: 'select'.
      * @name Select
      * @memberOf MenuButton
      * @extends MenuButton

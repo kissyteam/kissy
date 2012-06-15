@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/contentbox", function () {
 
     /**
+     * @name ContentBox
+     * @class
      * ContentBox extension class.
      * Represent inner element of component's root element.
-     * @class
      * @memberOf Component.UIBase
      */
     function ContentBox() {

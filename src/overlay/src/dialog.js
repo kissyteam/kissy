@@ -9,8 +9,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
     }
 
     /**
-     * KISSY Dialog Component
      * @class
+     * KISSY Dialog Component.
+     * xclass: 'dialog'.
      * @name Dialog
      * @memberOf Overlay
      * @extends Overlay

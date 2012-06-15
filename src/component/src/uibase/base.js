@@ -29,10 +29,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
     }
 
     /**
-     * UIBase for class-based component.
-     * @class
+     * @name UIBase
      * @memberOf Component
      * @extends Base
+     * @class
+     * UIBase for class-based component.
      */
     function UIBase(config) {
         var self = this;

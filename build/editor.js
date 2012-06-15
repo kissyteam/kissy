@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * Set up editor constructor
@@ -10,10 +10,10 @@ build time: Jun 15 12:07
 KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
     /**
-     * KISSY Editor
      * @class
+     * KISSY Editor.
+     * xclass: 'editor'.
      * @extends Component.Controller
-     * @extends Component.UIBase.Box
      * @name Editor
      */
     var Editor = Component.Controller.extend(
@@ -24,7 +24,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             initializer:function () {
                 var self = this;
                 self.__commands = {};
-                self.__controls={};
+                self.__controls = {};
             }
         },
 
@@ -3196,9 +3196,9 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
 
     /**
-     * Range implementation across browsers.
      * @memberOf Editor
      * @class
+     * Range implementation across browsers.
      * @param document {Document}
      * @name Range
      */
@@ -7262,8 +7262,8 @@ KISSY.add("editor/core/utils", function (S) {
         UA = S.UA,
 
         /**
-         * Utilities for Editor.
          * @namespace
+         * Utilities for Editor.
          * @name Utils
          * @memberOf Editor
          */
@@ -7782,9 +7782,10 @@ KISSY.add("editor/core/walker", function (S, Editor) {
     }
 
     /**
-     * Walker for DOM.
+     * @name Walker
      * @param {Editor.Range} range
      * @class
+     * Walker for DOM.
      * @memberOf Editor
      */
     function Walker(range) {

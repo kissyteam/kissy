@@ -4,13 +4,13 @@
  */
 KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     var $ = Node.all,
-        ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
 
 
     /**
-     * Tree Node
-     * @constructor
+     * @class
+     * Tree Node.
+     * xclass: 'tree-item'.
      * @name Node
      * @memberOf Tree
      * @extends Component.Controller
@@ -371,12 +371,10 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     value:"ks-tree-children"
                 }
             }
+        }, {
+            xclass:'tree-item',
+            priority:10
         });
-
-    Component.Manager.setConstructorByXClass(ITEM_CLS, {
-        priority:10,
-        constructor:BaseNode
-    });
 
     return BaseNode;
 

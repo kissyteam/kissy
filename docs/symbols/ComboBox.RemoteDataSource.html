@@ -191,9 +191,15 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
+                                    <p class="desc">dataSource which wrap <a href="../symbols/IO.html">IO</a> utility.xclass: 'combobox-RemoteDataSource'.</p>
+                                    
 
                                     
                                     
+                                    
+                                    <p>parents：
+                                        <a href="../symbols/Base.html">Base</a>
+                                    </p>                                                
                                     
 
                                     
@@ -220,10 +226,10 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list summary-list">
                                         <li class="li">                                            
                                             <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#constructor">ComboBox.RemoteDataSource</a></b>
-                                            <span class="param">(cfg)</span>                                
+                                            <span class="param">()</span>                                
                                             
                                             
-                                            <span class="desc">dataSource which wrap <a href="../symbols/IO.html">IO</a> utility.</span>                                            
+                                                                                        
                                         </li>
                                     </ul>
                                 </div>
@@ -232,6 +238,81 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Attributes</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#allowEmpty">allowEmpty</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">whether send empty to server when input val is empty.default:false</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#cache">cache</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether server response data is cached.default:false</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#paramName">paramName</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Used as parameter name to send combobox input's value to server</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#parse">parse</a></b>
+                                                <span class="type">{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Serve as a parse function to parse serverresponse to return a valid array of data for comboBox.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/ComboBox.RemoteDataSource.html#xhrCfg">xhrCfg</a></b>
+                                                <span class="type">{Object}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">IO configuration.same as {@link} IO</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -253,9 +334,14 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">Datasource interface.</span>                                                
+                                                <span class="desc">Data source interface.</span>                                                
                                             </li>
                                             
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
                                         </ul>
                                         
                                     </div>
@@ -280,75 +366,14 @@ a.go-top:active{text-decoration:none;}
                                         <li class="li">
                                             <div class="title">
                                                 <b class="name">ComboBox.RemoteDataSource</b>
-                                                <span class="param">(cfg)</span>
+                                                <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc"></div>
+                                            <div class="desc">dataSource which wrap <a href="../symbols/IO.html">IO</a> utility.xclass: 'combobox-RemoteDataSource'.</div>
                                             
                                             <dl>                                                
                                                 
                                                 
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
-                                                            <span class="desc">configs</span>
-                                                        </li>
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg.xhrCfg</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
-                                                            <span class="desc">IO configuration.same as {@link} IO</span>
-                                                        </li>
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg.paramName</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
-                                                            <span class="desc">Used as parameter name to send autoS=Complete input's value to server</span>
-                                                        </li>
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg.cache</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
-                                                            <span class="desc">Whether server response data is cached</span>
-                                                        </li>
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg.allowEmpty</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
-                                                            <span class="desc">whether send empty to server when input val is empty.default:false</span>
-                                                        </li>
-                                                        
-                                                        <li class="li">
-                                                            &nbsp;
-                                                                <b>cfg.parse</b>
-                                                            
-                                                            
-                                                            <span class="type"><span class="light fixedFont">{Function}</span> </span>
-                                                            <span class="desc">Serve as a parse function to parse serverresponse to return a valid array of data for comboBox.</span>
-                                                        </li>
-                                                        
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -372,6 +397,167 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Attributes Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="allowEmpty"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">allowEmpty</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    whether send empty to server when input val is empty.default:false
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="cache"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">cache</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether server response data is cached.default:false
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="paramName"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">paramName</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Used as parameter name to send combobox input's value to server
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="parse"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">parse</b>
+                                                <span>{Function}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Serve as a parse function to parse serverresponse to return a valid array of data for comboBox.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="xhrCfg"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">xhrCfg</b>
+                                                <span>{Object}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    IO configuration.same as {@link} IO
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -392,11 +578,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_remoteDataSource.js.html#line45">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_remoteDataSource.js.html#line68">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Datasource interface. How to get data for comboBox
+                                                Data source interface. How to get data for comboBox
                                                 
                                                 
                                             </div>
@@ -662,10 +848,16 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Menu.html">Menu</a></li>
             
             
+            <li><a href="../symbols/Menu.FilterMenu.html">Menu.FilterMenu</a></li>
+            
+            
             <li><a href="../symbols/Menu.Item.html">Menu.Item</a></li>
             
             
             <li><a href="../symbols/Menu.PopupMenu.html">Menu.PopupMenu</a></li>
+            
+            
+            <li><a href="../symbols/Menu.Separator.html">Menu.Separator</a></li>
             
             
             <li><a href="../symbols/MenuButton.html">MenuButton</a></li>

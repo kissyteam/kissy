@@ -11,6 +11,12 @@ KISSY.add("button/buttonRender", function (S, Component) {
                 .attr("role", "button")
                 .addClass("ks-inline-block");
         },
+        _uiSetChecked:function (v) {
+            var self = this,
+                el = self.get("el"),
+                cls = self.getComponentCssClassWithState("-checked");
+            el[v ? 'addClass' : 'removeClass'](cls);
+        },
         _uiSetTooltip:function (title) {
             this.get("el").attr("title", title);
         },
@@ -31,6 +37,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         ATTRS:{
             describedby:{},
             tooltip:{},
+            checked:{},
             collapseSide:{}
         }
     });

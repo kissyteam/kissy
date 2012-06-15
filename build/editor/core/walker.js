@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
 /**
  * modified from ckeditor for kissy editor ,walker implementation
@@ -163,9 +163,10 @@ KISSY.add("editor/core/walker", function (S, Editor) {
     }
 
     /**
-     * Walker for DOM.
+     * @name Walker
      * @param {Editor.Range} range
      * @class
+     * Walker for DOM.
      * @memberOf Editor
      */
     function Walker(range) {

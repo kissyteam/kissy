@@ -11,6 +11,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         MENU_DELAY = 300;
     /**
      * Class representing a submenu that can be added as an item to other menus.
+     * xclass: 'submenu'.
+     * @constructor
+     * @extends Menu.MenuItem
+     * @memberOf Menu
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 

@@ -115,13 +115,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     }
 
     /**
-     * Base Controller class for KISSY Component.
-     * xclass: 'controller' .
-     * @class
      * @memberOf Component
      * @name Controller
      * @extends Component.UIBase
      * @extends Component.UIBase.Box
+     * @class
+     * Base Controller class for KISSY Component.
+     * xclass: 'controller'.
      */
     var Controller = Component.define([UIBase.Box],
         /** @lends Component.Controller# */

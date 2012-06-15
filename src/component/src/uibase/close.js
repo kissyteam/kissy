@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/close", function () {
 
     /**
+     * @name Close
+     * @class
      * Close extension class.
      * Represent a close button.
-     * @class
      * @memberOf Component.UIBase
      */
     function Close() {

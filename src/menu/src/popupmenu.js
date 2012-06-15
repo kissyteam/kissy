@@ -9,10 +9,11 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     var UIBase = Component.UIBase;
 
     /**
-     * Popup Menu
      * @name PopupMenu
      * @memberOf Menu
-     * @constructor
+     * @class
+     * Popup Menu.
+     * xclass: 'popupmenu'.
      * @extends Menu
      * @extends Component.UIBase.Position
      * @extends Component.UIBase.Align

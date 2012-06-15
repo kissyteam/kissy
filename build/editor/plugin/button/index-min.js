@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 12:07
+build time: Jun 15 17:22
 */
-KISSY.add("editor/plugin/button/index",function(h,f,c){f.prototype.addButton=function(g,d,e){void 0===e&&(e=d.checkable?c.Toggle:c,delete d.checkable);var b=this.get("prefixCls")+"editor-",a=new e(h.mix({render:this.get("toolBarEl"),elAttrs:{hideFocus:"hideFocus"},autoRender:!0,content:'<span class="'+b+"toolbar-item "+b+"toolbar-"+g+'"></span>',elCls:b+"toolbar-button",prefixCls:b,editor:this},d)),i=a.get("el").one("span");a.get("el").unselectable();a.on("afterContentClsChange",function(a){i[0].className=
-b+"toolbar-item "+b+"toolbar-"+a.newVal});a.get("mode")==f.WYSIWYG_MODE&&(this.on("wysiwygMode",function(){a.set("disabled",false)}),this.on("sourceMode",function(){a.set("disabled",true)}));this.addControl(g+"/button",a);return a};return c},{requires:["editor","button"]});
+KISSY.add("editor/plugin/button/index",function(g,d,e){d.prototype.addButton=function(f,h,c){void 0===c&&(c=e);var b=this.get("prefixCls")+"editor-",a=new c(g.mix({render:this.get("toolBarEl"),elAttrs:{hideFocus:"hideFocus"},autoRender:!0,content:'<span class="'+b+"toolbar-item "+b+"toolbar-"+f+'"></span>',elCls:b+"toolbar-button",prefixCls:b,editor:this},h)),i=a.get("el").one("span");a.get("el").unselectable();a.on("afterContentClsChange",function(a){i[0].className=b+"toolbar-item "+b+"toolbar-"+
+a.newVal});a.get("mode")==d.WYSIWYG_MODE&&(this.on("wysiwygMode",function(){a.set("disabled",!1)}),this.on("sourceMode",function(){a.set("disabled",!0)}));this.addControl(f+"/button",a);return a};return e},{requires:["editor","button"]});

@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/constrain", function (S, DOM, Node) {
 
     /**
+     * @name Constrain
+     * @class
      * Constrain extension class.
      * Constrain component to specified region
-     * @class
      * @memberOf Component.UIBase
      */
     function Constrain() {

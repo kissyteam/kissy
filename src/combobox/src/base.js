@@ -81,11 +81,11 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
     }
 
     /**
-     * Input/Textarea Wrapper for comboBox.
-     * xclass: 'combobox'.
      * @name ComboBox
      * @extends Component.Controller
      * @class
+     * KISSY ComboBox.
+     * xclass: 'combobox'.
      */
     ComboBox = Component.Controller.extend(
         /**

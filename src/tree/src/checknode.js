@@ -5,15 +5,15 @@
 KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
-        CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
     /**
-     * Checked tree node.
      * @name CheckNode
      * @memberOf Tree
      * @class
+     * Checked tree node.
+     * xclass: 'tree-check-item'.
      * @extends Tree.Node
      */
     var CheckNode = BaseNode.extend(
@@ -127,10 +127,9 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                 xrender:{
                     value:CheckNodeRender
                 }
-            },
-            CHECK_CLS:CHECK_CLS
+            }
         }, {
-            xclass:CHECK_CLS,
+            xclass:"tree-check-item",
             priority:20
         });
 

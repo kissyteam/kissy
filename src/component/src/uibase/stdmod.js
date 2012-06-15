@@ -6,9 +6,10 @@ KISSY.add("component/uibase/stdmod", function () {
 
 
     /**
+     * @name StdMod
+     * @class
      * StdMod extension class.
      * Generate head, body, foot for component.
-     * @class
      * @memberOf Component.UIBase
      */
     function StdMod() {

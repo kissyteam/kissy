@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 15 17:22
 */
 /**
  * @fileOverview anim-node-plugin
@@ -351,143 +351,177 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList, {
-
+    S.augment(NodeList,
         /**
-         * 默认长度为 0
+         * @lends NodeList#
          */
-        length:0,
+        {
+
+            /**
+             * length of nodelist
+             * @type Number
+             */
+            length:0,
 
 
-        item:function (index) {
-            var self = this;
-            if (S.isNumber(index)) {
-                if (index >= self.length) {
-                    return null;
+            /**
+             * Get one node at index
+             * @param {Number} index Index position.
+             * @return {NodeList}
+             */
+            item:function (index) {
+                var self = this;
+                if (S.isNumber(index)) {
+                    if (index >= self.length) {
+                        return null;
+                    } else {
+                        return new NodeList(self[index]);
+                    }
                 } else {
-                    return new NodeList(self[index]);
+                    return new NodeList(index);
                 }
-            } else {
-                return new NodeList(index);
-            }
-        },
+            },
 
-        add:function (selector, context, index) {
-            if (S.isNumber(context)) {
-                index = context;
-                context = undefined;
-            }
-            var list = NodeList.all(selector, context).getDOMNodes(),
-                ret = new NodeList(this);
-            if (index === undefined) {
-                push.apply(ret, list);
-            } else {
-                var args = [index, 0];
-                args.push.apply(args, list);
-                AP.splice.apply(ret, args);
-            }
-            return ret;
-        },
+            /**
+             * Add existing node list.
+             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
+             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @param {Number} [index] Insert position.
+             * @return {NodeList}
+             */
+            add:function (selector, context, index) {
+                if (S.isNumber(context)) {
+                    index = context;
+                    context = undefined;
+                }
+                var list = NodeList.all(selector, context).getDOMNodes(),
+                    ret = new NodeList(this);
+                if (index === undefined) {
+                    push.apply(ret, list);
+                } else {
+                    var args = [index, 0];
+                    args.push.apply(args, list);
+                    AP.splice.apply(ret, args);
+                }
+                return ret;
+            },
 
-        slice:function (start, end) {
-            // ie<9 : [1,2].slice(-2,undefined) => []
-            // ie<9 : [1,2].slice(-2) => []
-            // fix #85
-            return new NodeList(slice.apply(this, arguments));
-        },
+            /**
+             * Get part of node list.
+             * @param {Number} start Start position.
+             * @param {number} end End position.
+             * @return {NodeList}
+             */
+            slice:function (start, end) {
+                // ie<9 : [1,2].slice(-2,undefined) => []
+                // ie<9 : [1,2].slice(-2) => []
+                // fix #85
+                return new NodeList(slice.apply(this, arguments));
+            },
 
-        /**
-         * Retrieves the DOMNodes.
-         */
-        getDOMNodes:function () {
-            return slice.call(this);
-        },
+            /**
+             * Retrieves the DOMNodes.
+             */
+            getDOMNodes:function () {
+                return slice.call(this);
+            },
 
-        /**
-         * Applies the given function to each Node in the NodeList.
-         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param [context] An optional context to apply the function with Default context is the current NodeList instance
-         */
-        each:function (fn, context) {
-            var self = this;
+            /**
+             * Applies the given function to each Node in the NodeList.
+             * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+             * @param [context] An optional context to apply the function with Default context is the current NodeList instance
+             */
+            each:function (fn, context) {
+                var self = this;
 
-            S.each(self, function (n, i) {
-                n = new NodeList(n);
-                return fn.call(context || n, n, i, self);
-            });
+                S.each(self, function (n, i) {
+                    n = new NodeList(n);
+                    return fn.call(context || n, n, i, self);
+                });
 
-            return self;
-        },
-        /**
-         * Retrieves the DOMNode.
-         */
-        getDOMNode:function () {
-            return this[0];
-        },
+                return self;
+            },
+            /**
+             * Retrieves the DOMNode.
+             */
+            getDOMNode:function () {
+                return this[0];
+            },
 
-        /**
-         * stack sub query
-         */
-        end:function () {
-            var self = this;
-            return self.__parent || self;
-        },
+            /**
+             * return last stack node list.
+             * @return {NodeList}
+             */
+            end:function () {
+                var self = this;
+                return self.__parent || self;
+            },
 
-        all:function (selector) {
-            var ret, self = this;
-            if (self.length > 0) {
-                ret = NodeList.all(selector, self);
-            } else {
-                ret = new NodeList();
-            }
-            ret.__parent = self;
-            return ret;
-        },
-
-        one:function (selector) {
-            var self = this, all = self.all(selector),
-                ret = all.length ? all.slice(0, 1) : null;
-            if (ret) {
+            /**
+             * Get node list which are descendants of current node list.
+             * @param {String} selector Selector string
+             * @return {NodeList}
+             */
+            all:function (selector) {
+                var ret, self = this;
+                if (self.length > 0) {
+                    ret = NodeList.all(selector, self);
+                } else {
+                    ret = new NodeList();
+                }
                 ret.__parent = self;
-            }
-            return ret;
-        }
-    });
+                return ret;
+            },
 
-    S.mix(NodeList, {
-        /**
-         * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
-         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
-         * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
-         * @returns {NodeList} 节点列表对象
-         */
-        all:function (selector, context) {
-            // are we dealing with html string ?
-            // TextNode 仍需要自己 new Node
-
-            if (S.isString(selector)
-                && (selector = S.trim(selector))
-                && selector.length >= 3
-                && S.startsWith(selector, "<")
-                && S.endsWith(selector, ">")
-                ) {
-                if (context) {
-                    if (context.getDOMNode) {
-                        context = context.getDOMNode();
-                    }
-                    if (context.ownerDocument) {
-                        context = context.ownerDocument;
-                    }
+            one:function (selector) {
+                var self = this, all = self.all(selector),
+                    ret = all.length ? all.slice(0, 1) : null;
+                if (ret) {
+                    ret.__parent = self;
                 }
-                return new NodeList(selector, undefined, context);
+                return ret;
             }
-            return new NodeList(DOM.query(selector, context));
-        },
-        one:function (selector, context) {
-            var all = NodeList.all(selector, context);
-            return all.length ? all.slice(0, 1) : null;
-        }
-    });
+        });
+
+    S.mix(NodeList,
+        /**
+         * @lends NodeList
+         */
+        {
+            /**
+             * Get node list from selector or construct new node list from html string.
+             * Can also called from KISSY.all
+             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
+             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @returns {NodeList}
+             */
+            all:function (selector, context) {
+                // are we dealing with html string ?
+                // TextNode 仍需要自己 new Node
+
+                if (S.isString(selector)
+                    && (selector = S.trim(selector))
+                    && selector.length >= 3
+                    && S.startsWith(selector, "<")
+                    && S.endsWith(selector, ">")
+                    ) {
+                    if (context) {
+                        if (context.getDOMNode) {
+                            context = context.getDOMNode();
+                        }
+                        if (context.ownerDocument) {
+                            context = context.ownerDocument;
+                        }
+                    }
+                    return new NodeList(selector, undefined, context);
+                }
+                return new NodeList(DOM.query(selector, context));
+            },
+            one:function (selector, context) {
+                var all = NodeList.all(selector, context);
+                return all.length ? all.slice(0, 1) : null;
+            }
+        });
 
     S.mix(NodeList, DOM.NodeTypes);
 

@@ -26,6 +26,7 @@
     KISSY.Loader = Loader;
 
     /**
+     * @name Package
      * @class KISSY Package constructor
      * This class should not be instantiated manually.
      * @memberOf KISSY.Loader
@@ -34,33 +35,61 @@
         S.mix(this, cfg);
     }
 
-    S.augment(Package, {
-        getTag:function () {
-            return this.tag || this.SS.Config.tag;
-        },
+    S.augment(Package,
+        /**
+         * @lends KISSY.Loader.Package#
+         */
+        {
+            /**
+             * Tag for package.
+             * @return {String}
+             */
+            getTag:function () {
+                return this.tag || this.SS.Config.tag;
+            },
 
-        getName:function () {
-            return this.name;
-        },
+            /**
+             * Get package name.
+             * @return {String}
+             */
+            getName:function () {
+                return this.name;
+            },
 
-        getBase:function () {
-            return this.base || this.SS.Config.base;
-        },
+            /**
+             * Get package base.
+             * @return {String}
+             */
+            getBase:function () {
+                return this.base || this.SS.Config.base;
+            },
 
-        isDebug:function () {
-            var debug = this.debug;
-            return debug === undefined ? this.SS.Config.debug : debug;
-        },
+            /**
+             * Whether is debug for this package.
+             * @return {Boolean}
+             */
+            isDebug:function () {
+                var debug = this.debug;
+                return debug === undefined ? this.SS.Config.debug : debug;
+            },
 
-        getCharset:function () {
-            return this.charset || this.SS.Config.charset;
-        },
+            /**
+             * Get charset for package.
+             * @return {String}
+             */
+            getCharset:function () {
+                return this.charset || this.SS.Config.charset;
+            },
 
-        isCombine:function () {
-            var combine = this.combine;
-            return combine === undefined ? this.SS.Config.combine : combine;
-        }
-    });
+            /**
+             * Whether modules are combined for this package.
+             * @return {Boolean}
+             */
+            isCombine:function () {
+                var combine = this.combine;
+                return combine === undefined ? this.SS.Config.combine : combine;
+            }
+        });
 
     Loader.Package = Package;
 

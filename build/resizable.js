@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:30
+build time: Jun 15 17:23
 */
 /**
  * @fileOverview resizable support for kissy
@@ -127,8 +127,8 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
     }
 
     /**
-     * Make a element resizable.
      * @class
+     * Make a element resizable.
      * @extends Base
      * @name Resizable
      */

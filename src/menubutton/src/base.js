@@ -65,8 +65,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             }
         };
     /**
-     * A menu button component, consist of a button and a drop down popup menu.
      * @class
+     * A menu button component, consist of a button and a drop down popup menu.
+     * xclass: 'menubutton'.
      * @name MenuButton
      * @extends Button
      */

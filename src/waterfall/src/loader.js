@@ -6,12 +6,14 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
         win = S.Env.host,
-        // > timeChunk interval to allow adjust first
+    // > timeChunk interval to allow adjust first
         SCROLL_TIMER = 50;
 
     /**
-     * Dynamic load waterfall items by monitor window scroll.
+     * @name Loader
+     * @extends Waterfall
      * @class
+     * Dynamic load waterfall items by monitor window scroll.
      * @memberOf Waterfall
      */
     function Loader() {

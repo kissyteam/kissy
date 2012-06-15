@@ -11,9 +11,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     }
 
     /**
+     * @class
      * Select component which supports single selection from a drop down menu
      * with semantics similar to native HTML select.
-     * @class
+     * xclass: 'select'.
      * @name Select
      * @memberOf MenuButton
      * @extends MenuButton

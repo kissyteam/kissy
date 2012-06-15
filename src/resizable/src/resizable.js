@@ -122,8 +122,8 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
     }
 
     /**
-     * Make a element resizable.
      * @class
+     * Make a element resizable.
      * @extends Base
      * @name Resizable
      */

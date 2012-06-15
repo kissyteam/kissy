@@ -19,9 +19,11 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     }
 
     /**
-     * make multiple nodes droppable under a container using only one droppable instance
+     * @name DroppableDelegate
      * @memberOf DD
+     * @extends DD.Droppable
      * @class
+     * make multiple nodes droppable under a container using only one droppable instance
      */
     function DroppableDelegate() {
         var self = this;
@@ -30,7 +32,18 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
         DDM.on("dragstart", dragStart, self);
     }
 
-    S.extend(DroppableDelegate, Droppable, {
+    S.extend(DroppableDelegate, Droppable,
+        /**
+         * @lends DD.DroppableDelegate
+         */
+        {
+
+            /**
+             * Destroy current instance
+             */
+            destroy:function(){
+                DroppableDelegate.superclass.destroy.apply(this,arguments);
+            },
 
             /**
              * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标

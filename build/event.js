@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:29
+build time: Jun 15 17:22
 */
 /**
  * @fileOverview responsible for registering event
@@ -1934,12 +1934,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     }
 
     /**
-     * @class EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * @namespace
+     * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
      * and also allows other EventTargets to target the object with events sourced from the other object.
      * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
      * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
      * or will not be created at all.
-     * @namespace
      * @name Target
      * @memberOf Event
      */

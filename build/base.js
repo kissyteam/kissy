@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 12:10
+build time: Jun 15 17:19
 */
 /**
  * @fileOverview attribute management
@@ -114,10 +114,10 @@ KISSY.add('base/attribute', function (S, undefined) {
      * @param val
      */
     function setValueByPath(o, path, val) {
-        var rlen = path.length - 1,
+        var len = path.length - 1,
             s = o;
-        if (rlen >= 0) {
-            for (var i = 0; i < rlen; i++) {
+        if (len >= 0) {
+            for (var i = 0; i < len; i++) {
                 o = o[path[i]];
             }
             if (o != undefined) {

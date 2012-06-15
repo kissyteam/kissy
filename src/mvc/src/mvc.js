@@ -6,6 +6,7 @@ KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
 
     /**
      * @namespace
+     * KISSY MVC Framework.
      * @name MVC
      */
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 18:11
+build time: Jun 15 17:19
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -31,21 +31,12 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         return m;
     }
 
-    function constructMenu(self) {
-        var menuCfg = self.get("menuCfg");
-        var m = new ComboBoxMenu(S.mix({
-            prefixCls:self.get("prefixCls")
-        }, self.get("menuCfg")));
-        self.__set("menu", m);
-        return m;
-    }
-
     function alignMenuImmediately(self) {
-        var menu = self.get("menu"),
-            menuCfg = self.get("menuCfg") || {};
-        menu.set("align", S.merge({
-            node:self.get("el")
-        }, ALIGN, menuCfg.align));
+        var menu = self.get("menu");
+        var align = S.clone(menu.get("align"));
+        align.node = self.get("el");
+        S.mix(align, ALIGN, false);
+        menu.set("align", align);
     }
 
     function alignWithTokenImmediately(self) {
@@ -95,15 +86,15 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
     }
 
     /**
-     * Input/Textarea Wrapper for comboBox.
-     * xclass: 'combobox'.
      * @name ComboBox
      * @extends Component.Controller
      * @class
+     * KISSY ComboBox.
+     * xclass: 'combobox'.
      */
     ComboBox = Component.Controller.extend(
         /**
-         * @lends ComboBox
+         * @lends ComboBox#
          */
         {
 
@@ -157,14 +148,13 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
             _uiSetCollapsed:function (v) {
                 var self = this,
-                    menuCfg = self.get("menuCfg"),
                     comboBoxMenu = getMenu(self);
                 if (comboBoxMenu) {
                     if (v) {
                         comboBoxMenu.hide();
                     } else {
                         comboBoxMenu.show();
-                        if (menuCfg.width == null) {
+                        if (self.get("matchElWidth")) {
                             comboBoxMenu.set("width", self.get("el").innerWidth());
                         }
                         if (!self.get("ariaOwns")) {
@@ -190,7 +180,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     v,
                     contents,
                     i,
-                    comboBoxMenu = getMenu(self, 1) || constructMenu(self);
+                    comboBoxMenu = getMenu(self, 1);
 
                 comboBoxMenu.removeChildren(true);
 
@@ -433,16 +423,16 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         },
         {
             ATTRS:/**
-             * @lends ComboBox
+             * @lends ComboBox#
              */
             {
 
                 input:{
-                    view:true
+                    view:1
                 },
 
                 trigger:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -451,8 +441,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type Boolean
                  */
                 hasTrigger:{
-                    value:true,
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -460,6 +449,9 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type ComboBox.Menu
                  */
                 menu:{
+                    value:{
+                        xclass:'combobox-menu'
+                    },
                     setter:function (m) {
                         if (m instanceof ComboBoxMenu) {
                             m.__set("parent", this);
@@ -473,7 +465,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @private
                  */
                 ariaOwns:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -481,7 +473,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type Boolean
                  */
                 collapsed:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -504,23 +496,14 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 },
 
                 /**
-                 * Config comboBox menu list.For Configuration when new.
-                 * {Number} menuCfg.width :
-                 * Config comboBox menu list's alignment.
-                 * Default to current active input's width.<br/>
-                 * {Object} menuCfg.align :
-                 * Config comboBox menu list's alignment.
-                 * Same with {@link Component.UIBase.Align#align} .
-                 * Default : align current input's bottom left edge
-                 * with comboBox list's top left edge.
-                 * @type Object
+                 * Whether drop down menu is same width with input.
+                 * Default: true.
+                 * @type {Boolean}
                  */
-                menuCfg:{
-                    value:{
-                        // width
-                        // align
-                    }
+                matchElWidth:{
+                  value:true
                 },
+
                 /**
                  * Format function to return array of
                  * html/text/menu item attributes from array of data.
@@ -755,7 +738,9 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         ATTRS:{
             ariaOwns:{},
             collapsed:{},
-            hasTrigger:{},
+            hasTrigger:{
+                value:true
+            },
             input:{},
             trigger:{}
         },
@@ -793,14 +778,14 @@ KISSY.add("combobox", function (S, Menu, ComboBox, LocalDataSource, RemoteDataSo
 KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     /**
-     * Local dataSource for comboBox
+     * @name LocalDataSource
      * @memberOf ComboBox
+     * @extends Base
      * @class
-     * @param {Object} cfg config
-     * @param {Array} cfg.data array of static data for comboBox
-     * @param {Function} cfg.parse parse data
+     * Local dataSource for comboBox.
+     * xclass: 'combobox-LocalDataSource'.
      */
-    function LocalDataSource(cfg) {
+    function LocalDataSource() {
         LocalDataSource.superclass.constructor.apply(this, arguments);
     }
 
@@ -820,18 +805,35 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         return ret;
     }
 
-    LocalDataSource.ATTRS = {
+    LocalDataSource.ATTRS =
+    /**
+     * @lends ComboBox.LocalDataSource#
+     */
+    {
+        /**
+         * array of static data for comboBox
+         * @type Object[]
+         */
         data:{
             value:[]
         },
+        /**
+         * parse data function.
+         * Default: index of match.
+         * @type Function
+         */
         parse:{
             value:parser
         }
     };
 
-    S.extend(LocalDataSource, S.Base, {
+    S.extend(LocalDataSource, S.Base,
         /**
-         * Datasource interface. How to get data for comboBox
+         * @lends ComboBox.LocalDataSource#
+         */
+        {
+        /**
+         * Data source interface. How to get data for comboBox
          * @function
          * @name ComboBox.LocalDataSource#fetchData
          * @param {String} inputVal current active input's value
@@ -862,12 +864,12 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
         window = S.Env.host;
 
     /**
-     * DropDown menu for comboBox input.
-     * xclass: 'combobox-menu'.
      * @name Menu
      * @memberOf ComboBox
      * @extends Menu.PopupMenu
      * @class
+     * DropDown menu for comboBox input.
+     * xclass: 'combobox-menu'.
      */
     ComboBoxMenu = Menu.PopupMenu.extend(
         /**
@@ -951,10 +953,10 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
         }, {
             ATTRS:{
                 head:{
-                    view:true
+                    view:1
                 },
                 foot:{
-                    view:true
+                    view:1
                 },
                 xrender:{
                     value:ComboBoxMenuRender
@@ -994,10 +996,10 @@ KISSY.add("combobox/menuRender", function (S, Menu) {
     }, {
         ATTRS:{
             head:{
-                view:true
+                view:1
             },
             foot:{
-                view:true
+                view:1
             }
         }
     });
@@ -1010,80 +1012,103 @@ KISSY.add("combobox/menuRender", function (S, Menu) {
 KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
 
     /**
-     * dataSource which wrap {@link IO} utility.
+     * @name RemoteDataSource
      * @class
+     * dataSource which wrap {@link IO} utility.
+     * xclass: 'combobox-RemoteDataSource'.
+     * @extends Base
      * @memberOf ComboBox
-     * @param {Object} cfg configs
-     * @param {Object} cfg.xhrCfg IO configuration.same as {@link} IO
-     * @param {String} cfg.paramName
-     * Used as parameter name to send autoS=Complete input's value to server
-     * @param {String} cfg.cache Whether server response data is cached
-     * @param {Boolean} cfg.allowEmpty whether send empty to server when input val is empty.default:false
-     * @param {Function} cfg.parse Serve as a parse function to parse server
-     * response to return a valid array of data for comboBox.
      */
-    function RemoteDataSource(cfg) {
+    function RemoteDataSource() {
         var self = this;
         RemoteDataSource.superclass.constructor.apply(self, arguments);
         self.io = null;
         self.caches = {};
     }
 
-    RemoteDataSource.ATTRS = {
+    RemoteDataSource.ATTRS =
+    /**
+     * @lends ComboBox.RemoteDataSource#
+     */
+    {
+        /**
+         * Used as parameter name to send combobox input's value to server
+         * @type String
+         */
         paramName:{},
+        /**
+         * whether send empty to server when input val is empty.default:false
+         * @type Boolean
+         */
         allowEmpty:{},
+        /**
+         * Whether server response data is cached.default:false
+         * @type Boolean
+         */
         cache:{},
+        /**
+         * Serve as a parse function to parse server
+         * response to return a valid array of data for comboBox.
+         * @type Function
+         */
         parse:{},
+        /**
+         * IO configuration.same as {@link} IO
+         * @type Object
+         */
         xhrCfg:{
             value:{}
         }
     };
 
-    S.extend(RemoteDataSource, S.Base, {
+    S.extend(RemoteDataSource, S.Base,
         /**
-         * Datasource interface. How to get data for comboBox
-         * @function
-         * @name ComboBox.RemoteDataSource#fetchData
-         * @param {String} inputVal current active input's value
-         * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback 's execution context
-         */
-        fetchData:function (inputVal, callback, context) {
-            var self = this,
-                v,
-                paramName = self.get("paramName"),
-                parse = self.get("parse"),
-                cache = self.get("cache"),
-                allowEmpty = self.get("allowEmpty");
-            if (self.io) {
-                // abort previous request
-                self.io.abort();
-                self.io = null;
-            }
-            if (!inputVal && allowEmpty !== true) {
-                return callback.call(context, []);
-            }
-            if (cache) {
-                if (v = self.caches[inputVal]) {
-                    return callback.call(context, v);
+         * @lends ComboBox.RemoteDataSource#
+         */{
+            /**
+             * Data source interface. How to get data for comboBox
+             * @function
+             * @name ComboBox.RemoteDataSource#fetchData
+             * @param {String} inputVal current active input's value
+             * @param {Function} callback callback to notify comboBox when data is ready
+             * @param {Object} context callback 's execution context
+             */
+            fetchData:function (inputVal, callback, context) {
+                var self = this,
+                    v,
+                    paramName = self.get("paramName"),
+                    parse = self.get("parse"),
+                    cache = self.get("cache"),
+                    allowEmpty = self.get("allowEmpty");
+                if (self.io) {
+                    // abort previous request
+                    self.io.abort();
+                    self.io = null;
                 }
-            }
-            var xhrCfg = self.get("xhrCfg");
-            xhrCfg.data = xhrCfg.data || {};
-            xhrCfg.data[paramName] = inputVal;
-            xhrCfg.success = function (data) {
-                if (parse) {
-                    data = parse(inputVal, data);
+                if (!inputVal && allowEmpty !== true) {
+                    return callback.call(context, []);
                 }
-                self.__set("data", data);
                 if (cache) {
-                    self.caches[inputVal] = data;
+                    if (v = self.caches[inputVal]) {
+                        return callback.call(context, v);
+                    }
                 }
-                callback.call(context, data);
-            };
-            self.io = IO(xhrCfg);
-        }
-    });
+                var xhrCfg = self.get("xhrCfg");
+                xhrCfg.data = xhrCfg.data || {};
+                xhrCfg.data[paramName] = inputVal;
+                xhrCfg.success = function (data) {
+                    if (parse) {
+                        data = parse(inputVal, data);
+                    }
+                    self.__set("data", data);
+                    if (cache) {
+                        self.caches[inputVal] = data;
+                    }
+                    callback.call(context, data);
+                };
+                self.io = IO(xhrCfg);
+            }
+        });
 
     Component.Manager.setConstructorByXClass("combobox-RemoteDataSource", RemoteDataSource);
 

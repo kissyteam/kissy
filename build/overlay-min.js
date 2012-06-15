@@ -1,9 +1,9 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 22:32
+build time: Jun 15 17:23
 */
-KISSY.add("overlay/aria",function(c,d){function e(){}e.ATTRS={aria:{view:!0}};e.prototype={__bindUI:function(){var a=this,b=a.get("el");if(a.get("aria"))b.on("keydown",function(b){b.keyCode===d.KeyCodes.ESC&&(a.hide(),b.halt())})}};return e},{requires:["event"]});
+KISSY.add("overlay/aria",function(c,d){function e(){}e.ATTRS={aria:{view:1}};e.prototype={__bindUI:function(){var a=this,b=a.get("el");if(a.get("aria"))b.on("keydown",function(b){b.keyCode===d.KeyCodes.ESC&&(a.hide(),b.halt())})}};return e},{requires:["event"]});
 KISSY.add("overlay/ariaRender",function(c,d){function e(){}function a(a){var c=a.keyCode,e=this.get("el");if(c==g){var c=b(a.target),d=this.__ariaArchor;if(c.equals(e)&&a.shiftKey)d[0].focus(),a.halt();else if(c.equals(d)&&!a.shiftKey)e[0].focus(),a.halt();else if(c.equals(e)||e.contains(c))return;a.halt()}}var b=d.all,g=d.KeyCodes.TAB;e.prototype={__renderUI:function(){var a=this.get("el"),e=this.get("header");this.get("aria")&&(a.attr("role","dialog"),a.attr("tabindex",0),e.attr("id")||e.attr("id",
 c.guid("ks-dialog-header")),a.attr("aria-labelledby",e.attr("id")),this.__ariaArchor=b("<div tabindex='0'></div>").appendTo(a))},__bindUI:function(){var c=this;if(c.get("aria")){var b=c.get("el"),e;c.on("afterVisibleChange",function(d){d.newVal?(e=b[0].ownerDocument.activeElement,b[0].focus(),b.attr("aria-hidden","false"),b.on("keydown",a,c)):(b.attr("aria-hidden","true"),b.detach("keydown",a,c),e&&e.focus())})}}};return e},{requires:["node"]});
 KISSY.add("overlay/base",function(c,d,e,a){function b(a){return c.require("component/uibase/"+a)}return d.Controller.extend([b("contentbox"),b("position"),b("loading"),b("align"),b("close"),b("resize"),b("mask"),a],{},{ATTRS:{focusable:{value:!1},closable:{value:!1},handleMouseEvents:{value:!1},visibleMode:{value:"visibility"},xrender:{value:e}}},{xclass:"overlay",priority:10})},{requires:["component","./overlayRender","./effect"]});

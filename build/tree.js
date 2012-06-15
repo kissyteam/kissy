@@ -1,15 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 14 22:30
+build time: Jun 15 17:23
 */
 /**
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
-
-    var TREE_CLS = TreeRender.TREE_CLS;
 
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
@@ -18,9 +16,10 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
      */
 
     /**
-     * KISSY Tree
      * @name Tree
      * @class
+     * KISSY Tree.
+     * xclass: 'tree'.
      * @extends Tree.Node
      */
     return BaseNode.extend([Component.DelegateChildren, TreeMgr],
@@ -41,7 +40,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
                 }
             }
         }, {
-            xclass:TREE_CLS,
+            xclass:'tree',
             priority:30
         });
 
@@ -62,13 +61,13 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
  */
 KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     var $ = Node.all,
-        ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
 
 
     /**
-     * Tree Node
-     * @constructor
+     * @class
+     * Tree Node.
+     * xclass: 'tree-item'.
      * @name Node
      * @memberOf Tree
      * @extends Component.Controller
@@ -366,7 +365,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Boolean
                  */
                 isLeaf:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -374,7 +373,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {NodeList}
                  */
                 expandIconEl:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -382,7 +381,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {NodeList}
                  */
                 iconEl:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -390,14 +389,14 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Boolean
                  */
                 selected:{
-                    view:true
+                    view:1
                 },
 
                 /**
                  * Whether current tree node is expanded.
                  */
                 expanded:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -405,7 +404,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type String
                  */
                 tooltip:{
-                    view:true
+                    view:1
                 },
 
                 /**
@@ -420,7 +419,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Number
                  */
                 depth:{
-                    view:true
+                    view:1
                 },
                 focusable:{
                     value:false
@@ -429,12 +428,10 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     value:"ks-tree-children"
                 }
             }
+        }, {
+            xclass:'tree-item',
+            priority:10
         });
-
-    Component.Manager.setConstructorByXClass(ITEM_CLS, {
-        priority:10,
-        constructor:BaseNode
-    });
 
     return BaseNode;
 
@@ -452,7 +449,6 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
         INLINE_BLOCK = " ks-inline-block",
-        ITEM_CLS = "tree-item",
         FOLDER_ICON_EXPANDED = "ks-tree-expanded-folder-icon",
         FOLDER_ICON_COLLAPSED = "ks-tree-collapsed-folder-icon",
         CHILDREN_CLS = "ks-tree-children",
@@ -634,9 +630,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 }
                 return children.css("display") != "none";
             }
-        },
-
-        ITEM_CLS:ITEM_CLS
+        }
 
     });
 
@@ -649,15 +643,15 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
 KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
-        CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
     /**
-     * Checked tree node.
      * @name CheckNode
      * @memberOf Tree
      * @class
+     * Checked tree node.
+     * xclass: 'tree-check-item'.
      * @extends Tree.Node
      */
     var CheckNode = BaseNode.extend(
@@ -765,16 +759,15 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                  * @type Number
                  */
                 checkState:{
-                    view:true
+                    view:1
                 },
 
                 xrender:{
                     value:CheckNodeRender
                 }
-            },
-            CHECK_CLS:CHECK_CLS
+            }
         }, {
-            xclass:CHECK_CLS,
+            xclass:"tree-check-item",
             priority:20
         });
 
@@ -807,7 +800,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
 KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "ks-tree-icon",
-        CHECK_CLS = "tree-item-check",
+        CHECK_CLS = "tree-item-checked",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = " ks-inline-block";
     return BaseNodeRender.extend({
@@ -823,7 +816,7 @@ KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
             var self = this;
             var checkEl = self.get("checkEl");
             checkEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
-                .addClass(self.getCssClassWithPrefix(CHECK_CLS + "ed" + s));
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS + s));
         }
 
     }, {
@@ -836,9 +829,7 @@ KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
                 // 2 全部都选了
                 value:0
             }
-        },
-
-        CHECK_CLS:CHECK_CLS
+        }
     });
 }, {
     requires:['node', './basenodeRender']
@@ -847,12 +838,12 @@ KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, TreeMgr) {
-    var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /**
-     * KISSY Checked Tree.
      * @name CheckTree
      * @extends Tree.CheckNode
      * @class
+     * KISSY Checked Tree.
+     * xclass: 'check-tree'.
      * @memberOf Tree
      */
     var CheckTree = CheckNode.extend([Component.DelegateChildren, TreeMgr],
@@ -867,13 +858,20 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
                 return CheckTree.superclass.expandAll.apply(this, arguments);
             }
         }, {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Tree.CheckTree#
+             */
+            {
+                /**
+                 * Readonly. Render class.
+                 * @type function
+                 */
                 xrender:{
                     value:CheckTreeRender
                 }
             }
         }, {
-            xclass:CHECK_TREE_CLS,
+            xclass:'check-tree',
             priority:40
         });
     return CheckTree;
@@ -885,11 +883,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktreeRender", function (S, CheckNodeRender, TreeMgrRender) {
-    var CHECK_TREE_CLS = "tree-root-check";
-    return CheckNodeRender.extend([TreeMgrRender], {
-    }, {
-        CHECK_TREE_CLS:CHECK_TREE_CLS
-    });
+    return CheckNodeRender.extend([TreeMgrRender]);
 }, {
     requires:['./checknodeRender', './treemgrRender']
 });/**
@@ -908,10 +902,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treeRender", function (S, BaseNodeRender, TreeMgrRender) {
-    var TREE_CLS = "tree-root";
-    return BaseNodeRender.extend([TreeMgrRender], {}, {
-        TREE_CLS:TREE_CLS
-    });
+    return BaseNodeRender.extend([TreeMgrRender]);
 }, {
     requires:['./basenodeRender', './treemgrRender']
 });/**
@@ -934,7 +925,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
          * @type Boolean
          */
         showRootNode:{
-            view:true
+            view:1
         },
         /**
          * Current selected tree node.

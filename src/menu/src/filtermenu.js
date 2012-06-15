@@ -2,7 +2,7 @@
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     var HIT_CLS = "ks-menuitem-hit";
 
@@ -12,7 +12,19 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = Menu.extend({
+    /**
+     * @class
+     * Filter Menu for KISSY.
+     * xclass: 'filtermenu'.
+     * @extends Menu
+     * @memberOf Menu
+     * @name FilterMenu
+     */
+    var FilterMenu = Menu.extend(
+        /**
+         * @lends Menu.FilterMenu#
+         */
+        {
             bindUI:function () {
                 var self = this,
                     view = self.get("view"),
@@ -50,6 +62,10 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
                 this.filterItems(v);
             },
 
+            /**
+             * For override. Specify how to filter items.
+             * @param {String} str User input.
+             */
             filterItems:function (str) {
                 var self = this,
                     view = self.get("view"),
@@ -151,7 +167,7 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
             },
 
             /**
-             * 重置状态,用于重用
+             * Reset user input.
              */
             reset:function () {
                 var self = this,
@@ -170,18 +186,37 @@ KISSY.add("menu/filtermenu", function (S,  Menu, FilterMenuRender) {
 
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Menu.FilterMenu#
+             */
+            {
+                /**
+                 * Hit info string
+                 * @type String
+                 */
                 label:{
                     view:1
                 },
 
+                /**
+                 * Filter string
+                 * @type String
+                 */
                 filterStr:{
                 },
 
+                /**
+                 * user entered string list when allowMultiple.
+                 * @type String[]
+                 */
                 enteredItems:{
                     value:[]
                 },
 
+                /**
+                 * Whether to allow input multiple.
+                 * @type Boolean
+                 */
                 allowMultiple:{
                     value:false
                 },

@@ -103,7 +103,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    return Button.Toggle.extend({
+    return Button.extend({
 
         initializer:function () {
             var self = this;
@@ -183,6 +183,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         }
     }, {
         ATTRS:{
+            checkable:{
+                value:true
+            },
             mode:{
                 value:Editor.WYSIWYG_MODE
             }

@@ -5,14 +5,14 @@
 KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     /**
-     * Local dataSource for comboBox
+     * @name LocalDataSource
      * @memberOf ComboBox
+     * @extends Base
      * @class
-     * @param {Object} cfg config
-     * @param {Array} cfg.data array of static data for comboBox
-     * @param {Function} cfg.parse parse data
+     * Local dataSource for comboBox.
+     * xclass: 'combobox-LocalDataSource'.
      */
-    function LocalDataSource(cfg) {
+    function LocalDataSource() {
         LocalDataSource.superclass.constructor.apply(this, arguments);
     }
 
@@ -32,18 +32,35 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         return ret;
     }
 
-    LocalDataSource.ATTRS = {
+    LocalDataSource.ATTRS =
+    /**
+     * @lends ComboBox.LocalDataSource#
+     */
+    {
+        /**
+         * array of static data for comboBox
+         * @type Object[]
+         */
         data:{
             value:[]
         },
+        /**
+         * parse data function.
+         * Default: index of match.
+         * @type Function
+         */
         parse:{
             value:parser
         }
     };
 
-    S.extend(LocalDataSource, S.Base, {
+    S.extend(LocalDataSource, S.Base,
         /**
-         * Datasource interface. How to get data for comboBox
+         * @lends ComboBox.LocalDataSource#
+         */
+        {
+        /**
+         * Data source interface. How to get data for comboBox
          * @function
          * @name ComboBox.LocalDataSource#fetchData
          * @param {String} inputVal current active input's value

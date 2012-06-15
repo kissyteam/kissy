@@ -9,9 +9,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
     }
 
     /**
-     * KISSY Overlay Component
      * @class
-     * @namespace
+     * KISSY Overlay Component.
+     * xclass: 'overlay'.
      * @name Overlay
      * @extends Component.Controller
      * @extends Component.UIBase.ContentBox

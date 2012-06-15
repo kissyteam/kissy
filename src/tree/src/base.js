@@ -4,8 +4,6 @@
  */
 KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
 
-    var TREE_CLS = TreeRender.TREE_CLS;
-
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
      2. 继承 mixin 树管理功能
@@ -13,9 +11,10 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
      */
 
     /**
-     * KISSY Tree
      * @name Tree
      * @class
+     * KISSY Tree.
+     * xclass: 'tree'.
      * @extends Tree.Node
      */
     return BaseNode.extend([Component.DelegateChildren, TreeMgr],
@@ -36,7 +35,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
                 }
             }
         }, {
-            xclass:TREE_CLS,
+            xclass:'tree',
             priority:30
         });
 

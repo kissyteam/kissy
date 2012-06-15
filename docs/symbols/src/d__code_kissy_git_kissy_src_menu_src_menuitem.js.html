@@ -14,163 +14,164 @@
 <span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.all</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line8' class='line'>  8</span> 
 <span id='line9' class='line'>  9</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span id='line10' class='line'> 10</span>      * A menu item component which menu is consisted of.
-<span id='line11' class='line'> 11</span>      * @class
-<span id='line12' class='line'> 12</span>      * @name Item
-<span id='line13' class='line'> 13</span>      * @memberOf Menu
-<span id='line14' class='line'> 14</span>      * @extends Component.Controller
-<span id='line15' class='line'> 15</span>      */</span><span class="WHIT">
-<span id='line16' class='line'> 16</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Controller.extend</span><span class="PUNC">(</span><span class="WHIT">
-<span id='line17' class='line'> 17</span> </span><span class="WHIT">        </span><span class="COMM">/**
-<span id='line18' class='line'> 18</span>          * @lends Menu.Item#
-<span id='line19' class='line'> 19</span>          */</span><span class="WHIT">
-<span id='line20' class='line'> 20</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line21' class='line'> 21</span> 
-<span id='line22' class='line'> 22</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line23' class='line'> 23</span>              * Handle mouseenter event. Make parent menu to highlight itself.
-<span id='line24' class='line'> 24</span>              * Protected, should only be overridden by subclasses.
-<span id='line25' class='line'> 25</span>              * @param {Event.Object} e Mouseenter event object.
-<span id='line26' class='line'> 26</span>              * @protected
-<span id='line27' class='line'> 27</span>              * @override
-<span id='line28' class='line'> 28</span>              */</span><span class="WHIT">
-<span id='line29' class='line'> 29</span> </span><span class="WHIT">            </span><span class="NAME">handleMouseEnter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line30' class='line'> 30</span> </span><span class="WHIT">                </span><span class="COMM">// 父亲不允许自己处理</span><span class="WHIT">
-<span id='line31' class='line'> 31</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">MenuItem.superclass.handleMouseEnter.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line32' class='line'> 32</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line33' class='line'> 33</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line34' class='line'> 34</span> </span><span class="WHIT">                </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line35' class='line'> 35</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line36' class='line'> 36</span> 
-<span id='line37' class='line'> 37</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line38' class='line'> 38</span>              * Handle mouseleave event. Make parent menu to unhighlight itself.
-<span id='line39' class='line'> 39</span>              * Protected, should only be overridden by subclasses.
-<span id='line40' class='line'> 40</span>              * @param {Event.Object} e Mouseleave event object.
-<span id='line41' class='line'> 41</span>              * @protected
-<span id='line42' class='line'> 42</span>              * @override
-<span id='line43' class='line'> 43</span>              */</span><span class="WHIT">
-<span id='line44' class='line'> 44</span> </span><span class="WHIT">            </span><span class="NAME">handleMouseLeave</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line45' class='line'> 45</span> </span><span class="WHIT">                </span><span class="COMM">// 父亲不允许自己处理</span><span class="WHIT">
-<span id='line46' class='line'> 46</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">MenuItem.superclass.handleMouseLeave.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line47' class='line'> 47</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line48' class='line'> 48</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line49' class='line'> 49</span> </span><span class="WHIT">                </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line50' class='line'> 50</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line51' class='line'> 51</span> 
-<span id='line52' class='line'> 52</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line53' class='line'> 53</span>              * Perform default action when click on enter on this menuitem.
-<span id='line54' class='line'> 54</span>              * If selectable, then make it selected.
-<span id='line55' class='line'> 55</span>              * If checkable, then toggle it.
-<span id='line56' class='line'> 56</span>              * Finally fire click on its parent menu.
-<span id='line57' class='line'> 57</span>              * @protected
-<span id='line58' class='line'> 58</span>              * @override
-<span id='line59' class='line'> 59</span>              */</span><span class="WHIT">
-<span id='line60' class='line'> 60</span> </span><span class="WHIT">            </span><span class="NAME">performActionInternal</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line61' class='line'> 61</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line62' class='line'> 62</span> </span><span class="WHIT">                </span><span class="COMM">// 可选</span><span class="WHIT">
-<span id='line63' class='line'> 63</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"selectable"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line64' class='line'> 64</span> </span><span class="WHIT">                    </span><span class="NAME">self.set</span><span class="PUNC">(</span><span class="STRN">"selected"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line65' class='line'> 65</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line66' class='line'> 66</span> </span><span class="WHIT">                </span><span class="COMM">// 可选中，取消选中</span><span class="WHIT">
-<span id='line67' class='line'> 67</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"checkable"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line68' class='line'> 68</span> </span><span class="WHIT">                    </span><span class="NAME">self.set</span><span class="PUNC">(</span><span class="STRN">"checked"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"checked"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line69' class='line'> 69</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line70' class='line'> 70</span> </span><span class="WHIT">                </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"click"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line71' class='line'> 71</span> </span><span class="WHIT">                    </span><span class="NAME">target</span><span class="PUNC">:</span><span class="NAME">self</span><span class="WHIT">
-<span id='line72' class='line'> 72</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line73' class='line'> 73</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line74' class='line'> 74</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line75' class='line'> 75</span> 
-<span id='line76' class='line'> 76</span> </span><span class="WHIT">            </span><span class="NAME">_uiSetHighlighted</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line77' class='line'> 77</span> </span><span class="WHIT">                </span><span class="COMM">// 是否要滚动到当前菜单项(横向，纵向)</span><span class="WHIT">
-<span id='line78' class='line'> 78</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line79' class='line'> 79</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line80' class='line'> 80</span> </span><span class="WHIT">                    </span><span class="COMM">// 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）</span><span class="WHIT">
-<span id='line81' class='line'> 81</span> </span><span class="WHIT">                    </span><span class="COMM">// 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div</span><span class="WHIT">
-<span id='line82' class='line'> 82</span> </span><span class="WHIT">                        </span><span class="NAME">p</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">el.parent</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line83' class='line'> 83</span> </span><span class="WHIT">                            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">css</span><span class="PUNC">(</span><span class="STRN">"overflow"</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">"visible"</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line84' class='line'> 84</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">parent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line85' class='line'> 85</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">p</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line86' class='line'> 86</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line87' class='line'> 87</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line88' class='line'> 88</span> </span><span class="WHIT">                    </span><span class="NAME">el.scrollIntoView</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line89' class='line'> 89</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line90' class='line'> 90</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line91' class='line'> 91</span> 
-<span id='line92' class='line'> 92</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span id='line93' class='line'> 93</span>              * Check whether this menu item contains specified element.
-<span id='line94' class='line'> 94</span>              * @param {NodeList} element Element to be tested.
-<span id='line95' class='line'> 95</span>              */</span><span class="WHIT">
-<span id='line96' class='line'> 96</span> </span><span class="WHIT">            </span><span class="NAME">containsElement</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line97' class='line'> 97</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'view'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'view'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">containsElement</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line98' class='line'> 98</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line99' class='line'> 99</span> 
-<span id='line100' class='line'>100</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line101' class='line'>101</span> </span><span class="WHIT">            </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="COMM">/**
-<span id='line102' class='line'>102</span>              * @lends Menu.Item#
-<span id='line103' class='line'>103</span>              */</span><span class="WHIT">
-<span id='line104' class='line'>104</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line105' class='line'>105</span> 
-<span id='line106' class='line'>106</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line107' class='line'>107</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
-<span id='line108' class='line'>108</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line109' class='line'>109</span> 
-<span id='line110' class='line'>110</span> </span><span class="WHIT">                </span><span class="NAME">visibleMode</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line111' class='line'>111</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"display"</span><span class="WHIT">
-<span id='line112' class='line'>112</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line113' class='line'>113</span> 
-<span id='line114' class='line'>114</span> </span><span class="WHIT">                </span><span class="NAME">handleMouseEvents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line115' class='line'>115</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
-<span id='line116' class='line'>116</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line117' class='line'>117</span> 
-<span id='line118' class='line'>118</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line119' class='line'>119</span>                  * Whether the menu item is selectable or not.
-<span id='line120' class='line'>120</span>                  * Set to true for option.
-<span id='line121' class='line'>121</span>                  * @type Boolean
-<span id='line122' class='line'>122</span>                  */</span><span class="WHIT">
-<span id='line123' class='line'>123</span> </span><span class="WHIT">                </span><span class="NAME">selectable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line124' class='line'>124</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line125' class='line'>125</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line126' class='line'>126</span> 
-<span id='line127' class='line'>127</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line128' class='line'>128</span>                  * Whether the menu item is checkable or not.
-<span id='line129' class='line'>129</span>                  * Set to true for checkbox option.
-<span id='line130' class='line'>130</span>                  * @type Boolean
-<span id='line131' class='line'>131</span>                  */</span><span class="WHIT">
-<span id='line132' class='line'>132</span> </span><span class="WHIT">                </span><span class="NAME">checkable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line133' class='line'>133</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line134' class='line'>134</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line135' class='line'>135</span> 
-<span id='line136' class='line'>136</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line137' class='line'>137</span>                  * The value associated with the menu item.
-<span id='line138' class='line'>138</span>                  */</span><span class="WHIT">
-<span id='line139' class='line'>139</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line140' class='line'>140</span> 
-<span id='line141' class='line'>141</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line142' class='line'>142</span>                  * Whether the menu item is checked.
-<span id='line143' class='line'>143</span>                  * @type Boolean
-<span id='line144' class='line'>144</span>                  */</span><span class="WHIT">
-<span id='line145' class='line'>145</span> </span><span class="WHIT">                </span><span class="NAME">checked</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line146' class='line'>146</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line147' class='line'>147</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line148' class='line'>148</span> 
-<span id='line149' class='line'>149</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line150' class='line'>150</span>                  * Whether the menu item is selected.
-<span id='line151' class='line'>151</span>                  * @type Boolean
-<span id='line152' class='line'>152</span>                  */</span><span class="WHIT">
-<span id='line153' class='line'>153</span> </span><span class="WHIT">                </span><span class="NAME">selected</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line154' class='line'>154</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line155' class='line'>155</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line156' class='line'>156</span> 
-<span id='line157' class='line'>157</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line158' class='line'>158</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">MenuItemRender</span><span class="WHIT">
-<span id='line159' class='line'>159</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line160' class='line'>160</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line161' class='line'>161</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line162' class='line'>162</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">"menuitem"</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line163' class='line'>163</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
-<span id='line164' class='line'>164</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line165' class='line'>165</span> 
-<span id='line166' class='line'>166</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line167' class='line'>167</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line168' class='line'>168</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line169' class='line'>169</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line10' class='line'> 10</span>      * @class
+<span id='line11' class='line'> 11</span>      * A menu item component which menu is consisted of.
+<span id='line12' class='line'> 12</span>      * xclass: 'menuitem'.
+<span id='line13' class='line'> 13</span>      * @name Item
+<span id='line14' class='line'> 14</span>      * @memberOf Menu
+<span id='line15' class='line'> 15</span>      * @extends Component.Controller
+<span id='line16' class='line'> 16</span>      */</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Controller.extend</span><span class="PUNC">(</span><span class="WHIT">
+<span id='line18' class='line'> 18</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line19' class='line'> 19</span>          * @lends Menu.Item#
+<span id='line20' class='line'> 20</span>          */</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line22' class='line'> 22</span> 
+<span id='line23' class='line'> 23</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line24' class='line'> 24</span>              * Handle mouseenter event. Make parent menu to highlight itself.
+<span id='line25' class='line'> 25</span>              * Protected, should only be overridden by subclasses.
+<span id='line26' class='line'> 26</span>              * @param {Event.Object} e Mouseenter event object.
+<span id='line27' class='line'> 27</span>              * @protected
+<span id='line28' class='line'> 28</span>              * @override
+<span id='line29' class='line'> 29</span>              */</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">            </span><span class="NAME">handleMouseEnter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">                </span><span class="COMM">// 父亲不允许自己处理</span><span class="WHIT">
+<span id='line32' class='line'> 32</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">MenuItem.superclass.handleMouseEnter.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">                </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> 
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line39' class='line'> 39</span>              * Handle mouseleave event. Make parent menu to unhighlight itself.
+<span id='line40' class='line'> 40</span>              * Protected, should only be overridden by subclasses.
+<span id='line41' class='line'> 41</span>              * @param {Event.Object} e Mouseleave event object.
+<span id='line42' class='line'> 42</span>              * @protected
+<span id='line43' class='line'> 43</span>              * @override
+<span id='line44' class='line'> 44</span>              */</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">            </span><span class="NAME">handleMouseLeave</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">                </span><span class="COMM">// 父亲不允许自己处理</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">MenuItem.superclass.handleMouseLeave.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line50' class='line'> 50</span> </span><span class="WHIT">                </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">set</span><span class="PUNC">(</span><span class="STRN">"highlightedItem"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line51' class='line'> 51</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> 
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line54' class='line'> 54</span>              * Perform default action when click on enter on this menuitem.
+<span id='line55' class='line'> 55</span>              * If selectable, then make it selected.
+<span id='line56' class='line'> 56</span>              * If checkable, then toggle it.
+<span id='line57' class='line'> 57</span>              * Finally fire click on its parent menu.
+<span id='line58' class='line'> 58</span>              * @protected
+<span id='line59' class='line'> 59</span>              * @override
+<span id='line60' class='line'> 60</span>              */</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">            </span><span class="NAME">performActionInternal</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">                </span><span class="COMM">// 可选</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"selectable"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">                    </span><span class="NAME">self.set</span><span class="PUNC">(</span><span class="STRN">"selected"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">                </span><span class="COMM">// 可选中，取消选中</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"checkable"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">                    </span><span class="NAME">self.set</span><span class="PUNC">(</span><span class="STRN">"checked"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"checked"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="WHIT">                </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fire</span><span class="PUNC">(</span><span class="STRN">"click"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">                    </span><span class="NAME">target</span><span class="PUNC">:</span><span class="NAME">self</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> 
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">            </span><span class="NAME">_uiSetHighlighted</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">                </span><span class="COMM">// 是否要滚动到当前菜单项(横向，纵向)</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line81' class='line'> 81</span> </span><span class="WHIT">                    </span><span class="COMM">// 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）</span><span class="WHIT">
+<span id='line82' class='line'> 82</span> </span><span class="WHIT">                    </span><span class="COMM">// 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div</span><span class="WHIT">
+<span id='line83' class='line'> 83</span> </span><span class="WHIT">                        </span><span class="NAME">p</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">el.parent</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">                            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">css</span><span class="PUNC">(</span><span class="STRN">"overflow"</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">"visible"</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line85' class='line'> 85</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"parent"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">parent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line86' class='line'> 86</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">p</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line87' class='line'> 87</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line88' class='line'> 88</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line89' class='line'> 89</span> </span><span class="WHIT">                    </span><span class="NAME">el.scrollIntoView</span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line90' class='line'> 90</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line91' class='line'> 91</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> 
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line94' class='line'> 94</span>              * Check whether this menu item contains specified element.
+<span id='line95' class='line'> 95</span>              * @param {NodeList} element Element to be tested.
+<span id='line96' class='line'> 96</span>              */</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">            </span><span class="NAME">containsElement</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'view'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'view'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">containsElement</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line100' class='line'>100</span> 
+<span id='line101' class='line'>101</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line102' class='line'>102</span> </span><span class="WHIT">            </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="COMM">/**
+<span id='line103' class='line'>103</span>              * @lends Menu.Item#
+<span id='line104' class='line'>104</span>              */</span><span class="WHIT">
+<span id='line105' class='line'>105</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line106' class='line'>106</span> 
+<span id='line107' class='line'>107</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line108' class='line'>108</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line109' class='line'>109</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line110' class='line'>110</span> 
+<span id='line111' class='line'>111</span> </span><span class="WHIT">                </span><span class="NAME">visibleMode</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line112' class='line'>112</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"display"</span><span class="WHIT">
+<span id='line113' class='line'>113</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line114' class='line'>114</span> 
+<span id='line115' class='line'>115</span> </span><span class="WHIT">                </span><span class="NAME">handleMouseEvents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line116' class='line'>116</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line117' class='line'>117</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line118' class='line'>118</span> 
+<span id='line119' class='line'>119</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line120' class='line'>120</span>                  * Whether the menu item is selectable or not.
+<span id='line121' class='line'>121</span>                  * Set to true for option.
+<span id='line122' class='line'>122</span>                  * @type Boolean
+<span id='line123' class='line'>123</span>                  */</span><span class="WHIT">
+<span id='line124' class='line'>124</span> </span><span class="WHIT">                </span><span class="NAME">selectable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line125' class='line'>125</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line126' class='line'>126</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line127' class='line'>127</span> 
+<span id='line128' class='line'>128</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line129' class='line'>129</span>                  * Whether the menu item is checkable or not.
+<span id='line130' class='line'>130</span>                  * Set to true for checkbox option.
+<span id='line131' class='line'>131</span>                  * @type Boolean
+<span id='line132' class='line'>132</span>                  */</span><span class="WHIT">
+<span id='line133' class='line'>133</span> </span><span class="WHIT">                </span><span class="NAME">checkable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line134' class='line'>134</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line135' class='line'>135</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line136' class='line'>136</span> 
+<span id='line137' class='line'>137</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line138' class='line'>138</span>                  * The value associated with the menu item.
+<span id='line139' class='line'>139</span>                  */</span><span class="WHIT">
+<span id='line140' class='line'>140</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line141' class='line'>141</span> 
+<span id='line142' class='line'>142</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line143' class='line'>143</span>                  * Whether the menu item is checked.
+<span id='line144' class='line'>144</span>                  * @type Boolean
+<span id='line145' class='line'>145</span>                  */</span><span class="WHIT">
+<span id='line146' class='line'>146</span> </span><span class="WHIT">                </span><span class="NAME">checked</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line147' class='line'>147</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line148' class='line'>148</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line149' class='line'>149</span> 
+<span id='line150' class='line'>150</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line151' class='line'>151</span>                  * Whether the menu item is selected.
+<span id='line152' class='line'>152</span>                  * @type Boolean
+<span id='line153' class='line'>153</span>                  */</span><span class="WHIT">
+<span id='line154' class='line'>154</span> </span><span class="WHIT">                </span><span class="NAME">selected</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line155' class='line'>155</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line156' class='line'>156</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line157' class='line'>157</span> 
+<span id='line158' class='line'>158</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line159' class='line'>159</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">MenuItemRender</span><span class="WHIT">
+<span id='line160' class='line'>160</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line161' class='line'>161</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line162' class='line'>162</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line163' class='line'>163</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">"menuitem"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line164' class='line'>164</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line165' class='line'>165</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line166' class='line'>166</span> 
+<span id='line167' class='line'>167</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MenuItem</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line168' class='line'>168</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line169' class='line'>169</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./menuitemRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line170' class='line'>170</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

@@ -5,9 +5,10 @@
 KISSY.add("component/uibase/resize", function (S) {
 
     /**
+     * @name Resize
+     * @class
      * Resizable extension class.
      * Make component resizable
-     * @class
      * @memberOf Component.UIBase
      */
     function Resize() {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:25
+build time: Jun 15 17:19
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -83,9 +83,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
     }
 
     /**
-     * LazyLoad elements which are out of current viewPort.
-     * @constructor
      * @name DataLazyload
+     * @class
+     * LazyLoad elements which are out of current viewPort.
      * @extends Base
      */
     function DataLazyload(containers, config) {

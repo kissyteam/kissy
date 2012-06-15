@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="JsDoc Toolkit" />
+        
+        <title>Menu.FilterMenu</title>
+        <style>
+            /*************************************************************************************
+ * Reset
+ *************************************************************************************/
+
+/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
+th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+}
+
+/** 设置默认字体 **/
+body,
+button, input, select, textarea /* for ie */ {
+    font: 14px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
+code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* 统一等宽字体 */
+small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol { list-style: none; }
+
+/** 重置文本格式元素 **/
+a {color:#03c;text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+sup { vertical-align: text-top; } /* 重置，减少对行高的影响 */
+sub { vertical-align: text-bottom; }
+
+/** 重置表单元素 **/
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: 0; } /* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table { border-collapse: collapse; border-spacing: 0; }
+
+/*************************************************************************************
+ * Layout
+ *************************************************************************************/
+
+/* 居中 */
+#content{
+    margin:0 10px;
+}
+
+/** 布局基础样式 **/
+.col-main {
+    float: left;
+    width: 100%;
+    /* bug fix: 主栏没有内容时，在 Firefox 和 Chrome 等浏览器下，布局不对 */
+    min-height: 1px;
+}
+.col-sub, .col-extra {
+    float: left;
+    /*position: relative;  按需设置，仅在需要时添加 */
+}
+
+/** 清除浮动 **/
+.layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
+    content: '\20';
+    display: block;
+    height: 0;
+    clear: both;
+}
+.layout, .main-wrap, .col-sub, .col-extra {
+    *zoom: 1;
+}
+
+/** 两栏布局 **/
+.layout .main-wrap { margin-left: 280px; }
+.layout .col-sub { width: 260px; margin-left: -100%; }
+
+/*************************************************************************************
+ * JSDoc
+ * gray:444, blue:06f, green:0c9, red:930
+ *************************************************************************************/
+
+/* reset for jsDoc */
+body{color:#444;}
+a{color: #06f;}
+h1,h2,h3{margin-bottom:10px;padding:8px 0;font:18px tahoma, "Microsoft YaHei", sans-serif;;}
+h1{font-size:28px;}
+dl{margin-left:30px;}
+dt{margin-bottom:5px;font-weight:bold;}
+dd{margin-bottom:10px;padding-left:30px;font-size:12px;}
+hr{margin:10px 0;height:0;overflow:hidden;border:none;border-top:1px dotted #ccc;}
+
+#header{margin:0 10px;border-bottom: 1px solid #a4d3f2;}
+.col-sub{border: 1px solid #a4d3f2;border-top:none;background:#f2f8fa;}
+#footer{margin-top:10px;padding:10px 10px 30px 10px;text-align:center;color:#666;border-top:1px solid #ddd;}
+
+.box{margin-bottom:10px;}
+.box-hd h3{margin:0;font-size:18px;}
+.box-bd{padding-left:30px;}
+
+.col-sub .box{margin:0 10px 10px 10px;}
+
+.class-title{color:#0c9;}
+.summary-box{color:#666;font-size:12px;}
+.param-list .name{color:#362e2b;}
+.code{margin-top:10px;padding:6px 10px;border-left:3px solid #0c9;background:#edfae5;}
+.attr,
+.desc{color:#666;font-size:12px;}
+.name{color:#930;}
+
+.detail-list li{padding-bottom:5px;margin-bottom:10px;border-bottom:1px dotted #ccc;}
+.detail-list li li{padding-bottom:0;margin-bottom:0;border-bottom:none;}
+.detail-list .title{margin-bottom:10px;}
+.detail-list div.desc{margin-left:30px;}
+
+.detail-list li .view-source{display:none;_display:inline;}
+.detail-list li:hover .view-source{display:inline;font-size:12px;}
+
+.go-top{position:fixed;width:24px;height:24px;bottom:0;right:10px;line-height:24px;text-align:center;color:#fff;font-size:12px;font-weight:bold;background:#06f;
+    -moz-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+a.go-top:hover,
+a.go-top:active{text-decoration:none;}
+
+.navigation {
+    float:right;
+    margin-top:30px;
+}
+
+.navigation li {
+    float:left;
+    margin:0 5px;
+}
+
+#header {
+    overflow:hidden;
+    zoom:1;
+}
+
+.logo {
+    float:left;
+}
+
+        </style>
+    </head>
+
+    <body>
+        <div id="page">
+        
+            ﻿<div id="header">    
+    <h1 class="logo">API Documentation</h1>
+    <div class="navigation">
+        <ul>
+        <li><a href="http://docs.kissyui.com" target="_blank">Index</a></li>
+        <li><a href="http://docs.kissyui.com/docs/html/tutorials/index.html" target="_blank">Tutorials</a></li>
+        <li><a href="http://docs.kissyui.com/docs/html/api/index.html" target="_blank">API</a></li>
+        <li><a href="http://docs.kissyui.com/docs/html/demo/index.html" target="_blank">DEMO</a></li>
+        <li><a href="https://groups.google.com/group/kissy-ui" target="_blank">Google Group</a></li>
+        <li><a href="http://www.github.com/kissyteam" target="_blank">Source Code</a></li>
+        <li><a href="http://docs.kissyui.com/kissy/docs/" target="_blank">English API Docs</a></li>
+    </ul>
+    </div>
+</div>
+
+            <div id="content">
+                <div class="layout">
+                    <div class="col-main">
+                        <div class="main-wrap">
+                        
+                            <!-- class title START-->
+                            <h2 class="class-title">
+                                
+                                Menu.FilterMenu
+                            </h2>
+                            <!-- class title END-->
+                            
+                            <!-- summary START -->
+                            <div class="box summary-box">
+                                <div class="box-bd">    
+                                    
+                                    <p class="desc">Filter Menu for KISSY.xclass: 'filtermenu'.</p>
+                                    
+
+                                    
+                                    
+                                    
+                                    <p>parents：
+                                        <a href="../symbols/Menu.html">Menu</a>
+                                    </p>                                                
+                                    
+
+                                    
+                                    
+                                    
+                                    <p>defined in：
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_filtermenu.js.html">filtermenu.js</a></p>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                            <!-- summary END -->
+                            
+                            <!-- contructor START -->            
+                            
+                            <div class="box constructor-box">
+                                <div class="box-hd">
+                                    <h3>Class </h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list summary-list">
+                                        <li class="li">                                            
+                                            <b class="name"><a href="../symbols/Menu.FilterMenu.html#constructor">Menu.FilterMenu</a></b>
+                                            <span class="param">()</span>                                
+                                            
+                                            
+                                                                                        
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- constructor END -->
+                            
+                            <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Attributes</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#allowMultiple">allowMultiple</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether to allow input multiple.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#enteredItems">enteredItems</a></b>
+                                                <span class="type">{String[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">user entered string list when allowMultiple.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#filterStr">filterStr</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Filter string</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#label">label</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Hit info string</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        <li class="li">Fields borrowed from class <a href="../symbols/Menu.html">Menu</a>: <a href="../symbols/Menu.html#activeItem">activeItem</a>, <a href="../symbols/Menu.html#highlightedItem">highlightedItem</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a>, <a href="../symbols/Component.Controller.html#xclass">xclass</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#created">created</a>, <a href="../symbols/Component.UIBase.html#listeners">listeners</a>, <a href="../symbols/Component.UIBase.html#plugins">plugins</a>, <a href="../symbols/Component.UIBase.html#rendered">rendered</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#content">content</a>, <a href="../symbols/Component.UIBase.Box.html#el">el</a>, <a href="../symbols/Component.UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/Component.UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/Component.UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/Component.UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/Component.UIBase.Box.html#height">height</a>, <a href="../symbols/Component.UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/Component.UIBase.Box.html#visible">visible</a>, <a href="../symbols/Component.UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/Component.UIBase.Box.html#width">width</a></li>
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
+                            
+                            <!-- properties END -->
+                            
+                            <!-- methods START -->
+                            
+                                
+                                
+                                <div class="box methods-box">
+                                    <div class="box-hd">
+                                        <h3>Methods</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#filterItems">filterItems</a></b>
+                                                <span class="param">(str)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">For override.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.FilterMenu.html#reset">reset</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Reset user input.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Menu.html">Menu</a>: <a href="../symbols/Menu.html#containsElement">containsElement</a>, <a href="../symbols/Menu.html#handleKeyEventInternal">handleKeyEventInternal</a></li><li>Methods borrowed from class <a href="../symbols/Component.Container.html">Component.Container</a>: <a href="../symbols/Component.Container.html#decorateInternal">decorateInternal</a>, <a href="../symbols/Component.Container.html#getOwnerControl">getOwnerControl</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#bindUI">bindUI</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleBlur">handleBlur</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#performActionInternal">performActionInternal</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#render">render</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                
+                            
+                            <!-- methods END -->
+                            
+                            <!-- events START -->
+                            
+                                
+                                
+                            
+                            <!-- events END -->
+
+                            <!-- constructor details START-->
+                            
+                            <div class="detail-box">
+                                <a name="constructor"></a>
+                                <div class="box-hd">
+                                    <h3>Class Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        <li class="li">
+                                            <div class="title">
+                                                <b class="name">Menu.FilterMenu</b>
+                                                <span class="param">()</span>
+                                            </div>
+                                            
+                                            <div class="desc">Filter Menu for KISSY.xclass: 'filtermenu'.</div>
+                                            
+                                            <dl>                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+
+                                                
+
+                                                
+
+                                                
+
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- constructor details START-->
+
+                            <!-- properties details START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Attributes Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="allowMultiple"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">allowMultiple</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether to allow input multiple.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="enteredItems"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">enteredItems</b>
+                                                <span>{String[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    user entered string list when allowMultiple.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="filterStr"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">filterStr</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Filter string
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="label"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">label</b>
+                                                <span>{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Hit info string
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- properties detail END -->
+
+                            <!-- methods detail START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Methods Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name="filterItems"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">filterItems</b>
+                                                <span class="param">(str)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_filtermenu.js.html#line69">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                For override. Specify how to filter items.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">str</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">User input.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="reset"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">reset</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_filtermenu.js.html#line172">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Reset user input.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- methods detail END -->
+
+                            <!-- events detail START -->
+                            
+                            <!-- events detail START -->
+                            <div id="disqus_thread"></div>
+<script>
+    if(window.location.hostname.indexOf("kissyui.com")!=-1 ){
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'kissy-docs'; // required: replace example with your forum shortname
+    
+        // The following are highly recommended additional parameters. Remove the slashes in front to use.
+         //var disqus_identifier = '/anim';
+         //var disqus_url = window.location;
+    
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                        </div>
+                    </div>
+                    <div class="col-sub">
+                        <div class="box">
+    <div class="box-hd">
+        <h3>Classes</h3>
+    </div>
+    <div class="box-bd">
+        <ul class="list class-list">
+            
+            
+            <li><a href="../symbols/Anim.html">Anim</a></li>
+            
+            
+            <li><a href="../symbols/Anim.Easing.html">Anim.Easing</a></li>
+            
+            
+            <li><a href="../symbols/Attribute.html">Attribute</a></li>
+            
+            
+            <li><a href="../symbols/Base.html">Base</a></li>
+            
+            
+            <li><a href="../symbols/Button.html">Button</a></li>
+            
+            
+            <li><a href="../symbols/Button.Split.html">Button.Split</a></li>
+            
+            
+            <li><a href="../symbols/ComboBox.html">ComboBox</a></li>
+            
+            
+            <li><a href="../symbols/ComboBox.LocalDataSource.html">ComboBox.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/ComboBox.Menu.html">ComboBox.Menu</a></li>
+            
+            
+            <li><a href="../symbols/ComboBox.RemoteDataSource.html">ComboBox.RemoteDataSource</a></li>
+            
+            
+            <li><a href="../symbols/Component.html">Component</a></li>
+            
+            
+            <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
+            
+            
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
+            
+            
+            <li><a href="../symbols/Component.Manager.html">Component.Manager</a></li>
+            
+            
+            <li><a href="../symbols/Component.Render.html">Component.Render</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.html">Component.UIBase</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Align.html">Component.UIBase.Align</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Close.html">Component.UIBase.Close</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Constrain.html">Component.UIBase.Constrain</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.ContentBox.html">Component.UIBase.ContentBox</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Drag.html">Component.UIBase.Drag</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Loading.html">Component.UIBase.Loading</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Mask.html">Component.UIBase.Mask</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Position.html">Component.UIBase.Position</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.Resize.html">Component.UIBase.Resize</a></li>
+            
+            
+            <li><a href="../symbols/Component.UIBase.StdMod.html">Component.UIBase.StdMod</a></li>
+            
+            
+            <li><a href="../symbols/Cookie.html">Cookie</a></li>
+            
+            
+            <li><a href="../symbols/DataLazyload.html">DataLazyload</a></li>
+            
+            
+            <li><a href="../symbols/DD.html">DD</a></li>
+            
+            
+            <li><a href="../symbols/DD.Constrain.html">DD.Constrain</a></li>
+            
+            
+            <li><a href="../symbols/DD.DDM.html">DD.DDM</a></li>
+            
+            
+            <li><a href="../symbols/DD.Draggable.html">DD.Draggable</a></li>
+            
+            
+            <li><a href="../symbols/DD.DraggableDelegate.html">DD.DraggableDelegate</a></li>
+            
+            
+            <li><a href="../symbols/DD.Droppable.html">DD.Droppable</a></li>
+            
+            
+            <li><a href="../symbols/DD.DroppableDelegate.html">DD.DroppableDelegate</a></li>
+            
+            
+            <li><a href="../symbols/DD.Proxy.html">DD.Proxy</a></li>
+            
+            
+            <li><a href="../symbols/DD.Scroll.html">DD.Scroll</a></li>
+            
+            
+            <li><a href="../symbols/DOM.html">DOM</a></li>
+            
+            
+            <li><a href="../symbols/Editor.html">Editor</a></li>
+            
+            
+            <li><a href="../symbols/Editor.Range.html">Editor.Range</a></li>
+            
+            
+            <li><a href="../symbols/Editor.Utils.html">Editor.Utils</a></li>
+            
+            
+            <li><a href="../symbols/Editor.Walker.html">Editor.Walker</a></li>
+            
+            
+            <li><a href="../symbols/Event.html">Event</a></li>
+            
+            
+            <li><a href="../symbols/Event.Object.html">Event.Object</a></li>
+            
+            
+            <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
+            
+            
+            <li><a href="../symbols/IO.html">IO</a></li>
+            
+            
+            <li><a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.html">KISSY</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Package.html">KISSY.Loader.Package</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>
+            
+            
+            <li><a href="../symbols/Menu.html">Menu</a></li>
+            
+            
+            <li><a href="../symbols/Menu.FilterMenu.html">Menu.FilterMenu</a></li>
+            
+            
+            <li><a href="../symbols/Menu.Item.html">Menu.Item</a></li>
+            
+            
+            <li><a href="../symbols/Menu.PopupMenu.html">Menu.PopupMenu</a></li>
+            
+            
+            <li><a href="../symbols/Menu.Separator.html">Menu.Separator</a></li>
+            
+            
+            <li><a href="../symbols/MenuButton.html">MenuButton</a></li>
+            
+            
+            <li><a href="../symbols/MenuButton.Option.html">MenuButton.Option</a></li>
+            
+            
+            <li><a href="../symbols/MenuButton.Select.html">MenuButton.Select</a></li>
+            
+            
+            <li><a href="../symbols/MVC.html">MVC</a></li>
+            
+            
+            <li><a href="../symbols/MVC.Collection.html">MVC.Collection</a></li>
+            
+            
+            <li><a href="../symbols/MVC.Model.html">MVC.Model</a></li>
+            
+            
+            <li><a href="../symbols/MVC.Router.html">MVC.Router</a></li>
+            
+            
+            <li><a href="../symbols/MVC.View.html">MVC.View</a></li>
+            
+            
+            <li><a href="../symbols/NodeList.html">NodeList</a></li>
+            
+            
+            <li><a href="../symbols/Overlay.html">Overlay</a></li>
+            
+            
+            <li><a href="../symbols/Overlay.Dialog.html">Overlay.Dialog</a></li>
+            
+            
+            <li><a href="../symbols/Overlay.Popup.html">Overlay.Popup</a></li>
+            
+            
+            <li><a href="../symbols/Resizable.html">Resizable</a></li>
+            
+            
+            <li><a href="../symbols/Tree.html">Tree</a></li>
+            
+            
+            <li><a href="../symbols/Tree.CheckNode.html">Tree.CheckNode</a></li>
+            
+            
+            <li><a href="../symbols/Tree.CheckTree.html">Tree.CheckTree</a></li>
+            
+            
+            <li><a href="../symbols/Tree.Node.html">Tree.Node</a></li>
+            
+            
+            <li><a href="../symbols/Waterfall.html">Waterfall</a></li>
+            
+            
+            <li><a href="../symbols/Waterfall.Loader.html">Waterfall.Loader</a></li>
+            
+        </ul>
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div id="footer">
+    <div>
+        Copyright 2010-2012 , <a href="http://docs.kissyui.com" target="_blank">kissyteam</a>
+    </div>
+</div>
+<a class="go-top" href="#page">Top</a>
+        </div>
+    </body>
+</html>

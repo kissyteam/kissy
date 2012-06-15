@@ -9,12 +9,12 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
         window = S.Env.host;
 
     /**
-     * DropDown menu for comboBox input.
-     * xclass: 'combobox-menu'.
      * @name Menu
      * @memberOf ComboBox
      * @extends Menu.PopupMenu
      * @class
+     * DropDown menu for comboBox input.
+     * xclass: 'combobox-menu'.
      */
     ComboBoxMenu = Menu.PopupMenu.extend(
         /**

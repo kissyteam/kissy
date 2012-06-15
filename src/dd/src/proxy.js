@@ -8,11 +8,12 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
         MARKER = S.guid("__dd_proxy");
 
     /**
-     * provide abilities for draggable tp create a proxy drag node,
-     * instead of dragging the original node.
+     * @name Proxy
      * @memberOf DD
      * @extends Base
      * @class
+     * provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
      */
     function Proxy() {
         var self = this;

@@ -205,9 +205,10 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
+     * @name Align
+     * @class
      * Align extension class.
      * Align component with specified element.
-     * @class
      * @memberOf Component.UIBase
      */
     function Align() {

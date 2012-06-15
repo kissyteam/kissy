@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
     }
 
     S.augment(sourceArea, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{

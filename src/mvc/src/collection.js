@@ -19,8 +19,9 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     }
 
     /**
-     * Collection. A list of model.
+     * @name Collection
      * @class
+     * Collection. A list of model.
      * @memberOf MVC
      * @extends Base
      */

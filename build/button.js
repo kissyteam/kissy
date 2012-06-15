@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 13 00:25
+build time: Jun 15 17:19
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -14,6 +14,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
      * @name Button
      * @constructor
      * @extends Component.Controller
+     * @class
+     * KISSY Button.
      */
     var Button = Component.Controller.extend(
         /**@lends Button.prototype */
@@ -37,8 +39,18 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
             performActionInternal:function () {
                 var self = this;
+                if (self.get("checkable")) {
+                    self.set("checked", !self.get("checked"));
+                }
                 // button 的默认行为就是触发 click
                 self.fire("click");
+            },
+
+            /**
+             * render button to document.
+             */
+            render:function () {
+                Button.superclass.render.apply(this, arguments);
             }
         }, {
             ATTRS:/**@lends Button.prototype */
@@ -52,22 +64,40 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                  * @type String
                  */
                 describedby:{
-                    view:true
+                    view:1
                 },
                 /**
                  * Tooltip for button.
                  * @type String
                  */
                 tooltip:{
-                    view:true
+                    view:1
                 },
+
+                /**
+                 * Whether button can be checkable(toggle).
+                 * Default: false.
+                 * @type Boolean
+                 */
+                checkable:{
+                },
+
+                /**
+                 * Whether button is checked(toggle).
+                 * Default: false.
+                 * @type Boolean
+                 */
+                checked:{
+                    view:1
+                },
+
                 /**
                  * Add collapse-right/left css class to root element.
                  * enum { "left","right" }
                  * @type String
                  */
                 collapseSide:{
-                    view:true
+                    view:1
                 },
 
                 xrender:{
@@ -87,17 +117,15 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Button, Render, Split, Toggle) {
+KISSY.add("button", function (S, Button, Render, Split) {
     Button.Render = Render;
     Button.Split = Split;
-    Button.Toggle = Toggle;
     return Button;
 }, {
     requires:[
         'button/base',
         'button/buttonRender',
-        'button/split',
-        'button/toggle'
+        'button/split'
     ]
 });/**
  * @fileOverview abstract view for button
@@ -111,6 +139,12 @@ KISSY.add("button/buttonRender", function (S, Component) {
             this.get("el")
                 .attr("role", "button")
                 .addClass("ks-inline-block");
+        },
+        _uiSetChecked:function (v) {
+            var self = this,
+                el = self.get("el"),
+                cls = self.getComponentCssClassWithState("-checked");
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
         _uiSetTooltip:function (title) {
             this.get("el").attr("title", title);
@@ -132,6 +166,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         ATTRS:{
             describedby:{},
             tooltip:{},
+            checked:{},
             collapseSide:{}
         }
     });
@@ -247,55 +282,4 @@ KISSY.add("button/split", function (S) {
 
 }, {
     requires:['base']
-});/**
- * @fileOverview ToggleButton for KISSY
- * @author yiminghe@gmail.com
- */
-KISSY.add('button/toggle', function (S, Button, ToggleRender) {
-
-    var ToggleButton = Button.extend({
-        performActionInternal:function () {
-            var self = this;
-            self.set("checked", !self.get("checked"));
-            ToggleButton.superclass.performActionInternal.apply(self, arguments);
-        }
-    }, {
-        ATTRS:{
-            checked:{
-                value:false,
-                view:true
-            },
-            xrender:{
-                value:ToggleRender
-            }
-        }
-    }, {
-        xclass:'toggle-button',
-        priority:30
-    });
-
-    return ToggleButton;
-
-}, {
-    requires:['./base', './toggleRender']
-});/**
- * @fileOverview Render for ToggleButton
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/toggleRender", function (S, ButtonRender) {
-
-    return ButtonRender.extend({
-        _uiSetChecked:function (v) {
-            var self = this,
-                cls = self.getComponentCssClassWithState("-checked");
-            self.get("el")[v ? 'addClass' : 'removeClass'](cls);
-        }
-    }, {
-        ATTRS:{
-            checked:{}
-        }
-    });
-
-}, {
-    requires:[ './buttonRender']
 });
