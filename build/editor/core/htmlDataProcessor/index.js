@@ -1,6 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
+build time: Jun 18 22:02
+*/
+/*
+Copyright 2012, KISSY UI Library v1.30dev
+MIT Licensed
 build time: Jun 18 17:43
 */
 /*

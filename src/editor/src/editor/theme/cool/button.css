@@ -36,7 +36,7 @@ LoVe F HAte
     border-radius: 2px;
 }
 
-.ks-editor-tools .ks-editor-toggle-button-checked {
+.ks-editor-tools .ks-editor-button-checked {
     border-color: #729BD1;
     background-color: #DDE1EB !important;
 }
@@ -70,7 +70,7 @@ LoVe F HAte
 /**
 hover
 **/
-.ks-editor-tools .ks-editor-button-hover.ks-editor-toggle-button-checked {
+.ks-editor-tools .ks-editor-button-hover.ks-editor-button-checked {
     border-color: #a1badf;
 }
 
