@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
     var SubMenuRender,
-        CONTENT_TMPL = '<span class="ks-submenu-content"><' + '/span>',
+        CONTENT_TMPL = '<span class="ks-menuitem-content"><' + '/span>',
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
@@ -18,7 +18,7 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ATTRS:{
             arrowEl:{},
             contentElCls:{
-                value:"ks-submenu-content"
+                value:"ks-menuitem-content"
             },
             contentEl:{
                 valueFn:function () {

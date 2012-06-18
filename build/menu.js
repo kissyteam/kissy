@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 18:14
+build time: Jun 18 20:22
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -350,9 +350,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
 
                 var children = self.get("children"),
-                    strExp = str && new RegExp(regExpEscape(str), "ig"),
-                // 匹配项样式类
-                    hit = HIT_CLS;
+                    strExp = str && new RegExp(regExpEscape(str), "ig");
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -370,7 +368,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + hit + "'>" + m + "<" + "/span>";
+                                return "<span class='" + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -1413,7 +1411,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
  */
 KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
     var SubMenuRender,
-        CONTENT_TMPL = '<span class="ks-submenu-content"><' + '/span>',
+        CONTENT_TMPL = '<span class="ks-menuitem-content"><' + '/span>',
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
@@ -1427,7 +1425,7 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ATTRS:{
             arrowEl:{},
             contentElCls:{
-                value:"ks-submenu-content"
+                value:"ks-menuitem-content"
             },
             contentEl:{
                 valueFn:function () {

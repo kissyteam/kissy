@@ -128,9 +128,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
 
                 var children = self.get("children"),
-                    strExp = str && new RegExp(regExpEscape(str), "ig"),
-                // 匹配项样式类
-                    hit = HIT_CLS;
+                    strExp = str && new RegExp(regExpEscape(str), "ig");
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -148,7 +146,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + hit + "'>" + m + "<" + "/span>";
+                                return "<span class='" + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
