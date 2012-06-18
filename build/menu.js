@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 18:14
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -837,6 +837,10 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         HTML_PARSER:{
             selectable:function (el) {
                 var cls = this.getCssClassWithPrefix("menuitem-selectable");
+                return el.hasClass(cls);
+            },
+            checkable:function (el) {
+                var cls = this.getCssClassWithPrefix("menuitem-checkable");
                 return el.hasClass(cls);
             }
         }

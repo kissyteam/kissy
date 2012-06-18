@@ -68,6 +68,10 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             selectable:function (el) {
                 var cls = this.getCssClassWithPrefix("menuitem-selectable");
                 return el.hasClass(cls);
+            },
+            checkable:function (el) {
+                var cls = this.getCssClassWithPrefix("menuitem-checkable");
+                return el.hasClass(cls);
             }
         }
     });
