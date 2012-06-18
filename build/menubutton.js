@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 17:14
+build time: Jun 18 18:57
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -50,6 +50,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         // 保证显示前已经 bind 好 menu 事件
         self.bindMenu();
         if (menu && !menu.get("visible")) {
+            // 先 render，监听 width 变化事件
+            menu.render();
             // 根据 el 自动调整大小
             if (self.get("matchElWidth")) {
                 menu.set("width", el.innerWidth());
@@ -81,16 +83,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
-
-            /**
-             * Get menu from attribute consider xclass.
-             * @param {Boolean} [initByCallFunction] If attribute 's value is a function, whether to call this function to get its returned value.
-             * @return {Menu} Menu instance or null.
-             */
-            _getMenu:function (initByCallFunction) {
-                return getMenu(this, initByCallFunction);
-            },
-
             _uiSetCollapsed:function (v) {
                 if (v) {
                     hideMenu(this);
@@ -370,7 +362,6 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                 '"ks-menu-button-dropdown-inner">' +
                 '<' + '/div>' +
                 '<' + '/div>',
-        CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
     return Button.Render.extend({
@@ -464,6 +455,14 @@ KISSY.add("menubutton/option", function (S, Menu) {
                  */
                 selectable:{
                     value:true
+                },
+
+                /**
+                 * String will be used as select 's content if selected.
+                 * @type String
+                 */
+                textContent:{
+
                 }
             }
         }, {

@@ -14,7 +14,6 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                 '"ks-menu-button-dropdown-inner">' +
                 '<' + '/div>' +
                 '<' + '/div>',
-        CAPTION_CLS = "ks-menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
     return Button.Render.extend({
