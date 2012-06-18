@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 17:43
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.

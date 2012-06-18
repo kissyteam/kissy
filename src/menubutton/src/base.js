@@ -78,11 +78,11 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         {
 
             /**
-             * Get menu from attribute consider function type.
+             * Get menu from attribute consider xclass.
              * @param {Boolean} [initByCallFunction] If attribute 's value is a function, whether to call this function to get its returned value.
              * @return {Menu} Menu instance or null.
              */
-            getMenu:function (initByCallFunction) {
+            _getMenu:function (initByCallFunction) {
                 return getMenu(this, initByCallFunction);
             },
 
@@ -234,8 +234,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param [destroy] {Boolean} Whether destroy removed menu items.
              */
             removeItems:function (destroy) {
-                var menu = getMenu(this);
-                menu && menu.removeChildren(destroy);
+                var menu = this.get("menu");
+                if (menu) {
+                    if (menu.removeChildren) {
+                        menu.removeChildren(destroy);
+                    } else if (menu.children) {
+                        menu.children = [];
+                    }
+                }
             },
 
             /**

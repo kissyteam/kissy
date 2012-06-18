@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:19
+build time: Jun 18 16:56
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -50,7 +50,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * render button to document.
              */
             render:function () {
-                Button.superclass.render.apply(this, arguments);
+                return Button.superclass.render.apply(this, arguments);
             }
         }, {
             ATTRS:/**@lends Button.prototype */
@@ -275,6 +275,7 @@ KISSY.add("button/split", function (S) {
                 if (eventType && eventHandler) {
                     second.on(eventType, eventHandler, self);
                 }
+                return self;
             }
         });
 

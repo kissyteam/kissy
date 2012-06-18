@@ -4,10 +4,74 @@
  */
 KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
 
-    function getMenuChildren(self) {
-        // 需要初始化 menu
-        var m = self.getMenu(1).render().hide();
-        return m && m.get("children") || [];
+    function getSelectedItem(self) {
+        var menu = self.get("menu"),
+            cs = menu.children || menu.get && menu.get("children") || [],
+            value = self.get("value"),
+            c,
+            i;
+        for (i = 0; i < cs.length; i++) {
+            c = cs[i];
+            if (getItemValue(c) == value) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    // c : Option
+    // c.get("value")
+    // c: Object
+    // c.value
+    function getItemValue(c) {
+        var v;
+        if (c) {
+            if (c.get) {
+                if ((v = c.get("value")) === undefined) {
+                    v = c.get("textContent") || c.get("content");
+                }
+
+            } else {
+                if ((v = c.value) === undefined) {
+                    v = c.textContent || c.content;
+                }
+            }
+        }
+        return v;
+    }
+
+    function deSelectAllExcept(self) {
+        var menu = self.get("menu"),
+            value = self.get("value"),
+            cs = menu && menu.get && menu.get("children");
+        S.each(cs, function (c) {
+            if (c && c.set) {
+                c.set("selected", getItemValue(c) == value)
+            }
+        });
+    }
+
+    /**
+     *  different from menubutton by highlighting the currently selected option
+     *  on open menu.
+     */
+    function _handleMenuShow() {
+        var self = this,
+            selectedItem = getSelectedItem(self),
+            m = self.get("menu");
+        m.set("highlightedItem", selectedItem || m.getChildAt(0));
+        // 初始化选中
+        if (selectedItem) {
+            selectedItem.set("selected", true);
+        }
+    }
+
+    function _updateCaption(self) {
+        var item = getSelectedItem(self),
+            textContent = item && ( item.textContent || item.get && item.get("textContent")),
+            content = item && (item.content || item.get && item.get('content'));
+        // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
+        self.set("content", textContent || content || self.get("defaultCaption"));
     }
 
     /**
@@ -30,26 +94,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * @protected
              */
             bindMenu:function () {
-                var self = this,
-                    menu = self.getMenu();
+                var self = this;
                 Select.superclass.bindMenu.call(self);
-                if (menu) {
-                    menu.on("show", self._handleMenuShow, self);
-                }
-            },
-            /**
-             *  different from menubutton by highlighting the currently selected option
-             *  on open menu.
-             */
-            _handleMenuShow:function () {
-                var self = this, m = self.get("menu");
-                m.set("highlightedItem", self.get("selectedItem") || m.getChildAt(0));
-            },
-
-            _updateCaption:function () {
-                var self = this,
-                    item = self.get("selectedItem");
-                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
+                self.get("menu").on("show", _handleMenuShow, self);
             },
 
             /**
@@ -63,8 +110,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             handleMenuClick:function (e) {
                 var self = this,
                     target = e.target,
-                    prevTarget = self.get("selectedItem");
-                self.set("selectedItem", target);
+                    prevTarget = getSelectedItem(self);
+                self.set("value", getItemValue(target));
                 self.set("collapsed", true);
                 self.fire("click", {
                     target:target,
@@ -79,7 +126,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             removeItems:function () {
                 var self = this;
                 Select.superclass.removeItems.apply(self, arguments);
-                self.set("selectedItem", null);
+                self.set("value", null);
             },
 
             /**
@@ -90,20 +137,19 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             removeItem:function (c) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
-                if (c == self.get("selectedItem")) {
-                    self.set("selectedItem", null);
+                if (c.get("value") == self.get("value")) {
+                    self.set("value", null);
                 }
             },
 
-            _uiSetSelectedItem:function (v, ev) {
-                if (ev && ev.prevVal) {
-                    ev.prevVal.set("selected", false);
-                }
-                this._updateCaption();
+            _uiSetValue:function () {
+                var self = this;
+                deSelectAllExcept(self);
+                _updateCaption(self);
             },
 
             _uiSetDefaultCaption:function () {
-                this._updateCaption();
+                _updateCaption(this);
             }
         },
         {
@@ -112,57 +158,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              */
             {
 
-                // 也是 selectedItem 的一个视图
+                /**
+                 * Get current select 's value.
+                 */
                 value:{
-                    getter:function () {
-                        var selectedItem = this.get("selectedItem");
-                        return selectedItem && selectedItem.get("value");
-                    },
-                    setter:function (v) {
-                        var self = this;
-                        if (v != null) {
-                            var children = getMenuChildren(self);
-                            for (var i = 0; i < children.length; i++) {
-                                var item = children[i];
-                                // item maybe a {xclass}
-                                if (item.get && item.get("value") == v) {
-                                    self.set("selectedItem", item);
-                                    return;
-                                }
-                            }
-                        }
-                        self.set("selectedItem", null);
-                        return null;
-                    }
-                },
-
-                /**
-                 * Selected option of current select component.
-                 * @type MenuButton.Option
-                 */
-                selectedItem:{
-                },
-
-                // 只是 selectedItem 的一个视图，无状态
-                /**
-                 * SelectedIndex of current select component.
-                 * @type Number
-                 */
-                selectedIndex:{
-                    setter:function (index) {
-                        var self = this,
-                            children = getMenuChildren(self);
-                        if (index < 0 || index >= children.length) {
-                            // 和原生保持一致
-                            return -1;
-                        }
-                        self.set("selectedItem", children[index]);
-                    },
-
-                    getter:function () {
-                        return S.indexOf(this.get("selectedItem"),
-                            getMenuChildren(this));
-                    }
                 },
 
                 /**
@@ -187,6 +186,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 var name,
                     allItems = [],
+                    select,
                     selectedItem = null,
                     curValue = element.val(),
                     options = element.all("option");
@@ -216,24 +216,20 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 delete cfg.menuCfg;
 
-                var select = new Select(S.mix(cfg, selectedItem));
-
-                select.render();
+                select = new Select(S.mix(cfg, selectedItem)).render();
 
                 if (name = element.attr("name")) {
                     var input = new Node("<input" +
                         " type='hidden'" +
                         " name='" + name
-                        + "' value='" + curValue + "'>").insertBefore(element, undefined);
+                        + "' value='" + curValue + "'>")
+                        .insertBefore(element, undefined);
 
-                    select.on("afterSelectedItemChange", function (e) {
-                        if (e.newVal) {
-                            input.val(e.newVal.get("value"));
-                        } else {
-                            input.val("");
-                        }
+                    select.on("afterValueChange", function (e) {
+                        input.val(e.newVal || "");
                     });
                 }
+
                 element.remove();
                 return select;
             }

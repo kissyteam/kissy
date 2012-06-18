@@ -1,8 +1,3 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
-MIT Licensed
-build time: Jun 18 14:51
-*/
 /*
 * timestap:201206140953
 */
@@ -909,9 +904,6 @@ pre code {
   -o-transition: background-position 0.1s linear;
   transition: background-position 0.1s linear;
 }
-.ks-menu-button-caption {
-  padding-right: 5px;
-}
 .ks-button:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
@@ -1428,6 +1420,11 @@ input[type="submit"].ks-button.ks-button-mini {
   color: #ffffff;
   text-decoration: none;
   background-color: #0088cc;
+}
+.ks-menu-button-caption {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
 }
 .ks-submenu {
   position: relative;
@@ -4076,6 +4073,10 @@ a.thumbnail:hover {
 .ks-grid-header-row td {
   padding: 0;
   border-bottom-width: 0;
+}
+.ks-grid-table .ks-grid-row-selected .ks-grid-cell,
+.ks-grid-table .ks-grid-row-selected .ks-grid-cell-empty {
+  background-color: #e6f2f8;
 }
 .ks-grid .ks-paggingbar {
   float: right;

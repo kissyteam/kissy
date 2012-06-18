@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 17:43
 */
 /**
  * Set up editor constructor
@@ -11881,7 +11881,7 @@ KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
     function FontFamilyPlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(FontFamilyPlugin, {
@@ -11891,9 +11891,10 @@ this.config=config||{};
 
             var fontFamilies = this.config;
 
-            fontFamilies = fontFamilies || {};
+            var menu = {};
 
-            S.mix(fontFamilies, {
+
+            S.mix(menu, {
                 children:[
                     //ie 不认识中文？？？
                     {
@@ -11946,9 +11947,9 @@ this.config=config||{};
                     }
                 ],
                 width:"130px"
-            }, false);
+            });
 
-            S.each(fontFamilies.children, function (item) {
+            S.each(menu.children, function (item) {
                 var attrs = item.elAttrs || {},
                     value = item.value;
                 attrs.style = attrs.style || "";
@@ -11956,16 +11957,14 @@ this.config=config||{};
                 item.elAttrs = attrs;
             });
 
-            editor.addSelect("fontFamily", {
+            fontFamilies.menu = S.mix(menu, fontFamilies.menu);
+
+            editor.addSelect("fontFamily", S.mix({
                 cmdType:"fontFamily",
                 defaultCaption:"字体",
                 width:130,
-                mode:Editor.WYSIWYG_MODE,
-                menu:{
-                    width:fontFamilies.width,
-                    children:fontFamilies.children
-                }
-            }, ui.Select);
+                mode:Editor.WYSIWYG_MODE
+            }, fontFamilies), ui.Select);
         }
     });
 
@@ -12008,7 +12007,7 @@ KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
     function FontSizePlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(FontSizePlugin, {
@@ -12028,30 +12027,23 @@ this.config=config||{};
                 return v;
             }
 
-            var fontSizes = this.config;
+            var fontSizeConfig = this.config;
 
-            fontSizes = fontSizes || {};
-
-            S.mix(fontSizes, {
+            fontSizeConfig.menu = S.mix({
                 children:wrapFont([
                     "8px", "10px", "12px",
                     "14px", "18px", "24px",
                     "36px", "48px", "60px",
                     "72px", "84px", "96px"
-                ]),
-                width:"55px"
-            }, false);
+                ])
+            }, fontSizeConfig.menu);
 
-            editor.addSelect("fontSize", {
+            editor.addSelect("fontSize", S.mix({
                 cmdType:"fontSize",
                 defaultCaption:"大小",
-                width:"55px",
-                mode:Editor.WYSIWYG_MODE,
-                menu:{
-                    width:fontSizes.width,
-                    children:fontSizes.children
-                }
-            }, ui.Select);
+                width:"70px",
+                mode:Editor.WYSIWYG_MODE
+            }, fontSizeConfig), ui.Select);
         }
     });
 
@@ -12375,7 +12367,6 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 defaultCaption:"标题",
                 width:"120px",
                 menu:{
-                    width:"120px",
                     children:FORMAT_SELECTION_ITEMS
                 },
                 mode:Editor.WYSIWYG_MODE,

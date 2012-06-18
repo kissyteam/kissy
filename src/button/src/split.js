@@ -101,6 +101,7 @@ KISSY.add("button/split", function (S) {
                 if (eventType && eventHandler) {
                     second.on(eventType, eventHandler, self);
                 }
+                return self;
             }
         });
 

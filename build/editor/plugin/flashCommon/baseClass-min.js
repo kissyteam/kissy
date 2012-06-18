@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 17:43
 */
 KISSY.add("editor/plugin/flashCommon/baseClass",function(e,i,k,l,f,g){function a(){a.superclass.constructor.apply(this,arguments);this._init()}var j=e.Node;a.ATTRS={cls:{},type:{},label:{value:"在新窗口查看"},bubbleId:{},contextMenuId:{},contextMenuHandlers:{}};e.extend(a,e.Base,{_init:function(){var b=this,d=b.get("cls"),c=b.get("editor"),a=[],f=b.get("bubbleId"),g=b.get("contextMenuId"),h=b.get("contextMenuHandlers");e.each(h,function(b,c){a.push({content:c})});c.addContextMenu(g,"."+d,{width:"120px",
 children:a,listeners:{click:function(b){b=b.target.get("content");h[b]&&h[b].call(this)}}});c.addBubble(f,function(b){return b.hasClass(d,void 0)&&b},{listeners:{afterRenderUI:function(){var d=this,a=d.get("contentEl");a.html(e.substitute(' <a class="ks-editor-bubble-url" target="_blank" href="#">{label}</a>   |    <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |    <span class="ks-editor-bubble-link ks-editor-bubble-remove">删除</span>',{label:b.get("label")}));var f=a.one(".ks-editor-bubble-url"),

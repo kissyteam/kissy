@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
     function FontSizePlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(FontSizePlugin, {
@@ -25,30 +25,23 @@ this.config=config||{};
                 return v;
             }
 
-            var fontSizes = this.config;
+            var fontSizeConfig = this.config;
 
-            fontSizes = fontSizes || {};
-
-            S.mix(fontSizes, {
+            fontSizeConfig.menu = S.mix({
                 children:wrapFont([
                     "8px", "10px", "12px",
                     "14px", "18px", "24px",
                     "36px", "48px", "60px",
                     "72px", "84px", "96px"
-                ]),
-                width:"55px"
-            }, false);
+                ])
+            }, fontSizeConfig.menu);
 
-            editor.addSelect("fontSize", {
+            editor.addSelect("fontSize", S.mix({
                 cmdType:"fontSize",
                 defaultCaption:"大小",
-                width:"55px",
-                mode:Editor.WYSIWYG_MODE,
-                menu:{
-                    width:fontSizes.width,
-                    children:fontSizes.children
-                }
-            }, ui.Select);
+                width:"70px",
+                mode:Editor.WYSIWYG_MODE
+            }, fontSizeConfig), ui.Select);
         }
     });
 

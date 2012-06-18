@@ -48,7 +48,6 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 defaultCaption:"标题",
                 width:"120px",
                 menu:{
-                    width:"120px",
                     children:FORMAT_SELECTION_ITEMS
                 },
                 mode:Editor.WYSIWYG_MODE,

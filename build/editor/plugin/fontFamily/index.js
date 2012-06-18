@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 17:43
 */
 /**
  * font formatting for kissy editor
@@ -10,7 +10,7 @@ build time: Jun 15 17:22
 KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
 
     function FontFamilyPlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(FontFamilyPlugin, {
@@ -20,9 +20,10 @@ this.config=config||{};
 
             var fontFamilies = this.config;
 
-            fontFamilies = fontFamilies || {};
+            var menu = {};
 
-            S.mix(fontFamilies, {
+
+            S.mix(menu, {
                 children:[
                     //ie 不认识中文？？？
                     {
@@ -75,9 +76,9 @@ this.config=config||{};
                     }
                 ],
                 width:"130px"
-            }, false);
+            });
 
-            S.each(fontFamilies.children, function (item) {
+            S.each(menu.children, function (item) {
                 var attrs = item.elAttrs || {},
                     value = item.value;
                 attrs.style = attrs.style || "";
@@ -85,16 +86,14 @@ this.config=config||{};
                 item.elAttrs = attrs;
             });
 
-            editor.addSelect("fontFamily", {
+            fontFamilies.menu = S.mix(menu, fontFamilies.menu);
+
+            editor.addSelect("fontFamily", S.mix({
                 cmdType:"fontFamily",
                 defaultCaption:"字体",
                 width:130,
-                mode:Editor.WYSIWYG_MODE,
-                menu:{
-                    width:fontFamilies.width,
-                    children:fontFamilies.children
-                }
-            }, ui.Select);
+                mode:Editor.WYSIWYG_MODE
+            }, fontFamilies), ui.Select);
         }
     });
 

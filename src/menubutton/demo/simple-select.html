@@ -155,7 +155,6 @@
                         align:{
                             offset:[0, -1]
                         },
-                        width:82,
                         height:150,
                         elStyle:{
                             overflow:"auto",
@@ -163,29 +162,19 @@
                         }
                     }
                 });
+
+                select.set("value",15);
+
                 select.on("click", function (e) {
                     S.log(e.target.get("value"));
                 });
 
-
-                S.log(select.get("value"));
-
-                //select.set("value", 18);
-
-                //S.log(select.get("value"));
-
-
-                $("#nativeSelect")[0].selectedIndex = 5;
-                S.log($("#nativeSelect")[0].selectedIndex);
-
-
                 $("#delAll").on("click", function () {
                     select.removeItems(true);
-                    S.log(select.get("value"));
+                    S.log(select.get("value")||"empty");
                 });
 
-
-                var delSelect = new MenuButton.Select({
+                var newSelect = new MenuButton.Select({
                     render:"#selectDel",
                     prefixCls:"c2c-",
                     menu:{
@@ -195,7 +184,8 @@
                         xclass:'popupmenu',
                         children:[
                             {
-                                xclass:'menuitem',
+                                xclass:'option',
+                                textContent:'xuan-wo',
                                 content:"漩涡"
                             }
                         ]
@@ -203,7 +193,7 @@
                     defaultCaption:"常用项"
                 });
 
-                delSelect.render();
+                newSelect.render();
 
             });
         });

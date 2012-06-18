@@ -45,7 +45,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * render button to document.
              */
             render:function () {
-                Button.superclass.render.apply(this, arguments);
+                return Button.superclass.render.apply(this, arguments);
             }
         }, {
             ATTRS:/**@lends Button.prototype */

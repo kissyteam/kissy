@@ -35,6 +35,14 @@ KISSY.add("menubutton/option", function (S, Menu) {
                  */
                 selectable:{
                     value:true
+                },
+
+                /**
+                 * String will be used as select 's content if selected.
+                 * @type String
+                 */
+                textContent:{
+
                 }
             }
         }, {

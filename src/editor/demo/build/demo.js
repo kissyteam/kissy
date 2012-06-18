@@ -67,7 +67,6 @@
             },
             "image":{
                 defaultMargin:0,
-                // remote:false,
                 upload:{
                     serverUrl:"upload.php",
                     serverParams:{
@@ -95,46 +94,52 @@
                     html:"<div style='border:1px solid red'>模板2效果演示html</div>"
                 }
             ],
-            "fontSizex":{
-                children:[
-                    {
-                        value:"14px",
-                        elAttrs:{
-                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+            "fontSize":{
+                matchElWidth:false,
+                menu:{
+                    children:[
+                        {
+                            value:"14px",
+                            textContent:"标准",
+                            elAttrs:{
+                                style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content:" <span style='font-size:14px'>标准</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>14px</span>"
                         },
-                        content:"" +
-                            " <span style='font-size:14px'>标准</span>" +
-                            "<span style='position:absolute;top:1px;right:3px;'>14px</span>"
-                    },
-                    {
-                        value:"16px",
-                        elAttrs:{
-                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        {
+                            value:"16px",
+                            textContent:"大",
+                            elAttrs:{
+                                style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content:"" +
+                                " <span style='font-size:16px'>大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>16px</span>"
                         },
-                        content:"" +
-                            " <span style='font-size:16px'>大</span>" +
-                            "<span style='position:absolute;top:1px;right:3px;'>16px</span>"
-                    },
-                    {
-                        value:"18px",
-                        elAttrs:{
-                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                        {
+                            value:"18px",
+                            textContent:"特大",
+                            elAttrs:{
+                                style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content:"" +
+                                " <span style='font-size:18px'>特大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>18px</span>"
                         },
-                        content:"" +
-                            " <span style='font-size:18px'>特大</span>" +
-                            "<span style='position:absolute;top:1px;right:3px;'>18px</span>"
-                    },
-                    {
-                        value:"20px",
-                        elAttrs:{
-                            style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
-                        },
-                        content:"" +
-                            " <span style='font-size:20px'>极大</span>" +
-                            "<span style='position:absolute;top:1px;right:3px;'>20px</span>"
-                    }
-                ],
-                width:"115px"
+                        {
+                            value:"20px",
+                            textContent:"极大",
+                            elAttrs:{
+                                style:'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content:"" +
+                                " <span style='font-size:20px'>极大</span>" +
+                                "<span style='position:absolute;top:1px;right:3px;'>20px</span>"
+                        }
+                    ],
+                    width:"125px"
+                }
             },
             "multipleUpload":{
                 serverUrl:"http://localhost/kissy_git/kissy/src/editor/demo/upload.php",

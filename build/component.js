@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:19
+build time: Jun 18 17:02
 */
 /**
  * Setup component namespace.
@@ -427,7 +427,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (index != -1) {
                     children.splice(index, 1);
                 }
-                if (destroy) {
+                if (destroy &&
+                    // c is still json
+                    c.destroy) {
                     c.destroy();
                 }
                 return c;

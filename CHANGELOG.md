@@ -81,8 +81,10 @@ History:
 
  - [*] SubMenu 支持 click 事件
  - [!] autoHideDelay 单位变更为秒
- - [!] 去除 menu/menubutton new 的 menuCfg 配置，合并到 menu 中
+ - [!] 去除 menu/menubutton 的 menuCfg 配置
+ - [!] 去除 select 的 selectedItem/selectedIndex 配置
  - [+] 增加 matchElWidth 菜单是否自动和 menubutton 保持宽度一致
+
 
 
  - [+] datalazyload 增加 autoDestroy 配置

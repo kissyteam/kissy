@@ -275,7 +275,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (index != -1) {
                     children.splice(index, 1);
                 }
-                if (destroy) {
+                if (destroy &&
+                    // c is still json
+                    c.destroy) {
                     c.destroy();
                 }
                 return c;
