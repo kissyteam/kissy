@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 16:56
+build time: Jun 18 23:25
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -117,15 +117,13 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Button, Render, Split) {
+KISSY.add("button", function (S, Button, Render) {
     Button.Render = Render;
-    Button.Split = Split;
     return Button;
 }, {
     requires:[
         'button/base',
-        'button/buttonRender',
-        'button/split'
+        'button/buttonRender'
     ]
 });/**
  * @fileOverview abstract view for button
@@ -172,115 +170,4 @@ KISSY.add("button/buttonRender", function (S, Component) {
     });
 }, {
     requires:['component']
-});/**
- * @fileOverview simple split button ,common usecase :button + menubutton
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/split", function (S) {
-
-    var handles = {
-        content:function (e) {
-            var self = this,
-                first = self.get("first"),
-                t = e.target;
-            first.set("content", t.get("content"));
-            first.set("value", t.get("value"));
-            if (self.get("hideAfterMenuClick")) {
-                self.get("second").set("collapsed", true);
-            }
-        },
-        value:function (e) {
-            var self = this,
-                first = self.get("first"),
-                t = e.target;
-            first.set("value", t.get("value"));
-            if (self.get("hideAfterMenuClick")) {
-                self.get("second").set("collapsed", true);
-            }
-        }
-    };
-
-    /**
-     * Combining button and menubutton to form SplitButton.
-     * @class
-     * @memberOf Button
-     * @extends Base
-     */
-    function Split() {
-        Split.superclass.constructor.apply(this, arguments);
-    }
-
-    Split.ATTRS =
-    /**
-     * @lends Button.Split#
-     */
-    {
-        /**
-         * Button instance.
-         * @type {Button}
-         */
-        first:{},
-        /**
-         * MenuButton instance.
-         * @type {MenuButton}
-         */
-        second:{},
-        /**
-         * Event type to listen on the menubutton.
-         * Default : click.
-         * @type String
-         */
-        eventType:{
-            value:"click"
-        },
-        /**
-         * Event handler type.
-         * Enum : "content", "value".
-         * "content" : sync first button with second menubutton 's content and value.
-         * "value" : sync first button with second menubutton 's  value only.
-         * @type String
-         */
-        eventHandler:{
-            // 或者 value
-            value:"content"
-        },
-        /**
-         * Whether hide menubutton 's drop menu after click on it.
-         * Default : true
-         * @type Boolean
-         */
-        hideAfterMenuClick:{
-            value:true
-        }
-    };
-
-    S.extend(Split, S.Base,
-        /**
-         * @lends Button.Split#
-         */
-        {
-            /**
-             * Render button and menubutton together.
-             */
-            render:function () {
-                var self = this,
-                    eventType = self.get("eventType"),
-                    eventHandler = handles[self.get("eventHandler")],
-                    first = self.get("first"),
-                    second = self.get("second");
-                first.set("collapseSide", "right");
-                second.set("collapseSide", "left");
-                first.render();
-                second.render();
-                if (eventType && eventHandler) {
-                    second.on(eventType, eventHandler, self);
-                }
-                return self;
-            }
-        });
-
-    return Split;
-
-}, {
-    requires:['base']
 });

@@ -1,5 +1,5 @@
 /**
- * @fileOverview storage for component's css
+ * @fileOverview storage for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/manager", function (S) {
@@ -58,6 +58,9 @@ KISSY.add("component/manager", function (S) {
         return cs.join(" ");
     }
 
+
+    var componentInstances = {};
+
     /**
      * @name Manager
      * @memberOf Component
@@ -65,6 +68,21 @@ KISSY.add("component/manager", function (S) {
      * Manage component metadata.
      */
     var Manager = /** @lends Component.Manager */{
+
+        __instances:componentInstances,
+
+        addComponent:function (id, component) {
+            componentInstances[id] = component;
+        },
+
+        removeComponent:function (id) {
+            delete componentInstances[id];
+        },
+
+        getComponent:function (id) {
+            return componentInstances[id];
+        },
+
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.

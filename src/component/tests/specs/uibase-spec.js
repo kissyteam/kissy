@@ -19,16 +19,14 @@ KISSY.use("component", function (S, Component) {
                 x = 1;
             };
 
-            function h2() {
-
-            }
+            var h2 = UIBase.extend({});
 
             h2.prototype.yy = function () {
                 y = 1;
             };
 
 
-            var h3 = UIBase.create(h2, [h1], {
+            var h3 = h2.extend([h1], {
                 zz:function () {
                     z = 1;
                 }
@@ -78,7 +76,7 @@ KISSY.use("component", function (S, Component) {
                     }
                 };
 
-                var x2 = UIBase.create([x, x3], {
+                var x2 = UIBase.extend([x, x3], {
 
                 }, {
                     ATTRS:{
@@ -127,7 +125,7 @@ KISSY.use("component", function (S, Component) {
                     }
                 };
 
-                var x2 = UIBase.create([x, x3], {
+                var x2 = UIBase.extend([x, x3], {
                     renderUI:function () {
                         ret.push(3);
                     }
@@ -143,7 +141,7 @@ KISSY.use("component", function (S, Component) {
 
         describe("srcNode", function () {
 
-            var SrcNode = UIBase.create([], {}, {
+            var SrcNode = UIBase.extend({}, {
                 HTML_PARSER:{
                     contentAttr:function (el) {
                         return el.attr("data-contentAttr")
@@ -151,7 +149,7 @@ KISSY.use("component", function (S, Component) {
                 }
             });
 
-            var BoxRender = UIBase.create([UIBase.Box.Render]);
+            var BoxRender = UIBase.extend([UIBase.Box.Render]);
 
             it("will get attribute from node", function () {
 
@@ -223,7 +221,7 @@ KISSY.use("component", function (S, Component) {
 
         describe("contentEl", function () {
 
-            var ContentEl = UIBase.create([UIBase.Box.Render, UIBase.ContentBox.Render]);
+            var ContentEl = UIBase.extend([UIBase.Box.Render, UIBase.ContentBox.Render]);
 
             describe("srcNode", function () {
 

@@ -12,7 +12,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
      * @class
      * Base Render class for KISSY Component.
      */
-    return Component.define([UIBase.Box.Render],
+    return UIBase.extend([UIBase.Box.Render],
         /**
          * @lends Component.Render#
          */

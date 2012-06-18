@@ -17,7 +17,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
         obj && obj.hide();
     }
 
-    return Component.define([
+    return Component.UIBase.extend([
         require("boxrender"),
         require("contentboxrender"),
         require("positionrender"),

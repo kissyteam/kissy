@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 17:02
+build time: Jun 18 23:15
 */
 /**
  * Setup component namespace.
@@ -17,26 +17,6 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
         Manager:Manager,
         UIBase:UIBase
     };
-
-    function extend() {
-        var args = S.makeArray(arguments),
-            ret,
-            last = args[args.length - 1];
-        args.unshift(this);
-        if (last.xclass) {
-            args.pop();
-            args.push(last.xclass);
-        }
-        ret = UIBase.create.apply(UIBase, args);
-        if (last.xclass) {
-            Manager.setConstructorByXClass(last.xclass, {
-                constructor:ret,
-                priority:last.priority
-            });
-        }
-        ret.extend = extend;
-        return ret;
-    }
 
     /**
      * Create a component instance using json with xclass.
@@ -69,16 +49,6 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
     }
 
     Component.create = create;
-
-    /**
-     * Shortcut for {@link Component.UIBase.create}.
-     * @function
-     */
-    Component.define = function () {
-        var args = S.makeArray(arguments), cls;
-        cls = args.shift();
-        return extend.apply(cls, args);
-    }
 
     return Component;
 }, {
@@ -275,7 +245,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
      */
-    var Controller = Component.define([UIBase.Box],
+    var Controller = UIBase.extend([UIBase.Box],
         /** @lends Component.Controller# */
         {
 
@@ -322,10 +292,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @override
              */
             renderUI:function () {
-                var self = this, i, child;
+                var self = this, i, children, child;
                 self.get("view").render();
                 //then render my children
-                var children = self.get("children");
+                children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     child = children[i];
                     // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
@@ -760,17 +730,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 xrender:{
                     value:Render
-                },
-
-                /**
-                 * Get xclass of current component instance.
-                 * Readonly and only for json config.
-                 * @type String
-                 */
-                xclass:{
-                    valueFn:function () {
-                        return Manager.getXClassByConstructor(this.constructor);
-                    }
                 }
             }
         }, {
@@ -967,7 +926,7 @@ KISSY.add("component/delegateChildren", function (S) {
 
     return DelegateChildren;
 });/**
- * @fileOverview storage for component's css
+ * @fileOverview storage for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/manager", function (S) {
@@ -1026,6 +985,9 @@ KISSY.add("component/manager", function (S) {
         return cs.join(" ");
     }
 
+
+    var componentInstances = {};
+
     /**
      * @name Manager
      * @memberOf Component
@@ -1033,6 +995,21 @@ KISSY.add("component/manager", function (S) {
      * Manage component metadata.
      */
     var Manager = /** @lends Component.Manager */{
+
+        __instances:componentInstances,
+
+        addComponent:function (id, component) {
+            componentInstances[id] = component;
+        },
+
+        removeComponent:function (id) {
+            delete componentInstances[id];
+        },
+
+        getComponent:function (id) {
+            return componentInstances[id];
+        },
+
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
@@ -1077,7 +1054,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
      * @class
      * Base Render class for KISSY Component.
      */
-    return Component.define([UIBase.Box.Render],
+    return UIBase.extend([UIBase.Box.Render],
         /**
          * @lends Component.Render#
          */
@@ -1685,7 +1662,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
  * @fileOverview UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
+KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
@@ -1694,22 +1671,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
         ucfirst = S.ucfirst,
         noop = S.noop;
 
-    function constructPlugins(plugins) {
-        S.each(plugins, function (plugin, i) {
-            if (S.isFunction(plugin)) {
-                plugins[i] = new plugin();
-            }
-        });
-    }
-
-
-    function actionPlugins(self, plugins, action) {
-        S.each(plugins, function (plugin) {
-            if (plugin[action]) {
-                plugin[action](self);
-            }
-        });
-    }
 
     /**
      * @name UIBase
@@ -1719,10 +1680,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      * UIBase for class-based component.
      */
     function UIBase(config) {
-        var self = this;
+        var self = this, id;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
+
+        // register instance if config id
+        if (id = self.get("id")) {
+            Manager.addComponent(id, self);
+        }
+
+
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
@@ -1952,59 +1920,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
      */
     UIBase.HTML_PARSER = {};
 
-    UIBase.ATTRS =
-    /**
-     * @lends Component.UIBase#
-     */
-    {
-        /**
-         * Whether this component is rendered.
-         * @type Boolean
-         */
-        rendered:{
-            value:false
-        },
-        /**
-         * Whether this component 's dom structure is created.
-         * @type Boolean
-         */
-        created:{
-            value:false
-        },
-
-        /**
-         * Config listener on created.
-         * @example
-         * <code>
-         * {
-         *  click:{
-         *      scope:{x:1},
-         *      fn:function(){
-         *          alert(this.x);
-         *      }
-         *  }
-         * }
-         * or
-         * {
-         *  click:function(){
-         *          alert(this.x);
-         *        }
-         * }
-         * </code>
-         */
-        listeners:{
-            value:{}
-        },
-
-        /**
-         * Plugins
-         * @type Function[]|Object[]
-         */
-        plugins:{
-            value:[]
-        }
-    };
-
     S.extend(UIBase, Base,
         /**
          * @lends Component.UIBase.prototype
@@ -2088,114 +2003,213 @@ KISSY.add('component/uibase/base', function (S, Base, Node, undefined) {
              * Destroy this component.
              */
             destroy:function () {
-                var self = this;
+                var self = this,
+                    id;
                 destroyHierarchy(self);
                 self.fire('destroy');
                 self.detach();
+                // remove instance if set id
+                if (id = self.get("id")) {
+                    Manager.removeComponent(id);
+                }
                 return self;
             }
-        },
-        /**
-         * @lends Component.UIBase
-         */
-        {
-            /**
-             * Create a new class which extends UIBase.
-             * @param {Function|Function[]} base Parent class constructor.
-             * @param {Function[]} extensions Class constructors for extending.
-             * @param {Object} px Object to be mixed into new class 's prototype.
-             * @param {Object} sx Object to be mixed into new class.
-             * @returns {UIBase} A new class which extends UIBase.
+        }, {
+
+            ATTRS:/**
+             * @lends Component.UIBase#
              */
-            create:function (base, extensions, px, sx) {
-                var args = S.makeArray(arguments), t;
-                if (S.isArray(base)) {
-                    sx = px;
-                    px = extensions;
-                    extensions = /*@type Function[]*/base;
-                    base = UIBase;
+            {
+                /**
+                 * Whether this component is rendered.
+                 * @type Boolean
+                 */
+                rendered:{
+                    value:false
+                },
+                /**
+                 * Whether this component 's dom structure is created.
+                 * @type Boolean
+                 */
+                created:{
+                    value:false
+                },
+
+                /**
+                 * Config listener on created.
+                 * @example
+                 * <code>
+                 * {
+                 *  click:{
+                 *      scope:{x:1},
+                 *      fn:function(){
+                 *          alert(this.x);
+                 *      }
+                 *  }
+                 * }
+                 * or
+                 * {
+                 *  click:function(){
+                 *          alert(this.x);
+                 *        }
+                 * }
+                 * </code>
+                 */
+                listeners:{
+                    value:{}
+                },
+
+                /**
+                 * Plugins
+                 * @type Function[]|Object[]
+                 */
+                plugins:{
+                    value:[]
+                },
+
+                /**
+                 * Get xclass of current component instance.
+                 * Readonly and only for json config.
+                 * @type String
+                 */
+                xclass:{
+                    valueFn:function () {
+                        return Manager.getXClassByConstructor(this.constructor);
+                    }
                 }
-                base = base || UIBase;
-                if (S.isObject(extensions)) {
-                    sx = px;
-                    px = extensions;
-                    extensions = [];
-                }
+            }
 
-                var name = "UIBaseDerived";
+        });
 
-                if (S.isString(t = args[args.length - 1])) {
-                    name = t;
-                }
 
-                function C() {
-                    UIBase.apply(this, arguments);
-                }
+    function constructPlugins(plugins) {
+        S.each(plugins, function (plugin, i) {
+            if (S.isFunction(plugin)) {
+                plugins[i] = new plugin();
+            }
+        });
+    }
 
-                // debug mode , give the right name for constructor
-                // refer : http://limu.iteye.com/blog/1136712
-                S.log("UIBase.create : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
 
-                S.extend(C, base, px, sx);
+    function actionPlugins(self, plugins, action) {
+        S.each(plugins, function (plugin) {
+            if (plugin[action]) {
+                plugin[action](self);
+            }
+        });
+    }
 
-                if (extensions) {
-                    C.__ks_exts = extensions;
 
-                    var desc = {
-                        // ATTRS:
-                        // HTML_PARSER:
-                    }, constructors = extensions['concat'](C);
+    function create(base, extensions, px, sx) {
+        var args = S.makeArray(arguments), t;
 
-                    // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
-                    // 主类最优先
-                    S.each(constructors, function (ext) {
-                        if (ext) {
-                            // 合并 ATTRS/HTML_PARSER 到主类
-                            S.each([ATTRS, HTML_PARSER], function (K) {
-                                if (ext[K]) {
-                                    desc[K] = desc[K] || {};
-                                    // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                                    // 但是值是对象的话会深度合并
-                                    // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
-                                    S.mix(desc[K], ext[K], {
-                                        deep:true
-                                    });
-                                }
+        if (S.isObject(extensions)) {
+            sx = px;
+            px = extensions;
+            extensions = [];
+        }
+
+        var name = "UIBaseDerived";
+
+        if (S.isString(t = args[args.length - 1])) {
+            name = t;
+        }
+
+        function C() {
+            UIBase.apply(this, arguments);
+        }
+
+        // debug mode , give the right name for constructor
+        // refer : http://limu.iteye.com/blog/1136712
+        S.log("UIBase.extend : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
+
+        S.extend(C, base, px, sx);
+
+        if (extensions) {
+            C.__ks_exts = extensions;
+
+            var desc = {
+                // ATTRS:
+                // HTML_PARSER:
+            }, constructors = extensions['concat'](C);
+
+            // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+            // 主类最优先
+            S.each(constructors, function (ext) {
+                if (ext) {
+                    // 合并 ATTRS/HTML_PARSER 到主类
+                    S.each([ATTRS, HTML_PARSER], function (K) {
+                        if (ext[K]) {
+                            desc[K] = desc[K] || {};
+                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                            // 但是值是对象的话会深度合并
+                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
+                            S.mix(desc[K], ext[K], {
+                                deep:true
                             });
                         }
                     });
-
-                    S.each(desc, function (v, k) {
-                        C[k] = v;
-                    });
-
-                    var prototype = {};
-
-                    // 主类最优先
-                    S.each(constructors, function (ext) {
-                        if (ext) {
-                            var proto = ext.prototype;
-                            // 合并功能代码到主类，不覆盖
-                            for (var p in proto) {
-                                // 不覆盖主类，但是主类的父类还是覆盖吧
-                                if (proto.hasOwnProperty(p)) {
-                                    prototype[p] = proto[p];
-                                }
-                            }
-                        }
-                    });
-
-                    S.each(prototype, function (v, k) {
-                        C.prototype[k] = v;
-                    });
                 }
-                return C;
-            }
-        });
+            });
+
+            S.each(desc, function (v, k) {
+                C[k] = v;
+            });
+
+            var prototype = {};
+
+            // 主类最优先
+            S.each(constructors, function (ext) {
+                if (ext) {
+                    var proto = ext.prototype;
+                    // 合并功能代码到主类，不覆盖
+                    for (var p in proto) {
+                        // 不覆盖主类，但是主类的父类还是覆盖吧
+                        if (proto.hasOwnProperty(p)) {
+                            prototype[p] = proto[p];
+                        }
+                    }
+                }
+            });
+
+            S.each(prototype, function (v, k) {
+                C.prototype[k] = v;
+            });
+        }
+        return C;
+    }
+
+    /**
+     * Create a new class which extends UIBase.
+     * @param {Function[]} extensions Class constructors for extending.
+     * @param {Object} px Object to be mixed into new class 's prototype.
+     * @param {Object} sx Object to be mixed into new class.
+     * @function
+     * @returns {UIBase} A new class which extends UIBase.
+     */
+    UIBase.extend = function extend(extensions, px, sx) {
+        var args = S.makeArray(arguments),
+            ret,
+            last = args[args.length - 1];
+        args.unshift(this);
+        if (last.xclass) {
+            args.pop();
+            args.push(last.xclass);
+        }
+        ret = create.apply(UIBase, args);
+        if (last.xclass) {
+            Manager.setConstructorByXClass(last.xclass, {
+                constructor:ret,
+                priority:last.priority
+            });
+        }
+        ret.extend = extend;
+        return ret;
+    };
 
     return UIBase;
 }, {
-    requires:["base", "node"]
+    requires:["base", "node", "../manager"]
 });
 /**
  * Refer:

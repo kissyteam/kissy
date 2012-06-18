@@ -123,7 +123,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
      */
-    var Controller = Component.define([UIBase.Box],
+    var Controller = UIBase.extend([UIBase.Box],
         /** @lends Component.Controller# */
         {
 
@@ -170,10 +170,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @override
              */
             renderUI:function () {
-                var self = this, i, child;
+                var self = this, i, children, child;
                 self.get("view").render();
                 //then render my children
-                var children = self.get("children");
+                children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     child = children[i];
                     // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
@@ -608,17 +608,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 xrender:{
                     value:Render
-                },
-
-                /**
-                 * Get xclass of current component instance.
-                 * Readonly and only for json config.
-                 * @type String
-                 */
-                xclass:{
-                    valueFn:function () {
-                        return Manager.getXClassByConstructor(this.constructor);
-                    }
                 }
             }
         }, {
