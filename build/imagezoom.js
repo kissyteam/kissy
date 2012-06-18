@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 18 23:29
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -22,7 +22,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
         obj && obj.hide();
     }
 
-    return Component.define([
+    return Component.UIBase.extend([
         require("boxrender"),
         require("contentboxrender"),
         require("positionrender"),
