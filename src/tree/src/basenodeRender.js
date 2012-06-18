@@ -18,7 +18,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
         ICON_CLS = "ks-tree-icon",
         LEAF_CLS = "tree-item-leaf",
         NOT_LEAF_CLS = "ks-tree-item-folder",
-        ROW_CLS = "ks-tree-row";
+        ROW_CLS = "ks-tree-item-row";
 
     return Component.Render.extend({
 
@@ -31,8 +31,10 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 childrenEl = self.get("childrenEl"),
                 expand_cls = [ICON_CLS, EXPAND_ICON_CLS, ""].join(" "),
                 icon_cls = [ICON_CLS, FILE_CLS, ""].join(" ") + INLINE_BLOCK,
-                folder_cls = [ ICON_CLS, expanded ? FOLDER_ICON_EXPANDED : FOLDER_ICON_COLLAPSED, ""].join(" ") + INLINE_BLOCK,
-                last = !parent || parent.get("children")[parent.get("children").length - 1].get("view") == self;
+                folder_cls = [ ICON_CLS, expanded ? FOLDER_ICON_EXPANDED :
+                    FOLDER_ICON_COLLAPSED, ""].join(" ") + INLINE_BLOCK,
+                lastChild = parent && parent.get("children")[parent.get("children").length - 1],
+                last = !parent || !lastChild || lastChild.get("view") == self;
             // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
             if (isLeaf === false || (isLeaf === undefined && children.length)) {
                 iconEl.attr("class", folder_cls);
@@ -130,7 +132,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
          * 内容容器节点，子树节点都插到这里
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
-         * @override
+         * @protected
          * @return {NodeList}
          */
         getContentElement:function () {
@@ -160,7 +162,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 value:0
             },
             contentEl:{
-                valueFn:function(){
+                valueFn:function () {
                     return $("<span id='" + S.guid("tree-item") + "' class='" + LABEL_CLS + "'/>");
                 }
             },

@@ -1,32 +1,11 @@
-/*
- * Copyright 2007 The Closure Library Authors. All Rights Reserved.
- *
- * Use of this source code is governed by the Apache License, Version 2.0.
- * See the COPYING file for details.
- */
-
-/* Author: arv@google.com (Erik Arvidsson) */
-/* Author: eae@google.com (Emil A Eklund) */
-/* Author: jonp@google.com (Jon Perlow) */
-
-/*
-  TODO(arv): Currently the sprite image has the height 16px. We should make the
-  image taller which would allow better flexibility when it comes to the height
-  of a tree row.
-*/
-.ks-tree:focus {
-  -moz-outline: none;
-  outline: none;
-}
-
-.ks-tree-row {
+.ks-tree-item-row {
   white-space: nowrap;
   font: icon;
   line-height: 16px;
   height: 16px;
 }
 
-.ks-tree-row span {
+.ks-tree-item-row span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -131,16 +110,49 @@
   text-decoration: underline;
 }
 
-.selected .ks-tree-item-content {
-  background-color: ButtonFace;
-  color: ButtonText;
+.ks-tree-children {
+     padding-left: 19px;
+ }
+
+.ks-tree-lchildren {
+    padding-left: 19px;
 }
 
-.focused .selected .ks-tree-item-content {
-  background-color: Highlight;
-  color: HighlightText;
+.ks-tree-item-selected .ks-tree-item-content {
+    background: buttonface;
+    color: buttontext;
+}
+
+.ks-tree-item-focused {
+    outline: none;
+}
+
+.ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-content {
+    background: highlight;
+    color: highlighttext;
 }
 
 .ks-tree-hide-root {
   display: none;
+}
+
+.ks-tree-item-checked0 {
+    background: url(../assets/check0.gif) 0 -2px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.ks-tree-item-checked1 {
+    background: url(../assets/check1.gif) 0 -2px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.ks-tree-item-checked2 {
+    background: url(../assets/check2.gif) 0 -2px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
 }

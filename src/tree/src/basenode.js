@@ -215,7 +215,8 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             _updateRecursive:function () {
-                var self = this, len = self.get('children').length;
+                var self = this,
+                    len = self.get('children').length;
                 self._computeClass("_updateRecursive");
                 S.each(self.get("children"), function (c, index) {
                     c._computeClass("_updateRecursive_children");
@@ -225,10 +226,11 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             removeChild:function (c) {
-                var self = this, tree = self.get("tree");
-                tree._unregister(c);
+                var self = this,
+                    tree = self.get("tree");
+                tree._unRegister(c);
                 S.each(c.get("children"), function (cc) {
-                    tree._unregister(cc);
+                    tree._unRegister(cc);
                 });
                 BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
                 self._updateRecursive();
@@ -280,7 +282,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 xrender:{
                     value:BaseNodeRender
                 },
-                /*事件代理*/
+                // 事件代理
                 handleMouseEvents:{
                     value:false
                 },

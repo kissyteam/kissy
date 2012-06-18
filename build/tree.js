@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:23
+build time: Jun 18 20:06
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -272,7 +272,8 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             _updateRecursive:function () {
-                var self = this, len = self.get('children').length;
+                var self = this,
+                    len = self.get('children').length;
                 self._computeClass("_updateRecursive");
                 S.each(self.get("children"), function (c, index) {
                     c._computeClass("_updateRecursive_children");
@@ -282,10 +283,11 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             removeChild:function (c) {
-                var self = this, tree = self.get("tree");
-                tree._unregister(c);
+                var self = this,
+                    tree = self.get("tree");
+                tree._unRegister(c);
                 S.each(c.get("children"), function (cc) {
-                    tree._unregister(cc);
+                    tree._unRegister(cc);
                 });
                 BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
                 self._updateRecursive();
@@ -337,7 +339,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 xrender:{
                     value:BaseNodeRender
                 },
-                /*事件代理*/
+                // 事件代理
                 handleMouseEvents:{
                     value:false
                 },
@@ -457,7 +459,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
         ICON_CLS = "ks-tree-icon",
         LEAF_CLS = "tree-item-leaf",
         NOT_LEAF_CLS = "ks-tree-item-folder",
-        ROW_CLS = "ks-tree-row";
+        ROW_CLS = "ks-tree-item-row";
 
     return Component.Render.extend({
 
@@ -470,8 +472,10 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 childrenEl = self.get("childrenEl"),
                 expand_cls = [ICON_CLS, EXPAND_ICON_CLS, ""].join(" "),
                 icon_cls = [ICON_CLS, FILE_CLS, ""].join(" ") + INLINE_BLOCK,
-                folder_cls = [ ICON_CLS, expanded ? FOLDER_ICON_EXPANDED : FOLDER_ICON_COLLAPSED, ""].join(" ") + INLINE_BLOCK,
-                last = !parent || parent.get("children")[parent.get("children").length - 1].get("view") == self;
+                folder_cls = [ ICON_CLS, expanded ? FOLDER_ICON_EXPANDED :
+                    FOLDER_ICON_COLLAPSED, ""].join(" ") + INLINE_BLOCK,
+                lastChild = parent && parent.get("children")[parent.get("children").length - 1],
+                last = !parent || !lastChild || lastChild.get("view") == self;
             // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
             if (isLeaf === false || (isLeaf === undefined && children.length)) {
                 iconEl.attr("class", folder_cls);
@@ -569,7 +573,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
          * 内容容器节点，子树节点都插到这里
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
-         * @override
+         * @protected
          * @return {NodeList}
          */
         getContentElement:function () {
@@ -599,7 +603,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component, DOM) {
                 value:0
             },
             contentEl:{
-                valueFn:function(){
+                valueFn:function () {
                     return $("<span id='" + S.guid("tree-item") + "' class='" + LABEL_CLS + "'/>");
                 }
             },
@@ -890,13 +894,13 @@ KISSY.add("tree/checktreeRender", function (S, CheckNodeRender, TreeMgrRender) {
  * @fileOverview tree component for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
+KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
     Tree.Node = TreeNode;
     Tree.CheckNode = CheckNode;
     Tree.CheckTree = CheckTree;
     return Tree;
 }, {
-    requires:["tree/base","tree/basenode","tree/checknode","tree/checktree"]
+    requires:["tree/base", "tree/basenode", "tree/checknode", "tree/checktree"]
 });/**
  * @fileOverview root node render
  * @author yiminghe@gmail.com
@@ -909,7 +913,7 @@ KISSY.add("tree/treeRender", function (S, BaseNodeRender, TreeMgrRender) {
  * @fileOverview tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgr", function(S, Event) {
+KISSY.add("tree/treemgr", function (S, Event) {
 
     function TreeMgr() {
     }
@@ -933,10 +937,11 @@ KISSY.add("tree/treemgr", function(S, Event) {
          */
         selectedItem:{},
         tree:{
-            valueFn:function() {
+            valueFn:function () {
                 return this;
             }
         },
+        // only root node is focusable
         focusable:{
             value:true
         }
@@ -946,31 +951,31 @@ KISSY.add("tree/treemgr", function(S, Event) {
         /*
          加快从事件代理获取原事件节点
          */
-        __getAllNodes:function() {
-            var self=this;
+        __getAllNodes:function () {
+            var self = this;
             if (!self._allNodes) {
                 self._allNodes = {};
             }
             return self._allNodes;
         },
 
-        __renderUI:function() {
-             var self=this;
+        __renderUI:function () {
+            var self = this;
             // add 过那么一定调用过 checkIcon 了
             if (!self.get("children").length) {
                 self._computeClass("root_renderUI");
             }
         },
 
-        _register:function(c) {
+        _register:function (c) {
             this.__getAllNodes()[c.get("id")] = c;
         },
 
-        _unregister:function(c) {
+        _unRegister:function (c) {
             delete this.__getAllNodes()[c.get("id")];
         },
 
-        handleKeyEventInternal:function(e) {
+        handleKeyEventInternal:function (e) {
             var current = this.get("selectedItem");
             if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
@@ -980,7 +985,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
         },
 
         // 重写 delegateChildren ，缓存加快从节点获取对象速度
-        getOwnerControl:function(node) {
+        getOwnerControl:function (node) {
             var self = this,
                 n,
                 allNodes = self.__getAllNodes(),
@@ -996,7 +1001,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
         },
 
         // 单选
-        _uiSetSelectedItem:function(n, ev) {
+        _uiSetSelectedItem:function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }
@@ -1004,7 +1009,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
         },
 
 
-        _uiSetFocused:function(v) {
+        _uiSetFocused:function (v) {
             var self = this;
             // 得到焦点时没有选择节点
             // 默认选择自己
@@ -1022,7 +1027,6 @@ KISSY.add("tree/treemgr", function(S, Event) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treemgrRender", function (S) {
-    var FOCUSED_CLS = "tree-item-focused";
 
     function TreeMgrRender() {
     }
@@ -1038,15 +1042,11 @@ KISSY.add("tree/treemgrRender", function (S) {
         __renderUI:function () {
             var self = this;
             self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
-            self.get("rowEl").addClass("ks-tree-root-row");
+            self.get("rowEl").addClass("ks-tree-row");
         },
 
         _uiSetShowRootNode:function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
-        },
-
-        _uiSetFocused:function (v) {
-            this.get("el")[v ? "addClass" : "removeClass"](this.getCssClassWithPrefix(FOCUSED_CLS));
         }
     });
 
