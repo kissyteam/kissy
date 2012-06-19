@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 20:22
+build time: Jun 20 00:27
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -891,21 +891,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
             },
 
             /**
-             * Handle mouseenter event.Make parent subMenu item highlighted.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             */
-            handleMouseEnter:function () {
-                var self = this, parent = self.get("parent");
-                // 防止从子菜单项移到子菜单，停止子菜单项将要隐藏子菜单的任务
-                if (parent && parent.clearSubMenuTimers) {
-                    parent.clearSubMenuTimers();
-                }
-            },
-
-
-            /**
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
@@ -1050,7 +1035,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     var KeyCodes = Event.KeyCodes,
         doc = S.Env.host.document,
-        MENU_DELAY = 300;
+        MENU_DELAY = 150;
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
@@ -1098,6 +1083,16 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     menu.on("afterActiveItemChange", function (ev) {
                         parentMenu.set("activeItem", ev.newVal);
                     });
+
+
+                    menu.on("afterHighlightedItemChange", function (ev) {
+                        if (ev.newVal) {
+                            // 1. 菜单再次高亮时，取消隐藏
+                            // 2. fix #160
+                            self.set("highlighted", true);
+                        }
+                    });
+
                     // 只绑定一次
                     self.bindSubMenu = S.noop;
                 }
@@ -1117,7 +1112,9 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
                     return true;
                 }
-                // 停止层层检查以及子菜单的隐藏
+                // 两个作用
+                // 1. 停止孙子菜单的层层检查，导致 highlighted false 而 buffer 的隐藏
+                // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
                 self.showTimer_ = S.later(showMenu, self.get("menuDelay"), false, self);
             },
@@ -1215,10 +1212,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         var submenu = self,
                             popupmenu = self.get("menu");
                         while (popupmenu.get("autoHideOnMouseLeave")) {
-                            hideMenu.call(submenu);
-                            if (// 原来的 submenu 在高亮
+                            // 取消高亮，buffer 隐藏子菜单
+                            // 可能马上又移到上面，防止闪烁
+                            // 相当于强制 submenu mouseleave
+                            submenu.set("highlighted", false);
+                            // 原来的 submenu 在高亮
                             // 表示越级选择 menu
-                                parentMenu.get("highlightedItem") != submenu) {
+                            if (parentMenu.get("highlightedItem") != submenu) {
                                 break;
                             }
                             submenu = parentMenu.get("parent");

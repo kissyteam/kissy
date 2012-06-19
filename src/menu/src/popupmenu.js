@@ -44,21 +44,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
             },
 
             /**
-             * Handle mouseenter event.Make parent subMenu item highlighted.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             */
-            handleMouseEnter:function () {
-                var self = this, parent = self.get("parent");
-                // 防止从子菜单项移到子菜单，停止子菜单项将要隐藏子菜单的任务
-                if (parent && parent.clearSubMenuTimers) {
-                    parent.clearSubMenuTimers();
-                }
-            },
-
-
-            /**
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
