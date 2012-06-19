@@ -12,13 +12,16 @@ Legend of version history:
 
 
 History:
---------
+---------------------------
 
 ### v1.2.0 -> v1.3.0
+
+#### structure
  - [*] 调整源码目录结构
- - [+] 增加 S.Defer/Promise ，支持 Promise 规范
  - [!] 删除 kissy-aio
 
+#### seed
+ - [+] 增加 S.Defer/Promise ，支持 Promise 规范
  - [+] S.config 增加 combine 配置，支持自动 combo
  - [+] 支持 <script src='seed|kissy.js' data-config="json"></script> data-config parse 为 json 传入 config
  - [x] KISSY.add(fn) fn 中 this 为模块对象
@@ -29,25 +32,30 @@ History:
  - [+] 内置 gallery 包地址
  - [+] 增加 KISSY.keys， #101
  - [+] 支持 KISSY.config({packages:{},modules:{}}); modules,packages 均可配置时间戳
-
  - [*] KISSY.ready try catch 达到互不影响的效果
 
+
+#### ua
  - [+] html 标签键入 ua 标志，例如 "ks-ie ke-ie6"
 
+#### event
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [x] Event.delegate 重构，fix #76
  - [*] valuechange 透明支持 webkitspeechchange 事件
  - [*] publish 支持空格分隔的多个事件名字符串
 
+#### ajax
  - [+] io 调用返回 Promise 类型，可以进行链式操作
  - [+] io 增加 formdata 上传示例
  - [+] io 调用返回的 XhrObject 增加 getNativeXhr 方法，用于取得原生 xhr 对象，对其上的 upload 上传进度进行监听
  - [+] io 增加配置 beforeSend ，可用于发送前监听 nativeXhr 事件，例如 upload progress
 
+#### anim
  - [*] anim 支持 backgroundPosition
  - [+] anim 支持 pause/resume
 
+#### dom
  - [x] dom 支持 css("backgroundPosition") in ie
  - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
  - [x] fix #88，去除多余的 tbody
@@ -55,55 +63,67 @@ History:
  - [+] DOM 增加 nodeName 方法，返回小写的 nodeName
  - [+] DOM 增加 outerHTML 方法，全浏览器兼容
 
+#### node
  - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
  - [+] NodeList.prototype 增加 nodeName/outerHTML/pause/resume/contents/wrap/wrapAll/unwrap/wrapInner
 
+#### base
  - [*] KISSY.Base : values should not be set if any validator occurs error
  - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
 
+#### input-selection
  - [+] 增加模块 input-selection，兼容 ie 下的 input selection api 为 w3c 标准
 
+#### dd
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
  - [*] proxy/scroll.attach changed to proxy/scroll.attachDrag,proxy/scroll.unAttach changed to proxy/scroll.detachDrag
 
+#### component
  - [!] 删除 uibase 模块，合并 uibase 到 component 模块
  - [!] 所有组件设置 prefixCls 只作用于组件最外层根节点 class
  - [+] Component children 可配置带有 xclass 的组件描述 json 对象
  - [+] Component 可配置 listeners，直接绑定事件
 
+#### calendar
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
 
+#### overlay
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
  - [!] popup 构造器参数和 overlay 一致，第一个参数为 object!
  - [+] Dialog draggable 扩展配置支持 dd proxy 以及 dd scroll.
  - [+] Overlay 增加 maskShared 配置以及 maskNode 属性，可以控制是否共享以及操纵 mask 层.
 
+#### menu
  - [*] SubMenu 支持 click 事件
  - [!] autoHideDelay 单位变更为秒
  - [!] 去除 menu/menubutton 的 menuCfg 配置
  - [!] 去除 select 的 selectedItem/selectedIndex 配置
  - [+] 增加 matchElWidth 菜单是否自动和 menubutton 保持宽度一致
 
-
-
+#### datalazyload
  - [+] datalazyload 增加 autoDestroy 配置
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
 
+#### switchable
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
  - [+] switchable 增加 add/remove/destroy
  - [!] switchable _switchView 参数变化，覆盖注意（不推荐覆盖）
 
+#### waterfall
  - [+] waterfall 增加方法 adjustItem/removeItem/start 以及配置 adjustEffect。支持调整时的动画。
  - [+] waterfall item class 支持配置 ks-waterfall-item-fixed-right/left 固定列。
 
+#### tree
  - [!] tree label(css/js)出现处改成 content
 
+#### combobox
  - [+] 增加 autocomplete/combobox 组件
 
+#### template
  - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
 
 ### Happy 2nd Anniversary (2011/10/26)
