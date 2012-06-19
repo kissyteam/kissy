@@ -293,100 +293,85 @@
 <span id='line286' class='line'>286</span> </span><span class="WHIT">                </span><span class="NAME">handleMouseEvents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line287' class='line'>287</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
 <span id='line288' class='line'>288</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line289' class='line'>289</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line290' class='line'>290</span>                  * Current tree node 's id.
-<span id='line291' class='line'>291</span>                  * Will generated automatically.
-<span id='line292' class='line'>292</span>                  * @type String
-<span id='line293' class='line'>293</span>                  */</span><span class="WHIT">
-<span id='line294' class='line'>294</span> </span><span class="WHIT">                </span><span class="NAME">id</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line295' class='line'>295</span> </span><span class="WHIT">                    </span><span class="NAME">getter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line296' class='line'>296</span> </span><span class="WHIT">                        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line297' class='line'>297</span> </span><span class="WHIT">                            </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">attr</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line298' class='line'>298</span> </span><span class="WHIT">                        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line299' class='line'>299</span> </span><span class="WHIT">                            </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">attr</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.guid</span><span class="PUNC">(</span><span class="STRN">"tree-node"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line300' class='line'>300</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line301' class='line'>301</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line302' class='line'>302</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line303' class='line'>303</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line304' class='line'>304</span> 
-<span id='line305' class='line'>305</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line306' class='line'>306</span>                  * Only For Config.
-<span id='line307' class='line'>307</span>                  * Whether to force current tree node as a leaf.
-<span id='line308' class='line'>308</span>                  * Default:false.
-<span id='line309' class='line'>309</span>                  * It will change as children are added.
-<span id='line310' class='line'>310</span>                  * @type Boolean
-<span id='line311' class='line'>311</span>                  */</span><span class="WHIT">
-<span id='line312' class='line'>312</span> </span><span class="WHIT">                </span><span class="NAME">isLeaf</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line313' class='line'>313</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line314' class='line'>314</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line315' class='line'>315</span> 
-<span id='line316' class='line'>316</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line317' class='line'>317</span>                  * Element for expand icon.
-<span id='line318' class='line'>318</span>                  * @type {NodeList}
-<span id='line319' class='line'>319</span>                  */</span><span class="WHIT">
-<span id='line320' class='line'>320</span> </span><span class="WHIT">                </span><span class="NAME">expandIconEl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line321' class='line'>321</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line322' class='line'>322</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line323' class='line'>323</span> 
-<span id='line324' class='line'>324</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line325' class='line'>325</span>                  * Element for icon.
-<span id='line326' class='line'>326</span>                  * @type {NodeList}
+<span id='line289' class='line'>289</span> 
+<span id='line290' class='line'>290</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line291' class='line'>291</span>                  * Only For Config.
+<span id='line292' class='line'>292</span>                  * Whether to force current tree node as a leaf.
+<span id='line293' class='line'>293</span>                  * Default:false.
+<span id='line294' class='line'>294</span>                  * It will change as children are added.
+<span id='line295' class='line'>295</span>                  * @type Boolean
+<span id='line296' class='line'>296</span>                  */</span><span class="WHIT">
+<span id='line297' class='line'>297</span> </span><span class="WHIT">                </span><span class="NAME">isLeaf</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line298' class='line'>298</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line299' class='line'>299</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line300' class='line'>300</span> 
+<span id='line301' class='line'>301</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line302' class='line'>302</span>                  * Element for expand icon.
+<span id='line303' class='line'>303</span>                  * @type {NodeList}
+<span id='line304' class='line'>304</span>                  */</span><span class="WHIT">
+<span id='line305' class='line'>305</span> </span><span class="WHIT">                </span><span class="NAME">expandIconEl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line306' class='line'>306</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line307' class='line'>307</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line308' class='line'>308</span> 
+<span id='line309' class='line'>309</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line310' class='line'>310</span>                  * Element for icon.
+<span id='line311' class='line'>311</span>                  * @type {NodeList}
+<span id='line312' class='line'>312</span>                  */</span><span class="WHIT">
+<span id='line313' class='line'>313</span> </span><span class="WHIT">                </span><span class="NAME">iconEl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line314' class='line'>314</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line315' class='line'>315</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line316' class='line'>316</span> 
+<span id='line317' class='line'>317</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line318' class='line'>318</span>                  * Whether current tree node is selected.
+<span id='line319' class='line'>319</span>                  * @type Boolean
+<span id='line320' class='line'>320</span>                  */</span><span class="WHIT">
+<span id='line321' class='line'>321</span> </span><span class="WHIT">                </span><span class="NAME">selected</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line322' class='line'>322</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line323' class='line'>323</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line324' class='line'>324</span> 
+<span id='line325' class='line'>325</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line326' class='line'>326</span>                  * Whether current tree node is expanded.
 <span id='line327' class='line'>327</span>                  */</span><span class="WHIT">
-<span id='line328' class='line'>328</span> </span><span class="WHIT">                </span><span class="NAME">iconEl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line328' class='line'>328</span> </span><span class="WHIT">                </span><span class="NAME">expanded</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line329' class='line'>329</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line330' class='line'>330</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line331' class='line'>331</span> 
 <span id='line332' class='line'>332</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line333' class='line'>333</span>                  * Whether current tree node is selected.
-<span id='line334' class='line'>334</span>                  * @type Boolean
+<span id='line333' class='line'>333</span>                  * Html title for current tree node.
+<span id='line334' class='line'>334</span>                  * @type String
 <span id='line335' class='line'>335</span>                  */</span><span class="WHIT">
-<span id='line336' class='line'>336</span> </span><span class="WHIT">                </span><span class="NAME">selected</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line336' class='line'>336</span> </span><span class="WHIT">                </span><span class="NAME">tooltip</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line337' class='line'>337</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line338' class='line'>338</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line339' class='line'>339</span> 
 <span id='line340' class='line'>340</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line341' class='line'>341</span>                  * Whether current tree node is expanded.
-<span id='line342' class='line'>342</span>                  */</span><span class="WHIT">
-<span id='line343' class='line'>343</span> </span><span class="WHIT">                </span><span class="NAME">expanded</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line344' class='line'>344</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line341' class='line'>341</span>                  * Tree instance current tree node belongs to.
+<span id='line342' class='line'>342</span>                  * @type Tree
+<span id='line343' class='line'>343</span>                  */</span><span class="WHIT">
+<span id='line344' class='line'>344</span> </span><span class="WHIT">                </span><span class="NAME">tree</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line345' class='line'>345</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line346' class='line'>346</span> 
 <span id='line347' class='line'>347</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line348' class='line'>348</span>                  * Html title for current tree node.
-<span id='line349' class='line'>349</span>                  * @type String
+<span id='line348' class='line'>348</span>                  * depth of node.
+<span id='line349' class='line'>349</span>                  * @type Number
 <span id='line350' class='line'>350</span>                  */</span><span class="WHIT">
-<span id='line351' class='line'>351</span> </span><span class="WHIT">                </span><span class="NAME">tooltip</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line351' class='line'>351</span> </span><span class="WHIT">                </span><span class="NAME">depth</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line352' class='line'>352</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
 <span id='line353' class='line'>353</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line354' class='line'>354</span> 
-<span id='line355' class='line'>355</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line356' class='line'>356</span>                  * Tree instance current tree node belongs to.
-<span id='line357' class='line'>357</span>                  * @type Tree
-<span id='line358' class='line'>358</span>                  */</span><span class="WHIT">
-<span id='line359' class='line'>359</span> </span><span class="WHIT">                </span><span class="NAME">tree</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line360' class='line'>360</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line361' class='line'>361</span> 
-<span id='line362' class='line'>362</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line363' class='line'>363</span>                  * depth of node.
-<span id='line364' class='line'>364</span>                  * @type Number
-<span id='line365' class='line'>365</span>                  */</span><span class="WHIT">
-<span id='line366' class='line'>366</span> </span><span class="WHIT">                </span><span class="NAME">depth</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line367' class='line'>367</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line368' class='line'>368</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line369' class='line'>369</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line370' class='line'>370</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
-<span id='line371' class='line'>371</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line372' class='line'>372</span> </span><span class="WHIT">                </span><span class="NAME">decorateChildCls</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line373' class='line'>373</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"ks-tree-children"</span><span class="WHIT">
-<span id='line374' class='line'>374</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line375' class='line'>375</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line376' class='line'>376</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line377' class='line'>377</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'tree-item'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line378' class='line'>378</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
-<span id='line379' class='line'>379</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line380' class='line'>380</span> 
-<span id='line381' class='line'>381</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">BaseNode</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line382' class='line'>382</span> 
-<span id='line383' class='line'>383</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line384' class='line'>384</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'node'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./basenodeRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line385' class='line'>385</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line354' class='line'>354</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line355' class='line'>355</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line356' class='line'>356</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line357' class='line'>357</span> </span><span class="WHIT">                </span><span class="NAME">decorateChildCls</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line358' class='line'>358</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"ks-tree-children"</span><span class="WHIT">
+<span id='line359' class='line'>359</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line360' class='line'>360</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line361' class='line'>361</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line362' class='line'>362</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'tree-item'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line363' class='line'>363</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">10</span><span class="WHIT">
+<span id='line364' class='line'>364</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line365' class='line'>365</span> 
+<span id='line366' class='line'>366</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">BaseNode</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line367' class='line'>367</span> 
+<span id='line368' class='line'>368</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line369' class='line'>369</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'node'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./basenodeRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line370' class='line'>370</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

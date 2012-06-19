@@ -260,6 +260,17 @@ a.go-top:active{text-decoration:none;}
                                             </li>
                                             
                                             <li class="li">                                                
+                                                Component.UIBase.
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#.HTML_PARSER">HTML_PARSER</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">Parse attribute from existing dom node.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/Component.UIBase.html#listeners">listeners</a></b>
                                                 <span class="type">{}</span>
@@ -290,17 +301,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Whether this component is rendered.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                Component.UIBase.
-                                                <b class="name"><a href="../symbols/Component.UIBase.html#.UIBase.HTML_PARSER">UIBase.HTML_PARSER</a></b>
-                                                <span class="type">{Object}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">Parse attribute from existing dom node.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -379,6 +379,16 @@ a.go-top:active{text-decoration:none;}
                                             </li>
                                             
                                             <li class="li">                                                
+                                                Component.UIBase.
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#.extend">extend</a></b>
+                                                <span class="param">(extensions, px, sx)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Create a new class which extends UIBase .</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/Component.UIBase.html#render">render</a></b>
                                                 <span class="param">()</span>
@@ -439,7 +449,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">fired when component 's internal event is binded.</span>
+                                                <span class="desc">fired when component 's internal event is bind.</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:afterCreateDom">afterCreateDom</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired when root node is created</span>
                                             </li>
                                             
                                             <li class="li">
@@ -449,7 +469,57 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                <span class="desc">fired after root node is rendered into dom</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:afterSyncUI">afterSyncUI</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired after component 's internal state is synchronized.</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:beforeBindUI">beforeBindUI</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired before component 's internal event is bind.</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:beforeCreateDom">beforeCreateDom</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired before root node is created</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:beforeRenderUI">beforeRenderUI</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
                                                 <span class="desc">fired when root node is ready</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/Component.UIBase.html#event:beforeSyncUI">beforeSyncUI</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired before component 's internal state is synchronized.</span>
                                             </li>
                                             
                                         </ul>
@@ -535,6 +605,47 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".HTML_PARSER"> </a>
+                                            <div class="title">                                                
+                                                <span>Component.UIBase.</span>
+                                                <b class="name">HTML_PARSER</b>
+                                                
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    Parse attribute from existing dom node.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code">Overlay.HTML_PARSER={   // el: root element of current component.   "isRed":function(el){      return el.hasClass("ks-red");   }};</pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -647,47 +758,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name=".UIBase.HTML_PARSER"> </a>
-                                            <div class="title">                                                
-                                                <span>Component.UIBase.</span>
-                                                <b class="name">UIBase.HTML_PARSER</b>
-                                                <span>{Object}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">
-                                                    Parse attribute from existing dom node.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                <dt>Example</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                    <li class="li">
-                                                        <pre class="code">Overlay.HTML_PARSER={   // el: root element of current component.   "isRed":function(el){      return el.hasClass("ks-red");   }};</pre>
-                                                    </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
                                             <a name="xclass"> </a>
                                             <div class="title">                                                
                                                 
@@ -741,7 +811,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line332">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line365">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -780,7 +850,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line272">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line244">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -819,7 +889,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line318">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line351">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -858,7 +928,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line345">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line378">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -889,6 +959,91 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name=".extend"> </a>
+                                            <div class="title">
+                                                <span>Component.UIBase.</span>
+                                                <b class="name">extend</b>
+                                                <span class="param">(extensions, px, sx)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line580">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Create a new class which extends UIBase .
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">extensions</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function[]}</span> 
+                                                            <span class="desc">Class constructors for extending.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">px</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Object to be mixed into new class 's prototype.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">sx</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Object to be mixed into new class.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{UIBase}</span> 
+                                                            <span>A new class which extends UIBase .</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="render"> </a>
                                             <div class="title">
                                                 
@@ -897,7 +1052,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line288">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line272">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -936,7 +1091,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line325">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line358">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -975,7 +1130,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line339">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line372">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1031,11 +1186,67 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line69">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line315">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            fired when component 's internal event is binded.
+                                            fired when component 's internal event is bind.
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:afterCreateDom"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">afterCreateDom</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line262">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired when root node is created
                                             
                                             
                                         </div>
@@ -1087,11 +1298,291 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line61">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line294">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired after root node is rendered into dom
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:afterSyncUI"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">afterSyncUI</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line337">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired after component 's internal state is synchronized.
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:beforeBindUI"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">beforeBindUI</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line304">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired before component 's internal event is bind.
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:beforeCreateDom"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">beforeCreateDom</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line253">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired before root node is created
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:beforeRenderUI"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">beforeRenderUI</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line284">view source</a>
                                         </div>
                                         
                                         <div class="desc">
                                             fired when root node is ready
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
+                                        <a name="event:beforeSyncUI"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">beforeSyncUI</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_base.js.html#line325">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired before component 's internal state is synchronized.
                                             
                                             
                                         </div>

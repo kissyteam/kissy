@@ -261,17 +261,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/ComboBox.html#appendSeparatorOnComplete">appendSeparatorOnComplete</a></b>
-                                                <span class="type">{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">Whether append separator after auto-completed value.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/ComboBox.html#autoHighlightFirst">autoHighlightFirst</a></b>
                                                 <span class="type">{Boolean}</span>
                                                 
@@ -382,28 +371,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/ComboBox.html#queryAtStart">queryAtStart</a></b>
-                                                <span class="type">{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">Whether query at start of input when allow multiple.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/ComboBox.html#selectedItem">selectedItem</a></b>
-                                                <span class="type">{Menu.Item}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">Readonly.User selected menu item by click or enter on highlighted suggested menu item</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/ComboBox.html#separator">separator</a></b>
                                                 <span class="type">{String}</span>
                                                 
@@ -415,13 +382,13 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/ComboBox.html#strAppendedOnComplete">strAppendedOnComplete</a></b>
+                                                <b class="name"><a href="../symbols/ComboBox.html#separatorType">separatorType</a></b>
                                                 <span class="type">{String}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">String appended to selected value after click combobox item.</span>                                                
+                                                <span class="desc">Separator type.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -433,17 +400,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Whether update input's value at keydown or up when combobox menu shows.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/ComboBox.html#whitespace">whitespace</a></b>
-                                                <span class="type">{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">Whether whitespace is part of toke value.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -506,6 +462,16 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">
                                                 
+                                                <b class="name"><a href="../symbols/ComboBox.html#event:afterCollapsedChange">afterCollapsedChange</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired after combobox 's collapsed attribute is changed.</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
                                                 <b class="name"><a href="../symbols/ComboBox.html#event:click">click</a></b>
                                                 <span class="param">(e)</span>
                                                 
@@ -518,7 +484,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="list summary-list">
-                                        <li class="li">Events borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#event:afterBindUI">afterBindUI</a>, <a href="../symbols/Component.UIBase.html#event:afterRenderUI">afterRenderUI</a></li>
+                                        <li class="li">Events borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#event:afterBindUI">afterBindUI</a>, <a href="../symbols/Component.UIBase.html#event:afterCreateDom">afterCreateDom</a>, <a href="../symbols/Component.UIBase.html#event:afterRenderUI">afterRenderUI</a>, <a href="../symbols/Component.UIBase.html#event:afterSyncUI">afterSyncUI</a>, <a href="../symbols/Component.UIBase.html#event:beforeBindUI">beforeBindUI</a>, <a href="../symbols/Component.UIBase.html#event:beforeCreateDom">beforeCreateDom</a>, <a href="../symbols/Component.UIBase.html#event:beforeRenderUI">beforeRenderUI</a>, <a href="../symbols/Component.UIBase.html#event:beforeSyncUI">beforeSyncUI</a></li>
                                         </ul>
                                         
                                     </div>
@@ -589,36 +555,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="desc">
                                                     Whether align menu with individual token after separated by separator.Default : false
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="appendSeparatorOnComplete"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">appendSeparatorOnComplete</b>
-                                                <span>{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    Whether append separator after auto-completed value.Default true
                                                     
                                                     
                                                 </span>
@@ -938,66 +874,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="queryAtStart"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">queryAtStart</b>
-                                                <span>{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    Whether query at start of input when allow multiple.Default: true.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="selectedItem"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">selectedItem</b>
-                                                <span>{<a href="../symbols/Menu.Item.html">Menu.Item</a>}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    Readonly.User selected menu item by click or enter on highlighted suggested menu item
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
                                             <a name="separator"> </a>
                                             <div class="title">                                                
                                                 
@@ -1028,17 +904,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="strAppendedOnComplete"> </a>
+                                            <a name="separatorType"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">strAppendedOnComplete</b>
+                                                <b class="name">separatorType</b>
                                                 <span>{String}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    String appended to selected value after click combobox item.
+                                                    Separator type.After value( 'suffix' ) or before value( 'prefix' ).
                                                     
                                                     
                                                 </span>
@@ -1087,36 +963,6 @@ a.go-top:active{text-decoration:none;}
                                             </dl>
                                         </li>
                                     
-                                        <li class="li">
-                                            <a name="whitespace"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">whitespace</b>
-                                                <span>{Boolean}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    Whether whitespace is part of toke value.Default true
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
                                     </ul>
                                 </div>
                             </div>
@@ -1141,7 +987,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_base.js.html#line123">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_base.js.html#line68">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1203,6 +1049,80 @@ a.go-top:active{text-decoration:none;}
                                 <ul class="detail-list">
                                     
                                     <li>
+                                        <a name="event:afterCollapsedChange"> </a>
+                                        <div class="title">
+                                            
+                                            
+                                            <b class="name">afterCollapsedChange</b>
+                                            <span class="param">(e)</span>
+                                            
+                                            
+                                            
+                                            
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_base.js.html#line48">view source</a>
+                                        </div>
+                                        
+                                        <div class="desc">
+                                            fired after combobox 's collapsed attribute is changed.
+                                            
+                                            
+                                        </div>
+                                        
+                                        <dl>
+                                            
+                                            <dt>Parameters</dt>
+                                            <dd>
+                                                <ul class="list param-list">
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc"></span>
+                                                    </li>
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e.newVal</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc">current value</span>
+                                                    </li>
+                                                
+                                                    <li class="li">
+                                                        &nbsp;
+                                                        <b class="name">e.prevVal</b>
+                                                        
+                                                        
+                                                        
+                                                        <span class="desc">previous value</span>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dt>
+
+                                            
+                                            
+                                        </dl>
+                                    </li>
+                                    
+                                    <li>
                                         <a name="event:click"> </a>
                                         <div class="title">
                                             
@@ -1213,7 +1133,7 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_base.js.html#line286">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_combobox_src_base.js.html#line184">view source</a>
                                         </div>
                                         
                                         <div class="desc">
