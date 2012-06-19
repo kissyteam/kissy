@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 22:02
+build time: Jun 19 16:41
 */
 /**
  * ie selection fix.
@@ -474,5 +474,5 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base', './selection']
 });

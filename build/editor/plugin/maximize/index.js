@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 22:02
+build time: Jun 19 16:41
 */
 /**
  * Maximize plugin

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 22:02
+build time: Jun 19 16:41
 */
 /**
  * Set up editor constructor
@@ -145,10 +145,9 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/clipboard", function (S, Editor) {
+KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     var $ = S.all,
         UA = S.UA,
-        KERange = Editor.Range,
         KER = Editor.RANGE,
         Event = S.Event;
 
@@ -361,7 +360,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor) {
             return success;
         }
     };
-    var KES = Editor.Selection;
+
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
         if (!UA['ie'] || editor.get("document")[0].compatMode == 'BackCompat')
@@ -441,7 +440,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base', './range', './selection']
 });
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -1821,14 +1820,12 @@ KISSY.add("editor/core/elementPath", function (S) {
  * monitor user's enter and shift enter keydown,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/enterKey", function (S,Editor) {
+KISSY.add("editor/core/enterKey", function (S,Editor,Walker,ElementPath) {
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
-        Event = S.Event,
-        Walker = Editor.Walker,
-        ElementPath = Editor.ElementPath;
+        Event = S.Event;
 
 
     function getRange(editor) {
@@ -2024,7 +2021,7 @@ KISSY.add("editor/core/enterKey", function (S,Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base','./walker','./elementPath']
 });
 /**
  * 多实例的管理，主要是焦点控制，主要是为了
@@ -5864,7 +5861,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base', './selection']
 });
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.

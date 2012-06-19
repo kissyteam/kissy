@@ -2,10 +2,9 @@
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/clipboard", function (S, Editor) {
+KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     var $ = S.all,
         UA = S.UA,
-        KERange = Editor.Range,
         KER = Editor.RANGE,
         Event = S.Event;
 
@@ -218,7 +217,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor) {
             return success;
         }
     };
-    var KES = Editor.Selection;
+
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
         if (!UA['ie'] || editor.get("document")[0].compatMode == 'BackCompat')
@@ -298,5 +297,5 @@ KISSY.add("editor/core/clipboard", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base', './range', './selection']
 });

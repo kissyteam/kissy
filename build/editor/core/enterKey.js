@@ -1,20 +1,18 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 22:02
+build time: Jun 19 16:41
 */
 /**
  * monitor user's enter and shift enter keydown,modified from ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/enterKey", function (S,Editor) {
+KISSY.add("editor/core/enterKey", function (S,Editor,Walker,ElementPath) {
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
-        Event = S.Event,
-        Walker = Editor.Walker,
-        ElementPath = Editor.ElementPath;
+        Event = S.Event;
 
 
     function getRange(editor) {
@@ -210,5 +208,5 @@ KISSY.add("editor/core/enterKey", function (S,Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires:['./base','./walker','./elementPath']
 });
