@@ -61,7 +61,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
             {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
-                 * Whether the popup menu is focuable.
+                 * Whether the popup menu is focusable.
                  * Default : false.
                  * @type Boolean
                  */
@@ -78,15 +78,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  * @type Boolean
                  */
                 autoHideOnMouseLeave:{},
-                /**
-                 * After how much time the popup menu hides when mouseleave.
-                 * Unit : second.
-                 * Default : .1
-                 * @type Number
-                 */
-                autoHideDelay:{
-                    value:.1
-                },
                 xrender:{
                     value:PopupMenuRender
                 }

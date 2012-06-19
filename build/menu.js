@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 20 00:27
+build time: Jun 20 00:46
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -814,7 +814,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
         containsElement:function (element) {
             var el = this.get("el");
-            return el[0] == element || el.contains(element);
+            return el && ( el[0] == element || el.contains(element));
         }
     }, {
         ATTRS:{
@@ -908,7 +908,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
             {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
-                 * Whether the popup menu is focuable.
+                 * Whether the popup menu is focusable.
                  * Default : false.
                  * @type Boolean
                  */
@@ -925,15 +925,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  * @type Boolean
                  */
                 autoHideOnMouseLeave:{},
-                /**
-                 * After how much time the popup menu hides when mouseleave.
-                 * Unit : second.
-                 * Default : .1
-                 * @type Number
-                 */
-                autoHideDelay:{
-                    value:.1
-                },
                 xrender:{
                     value:PopupMenuRender
                 }
@@ -1073,9 +1064,12 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
                     // if not bind doc click for parent menu
                     // if already bind, then if parent menu hide, menu will hide too
+                    // !TODO 优化此处绑定！，不要特殊标记
                     if (!parentMenu.__bindDocClickToHide) {
+                        // 绑到最根部
                         Event.on(doc, "click", _onDocClick, self);
                         parentMenu.__bindDocClickToHide = 1;
+                        // 绑到最根部
                         menu.__bindDocClickToHide = 1;
                     }
 
@@ -1348,6 +1342,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         var self = this,
             menu = getMenu(self, 1);
         if (menu) {
+
             // 保证显示前已经绑定好事件
             self.bindSubMenu();
 

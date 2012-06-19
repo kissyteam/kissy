@@ -46,9 +46,12 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
                     // if not bind doc click for parent menu
                     // if already bind, then if parent menu hide, menu will hide too
+                    // !TODO 优化此处绑定！，不要特殊标记
                     if (!parentMenu.__bindDocClickToHide) {
+                        // 绑到最根部
                         Event.on(doc, "click", _onDocClick, self);
                         parentMenu.__bindDocClickToHide = 1;
+                        // 绑到最根部
                         menu.__bindDocClickToHide = 1;
                     }
 
@@ -321,6 +324,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         var self = this,
             menu = getMenu(self, 1);
         if (menu) {
+
             // 保证显示前已经绑定好事件
             self.bindSubMenu();
 
