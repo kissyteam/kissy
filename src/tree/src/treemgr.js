@@ -14,10 +14,11 @@ KISSY.add("tree/treemgr", function (S, Event) {
     {
         /**
          * Whether show root node.
-         * Default:false.
+         * Default:true.
          * @type Boolean
          */
         showRootNode:{
+            value:true,
             view:1
         },
         /**
@@ -35,6 +36,15 @@ KISSY.add("tree/treemgr", function (S, Event) {
             value:true
         }
     };
+
+    function getIdFromNode(c) {
+        var el = c.get("el"),
+            id = el.attr("id");
+        if (!id) {
+            el.attr("id", id=S.guid("tree-node"));
+        }
+        return id;
+    }
 
     S.augment(TreeMgr, {
         /*
@@ -57,11 +67,11 @@ KISSY.add("tree/treemgr", function (S, Event) {
         },
 
         _register:function (c) {
-            this.__getAllNodes()[c.get("id")] = c;
+            this.__getAllNodes()[getIdFromNode(c)] = c;
         },
 
         _unRegister:function (c) {
-            delete this.__getAllNodes()[c.get("id")];
+            delete this.__getAllNodes()[getIdFromNode(c)];
         },
 
         handleKeyEventInternal:function (e) {

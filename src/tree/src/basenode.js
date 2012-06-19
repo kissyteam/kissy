@@ -286,21 +286,6 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 handleMouseEvents:{
                     value:false
                 },
-                /**
-                 * Current tree node 's id.
-                 * Will generated automatically.
-                 * @type String
-                 */
-                id:{
-                    getter:function () {
-                        var self = this,
-                            id = self.get("el").attr("id");
-                        if (!id) {
-                            self.get("el").attr("id", id = S.guid("tree-node"));
-                        }
-                        return id;
-                    }
-                },
 
                 /**
                  * Only For Config.

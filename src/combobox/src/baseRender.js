@@ -40,7 +40,7 @@ KISSY.add("combobox/baseRender", function (S, Component) {
             self.get("trigger").unselectable();
         },
 
-        _uiSetAriaOwns:function (v) {
+        setAriaOwns:function (v) {
             this.get("input").attr("aria-owns", v);
         },
 
@@ -62,7 +62,6 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         }
     }, {
         ATTRS:{
-            ariaOwns:{},
             collapsed:{},
             hasTrigger:{
                 value:true

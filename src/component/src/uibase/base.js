@@ -52,21 +52,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         // 是否自动渲染
         config && config.autoRender && self.render();
-
-        /**
-         * @name Component.UIBase#afterRenderUI
-         * @description fired when root node is ready
-         * @event
-         * @param e
-         */
-
-
-        /**
-         * @name Component.UIBase#afterBindUI
-         * @description fired when component 's internal event is binded.
-         * @event
-         * @param e
-         */
     }
 
     /**
@@ -291,18 +276,67 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 if (!self.get("rendered")) {
                     var plugins = self.get("plugins");
                     self.create(undefined);
+
+                    /**
+                     * @name Component.UIBase#afterRenderUI
+                     * @description fired when root node is ready
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeRenderUI');
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
+
+                    /**
+                     * @name Component.UIBase#afterRenderUI
+                     * @description fired after root node is rendered into dom
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterRenderUI');
                     actionPlugins(self, plugins, "renderUI");
+
+                    /**
+                     * @name Component.UIBase#beforeBindUI
+                     * @description fired before component 's internal event is bind.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeBindUI');
                     bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
+
+                    /**
+                     * @name Component.UIBase#afterBindUI
+                     * @description fired when component 's internal event is bind.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterBindUI');
                     actionPlugins(self, plugins, "bindUI");
+
+                    /**
+                     * @name Component.UIBase#beforeSyncUI
+                     * @description fired before component 's internal state is synchronized.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeSyncUI');
+
                     syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
+
+                    /**
+                     * @name Component.UIBase#afterSyncUI
+                     * @description fired after component 's internal state is synchronized.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterSyncUI');
                     actionPlugins(self, plugins, "syncUI");
                     self.__set("rendered", true);

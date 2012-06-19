@@ -4,8 +4,8 @@
  */
 KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
 
-
     var ComboBoxMenu,
+
         window = S.Env.host;
 
     /**
@@ -31,69 +31,45 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
 
                 self.on("click", function (e) {
                     var item = e.target;
-                    var input = self.get("parent");
+                    var combobox = self.get("parent");
                     // stop valuechange event
-                    input._stopNotify = 1;
-                    input.set("selectedItem", item);
-                    input.set("collapsed", true);
+                    combobox._stopNotify = 1;
+                    combobox._selectItem(item);
+                    combobox.set("collapsed", true);
                     setTimeout(
                         function () {
-                            input._stopNotify = 0;
+                            combobox._stopNotify = 0;
                         },
                         // valuechange interval
                         50
                     );
                 });
 
-                var reAlign = S.buffer(function () {
-                    var self = this;
-                    if (self.get("visible")) {
-                        self.get("parent")._onWindowResize();
-                    }
-                }, 50);
-
-                self.__reAlign = reAlign;
-
                 Event.on(window, "resize", reAlign, self);
 
                 var el = self.get("el");
                 var contentEl = self.get("contentEl");
 
-                el.on("focusin", function () {
-                    self._clearDismissTimer();
-                });
+                el.on("focusin", clearDismissTimer, self);
 
-                el.on("focusout", function () {
-                    self._hideForComboBox();
-                });
+                el.on("focusout", delayHide, self);
 
                 contentEl.on("mouseover", function () {
-                    var input = self.get("parent");
-                    // trigger el focusous
-                    input.get("input")[0].focus();
+                    var combobox = self.get("parent");
+                    // trigger el focus
+                    combobox.get("input")[0].focus();
                     // prevent menu from hiding
-                    self._clearDismissTimer();
+                    clearDismissTimer.call(self);
                 });
             },
 
-            _clearDismissTimer:function () {
-                var self = this;
-                if (self._dismissTimer) {
-                    clearTimeout(self._dismissTimer);
-                    self._dismissTimer = null;
-                }
-            },
+            _clearDismissTimer:clearDismissTimer,
 
-            _hideForComboBox:function () {
-                var self = this;
-                self._dismissTimer = setTimeout(function () {
-                    self.get("parent").set("collapsed", true);
-                }, 30);
-            },
+            _delayHide:delayHide,
 
             destructor:function () {
                 var self = this;
-                Event.remove(window, "resize", self.__reAlign, self);
+                Event.remove(window, "resize", reAlign, self);
             }
         }, {
             ATTRS:{
@@ -111,6 +87,33 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
             xclass:'combobox-menu',
             priority:40
         });
+
+
+    // # ---------------------- private start
+
+    function clearDismissTimer() {
+        var self = this;
+        if (self._dismissTimer) {
+            clearTimeout(self._dismissTimer);
+            self._dismissTimer = null;
+        }
+    }
+
+    function delayHide() {
+        var self = this;
+        self._dismissTimer = setTimeout(function () {
+            self.get("parent").set("collapsed", true);
+        }, 30);
+    }
+
+    var reAlign = S.buffer(function () {
+        var self = this;
+        if (self.get("visible")) {
+            self.get("parent")._onWindowResize();
+        }
+    }, 50);
+
+    // # ---------------------- private end
 
     return ComboBoxMenu;
 }, {

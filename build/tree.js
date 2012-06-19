@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 20:06
+build time: Jun 19 14:23
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -342,21 +342,6 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 // 事件代理
                 handleMouseEvents:{
                     value:false
-                },
-                /**
-                 * Current tree node 's id.
-                 * Will generated automatically.
-                 * @type String
-                 */
-                id:{
-                    getter:function () {
-                        var self = this,
-                            id = self.get("el").attr("id");
-                        if (!id) {
-                            self.get("el").attr("id", id = S.guid("tree-node"));
-                        }
-                        return id;
-                    }
                 },
 
                 /**
@@ -925,10 +910,11 @@ KISSY.add("tree/treemgr", function (S, Event) {
     {
         /**
          * Whether show root node.
-         * Default:false.
+         * Default:true.
          * @type Boolean
          */
         showRootNode:{
+            value:true,
             view:1
         },
         /**
@@ -946,6 +932,15 @@ KISSY.add("tree/treemgr", function (S, Event) {
             value:true
         }
     };
+
+    function getIdFromNode(c) {
+        var el = c.get("el"),
+            id = el.attr("id");
+        if (!id) {
+            el.attr("id", id=S.guid("tree-node"));
+        }
+        return id;
+    }
 
     S.augment(TreeMgr, {
         /*
@@ -968,11 +963,11 @@ KISSY.add("tree/treemgr", function (S, Event) {
         },
 
         _register:function (c) {
-            this.__getAllNodes()[c.get("id")] = c;
+            this.__getAllNodes()[getIdFromNode(c)] = c;
         },
 
         _unRegister:function (c) {
-            delete this.__getAllNodes()[c.get("id")];
+            delete this.__getAllNodes()[getIdFromNode(c)];
         },
 
         handleKeyEventInternal:function (e) {
