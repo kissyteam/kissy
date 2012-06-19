@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:19
+build time: Jun 19 15:35
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -9,6 +9,7 @@ build time: Jun 15 17:19
  */
 KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBoxRender, _, undefined) {
     var ComboBox,
+        SUFFIX = 'suffix',
         KeyCodes = Event.KeyCodes,
         ALIGN = {
             points:["bl", "tl"],
@@ -17,73 +18,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 adjustY:1
             }
         };
-
-    function getMenu(self, init) {
-        var m = self.get("menu");
-        if (m && m.xclass) {
-            if (init) {
-                m = Component.create(m, self);
-                self.__set("menu", m);
-            } else {
-                return null;
-            }
-        }
-        return m;
-    }
-
-    function alignMenuImmediately(self) {
-        var menu = self.get("menu");
-        var align = S.clone(menu.get("align"));
-        align.node = self.get("el");
-        S.mix(align, ALIGN, false);
-        menu.set("align", align);
-    }
-
-    function alignWithTokenImmediately(self) {
-        var inputDesc = self._getInputDesc(),
-            tokens = inputDesc.tokens,
-            menu = self.get("menu"),
-            cursorPosition = inputDesc.cursorPosition,
-            tokenIndex = inputDesc.tokenIndex,
-            tokenCursorPosition,
-            input = self.get("input");
-        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
-        if (tokenCursorPosition > 0) {
-            // behind separator
-            ++tokenCursorPosition;
-        }
-        input.prop("selectionStart", tokenCursorPosition);
-        input.prop("selectionEnd", tokenCursorPosition);
-        var cursorOffset = input.prop("KsCursorOffset");
-        input.prop("selectionStart", cursorPosition);
-        input.prop("selectionEnd", cursorPosition);
-        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
-    }
-
-    function alignImmediately(self) {
-        if (self.get("multiple") && self.get("alignWithCursor")) {
-            alignWithTokenImmediately(self);
-        } else {
-            alignMenuImmediately(self);
-        }
-    }
-
-    function onTriggerClick() {
-        var self = this,
-            input = self.get("input"),
-            menu = getMenu(self);
-
-        if (menu && menu.get("visible")) {
-            self.set('collapsed', true);
-        } else {
-            input[0].focus();
-            self.sendRequest('');
-        }
-    }
-
-    function onTriggerMouseDown(e) {
-        e.preventDefault();
-    }
 
     /**
      * @name ComboBox
@@ -106,7 +40,18 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             bindUI:function () {
                 var self = this,
                     input = self.get("input");
-                input.on("valuechange", self._onValueChange, self);
+                input.on("valuechange", onValueChange, self);
+
+
+                /**
+                 * @name ComboBox#afterCollapsedChange
+                 * @description fired after combobox 's collapsed attribute is changed.
+                 * @event
+                 * @param e
+                 * @param e.newVal current value
+                 * @param e.prevVal previous value
+                 */
+
             },
 
             _uiSetHasTrigger:function (v) {
@@ -128,22 +73,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             sendRequest:function (value) {
                 var self = this,
                     dataSource = self.get("dataSource");
-                dataSource.fetchData(value, self._renderData, self);
-            },
-
-            _onValueChange:function () {
-                var self = this;
-                if (self._stopNotify) {
-                    return;
-                }
-                var value = self._getValue();
-                if (value === undefined) {
-                    self.set("collapsed", true);
-                    return;
-                }
-                self._savedInputValue = value;
-                S.log("value change: " + value);
-                self.sendRequest(value);
+                dataSource.fetchData(value, renderData, self);
             },
 
             _uiSetCollapsed:function (v) {
@@ -157,9 +87,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                         if (self.get("matchElWidth")) {
                             comboBoxMenu.set("width", self.get("el").innerWidth());
                         }
-                        if (!self.get("ariaOwns")) {
-                            self.set("ariaOwns", comboBoxMenu.get("el")[0].id)
-                        }
+                        self.get("view").setAriaOwns(comboBoxMenu.get("el")[0].id);
                     }
                 }
             },
@@ -171,38 +99,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 // S.log("input blur!!!!!!!");
                 if (comboBoxMenu) {
                     // 通知 menu
-                    comboBoxMenu._hideForComboBox();
-                }
-            },
-
-            _renderData:function (data) {
-                var self = this,
-                    v,
-                    contents,
-                    i,
-                    comboBoxMenu = getMenu(self, 1);
-
-                comboBoxMenu.removeChildren(true);
-
-                if (data && data.length) {
-                    data = data.slice(0, self.get("maxItemCount"));
-                    if (self.get("format")) {
-                        contents = self.get("format").call(self, self._getValue(), data);
-                    } else {
-                        contents = [];
-                    }
-                    for (i = 0; i < data.length; i++) {
-                        v = data[i];
-                        comboBoxMenu.addChild(S.mix({
-                            xclass:'menuitem',
-                            content:v,
-                            textContent:v,
-                            value:v
-                        }, contents[i]))
-                    }
-                    _showMenu(self);
-                } else {
-                    self.set("collapsed", true);
+                    comboBoxMenu._delayHide();
                 }
             },
 
@@ -243,7 +140,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     if (updateInputOnDownUp) {
                         if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                             // update menu's active value to input just for show
-                            self._setValue(comboBoxMenu.get("activeItem").get("textContent"));
+                            setValue(self, comboBoxMenu.get("activeItem").get("textContent"));
                         }
                     }
                     // esc
@@ -251,7 +148,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                         self.set("collapsed", true);
                         if (updateInputOnDownUp) {
                             // restore original user's input text
-                            self._setValue(self._savedInputValue);
+                            setValue(self, self._savedInputValue);
                         }
                         return true;
                     }
@@ -270,17 +167,18 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     return handledByMenu;
                 } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
                     // re-fetch , consider multiple input
-                    S.log("refetch : " + self._getValue());
-                    self.sendRequest(self._getValue());
+                    S.log("refetch : " + getValue(self));
+                    self.sendRequest(getValue(self));
                     return true;
                 }
             },
 
-            _uiSetSelectedItem:function (item) {
+            _selectItem:function (item) {
                 var self = this;
                 if (item) {
                     var textContent = item.get("textContent");
-                    self._setValue(textContent + self.get("strAppendedOnComplete"));
+                    var separatorType = self.get("separatorType");
+                    setValue(self, textContent + (separatorType == SUFFIX ? "" : " "));
                     self._savedInputValue = textContent;
                     /**
                      * @name ComboBox#click
@@ -293,132 +191,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                         target:item
                     });
                 }
-            },
-
-            /**
-             * Consider multiple mode , get token at current cursor position
-             */
-            _getValue:function () {
-                var self = this,
-                    input = self.get("input"),
-                    inputVal = input.val();
-                if (self.get("multiple")) {
-                    var inputDesc = self._getInputDesc();
-                    var tokens = inputDesc.tokens,
-                        tokenIndex = inputDesc.tokenIndex;
-                    var separator = self.get("separator");
-                    var token = tokens[tokenIndex] || "";
-                    // only if token starts with separator , then token has meaning!
-                    // token can not be empty
-                    if (token && separator.indexOf(token.charAt(0)) != -1) {
-                        // remove separator
-                        return token.substring(1);
-                    }
-                    if (// cursor is at the beginning of textarea
-                    // whether to trigger comboBox
-                        self.get("queryAtStart") &&
-                            (tokenIndex == 0 || tokenIndex == -1)
-                        ) {
-                        return token;
-                    }
-                    return undefined;
-                } else {
-                    return inputVal;
-                }
-            },
-
-            _setValue:function (value) {
-                var self = this,
-                    input = self.get("input");
-                if (self.get("multiple")) {
-                    var inputDesc = self._getInputDesc();
-                    var tokens = inputDesc.tokens,
-                        tokenIndex = Math.max(0, inputDesc.tokenIndex);
-
-                    var separator = self.get("separator");
-                    var cursorPosition;
-                    var appendSeparatorOnComplete = self.get("appendSeparatorOnComplete");
-
-                    var token = tokens[tokenIndex];
-
-                    if (token && separator.indexOf(token.charAt(0)) != -1) {
-                        tokens[tokenIndex] = token.charAt(0);
-                    } else {
-                        tokens[tokenIndex] = "";
-                    }
-
-                    tokens[tokenIndex] += value;
-
-                    var nextToken = tokens[tokenIndex + 1];
-
-                    // appendSeparatorOnComplete if next token does not start with separator
-                    if (appendSeparatorOnComplete &&
-                        (!nextToken || separator.indexOf(nextToken.charAt(0)) == -1 )) {
-                        tokens[tokenIndex] += separator.charAt(0);
-                    }
-
-                    cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
-
-                    input.val(tokens.join(""));
-
-                    input.prop("selectionStart", cursorPosition);
-                    input.prop("selectionEnd", cursorPosition);
-                } else {
-                    input.val(value);
-                }
-            },
-
-            _getInputDesc:function () {
-                var self = this,
-                    input = self.get("input"),
-                    inputVal = input.val(),
-                    tokens = [],
-                    cache = [],
-                    literal = self.get("literal"),
-                    separator = self.get("separator"),
-                    inLiteral = false,
-                    whitespace = self.get("whitespace"),
-                    cursorPosition = input.prop('selectionStart'),
-                    tokenIndex = -1;
-
-                for (var i = 0; i < inputVal.length; i++) {
-                    var c = inputVal.charAt(i);
-                    if (i == cursorPosition) {
-                        // current token index
-                        tokenIndex = tokens.length;
-                    }
-                    if (!inLiteral) {
-                        // whitespace is not part of token value
-                        // then separate
-                        if (!whitespace && /\s|\xa0/.test(c)) {
-                            tokens.push(cache.join(""));
-                            cache = [];
-                        }
-
-                        if (separator.indexOf(c) != -1) {
-                            tokens.push(cache.join(""));
-                            cache = [];
-                        }
-                    }
-                    if (literal) {
-                        if (c == literal) {
-                            inLiteral = !inLiteral;
-                        }
-                    }
-                    cache.push(c);
-                }
-
-                if (cache.length) {
-                    tokens.push(cache.join(""));
-                }
-                if (tokenIndex == -1) {
-                    tokenIndex = tokens.length - 1;
-                }
-                return {
-                    tokens:tokens,
-                    cursorPosition:cursorPosition,
-                    tokenIndex:tokenIndex
-                };
             }
         },
         {
@@ -460,15 +232,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 },
 
                 /**
-                 * aria-owns.ReadOnly.
-                 * @type String
-                 * @private
-                 */
-                ariaOwns:{
-                    view:1
-                },
-
-                /**
                  * Whether combobox menu is hidden.
                  * @type Boolean
                  */
@@ -501,7 +264,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type {Boolean}
                  */
                 matchElWidth:{
-                  value:true
+                    value:true
                 },
 
                 /**
@@ -510,13 +273,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @type {Function}
                  */
                 format:{
-                },
-
-                /**
-                 * Readonly.User selected menu item by click or enter on highlighted suggested menu item
-                 * @type Menu.Item
-                 */
-                selectedItem:{
                 },
 
                 /**
@@ -537,30 +293,24 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 },
 
                 /**
+                 * Separator type.
+                 * After value( 'suffix' ) or before value( 'prefix' ).
+                 * @type String
+                 */
+                separatorType:{
+                    value:SUFFIX
+                },
+
+                /**
                  * Whether whitespace is part of toke value.
                  * Default true
                  * @type Boolean
+                 * @private
                  */
                 whitespace:{
-                    value:true
-                },
-
-                /**
-                 * Whether append separator after auto-completed value.
-                 * Default true
-                 * @type Boolean
-                 */
-                appendSeparatorOnComplete:{
-                    value:true
-                },
-
-                /**
-                 * Whether query at start of input when allow multiple.
-                 * Default: true.
-                 * @type Boolean
-                 */
-                queryAtStart:{
-                    value:true
+                    valueFn:function () {
+                        return this.get("separatorType") == SUFFIX;
+                    }
                 },
 
                 /**
@@ -597,13 +347,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                 autoHighlightFirst:{
                 },
 
-                /**
-                 * String appended to selected value after click combobox item.
-                 * @type String
-                 */
-                strAppendedOnComplete:{
-                    value:""
-                },
                 xrender:{
                     value:ComboBoxRender
                 }
@@ -618,6 +361,241 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
     // #----------------------- private start
 
+
+    function setValue(self, value) {
+        var input = self.get("input");
+        if (self.get("multiple")) {
+            var inputDesc = getInputDesc(self),
+                tokens = inputDesc.tokens,
+                tokenIndex = Math.max(0, inputDesc.tokenIndex),
+                separator = self.get("separator"),
+                cursorPosition,
+                separatorType = self.get("separatorType"),
+                token = tokens[tokenIndex];
+
+            if (token && separator.indexOf(token.charAt(0)) != -1) {
+                tokens[tokenIndex] = token.charAt(0);
+            } else {
+                tokens[tokenIndex] = "";
+            }
+
+            tokens[tokenIndex] += value;
+
+            var nextToken = tokens[tokenIndex + 1];
+
+            // appendSeparatorOnComplete if next token does not start with separator
+            if (separatorType == SUFFIX && (!nextToken || separator.indexOf(nextToken.charAt(0)) == -1 )) {
+                tokens[tokenIndex] += separator.charAt(0);
+            }
+
+            cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
+
+            input.val(tokens.join(""));
+
+            input.prop("selectionStart", cursorPosition);
+            input.prop("selectionEnd", cursorPosition);
+        } else {
+            input.val(value);
+        }
+    }
+
+
+    /**
+     * Consider multiple mode , get token at current cursor position
+     */
+    function getValue(self) {
+        var input = self.get("input"),
+            inputVal = input.val();
+        if (self.get("multiple")) {
+            var inputDesc = getInputDesc(self);
+            var tokens = inputDesc.tokens,
+                tokenIndex = inputDesc.tokenIndex;
+            var separator = self.get("separator");
+            var separatorType = self.get("separatorType");
+            var token = tokens[tokenIndex] || "";
+            // only if token starts with separator , then token has meaning!
+            // token can not be empty
+            if (token && separator.indexOf(token.charAt(0)) != -1) {
+                // remove separator
+                return token.substring(1);
+            }
+            // cursor is at the beginning of textarea
+            if (separatorType == SUFFIX && (tokenIndex == 0 || tokenIndex == -1)) {
+                return token;
+            }
+            return undefined;
+        } else {
+            return inputVal;
+        }
+    }
+
+
+    function onValueChange() {
+        var self = this;
+        if (self._stopNotify) {
+            return;
+        }
+        var value = getValue(self);
+        if (value === undefined) {
+            self.set("collapsed", true);
+            return;
+        }
+        self._savedInputValue = value;
+        S.log("value change: " + value);
+        self.sendRequest(value);
+    }
+
+    function renderData(data) {
+        var self = this,
+            v,
+            contents,
+            i,
+            comboBoxMenu = getMenu(self, 1);
+
+        comboBoxMenu.removeChildren(true);
+
+        if (data && data.length) {
+            data = data.slice(0, self.get("maxItemCount"));
+            if (self.get("format")) {
+                contents = self.get("format").call(self, getValue(self), data);
+            } else {
+                contents = [];
+            }
+            for (i = 0; i < data.length; i++) {
+                v = data[i];
+                comboBoxMenu.addChild(S.mix({
+                    xclass:'menuitem',
+                    content:v,
+                    textContent:v,
+                    value:v
+                }, contents[i]))
+            }
+            _showMenu(self);
+        } else {
+            self.set("collapsed", true);
+        }
+    }
+
+    function getMenu(self, init) {
+        var m = self.get("menu");
+        if (m && m.xclass) {
+            if (init) {
+                m = Component.create(m, self);
+                self.__set("menu", m);
+            } else {
+                return null;
+            }
+        }
+        return m;
+    }
+
+    function alignMenuImmediately(self) {
+        var menu = self.get("menu");
+        var align = S.clone(menu.get("align"));
+        align.node = self.get("el");
+        S.mix(align, ALIGN, false);
+        menu.set("align", align);
+    }
+
+    function alignWithTokenImmediately(self) {
+        var inputDesc = getInputDesc(self),
+            tokens = inputDesc.tokens,
+            menu = self.get("menu"),
+            cursorPosition = inputDesc.cursorPosition,
+            tokenIndex = inputDesc.tokenIndex,
+            tokenCursorPosition,
+            cursorOffset,
+            input = self.get("input");
+        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
+        if (tokenCursorPosition > 0) {
+            // behind separator
+            ++tokenCursorPosition;
+        }
+        input.prop("selectionStart", tokenCursorPosition);
+        input.prop("selectionEnd", tokenCursorPosition);
+        cursorOffset = input.prop("KsCursorOffset");
+        input.prop("selectionStart", cursorPosition);
+        input.prop("selectionEnd", cursorPosition);
+        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
+    }
+
+    function alignImmediately(self) {
+        if (self.get("multiple") && self.get("alignWithCursor")) {
+            alignWithTokenImmediately(self);
+        } else {
+            alignMenuImmediately(self);
+        }
+    }
+
+    function onTriggerClick() {
+        var self = this,
+            input = self.get("input"),
+            menu = getMenu(self);
+
+        if (menu && menu.get("visible")) {
+            self.set('collapsed', true);
+        } else {
+            input[0].focus();
+            self.sendRequest('');
+        }
+    }
+
+    function onTriggerMouseDown(e) {
+        e.preventDefault();
+    }
+
+    function getInputDesc(self) {
+        var input = self.get("input"),
+            inputVal = input.val(),
+            tokens = [],
+            cache = [],
+            literal = self.get("literal"),
+            separator = self.get("separator"),
+            inLiteral = false,
+            whitespace = self.get("whitespace"),
+            cursorPosition = input.prop('selectionStart'),
+            tokenIndex = -1;
+
+        for (var i = 0; i < inputVal.length; i++) {
+            var c = inputVal.charAt(i);
+            if (i == cursorPosition) {
+                // current token index
+                tokenIndex = tokens.length;
+            }
+            if (!inLiteral) {
+                // whitespace is not part of token value
+                // then separate
+                if (!whitespace && /\s|\xa0/.test(c)) {
+                    tokens.push(cache.join(""));
+                    cache = [];
+                }
+
+                if (separator.indexOf(c) != -1) {
+                    tokens.push(cache.join(""));
+                    cache = [];
+                }
+            }
+            if (literal) {
+                if (c == literal) {
+                    inLiteral = !inLiteral;
+                }
+            }
+            cache.push(c);
+        }
+
+        if (cache.length) {
+            tokens.push(cache.join(""));
+        }
+        if (tokenIndex == -1) {
+            tokenIndex = tokens.length - 1;
+        }
+        return {
+            tokens:tokens,
+            cursorPosition:cursorPosition,
+            tokenIndex:tokenIndex
+        };
+    }
+
     function _showMenu(self) {
         var children,
             val,
@@ -628,7 +606,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         self.set("collapsed", false);
         // make menu item (which textContent is same as input) active
         children = menu.get("children");
-        val = self._getValue();
+        val = getValue(self);
         for (i = 0; i < children.length; i++) {
             if (children[i].get("textContent") == val) {
                 menu.set("highlightedItem", children[i]);
@@ -714,7 +692,7 @@ KISSY.add("combobox/baseRender", function (S, Component) {
             self.get("trigger").unselectable();
         },
 
-        _uiSetAriaOwns:function (v) {
+        setAriaOwns:function (v) {
             this.get("input").attr("aria-owns", v);
         },
 
@@ -736,7 +714,6 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         }
     }, {
         ATTRS:{
-            ariaOwns:{},
             collapsed:{},
             hasTrigger:{
                 value:true
@@ -859,8 +836,8 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
  */
 KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
 
-
     var ComboBoxMenu,
+
         window = S.Env.host;
 
     /**
@@ -886,69 +863,45 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
 
                 self.on("click", function (e) {
                     var item = e.target;
-                    var input = self.get("parent");
+                    var combobox = self.get("parent");
                     // stop valuechange event
-                    input._stopNotify = 1;
-                    input.set("selectedItem", item);
-                    input.set("collapsed", true);
+                    combobox._stopNotify = 1;
+                    combobox._selectItem(item);
+                    combobox.set("collapsed", true);
                     setTimeout(
                         function () {
-                            input._stopNotify = 0;
+                            combobox._stopNotify = 0;
                         },
                         // valuechange interval
                         50
                     );
                 });
 
-                var reAlign = S.buffer(function () {
-                    var self = this;
-                    if (self.get("visible")) {
-                        self.get("parent")._onWindowResize();
-                    }
-                }, 50);
-
-                self.__reAlign = reAlign;
-
                 Event.on(window, "resize", reAlign, self);
 
                 var el = self.get("el");
                 var contentEl = self.get("contentEl");
 
-                el.on("focusin", function () {
-                    self._clearDismissTimer();
-                });
+                el.on("focusin", clearDismissTimer, self);
 
-                el.on("focusout", function () {
-                    self._hideForComboBox();
-                });
+                el.on("focusout", delayHide, self);
 
                 contentEl.on("mouseover", function () {
-                    var input = self.get("parent");
-                    // trigger el focusous
-                    input.get("input")[0].focus();
+                    var combobox = self.get("parent");
+                    // trigger el focus
+                    combobox.get("input")[0].focus();
                     // prevent menu from hiding
-                    self._clearDismissTimer();
+                    clearDismissTimer.call(self);
                 });
             },
 
-            _clearDismissTimer:function () {
-                var self = this;
-                if (self._dismissTimer) {
-                    clearTimeout(self._dismissTimer);
-                    self._dismissTimer = null;
-                }
-            },
+            _clearDismissTimer:clearDismissTimer,
 
-            _hideForComboBox:function () {
-                var self = this;
-                self._dismissTimer = setTimeout(function () {
-                    self.get("parent").set("collapsed", true);
-                }, 30);
-            },
+            _delayHide:delayHide,
 
             destructor:function () {
                 var self = this;
-                Event.remove(window, "resize", self.__reAlign, self);
+                Event.remove(window, "resize", reAlign, self);
             }
         }, {
             ATTRS:{
@@ -966,6 +919,33 @@ KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
             xclass:'combobox-menu',
             priority:40
         });
+
+
+    // # ---------------------- private start
+
+    function clearDismissTimer() {
+        var self = this;
+        if (self._dismissTimer) {
+            clearTimeout(self._dismissTimer);
+            self._dismissTimer = null;
+        }
+    }
+
+    function delayHide() {
+        var self = this;
+        self._dismissTimer = setTimeout(function () {
+            self.get("parent").set("collapsed", true);
+        }, 30);
+    }
+
+    var reAlign = S.buffer(function () {
+        var self = this;
+        if (self.get("visible")) {
+            self.get("parent")._onWindowResize();
+        }
+    }, 50);
+
+    // # ---------------------- private end
 
     return ComboBoxMenu;
 }, {
