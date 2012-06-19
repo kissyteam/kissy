@@ -119,47 +119,47 @@
 
 
 <script>
-    var S = KISSY;
-    KISSY.use("dom,event,imagezoom", function (S, DOM, Event, ImageZoom) {
+var S = KISSY;
+KISSY.use("dom,event,imagezoom", function (S, DOM, Event, ImageZoom) {
 
-        var a = new ImageZoom({
-            imageNode:"#inner",
-            // type inner, 最好不要设置 width，height
-            type:'inner',
-            align:{
-                node:"#inner",
-                points:["tr", "tl"],
-                offset:[0, 0]
-            },
-            bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
-            bigImageWidth:900,
-            bigImageHeight:900
-        });
-
-        var m = new ImageZoom({
-            imageNode:"#multi",
-            bigImageWidth:900,
-            bigImageHeight:900,
-            // 不设置默认为小图的高宽
-            width:600,
-            height:200,
-            align:{
-                points:["tr", "tl"],
-                offset:[0, 0]
-            }
-        });
-
-        Event.on("#imgList img", 'click', function () {
-            var data = DOM.attr(this, 'data-ks-imagezoom');
-            m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
-            m.changeImageSrc(data + '_310x310.jpg');
-            if (data) {
-                m.set('bigImageSrc', data);
-                m.set("bigImageWidth", parseInt(DOM.attr(this, 'data-bigImageWidth')));
-                m.set("bigImageHeight", parseInt(DOM.attr(this, 'data-bigImageHeight')))
-            }
-        });
+    var a = new ImageZoom({
+        imageNode:"#inner",
+        // type inner, 最好不要设置 width，height
+        type:'inner',
+        align:{
+            node:"#inner",
+            points:["tr", "tl"],
+            offset:[0, 0]
+        },
+        bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+        bigImageWidth:900,
+        bigImageHeight:900
     });
+
+    var m = new ImageZoom({
+        imageNode:"#multi",
+        bigImageWidth:900,
+        bigImageHeight:900,
+        // 不设置默认为小图的高宽
+        width:600,
+        height:200,
+        align:{
+            points:["tr", "tl"],
+            offset:[0, 0]
+        }
+    });
+
+    Event.on("#imgList img", 'click', function () {
+        var data = DOM.attr(this, 'data-ks-imagezoom');
+        m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
+        m.changeImageSrc(data + '_310x310.jpg');
+        if (data) {
+            m.set('bigImageSrc', data);
+            m.set("bigImageWidth", parseInt(DOM.attr(this, 'data-bigImageWidth')));
+            m.set("bigImageHeight", parseInt(DOM.attr(this, 'data-bigImageHeight')))
+        }
+    });
+});
 </script>
 <p class="code-switch">显示源码</p>
 

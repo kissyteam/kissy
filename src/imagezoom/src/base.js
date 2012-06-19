@@ -61,7 +61,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
             },
 
             _render:function () {
-                var self = this, wrap,
+                var self = this,
                     image = self.image;
 
                 self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
@@ -139,13 +139,6 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
 
             _uiSetImageHeight:function (v) {
                 this.image.height(v);
-            },
-
-            _uiSetHeight:function () {
-                this.constructor.superclass._uiSetHeight.apply(this, arguments);
-            },
-            _uiSetWidth:function () {
-                this.constructor.superclass._uiSetWidth.apply(this, arguments);
             }
         },
         {
