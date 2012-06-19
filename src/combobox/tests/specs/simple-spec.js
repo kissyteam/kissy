@@ -220,7 +220,6 @@ KISSY.use("combobox", function (S, ComboBox) {
                 // 先把 textContent 放到里面
                 expect(t.value).toBe(children[1].get("textContent"));
 
-
                 jasmine.simulate(t, "keydown", {
                     keyCode:KeyCodes.DOWN
                 });
@@ -293,8 +292,6 @@ KISSY.use("combobox", function (S, ComboBox) {
 
         it("should update selectedItem and hide menu", function () {
 
-            comboBox.__set("selectedItem", null);
-
             t.value = "";
 
             t.focus();
@@ -326,8 +323,6 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var children = menu.get("children");
                 // 第二个高亮
                 expect(menu.get("activeItem")).toBe(children[1]);
-
-                expect(comboBox.get("selectedItem")).toBe(null);
 
                 jasmine.simulate(t, "keydown", {
                     keyCode:KeyCodes.ENTER
@@ -339,14 +334,12 @@ KISSY.use("combobox", function (S, ComboBox) {
             runs(function () {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
-                expect(comboBox.get("selectedItem")).toBe(children[1]);
+                expect(t.value).toBe(children[1].get("textContent"));
                 expect(menu.get('visible')).toBe(false);
             });
         });
 
         it("esc should restore value to original and hide menu", function () {
-
-            comboBox.__set("selectedItem", null);
 
             t.value = "";
 
@@ -379,7 +372,6 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var children = menu.get("children");
                 // 第二个高亮
                 expect(menu.get("activeItem")).toBe(children[1]);
-                expect(comboBox.get("selectedItem")).toBe(null);
                 expect(t.value).toBe(children[1].get("textContent"));
                 jasmine.simulate(t, "keydown", {
                     keyCode:KeyCodes.ESC
@@ -390,7 +382,6 @@ KISSY.use("combobox", function (S, ComboBox) {
             runs(function () {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
-                expect(comboBox.get("selectedItem")).toBe(null);
                 expect(t.value).toBe("1");
                 expect(menu.get('visible')).toBe(false);
             });

@@ -149,8 +149,6 @@ KISSY.use("component", function (S, Component) {
                 }
             });
 
-            var BoxRender = UIBase.extend([UIBase.Box.Render]);
-
             it("will get attribute from node", function () {
 
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
@@ -165,21 +163,17 @@ KISSY.use("component", function (S, Component) {
 
             });
 
-
             it("will override attribute from node", function () {
-
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
-
                 var n = new SrcNode({
                     srcNode:node,
                     "contentAttr":'y'
                 });
-
                 expect(n.get("contentAttr")).toBe('y');
-
                 node.remove();
-
             });
+
+            var BoxRender = UIBase.extend([UIBase.Box.Render]);
 
             it("should get html", function () {
                 var node = $("<div>123</div>").appendTo("body");
@@ -188,81 +182,77 @@ KISSY.use("component", function (S, Component) {
                 });
                 expect(n.get("content")).toBe('123');
                 node.remove();
-
             });
 
-            it("should override html", function () {
+            it("can not override html", function () {
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxRender({
-                    el:node,
                     srcNode:node,
                     content:'4',
                     autoRender:true
                 });
                 expect(n.get("content")).toBe('4');
-                expect(node.html().toLowerCase()).toBe('4');
+                expect(node.html().toLowerCase()).toBe('123');
                 node.remove();
-
             });
 
-            it("html can be node", function () {
-                var node = $("<div>123</div>").appendTo("body");
+            it("html can be node without srcNode", function () {
                 var n = new BoxRender({
-                    el:node,
-                    srcNode:node,
                     content:$('<span>4</span>'),
                     autoRender:true
                 });
                 expect(n.get("content").html()).toBe('4');
-                expect(node.html().toLowerCase()).toBe('<span>4</span>');
-                node.remove();
+                expect(n.get("el").html().toLowerCase()).toBe('<span>4</span>');
+                n.destroy();
             });
         });
 
         describe("contentEl", function () {
 
-            var ContentEl = UIBase.extend([UIBase.Box.Render, UIBase.ContentBox.Render]);
+            var ContentEl = UIBase.extend([UIBase.Box.Render,
+                UIBase.ContentBox.Render], {}, {}, {
+                xclass:'contentELTest'
+            });
 
             describe("srcNode", function () {
 
-                it('transform el', function () {
+                it('transform el without srcNode', function () {
 
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        srcNode:el,
-                        el:el
+                        // srcNode->el 在 box 上
+                        el:el,
+                        srcNode:el
                     }).render();
 
                     expect(content.get("content")).toBe("23");
 
                     expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox \">23</div>");
+                        .toBe("<div class=\"ks-contentbox\">23</div>");
 
                     el.remove();
 
                 });
 
-                it('transform el with string content', function () {
-
+                it('can not transform el with string content', function () {
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        srcNode:el,
                         el:el,
+                        srcNode:el,
                         content:'4'
                     }).render();
 
                     expect(content.get("content")).toBe("4");
 
                     expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox \">4</div>");
+                        .toBe("<div class=\"ks-contentbox\">23</div>");
 
                     el.remove();
                 });
 
-
-                it('transform el with node content', function () {
+                it('can not transform el with node content', function () {
 
                     var el = $("<div>23</div>").appendTo("body");
 
@@ -275,7 +265,7 @@ KISSY.use("component", function (S, Component) {
                     expect(content.get("content").html()).toBe("4");
 
                     expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox \"><s>4</s></div>");
+                        .toBe("<div class=\"ks-contentbox\">23</div>");
 
                     el.remove();
 

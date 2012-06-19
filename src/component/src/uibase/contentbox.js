@@ -26,31 +26,6 @@ KISSY.add("component/uibase/contentbox", function () {
          */
         contentEl:{
             view:1
-        },
-
-        /**
-         * name-value pair attribute of component's content box element
-         * @type Object
-         */
-        contentElAttrs:{
-            view:1
-        },
-
-        /**
-         * name-value pair css style of component's content box element
-         * @type Object
-         */
-        contentElStyle:{
-            view:1
-        },
-
-        /**
-         * tag name of contentbox 's root element.
-         * Default: "div"
-         * @type String
-         */
-        contentTagName:{
-            view:1
         }
     };
 

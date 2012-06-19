@@ -6,7 +6,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
     var $ = S.all, doc = S.Env.host.document;
 
-
     function BoxRender() {
     }
 
@@ -73,8 +72,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             return (contentElCls ? el.one("." + contentElCls) : el).html();
         }
     };
-
-    BoxRender.constructEl = constructEl;
 
     function wrapWH(v) {
         return typeof v == "number" ? (v + "px") : v;
@@ -189,7 +186,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             // 通过 srcNode 过来的，最后调整，防止 plugin render 又改过!
             if (self.get("srcNode")) {
                 var el = self.get("el"),
-                    content = self.get("content"),
                     attrs = [
                         "elCls",
                         "elStyle",

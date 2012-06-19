@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 23:15
+build time: Jun 19 18:21
 */
 /**
  * Setup component namespace.
@@ -1712,21 +1712,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         // 是否自动渲染
         config && config.autoRender && self.render();
-
-        /**
-         * @name Component.UIBase#afterRenderUI
-         * @description fired when root node is ready
-         * @event
-         * @param e
-         */
-
-
-        /**
-         * @name Component.UIBase#afterBindUI
-         * @description fired when component 's internal event is binded.
-         * @event
-         * @param e
-         */
     }
 
     /**
@@ -1842,6 +1827,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         for (p in parser) {
             if (parser.hasOwnProperty(p) &&
                 // 用户设置过那么这里不从 dom 节点取
+                // 用户设置 > html parser > default value
                 config[p] === undefined) {
                 v = parser[p];
                 // 函数
@@ -1951,18 +1937,67 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 if (!self.get("rendered")) {
                     var plugins = self.get("plugins");
                     self.create(undefined);
+
+                    /**
+                     * @name Component.UIBase#afterRenderUI
+                     * @description fired when root node is ready
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeRenderUI');
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
+
+                    /**
+                     * @name Component.UIBase#afterRenderUI
+                     * @description fired after root node is rendered into dom
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterRenderUI');
                     actionPlugins(self, plugins, "renderUI");
+
+                    /**
+                     * @name Component.UIBase#beforeBindUI
+                     * @description fired before component 's internal event is bind.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeBindUI');
                     bindUI(self);
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
+
+                    /**
+                     * @name Component.UIBase#afterBindUI
+                     * @description fired when component 's internal event is bind.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterBindUI');
                     actionPlugins(self, plugins, "bindUI");
+
+                    /**
+                     * @name Component.UIBase#beforeSyncUI
+                     * @description fired before component 's internal state is synchronized.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('beforeSyncUI');
+
                     syncUI(self);
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
+
+                    /**
+                     * @name Component.UIBase#afterSyncUI
+                     * @description fired after component 's internal state is synchronized.
+                     * @event
+                     * @param e
+                     */
+
                     self.fire('afterSyncUI');
                     actionPlugins(self, plugins, "syncUI");
                     self.__set("rendered", true);
@@ -2415,7 +2450,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
     var $ = S.all, doc = S.Env.host.document;
 
-
     function BoxRender() {
     }
 
@@ -2482,8 +2516,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             return (contentElCls ? el.one("." + contentElCls) : el).html();
         }
     };
-
-    BoxRender.constructEl = constructEl;
 
     function wrapWH(v) {
         return typeof v == "number" ? (v + "px") : v;
@@ -2598,7 +2630,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             // 通过 srcNode 过来的，最后调整，防止 plugin render 又改过!
             if (self.get("srcNode")) {
                 var el = self.get("el"),
-                    content = self.get("content"),
                     attrs = [
                         "elCls",
                         "elStyle",
@@ -2942,31 +2973,6 @@ KISSY.add("component/uibase/contentbox", function () {
          */
         contentEl:{
             view:1
-        },
-
-        /**
-         * name-value pair attribute of component's content box element
-         * @type Object
-         */
-        contentElAttrs:{
-            view:1
-        },
-
-        /**
-         * name-value pair css style of component's content box element
-         * @type Object
-         */
-        contentElStyle:{
-            view:1
-        },
-
-        /**
-         * tag name of contentbox 's root element.
-         * Default: "div"
-         * @type String
-         */
-        contentTagName:{
-            view:1
         }
     };
 
@@ -2982,53 +2988,29 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
     ContentBoxRender.ATTRS = {
         contentEl:{
-            // 不写 valueFn,留待 createDom 处理
-        },
-        contentElAttrs:{},
-        contentElStyle:{},
-        contentTagName:{
-            value:"div"
+            // 不写 valueFn, 留待 createDom 处理
         }
     };
 
     /*
      ! contentEl 只能由组件动态生成
      */
-    var constructEl = BoxRender.constructEl;
-
     ContentBoxRender.prototype = {
-
         __createDom:function () {
             var self = this,
                 contentEl,
-                el = self.get("el"),
-                childNodes = el[0].childNodes,
+                el = self.get("el");
+
+            var childNodes = el[0].childNodes,
                 c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = constructEl("ks-contentbox "
-                + (self.get("contentElCls") || ""),
-                self.get("contentElStyle"),
-                undefined,
-                undefined,
-                self.get("contentTagName"),
-                self.get("contentElAttrs"), c);
+            contentEl = Node.all("<div class='ks-contentbox'>" +
+                "</div>").append(c);
 
             el.append(contentEl);
 
             self.__set("contentEl", contentEl);
-        },
-
-        _uiSetContentElCls:function (cls) {
-            this.get("contentEl").addClass(cls);
-        },
-
-        _uiSetContentElAttrs:function (attrs) {
-            this.get("contentEl").attr(attrs);
-        },
-
-        _uiSetContentElStyle:function (v) {
-            this.get("contentEl").css(v);
         }
     };
 

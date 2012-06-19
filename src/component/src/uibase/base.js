@@ -167,6 +167,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         for (p in parser) {
             if (parser.hasOwnProperty(p) &&
                 // 用户设置过那么这里不从 dom 节点取
+                // 用户设置 > html parser > default value
                 config[p] === undefined) {
                 v = parser[p];
                 // 函数
