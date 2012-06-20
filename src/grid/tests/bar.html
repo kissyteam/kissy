@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>KISSY.Grid.Bar Test Runner</title>
+
+<link href="../../../../kissy-bootstrap/docs/assets/css/dpl.css" rel="stylesheet"/>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+<script>
+	
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1>bar 测试 </h1>
+	</div>
+	<div class="row">
+		<div id="log" class="well">点击结果</div>
+		<div class="span12">
+			<div id="bar"></div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="page-header">
+		<h1>pagging bar 测试 </h1>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<div id="pbar"></div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="page-header">
+		<h1>number pagging bar 测试 </h1>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<h3>生成测试</h3>
+			<div id="nbar"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<h3>加载数据小于 5页测试</h3>
+			<div id="nbar1"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<h3>加载数据大于 5页测试</h3>
+			<div id="nbar2"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<h3>测试数字按钮点击事件</h3>
+			<div id="nbar3"></div>
+		</div>
+	</div>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/button.js"></script>
+<script src="../src/baritem.js"></script>
+<script src="../src/barrender.js"></script>
+<script src="../src/bar.js"></script>
+<script src="../src/store.js"></script>
+<script src="../src/bindable.js"></script>
+<script src="../src/paggingbar.js"></script>
+<script src="../src/numberpaggingbar.js"></script>
+
+<script src="bar-spec.js"></script>
+<script src="paggingbar-spec.js"></script><!---->
+<script src="numberPaggingbar-spec.js"></script>
+<script>
+    KISSY.use("grid/bar", function () {
+			jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+			jasmine.getEnv().execute();
+    });/**/
+</script>
+
+</body>
+</html>
