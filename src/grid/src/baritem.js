@@ -4,7 +4,7 @@
  */
 KISSY.add('grid/baritem',function(S,Component,Button){
 	
-	var BarItemRender =  Component.define(Component.Render,{
+	var BarItemRender =  Component.Render.extend({
 
 		renderUI:function(){
 			var el = this.get("el");
@@ -18,7 +18,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends Component.Controller
      * @memberOf Grid.Bar
      */
-	var BarItem = Component.define(Component.Controller,{
+	var BarItem = Component.Controller.extend({
 		/* render baritem's dom
 		* @protected
         * @override
@@ -89,7 +89,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var ButtonBarItem = Component.define(BarItem,{
+	var ButtonBarItem = BarItem.extend({
 
 		initializer : function(){
 			var _self = this,
@@ -169,7 +169,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var SeparatorBarItem = Component.define(BarItem,{
+	var SeparatorBarItem = BarItem.extend({
 		/* render separator's dom
 		* @protected
         * @override
@@ -191,7 +191,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var SpacerBarItem = Component.define(BarItem,{
+	var SpacerBarItem = BarItem.extend({
 		
 	},{
 		ATTRS:/** @lends Grid.Bar.Spacer.prototype*/
@@ -217,7 +217,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var TextBarItem = Component.define(BarItem,{
+	var TextBarItem = BarItem.extend({
 		_uiSetText : function(text){
 			var _self = this,
 				el = _self.get('el');

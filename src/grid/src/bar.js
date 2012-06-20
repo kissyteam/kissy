@@ -12,7 +12,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
      * @extends Component.Container
      * @memberOf Grid
      */
-	var Bar = Component.define(Component.Container,
+	var Bar = Component.Container.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	

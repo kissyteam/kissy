@@ -14,7 +14,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 	/**
 	* render of column
 	*/
-	var columnRender = Component.define(Component.Render,{
+	var columnRender = Component.Render.extend({
 		/**
 		* @override
 		*/
@@ -107,7 +107,7 @@ KISSY.add('grid/column',function(S,Component,Template){
      * @constructor
      * @extends Component.Container
      */
-	var column = Component.define(Component.Container,
+	var column = Component.Container.extend(
 	/**
 	 * @lends Grid.Column.prototype
 	 */		

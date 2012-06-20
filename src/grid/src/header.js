@@ -6,7 +6,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 
 	var CLS_CELL_EMPTY = 'ks-grid-hd-empty',
 		CLS_SCROLL_WITH = 17;
-	var headerRender = Component.define(Component.Render,{
+	var headerRender = Component.Render.extend({
 
 		renderUI : function(){
 			var _self = this,
@@ -61,7 +61,7 @@ KISSY.add('grid/header',function(S,Component,Column){
      * @constructor
      * @extends Component.Container
      */
-	var header = Component.define(Component.Container,
+	var header = Component.Container.extend(
 	/**
 	 * @lends Grid.Header.prototype
 	 */		

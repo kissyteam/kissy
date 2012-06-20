@@ -4,7 +4,7 @@
  */
 KISSY.add("grid/barrender", function(S,  Component) {
 
-	return Component.define(Component.Render,{
+	return Component.Render.extend({
 
 		renderUI:function() {
             var el = this.get("el");
