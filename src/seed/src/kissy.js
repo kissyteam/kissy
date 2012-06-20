@@ -233,7 +233,7 @@
              * Static members will not be inherited.
              * @param r {Function} the object to modify
              * @param s {Function} the object to inherit
-             * @param px {Object} prototype properties to add/override
+             * @param {Object} [px] prototype properties to add/override
              * @param {Object} [sx] static properties to add/override
              * @return r {Object}
              */
