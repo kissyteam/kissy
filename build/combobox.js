@@ -1,23 +1,128 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 15:35
+build time: Jun 20 23:31
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBoxRender, _, undefined) {
+KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu, undefined) {
     var ComboBox,
-        SUFFIX = 'suffix',
-        KeyCodes = Event.KeyCodes,
+        $ = Node.all,
+        KeyCodes = Node.KeyCodes,
         ALIGN = {
             points:["bl", "tl"],
             overflow:{
                 adjustX:1,
                 adjustY:1
             }
-        };
+        },
+        win = $(S.Env.host),
+        SUFFIX = 'suffix';
+
+    function getMenu(self, init) {
+        var m = self.get("menu");
+        if (m && m.xclass) {
+            if (init) {
+                m = Component.create(m, self);
+                self.__set("menu", m);
+            } else {
+                return null;
+            }
+        }
+        return m;
+    }
+
+
+    function hideMenu(self) {
+        var menu = getMenu(self);
+        if (menu) {
+            menu.hide();
+        }
+    }
+
+    function alignMenuImmediately(self) {
+        var menu = self.get("menu");
+        var align = S.clone(menu.get("align"));
+        align.node = self.get("el");
+        S.mix(align, ALIGN, false);
+        menu.set("align", align);
+    }
+
+    function alignWithTokenImmediately(self) {
+        var inputDesc = getInputDesc(self),
+            tokens = inputDesc.tokens,
+            menu = self.get("menu"),
+            cursorPosition = inputDesc.cursorPosition,
+            tokenIndex = inputDesc.tokenIndex,
+            tokenCursorPosition,
+            cursorOffset,
+            input = self.get("input");
+        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
+        if (tokenCursorPosition > 0) {
+            // behind separator
+            ++tokenCursorPosition;
+        }
+        input.prop("selectionStart", tokenCursorPosition);
+        input.prop("selectionEnd", tokenCursorPosition);
+        cursorOffset = input.prop("KsCursorOffset");
+        input.prop("selectionStart", cursorPosition);
+        input.prop("selectionEnd", cursorPosition);
+        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
+    }
+
+    function reposition() {
+        var self = this,
+            menu = getMenu(self);
+        if (menu && menu.get("visible")) {
+            if (self.get("multiple") && self.get("alignWithCursor")) {
+                alignWithTokenImmediately(self);
+            } else {
+                alignMenuImmediately(self);
+            }
+        }
+    }
+
+    var repositionBuffer = S.buffer(reposition, 50);
+
+
+    function delayHide() {
+        var self = this;
+        self._focusoutDismissTimer = setTimeout(function () {
+            self.set("collapsed", true);
+        }, 30);
+    }
+
+    function clearDismissTimer() {
+        var self = this, t;
+        if (t = self._focusoutDismissTimer) {
+            clearTimeout(t);
+            self._focusoutDismissTimer = null;
+        }
+    }
+
+
+    function showMenu(self) {
+        var el = self.get("el"),
+            menu = getMenu(self, 1);
+        // 保证显示前已经 bind 好 menu 事件
+
+        clearDismissTimer.call(self);
+        if (menu && !menu.get("visible")) {
+            // 先 render，监听 width 变化事件
+            menu.render();
+            self.bindMenu();
+            // 根据 el 自动调整大小
+            if (self.get("matchElWidth")) {
+                menu.set("width", el.innerWidth());
+            }
+            menu.show();
+            reposition.call(self);
+            self.get("input").attr("aria-owns", menu.get("el")[0].id);
+        }
+    }
+
 
     /**
      * @name ComboBox
@@ -42,7 +147,6 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     input = self.get("input");
                 input.on("valuechange", onValueChange, self);
 
-
                 /**
                  * @name ComboBox#afterCollapsedChange
                  * @description fired after combobox 's collapsed attribute is changed.
@@ -52,6 +156,47 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                  * @param e.prevVal previous value
                  */
 
+            },
+
+            bindMenu:function () {
+                var self = this,
+                    el,
+                    contentEl,
+                    menu = self.get("menu");
+
+                menu.on("click", function (e) {
+                    var item = e.target;
+                    // stop valuechange event
+                    self._stopNotify = 1;
+                    self._selectItem(item);
+                    self.set("collapsed", true);
+                    setTimeout(
+                        function () {
+                            self._stopNotify = 0;
+                        },
+                        // valuechange interval
+                        50
+                    );
+                });
+
+                win.on("resize", repositionBuffer, self);
+
+
+                el = menu.get("el");
+                contentEl = menu.get("contentEl");
+
+                el.on("focusout", delayHide, self);
+                el.on("focusin", clearDismissTimer, self);
+
+                contentEl.on("mouseover", function () {
+                    // trigger el focus
+                    self.get("input")[0].focus();
+                    // prevent menu from hiding
+                    clearDismissTimer.call(self);
+                });
+
+
+                self.bindMenu = S.noop;
             },
 
             _uiSetHasTrigger:function (v) {
@@ -77,42 +222,25 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             },
 
             _uiSetCollapsed:function (v) {
-                var self = this,
-                    comboBoxMenu = getMenu(self);
-                if (comboBoxMenu) {
-                    if (v) {
-                        comboBoxMenu.hide();
-                    } else {
-                        comboBoxMenu.show();
-                        if (self.get("matchElWidth")) {
-                            comboBoxMenu.set("width", self.get("el").innerWidth());
-                        }
-                        self.get("view").setAriaOwns(comboBoxMenu.get("el")[0].id);
-                    }
+                if (v) {
+                    hideMenu(this);
+                } else {
+                    showMenu(this);
                 }
             },
 
             handleBlur:function () {
                 var self = this;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
-                var comboBoxMenu = getMenu(self);
-                // S.log("input blur!!!!!!!");
-                if (comboBoxMenu) {
-                    // 通知 menu
-                    comboBoxMenu._delayHide();
-                }
-            },
-
-            _onWindowResize:function () {
-                alignImmediately(this);
+                delayHide.call(self);
             },
 
             handleKeyEventInternal:function (e) {
                 var self = this,
                     input = self.get("input"),
-                    comboBoxMenu = getMenu(self);
+                    menu = getMenu(self);
 
-                if (!comboBoxMenu) {
+                if (!menu) {
                     return;
                 }
 
@@ -134,13 +262,13 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
                 var activeItem;
 
-                if (comboBoxMenu.get("visible")) {
-                    var handledByMenu = comboBoxMenu.handleKeydown(e);
+                if (menu.get("visible")) {
+                    var handledByMenu = menu.handleKeydown(e);
 
                     if (updateInputOnDownUp) {
                         if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                             // update menu's active value to input just for show
-                            setValue(self, comboBoxMenu.get("activeItem").get("textContent"));
+                            setValue(self, menu.get("activeItem").get("textContent"));
                         }
                     }
                     // esc
@@ -156,7 +284,7 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (e.keyCode == KeyCodes.TAB) {
-                        if (activeItem = comboBoxMenu.get("activeItem")) {
+                        if (activeItem = menu.get("activeItem")) {
                             activeItem.performActionInternal();
                             // only prevent focus change in multiple mode
                             if (self.get("multiple")) {
@@ -176,8 +304,8 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             _selectItem:function (item) {
                 var self = this;
                 if (item) {
-                    var textContent = item.get("textContent");
-                    var separatorType = self.get("separatorType");
+                    var textContent = item.get("textContent"),
+                        separatorType = self.get("separatorType");
                     setValue(self, textContent + (separatorType == SUFFIX ? "" : " "));
                     self._savedInputValue = textContent;
                     /**
@@ -191,6 +319,10 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
                         target:item
                     });
                 }
+            },
+
+            destructor:function () {
+                win.detach("resize", repositionBuffer, this);
             }
         },
         {
@@ -199,6 +331,10 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
              */
             {
 
+                /**
+                 * Input element of current combobox.
+                 * @type NodeList
+                 */
                 input:{
                     view:1
                 },
@@ -218,14 +354,14 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
 
                 /**
                  * ComboBox dropDown menuList
-                 * @type ComboBox.Menu
+                 * @type Menu.PopupMenu
                  */
                 menu:{
                     value:{
-                        xclass:'combobox-menu'
+                        xclass:'popupmenu'
                     },
                     setter:function (m) {
-                        if (m instanceof ComboBoxMenu) {
+                        if (m instanceof Component.Controller) {
                             m.__set("parent", this);
                         }
                     }
@@ -448,11 +584,15 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
     function renderData(data) {
         var self = this,
             v,
+            children = [],
+            val,
             contents,
+            matchVal,
             i,
-            comboBoxMenu = getMenu(self, 1);
+            menu = getMenu(self, 1);
 
-        comboBoxMenu.removeChildren(true);
+
+        menu.removeChildren(true);
 
         if (data && data.length) {
             data = data.slice(0, self.get("maxItemCount"));
@@ -463,76 +603,41 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
             }
             for (i = 0; i < data.length; i++) {
                 v = data[i];
-                comboBoxMenu.addChild(S.mix({
+                children.push(menu.addChild(S.mix({
                     xclass:'menuitem',
                     content:v,
                     textContent:v,
                     value:v
-                }, contents[i]))
+                }, contents[i])));
             }
-            _showMenu(self);
+            // make menu item (which textContent is same as input) active
+            val = getValue(self);
+            for (i = 0; i < children.length; i++) {
+                if (children[i].get("textContent") == val) {
+                    menu.set("highlightedItem", children[i]);
+                    matchVal = true;
+                    break;
+                }
+            }
+            // Whether or not the first row should be highlighted by default.
+            if (!matchVal && self.get("autoHighlightFirst")) {
+                for (i = 0; i < children.length; i++) {
+                    if (!children[i].get("disabled")) {
+                        menu.set("highlightedItem", children[i]);
+                        break;
+                    }
+                }
+            }
+            self.set("collapsed", false);
         } else {
             self.set("collapsed", true);
         }
     }
 
-    function getMenu(self, init) {
-        var m = self.get("menu");
-        if (m && m.xclass) {
-            if (init) {
-                m = Component.create(m, self);
-                self.__set("menu", m);
-            } else {
-                return null;
-            }
-        }
-        return m;
-    }
-
-    function alignMenuImmediately(self) {
-        var menu = self.get("menu");
-        var align = S.clone(menu.get("align"));
-        align.node = self.get("el");
-        S.mix(align, ALIGN, false);
-        menu.set("align", align);
-    }
-
-    function alignWithTokenImmediately(self) {
-        var inputDesc = getInputDesc(self),
-            tokens = inputDesc.tokens,
-            menu = self.get("menu"),
-            cursorPosition = inputDesc.cursorPosition,
-            tokenIndex = inputDesc.tokenIndex,
-            tokenCursorPosition,
-            cursorOffset,
-            input = self.get("input");
-        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
-        if (tokenCursorPosition > 0) {
-            // behind separator
-            ++tokenCursorPosition;
-        }
-        input.prop("selectionStart", tokenCursorPosition);
-        input.prop("selectionEnd", tokenCursorPosition);
-        cursorOffset = input.prop("KsCursorOffset");
-        input.prop("selectionStart", cursorPosition);
-        input.prop("selectionEnd", cursorPosition);
-        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
-    }
-
-    function alignImmediately(self) {
-        if (self.get("multiple") && self.get("alignWithCursor")) {
-            alignWithTokenImmediately(self);
-        } else {
-            alignMenuImmediately(self);
-        }
-    }
-
     function onTriggerClick() {
         var self = this,
-            input = self.get("input"),
-            menu = getMenu(self);
-
-        if (menu && menu.get("visible")) {
+            input = self.get("input");
+        if (!self.get('collapsed')) {
             self.set('collapsed', true);
         } else {
             input[0].focus();
@@ -596,49 +701,27 @@ KISSY.add("combobox/base", function (S, Event, Component, ComboBoxMenu, ComboBox
         };
     }
 
-    function _showMenu(self) {
-        var children,
-            val,
-            i,
-            menu = self.get("menu");
-        menu._clearDismissTimer();
-        alignImmediately(self);
-        self.set("collapsed", false);
-        // make menu item (which textContent is same as input) active
-        children = menu.get("children");
-        val = getValue(self);
-        for (i = 0; i < children.length; i++) {
-            if (children[i].get("textContent") == val) {
-                menu.set("highlightedItem", children[i]);
-                return;
-            }
-        }
-        // Whether or not the first row should be highlighted by default.
-        if (self.get("autoHighlightFirst")) {
-            for (i = 0; i < children.length; i++) {
-                if (!children[i].get("disabled")) {
-                    menu.set("highlightedItem", children[i]);
-                    break;
-                }
-            }
-        }
-    }
-
     // #------------------------private end
 
     return ComboBox;
 }, {
     requires:[
-        'event',
+        'node',
         'component',
-        './menu',
         './baseRender',
-        'input-selection'
+        'input-selection',
+        'menu'
     ]
 });
 
 /**
- * TODO auto-complete menu 对齐当前输入位置
+ *
+ * !TODO
+ *  - menubutton combobox 抽象提取 picker (extjs)
+ *
+ *
+ * 2012-05
+ * auto-complete menu 对齐当前输入位置
  *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
  *  - https://github.com/kir/js_cursor_position
  *
@@ -692,10 +775,6 @@ KISSY.add("combobox/baseRender", function (S, Component) {
             self.get("trigger").unselectable();
         },
 
-        setAriaOwns:function (v) {
-            this.get("input").attr("aria-owns", v);
-        },
-
         getKeyEventTarget:function () {
             return this.get("input");
         },
@@ -736,14 +815,12 @@ KISSY.add("combobox/baseRender", function (S, Component) {
  * @fileOverview Export ComboBox.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox", function (S, Menu, ComboBox, LocalDataSource, RemoteDataSource) {
-    ComboBox.Menu = Menu;
+KISSY.add("combobox", function (S, ComboBox, LocalDataSource, RemoteDataSource) {
     ComboBox.LocalDataSource = LocalDataSource;
     ComboBox.RemoteDataSource = RemoteDataSource;
     return ComboBox;
 }, {
     requires:[
-        'combobox/menu',
         'combobox/base',
         'combobox/LocalDataSource',
         'combobox/RemoteDataSource'
@@ -831,161 +908,6 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
 }, {
     requires:['component']
 });/**
- * @fileOverview ComboBox menu constroller.
- * @author yiminghe@gmail.com
- */
-KISSY.add("combobox/menu", function (S, Event, Menu, ComboBoxMenuRender) {
-
-    var ComboBoxMenu,
-
-        window = S.Env.host;
-
-    /**
-     * @name Menu
-     * @memberOf ComboBox
-     * @extends Menu.PopupMenu
-     * @class
-     * DropDown menu for comboBox input.
-     * xclass: 'combobox-menu'.
-     */
-    ComboBoxMenu = Menu.PopupMenu.extend(
-        /**
-         * @lends ComboBox.Menu#
-         */
-        {
-            /**
-             * Bind event once after menu initialize and before menu shows.
-             * Bind only one time!
-             * @protected
-             */
-            bindUI:function () {
-                var self = this;
-
-                self.on("click", function (e) {
-                    var item = e.target;
-                    var combobox = self.get("parent");
-                    // stop valuechange event
-                    combobox._stopNotify = 1;
-                    combobox._selectItem(item);
-                    combobox.set("collapsed", true);
-                    setTimeout(
-                        function () {
-                            combobox._stopNotify = 0;
-                        },
-                        // valuechange interval
-                        50
-                    );
-                });
-
-                Event.on(window, "resize", reAlign, self);
-
-                var el = self.get("el");
-                var contentEl = self.get("contentEl");
-
-                el.on("focusin", clearDismissTimer, self);
-
-                el.on("focusout", delayHide, self);
-
-                contentEl.on("mouseover", function () {
-                    var combobox = self.get("parent");
-                    // trigger el focus
-                    combobox.get("input")[0].focus();
-                    // prevent menu from hiding
-                    clearDismissTimer.call(self);
-                });
-            },
-
-            _clearDismissTimer:clearDismissTimer,
-
-            _delayHide:delayHide,
-
-            destructor:function () {
-                var self = this;
-                Event.remove(window, "resize", reAlign, self);
-            }
-        }, {
-            ATTRS:{
-                head:{
-                    view:1
-                },
-                foot:{
-                    view:1
-                },
-                xrender:{
-                    value:ComboBoxMenuRender
-                }
-            }
-        }, {
-            xclass:'combobox-menu',
-            priority:40
-        });
-
-
-    // # ---------------------- private start
-
-    function clearDismissTimer() {
-        var self = this;
-        if (self._dismissTimer) {
-            clearTimeout(self._dismissTimer);
-            self._dismissTimer = null;
-        }
-    }
-
-    function delayHide() {
-        var self = this;
-        self._dismissTimer = setTimeout(function () {
-            self.get("parent").set("collapsed", true);
-        }, 30);
-    }
-
-    var reAlign = S.buffer(function () {
-        var self = this;
-        if (self.get("visible")) {
-            self.get("parent")._onWindowResize();
-        }
-    }, 50);
-
-    // # ---------------------- private end
-
-    return ComboBoxMenu;
-}, {
-    requires:['event', 'menu', './menuRender']
-});
-/**
- * 2012-03-26 yiminghe@gmail.com
- *  - refer http://www.w3.org/TR/wai-aria-practices/#combobox
- **//**
- * @fileOverview ComboBox menu render
- * @author yiminghe@gmail.com
- */
-KISSY.add("combobox/menuRender", function (S, Menu) {
-    var $ = S.all;
-    return Menu.PopupMenu.Render.extend({
-        createDom:function () {
-            var self = this,
-                el = self.get("el"),
-                head = $("<div class='ks-combobox-menu-header"
-                    + "'></div>"),
-                foot = $("<div class='ks-combobox-menu-footer"
-                    + "'></div>");
-            el.prepend(head);
-            el.append(foot);
-            self.__set("head", head);
-            self.__set("foot", foot);
-        }
-    }, {
-        ATTRS:{
-            head:{
-                view:1
-            },
-            foot:{
-                view:1
-            }
-        }
-    });
-}, {
-    requires:['menu']
-});/**
  * @fileOverview Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
@@ -1015,7 +937,9 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
          * Used as parameter name to send combobox input's value to server
          * @type String
          */
-        paramName:{},
+        paramName:{
+            value:'q'
+        },
         /**
          * whether send empty to server when input val is empty.default:false
          * @type Boolean

@@ -40,10 +40,6 @@ KISSY.add("combobox/baseRender", function (S, Component) {
             self.get("trigger").unselectable();
         },
 
-        setAriaOwns:function (v) {
-            this.get("input").attr("aria-owns", v);
-        },
-
         getKeyEventTarget:function () {
             return this.get("input");
         },

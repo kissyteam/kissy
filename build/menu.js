@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 20 00:46
+build time: Jun 20 23:27
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -855,6 +855,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
 
     var UIBase = Component.UIBase;
 
+
     /**
      * @name PopupMenu
      * @memberOf Menu
@@ -874,7 +875,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
          * @lends Menu.PopupMenu#
          */
         {
-
             /**
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
@@ -888,18 +888,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 }
                 // 通知 submenu item buffer 层层检查，是否隐藏掉改子菜单以及子菜单的祖先菜单
                 self.get("parent").hideParentMenusBuffer();
-            },
-
-            /**
-             * Suppose it has focus (as a context menu), then it must hide when lose focus.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             */
-            handleBlur:function () {
-                var self = this;
-                PopupMenu.superclass.handleBlur.apply(self, arguments);
-                self.hide();
             }
         }, {
             ATTRS:/**

@@ -254,6 +254,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 elBefore = children[index] && children[index].get("el") || null;
                 c = initChild(self, c, elBefore);
                 children.splice(index, 0, c);
+                return c;
             },
 
             /**

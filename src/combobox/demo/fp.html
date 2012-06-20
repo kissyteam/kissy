@@ -46,8 +46,8 @@
 <script src="../src/baseRender.js"></script>
 <script src="../src/base.js"></script>
 <script src="../src/combobox.js"></script>
-<script src="../src/menu.js"></script>
-<script src="../src/menuRender.js"></script>
+
+
 <script src="../src/localDataSource.js"></script>
 <script src="../src/remoteDataSource.js"></script>
 <script>
@@ -140,23 +140,27 @@
                     'type="submit" onclick="return false">搜索</button>' +
                     '</div>';
 
-            basicComboBox.on("beforeCollapsedChange", function (e) {
+            basicComboBox.on("afterCollapsedChange", function (e) {
                 var self = this;
                 if (!e.newVal) {
                     var menu = self.get("menu");
-                    if (!menu.get("foot").children().length) {
-                        menu.get("foot").append(html);
-                        var el = menu.get("foot").one(".tdg-input"),
+                    var menuEl = menu.get("el"), footer;
+                    if (!(footer = menuEl.one(".ks-combobox-menu-footer"))) {
+                        footer = new S.Node("<div class='ks-combobox-menu-footer'></div>").appendTo(menuEl);
+                    }
+                    if (!footer.children().length) {
+                        footer.append(html);
+                        var el = footer.one(".tdg-input"),
                                 oel = basicComboBox.get("el");
-                        oel.on("keyup", function (e) {
+                        el.on("keyup", function (e) {
                             if (e.keyCode != Event.KeyCodes.DOWN &&
                                     e.keyCode != Event.KeyCodes.UP) {
-                                el.val(oel.val());
+                                el.val(el.val());
                             }
                         });
                     }
-                    menu.get("foot").one(".tdg-input")
-                            .val(basicComboBox.get("el").val())
+                    footer.one(".tdg-input")
+                            .val(basicComboBox.get("input").val())
                 }
             });
         })();

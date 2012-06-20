@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 18:21
+build time: Jun 20 23:27
 */
 /**
  * Setup component namespace.
@@ -376,6 +376,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 elBefore = children[index] && children[index].get("el") || null;
                 c = initChild(self, c, elBefore);
                 children.splice(index, 0, c);
+                return c;
             },
 
             /**
@@ -1727,9 +1728,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             // 从 markup 生成相应的属性项
             if (config &&
                 config[SRC_NODE] &&
-                c.HTML_PARSER) {
+                c[HTML_PARSER]) {
                 if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
-                    applyParser.call(host, config, c.HTML_PARSER);
+                    applyParser.call(host, config, c[HTML_PARSER]);
                 }
             }
 
@@ -1892,20 +1893,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         }
     }
 
-    /**
-     * Parse attribute from existing dom node.
-     * @type Object
-     * @memberOf Component.UIBase
-     * @example
-     * Overlay.HTML_PARSER={
-     *    // el: root element of current component.
-     *    "isRed":function(el){
-     *       return el.hasClass("ks-red");
-     *    }
-     * };
-     */
-    UIBase.HTML_PARSER = {};
-
     S.extend(UIBase, Base,
         /**
          * @lends Component.UIBase.prototype
@@ -1919,9 +1906,21 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
+                    /**
+                     * @name Component.UIBase#beforeCreateDom
+                     * @description fired before root node is created
+                     * @event
+                     * @param e
+                     */
                     self.fire('beforeCreateDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
                     self.__set("created", true);
+                    /**
+                     * @name Component.UIBase#afterCreateDom
+                     * @description fired when root node is created
+                     * @event
+                     * @param e
+                     */
                     self.fire('afterCreateDom');
                     actionPlugins(self, self.get("plugins"), "createDom");
                 }
@@ -1939,7 +1938,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     self.create(undefined);
 
                     /**
-                     * @name Component.UIBase#afterRenderUI
+                     * @name Component.UIBase#beforeRenderUI
                      * @description fired when root node is ready
                      * @event
                      * @param e
@@ -2214,33 +2213,51 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         return C;
     }
 
-    /**
-     * Create a new class which extends UIBase.
-     * @param {Function[]} extensions Class constructors for extending.
-     * @param {Object} px Object to be mixed into new class 's prototype.
-     * @param {Object} sx Object to be mixed into new class.
-     * @function
-     * @returns {UIBase} A new class which extends UIBase.
-     */
-    UIBase.extend = function extend(extensions, px, sx) {
-        var args = S.makeArray(arguments),
-            ret,
-            last = args[args.length - 1];
-        args.unshift(this);
-        if (last.xclass) {
-            args.pop();
-            args.push(last.xclass);
-        }
-        ret = create.apply(UIBase, args);
-        if (last.xclass) {
-            Manager.setConstructorByXClass(last.xclass, {
-                constructor:ret,
-                priority:last.priority
-            });
-        }
-        ret.extend = extend;
-        return ret;
-    };
+
+    S.mix(UIBase,
+        /**
+         * @lends Component.UIBase
+         */
+        {
+            /**
+             * Parse attribute from existing dom node.
+             * @example
+             * Overlay.HTML_PARSER={
+             *    // el: root element of current component.
+             *    "isRed":function(el){
+             *       return el.hasClass("ks-red");
+             *    }
+             * };
+             */
+            HTML_PARSER:{},
+
+            /**
+             * Create a new class which extends UIBase .
+             * @param {Function[]} extensions Class constructors for extending.
+             * @param {Object} px Object to be mixed into new class 's prototype.
+             * @param {Object} sx Object to be mixed into new class.
+             * @returns {UIBase} A new class which extends UIBase .
+             */
+            extend:function extend(extensions, px, sx) {
+                var args = S.makeArray(arguments),
+                    ret,
+                    last = args[args.length - 1];
+                args.unshift(this);
+                if (last.xclass) {
+                    args.pop();
+                    args.push(last.xclass);
+                }
+                ret = create.apply(UIBase, args);
+                if (last.xclass) {
+                    Manager.setConstructorByXClass(last.xclass, {
+                        constructor:ret,
+                        priority:last.priority
+                    });
+                }
+                ret.extend = extend;
+                return ret;
+            }
+        });
 
     return UIBase;
 }, {

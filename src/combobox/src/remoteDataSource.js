@@ -28,7 +28,9 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
          * Used as parameter name to send combobox input's value to server
          * @type String
          */
-        paramName:{},
+        paramName:{
+            value:'q'
+        },
         /**
          * whether send empty to server when input val is empty.default:false
          * @type Boolean

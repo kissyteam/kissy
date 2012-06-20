@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 18 18:57
+build time: Jun 20 23:31
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -48,10 +48,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         var el = self.get("el"),
             menu = getMenu(self, 1);
         // 保证显示前已经 bind 好 menu 事件
-        self.bindMenu();
         if (menu && !menu.get("visible")) {
             // 先 render，监听 width 变化事件
             menu.render();
+            self.bindMenu();
             // 根据 el 自动调整大小
             if (self.get("matchElWidth")) {
                 menu.set("width", el.innerWidth());
@@ -99,21 +99,20 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             bindMenu:function () {
                 var self = this,
                     menu = self.get("menu");
-                if (menu) {
-                    menu.on("afterActiveItemChange", function (ev) {
-                        self.set("activeItem", ev.newVal);
-                    });
 
-                    menu.on("click", self.handleMenuClick, self);
+                menu.on("afterActiveItemChange", function (ev) {
+                    self.set("activeItem", ev.newVal);
+                });
 
-                    // 窗口改变大小，重新调整
-                    $(win).on("resize", repositionBuffer, self);
+                menu.on("click", self.handleMenuClick, self);
 
-                    /*
-                     只绑定事件一次
-                     */
-                    self.bindMenu = S.noop;
-                }
+                // 窗口改变大小，重新调整
+                $(win).on("resize", repositionBuffer, self);
+
+                /*
+                 只绑定事件一次
+                 */
+                self.bindMenu = S.noop;
             },
 
             /**
@@ -264,7 +263,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @override
              */
             decorateChildrenInternal:function (UI, el) {
-                // 不能用 diaplay:none , menu 的隐藏是靠 visibility
+                // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
