@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>bar 测试</title>
+<link href="http://localhost:8080/bootstrap/kissy-bootstrap/docs/assets/css/dpl.css" rel="stylesheet"/>
+<link href="../assets/bar.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1>bar 测试 </h1>
+	</div>
+	<div class="row">
+		<h2>普通的Bar测试</h2>
+		<div class="span12">
+			<div id="bar"></div>
+		</div>
+		<div class="control-group">
+				<input type="text" id="txtLink" placeholder="修改链接文本" />
+				<button class="ks-button" id="btn1">更改文本</button> 
+		</div>
+	</div>
+	<div class="row">
+		<h2>默认的paggingbar</h2>
+		<div class="span20">
+			<div id="pbar"></div>
+		</div>
+	</div>
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+
+<script src="../src/baritem.js"></script>
+<script src="../src/barrender.js"></script>
+<script src="../src/bar.js"></script>
+<script src="../src/store.js"></script>
+<script src="../src/paggingbar.js"></script>
+
+<script>
+
+    KISSY.use("grid/bar,button,grid/paggingbar,grid/store",function(S, Bar,Button,PBar,Store) {
+      var bar = new Bar({
+				render : '#bar',
+				//elCls : 'ks-button-group',
+				children : [
+					new Button({
+						content:"测试1"
+					}),
+					new Button({
+						content:"测试2"
+					}),
+					new Bar.BarItem({
+						html : '<span class="label">Default</span>'
+					}),{
+						xtype : 'spacer',width : 50
+					},{
+					
+						id :'link1',
+						xtype : 'link',
+						html : '<a href="http://www.taobao.com">sssss</a>',
+						listeners : {
+							'click':function(event){
+								alert('link');
+							}
+						}
+					},{
+						xtype :'separator'
+					},{
+					
+						xtype : 'button',
+						content : '测试3',
+						listeners : {
+							'click':function(event){
+								alert('测试3');
+							}
+						}
+					},{
+						xtype :'text',text:'only a text'
+					},{
+						xtype : 'custom',
+						html : '<input class="span2" type="text"/>',
+						listeners : {
+							'change':function(event){
+								S.log(event.target.value);
+							}
+						}
+					}
+				]
+			});
+			bar.render();
+			S.one('#btn1').on('click',function(){
+				var txt = S.one('#txtLink').val();
+				if(txt){
+					bar.getItem('link1').set('html','<a href="http://www.taobao.com">' + txt + '</a>');
+				}
+			});
+			bar.on('click',function(event){
+				S.log(event.target);
+			});
+			var store = new Store({
+					url : 'page-data.php'
+				}); 
+				pBar = new PBar({
+					render : '#pbar',
+					store : store
+				});
+			pBar.render();
+			store.load();
+    });
+</script>
+</body>
+</html>
