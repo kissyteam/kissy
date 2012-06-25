@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 20 23:27
+build time: Jun 25 11:09
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -888,6 +888,18 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 }
                 // 通知 submenu item buffer 层层检查，是否隐藏掉改子菜单以及子菜单的祖先菜单
                 self.get("parent").hideParentMenusBuffer();
+            },
+
+            /**
+             * Suppose it has focus (as a context menu), then it must hide when lose focus.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             * @override
+             */
+            handleBlur:function () {
+                var self = this;
+                PopupMenu.superclass.handleBlur.apply(self, arguments);
+                self.hide();
             }
         }, {
             ATTRS:/**
