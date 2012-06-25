@@ -186,9 +186,6 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
             return 1;
         }
         var nodeName = node.tagName || node.nodeName;
-        if (node.nodeType == 3) {
-            nodeName = '#';
-        }
         return !!dtd[tag.tagName][nodeName];
     }
 

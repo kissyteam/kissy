@@ -13,7 +13,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
      *
      * Each element in the DTD is represented by a
      * property in this object. Each property contains the list of elements that
-     * can be contained by the element. Text is represented by the "#" property.
+     * can be contained by the element. Text is represented by the "#text" property.
      *
      * Several special grouping properties are also available. Their names start
      * with the "$" character.
@@ -43,7 +43,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
         },
         F = {"ins":1,"del":1,"script":1,"style":1},
         G = merge({
-            "b":1,"acronym":1,"bdo":1,'var':1,'#':1,
+            "b":1,"acronym":1,"bdo":1,'var':1,'#text':1,
             "abbr":1,"code":1,
             "br":1,"i":1,"cite":1,
             "kbd":1,
@@ -79,7 +79,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
             "h1":1,"h3":1,"h2":1,
             "form":1,
             "font":1,
-            '#':1,
+            '#text':1,
             "select":1,
             "menu":1,
             "ins":1,
@@ -98,7 +98,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
         },
         L = merge({"a":1}, J),
         M = {"tr":1},
-        N = {'#':1},
+        N = {'#text':1},
         O = merge({"param":1}, K),
         P = merge({"form":1}, A, D, E, I),
         Q = {"li":1},

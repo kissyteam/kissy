@@ -2,7 +2,7 @@
  * @fileOverview format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
+KISSY.add("htmlparser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
 
     function BeautifyWriter() {
         var self = this;
@@ -32,40 +32,40 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
         )) {
             self.setRules(e, {
                 // whether its tag/text children should indent
-                allowIndent : 1,
-                breakBeforeOpen : 1,
-                breakAfterOpen : 1,
-                breakBeforeClose : 1,// !dtd[e]['#']
-                breakAfterClose : 1
+                allowIndent:1,
+                breakBeforeOpen:1,
+                breakAfterOpen:1,
+                breakBeforeClose:1, // !dtd[e]['#text']
+                breakAfterClose:1
             });
         }
 
         self.setRules('option', {
-            breakBeforeOpen : 1
+            breakBeforeOpen:1
         });
 
         self.setRules('optiongroup', {
-            breakBeforeOpen : 1
+            breakBeforeOpen:1
         });
 
         self.setRules('br', {
-            breakAfterOpen : 1
+            breakAfterOpen:1
         });
 
         self.setRules('title', {
-            allowIndent : 0,
+            allowIndent:0,
             breakBeforeClose:0,
-            breakAfterOpen : 0
+            breakAfterOpen:0
         });
 
         // Disable indentation on <pre>.
         self.setRules('pre', {
-            allowIndent : 0
+            allowIndent:0
         });
     }
 
     S.extend(BeautifyWriter, BasicWriter, {
-        indentation:function() {
+        indentation:function () {
             if (!this.inPre) {
                 this.append(new Array(this.indentLevel + 1).join(this.indentChar));
             }
@@ -73,7 +73,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             this.allowIndent = 0;
         },
 
-        lineBreak:function() {
+        lineBreak:function () {
             var o = this.output;
             if (!this.inPre && o.length) {
                 // prevent adding more \n between tags :
@@ -91,14 +91,14 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             this.allowIndent = 1;
         },
 
-        setRules:function(tagName, rule) {
+        setRules:function (tagName, rule) {
             if (!this.rules[tagName]) {
                 this.rules[tagName] = {};
             }
             S.mix(this.rules[tagName], rule);
         },
 
-        openTag:function(el) {
+        openTag:function (el) {
 
             var tagName = el.tagName,
                 rules = this.rules[tagName] || {};
@@ -111,7 +111,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             BeautifyWriter.superclass.openTag.apply(this, arguments);
         },
 
-        openTagClose:function(el) {
+        openTagClose:function (el) {
 
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
@@ -131,7 +131,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             }
         },
 
-        closeTag:function(el) {
+        closeTag:function (el) {
             var self = this,
                 tagName = el.tagName,
                 rules = self.rules[tagName] || {};
@@ -159,37 +159,36 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
         },
 
-        text:function(text) {
-
+        text:function (text) {
             if (this.allowIndent) {
                 this.indentation();
             }
             if (!this.inPre) {
                 // shrink consequential spaces into one space
+                // 换行也没了，否则由于 closeTag 时 lineBreak 会导致换行越来越多
                 text = Utils.collapseWhitespace(text);
             }
             this.append(text);
         },
 
-        comment:function(comment) {
+        comment:function (comment) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append(comment);
+            this.append("<!--" + comment + "-->");
         },
 
-        cdata:function(text) {
+        cdata:function (text) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append(text);
+            this.append(S.trim(text));
         }
-
 
     });
 
     return BeautifyWriter;
 
 }, {
-    requires:['./basic','../dtd','../Utils']
+    requires:['./basic', '../dtd', '../Utils']
 });

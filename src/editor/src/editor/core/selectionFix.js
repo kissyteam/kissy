@@ -318,7 +318,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         // In other browsers, we make the selection change
         // check based on other events, like clicks or keys
         // press.
-        function monitor(e) {
+        function monitor() {
             // S.log("fireSelectionChangeForNonIE in selection/index");
             editor.checkSelectionChange();
         }

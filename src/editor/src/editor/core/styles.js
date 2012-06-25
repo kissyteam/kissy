@@ -99,7 +99,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         var element = this["element"] = this.element = ( styleDefinition["element"] || '*' ).toLowerCase();
 
-        this["type"] = this.type = ( element == '#' || blockElements[ element ] ) ?
+        this["type"] = this.type = ( element == '#text' || blockElements[ element ] ) ?
             KEST.STYLE_BLOCK
             : objectElements[ element ] ?
             KEST.STYLE_OBJECT : KEST.STYLE_INLINE;

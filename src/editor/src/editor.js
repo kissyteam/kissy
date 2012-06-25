@@ -379,7 +379,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     return;
                 }
                 if (htmlDataProcessor = self.htmlDataProcessor) {
-                    afterData = htmlDataProcessor.toDataFormat(data, "p");
+                    afterData = htmlDataProcessor.toDataFormat(data);
                 }
                 // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
                 clearIframeDocContent(self);
@@ -609,7 +609,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     // Check if it's a block element that accepts text.
                     if (nextName &&
                         xhtml_dtd.$block[ nextName ] &&
-                        xhtml_dtd[ nextName ]['#']) {
+                        xhtml_dtd[ nextName ]['#text']) {
                         range.moveToElementEditablePosition(next);
                     }
                 }
@@ -617,7 +617,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 self.focus();
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 clone && clone.scrollIntoView(undefined, false);
-                saveLater(self);
+                saveLater.call(self);
                 return clone;
             },
 
@@ -627,21 +627,29 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              */
             insertHtml:function (data, dataFilter) {
                 var self = this,
-                    htmlDataProcessor;
+                    htmlDataProcessor,
+                    editorDoc = self.get("document")[0];
 
                 if (self.get("mode") !== WYSIWYG_MODE) {
                     return;
                 }
 
                 if (htmlDataProcessor = self.htmlDataProcessor) {
-                    data = htmlDataProcessor.toDataFormat(data, null, dataFilter);
+                    data = htmlDataProcessor.toDataFormat(data, dataFilter);
+                }
+
+                // webkit bug
+                if (UA.webkit) {
+                    var nodes = new Node(data, null, editorDoc);
+                    nodes.each(function (node) {
+                        self.insertElement(node);
+                    });
+                    return;
                 }
 
                 self.focus();
                 self.execCommand("save");
 
-                var editorDoc = self.get("document")[0],
-                    saveInterval = 0;
                 // ie9 仍然需要这样！
                 // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
                 if (IS_IE) {
@@ -679,15 +687,15 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                                 r.select();
                             }
                             editorDoc.execCommand('inserthtml', FALSE, data);
-                        }, saveInterval = 100);
+                        }, 50);
                     }
                 }
                 // bug by zjw2004112@163.com :
                 // 有的浏览器 ： chrome , ie67 貌似不会自动滚动到粘贴后的位置
                 setTimeout(function () {
                     self.getSelection().scrollIntoView();
-                }, saveInterval);
-                saveLater(self, saveInterval);
+                }, 50);
+                saveLater.call(self);
             }
         });
 
@@ -1064,15 +1072,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
         });
     }
 
-    function saveLater(self, saveInterval) {
-        if (self.__saveTimer) {
-            clearTimeout(self.__saveTimer);
-            self.__saveTimer = null;
-        }
-        self.__saveTimer = setTimeout(function () {
-            self.execCommand("save");
-        }, saveInterval || 0);
-    }
+    var saveLater = S.buffer(function () {
+        this.execCommand("save");
+    }, 50);
 
     function setUpIFrame(self, data) {
         var iframe = self.get("iframe"),

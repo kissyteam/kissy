@@ -15,7 +15,15 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
         BeautifyWriter:BeautifyWriter,
         MinifyWriter:MinifyWriter,
         Filter:Filter,
-        DTD:DTD
+        DTD:DTD,
+        serialize:function (n) {
+            var basicWriter = new BasicWriter();
+            n.writeHtml(basicWriter);
+            return basicWriter.getHtml();
+        },
+        parse:function (html) {
+            return new Parser(html).parse();
+        }
     };
 }, {
     requires:[

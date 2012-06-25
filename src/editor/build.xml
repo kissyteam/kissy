@@ -30,7 +30,10 @@
 
     <target name="editor-js">
         <concat destfile="${component.src.dir.tmp}/editor-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}/editor/core" includes="**/*.js"/>
+            <fileset dir="${src.dir}/editor/core"
+                     includes="**/*.js"
+                     excludes="**/dynamic/**/*.js"
+                    />
             <path location="${src.dir}/editor.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>

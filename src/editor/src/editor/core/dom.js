@@ -807,7 +807,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
-                return dtd && dtd['#'];
+                return dtd && dtd['#text'];
             },
 
             /**

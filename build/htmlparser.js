@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 15 17:22
+build time: Jun 25 23:37
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -279,7 +279,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
      *
      * Each element in the DTD is represented by a
      * property in this object. Each property contains the list of elements that
-     * can be contained by the element. Text is represented by the "#" property.
+     * can be contained by the element. Text is represented by the "#text" property.
      *
      * Several special grouping properties are also available. Their names start
      * with the "$" character.
@@ -309,7 +309,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
         },
         F = {"ins":1,"del":1,"script":1,"style":1},
         G = merge({
-            "b":1,"acronym":1,"bdo":1,'var':1,'#':1,
+            "b":1,"acronym":1,"bdo":1,'var':1,'#text':1,
             "abbr":1,"code":1,
             "br":1,"i":1,"cite":1,
             "kbd":1,
@@ -345,7 +345,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
             "h1":1,"h3":1,"h2":1,
             "form":1,
             "font":1,
-            '#':1,
+            '#text':1,
             "select":1,
             "menu":1,
             "ins":1,
@@ -364,7 +364,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
         },
         L = merge({"a":1}, J),
         M = {"tr":1},
-        N = {'#':1},
+        N = {'#text':1},
         O = merge({"param":1}, K),
         P = merge({"form":1}, A, D, E, I),
         Q = {"li":1},
@@ -614,7 +614,15 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
         BeautifyWriter:BeautifyWriter,
         MinifyWriter:MinifyWriter,
         Filter:Filter,
-        DTD:DTD
+        DTD:DTD,
+        serialize:function (n) {
+            var basicWriter = new BasicWriter();
+            n.writeHtml(basicWriter);
+            return basicWriter.getHtml();
+        },
+        parse:function (html) {
+            return new Parser(html).parse();
+        }
     };
 }, {
     requires:[
@@ -1595,7 +1603,7 @@ KISSY.add("htmlparser/nodes/Attribute", function(S) {
  * @fileOverview dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/CData", function(S, Text) {
+KISSY.add("htmlparser/nodes/CData", function (S, Text) {
 
     function CData() {
         CData.superclass.constructor.apply(this, arguments);
@@ -1604,10 +1612,16 @@ KISSY.add("htmlparser/nodes/CData", function(S, Text) {
     }
 
     S.extend(CData, Text, {
-        writeHtml:function(writer, filter) {
-            var value = this.toHtml();
-            if (!filter || filter.onCData(this) !== false) {
-                writer.cdata(value);
+        writeHtml:function (writer, filter) {
+            var ret;
+            if (!filter || (ret = filter.onCData(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.cdata(this.toHtml());
             }
         }
     });
@@ -1619,7 +1633,7 @@ KISSY.add("htmlparser/nodes/CData", function(S, Text) {
  * @fileOverview comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
+KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -1627,18 +1641,33 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
         this.nodeName = "#comment";
     }
 
-    S.extend(Comment, Tag, {
-        writeHtml:function(writer, filter) {
-            var value = this.toHtml();
-            if (!filter || filter.onComment(this) !== false) {
-                writer.comment(value);
+    S.extend(Comment, Text, {
+        writeHtml:function (writer, filter) {
+            var ret;
+            if (!filter || (ret = filter.onComment(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.comment(this.toHtml());
+            }
+        },
+        toHtml:function () {
+            if (this.nodeValue) {
+                return this.nodeValue;
+            } else {
+                var value = Text.superclass.toHtml.apply(this, arguments);
+                // <!-- -->
+                return value.substring(4, value.length - 3);
             }
         }
     });
 
     return Comment;
 }, {
-    requires:['./Tag']
+    requires:['./Text']
 });/**
  * @fileOverview fake document node
  * @author yiminghe@gmail.com
@@ -1850,7 +1879,9 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         setTagName:function (v) {
             var self = this;
             self.nodeName = self.tagName = v;
-            self._updateSelfClosed();
+            if (v) {
+                self._updateSelfClosed();
+            }
         },
 
         equals:function (tag) {
@@ -2027,7 +2058,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                     if (!(attrName = filter.onAttributeName(attrName, el))) {
                         continue;
                     }
-                    attr.name=attrName;
+                    attr.name = attrName;
                     // filtered by value and node
                     if (filter.onAttribute(attr, el) === false) {
                         continue;
@@ -2091,14 +2122,19 @@ KISSY.add("htmlparser/nodes/Text", function (S, Node) {
         }
         this.nodeType = 3;
         this.nodeName = "#text";
-
     }
 
     S.extend(Text, Node, {
         writeHtml:function (writer, filter) {
-            var value = this.nodeValue;
-            if (!filter || filter.onText(this) !== false) {
-                writer.text(value);
+            var ret;
+            if (!filter || (ret = filter.onText(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.text(this.toHtml());
             }
         },
         toHtml:function () {
@@ -2354,9 +2390,6 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
             return 1;
         }
         var nodeName = node.tagName || node.nodeName;
-        if (node.nodeType == 3) {
-            nodeName = '#';
-        }
         return !!dtd[tag.tagName][nodeName];
     }
 
@@ -2585,7 +2618,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
         },
 
         comment:function(comment) {
-            this.append(comment);
+            this.append("<!--"+comment+"-->");
         },
 
         getHtml:function() {
@@ -2600,7 +2633,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
  * @fileOverview format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
+KISSY.add("htmlparser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
 
     function BeautifyWriter() {
         var self = this;
@@ -2630,40 +2663,40 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
         )) {
             self.setRules(e, {
                 // whether its tag/text children should indent
-                allowIndent : 1,
-                breakBeforeOpen : 1,
-                breakAfterOpen : 1,
-                breakBeforeClose : 1,// !dtd[e]['#']
-                breakAfterClose : 1
+                allowIndent:1,
+                breakBeforeOpen:1,
+                breakAfterOpen:1,
+                breakBeforeClose:1, // !dtd[e]['#text']
+                breakAfterClose:1
             });
         }
 
         self.setRules('option', {
-            breakBeforeOpen : 1
+            breakBeforeOpen:1
         });
 
         self.setRules('optiongroup', {
-            breakBeforeOpen : 1
+            breakBeforeOpen:1
         });
 
         self.setRules('br', {
-            breakAfterOpen : 1
+            breakAfterOpen:1
         });
 
         self.setRules('title', {
-            allowIndent : 0,
+            allowIndent:0,
             breakBeforeClose:0,
-            breakAfterOpen : 0
+            breakAfterOpen:0
         });
 
         // Disable indentation on <pre>.
         self.setRules('pre', {
-            allowIndent : 0
+            allowIndent:0
         });
     }
 
     S.extend(BeautifyWriter, BasicWriter, {
-        indentation:function() {
+        indentation:function () {
             if (!this.inPre) {
                 this.append(new Array(this.indentLevel + 1).join(this.indentChar));
             }
@@ -2671,7 +2704,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             this.allowIndent = 0;
         },
 
-        lineBreak:function() {
+        lineBreak:function () {
             var o = this.output;
             if (!this.inPre && o.length) {
                 // prevent adding more \n between tags :
@@ -2689,14 +2722,14 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             this.allowIndent = 1;
         },
 
-        setRules:function(tagName, rule) {
+        setRules:function (tagName, rule) {
             if (!this.rules[tagName]) {
                 this.rules[tagName] = {};
             }
             S.mix(this.rules[tagName], rule);
         },
 
-        openTag:function(el) {
+        openTag:function (el) {
 
             var tagName = el.tagName,
                 rules = this.rules[tagName] || {};
@@ -2709,7 +2742,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             BeautifyWriter.superclass.openTag.apply(this, arguments);
         },
 
-        openTagClose:function(el) {
+        openTagClose:function (el) {
 
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
@@ -2729,7 +2762,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
             }
         },
 
-        closeTag:function(el) {
+        closeTag:function (el) {
             var self = this,
                 tagName = el.tagName,
                 rules = self.rules[tagName] || {};
@@ -2757,39 +2790,38 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
         },
 
-        text:function(text) {
-
+        text:function (text) {
             if (this.allowIndent) {
                 this.indentation();
             }
             if (!this.inPre) {
                 // shrink consequential spaces into one space
+                // 换行也没了，否则由于 closeTag 时 lineBreak 会导致换行越来越多
                 text = Utils.collapseWhitespace(text);
             }
             this.append(text);
         },
 
-        comment:function(comment) {
+        comment:function (comment) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append(comment);
+            this.append("<!--" + comment + "-->");
         },
 
-        cdata:function(text) {
+        cdata:function (text) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append(text);
+            this.append(S.trim(text));
         }
-
 
     });
 
     return BeautifyWriter;
 
 }, {
-    requires:['./basic','../dtd','../Utils']
+    requires:['./basic', '../dtd', '../Utils']
 });/**
  * @fileOverview filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
@@ -2826,11 +2858,15 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         return v;
     }
 
-    function filterFn(arr, args, _default) {
+    function filterFn(arr, args, _default, el) {
         for (var i = 0; arr && i < arr.length; i++) {
-            var item = arr[i].value;
-            if (item.apply(null, args) === false) {
+            var item = arr[i].value, ret;
+            if ((ret = item.apply(null, args)) === false) {
                 return false;
+            }
+            // node can be replaced with another node
+            if (el && ret && ret != el) {
+                return this.onNode(ret);
             }
         }
         return _default;
@@ -2896,11 +2932,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText:function (el) {
-            return filterFn(this.text, [el.toHtml(), el], el);
+            return filterFn.call(this, this.text, [el.toHtml(), el], el, el);
         },
 
         onCData:function (el) {
-            return filterFn(this.cdata, [el.toHtml(), el], el);
+            return filterFn.call(this, this.cdata, [el.toHtml(), el], el, el);
         },
 
         onAttribute:function (attrNode, el) {
@@ -2908,7 +2944,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onComment:function (el) {
-            return filterFn(this.comment, [el.toHtml(), el], el);
+            return filterFn.call(this, this.comment, [el.toHtml(), el], el, el);
         },
 
         onNode:function (el) {
@@ -2923,7 +2959,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onFragment:function (el) {
-            return filterFn(this.root, [el], el);
+            return filterFn.call(this, this.root, [el], el, el);
         },
 
         onTag:function (el) {

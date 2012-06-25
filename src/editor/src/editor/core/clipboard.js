@@ -17,19 +17,21 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     S.augment(Paste, {
         _init:function () {
             var self = this,
-                editor = self.editor;
+                editor = self.editor,
+                editorBody = editor.get("document")[0].body;
             // Event.on(editor.document.body, UA['ie'] ? "beforepaste" : "keydown", self._paste, self);
             // beforepaste not fire on webkit and firefox
             // paste fire too later in ie ,cause error
             // 奇怪哦
             // http://help.dottoro.com/ljxqbxkf.php
             // refer : http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
-            Event.on(editor.get("document")[0].body,
-                UA['webkit'] ? 'paste' : (UA.gecko ? 'paste' : 'beforepaste'),
+            Event.on(editorBody,
+                (UA.ie ? 'beforepaste' : 'paste'),
                 self._paste, self);
 
             // Dismiss the (wrong) 'beforepaste' event fired on context menu open. (#7953)
-            Event.on(editor.get("document")[0].body, 'contextmenu', function () {
+            // Note: IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)'
+            Event.on(editorBody, 'contextmenu', function () {
                 depressBeforeEvent = 1;
                 setTimeout(function () {
                     depressBeforeEvent = 0;
@@ -96,12 +98,8 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             range.setStartAt(pastebin, KER.POSITION_AFTER_START);
             range.setEndAt(pastebin, KER.POSITION_BEFORE_END);
             range.select(true);
-            //self._running = true;
             // Wait a while and grab the pasted contents
             setTimeout(function () {
-
-                //self._running = false;
-                pastebin.remove();
 
                 // Grab the HTML contents.
                 // We need to look for a apple style wrapper on webkit it also adds
@@ -116,6 +114,8 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 sel.selectBookmarks(bms);
 
+                pastebin.remove();
+
                 var html = pastebin.html();
 
                 //S.log("paster " + html);
@@ -129,7 +129,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                     return;
                 }
 
-                S.log("paster " + html);
+                S.log("paste " + html);
 
                 var re = editor.fire("paste", {
                     html:html,
@@ -144,10 +144,13 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
-                    dataFilter = editor.htmlDataProcessor.wordFilter;
+                    // !TODO 动态载入 word 过滤规则
+                    // use("dynamic/wordFilter",function(){
+                    //  insert(clean(html))
+                    // })
+                } else {
+                    editor.insertHtml(html, dataFilter);
                 }
-
-                editor.insertHtml(html, dataFilter);
 
             }, 0);
         }

@@ -2,7 +2,7 @@
  * @fileOverview comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
+KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -10,16 +10,31 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
         this.nodeName = "#comment";
     }
 
-    S.extend(Comment, Tag, {
-        writeHtml:function(writer, filter) {
-            var value = this.toHtml();
-            if (!filter || filter.onComment(this) !== false) {
-                writer.comment(value);
+    S.extend(Comment, Text, {
+        writeHtml:function (writer, filter) {
+            var ret;
+            if (!filter || (ret = filter.onComment(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.comment(this.toHtml());
+            }
+        },
+        toHtml:function () {
+            if (this.nodeValue) {
+                return this.nodeValue;
+            } else {
+                var value = Text.superclass.toHtml.apply(this, arguments);
+                // <!-- -->
+                return value.substring(4, value.length - 3);
             }
         }
     });
 
     return Comment;
 }, {
-    requires:['./Tag']
+    requires:['./Text']
 });

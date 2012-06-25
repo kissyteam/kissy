@@ -14,14 +14,19 @@ KISSY.add("htmlparser/nodes/Text", function (S, Node) {
         }
         this.nodeType = 3;
         this.nodeName = "#text";
-
     }
 
     S.extend(Text, Node, {
         writeHtml:function (writer, filter) {
-            var value = this.nodeValue;
-            if (!filter || filter.onText(this) !== false) {
-                writer.text(value);
+            var ret;
+            if (!filter || (ret = filter.onText(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.text(this.toHtml());
             }
         },
         toHtml:function () {

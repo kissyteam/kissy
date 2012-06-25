@@ -64,7 +64,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
         },
 
         comment:function(comment) {
-            this.append(comment);
+            this.append("<!--"+comment+"-->");
         },
 
         getHtml:function() {

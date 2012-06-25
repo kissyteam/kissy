@@ -111,7 +111,9 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         setTagName:function (v) {
             var self = this;
             self.nodeName = self.tagName = v;
-            self._updateSelfClosed();
+            if (v) {
+                self._updateSelfClosed();
+            }
         },
 
         equals:function (tag) {
@@ -288,7 +290,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                     if (!(attrName = filter.onAttributeName(attrName, el))) {
                         continue;
                     }
-                    attr.name=attrName;
+                    attr.name = attrName;
                     // filtered by value and node
                     if (filter.onAttribute(attr, el) === false) {
                         continue;

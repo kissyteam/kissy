@@ -34,11 +34,15 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         return v;
     }
 
-    function filterFn(arr, args, _default) {
+    function filterFn(arr, args, _default, el) {
         for (var i = 0; arr && i < arr.length; i++) {
-            var item = arr[i].value;
-            if (item.apply(null, args) === false) {
+            var item = arr[i].value, ret;
+            if ((ret = item.apply(null, args)) === false) {
                 return false;
+            }
+            // node can be replaced with another node
+            if (el && ret && ret != el) {
+                return this.onNode(ret);
             }
         }
         return _default;
@@ -104,11 +108,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText:function (el) {
-            return filterFn(this.text, [el.toHtml(), el], el);
+            return filterFn.call(this, this.text, [el.toHtml(), el], el, el);
         },
 
         onCData:function (el) {
-            return filterFn(this.cdata, [el.toHtml(), el], el);
+            return filterFn.call(this, this.cdata, [el.toHtml(), el], el, el);
         },
 
         onAttribute:function (attrNode, el) {
@@ -116,7 +120,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onComment:function (el) {
-            return filterFn(this.comment, [el.toHtml(), el], el);
+            return filterFn.call(this, this.comment, [el.toHtml(), el], el, el);
         },
 
         onNode:function (el) {
@@ -131,7 +135,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onFragment:function (el) {
-            return filterFn(this.root, [el], el);
+            return filterFn.call(this, this.root, [el], el, el);
         },
 
         onTag:function (el) {
