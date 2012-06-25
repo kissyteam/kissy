@@ -3,9 +3,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("input-selection", function (S, DOM) {
-    var propHooks = DOM._propHooks;
+    var propHooks = DOM._propHooks, supportSelectionEnd = true;
 
-    if (typeof S.Env.host.document.createElement("input").selectionEnd != "number") {
+    try {
+        // firefox 4 throw exception
+        supportSelectionEnd = typeof S.Env.host.document.createElement("input").selectionEnd == "number";
+    } catch (e) {
+    }
+
+    if (!supportSelectionEnd) {
         // S.log("fix selectionEnd/Start !");
         // note :
         // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
@@ -130,16 +136,16 @@ KISSY.add("input-selection", function (S, DOM) {
     }
 
     var FAKE_DIV_HTML = "<div style='" +
-        "z-index:-9999;" +
-        "overflow:hidden;" +
-        "position: fixed;" +
-        "left:-9999px;" +
-        "top:-9999px;" +
-        "opacity:0;" +
-        // firefox default normal,need to force to use pre-wrap
-        "white-space:pre-wrap;" +
-        "word-wrap:break-word;" +
-        "'></div>",
+            "z-index:-9999;" +
+            "overflow:hidden;" +
+            "position: fixed;" +
+            "left:-9999px;" +
+            "top:-9999px;" +
+            "opacity:0;" +
+            // firefox default normal,need to force to use pre-wrap
+            "white-space:pre-wrap;" +
+            "word-wrap:break-word;" +
+            "'></div>",
         FAKE_DIV,
         MARKER = "<span>" +
             // must has content
@@ -229,7 +235,7 @@ KISSY.add("input-selection", function (S, DOM) {
             var elemOffset = DOM.offset(elem);
 
             // input does not has scrollLeft
-            // so just get the postition of the beginning of input
+            // so just get the position of the beginning of input
             if (!supportInputScrollLeft && elem.type != 'textarea') {
                 elemOffset.top += elem.offsetHeight;
                 return elemOffset;
