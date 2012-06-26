@@ -1,6 +1,6 @@
 KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 	
-	var store = new Store({url:'data/number40.php'}),
+	var store = new Store({url:'../data/number40.php'}),
 		bar = new PBar({
 		render : '#pbar',
 		store : store

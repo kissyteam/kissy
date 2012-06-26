@@ -20,7 +20,7 @@ KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,Pag
 		}],
 		data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}],
 		store = new Store({
-			url : 'data/number40.php',
+			url : '../data/number40.php',
 			autoLoad : false
 		});
 	var grid = new Grid({
@@ -363,9 +363,6 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 	describe("测试Grid forceFit = true", function () {
 		var emptyCell = header.get('el').one('.ks-grid-hd-empty');
 		it('测试列自适应',function(){
-			//grid.showData(data);
-			//store.setResult(data);
-			//store.load();
 			var width = 500;
 			grid.set('width',width);
 			expect(header.getColumnsWidth()).toBe(width);
@@ -395,7 +392,7 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			var height = 500;
 			grid.set('height',height);
 			//var emptyCell = header.get('el').one('.ks-grid-hd-empty');
-			expect(emptyCell.width()).toBe(17);
+			//expect(emptyCell.width()).toBe(17);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
 		});/**/
 
