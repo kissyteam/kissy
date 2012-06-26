@@ -51,9 +51,14 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     function filterAttr(arr, attrNode, el, _default) {
         for (var i = 0; arr && i < arr.length; i++) {
             var item = arr[i].value,
+                ret,
                 name = attrNode.name;
-            if (item[name] && item[name].call(null, attrNode.value, el) === false) {
-                return false;
+            if (item[name] && (ret = item[name].call(null, attrNode.value, el)) === false) {
+                return ret;
+            }
+            // 2012.06.26 change attribute value
+            if (typeof ret == 'string') {
+                attrNode.value = ret;
             }
         }
         return _default;

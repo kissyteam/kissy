@@ -23,11 +23,12 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
      */
     var impliedEndTag = {
         // if dd encounter another dd before encounter dl ,then close last dd
-        'dd':'dl',
-        'dt':'dl',
-        'li':'ul',
-        'option':'select',
-        'optgroup':'select'
+        'dd':{'dl':1},
+        'dt':{'dl':1},
+        // 2012.06.27 Note: li may has two kinds of parent!
+        'li':{'ul':1, 'ol':1},
+        'option':{'select':1},
+        'optgroup':{'select':1}
         // p? rp? rt?
     };
 
@@ -58,11 +59,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
         }
 
         var
-            // a valid element which will replace current invalid tag
-            // and move tag's children to holder validly !
+        // a valid element which will replace current invalid tag
+        // and move tag's children to holder validly !
             holder = tag.clone(),
-            // last escape position that tag's children can be insertAfter
-            // escape from its parent if its parent can not include him :(
+        // last escape position that tag's children can be insertAfter
+        // escape from its parent if its parent can not include him :(
             prev = tag,
             recursives = [];
 
@@ -204,6 +205,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                 stack.length = from;
             }
 
+            // fix
+            // <ol><li>1<li>2</ol>
             function processImpliedEndTag(node) {
                 var needFix = 0,
                     endParentTagName;
@@ -211,8 +214,9 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                 if (endParentTagName = impliedEndTag[node.tagName]) {
                     var from = stack.length - 1,
                         parent = stack[from];
-                    while (parent &&
-                        parent.tagName != endParentTagName) {
+                    // <ol><li><ol><li>
+                    // parent ol break li check
+                    while (parent && !(parent.tagName in endParentTagName)) {
                         // <ul><li>1<div><li>2</div></ul>
                         if (parent.tagName == node.tagName) {
                             needFix = 1;

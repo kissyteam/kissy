@@ -158,20 +158,19 @@
             </sequential>
         </ac:for>
 
-        <replaceregexp match="@VERSION@"
-                       replace="${version}"
-                       flags="g"
-                       encoding="${charset}"
-                       byline="true">
-            <fileset dir="${component.build.dir.tmp}" includes="*.js,*.css"/>
-        </replaceregexp>
+        <move todir="${component.build.dir}">
+            <fileset dir="${component.build.dir.tmp}"
+                     includes="${copyright.files}"/>
+        </move>
+
+        <delete dir="${component.build.dir.tmp}"/>
 
         <replaceregexp match="@DEBUG@"
                        replace=""
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${component.build.dir.tmp}" includes="*-min.js,*-min.css"/>
+            <fileset dir="${component.build.dir}" includes="*-min.js,*-min.css"/>
         </replaceregexp>
 
         <replaceregexp match="@TIMESTAMP@"
@@ -179,15 +178,8 @@
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${component.build.dir.tmp}" includes="*.js,*.css"/>
+            <fileset dir="${component.build.dir}" includes="*.js,*.css"/>
         </replaceregexp>
-
-
-        <move todir="${component.build.dir}">
-            <fileset dir="${component.build.dir.tmp}"
-                     includes="${copyright.files}"/>
-        </move>
-        <delete dir="${component.build.dir.tmp}"/>
 
     </target>
 

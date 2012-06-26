@@ -616,7 +616,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 selection.selectRanges([ range ]);
                 self.focus();
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
-                clone && clone.scrollIntoView(undefined, false);
+                // only tag can scroll
+                if (clone && clone[0].nodeType == 1) {
+                    clone.scrollIntoView(undefined, false);
+                }
                 saveLater.call(self);
                 return clone;
             },

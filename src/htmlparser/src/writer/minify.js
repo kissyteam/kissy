@@ -12,7 +12,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
                 '?:down|up|over|move|out)|key(?:press|down|up)))$');
 
     function escapeAttrValue(str) {
-        return str.replace(/"/g, "&quote;");
+        return String(str).replace(/"/g, "&quote;");
     }
 
     function canDeleteEmptyAttribute(tag, attr) {

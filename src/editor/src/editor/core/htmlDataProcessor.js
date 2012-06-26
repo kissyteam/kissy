@@ -16,6 +16,18 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 htmlFilter = new HtmlParser.Filter(),
                 dataFilter = new HtmlParser.Filter();
 
+            function filterSpan(element) {
+                if (element.getAttribute('class') == 'Apple-style-span'
+                    || !(element.attributes.length)) {
+                    element.setTagName(null);
+                    return undefined;
+                }
+                if (!(element.childNodes.length) && !(element.attributes.length)) {
+                    return false;
+                }
+                return undefined;
+            }
+
             (function () {
 
                 function wrapAsComment(element) {
@@ -39,7 +51,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     ],
                     tags:{
                         script:wrapAsComment,
-                        noscript:wrapAsComment
+                        noscript:wrapAsComment,
+                        span:filterSpan
                     }
                 };
 
@@ -92,15 +105,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                                 return false;
                             }
                         },
-                        span:function (element) {
-                            if (element.getAttribute('class') == 'Apple-style-span') {
-                                element.setTagName(null);
-                                return;
-                            }
-                            if (!(element.childNodes.length) && !(element.attributes.length)) {
-                                return false;
-                            }
-                        }
+                        span:filterSpan
                     },
                     attributes:{
                         // 清除空style
@@ -369,7 +374,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     // fixForBody = fixForBody || "p";
                     // bug:qc #3710:使用 basicWriter ，去除无用的文字节点，标签间连续\n空白等
 
-                    var writer = new HtmlParser.BeautifyWriter(),
+                    var writer = new HtmlParser.BasicWriter(),
                         n = new HtmlParser.Parser(html).parse();
 
                     n.writeHtml(writer, _dataFilter);

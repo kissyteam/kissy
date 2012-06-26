@@ -164,5 +164,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             node.writeHtml(writer, filter);
             expect(writer.getHtml()).toBe("<ul><li>1</li><li>2</li></ul>");
         });
+
+        it("should parse nested li", function () {
+            var html = "<ol><li><ol><li></li></ol></li></ol>";
+            var n = HtmlParser.parse(html).childNodes[0];
+            expect(HtmlParser.serialize(n)).toBe(html);
+        });
     });
 });

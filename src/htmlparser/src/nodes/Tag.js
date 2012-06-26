@@ -150,6 +150,14 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             refreshChildNodes(ref.parentNode);
         },
 
+        replaceChild:function (newC, refC) {
+            var self = this,
+                childNodes = self.childNodes;
+            var index = S.indexOf(refC, childNodes);
+            childNodes[index] = newC;
+            refreshChildNodes(self);
+        },
+
         prepend:function (node) {
             this.childNodes.unshift(node);
             refreshChildNodes(this);

@@ -6,17 +6,29 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
     var $ = S.all,
         UA = S.UA,
         dtd = HtmlParser.DTD,
-        wordFilter = new HtmlParser.Filter();
-
-    var cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i;
-    var emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/;		// e.g. 0px 0pt 0px
-    var romanLiternalPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$',
-        lowerRomanLiteralRegex = new RegExp(romanLiternalPattern),
-        upperRomanLiteralRegex = new RegExp(romanLiternalPattern.toUpperCase());
-
-    var orderedPatterns = { 'decimal':/\d+/, 'lower-roman':lowerRomanLiteralRegex, 'upper-roman':upperRomanLiteralRegex, 'lower-alpha':/^[a-z]+$/, 'upper-alpha':/^[A-Z]+$/ },
-        unorderedPatterns = { 'disc':/[l\u00B7\u2002]/, 'circle':/[\u006F\u00D8]/, 'square':/[\u006E\u25C6]/},
-        listMarkerPatterns = { 'ol':orderedPatterns, 'ul':unorderedPatterns },
+        wordFilter = new HtmlParser.Filter(),
+        cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
+    // e.g. 0px 0pt 0px
+        emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/,
+        romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$',
+        lowerRomanLiteralRegex = new RegExp(romanLiteralPattern),
+        upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()),
+        orderedPatterns = {
+            'decimal':/\d+/,
+            'lower-roman':lowerRomanLiteralRegex,
+            'upper-roman':upperRomanLiteralRegex,
+            'lower-alpha':/^[a-z]+$/,
+            'upper-alpha':/^[A-Z]+$/
+        },
+        unorderedPatterns = {
+            'disc':/[l\u00B7\u2002]/,
+            'circle':/[\u006F\u00D8]/,
+            'square':/[\u006E\u25C6]/
+        },
+        listMarkerPatterns = {
+            'ol':orderedPatterns,
+            'ul':unorderedPatterns
+        },
         romans = [
             [1000, 'M'],
             [900, 'CM'],
@@ -32,7 +44,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             [4, 'IV'],
             [1, 'I']
         ],
-        alpahbets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     // Convert roman numbering back to decimal.
     function fromRoman(str) {
@@ -48,12 +60,20 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
     // Convert alphabet numbering back to decimal.
     function fromAlphabet(str) {
         str = str.toUpperCase();
-        var l = alpahbets.length, retVal = 1;
+        var l = alphabets.length, retVal = 1;
         for (var x = 1; str.length > 0; x *= l) {
-            retVal += alpahbets.indexOf(str.charAt(str.length - 1)) * x;
+            retVal += alphabets.indexOf(str.charAt(str.length - 1)) * x;
             str = str.substr(0, str.length - 1);
         }
         return retVal;
+    }
+
+    function setStyle(element, str) {
+        if (str) {
+            element.setAttribute("style", str);
+        } else {
+            element.removeAttribute("style");
+        }
     }
 
     /**
@@ -87,48 +107,49 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         previousListId;
 
     function onlyChild(elem) {
-        var childNodes = elem.childNodes,
+        var childNodes = elem.childNodes || [],
             count = childNodes.length,
             firstChild = (count == 1) && childNodes[0];
         return firstChild || null;
     }
 
     function removeAnyChildWithName(elem, tagName) {
-        var children = elem.childNodes,
-            childs = [],
+        var children = elem.childNodes || [],
+            ret = [],
             child;
 
         for (var i = 0; i < children.length; i++) {
             child = children[ i ];
-            if (!child.nodeName)
+            if (!child.nodeName) {
                 continue;
-
+            }
             if (child.nodeName == tagName) {
-                childs.push(child);
+                ret.push(child);
                 children.splice(i--, 1);
             }
-            childs = childs.concat(removeAnyChildWithName(child, tagName));
+            ret = ret.concat(removeAnyChildWithName(child, tagName));
         }
-        return childs;
+        return ret;
     }
 
     function getAncestor(elem, tagNameRegex) {
         var parent = elem.parentNode;
-        while (parent && !( parent.nodeName && parent.nodeName.match(tagNameRegex) ))
+        while (parent && !( parent.nodeName && parent.nodeName.match(tagNameRegex) )) {
             parent = parent.parentNode;
+        }
         return parent;
     }
 
-
     function firstChild(elem, evaluator) {
         var child,
-            children = elem.childNodes;
+            i,
+            children = elem.childNodes || [];
 
-        for (var i = 0; i < children.length; i++) {
+        for (i = 0; i < children.length; i++) {
             child = children[ i ];
-            if (evaluator(child))
+            if (evaluator(child)) {
                 return child;
-            else if (child.name) {
+            } else if (child.nodeName) {
                 child = firstChild(child, evaluator);
                 if (child) {
                     return child;
@@ -149,14 +170,15 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             // style literal.
             if (typeof name == 'object') {
                 for (var style in name) {
-                    if (name.hasOwnProperty(style))
+                    if (name.hasOwnProperty(style)) {
                         addingStyleText += style + ':' + name[ style ] + ';';
+                    }
                 }
             }
             // raw style text form.
-            else
+            else {
                 addingStyleText += name;
-
+            }
             isPrepend = value;
         }
 
@@ -167,15 +189,17 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             [ addingStyleText, styleText ]
             : [ styleText, addingStyleText ] ).join(';');
 
-        elem.setAttribute("style", styleText.replace(/^;|;(?=;)/, ''));
+        setStyle(elem, styleText.replace(/^;|;(?=;)/, ''));
     }
 
 
     function parentOf(tagName) {
-        var result = {};
-        for (var tag in dtd) {
-            if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ])
+        var result = {},
+            tag;
+        for (tag in dtd) {
+            if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
                 result[ tag ] = 1;
+            }
         }
         return result;
     }
@@ -202,34 +226,27 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 // TODO: Support more list style type from MS-Word.
             }
 
-            var children = element.childNodes,
+            var children = element.childNodes || [],
                 child;
 
             for (var i = 0; i < children.length; i++) {
                 child = children[ i ];
 
                 if (child.nodeName in dtd.$listItem) {
-                    var listItemChildren = child.childNodes,
+                    var listItemChildren = child.childNodes || [],
                         count = listItemChildren.length,
                         last = listItemChildren[ count - 1 ];
 
                     // Move out nested list.
                     if (last.nodeName in dtd.$list) {
-                        var ref = children[i + 1];
-                        if (!ref) {
-                            element.appendChild(last);
-                        } else {
-                            last.insertBefore(ref);
-                        }
-
+                        element.insertAfter(child);
                         // Remove the parent list item if it's just a holder.
                         if (!--listItemChildren.length) {
                             element.removeChild(children[i--]);
-                            children = element.childNodes;
                         }
                     }
 
-                    child.nodeName = child.tagName = 'ke:li';
+                    child.setTagName('ke:li');
 
                     // Inherit numbering from list root on the first list item.
                     element.getAttribute("start") &&
@@ -238,10 +255,12 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                     filters.stylesFilter(
                         [
-                            [ 'tab-stops', null, function (val) {
+                            [
+                                'tab-stops', null, function (val) {
                                 var margin = val.split(' ')[ 1 ].match(cssLengthRelativeUnit);
                                 margin && ( previousListItemMargin = convertToPx(margin[ 0 ]) );
-                            } ],
+                            }
+                            ],
                             ( level == 1 ? [ 'mso-list', null, function (val) {
                                 val = val.split(' ');
                                 var listId = Number(val[ 0 ].match(/\d+/));
@@ -279,7 +298,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
          * @param element
          */
         assembleList:function (element) {
-            var children = element.childNodes,
+            var children = element.childNodes || [],
                 child,
                 listItem, // The current processing ke:li element.
                 listItemIndent, // Indent level of current list item.
@@ -397,9 +416,8 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     if (!list) {
                         openedLists.push(list = new HtmlParser.Tag(listType));
                         list.appendChild(listItem);
-                        children[ i ] = list;
-                    }
-                    else {
+                        element.replaceChild(list, children[i]);
+                    } else {
                         if (listItemIndent > lastIndent) {
                             openedLists.push(list = new HtmlParser.Tag(listType));
                             list.appendChild(listItem);
@@ -409,29 +427,30 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                             // There might be a negative gap between two list levels. (#4944)
                             var diff = lastIndent - listItemIndent,
                                 parent;
-                            while (diff-- && ( parent = list.parentNode ))
+                            while (diff-- && ( parent = list.parentNode )) {
                                 list = parent.parentNode;
-
+                            }
                             list.appendChild(listItem);
                         }
-                        else
+                        else {
                             list.appendChild(listItem);
-
+                        }
                         children.splice(i--, 1);
                     }
 
                     lastListItem = listItem;
                     lastIndent = listItemIndent;
                 }
-                else if (list)
+                else if (child.nodeType == 3 && !S.trim(child.nodeValue)) {
+                    //  li 间的空文字节点忽略
+                } else if (list) {
                     list = lastIndent = lastListItem = null;
+                }
             }
 
-            for (i = 0; i < openedLists.length; i++)
+            for (i = 0; i < openedLists.length; i++) {
                 postProcessList(openedLists[ i ]);
-
-            list = lastIndent = lastListItem =
-                previousListId = previousListItemMargin = listBaseIndent = null;
+            }
         },
 
         /**
@@ -477,16 +496,21 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                                     name = newName || name;
                                     whitelist && ( newValue = newValue || value );
 
-                                    if (typeof newValue == 'function')
+                                    if (typeof newValue == 'function') {
                                         newValue = newValue(value, element, name);
+                                    }
 
                                     // Return an couple indicate both name and value
                                     // changed.
-                                    if (newValue && newValue.push)
-                                        name = newValue[ 0 ], newValue = newValue[ 1 ];
+                                    if (newValue && newValue.push) {
+                                        name = newValue[ 0 ];
+                                        newValue = newValue[ 1 ];
+                                    }
 
-                                    if (typeof newValue == 'string')
+                                    if (typeof newValue == 'string') {
                                         rules.push([ name, newValue ]);
+                                    }
+
                                     return;
                                 }
                             }
@@ -496,10 +520,11 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                     });
 
-                for (var i = 0; i < rules.length; i++)
+                for (var i = 0; i < rules.length; i++) {
                     rules[ i ] = rules[ i ].join(':');
-                return rules.length ?
-                    ( rules.join(';') + ';' ) : false;
+                }
+
+                return rules.length ? ( rules.join(';') + ';' ) : false;
             };
         },
 
@@ -515,9 +540,8 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
     // 1. move consistent list item styles up to list root.
     // 2. clear out unnecessary list item numbering.
     function postProcessList(list) {
-        var children = list.childNodes,
+        var children = list.childNodes || [],
             child,
-            attrs,
             count = children.length,
             match,
             mergeStyle,
@@ -531,8 +555,9 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         for (var i = 0; i < count; i++) {
             child = children[ i ];
 
-            if (child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1)
-                delete child.removeAttribute("value");
+            if (child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1) {
+                child.removeAttribute("value");
+            }
 
             match = styleTypeRegexp.exec(child.getAttribute("style"));
 
@@ -549,12 +574,14 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         if (mergeStyle) {
             for (i = 0; i < count; i++) {
                 var style = children[ i ].getAttribute("style");
-                attrs = children[ i ].attributes;
-                style && ( children[ i ].setAttribute("style", stylesFilter([
-                    [ 'list-style-type']
-                ])(style) || ''));
-            }
 
+                if (style) {
+                    style = stylesFilter([
+                        [ 'list-style-type']
+                    ])(style);
+                    setStyle(children[ i ], style);
+                }
+            }
             addStyle(list, 'list-style-type', mergeStyle);
         }
     }
@@ -591,7 +618,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 element.setTagName('ke:li');
 
                 if (element.getAttribute("style")) {
-                    element.setAttribute("style", filters.stylesFilter(
+                    var styleStr = filters.stylesFilter(
                         [
                             // Text-indent is not representing list item level any more.
                             [ 'text-indent' ],
@@ -603,13 +630,16 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                                 margin = convertToPx(values[ 3 ] || values[ 1 ] || values [ 0 ]);
 
                                 // Figure out the indent unit by checking the first time of incrementation.
-                                if (!listBaseIndent && previousListItemMargin !== null && margin > previousListItemMargin)
+                                if (!listBaseIndent && previousListItemMargin !== null &&
+                                    margin > previousListItemMargin) {
                                     listBaseIndent = margin - previousListItemMargin;
+                                }
 
                                 previousListItemMargin = margin;
-
-                                element.setAttribute('ke:indent', listBaseIndent &&
-                                    ( Math.ceil(margin / listBaseIndent) + 1 ) || 1);
+                                if (listBaseIndent) {
+                                    element.setAttribute('ke:indent', listBaseIndent &&
+                                        ( Math.ceil(margin / listBaseIndent) + 1 ) || 1);
+                                }
                             } ],
                             // The best situation: "mso-list:l0 level1 lfo2" tells the belonged list root, list item indentation, etc.
                             [ ( /^mso-list$/ ), null, function (val) {
@@ -624,28 +654,28 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                                 }
                                 element.setAttribute('ke:indent', indent);
                             } ]
-                        ])(element.getAttribute("style"), element) || '');
+                        ])(element.getAttribute("style"), element);
+
+                    setStyle(element, styleStr);
                 }
 
                 // First level list item might be presented without a margin.
-
-
                 // In case all above doesn't apply.
                 if (!element.getAttribute("ke:indent")) {
                     previousListItemMargin = 0;
                     element.setAttribute('ke:indent', 1);
                 }
 
-                for (var a in listMarker.attributes) {
-                    element.setAttribute(a, listMarker.attributes[a]);
-                }
+                S.each(listMarker.attributes, function (a) {
+                    element.setAttribute(a.name, a.value);
+                });
 
                 return true;
             }
             // Current list disconnected.
-            else
+            else {
                 previousListId = previousListItemMargin = listBaseIndent = null;
-
+            }
             return false;
         },
 
@@ -665,7 +695,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             };
         })(),
 
-        listDtdParents:parentOf(dtd, 'ol')
+        listDtdParents:parentOf('ol')
     };
 
     (function () {
@@ -683,9 +713,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 return isNaN(value) ? value : value + 'px';
             },
             getStyleComponents = utils.getStyleComponents,
-            listDtdParents = utils.listDtdParents,
-            removeFontStyles = 1,
-            removeStyles = 1;
+            listDtdParents = utils.listDtdParents;
 
         wordFilter.addRules({
 
@@ -699,7 +727,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 assembleList(element);
             },
 
-            elements:{
+            tags:{
                 '^':function (element) {
                     // Transform CSS style declaration to inline style.
                     var applyStyleFilter;
@@ -712,20 +740,20 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                     // Convert length unit of width/height on blocks to
                     // a more editor-friendly way (px).
-                    if (tagName in blockLike
-                        && element.getAttribute("style")) {
-                        element.setAttribute("style", stylesFilter(
+                    if (tagName in blockLike && element.getAttribute("style")) {
+                        setStyle(element, stylesFilter(
                             [
                                 [ ( /^(:?width|height)$/ ), null, convertToPx ]
-                            ])(element.getAttribute("style")) || '');
+                            ])(element.getAttribute("style")));
                     }
 
                     // Processing headings.
                     if (tagName.match(/h\d/)) {
                         element.filterChildren();
                         // Is the heading actually a list item?
-                        if (resolveListItem(element))
+                        if (resolveListItem(element)) {
                             return;
+                        }
                     }
                     // Remove inline elements which contain only empty spaces.
                     else if (tagName in dtd.$inline) {
@@ -765,7 +793,8 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 'style':function (element) {
                     if (UA.gecko) {
                         // Grab only the style definition section.
-                        var styleDefSection = onlyChild(element).nodeValue.match(/\/\* Style Definitions \*\/([\s\S]*?)\/\*/),
+                        var styleDefSection = onlyChild(element).nodeValue
+                                .match(/\/\* Style Definitions \*\/([\s\S]*?)\/\*/),
                             styleDefText = styleDefSection && styleDefSection[ 1 ],
                             rules = {}; // Storing the parsed result.
 
@@ -791,12 +820,14 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                                                 if (className.match(/MsoNormal/))
                                                     return;
 
-                                                if (!rules[ tagName ])
+                                                if (!rules[ tagName ]) {
                                                     rules[ tagName ] = {};
-                                                if (className)
+                                                }
+                                                if (className) {
                                                     rules[ tagName ][ className ] = styleBlock;
-                                                else
+                                                } else {
                                                     rules[ tagName ] = styleBlock;
+                                                }
                                             });
                                     }
                                 });
@@ -827,13 +858,12 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                             return node.nodeType == 3 && !containsNothingButSpaces(node.parentNode);
                         });
                         var bullet = bulletText && bulletText.parentNode;
-                        !bullet.getAttribute("style") && (                           bullet.setAttribute("style", 'mso-list: Ignore;'));
+                        !bullet.getAttribute("style") && ( bullet.setAttribute("style", 'mso-list: Ignore;'));
                     }
 
                     element.filterChildren();
-
                     // Is the paragraph actually a list item?
-                    // resolveListItem(element)
+                    resolveListItem(element)
                 },
 
                 'div':function (element) {
@@ -842,7 +872,6 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     // Instead we use a clear-float div after the table to properly achieve the same layout.
                     var singleChild = onlyChild(element);
                     if (singleChild && singleChild.nodeName == 'table') {
-
                         var attrs = element.attributes;
 
                         S.each(attrs, function (attr) {
@@ -920,9 +949,9 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                 'span':function (element) {
                     // Remove the span if it comes from list bullet text.
-                    if (isListBulletIndicator(element.parentNode))
+                    if (isListBulletIndicator(element.parentNode)) {
                         return false;
-
+                    }
                     element.filterChildren();
                     if (containsNothingButSpaces(element)) {
                         element.setTagName(null);
@@ -941,10 +970,12 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                         if (listType) {
                             var marker = createListBulletMarker(listType, listSymbol);
-                            // Some non-existed list items might be carried by an inconsequential list, indicate by "mso-hide:all/display:none",
+                            // Some non-existed list items might be carried by an inconsequential list,
+                            // indicate by "mso-hide:all/display:none",
                             // those are to be removed later, now mark it with "ke:ignored".
                             var ancestor = getAncestor(element, 'span');
-                            if (ancestor && (/ mso-hide:\s*all|display:\s*none /).test(ancestor.getAttribute("style"))) {
+                            if (ancestor && (/ mso-hide:\s*all|display:\s*none /).
+                                test(ancestor.getAttribute("style"))) {
                                 marker.setAttribute('ke:ignored', 1);
                             }
                             return marker;
@@ -957,19 +988,18 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     // Assume MS-Word mostly carry font related styles on <span>,
                     // adapting them to editor's convention.
                     if (styleText) {
-                        element.setAttribute("style", stylesFilter(
+
+                        setStyle(element, stylesFilter(
                             [
                                 // Drop 'inline-height' style which make lines overlapping.
-                                [ 'line-height' ],
-                                [ ( /^font-family$/ ), null, null ] ,
-                                [ ( /^font-size$/ ), null, null ] ,
-                                [ ( /^color$/ ), null, null ] ,
-                                [ ( /^background-color$/ ), null, null ]
+                                [ /^line-height$/ ],
+                                [  /^font-family$/  ] ,
+                                [  /^font-size$/  ] ,
+                                [  /^color$/  ] ,
+                                [  /^background-color$/  ]
                             ]
-                        )(styleText, element) || '');
+                        )(styleText, element));
                     }
-
-                    return null;
                 },
                 // Editor doesn't support anchor with content currently (#3582),
                 // drop such anchors with content preserved.
@@ -1001,66 +1031,48 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
             attributes:{
                 'style':stylesFilter(
-                    removeStyles ?
-                        // Provide a white-list of styles that we preserve, those should
-                        // be the ones that could later be altered with editor tools.
-                        [
-                            // Leave list-style-type
-                            [ ( /^list-style-type$/ ), null ],
+                    // Provide a white-list of styles that we preserve, those should
+                    // be the ones that could later be altered with editor tools.
+                    [
+                        // Leave list-style-type
+                        [ ( /^list-style-type$/ ) ],
 
-                            // Preserve margin-left/right which used as default indent style in the editor.
-                            [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
-                                if (element.name in { p:1, div:1 }) {
-                                    var indentStyleName = 'margin-left';
+                        // Preserve margin-left/right which used as default indent style in the editor.
+                        [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
+                            if (element.nodeName in { p:1, div:1 }) {
+                                var indentStyleName = 'margin-left';
 
-                                    // Extract component value from 'margin' shorthand.
-                                    if (name == 'margin') {
-                                        value = getStyleComponents(name, value,
-                                            [ indentStyleName ])[ indentStyleName ];
-                                    }
-                                    else if (name != indentStyleName)
-                                        return null;
-
-                                    if (value && !emptyMarginRegex.test(value))
-                                        return [ indentStyleName, value ];
+                                // Extract component value from 'margin' shorthand.
+                                if (name == 'margin') {
+                                    value = getStyleComponents(name, value,
+                                        [ indentStyleName ])[ indentStyleName ];
+                                } else if (name != indentStyleName) {
+                                    return null;
                                 }
 
-                                return null;
+                                if (value && !emptyMarginRegex.test(value)) {
+                                    return [ indentStyleName, value ];
+                                }
+                            }
+
+                            return null;
+                        } ],
+
+                        // Preserve clear float style.
+                        [ ( /^clear$/ ) ],
+
+                        [ ( /^border.*|margin.*|vertical-align|float$/ ), null,
+                            function (value, element) {
+                                if (element.nodeName == 'img')
+                                    return value;
                             } ],
 
-                            // Preserve clear float style.
-                            [ ( /^clear$/ ) ],
-
-                            [ ( /^border.*|margin.*|vertical-align|float$/ ), null,
-                                function (value, element) {
-                                    if (element.nodeName == 'img')
-                                        return value;
-                                } ],
-
-                            [ (/^width|height$/ ), null,
-                                function (value, element) {
-                                    if (element.nodeName in { table:1, td:1, th:1, img:1 })
-                                        return value;
-                                } ]
-                        ] :
-                        // Otherwise provide a black-list of styles that we remove.
-                        [
-                            [ ( /^mso-/ ) ],
-                            // Fixing color values.
-                            [ ( /-color$/ ), null, function (value) {
-                                if (value == 'transparent')
-                                    return false;
-                                if (UA.gecko)
-                                    return value.replace(/-moz-use-text-color/g, 'transparent');
-                            } ],
-                            // Remove empty margin values, e.g. 0.00001pt 0em 0pt
-                            [ ( /^margin$/ ), emptyMarginRegex ],
-                            [ 'text-indent', '0cm' ],
-                            [ 'page-break-before' ],
-                            [ 'tab-stops' ],
-                            [ 'display', 'none' ],
-                            removeFontStyles ? [ ( /font-?/ ) ] : null
-                        ], removeStyles),
+                        [ (/^width|height$/ ), null,
+                            function (value, element) {
+                                if (element.nodeName in { table:1, td:1, th:1, img:1 })
+                                    return value;
+                            } ]
+                    ], 1),
 
                 // Prefer width styles over 'width' attributes.
                 'width':function (value, element) {
@@ -1083,7 +1095,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 'bgcolor':falsyFilter,
 
                 // Deprecate 'valign' attribute in favor of 'vertical-align'.
-                'valign':removeStyles ? falsyFilter : function (value, element) {
+                'valign':function (value, element) {
                     addStyle(element, 'vertical-align', value);
                     return false;
                 }

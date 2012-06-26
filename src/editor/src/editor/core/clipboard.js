@@ -140,16 +140,15 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                     html = re;
                 }
 
-                var dataFilter = null;
 
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
-                    // !TODO 动态载入 word 过滤规则
-                    // use("dynamic/wordFilter",function(){
-                    //  insert(clean(html))
-                    // })
+                    // 动态载入 word 过滤规则
+                    S.use("editor/core/dynamic/wordFilter", function (S, wordFilter) {
+                        editor.insertHtml(wordFilter.toDataFormat(html, editor));
+                    });
                 } else {
-                    editor.insertHtml(html, dataFilter);
+                    editor.insertHtml(html);
                 }
 
             }, 0);

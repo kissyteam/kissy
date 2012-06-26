@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 25 23:37
+build time: Jun 27 00:24
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -1918,6 +1918,14 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             refreshChildNodes(ref.parentNode);
         },
 
+        replaceChild:function (newC, refC) {
+            var self = this,
+                childNodes = self.childNodes;
+            var index = S.indexOf(refC, childNodes);
+            childNodes[index] = newC;
+            refreshChildNodes(self);
+        },
+
         prepend:function (node) {
             this.childNodes.unshift(node);
             refreshChildNodes(this);
@@ -2227,11 +2235,12 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
      */
     var impliedEndTag = {
         // if dd encounter another dd before encounter dl ,then close last dd
-        'dd':'dl',
-        'dt':'dl',
-        'li':'ul',
-        'option':'select',
-        'optgroup':'select'
+        'dd':{'dl':1},
+        'dt':{'dl':1},
+        // 2012.06.27 Note: li may has two kinds of parent!
+        'li':{'ul':1, 'ol':1},
+        'option':{'select':1},
+        'optgroup':{'select':1}
         // p? rp? rt?
     };
 
@@ -2262,11 +2271,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
         }
 
         var
-            // a valid element which will replace current invalid tag
-            // and move tag's children to holder validly !
+        // a valid element which will replace current invalid tag
+        // and move tag's children to holder validly !
             holder = tag.clone(),
-            // last escape position that tag's children can be insertAfter
-            // escape from its parent if its parent can not include him :(
+        // last escape position that tag's children can be insertAfter
+        // escape from its parent if its parent can not include him :(
             prev = tag,
             recursives = [];
 
@@ -2408,6 +2417,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                 stack.length = from;
             }
 
+            // fix
+            // <ol><li>1<li>2</ol>
             function processImpliedEndTag(node) {
                 var needFix = 0,
                     endParentTagName;
@@ -2415,8 +2426,9 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                 if (endParentTagName = impliedEndTag[node.tagName]) {
                     var from = stack.length - 1,
                         parent = stack[from];
-                    while (parent &&
-                        parent.tagName != endParentTagName) {
+                    // <ol><li><ol><li>
+                    // parent ol break li check
+                    while (parent && !(parent.tagName in endParentTagName)) {
                         // <ul><li>1<div><li>2</div></ul>
                         if (parent.tagName == node.tagName) {
                             needFix = 1;
@@ -2559,7 +2571,7 @@ KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, Speci
 KISSY.add("htmlparser/writer/basic", function(S) {
 
     function escapeAttrValue(str) {
-        return str.replace(/"/g, "&quote;");
+        return String(str).replace(/"/g, "&quote;");
     }
 
 
@@ -2875,9 +2887,14 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     function filterAttr(arr, attrNode, el, _default) {
         for (var i = 0; arr && i < arr.length; i++) {
             var item = arr[i].value,
+                ret,
                 name = attrNode.name;
-            if (item[name] && item[name].call(null, attrNode.value, el) === false) {
-                return false;
+            if (item[name] && (ret = item[name].call(null, attrNode.value, el)) === false) {
+                return ret;
+            }
+            // 2012.06.26 change attribute value
+            if (typeof ret == 'string') {
+                attrNode.value = ret;
             }
         }
         return _default;
@@ -3007,7 +3024,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
                 '?:down|up|over|move|out)|key(?:press|down|up)))$');
 
     function escapeAttrValue(str) {
-        return str.replace(/"/g, "&quote;");
+        return String(str).replace(/"/g, "&quote;");
     }
 
     function canDeleteEmptyAttribute(tag, attr) {
