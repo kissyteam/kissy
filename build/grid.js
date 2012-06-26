@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 25 15:26
+build time: Jun 26 10:47
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -1598,11 +1598,14 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		_getColumnsWidth : function(){
 			var _self = this,
 				columns = null,
+				borderWidth = 0,
 				totalWidth = 0;
 				columns = _self.get('columns');
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -2328,11 +2331,14 @@ KISSY.add('grid/header',function(S,Component,Column){
 			var _self = this,
 				columns = _self.getColumns(),
 				//checkable = _self.get('checkable'),
-				totalWidth = 0;
+				totalWidth = 0,
+				borderWidth = 0;
 
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -2466,8 +2472,8 @@ KISSY.add('grid/header',function(S,Component,Column){
 						showCount ++;
 					}
 				});
-				borderWidth = S.UA.chrome ? 0 : showCount * 1;
-				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0) + borderWidth;// + 2 + 
+				borderWidth = S.UA.webkit ? 0 : showCount * 1;
+				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0) + borderWidth;//  + 2 + 
 				//Calculate how many times ( width / columnsWidth )
 				times = (width - extraWidth - fixedWidth)/ (columnsWidth - fixedWidth);
 
