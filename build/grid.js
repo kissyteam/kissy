@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:20
+build time: Jun 26 10:47
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -17,7 +17,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
      * @extends Component.Container
      * @memberOf Grid
      */
-	var Bar = Component.define(Component.Container,
+	var Bar = Component.Container.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	
@@ -110,7 +110,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
  */
 KISSY.add('grid/baritem',function(S,Component,Button){
 	
-	var BarItemRender =  Component.define(Component.Render,{
+	var BarItemRender =  Component.Render.extend({
 
 		renderUI:function(){
 			var el = this.get("el");
@@ -124,7 +124,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends Component.Controller
      * @memberOf Grid.Bar
      */
-	var BarItem = Component.define(Component.Controller,{
+	var BarItem = Component.Controller.extend({
 		/* render baritem's dom
 		* @protected
         * @override
@@ -195,7 +195,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var ButtonBarItem = Component.define(BarItem,{
+	var ButtonBarItem = BarItem.extend({
 
 		initializer : function(){
 			var _self = this,
@@ -275,7 +275,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var SeparatorBarItem = Component.define(BarItem,{
+	var SeparatorBarItem = BarItem.extend({
 		/* render separator's dom
 		* @protected
         * @override
@@ -297,7 +297,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var SpacerBarItem = Component.define(BarItem,{
+	var SpacerBarItem = BarItem.extend({
 		
 	},{
 		ATTRS:/** @lends Grid.Bar.Spacer.prototype*/
@@ -323,7 +323,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @extends  Grid.Bar.BarItem
      * @memberOf Grid.Bar
      */
-	var TextBarItem = Component.define(BarItem,{
+	var TextBarItem = BarItem.extend({
 		_uiSetText : function(text){
 			var _self = this,
 				el = _self.get('el');
@@ -363,7 +363,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
  */
 KISSY.add("grid/barrender", function(S,  Component) {
 
-	return Component.define(Component.Render,{
+	return Component.Render.extend({
 
 		renderUI:function() {
             var el = this.get("el");
@@ -381,7 +381,7 @@ KISSY.add("grid/barrender", function(S,  Component) {
  * @fileOverview This class specifies the definition for whow grid
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/base',function(S,Component,Header,GridBody){
+KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 
 	var CLS_GRID_WITH = 'ks-grid-width',
 		CLS_GRID_HEIGHT = 'ks-grid-height',
@@ -420,6 +420,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 			if(bbar){
 				children.push(bbar);
 			}
+			_self._initLoadMask();
 		},
 		/**
 		* add a column to grid
@@ -527,6 +528,15 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 				_self.set(name,bar);
 			}
 			return bar;
+		},
+		//when set 'loadMask = true' ,create a loadMask instance
+		_initLoadMask : function(){
+			var _self = this,
+				loadMask = _self.get('loadMask');
+			if(loadMask && !loadMask.show){
+				loadMask = new Util.LoadMask(_self.get('el'));
+				_self.set('loadMask',loadMask);
+			}
 		},
 		//bind header event,when column changed,followed this componet
 		_bindHeaderEvent : function(){
@@ -750,7 +760,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 	});
 	return grid;
 },{
-	requires:['component','./header','./gridbody']
+	requires:['component','./header','./gridbody','./util']
 });KISSY.add('grid/bindable',function(S){
 	
 	/**
@@ -780,11 +790,14 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 			value : true
 		}
 	}
+
+
 	S.augment(bindable,
 	/**
 	* @lends Grid.Bindable.prototype
 	*/	
 	{
+
 		__bindUI : function(){
 			var _self = this,
 				store = _self.get('store'),
@@ -894,7 +907,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 	/**
 	* render of column
 	*/
-	var columnRender = Component.define(Component.Render,{
+	var columnRender = Component.Render.extend({
 		/**
 		* @override
 		*/
@@ -987,7 +1000,7 @@ KISSY.add('grid/column',function(S,Component,Template){
      * @constructor
      * @extends Component.Container
      */
-	var column = Component.define(Component.Container,
+	var column = Component.Container.extend(
 	/**
 	 * @lends Grid.Column.prototype
 	 */		
@@ -1284,12 +1297,13 @@ KISSY.add('grid/column',function(S,Component,Template){
  * @fileOverview grid component for kissy
  * @author dxq613@gmail.com
  */
-KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins) {
+KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins,Util) {
 	Grid.Bar = Bar;
 	Grid.Store = Store;
 	Grid.PaggingBar = PaggingBar;
 	Grid.PaggingBar.Number = NumberPaggingBar;
 	Grid.Plugins = Plugins;
+	Grid.Util = Util;
 
     return Grid;
 }, {
@@ -1299,7 +1313,8 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins
 		"grid/store",
 		"grid/paggingbar",
 		"grid/numberpaggingbar",
-		"grid/plugins"
+		"grid/plugins",
+		"grid/util"
 	]
 });/**
  * @fileOverview This class specifies the definition for the body of grid.
@@ -1583,11 +1598,14 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		_getColumnsWidth : function(){
 			var _self = this,
 				columns = null,
+				borderWidth = 0,
 				totalWidth = 0;
 				columns = _self.get('columns');
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -1666,6 +1684,8 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		},
 		/**
 		* clear data in this component
+		* @example:
+		* grid.clearData();
 		*/
 		clearData : function(){
 			var _self = this;
@@ -1685,7 +1705,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		* find the cell dom by record and column id
 		* @param {String|Number} id the column id 
 		* @param {Object} record the record that showed in this componet,if can not find ,return null
-		* @result {Node} 
+		* @return  {Node} 
 		*/
 		findCell : function(id,record){
 			var _self = this,
@@ -1888,12 +1908,16 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//publish event to grid
 		_publishEvent : function(){
 			var _self = this,
+				parent = _self.get('parent'),
 				events = _self.get('events');
+			if(!parent){
+				return;
+			}
 			S.each(events,function(event){
 				_self.publish(event,{
 					bubbles:1
 				});
-				_self.addTarget(_self.get('parent'));
+				_self.addTarget(parent);
 			});
 		},
 		_rowClickEvent : function(event){
@@ -2057,7 +2081,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			},
 			headerCellTemplate : {
 				view : true,
-				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none" {{/if}}"></td>'
+				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
 			},
 			/**
 			* @override 
@@ -2172,7 +2196,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 
 	var CLS_CELL_EMPTY = 'ks-grid-hd-empty',
 		CLS_SCROLL_WITH = 17;
-	var headerRender = Component.define(Component.Render,{
+	var headerRender = Component.Render.extend({
 
 		renderUI : function(){
 			var _self = this,
@@ -2227,7 +2251,7 @@ KISSY.add('grid/header',function(S,Component,Column){
      * @constructor
      * @extends Component.Container
      */
-	var header = Component.define(Component.Container,
+	var header = Component.Container.extend(
 	/**
 	 * @lends Grid.Header.prototype
 	 */		
@@ -2307,11 +2331,14 @@ KISSY.add('grid/header',function(S,Component,Column){
 			var _self = this,
 				columns = _self.getColumns(),
 				//checkable = _self.get('checkable'),
-				totalWidth = 0;
+				totalWidth = 0,
+				borderWidth = 0;
 
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -2430,6 +2457,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 				showCount = 0,
 				extraWidth = 0,
 				appendWidth = 0,
+				borderWidth = 0,
 				columnsWidth = 0;
 			//if there is not a width config of grid ,The forceFit action can't work
 			if(width){
@@ -2444,7 +2472,8 @@ KISSY.add('grid/header',function(S,Component,Column){
 						showCount ++;
 					}
 				});
-				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0);//showCount * 1 + 2 + 
+				borderWidth = S.UA.webkit ? 0 : showCount * 1;
+				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0) + borderWidth;//  + 2 + 
 				//Calculate how many times ( width / columnsWidth )
 				times = (width - extraWidth - fixedWidth)/ (columnsWidth - fixedWidth);
 
@@ -3918,6 +3947,10 @@ KISSY.add('grid/plugins',function(S){
 			_self.sortInfo.field = field || _self.sortInfo.field;
 			_self.sortInfo.direction = direction || _self.sortInfo.direction;
 			if(_self.remoteSort){	//如果远程排序，重新加载数据
+				var memeryData = _self.proxy.memeryData;
+				if(memeryData){
+					_self._sortData(field,direction,memeryData);
+				}
 				this.load();
 			}else{
 				_self._sortData(field,direction);
@@ -4088,16 +4121,16 @@ KISSY.add('grid/plugins',function(S){
 
 		},
 		//排序
-		_sortData : function(field,direction){
+		_sortData : function(field,direction,records){
 			var _self = this;
-
+			records = records || _self.resultRows;
 			field = field || _self.sortInfo.field;
 			direction = direction || _self.sortInfo.direction;
 			//如果未定义排序字段，则不排序
 			if(!field || !direction){
 				return;
 			}
-			_self.resultRows.sort(function(obj1,obj2){
+			records.sort(function(obj1,obj2){
 				return _self.compare(obj1,obj2,field,direction);
 			});
 		},
@@ -4122,4 +4155,321 @@ KISSY.add('grid/plugins',function(S){
 	});
 
 	return Store;
+});/**
+ * @fileOverview this class details some util tools of grid,like loadMask, formatter for grid's cell render
+ * @author dxq613@gmail.com
+ */
+KISSY.add('grid/util',function(S){
+	var DOM = S.DOM,
+		Node = S.Node,
+		UA = S.UA,
+		CLS_MASK = 'ks-ext-mask',
+		CLS_MASK_MSG = CLS_MASK + '-msg';
+	/**
+	 * This class specifies some util tools of grid
+     * @name Util
+     * @class
+     * @memberOf Grid
+     */
+	var util = 
+	/** @lends Grid.Util */		
+	{
+		/**
+		* @description mask the dom element
+		* @param {[String|DOM|Node]} element the element such as selector,Dom or Node will be masked
+		* @param {String} [msg] when mask one element ,you can show some message to user
+		* @param {String} [msgCls] when show message, you can set it's style by this css class
+		* @example 
+		*	Grid.Util.maskElement('#domId');	
+		*/
+		maskElement: function (element, msg, msgCls) {
+			var maskedEl = S.one(element),
+				maskedNode = maskedEl.getDOMNode(),
+				maskDiv = S.one('.'+ CLS_MASK ,maskedNode),
+				template = null,
+				msgDiv = null,
+				top = null,
+				left = null;
+			if (!maskDiv) {
+				maskDiv = S.one(DOM.create('<div class="' + CLS_MASK + '"></div>')).appendTo(maskedNode);
+				maskedEl.addClass('x-masked-relative x-masked');
+				if(UA.ie === 6){
+					maskDiv.height(maskedEl.height());
+				}
+				if (msg) {
+					template = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
+					msgDiv = S.one(DOM.create(template)).appendTo(maskedNode);
+					if (msgCls) {
+						msgDiv.addClass(msgCls);
+					}
+					try{
+						top = (maskedEl.height() - msgDiv.height()) / 2;
+						left = (maskedEl.width()- msgDiv.width()) / 2;
+							
+						msgDiv.css({ left: left, top: top });
+					}catch(ex){
+						S.log('mask error occurred');
+					}
+				}
+			}
+			return maskDiv;
+		},
+		/**
+		* @description unmask the dom element
+		* @param {[String|DOM|Node]} element the element such as selector,Dom or Node will  unmask
+		* @example 
+		*	S.LP.unmaskElement('#domId');	
+		*/ 
+		unmaskElement: function (element) {
+			var maskedEl = S.one(element),
+				msgEl = maskedEl.children('.' + CLS_MASK_MSG),
+				maskDiv = maskedEl.children('.' + CLS_MASK);
+			if(msgEl){
+				msgEl.remove();
+			}
+			if(maskDiv){
+				maskDiv.remove();
+			}
+			maskedEl.removeClass('x-masked-relative x-masked');
+
+		}
+	};
+
+	function formateTimeUnit(v){
+		if(v < 10){
+			return '0'+v;
+		}
+		return v;
+	}
+	/**
+	 * This class specifies some formatter for grid's cell renderer
+     * @name Format
+     * @class
+     * @memberOf Grid.Util
+     */
+	util.Format = 
+	/** @lends Grid.Util.Format */	
+	{
+		/**
+			@description 日期格式化函数
+			@param {Number|Date} date 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数 
+			@return {String} 格式化后的日期格式为 2011-10-31
+			@example
+		* 一般用法：<br> 
+		* S.LP.Format.dateRenderer(1320049890544);输出：2011-10-31 <br>
+		* 表格中用于渲染列：<br>
+		* {title:"出库日期",dataIndex:"date",renderer:Grid.Util.Format.dateRenderer}
+		*/
+		dateRenderer: function (d) {
+			if(!d){
+				 return '';
+			}
+			if(S.isString(d)){
+				return d;
+			}
+			var date = null;
+			try {
+				date =new Date(d);
+			} catch (e) {
+				return '';
+			}
+			if (!date || !date.getFullYear){
+				return '';
+			}
+			return date.getFullYear() + '-' + formateTimeUnit(date.getMonth() + 1) + '-' + formateTimeUnit(date.getDate());//S.Date.format(d,'yyyy-mm-dd');
+		},
+		/**
+			@description 日期时间格式化函数
+			@param {Number|Date} date 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数 
+			@return {String} 格式化后的日期格式时间为 2011-10-31 16 : 41 : 02
+		*/
+		datetimeRenderer: function (d) {
+			if(!d){
+				 return '';
+			}
+			if(S.isString(d)){
+				return d;
+			}
+			var date = null;
+			try {
+				date =new Date(d);
+			} catch (e) {
+				return '';
+			}
+			if(!date || !date.getFullYear){
+				return '';
+			}
+			return date.getFullYear() + '-' + formateTimeUnit(date.getMonth() + 1) + '-' + formateTimeUnit(date.getDate()) +' ' + formateTimeUnit(date.getHours()) + ':' + formateTimeUnit(date.getMinutes()) +':' + formateTimeUnit(date.getSeconds());
+		},
+		/**
+			@description 文本截取函数，当文本超出一定数字时，会截取文本，添加...
+			@param {Number} length 截取多少字符
+			@return {function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
+		*/
+		cutTextRenderer : function(length){
+			return function(value){
+				value = value || '';
+				if(value.toString().length > length){
+					return value.toString().substring(0,length)+'...';
+				}
+				return value;
+			};
+		},
+		/**
+		* @description 枚举格式化函数
+		* @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+		* @return {Function} 返回指定枚举的格式化函数
+		* @example 
+		* //Grid 的列定义
+		*  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.enumRenderer({"1":"入库","2":"出库"})}
+		*/
+		enumRenderer : function(enumObj){
+			return function(value){
+				return enumObj[value] || '';
+			};
+		},
+		/*
+		* @description 将多个值转换成一个字符串
+		* @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+		* @return {Function} 返回指定枚举的格式化函数
+		* @example 
+		* //Grid 的列定义
+		*  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.multipleItemsRenderer({"1":"入库","2":"出库","3":"退货"})}
+		*  //数据源是[1,2] 时，则返回 "入库,出库"
+		*  
+		*/
+		multipleItemsRenderer : function(enumObj){
+			var enumFun = Grid.Util.Format.enumRenderer(enumObj);
+			return function(values){
+				var result = [];
+				if(!values){
+					return '';
+				}
+				if(S.isArray(values)){
+					values = values.toString().split(',');
+				}
+				S.each(values,function(value){
+					result.push(enumFun(value));
+				});
+				
+				return result.join(',');
+			};
+		},
+		/*
+		* @description 将财务数据分转换成元
+		* @param {Number|String} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+		* @return {Number} 返回将分转换成元的数字
+		*/
+		moneyCentRenderer : function(v){
+			if(S.isString(v)){
+				v = parseFloat(v);
+			}
+			if(S.isNumber(v)){
+				return (v * 0.01).toFixed(2);
+			}
+			return v;
+		}
+	};
+
+	/**
+	* 屏蔽指定元素，并显示加载信息
+	* @memberOf Grid.Util
+	* @class 加载屏蔽类
+	* @property {String|DOM|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
+	* @param {String|DOM|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
+	* @param {Object} config 配置信息<br>
+	* 1) msg :加载时显示的加载信息<br>
+	* 2) msgCls : 加载时显示信息的样式
+	*/
+    function LoadMask (element, config) {
+		var _self = this;
+		
+        _self.el = element;
+		LoadMask.superclass.constructor.call(_self, config);
+		_self._init();
+    }
+
+	S.extend(LoadMask, S.Base);
+    //对象原型
+    S.augment(LoadMask, 
+	/** @lends Grid.Util.LoadMask.prototype */	
+	{
+		/**
+		* 加载时显示的加载信息
+		* @field 
+		* @default Loading...
+		*/
+        msg: 'Loading...',
+		/**
+		* 加载时显示的加载信息的样式
+		* @field
+		* @default x-mask-loading
+		*/
+        msgCls: 'x-mask-loading',
+		/**
+		* 加载控件是否禁用
+		* @type Boolean
+		* @field
+		* @default false
+		*/
+        disabled: false,
+		_init:function(){
+			var _self =this;
+			_self.msg = _self.get('msg')|| _self.msg;
+		},
+        /**
+		* @description 设置控件不可用
+		*/
+        disable: function () {
+            this.disabled = true;
+        },
+        /**
+		* @private 设置控件可用
+		*/
+        enable: function () {
+            this.disabled = false;
+        },
+
+        /**
+		* @private 加载已经完毕，解除屏蔽
+		*/ 
+        onLoad: function () {
+            util.unmaskElement(this.el);
+        },
+
+        /**
+		* @private 开始加载，屏蔽当前元素
+		*/ 
+        onBeforeLoad: function () {
+            if (!this.disabled) {
+                util.maskElement(this.el, this.msg, this.msgCls);
+
+            }
+        },
+        /**
+        * 显示加载条，并遮盖元素
+        */
+        show: function () {
+            this.onBeforeLoad();
+        },
+
+        /**
+        * 隐藏加载条，并解除遮盖元素
+        */
+        hide: function () {
+            this.onLoad();
+        },
+
+        /*
+		* 清理资源
+		*/
+        destroy: function () {
+			this.el = null;   
+        }
+    });
+
+	util.LoadMask = LoadMask;
+	
+	
+	return util;
 });

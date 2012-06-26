@@ -2,7 +2,7 @@
  * @fileOverview This class specifies the definition for whow grid
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/base',function(S,Component,Header,GridBody){
+KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 
 	var CLS_GRID_WITH = 'ks-grid-width',
 		CLS_GRID_HEIGHT = 'ks-grid-height',
@@ -41,6 +41,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 			if(bbar){
 				children.push(bbar);
 			}
+			_self._initLoadMask();
 		},
 		/**
 		* add a column to grid
@@ -148,6 +149,15 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 				_self.set(name,bar);
 			}
 			return bar;
+		},
+		//when set 'loadMask = true' ,create a loadMask instance
+		_initLoadMask : function(){
+			var _self = this,
+				loadMask = _self.get('loadMask');
+			if(loadMask && !loadMask.show){
+				loadMask = new Util.LoadMask(_self.get('el'));
+				_self.set('loadMask',loadMask);
+			}
 		},
 		//bind header event,when column changed,followed this componet
 		_bindHeaderEvent : function(){
@@ -371,5 +381,5 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody){
 	});
 	return grid;
 },{
-	requires:['component','./header','./gridbody']
+	requires:['component','./header','./gridbody','./util']
 });

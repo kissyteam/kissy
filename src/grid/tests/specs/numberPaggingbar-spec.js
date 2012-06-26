@@ -37,7 +37,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 	});
 	describe("测试加载数据后，当页面少于6页时", function () {
 		var store = new Store({
-				url : 'data/number40.php',
+				url : '../data/number40.php',
 				pageSize : 10
 			}),
 			bar1 = new NBar({
@@ -89,7 +89,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 	});
 	describe("测试加载数据后，当页面大于6页时",function(){
 		var store = new Store({
-				url : 'data/number40.php',
+				url : '../data/number40.php',
 				pageSize : 4
 			}),
 			bar1 = new NBar({
@@ -141,7 +141,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 	});
 	describe("测试按钮事件", function () {
 		var store = new Store({
-				url : 'data/number40.php',
+				url : '../data/number40.php',
 				pageSize : 1
 			}),
 			bar1 = new NBar({

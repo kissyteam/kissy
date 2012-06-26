@@ -141,11 +141,14 @@ KISSY.add('grid/header',function(S,Component,Column){
 			var _self = this,
 				columns = _self.getColumns(),
 				//checkable = _self.get('checkable'),
-				totalWidth = 0;
+				totalWidth = 0,
+				borderWidth = 0;
 
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -264,6 +267,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 				showCount = 0,
 				extraWidth = 0,
 				appendWidth = 0,
+				borderWidth = 0,
 				columnsWidth = 0;
 			//if there is not a width config of grid ,The forceFit action can't work
 			if(width){
@@ -278,7 +282,8 @@ KISSY.add('grid/header',function(S,Component,Column){
 						showCount ++;
 					}
 				});
-				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0);//showCount * 1 + 2 + 
+				borderWidth = S.UA.webkit ? 0 : showCount * 1;
+				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0) + borderWidth;//  + 2 + 
 				//Calculate how many times ( width / columnsWidth )
 				times = (width - extraWidth - fixedWidth)/ (columnsWidth - fixedWidth);
 

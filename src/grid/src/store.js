@@ -514,6 +514,10 @@ KISSY.add('grid/store',function(S){
 			_self.sortInfo.field = field || _self.sortInfo.field;
 			_self.sortInfo.direction = direction || _self.sortInfo.direction;
 			if(_self.remoteSort){	//如果远程排序，重新加载数据
+				var memeryData = _self.proxy.memeryData;
+				if(memeryData){
+					_self._sortData(field,direction,memeryData);
+				}
 				this.load();
 			}else{
 				_self._sortData(field,direction);
@@ -684,16 +688,16 @@ KISSY.add('grid/store',function(S){
 
 		},
 		//排序
-		_sortData : function(field,direction){
+		_sortData : function(field,direction,records){
 			var _self = this;
-
+			records = records || _self.resultRows;
 			field = field || _self.sortInfo.field;
 			direction = direction || _self.sortInfo.direction;
 			//如果未定义排序字段，则不排序
 			if(!field || !direction){
 				return;
 			}
-			_self.resultRows.sort(function(obj1,obj2){
+			records.sort(function(obj1,obj2){
 				return _self.compare(obj1,obj2,field,direction);
 			});
 		},

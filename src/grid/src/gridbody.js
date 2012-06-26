@@ -280,11 +280,14 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		_getColumnsWidth : function(){
 			var _self = this,
 				columns = null,
+				borderWidth = 0,
 				totalWidth = 0;
 				columns = _self.get('columns');
 			S.each(columns, function (column) {
 				if (!column.get('hide')) {
 					totalWidth += column.get('width');
+					borderWidth = S.UA.webkit ? 0 : 1;
+					totalWidth += borderWidth;
 				}
 			});
 			return totalWidth;
@@ -760,7 +763,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			},
 			headerCellTemplate : {
 				view : true,
-				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none" {{/if}}"></td>'
+				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
 			},
 			/**
 			* @override 

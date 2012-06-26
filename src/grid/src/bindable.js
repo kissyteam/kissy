@@ -27,11 +27,14 @@ KISSY.add('grid/bindable',function(S){
 			value : true
 		}
 	}
+
+
 	S.augment(bindable,
 	/**
 	* @lends Grid.Bindable.prototype
 	*/	
 	{
+
 		__bindUI : function(){
 			var _self = this,
 				store = _self.get('store'),
