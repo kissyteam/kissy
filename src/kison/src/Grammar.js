@@ -2,9 +2,9 @@
  * LALR grammar parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
+KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
-    var mix = S.mix;
+    var mix = S.mix, END_TAG = '$EOF';
 
     function setSize(set) {
         var count = 0;
@@ -16,12 +16,23 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
         return count;
     }
 
+    function ObjectToArray(obj) {
+        var ret = [];
+        S.each(obj, function (v, k) {
+            ret.push(k);
+        });
+        return ret;
+    }
+
     function Grammar() {
         var self = this;
         Grammar.superclass.constructor.apply(self, arguments);
+        self.get("terminals")[END_TAG] = 1;
+
         self.buildNonTerminals();
         self.buildNullAble();
         self.buildFirsts();
+        self.buildItemSet();
     }
 
 
@@ -34,7 +45,7 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                 productions = self.get("productions");
 
             S.each(productions, function (production) {
-                var symbol = production.symbol,
+                var symbol = production.get("symbol"),
                     nonTerminal = nonTerminals[symbol];
 
                 if (!nonTerminal) {
@@ -88,7 +99,7 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
                 //check if each symbol is null able
                 for (symbol in nonTerminals) {
-                    if (!symbol.get("nullAble")) {
+                    if (!nonTerminals[symbol].get("nullAble")) {
                         productions = nonTerminals[symbol].get("productions");
                         for (i = 0; production = productions[i]; i++) {
                             if (production.get("nullAble")) {
@@ -185,31 +196,67 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
             var self = this,
                 items = itemSet.get("items"),
                 productions = self.get("productions");
-            var cont;
+            var cont = 1;
             while (cont) {
                 cont = false;
                 S.each(items, function (item) {
+
                     var dotPosition = item.get("dotPosition"),
                         production = item.get("production"),
                         rhs = production.get("rhs"),
                         dotSymbol = rhs[dotPosition],
                         lookAhead = item.get("lookAhead"),
-                        rightRhs = rhs.slice(dotPosition);
-                    if (lookAhead[0]) {
-                        rightRhs.push(lookAhead[0]);
-                    }
-                    var firsts = self.findFirst(rightRhs);
+                        finalFirsts = {};
+
+                    S.each(lookAhead, function (ahead) {
+                        var rightRhs = rhs.slice(dotPosition + 1);
+                        rightRhs.push(ahead);
+                        S.mix(finalFirsts, self.findFirst(rightRhs));
+                    });
+
                     S.each(productions, function (p2) {
-                        if (p2.get("symbol") == dotSymbol) {
-                            items.push(new Item({
-                                production:p2,
-                                lookAhead:S.merge(firsts)
-                            }));
+                        var itemNew = new Item({
+                            production:p2,
+                            lookAhead:ObjectToArray(finalFirsts)
+                        });
+                        if (p2.get("symbol") == dotSymbol &&
+                            itemSet.findItemIndex(itemNew) == -1) {
+                            items.push(itemNew);
                             cont = true;
                         }
                     });
                 });
             }
+            return itemSet;
+        },
+
+        gotos:function (i, x) {
+            var j = new ItemSet();
+            var iItems = i.get("items");
+            S.each(iItems, function (item) {
+                var production = item.get("production"),
+                    dotPosition = item.get("dotPosition"),
+                    markSymbol = production.get("rhs")[dotPosition];
+                if (markSymbol == x) {
+                    j.addItem(new Item({
+                        production:production,
+                        dotPosition:dotPosition + 1,
+                        lookAhead:item.get("lookAhead")
+                    }));
+                }
+            });
+            return this.closure(j);
+        },
+
+        findItemSetIndex:function (itemSet) {
+            var itemSets = this.get("itemSets");
+            for (var i = 0; i < itemSets.length; i++) {
+                if (itemSets[i].equals(itemSet)) {
+                    return i;
+                }
+            }
+            return -1;
+
         },
 
         /**
@@ -218,27 +265,70 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
          */
         buildItemSet:function () {
             var self = this,
-                itemSet = self.get("itemSet"),
+                itemSets = self.get("itemSets"),
                 productions = self.get("productions");
 
-            var initItem = new Item({
-                production:productions[0],
-                lookAhead:['$EOF']
-            });
+            var initItemSet = self.closure(
+                new ItemSet({
+                    items:[
+                        new Item({
+                            production:productions[0],
+                            lookAhead:['$EOF']
+                        })
+                    ]
+                }));
 
-            itemSet.addItem(initItem);
-            var count;
-            // !TODO 还未完成
-            while (1) {
+            itemSets.push(initItemSet);
+
+            var condition = true;
+
+            var symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
+
+            delete  symbols["$EOF"];
+
+            while (condition) {
+                condition = false;
+                var itemSets2 = itemSets.concat();
+                S.each(itemSets2, function (itemSet) {
+                    S.each(symbols, function (v, symbol) {
+
+                        if (!itemSet.__cache) {
+                            itemSet.__cache = {};
+                        }
+
+                        if (itemSet.__cache[symbol]) {
+                            return;
+                        }
+
+                        var itemSetNew = self.gotos(itemSet, symbol);
+
+                        itemSet.__cache[symbol] = 1;
+
+                        if (itemSetNew.size() == 0) {
+                            return;
+                        }
+
+                        var index = self.findItemSetIndex(itemSetNew);
+
+                        if (index > -1) {
+                            itemSetNew = itemSets[index];
+                        } else {
+                            itemSets.push(itemSetNew);
+                            condition = true;
+                        }
+
+                        itemSet.get("gotos")[symbol] = itemSetNew;
+                        itemSetNew.get("reverseGotos")[symbol] = itemSet;
+                    })
+                });
+
             }
-
-
         }
 
     }, {
         ATTRS:{
-            itemSet:{
-                value:new ItemSet()
+            itemSets:{
+                value:[]
             },
             productions:{
                 value:[]
@@ -250,12 +340,12 @@ KISSY.add("Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
             },
             terminals:{
                 value:{
-                    "$EOF":1
                 }
             }
         }
     });
 
+    return Grammar;
 }, {
     requires:[
         'base',

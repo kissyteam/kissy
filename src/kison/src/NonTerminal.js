@@ -1,7 +1,7 @@
-KISSY.add("NonTerminal", function (S, Base) {
+KISSY.add("kison/NonTerminal", function (S, Base) {
 
     function NonTerminal() {
-
+        NonTerminal.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(NonTerminal, Base, {

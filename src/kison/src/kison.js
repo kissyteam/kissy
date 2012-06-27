@@ -2,19 +2,13 @@
  * Parser generator for kissy.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison", function (S, Base) {
+KISSY.add("kison", function (S, Grammar, Production) {
 
-
-    function Kison() {
-
-    }
-
-    S.extend(Kison, Base, {
-
-    });
-
+    var Kison = {};
+    Kison.Grammar = Grammar;
+    Kison.Production = Production;
     return Kison;
 
 }, {
-    requires:['base']
+    requires:['kison/Grammar', 'kison/Production']
 });
