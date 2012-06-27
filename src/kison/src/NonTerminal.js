@@ -1,3 +1,7 @@
+/**
+ * NonTerminal Set for KISON
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("kison/NonTerminal", function (S, Base) {
 
     function NonTerminal() {

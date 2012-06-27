@@ -1,3 +1,7 @@
+/**
+ * Item Set for KISON
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("kison/ItemSet", function (S, Base) {
     function ItemSet() {
         ItemSet.superclass.constructor.apply(this, arguments);
@@ -5,8 +9,18 @@ KISSY.add("kison/ItemSet", function (S, Base) {
 
     S.extend(ItemSet, Base, {
 
+        /**
+         * Insert item by order
+         * @param item
+         */
         addItem:function (item) {
-            this.get("items").push(item);
+            var items = this.get("items");
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].get("production").toString() > item.get("production").toString()) {
+                    break;
+                }
+            }
+            items.splice(i, 0, item);
         },
 
         size:function () {
@@ -23,7 +37,7 @@ KISSY.add("kison/ItemSet", function (S, Base) {
             return -1;
         },
 
-        equals:function (other) {
+        equals:function (other, ignoreLookAhead) {
             var oneItems = this.get("items"),
                 i,
                 otherItems = other.get("items");
@@ -31,7 +45,7 @@ KISSY.add("kison/ItemSet", function (S, Base) {
                 return false;
             }
             for (i = 0; i < oneItems.length; i++) {
-                if (!oneItems[i].equals(otherItems[i])) {
+                if (!oneItems[i].equals(otherItems[i], ignoreLookAhead)) {
                     return false;
                 }
             }
@@ -43,6 +57,12 @@ KISSY.add("kison/ItemSet", function (S, Base) {
                 ret.push(item.toString());
             });
             return ret.join("\n");
+        },
+
+        addReverseGoto:function (symbol, item) {
+            var reverseGotos = this.get("reverseGotos");
+            reverseGotos[symbol] = reverseGotos[symbol] || [];
+            reverseGotos[symbol].push(item);
         }
 
     }, {
@@ -54,6 +74,8 @@ KISSY.add("kison/ItemSet", function (S, Base) {
                 value:{}
             },
             reverseGotos:{
+                // 多个来源同一个symbol指向自己
+                //{ c: [x,y]}
                 value:{}
             }
         }

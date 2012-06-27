@@ -1,3 +1,7 @@
+/**
+ * Item for KISON
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("kison/Item", function (S, Base) {
 
     function Item() {
@@ -7,7 +11,7 @@ KISSY.add("kison/Item", function (S, Base) {
 
     S.extend(Item, Base, {
 
-        equals:function (other) {
+        equals:function (other, ignoreLookAhead) {
             var self = this;
             if (!other.get("production").equals(self.get("production"))) {
                 return false;
@@ -15,8 +19,10 @@ KISSY.add("kison/Item", function (S, Base) {
             if (other.get("dotPosition") != self.get("dotPosition")) {
                 return false;
             }
-            if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
-                return false;
+            if (!ignoreLookAhead) {
+                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
+                    return false;
+                }
             }
             return true;
         },

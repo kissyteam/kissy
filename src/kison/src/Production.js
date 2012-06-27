@@ -1,3 +1,7 @@
+/**
+ * Production for KISON
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("kison/Production", function (S, Base) {
 
     function Production() {

@@ -6,10 +6,18 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
     var mix = S.mix, END_TAG = '$EOF';
 
-    function setSize(set) {
+    function mergeArray(from, to) {
+        for (var i = 0; i < to.length; i++) {
+            if (!S.inArray(to[i], from)) {
+                from.push(to[i]);
+            }
+        }
+    }
+
+    function setSize(set3) {
         var count = 0;
-        for (var i in set) {
-            if (set.hasOwnProperty(i)) {
+        for (var i in set3) {
+            if (set3.hasOwnProperty(i)) {
                 count++;
             }
         }
@@ -33,6 +41,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
         self.buildNullAble();
         self.buildFirsts();
         self.buildItemSet();
+        self.buildLalrItemSets();
     }
 
 
@@ -221,7 +230,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                         });
                         if (p2.get("symbol") == dotSymbol &&
                             itemSet.findItemIndex(itemNew) == -1) {
-                            items.push(itemNew);
+                            itemSet.addItem(itemNew);
                             cont = true;
                         }
                     });
@@ -241,7 +250,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                     j.addItem(new Item({
                         production:production,
                         dotPosition:dotPosition + 1,
-                        lookAhead:item.get("lookAhead")
+                        lookAhead:item.get("lookAhead").concat()
                     }));
                 }
             });
@@ -318,10 +327,44 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                         }
 
                         itemSet.get("gotos")[symbol] = itemSetNew;
-                        itemSetNew.get("reverseGotos")[symbol] = itemSet;
+                        itemSetNew.addReverseGoto(symbol, itemSet);
                     })
                 });
 
+            }
+        },
+
+        buildLalrItemSets:function () {
+            var itemSets = this.get("itemSets");
+
+            for (var i = 0; i < itemSets.length; i++) {
+                var one = itemSets[i];
+                for (var j = i + 1; j < itemSets.length; j++) {
+                    var two = itemSets[j];
+                    if (one.equals(two, true)) {
+
+                        for (var k = 0; k < one.get("items").length; k++) {
+                            mergeArray(one.get("items")[k].get("lookAhead"),
+                                two.get("items")[k].get("lookAhead"));
+                        }
+
+                        var oneGotos = one.get("gotos");
+
+                        S.each(two.get("gotos"), function (item, symbol) {
+                            oneGotos[symbol] = item;
+                            item.addReverseGoto(symbol, one);
+                        });
+
+                        S.each(two.get("reverseGotos"), function (items, symbol) {
+                            S.each(items, function (item) {
+                                item.get("gotos")[symbol] = one;
+                                one.addReverseGoto(symbol, item);
+                            });
+                        });
+
+                        itemSets.splice(j--, 1);
+                    }
+                }
             }
         }
 
