@@ -10,6 +10,12 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                 editor.addCommand("heading", {
                     exec:function (editor, tag) {
                         editor.execCommand("save");
+                        if (tag != "p") {
+                            var currentValue = editor.queryCommandValue("heading");
+                        }
+                        if (tag == currentValue) {
+                            tag = "p";
+                        }
                         new Editor.Style({
                             element:tag
                         }).apply(editor.get("document")[0]);

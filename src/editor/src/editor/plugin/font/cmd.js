@@ -88,17 +88,18 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
-                    exec:function (editor, value, apply) {
+                    exec:function (editor, value) {
                         editor.focus();
+                        var currentValue = editor.queryCommandValue(cmdType) || "";
                         var style = new Editor.Style(styleObj, {
                                 value:value
                             }),
                             doc = editor.get("document")[0];
                         editor.execCommand("save");
-                        if (apply === undefined || apply) {
-                            style.apply(doc);
-                        } else {
+                        if (value.toLowerCase() == currentValue.toLowerCase()) {
                             style.remove(doc);
+                        } else {
+                            style.apply(doc);
                         }
                         editor.execCommand("save");
                     }

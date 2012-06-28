@@ -11,15 +11,8 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                 editor = self.get("editor");
             self.on("click", function (ev) {
                 var v = ev.target.get("value"),
-                    cmdType = self.get("cmdType"),
-                    pre = ev.prevTarget && ev.prevTarget.get("value");
-                if (v == pre) {
-                    // 清除,wildcard pls
-                    // !TODO inherit 小问题，在中间点 inherit
-                    editor.execCommand(cmdType, v, false);
-                } else {
-                    editor.execCommand(cmdType, v);
-                }
+                    cmdType = self.get("cmdType");
+                editor.execCommand(cmdType, v);
             });
 
             editor.on("selectionChange", function () {

@@ -53,15 +53,8 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function (ev) {
-                        var self = this,
-                            v = ev.target.get("value"),
-                            pre = ev.prevTarget && ev.prevTarget.get("value");
-                        if (v != pre) {
-                            editor.execCommand("heading", v);
-                        } else {
-                            editor.execCommand("heading", "p");
-                            self.set("value", "p");
-                        }
+                        var v = ev.target.get("value")
+                        editor.execCommand("heading", v);
                     },
                     afterSyncUI:function () {
                         var self = this;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 28 20:23
+build time: Jun 28 21:51
 */
 /**
  * Set up editor constructor
@@ -11994,17 +11994,18 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
-                    exec:function (editor, value, apply) {
+                    exec:function (editor, value) {
                         editor.focus();
+                        var currentValue = editor.queryCommandValue(cmdType) || "";
                         var style = new Editor.Style(styleObj, {
                                 value:value
                             }),
                             doc = editor.get("document")[0];
                         editor.execCommand("save");
-                        if (apply === undefined || apply) {
-                            style.apply(doc);
-                        } else {
+                        if (value.toLowerCase() == currentValue.toLowerCase()) {
                             style.remove(doc);
+                        } else {
+                            style.apply(doc);
                         }
                         editor.execCommand("save");
                     }
@@ -12037,15 +12038,8 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                 editor = self.get("editor");
             self.on("click", function (ev) {
                 var v = ev.target.get("value"),
-                    cmdType = self.get("cmdType"),
-                    pre = ev.prevTarget && ev.prevTarget.get("value");
-                if (v == pre) {
-                    // 清除,wildcard pls
-                    // !TODO inherit 小问题，在中间点 inherit
-                    editor.execCommand(cmdType, v, false);
-                } else {
-                    editor.execCommand(cmdType, v);
-                }
+                    cmdType = self.get("cmdType");
+                editor.execCommand(cmdType, v);
             });
 
             editor.on("selectionChange", function () {
@@ -12197,6 +12191,12 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                 editor.addCommand("heading", {
                     exec:function (editor, tag) {
                         editor.execCommand("save");
+                        if (tag != "p") {
+                            var currentValue = editor.queryCommandValue("heading");
+                        }
+                        if (tag == currentValue) {
+                            tag = "p";
+                        }
                         new Editor.Style({
                             element:tag
                         }).apply(editor.get("document")[0]);
@@ -12282,15 +12282,8 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                 mode:Editor.WYSIWYG_MODE,
                 listeners:{
                     click:function (ev) {
-                        var self = this,
-                            v = ev.target.get("value"),
-                            pre = ev.prevTarget && ev.prevTarget.get("value");
-                        if (v != pre) {
-                            editor.execCommand("heading", v);
-                        } else {
-                            editor.execCommand("heading", "p");
-                            self.set("value", "p");
-                        }
+                        var v = ev.target.get("value")
+                        editor.execCommand("heading", v);
                     },
                     afterSyncUI:function () {
                         var self = this;
