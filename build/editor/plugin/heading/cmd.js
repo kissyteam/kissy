@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Adds a heading tag around a selection or insertion point line.
@@ -22,13 +22,20 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                     }
                 });
 
-
                 var queryCmd = Editor.Utils.getQueryCmd("heading");
+
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, elementPath, tag) {
-                        return new Editor.Style({
-                            element:tag
-                        }).checkActive(elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var currentPath = new Editor.ElementPath(startElement);
+                            var block = currentPath.block || currentPath.blockLimit;
+                            var nodeName = block && block.nodeName() || "";
+                            if (nodeName.match(/^h\d$/) || nodeName == "p") {
+                                return nodeName;
+                            }
+                        }
                     }
                 });
             }

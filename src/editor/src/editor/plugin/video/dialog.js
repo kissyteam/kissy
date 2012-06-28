@@ -93,7 +93,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
                 d = self.dialog,
                 el = d.get("el");
             self.dUrl = el.one(".ks-editor-video-url");
-            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"),{
+            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"), {
                 prefixCls:'ks-editor-big-',
                 elAttrs:{
                     hideFocus:"hideFocus"
@@ -117,7 +117,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             Editor.Utils.placeholder(self.dUrl, self._urlTip);
             Editor.Utils.placeholder(self.dWidth, DTIP);
             Editor.Utils.placeholder(self.dHeight, DTIP);
-            self.addRes(action, cancel, self.dUrl, self.dWidth, self.dHeight);
+            self.addRes(self.dAlign);
         },
 
         _getDInfo:function () {
@@ -190,13 +190,13 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             if (f) {
                 var r = editor.restoreRealElement(f);
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
-                self.dAlign.set("value",f.css("float"));
+                self.dAlign.set("value", f.css("float"));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
                 Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
                 Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
             } else {
                 Editor.Utils.resetInput(self.dUrl);
-                self.dAlign.set("value","none");
+                self.dAlign.set("value", "none");
                 self.dMargin.val(MARGIN_DEFAULT);
                 Editor.Utils.resetInput(self.dWidth);
                 Editor.Utils.resetInput(self.dHeight);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -1800,6 +1800,8 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
     });
 
     Editor.Range = KERange;
+
+    return KERange;
 }, {
     requires:['./base', './utils', './walker', './elementPath', './dom']
 });

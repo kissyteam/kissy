@@ -62,6 +62,8 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
                                 false,
                                 PAGE_BREAK_MARKUP);
 
+                        editor.focus();
+
                         var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
 
                         if (!range) {

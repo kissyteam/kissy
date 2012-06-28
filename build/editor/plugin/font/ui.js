@@ -1,15 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
-
-    var getQueryCmd = Editor.Utils.getQueryCmd;
 
     var FontSelect = MenuButton.Select.extend({
 
@@ -20,7 +18,6 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                 var v = ev.target.get("value"),
                     cmdType = self.get("cmdType"),
                     pre = ev.prevTarget && ev.prevTarget.get("value");
-                editor.focus();
                 if (v == pre) {
                     // 清除,wildcard pls
                     // !TODO inherit 小问题，在中间点 inherit
@@ -30,27 +27,25 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                 }
             });
 
-            editor.on("selectionChange", function (ev) {
+            editor.on("selectionChange", function () {
                 if (editor.get("mode") == Editor.SOURCE_MODE) {
                     return;
                 }
 
-                var elementPath = ev.path,
-                    cmdType = getQueryCmd(self.get("cmdType")),
+                var cmdType = self.get("cmdType"),
                     menu = self.get("menu"),
-                    children = menu.get && menu.get("children"),
-                    elements = elementPath.elements;
+                    children = menu.get && menu.get("children");
 
                 if (children) {
-                    // For each element into the elements path.
-                    for (var i = 0, element; i < elements.length; i++) {
-                        element = elements[i];
-                        // Check if the element is removable by any of
-                        // the styles.
+                    // Check if the element is removable by any of
+                    // the styles.
+                    var currentValue = editor.queryCommandValue(cmdType);
+                    if (currentValue !== false) {
+                        currentValue = (currentValue + "").toLowerCase();
                         for (var j = 0; j < children.length; j++) {
                             var item = children[j];
                             var value = item.get("value");
-                            if (editor.execCommand(cmdType, value, element)) {
+                            if (currentValue == value.toLowerCase()) {
                                 self.set("value", value);
                                 return;
                             }
@@ -66,7 +61,8 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
     var FontButton = Button.extend({
 
         initializer:function () {
-            var self = this, editor = self.get("editor"),
+            var self = this,
+                editor = self.get("editor"),
                 cmdType = self.get("cmdType");
             self.on("click", function () {
                 var checked = self.get("checked");
@@ -78,14 +74,13 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                     editor.focus();
                 }
             });
-            editor.on("selectionChange", function (ev) {
+            editor.on("selectionChange", function () {
 
                 if (editor.get("mode") == Editor.SOURCE_MODE) {
                     return;
                 }
-                var cmdType = getQueryCmd(self.get("cmdType"));
-                var elementPath = ev.path;
-                if (editor.execCommand(cmdType, elementPath)) {
+                var cmdType = self.get("cmdType");
+                if (editor.queryCommandValue(cmdType)) {
                     self.set("checked", true);
                 } else {
                     self.set("checked", false);

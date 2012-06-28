@@ -377,7 +377,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              */
             destroy:function () {
                 var self = this,
-                    id;
+                    id,
+                    plugins = self.get("plugins");
+                actionPlugins(self, plugins, "destructor");
                 destroyHierarchy(self);
                 self.fire('destroy');
                 self.detach();

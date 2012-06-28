@@ -32,6 +32,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             }, cfg)), contentEl = b.get("el").one("span");
 
         // preserver selection in editor iframe
+        // magic happens when tabIndex and unselectable are both set
         b.get("el").unselectable();
 
         b.on("afterContentClsChange", function (e) {

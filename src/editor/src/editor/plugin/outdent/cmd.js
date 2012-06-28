@@ -11,8 +11,13 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
             var queryCmd = Editor.Utils.getQueryCmd("outdent");
             if (!editor.hasCommand(queryCmd)) {
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, elementPath) {
-                        return checkOutdentActive(elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return checkOutdentActive(elementPath);
+                        }
                     }
                 });
             }

@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
-KISSY.add("editor/plugin/heading/cmd",function(f,b){return{init:function(a){if(!a.hasCommand("heading")){a.addCommand("heading",{exec:function(c,a){c.execCommand("save");(new b.Style({element:a})).apply(c.get("document")[0]);c.execCommand("save")}});var d=b.Utils.getQueryCmd("heading");a.addCommand(d,{exec:function(a,d,e){return(new b.Style({element:e})).checkActive(d)}})}}}},{requires:["editor"]});
+KISSY.add("editor/plugin/heading/cmd",function(e,c){return{init:function(b){if(!b.hasCommand("heading")){b.addCommand("heading",{exec:function(a,b){a.execCommand("save");(new c.Style({element:b})).apply(a.get("document")[0]);a.execCommand("save")}});var d=c.Utils.getQueryCmd("heading");b.addCommand(d,{exec:function(a){if((a=a.getSelection())&&!a.isInvalid)if(a=a.getStartElement(),a=new c.ElementPath(a),a=(a=a.block||a.blockLimit)&&a.nodeName()||"",a.match(/^h\d$/)||"p"==a)return a}})}}}},{requires:["editor"]});

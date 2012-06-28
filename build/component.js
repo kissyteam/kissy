@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 20 23:27
+build time: Jun 28 20:10
 */
 /**
  * Setup component namespace.
@@ -620,7 +620,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     view,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
-                    children[i].destroy();
+                    children[i].destroy && children[i].destroy();
                 }
                 view = self.get("view");
                 if (view) {
@@ -2038,7 +2038,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              */
             destroy:function () {
                 var self = this,
-                    id;
+                    id,
+                    plugins = self.get("plugins");
+                actionPlugins(self, plugins, "destructor");
                 destroyHierarchy(self);
                 self.fire('destroy');
                 self.detach();

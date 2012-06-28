@@ -68,6 +68,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 }
             });
 
+            this.flashControl = flashControl;
+
             editor.addButton("flash", {
                 tooltip:"插入Flash",
                 listeners:{
@@ -78,6 +80,11 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 mode:Editor.WYSIWYG_MODE
             });
         }
+//       ,
+//
+//        destructor:function () {
+//            this.flashControl.destroy();
+//        }
     });
 
     return FlashPlugin;

@@ -33,8 +33,11 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 thisContents = self.contents,
                 otherContents = otherImage.contents;
-            if (thisContents != otherContents)
+
+            if (thisContents != otherContents){
                 return false;
+            }
+
             var bookmarksA = self.bookmarks,
                 bookmarksB = otherImage.bookmarks;
 
@@ -231,16 +234,19 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                 var undoRedo = new UndoManager(editor);
                 editor.addCommand("save", {
                     exec:function (_, buffer) {
+                        editor.focus();
                         undoRedo.save(buffer);
                     }
                 });
                 editor.addCommand("undo", {
                     exec:function () {
+                        editor.focus();
                         undoRedo.restore(-1);
                     }
                 });
                 editor.addCommand("redo", {
                     exec:function () {
+                        editor.focus();
                         undoRedo.restore(1);
                     }
                 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * modified from ckeditor core - selection
@@ -503,7 +503,7 @@ KISSY.add("editor/core/selection", function (S) {
                     range.moveToElementText(element[0]);
                     range.select();
                 } finally {
-                    //this.document.fire('selectionchange');
+                    // fire('selectionChange');
                 }
                 self.reset();
             } else {
@@ -791,7 +791,7 @@ KISSY.add("editor/core/selection", function (S) {
                         endNode._4e_remove();
                         ieRange.select();
                     }
-                    // this.document.fire('selectionchange');
+                    // fire('selectionChange');
                 };
 
 

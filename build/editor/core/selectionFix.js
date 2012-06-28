@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * ie selection fix.
@@ -323,7 +323,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         // In other browsers, we make the selection change
         // check based on other events, like clicks or keys
         // press.
-        function monitor(e) {
+        function monitor() {
             // S.log("fireSelectionChangeForNonIE in selection/index");
             editor.checkSelectionChange();
         }

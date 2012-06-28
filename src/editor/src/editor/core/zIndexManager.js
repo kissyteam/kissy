@@ -9,7 +9,7 @@ KISSY.add("editor/core/zIndexManager", function (S) {
      * z-index manager
      *@enum {number}
      */
-    Editor.zIndexManager = {
+    var zIndexManager = Editor.zIndexManager = {
         BUBBLE_VIEW:(1100),
         POPUP_MENU:(1200),
         // flash 存储设置最高
@@ -27,6 +27,8 @@ KISSY.add("editor/core/zIndexManager", function (S) {
     Editor.baseZIndex = function (z) {
         return (Editor['Config'].baseZIndex || 10000) + z;
     };
+
+    return zIndexManager;
 }, {
     requires:['./base']
 });

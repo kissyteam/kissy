@@ -246,7 +246,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     parentMenu.detach("hide", onParentHide, self);
                 }
 
-                if (menu && !self.get("externalSubMenu")) {
+                if (menu && menu.destroy) {
                     menu.destroy();
                 }
             }
@@ -261,13 +261,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                  */
                 menuDelay:{
                     value:MENU_DELAY
-                },
-                /**
-                 * whether destroy submenu when destroy itself ,reverse result
-                 * @type {Boolean}
-                 */
-                externalSubMenu:{
-                    value:false
                 },
                 menu:{
                     setter:function (m) {

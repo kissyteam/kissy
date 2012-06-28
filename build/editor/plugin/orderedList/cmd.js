@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * orderedList command
@@ -19,6 +19,7 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
                     exec:function (editor) {
+                        editor.focus();
                         olCmd.exec(editor);
                     }
                 });
@@ -28,8 +29,13 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
 
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {
-                    exec:function (editor, elementPath) {
-                        return queryActive("ol", elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return queryActive("ol", elementPath);
+                        }
                     }
                 });
             }

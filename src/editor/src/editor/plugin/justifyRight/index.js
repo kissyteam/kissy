@@ -23,12 +23,11 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
                     click:exec,
                     afterSyncUI:function () {
                         var self = this;
-                        editor.on("selectionChange", function (e) {
+                        editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.SOURCE_MODE) {
                                 return;
                             }
-                            var queryCmd = Editor.Utils.getQueryCmd("justifyRight");
-                            if (editor.execCommand(queryCmd, e.path)) {
+                            if (editor.queryCommandValue("justifyRight")) {
                                 self.set("checked", true);
                             } else {
                                 self.set("checked", false);

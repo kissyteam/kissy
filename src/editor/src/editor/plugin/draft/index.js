@@ -43,9 +43,9 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             return d;
     }
 
-    function Draft(editor,config) {
+    function Draft(editor, config) {
         this.editor = editor;
-        this.config=config;
+        this.config = config;
         this._init();
     }
 
@@ -122,6 +122,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                             points:['tr', 'br']
                         }
                     },
+                    matchElWidth:false,
                     autoRender:true,
                     content:"恢复编辑历史"
                 });
@@ -341,25 +342,26 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         }
     });
 
-    function init(editor,config) {
-        var d = new Draft(editor,config);
+    function init(editor, config) {
+        var d = new Draft(editor, config);
         editor.on("destroy", function () {
             d.destroy();
         });
     }
 
     function DraftPlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(DraftPlugin, {
         renderUI:function (editor) {
+            var config = this.config;
             if (localStorage.ready) {
                 localStorage.ready(function () {
-                    init(editor,this.config);
+                    init(editor, config);
                 });
             } else {
-                init(editor,this.config);
+                init(editor, config);
             }
         }
     });

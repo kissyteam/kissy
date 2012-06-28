@@ -65,10 +65,10 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<a class='ks-editor-flash-cancel ks-editor-button ks-inline-block'>取消</a></div>";
 
 
-    function FlashDialog(editor,config) {
+    function FlashDialog(editor, config) {
         var self = this;
         self.editor = editor;
-        self.config=config||{};
+        self.config = config || {};
         Editor.Utils.lazyRun(self, "_prepareShow", "_realShow");
         self._config();
     }
@@ -183,7 +183,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             });
 
             Editor.Utils.placeholder(self.dUrl, self._urlTip);
-            self.addRes(action, cancel, self.dUrl);
+            self.addRes(self.dAlign);
         },
 
         /**

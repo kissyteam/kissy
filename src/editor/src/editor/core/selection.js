@@ -498,7 +498,7 @@ KISSY.add("editor/core/selection", function (S) {
                     range.moveToElementText(element[0]);
                     range.select();
                 } finally {
-                    //this.document.fire('selectionchange');
+                    // fire('selectionChange');
                 }
                 self.reset();
             } else {
@@ -786,7 +786,7 @@ KISSY.add("editor/core/selection", function (S) {
                         endNode._4e_remove();
                         ieRange.select();
                     }
-                    // this.document.fire('selectionchange');
+                    // fire('selectionChange');
                 };
 
 

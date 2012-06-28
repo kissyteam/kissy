@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * modified from ckeditor ,dom iterator implementation using walker and nextSourceNode
@@ -308,8 +308,8 @@ KISSY.add("editor/core/domIterator", function (S) {
                 if (lastChild[0] && lastChild[0].nodeType == DOM.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
-                        || lastChild.prev(bookmarkGuard,1)
-                        || lastChild.next(bookmarkGuard,1))
+                        || lastChild.prev(bookmarkGuard, 1)
+                        || lastChild.next(bookmarkGuard, 1))
                         lastChild.remove();
                 }
             }
@@ -329,6 +329,8 @@ KISSY.add("editor/core/domIterator", function (S) {
     KERange.prototype.createIterator = function () {
         return new Iterator(this);
     };
+
+    return Iterator;
 }, {
     requires:['./base', './range', './elementPath', './walker']
 });

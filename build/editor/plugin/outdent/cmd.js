@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Add indent and outdent command identifier for KISSY Editor.
@@ -16,8 +16,13 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
             var queryCmd = Editor.Utils.getQueryCmd("outdent");
             if (!editor.hasCommand(queryCmd)) {
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, elementPath) {
-                        return checkOutdentActive(elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return checkOutdentActive(elementPath);
+                        }
                     }
                 });
             }

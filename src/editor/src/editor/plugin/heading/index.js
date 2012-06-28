@@ -64,23 +64,22 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                         }
                     },
                     afterSyncUI:function () {
-                        editor.on("selectionChange", function (ev) {
+                        var self = this;
+                        editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.SOURCE_MODE) {
                                 return;
                             }
-                            var self = this,
-                                elementPath = ev.path;
                             // For each element into the elements path.
                             // Check if the element is removable by any of
                             // the styles.
-                            var queryCmd = Editor.Utils.getQueryCmd("heading");
+                            var headingValue = editor.queryCommandValue("heading");
                             for (var value in FORMAT_SIZES) {
-                                if (FORMAT_SIZES.hasOwnProperty(value) &&
-                                    editor.execCommand(queryCmd, elementPath, value)) {
+                                if (FORMAT_SIZES.hasOwnProperty(value) && value == headingValue) {
                                     self.set("value", value);
                                     return;
                                 }
                             }
+                            self.set("value", null);
                         });
                     }
 

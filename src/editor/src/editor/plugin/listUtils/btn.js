@@ -16,9 +16,9 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
             var self = this;
             self.on("click", onClick, self);
             var editor = self.get("editor");
-            editor.on("selectionChange", function (e) {
-                var cmd = Editor.Utils.getQueryCmd(self.get("cmdType"));
-                if (editor.execCommand(cmd, e.path)) {
+            editor.on("selectionChange", function () {
+                var cmd = self.get("cmdType");
+                if (editor.queryCommandValue(cmd)) {
                     self.set("checked", true);
                 } else {
                     self.set("checked", false);

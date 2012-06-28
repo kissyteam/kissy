@@ -14,6 +14,7 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
                     exec:function (editor) {
+                        editor.focus();
                         olCmd.exec(editor);
                     }
                 });
@@ -23,8 +24,13 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
 
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {
-                    exec:function (editor, elementPath) {
-                        return queryActive("ol", elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return queryActive("ol", elementPath);
+                        }
                     }
                 });
             }

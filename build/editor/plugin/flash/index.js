@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Add flash plugin.
@@ -73,6 +73,8 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 }
             });
 
+            this.flashControl = flashControl;
+
             editor.addButton("flash", {
                 tooltip:"插入Flash",
                 listeners:{
@@ -83,6 +85,11 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
                 mode:Editor.WYSIWYG_MODE
             });
         }
+//       ,
+//
+//        destructor:function () {
+//            this.flashControl.destroy();
+//        }
     });
 
     return FlashPlugin;

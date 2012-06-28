@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * common utils for kissy editor
@@ -354,7 +354,7 @@ KISSY.add("editor/core/utils", function (S) {
                         if (r.destroy) {
                             r.destroy();
                         }
-                        if (r.remove) {
+                        else if (r.remove) {
                             r.remove();
                         }
                     }
@@ -368,7 +368,7 @@ KISSY.add("editor/core/utils", function (S) {
             getQueryCmd:function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()
-                }) + "Active";
+                }) + "Value";
             }
         };
 

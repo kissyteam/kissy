@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -812,7 +812,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.
-                return dtd && dtd['#'];
+                return dtd && dtd['#text'];
             },
 
             /**

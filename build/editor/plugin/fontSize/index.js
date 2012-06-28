@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * font formatting for kissy editor
@@ -15,7 +15,6 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
 
     S.augment(FontSizePlugin, {
         renderUI:function (editor) {
-
 
             cmd.init(editor);
 

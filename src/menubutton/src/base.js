@@ -273,6 +273,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             destructor:function () {
                 var self = this;
                 $(win).detach("resize", repositionBuffer, self);
+                var menu = self.get("menu");
+                if (menu.destroy) {
+                    menu.destroy();
+                }
             }
 
         },

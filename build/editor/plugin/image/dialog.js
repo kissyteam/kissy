@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * image dialog (support upload and remote)
@@ -185,10 +185,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
     }
 
 
-    function ImageDialog(editor,config) {
+    function ImageDialog(editor, config) {
         var self = this;
         self.editor = editor;
-        self.imageCfg = config||{};
+        self.imageCfg = config || {};
         self.cfg = self.imageCfg["upload"] || null;
         self.suffix = self.cfg && self.cfg["suffix"] || "png,jpg,jpeg,gif";
         // 不要加g：http://yiminghe.javaeye.com/blog/581347
@@ -277,6 +277,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 "left:-9999px;" +
                 "top:-9999px;" +
                 "'>取消上传</a>").appendTo(document.body, undefined);
+
+            self.loadingCancel = loadingCancel;
 
             function getFileSize(file) {
                 if (file['files']) {
@@ -573,8 +575,15 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.d.show();
         },
         destroy:function () {
-            this.d.destroy();
-            this.tab.destroy();
+            var self = this;
+            self.d.destroy();
+            self.tab.destroy();
+            if (self.loadingCancel) {
+                self.loadingCancel.remove();
+            }
+            if (self.imgAlign) {
+                self.imgAlign.destroy();
+            }
         }
     });
 

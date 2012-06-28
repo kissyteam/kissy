@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * undo,redo manager for kissy editor
@@ -38,8 +38,11 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 thisContents = self.contents,
                 otherContents = otherImage.contents;
-            if (thisContents != otherContents)
+
+            if (thisContents != otherContents){
                 return false;
+            }
+
             var bookmarksA = self.bookmarks,
                 bookmarksB = otherImage.bookmarks;
 
@@ -236,16 +239,19 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                 var undoRedo = new UndoManager(editor);
                 editor.addCommand("save", {
                     exec:function (_, buffer) {
+                        editor.focus();
                         undoRedo.save(buffer);
                     }
                 });
                 editor.addCommand("undo", {
                     exec:function () {
+                        editor.focus();
                         undoRedo.restore(-1);
                     }
                 });
                 editor.addCommand("redo", {
                     exec:function () {
+                        editor.focus();
                         undoRedo.restore(1);
                     }
                 });

@@ -17,13 +17,20 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                     }
                 });
 
-
                 var queryCmd = Editor.Utils.getQueryCmd("heading");
+
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, elementPath, tag) {
-                        return new Editor.Style({
-                            element:tag
-                        }).checkActive(elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var currentPath = new Editor.ElementPath(startElement);
+                            var block = currentPath.block || currentPath.blockLimit;
+                            var nodeName = block && block.nodeName() || "";
+                            if (nodeName.match(/^h\d$/) || nodeName == "p") {
+                                return nodeName;
+                            }
+                        }
                     }
                 });
             }

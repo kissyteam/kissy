@@ -349,7 +349,7 @@ KISSY.add("editor/core/utils", function (S) {
                         if (r.destroy) {
                             r.destroy();
                         }
-                        if (r.remove) {
+                        else if (r.remove) {
                             r.remove();
                         }
                     }
@@ -363,7 +363,7 @@ KISSY.add("editor/core/utils", function (S) {
             getQueryCmd:function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()
-                }) + "Active";
+                }) + "Value";
             }
         };
 

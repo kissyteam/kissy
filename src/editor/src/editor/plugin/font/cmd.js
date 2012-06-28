@@ -6,6 +6,52 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
 
     var getQueryCmd = Editor.Utils.getQueryCmd;
 
+    function getValueFromSingle(element, styleObj) {
+        var nodeName = element.nodeName();
+        if (styleObj.element != nodeName) {
+            return false;
+        }
+        var styles = styleObj.styles, v;
+        for (var s in styles) {
+            if (v = element.style(s)) {
+                return v;
+            }
+        }
+        var overrides = styleObj.overrides;
+        for (var i = 0; i < overrides.length; i++) {
+            var override = overrides[i];
+            if (override.element != nodeName) {
+                continue;
+            }
+            var attributes = override.attributes;
+            for (var a in attributes) {
+                if (v = element.attr(a)) {
+                    return v;
+                }
+            }
+        }
+        return false;
+    }
+
+    function getValueFromStyleObj(elementPath, styleObj) {
+        var elements = elementPath.elements,
+            element,
+            i,
+            v;
+        for (i = 0; i < elements.length; i++) {
+            element = elements[ i ];
+            if (element[0] == elementPath.block[0] ||
+                element[0] == elementPath.blockLimit[0]) {
+                continue;
+            }
+            v = getValueFromSingle(element, styleObj);
+            if (v !== false) {
+                return v;
+            }
+        }
+        return v;
+    }
+
     return {
         addButtonCmd:function (editor, cmdType, style) {
             var queryCmd = getQueryCmd(cmdType);
@@ -14,10 +60,11 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
                     exec:function (editor, effect) {
                         var doc = editor.get("document")[0];
                         editor.execCommand("save");
-                        if (effect || effect === undefined) {
-                            style.apply(doc);
-                        } else {
+                        var checked = editor.queryCommandValue(cmdType);
+                        if (checked) {
                             style.remove(doc);
+                        } else {
+                            style.apply(doc);
                         }
                         editor.execCommand("save");
                         editor.notifySelectionChange();
@@ -25,8 +72,13 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
                 });
 
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, currentPath) {
-                        return  style.checkActive(currentPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement(),
+                                currentPath = new Editor.ElementPath(startElement);
+                            return  style.checkActive(currentPath);
+                        }
                     }
                 });
             }
@@ -37,9 +89,10 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
                     exec:function (editor, value, apply) {
+                        editor.focus();
                         var style = new Editor.Style(styleObj, {
-                            value:value
-                        }),
+                                value:value
+                            }),
                             doc = editor.get("document")[0];
                         editor.execCommand("save");
                         if (apply === undefined || apply) {
@@ -51,11 +104,13 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
                     }
                 });
                 editor.addCommand(queryCmd, {
-                    exec:function (editor, value, element) {
-                        var style = new Editor.Style(styleObj, {
-                            value:value
-                        });
-                        return style.checkElementRemovable(element, true);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var currentPath = new Editor.ElementPath(startElement);
+                            return getValueFromStyleObj(currentPath, styleObj);
+                        }
                     }
                 });
             }

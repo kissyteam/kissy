@@ -13,8 +13,6 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
 
             indexCmd.init(editor);
 
-            var queryOutdent = Editor.Utils.getQueryCmd("outdent");
-
             editor.addButton("outdent", {
                 tooltip:"减少缩进量 ",
                 listeners:{
@@ -25,11 +23,11 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
                     },
                     afterSyncUI:function () {
                         var self = this;
-                        editor.on("selectionChange", function (e) {
+                        editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.SOURCE_MODE) {
                                 return;
                             }
-                            if (editor.execCommand(queryOutdent, e.path)) {
+                            if (editor.queryCommandValue("outdent")) {
                                 self.set("disabled", false);
                             } else {
                                 self.set("disabled", true);

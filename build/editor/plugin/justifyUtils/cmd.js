@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Add justify command identifier for Editor.
@@ -12,6 +12,7 @@ KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
         default_align = "left";
 
     function exec(editor, textAlign) {
+        editor.focus();
         editor.execCommand("save");
         var selection = editor.getSelection(),
             bookmarks = selection.createBookmarks(),
@@ -54,12 +55,17 @@ KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
                 });
 
                 editor.addCommand(Editor.Utils.getQueryCmd(command), {
-                    exec:function (editor, path) {
-                        var block = path.block || path.blockLimit;
-                        if (!block || block.nodeName() === "body") {
-                            return false;
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var path = new Editor.ElementPath(startElement);
+                            var block = path.block || path.blockLimit;
+                            if (!block || block.nodeName() === "body") {
+                                return false;
+                            }
+                            return isAlign(block, textAlign);
                         }
-                        return isAlign(block, textAlign);
                     }
                 });
 

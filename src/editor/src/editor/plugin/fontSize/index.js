@@ -11,7 +11,6 @@ KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
     S.augment(FontSizePlugin, {
         renderUI:function (editor) {
 
-
             cmd.init(editor);
 
             function wrapFont(vs) {

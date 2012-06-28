@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Encapsulate KISSY toggle button for kissy editor
@@ -37,6 +37,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             }, cfg)), contentEl = b.get("el").one("span");
 
         // preserver selection in editor iframe
+        // magic happens when tabIndex and unselectable are both set
         b.get("el").unselectable();
 
         b.on("afterContentClsChange", function (e) {

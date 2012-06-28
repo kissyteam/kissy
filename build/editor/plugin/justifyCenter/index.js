@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * justifyCenter button.
@@ -28,12 +28,11 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                     click:exec,
                     afterSyncUI:function () {
                         var self = this;
-                        editor.on("selectionChange", function (e) {
+                        editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.SOURCE_MODE) {
                                 return;
                             }
-                            var queryCmd = Editor.Utils.getQueryCmd("justifyCenter");
-                            if (editor.execCommand(queryCmd, e.path)) {
+                            if (editor.queryCommandValue("justifyCenter")) {
                                 self.set("checked", true);
                             } else {
                                 self.set("checked", false);

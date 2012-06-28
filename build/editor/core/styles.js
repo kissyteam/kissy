@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -11,10 +11,9 @@ build time: Jun 19 16:41
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/core/styles", function (S) {
+KISSY.add("editor/core/styles", function (S, Editor) {
 
-    var Editor = S.Editor,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         NULL = null,
         DOM = S.DOM,
@@ -94,7 +93,7 @@ KISSY.add("editor/core/styles", function (S) {
     /**
      * @constructor
      * @param styleDefinition {Object}
-     * @param variablesValues {Object}
+     * @param [variablesValues] {Object}
      */
     function KEStyle(styleDefinition, variablesValues) {
         if (variablesValues) {
@@ -104,7 +103,7 @@ KISSY.add("editor/core/styles", function (S) {
 
         var element = this["element"] = this.element = ( styleDefinition["element"] || '*' ).toLowerCase();
 
-        this["type"] = this.type = ( element == '#' || blockElements[ element ] ) ?
+        this["type"] = this.type = ( element == '#text' || blockElements[ element ] ) ?
             KEST.STYLE_BLOCK
             : objectElements[ element ] ?
             KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
@@ -703,7 +702,7 @@ KISSY.add("editor/core/styles", function (S) {
                             // parent, it means that the parent can't be included
                             // in this style DTD, so apply the style immediately.
                             while (
-                                (applyStyle = !includedNode.next(notBookmark,1))
+                                (applyStyle = !includedNode.next(notBookmark, 1))
                                     && ( (parentNode = includedNode.parent()) &&
                                     dtd[ parentNode.nodeName() ] )
                                     && ( parentNode._4e_position(firstNode) |
@@ -1378,8 +1377,10 @@ KISSY.add("editor/core/styles", function (S) {
     }
 
     Editor.Style = KEStyle;
+
+    return KEStyle;
 }, {
-    requires:['./range', './selection', './domIterator', './elementPath']
+    requires:['./base', './range', './selection', './domIterator', './elementPath']
 });
 /**
  * TODO yiminghe@gmail.com : 重构 Refer

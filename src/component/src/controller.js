@@ -498,7 +498,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     view,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
-                    children[i].destroy();
+                    children[i].destroy && children[i].destroy();
                 }
                 view = self.get("view");
                 if (view) {

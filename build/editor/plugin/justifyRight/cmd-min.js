@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 KISSY.add("editor/plugin/justifyRight/cmd",function(c,a){return{init:function(b){a.addCommand(b,"justifyRight","right")}}},{requires:["../justifyUtils/cmd"]});

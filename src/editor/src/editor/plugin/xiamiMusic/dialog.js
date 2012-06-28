@@ -91,7 +91,7 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, M
             "</p>" +
             "<p class='ks-editor-xiami-url-wrap'>" +
             "<input class='ks-editor-xiami-url ks-editor-input' " +
-            "style='width:374px;" + (UA['ie'] == 6 ? "" : MIDDLE)
+            "style='width:370px;" + (UA['ie'] == 6 ? "" : MIDDLE)
             + "'" +
             "/> &nbsp; " +
             " <a " +
@@ -315,18 +315,18 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, M
                     html += "</ul>";
 
                     var page = data.page,
-                        totalpage = Math.floor(data['total'] / 8),
+                        totalPage = Math.floor(data['total'] / 8),
                         start = page - 1,
                         end = page + 1;
 
-                    if (totalpage > 1) {
+                    if (totalPage > 1) {
                         html += "<p class='ks-editor-xiami-paging'>";
                         if (start <= 2) {
-                            end = Math.min(2 - start + end, totalpage - 1);
+                            end = Math.min(2 - start + end, totalPage - 1);
                             start = 2;
                         }
-                        end = Math.min(end, totalpage - 1);
-                        if (end == totalpage - 1) {
+                        end = Math.min(end, totalPage - 1);
+                        if (end == totalPage - 1) {
                             start = Math.max(2, end - 3);
                         }
                         if (page != 1) {
@@ -339,13 +339,13 @@ KISSY.add("editor/plugin/xiamiMusic/dialog", function (S, Editor, FlashDialog, M
                         for (i = start; i <= end; i++) {
                             html += getXiamiPaging(page, i, undefined);
                         }
-                        if (end != totalpage) {
-                            if (end != totalpage - 1) {
+                        if (end != totalPage) {
+                            if (end != totalPage - 1) {
                                 html += "<span class='ks-editor-xiami-page-more'>...</span>";
                             }
-                            html += getXiamiPaging(page, totalpage, totalpage);
+                            html += getXiamiPaging(page, totalPage, totalPage);
                         }
-                        if (page != totalpage) {
+                        if (page != totalPage) {
                             html += getXiamiPaging(page, page + 1, "下一页");
                         }
                         html += "</p>";

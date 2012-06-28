@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 /**
  * 集中管理各个z-index
@@ -14,7 +14,7 @@ KISSY.add("editor/core/zIndexManager", function (S) {
      * z-index manager
      *@enum {number}
      */
-    Editor.zIndexManager = {
+    var zIndexManager = Editor.zIndexManager = {
         BUBBLE_VIEW:(1100),
         POPUP_MENU:(1200),
         // flash 存储设置最高
@@ -32,6 +32,8 @@ KISSY.add("editor/core/zIndexManager", function (S) {
     Editor.baseZIndex = function (z) {
         return (Editor['Config'].baseZIndex || 10000) + z;
     };
+
+    return zIndexManager;
 }, {
     requires:['./base']
 });

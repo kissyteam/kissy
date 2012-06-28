@@ -345,9 +345,6 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
         }
     };
 
-    var ulCmd = new ListCommand("ul"),
-        olCmd = new ListCommand("ol");
-
     function queryActive(type, elementPath) {
         var element,
             name,

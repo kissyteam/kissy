@@ -14,6 +14,7 @@ KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {
                     exec:function (editor) {
+                        editor.focus();
                         ulCmd.exec(editor);
                     }
                 });
@@ -23,8 +24,13 @@ KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
 
             if (!editor.hasCommand(queryUl)) {
                 editor.addCommand(queryUl, {
-                    exec:function (editor, elementPath) {
-                        return queryActive("ul", elementPath);
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection && !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return queryActive("ul", elementPath);
+                        }
                     }
                 });
             }

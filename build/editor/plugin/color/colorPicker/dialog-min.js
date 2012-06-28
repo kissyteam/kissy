@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jun 19 16:41
+build time: Jun 28 20:23
 */
 KISSY.add("editor/plugin/color/colorPicker/dialog",function(e,o,r){function h(a){if(e.isArray(a))return a;var b=RegExp;if(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a,16)});if(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a+a,16)});if(/^rgb\((.*),(.*),(.*)\)$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return 0<a.indexOf("%")?2.55*parseFloat(a,10):a|0})}function j(a){var a="0"+
 a,b=a.length;return a.slice(b-2,b)}function m(a){a=h(a);return"#"+j(a[0].toString(16))+j(a[1].toString(16))+j(a[2].toString(16))}function p(a){this.editor=a;this._init()}var f=e.map,q=e.DOM;q.addStyleSheet(".ks-editor-color-advanced-picker-left {float:left;display:inline;margin-left:10px;}.ks-editor-color-advanced-picker-right {float:right;width:50px;display:inline;margin:13px 10px 0 0;cursor:crosshair;}.ks-editor-color-advanced-picker-right a {height:2px;line-height:0;fontSize:0;display:block;}.ks-editor-color-advanced-picker-left ul{float:left;}.ks-editor-color-advanced-picker-left li,.ks-editor-color-advanced-picker-left a{overflow:hidden;width:15px;height:16px;line-height:0;fontSize:0;display:block;}.ks-editor-color-advanced-picker-left a:hover{width:13px;height:13px;border:1px solid white;}.ks-editor-color-advanced-indicator {margin-left:10px;*zoom:1;display:inline-block;*display:inline;width:68px;height:24px;vertical-align:middle;line-height:0;overflow:hidden;}",

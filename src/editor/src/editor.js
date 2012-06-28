@@ -341,6 +341,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            queryCommandValue:function (name) {
+                return this.execCommand(Utils.getQueryCmd(name));
+            },
+
             _getData:function (format, mode) {
                 var self = this,
                     htmlDataProcessor = self.htmlDataProcessor,
