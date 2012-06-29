@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 25 10:38
+build time: Jun 29 16:30
 */
 KISSY.add("input-selection",function(h,d){function p(a){var b=i;b||(b=d.create(q));"textarea"==a.type?d.css(b,"width",d.css(a,"width")):d.css(b,"width",9999);h.each(r,function(c){d.css(b,c,d.css(a,c))});if(!i){var c=a.ownerDocument.body;c.insertBefore(b,c.firstChild)}return i=b}var j=d._propHooks,l=!0;try{l="number"==typeof h.Env.host.document.createElement("input").selectionEnd}catch(s){}if(!l){j.selectionStart={set:function(a,b){var c=a.ownerDocument.selection.createRange();if(k(a).inRange(c)){var f=
 g(a,1)[1],e=m(a,b,f);c.collapse(!1);c.moveStart("character",-e);b>f&&c.collapse(!0);c.select()}},get:function(a){return g(a)[0]}};j.selectionEnd={set:function(a,b){var c=a.ownerDocument.selection.createRange();if(k(a).inRange(c)){var f=g(a)[0],e=m(a,f,b);c.collapse(!0);c.moveEnd("character",e);f>b&&c.collapse(!1);c.select()}},get:function(a){return g(a,1)[1]}};var g=function(a,b){var c=0,f=0,e=a.ownerDocument.selection.createRange(),d=k(a);d.inRange(e)&&(d.setEndPoint("EndToStart",e),c=n(a,d).length,

@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jun 29 16:29
 */
 KISSY.add("editor/plugin/listUtils/cmd",function(r,p,n,e){function u(f){this.type=f}function v(f,d){var b,e,h=d.blockLimit,c=d.elements;if(!h)return!1;if(c)for(var a=0;a<c.length&&(b=c[a])&&b[0]!==h[0];a++)if(t[e=b.nodeName()]&&e==f)return!0;return!1}var t={ol:"insertOrderedList",ul:"insertUnorderedList"},w=p.RANGE,y=p.ElementPath,x=p.Walker,z=r.UA,m=r.Node,s=r.DOM,A=/^h[1-6]$/;u.prototype={changeListType:function(f,d,b,j){for(var h=n.listToArray(d.root,b,e,e,e),c=[],f=0;f<d.contents.length;f++){var a=
 d.contents[f];if((a=a.closest("li",e))&&a[0]&&!a.data("list_item_processed"))c.push(a),a._4e_setMarker(b,"list_item_processed",!0,e)}a=new m(d.root[0].ownerDocument.createElement(this.type));for(f=0;f<c.length;f++){var i=c[f].data("listarray_index");h[i].parent=a}for(var b=n.arrayToList(h,b,null,"p"),k,h=b.listNode.childNodes.length,f=0;f<h&&(k=new m(b.listNode.childNodes[f]));f++)k.nodeName()==this.type&&j.push(k);d.root.before(b.listNode);d.root.remove()},createList:function(f,d,b){var j=d.contents,

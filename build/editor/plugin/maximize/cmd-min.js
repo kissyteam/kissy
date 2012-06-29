@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jun 29 16:29
 */
 KISSY.add("editor/plugin/maximize/cmd",function(d,k){function i(a){this.editor=a}var e=d.UA,l=e.ie,f=document,n=d.Node,g=d.Event,h=d.DOM,j;d.augment(i,{restoreWindow:function(){var a=this,b=a.editor;!1!==b.fire("beforeRestoreWindow")&&a._resize&&(g.remove(window,"resize",a._resize),a._resize=0,a._saveEditorStatus(),a._restoreState(),setTimeout(function(){a._restoreEditorStatus();b.notifySelectionChange();b.fire("afterRestoreWindow")},30))},_restoreState:function(){var a=this.editor,b=a.get("textarea"),
 c=this._savedParents;if(c){for(var m=0;m<c.length;m++){var d=c[m];d.el.css("position",d.position)}this._savedParents=null}b.parent().css({height:this.iframeHeight});b.css({height:this.iframeHeight});h.css(f.body,{width:"",height:"",overflow:""});f.documentElement.style.overflow="";a=a.get("el")[0].style;a.position="static";a.width=this.editorElWidth;j.css({left:"-99999px",top:"-99999px"});window.scrollTo(this.scrollLeft,this.scrollTop);8>l&&this.editor.get("toolBarEl").removeClass("ks-editor-toolbar-padding",

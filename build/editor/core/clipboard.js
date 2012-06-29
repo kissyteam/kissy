@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jun 29 16:29
 */
 /**
  * monitor user's paste key ,clear user input,modified from ckeditor

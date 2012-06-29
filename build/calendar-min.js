@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 15 17:19
+build time: Jun 29 16:26
 */
 KISSY.add("calendar/base",function(g,h,k,j,f){function c(a,b){this._init(a,b)}var b=h.all;g.augment(c,k.Target,{_init:function(a,n){var d=b(a);this.id=this._stamp(d);this._buildParam(n);this.popup?(this.trigger=d,this.con=new h("<div>"),b(document.body).append(this.con),this.con.css({top:"0px",position:"absolute",background:"white",visibility:"hidden","z-index":99999999})):this.con=d;this.C_Id=this._stamp(this.con);this.render();this._buildEvent();return this},render:function(a){var b=0,d,e,a=a||
 {};this._parseParam(a);this.con.addClass("ks-cal-call ks-clearfix ks-cal-call-multi-"+this.pages);this.ca=this.ca||[];for(b=0;b<this.ca.length;b++)this.ca[b].detachEvent();this.__shimEl&&(this.__shimEl.remove(),delete this.__shimEl);this.con.empty();this.ca.length=this.pages;var c=!1,f=!1;this.range&&(this.range.start&&(c=!0),this.range.end&&(f=!0));e=c&&!this.rangeLinkage?[this.range.start.getFullYear(),this.range.start.getMonth()]:[this.year,this.month];for(b=0;b<this.pages;b++){0===b?(c&&(this._time=

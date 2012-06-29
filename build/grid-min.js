@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 26 10:47
+build time: Jun 29 16:30
 */
 KISSY.add("grid/bar",function(f,g,c,d){return g.Container.extend({initializer:function(){for(var b=this.get("children"),a=0;a<b.length;a++){var k=b[a];k instanceof g.Controller||(b[a]=this._createItem(k))}},getItem:function(b){var a=this.get("children"),k=null;f.each(a,function(a){if(a.get("id")===b)return k=a,!1});return k},_createItem:function(b){if(b instanceof g.Controller)return b;b.xtype||(b.xtype="button");var a=d.types[b.xtype],k=null;return k=a?new a(b):new d(b)}},{ATTRS:{focusable:{value:!1},
 xrender:{value:c}},BarItem:d},{xclass:"bar",priority:1})},{requires:["component","./barrender","./baritem"]});

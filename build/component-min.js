@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 28 20:10
+build time: Jun 29 16:26
 */
 KISSY.add("component/base",function(c,g,e){return{Manager:e,UIBase:g,create:function(b,a){var d;if(b&&(d=b.xclass))a&&!b.prefixCls&&(b.prefixCls=a.get("prefixCls")),d=e.getConstructorByXClass(d),b=new d(b);return b}}},{requires:["./uibase","./manager"]});KISSY.add("component",function(c,g,e,b,a,d,h,o){c.mix(g,{Controller:e,Render:b,Container:a,DelegateChildren:d,DecorateChild:o,DecorateChildren:h});return g},{requires:"component/base,component/controller,component/render,component/container,component/delegateChildren,component/decorateChildren,component/decorateChild".split(",")});
 KISSY.add("component/container",function(c,g,e,b){return g.extend([e,b],{})},{requires:["./controller","./delegateChildren","./decorateChildren"]});

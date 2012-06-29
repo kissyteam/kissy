@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 26 10:47
+build time: Jun 29 16:30
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
