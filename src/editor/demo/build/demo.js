@@ -142,7 +142,7 @@
                 }
             },
             "multipleUpload":{
-                serverUrl:"http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
+                serverUrl:"http://localhost/kissy_git/kissy1.3/src/editor/demo/upload.php",
                 serverParams:{
                     waterMark:function () {
                         return S.one("#ke_img_up_watermark_2")[0].checked;
