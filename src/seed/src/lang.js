@@ -54,7 +54,7 @@
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (hasOwnProperty(htmlEntities, k)) {
+            if (htmlEntities.hasOwnProperty(k)) {
                 reverseEntities[htmlEntities[k]] = k;
             }
         }
@@ -690,7 +690,7 @@
                 }
                 var buf = [], key, val;
                 for (key in o) {
-                    if (hasOwnProperty(o, key)) {
+                    if (o.hasOwnProperty(key)) {
                         val = o[key];
                         key = encode(key);
 
@@ -1022,7 +1022,7 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (hasOwnProperty(input, k)) {
+                if (input.hasOwnProperty(k)) {
                     if (k !== CLONE_MARKER &&
                         (!f || (f.call(input, input[k], k, input) !== FALSE))) {
                         destination[k] = cloneInternal(input[k], f, memory);
@@ -1045,21 +1045,21 @@
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (hasOwnProperty(b, property)) {
+            if (b.hasOwnProperty(property)) {
                 if (!hasKey(a, property) && hasKey(b, property)) {
                     mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
                 }
             }
         }
         for (property in a) {
-            if (hasOwnProperty(a, property)) {
+            if (a.hasOwnProperty(property)) {
                 if (!hasKey(b, property) && hasKey(a, property)) {
                     mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
                 }
             }
         }
         for (property in b) {
-            if (hasOwnProperty(b, property)) {
+            if (b.hasOwnProperty(property)) {
                 if (property == COMPARE_MARKER) {
                     continue;
                 }

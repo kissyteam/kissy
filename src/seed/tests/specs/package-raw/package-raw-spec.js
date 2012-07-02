@@ -9,7 +9,7 @@ describe("loader", function () {
                     {
                         debug:true,
                         name:'t',
-                        path:'/kissy_git/kissy/src/seed/tests/specs/package-raw/'
+                        path:'/kissy_git/kissy1.3/src/seed/tests/specs/package-raw/'
                     }
                 ]
             });

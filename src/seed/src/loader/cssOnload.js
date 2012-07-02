@@ -31,39 +31,41 @@
     // single thread is ok
     function cssPoll() {
         for (var url in monitors) {
-            var callbackObj = monitors[url],
-                node = callbackObj.node,
-                exName,
-                loaded = 0;
-            if (utils.isWebKit) {
-                if (node['sheet']) {
-                    S.log("webkit loaded : " + url);
-                    loaded = 1;
-                }
-            } else if (node['sheet']) {
-                try {
-                    var cssRules;
-                    if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox loaded : ' + url);
+            if (monitors.hasOwnProperty(url)) {
+                var callbackObj = monitors[url],
+                    node = callbackObj.node,
+                    exName,
+                    loaded = 0;
+                if (utils.isWebKit) {
+                    if (node['sheet']) {
+                        S.log("webkit loaded : " + url);
                         loaded = 1;
                     }
-                } catch (ex) {
-                    exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                    // http://www.w3.org/TR/dom/#dom-domexception-code
-                    if (exName == 'SecurityError' ||
-                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log('firefox loaded : ' + url);
-                        loaded = 1;
+                } else if (node['sheet']) {
+                    try {
+                        var cssRules;
+                        if (cssRules = node['sheet'].cssRules) {
+                            S.log('firefox loaded : ' + url);
+                            loaded = 1;
+                        }
+                    } catch (ex) {
+                        exName = ex.name;
+                        S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                        // http://www.w3.org/TR/dom/#dom-domexception-code
+                        if (exName == 'SecurityError' ||
+                            exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                            S.log('firefox loaded : ' + url);
+                            loaded = 1;
+                        }
                     }
                 }
-            }
 
-            if (loaded) {
-                if (callbackObj.callback) {
-                    callbackObj.callback.call(node);
+                if (loaded) {
+                    if (callbackObj.callback) {
+                        callbackObj.callback.call(node);
+                    }
+                    delete monitors[url];
                 }
-                delete monitors[url];
             }
         }
         if (S.isEmptyObject(monitors)) {

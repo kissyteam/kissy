@@ -372,7 +372,7 @@
                     configs = S.configs;
                 if (S.isObject(c)) {
                     for (p in c) {
-                        if (hasOwnProperty(c, p)) {
+                        if (c.hasOwnProperty(p)) {
                             runs.push({
                                 name:p,
                                 order:configs[p] && configs[p].order || 0,
@@ -459,7 +459,7 @@
                 var result = [];
 
                 for (var p in o) {
-                    if (hasOwnProperty(o, p)) {
+                    if (o.hasOwnProperty(p)) {
                         result.push(p);
                     }
                 }

@@ -12,7 +12,7 @@ KISSY.add(function(S, Node, NoteRouter, Sy, MVC) {
         triggerRoute:1,
         nativeHistory:1,
         urlRoot:location.hostname == "localhost" ?
-            '/kissy_git/kissy/src/mvc/demo/note_html5' :
+            '/kissy_git/kissy1.3/src/mvc/demo/note_html5' :
             '/kissy/src/mvc/demo/note_html5',
         success:function() {
             Node.all('#loading').hide();

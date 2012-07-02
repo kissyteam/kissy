@@ -11,7 +11,7 @@
     <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
-    <property name="version" value="1.30dev"/>
+    <property name="version" value="1.40dev"/>
     <property name="charset" value="utf-8"/>
     <property name="copyright.files" value="**/*.css, **/*.js"/>
     <property name="component.src.dir.tmp" location="tmp/"/>
@@ -164,6 +164,14 @@
         </move>
 
         <delete dir="${component.build.dir.tmp}"/>
+
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir}" includes="*.js,*.css"/>
+        </replaceregexp>
 
         <replaceregexp match="@DEBUG@"
                        replace=""

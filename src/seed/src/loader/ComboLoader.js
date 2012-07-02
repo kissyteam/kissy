@@ -96,14 +96,16 @@
                 }
 
                 for (p in css) {
-                    loadScripts(css[p], function () {
-                        if (!(--countCss)) {
-                            S.each(unaliasModNames, function (name) {
-                                utils.attachMod(self.SS, self.getModInfo(name));
-                            });
-                            self._useJs(comboUrls, fn, modNames);
-                        }
-                    }, css[p].charset);
+                    if (css.hasOwnProperty(p)) {
+                        loadScripts(css[p], function () {
+                            if (!(--countCss)) {
+                                S.each(unaliasModNames, function (name) {
+                                    utils.attachMod(self.SS, self.getModInfo(name));
+                                });
+                                self._useJs(comboUrls, fn, modNames);
+                            }
+                        }, css[p].charset);
+                    }
                 }
             },
 
@@ -144,33 +146,35 @@
                 }
                 var success = 1;
                 for (p in jss) {
-                    (function (p) {
-                        loadScripts(jss[p], function () {
-                            var mods = jss[p].mods;
-                            for (var i = 0; i < mods.length; i++) {
-                                var mod = mods[i];
-                                // fix #111
-                                // https://github.com/kissyteam/kissy/issues/111
-                                if (!mod.fn) {
-                                    S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
-                                    mod.status = data.ERROR;
-                                    success = 0;
-                                    return;
+                    if (jss.hasOwnProperty(p)) {
+                        (function (p) {
+                            loadScripts(jss[p], function () {
+                                var mods = jss[p].mods;
+                                for (var i = 0; i < mods.length; i++) {
+                                    var mod = mods[i];
+                                    // fix #111
+                                    // https://github.com/kissyteam/kissy/issues/111
+                                    if (!mod.fn) {
+                                        S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                                        mod.status = data.ERROR;
+                                        success = 0;
+                                        return;
+                                    }
                                 }
-                            }
-                            if (success && !(--countJss)) {
-                                var unaliasModNames = utils.unalias(self.SS, modNames);
-                                self.attachMods(unaliasModNames);
-                                if (utils.isAttached(self.SS, unaliasModNames)) {
-                                    fn.apply(null, utils.getModules(self.SS, modNames))
-                                } else {
-                                    // new require is introduced by KISSY.add
-                                    // run again
-                                    self._use(modNames, fn)
+                                if (success && !(--countJss)) {
+                                    var unaliasModNames = utils.unalias(self.SS, modNames);
+                                    self.attachMods(unaliasModNames);
+                                    if (utils.isAttached(self.SS, unaliasModNames)) {
+                                        fn.apply(null, utils.getModules(self.SS, modNames))
+                                    } else {
+                                        // new require is introduced by KISSY.add
+                                        // run again
+                                        self._use(modNames, fn)
+                                    }
                                 }
-                            }
-                        }, jss[p].charset);
-                    })(p);
+                            }, jss[p].charset);
+                        })(p);
+                    }
                 }
             },
 
@@ -232,7 +236,9 @@
                 }
                 var ret2 = [];
                 for (var r in ret) {
-                    ret2.push(r);
+                    if (ret.hasOwnProperty(r)) {
+                        ret2.push(r);
+                    }
                 }
                 return ret2;
             },
@@ -273,54 +279,60 @@
                     maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packageBase in combos) {
-                    for (var type in combos[packageBase]) {
-                        t = [];
-                        var jss = combos[packageBase][type],
-                            packageName = jss.name,
-                            packageNamePath = packageName + "/";
-                        res[type][packageBase] = [];
-                        res[type][packageBase].charset = jss.charset;
-                        // current package's mods
-                        res[type][packageBase].mods = [];
-                        // add packageName to common prefix
-                        // combo grouped by package
-                        var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
-                            path,
-                            tag,
-                            l = prefix.length;
-                        for (i = 0; i < jss.length; i++) {
-                            // remove packageName prefix from mod path
-                            path = jss[i].path;
-                            if (packageName) {
-                                path = utils.removePackageNameFromModName(packageName, path);
-                            }
-                            res[type][packageBase].mods.push(jss[i]);
-                            if (!jss.combine) {
-                                tag = jss[i].getTag();
-                                res[type][packageBase].push(utils.getMappedPath(SS,
-                                    prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
-                                continue;
-                            }
-                            t.push(path);
-                            if (l + t.join(comboSep).length > maxUrlLength) {
-                                t.pop();
-                                res[type][packageBase].push(self.getComboUrl(
-                                    prefix,
-                                    t,
-                                    comboSep,
-                                    jss.tag
-                                ));
+                    if (combos.hasOwnProperty(packageBase)) {
+                        for (var type in combos[packageBase]) {
+                            if (combos[packageBase].hasOwnProperty(type)) {
+
                                 t = [];
-                                i--;
+                                var jss = combos[packageBase][type],
+                                    packageName = jss.name,
+                                    packageNamePath = packageName + "/";
+                                res[type][packageBase] = [];
+                                res[type][packageBase].charset = jss.charset;
+                                // current package's mods
+                                res[type][packageBase].mods = [];
+                                // add packageName to common prefix
+                                // combo grouped by package
+                                var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
+                                    path,
+                                    tag,
+                                    l = prefix.length;
+                                for (i = 0; i < jss.length; i++) {
+                                    // remove packageName prefix from mod path
+                                    path = jss[i].path;
+                                    if (packageName) {
+                                        path = utils.removePackageNameFromModName(packageName, path);
+                                    }
+                                    res[type][packageBase].mods.push(jss[i]);
+                                    if (!jss.combine) {
+                                        tag = jss[i].getTag();
+                                        res[type][packageBase].push(utils.getMappedPath(SS,
+                                            prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
+                                        continue;
+                                    }
+                                    t.push(path);
+                                    if (l + t.join(comboSep).length > maxUrlLength) {
+                                        t.pop();
+                                        res[type][packageBase].push(self.getComboUrl(
+                                            prefix,
+                                            t,
+                                            comboSep,
+                                            jss.tag
+                                        ));
+                                        t = [];
+                                        i--;
+                                    }
+                                }
+                                if (t.length) {
+                                    res[type][packageBase].push(self.getComboUrl(
+                                        prefix,
+                                        t,
+                                        comboSep,
+                                        jss.tag
+                                    ));
+                                }
+
                             }
-                        }
-                        if (t.length) {
-                            res[type][packageBase].push(self.getComboUrl(
-                                prefix,
-                                t,
-                                comboSep,
-                                jss.tag
-                            ));
                         }
                     }
                 }
