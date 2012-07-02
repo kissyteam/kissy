@@ -22,7 +22,7 @@
         readyPromise = readyDefer.promise,
 
     // The number of poll times.
-        POLL_RETRYS = 500,
+        POLL_RETIRES = 500,
 
     // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
@@ -122,7 +122,7 @@
                     node,
                     timer = S.later(function () {
                         if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                            ++retryCount > POLL_RETRYS) {
+                            ++retryCount > POLL_RETIRES) {
                             timer.cancel();
                         }
                     }, POLL_INTERVAL, true);

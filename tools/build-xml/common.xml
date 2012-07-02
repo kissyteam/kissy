@@ -165,6 +165,14 @@
 
         <delete dir="${component.build.dir.tmp}"/>
 
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir}" includes="*.js,*.css"/>
+        </replaceregexp>
+
         <replaceregexp match="@DEBUG@"
                        replace=""
                        flags="g"

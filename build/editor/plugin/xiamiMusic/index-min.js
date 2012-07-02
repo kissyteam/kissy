@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:29
+build time: Jul 2 11:44
 */
 KISSY.add("editor/plugin/xiamiMusic/index",function(c,k,l,j){function i(){i.superclass.constructor.apply(this,arguments)}function h(b){this.config=b||{}}c.extend(i,l,{_updateTip:function(b,g){var e=this.get("editor").restoreRealElement(g);e&&(b.html(g.attr("title")),b.attr("href",this._getFlashUrl(e)))}});c.augment(h,{renderUI:function(b){function g(a){return/xiami\.com/i.test(a)}var e=b.htmlDataProcessor,c=e&&e.dataFilter;c&&c.addRules({tags:{object:function(a){var b=a.getAttribute("title"),d,f;
 d=a.getAttribute("classid");var c=a.childNodes;if(!d){for(d=0;d<c.length;d++)if(f=c[d],"embed"==f.nodeName){if(!j.isFlashEmbed(f))break;if(g(f.attributes.src))return e.createFakeParserElement(a,"ke_xiami","xiamiMusic",!0,{title:b})}return null}for(d=0;d<c.length;d++)if(f=c[d],"param"==f.nodeName&&"movie"==f.getAttribute("name")&&g(f.getAttribute("value")))return e.createFakeParserElement(a,"ke_xiami","xiamiMusic",!0,{title:b})},embed:function(a){if(j.isFlashEmbed(a)&&g(a.getAttribute("src")))return e.createFakeParserElement(a,

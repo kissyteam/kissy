@@ -147,7 +147,7 @@
                     }
                 });
                 delete jsCallbacks[src];
-            }
+            };
 
             //标准浏览器
             if (node.addEventListener) {

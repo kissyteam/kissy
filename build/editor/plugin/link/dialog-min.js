@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:29
+build time: Jul 2 11:44
 */
 KISSY.add("editor/plugin/link/dialog",function(f,d,h,g){function e(a,b){this.editor=a;this.config=b||{};d.Utils.lazyRun(this,"_prepareShow","_real")}var i=h.Dialog,j=g._ke_saved_href;f.augment(e,{_prepareShow:function(){var a=new i({autoRender:!0,width:500,headerContent:"链接",bodyContent:"<div style='padding:20px 20px 0 20px'><p><label>链接网址： <input  data-verify='^(https?://[^\\s]+)|(#.+)$'  data-warning='请输入合适的网址格式' class='ks-editor-link-url ks-editor-input' style='width:390px;vertical-align:middle;' /></label></p><p style='margin: 15px 0 10px 0px;'><label>链接名称： <input class='ks-editor-link-title ks-editor-input' style='width:100px;vertical-align:middle;'></label> <label><input class='ks-editor-link-blank' style='vertical-align: middle; margin-left: 21px;' type='checkbox'/> &nbsp; 在新窗口打开链接</label></p></div>",
 footerContent:"<div style='padding:5px 20px 20px;'><a href='javascript:void('确定')' class='ks-editor-link-ok ks-editor-button ks-inline-block' style='margin-left:65px;margin-right:20px;'>确定</a> <a href='javascript:void('取消')' class='ks-editor-link-cancel ks-editor-button ks-inline-block'>取消</a></div>",mask:!0});this.dialog=a;var b=a.get("body"),c=a.get("footer");a.urlEl=b.one(".ks-editor-link-url");a.urlTitle=b.one(".ks-editor-link-title");a.targetEl=b.one(".ks-editor-link-blank");b=c.one(".ks-editor-link-cancel");

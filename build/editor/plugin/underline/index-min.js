@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:29
+build time: Jul 2 11:44
 */
 KISSY.add("editor/plugin/underline/index",function(b,e,c,d){function a(){}b.augment(a,{renderUI:function(a){d.init(a);a.addButton("underline",{cmdType:"underline",tooltip:"下划线 "},c.Button)}});return a},{requires:["editor","../font/ui","./cmd"]});

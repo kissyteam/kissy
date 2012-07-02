@@ -203,7 +203,6 @@
 
         createModuleInfo:function (self, modName, cfg) {
             var mods = self.Env.mods,
-                t,
                 mod = mods[modName];
 
             if (mod) {

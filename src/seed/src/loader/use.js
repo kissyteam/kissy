@@ -209,7 +209,7 @@
         var SS = self.SS,
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = utils.isCss(url)
+            isCss = utils.isCss(url);
 
         mod.status = mod.status || INIT;
 

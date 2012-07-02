@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:30
+build time: Jul 2 11:45
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -182,7 +182,7 @@ build time: Jun 29 16:30
              * The version of the library.
              * @type {String}
              */
-            version:'@VERSION@',
+            version:'1.30rc',
 
             /**
              * Returns a new object containing all of the properties of
@@ -377,7 +377,7 @@ build time: Jun 29 16:30
                     configs = S.configs;
                 if (S.isObject(c)) {
                     for (p in c) {
-                        if (hasOwnProperty(c, p)) {
+                        if (c.hasOwnProperty(p)) {
                             runs.push({
                                 name:p,
                                 order:configs[p] && configs[p].order || 0,
@@ -464,7 +464,7 @@ build time: Jun 29 16:30
                 var result = [];
 
                 for (var p in o) {
-                    if (hasOwnProperty(o, p)) {
+                    if (o.hasOwnProperty(p)) {
                         result.push(p);
                     }
                 }
@@ -496,7 +496,7 @@ build time: Jun 29 16:30
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120629163043';
+        S.__BUILD_TIME = '20120702114537';
     })();
 
     return S;
@@ -558,7 +558,7 @@ build time: Jun 29 16:30
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (hasOwnProperty(htmlEntities, k)) {
+            if (htmlEntities.hasOwnProperty(k)) {
                 reverseEntities[htmlEntities[k]] = k;
             }
         }
@@ -1194,7 +1194,7 @@ build time: Jun 29 16:30
                 }
                 var buf = [], key, val;
                 for (key in o) {
-                    if (hasOwnProperty(o, key)) {
+                    if (o.hasOwnProperty(key)) {
                         val = o[key];
                         key = encode(key);
 
@@ -1526,7 +1526,7 @@ build time: Jun 29 16:30
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (hasOwnProperty(input, k)) {
+                if (input.hasOwnProperty(k)) {
                     if (k !== CLONE_MARKER &&
                         (!f || (f.call(input, input[k], k, input) !== FALSE))) {
                         destination[k] = cloneInternal(input[k], f, memory);
@@ -1549,21 +1549,21 @@ build time: Jun 29 16:30
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (hasOwnProperty(b, property)) {
+            if (b.hasOwnProperty(property)) {
                 if (!hasKey(a, property) && hasKey(b, property)) {
                     mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
                 }
             }
         }
         for (property in a) {
-            if (hasOwnProperty(a, property)) {
+            if (a.hasOwnProperty(property)) {
                 if (!hasKey(b, property) && hasKey(a, property)) {
                     mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
                 }
             }
         }
         for (property in b) {
-            if (hasOwnProperty(b, property)) {
+            if (b.hasOwnProperty(property)) {
                 if (property == COMPARE_MARKER) {
                     continue;
                 }
@@ -2423,7 +2423,6 @@ build time: Jun 29 16:30
 
         createModuleInfo:function (self, modName, cfg) {
             var mods = self.Env.mods,
-                t,
                 mod = mods[modName];
 
             if (mod) {
@@ -2678,39 +2677,41 @@ build time: Jun 29 16:30
     // single thread is ok
     function cssPoll() {
         for (var url in monitors) {
-            var callbackObj = monitors[url],
-                node = callbackObj.node,
-                exName,
-                loaded = 0;
-            if (utils.isWebKit) {
-                if (node['sheet']) {
-                    S.log("webkit loaded : " + url);
-                    loaded = 1;
-                }
-            } else if (node['sheet']) {
-                try {
-                    var cssRules;
-                    if (cssRules = node['sheet'].cssRules) {
-                        S.log('firefox loaded : ' + url);
+            if (monitors.hasOwnProperty(url)) {
+                var callbackObj = monitors[url],
+                    node = callbackObj.node,
+                    exName,
+                    loaded = 0;
+                if (utils.isWebKit) {
+                    if (node['sheet']) {
+                        S.log("webkit loaded : " + url);
                         loaded = 1;
                     }
-                } catch (ex) {
-                    exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                    // http://www.w3.org/TR/dom/#dom-domexception-code
-                    if (exName == 'SecurityError' ||
-                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log('firefox loaded : ' + url);
-                        loaded = 1;
+                } else if (node['sheet']) {
+                    try {
+                        var cssRules;
+                        if (cssRules = node['sheet'].cssRules) {
+                            S.log('firefox loaded : ' + url);
+                            loaded = 1;
+                        }
+                    } catch (ex) {
+                        exName = ex.name;
+                        S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                        // http://www.w3.org/TR/dom/#dom-domexception-code
+                        if (exName == 'SecurityError' ||
+                            exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                            S.log('firefox loaded : ' + url);
+                            loaded = 1;
+                        }
                     }
                 }
-            }
 
-            if (loaded) {
-                if (callbackObj.callback) {
-                    callbackObj.callback.call(node);
+                if (loaded) {
+                    if (callbackObj.callback) {
+                        callbackObj.callback.call(node);
+                    }
+                    delete monitors[url];
                 }
-                delete monitors[url];
             }
         }
         if (S.isEmptyObject(monitors)) {
@@ -2909,7 +2910,7 @@ build time: Jun 29 16:30
                     }
                 });
                 delete jsCallbacks[src];
-            }
+            };
 
             //标准浏览器
             if (node.addEventListener) {
@@ -3494,7 +3495,7 @@ build time: Jun 29 16:30
         var SS = self.SS,
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = utils.isCss(url)
+            isCss = utils.isCss(url);
 
         mod.status = mod.status || INIT;
 
@@ -3657,14 +3658,16 @@ build time: Jun 29 16:30
                 }
 
                 for (p in css) {
-                    loadScripts(css[p], function () {
-                        if (!(--countCss)) {
-                            S.each(unaliasModNames, function (name) {
-                                utils.attachMod(self.SS, self.getModInfo(name));
-                            });
-                            self._useJs(comboUrls, fn, modNames);
-                        }
-                    }, css[p].charset);
+                    if (css.hasOwnProperty(p)) {
+                        loadScripts(css[p], function () {
+                            if (!(--countCss)) {
+                                S.each(unaliasModNames, function (name) {
+                                    utils.attachMod(self.SS, self.getModInfo(name));
+                                });
+                                self._useJs(comboUrls, fn, modNames);
+                            }
+                        }, css[p].charset);
+                    }
                 }
             },
 
@@ -3705,33 +3708,35 @@ build time: Jun 29 16:30
                 }
                 var success = 1;
                 for (p in jss) {
-                    (function (p) {
-                        loadScripts(jss[p], function () {
-                            var mods = jss[p].mods;
-                            for (var i = 0; i < mods.length; i++) {
-                                var mod = mods[i];
-                                // fix #111
-                                // https://github.com/kissyteam/kissy/issues/111
-                                if (!mod.fn) {
-                                    S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
-                                    mod.status = data.ERROR;
-                                    success = 0;
-                                    return;
+                    if (jss.hasOwnProperty(p)) {
+                        (function (p) {
+                            loadScripts(jss[p], function () {
+                                var mods = jss[p].mods;
+                                for (var i = 0; i < mods.length; i++) {
+                                    var mod = mods[i];
+                                    // fix #111
+                                    // https://github.com/kissyteam/kissy/issues/111
+                                    if (!mod.fn) {
+                                        S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                                        mod.status = data.ERROR;
+                                        success = 0;
+                                        return;
+                                    }
                                 }
-                            }
-                            if (success && !(--countJss)) {
-                                var unaliasModNames = utils.unalias(self.SS, modNames);
-                                self.attachMods(unaliasModNames);
-                                if (utils.isAttached(self.SS, unaliasModNames)) {
-                                    fn.apply(null, utils.getModules(self.SS, modNames))
-                                } else {
-                                    // new require is introduced by KISSY.add
-                                    // run again
-                                    self._use(modNames, fn)
+                                if (success && !(--countJss)) {
+                                    var unaliasModNames = utils.unalias(self.SS, modNames);
+                                    self.attachMods(unaliasModNames);
+                                    if (utils.isAttached(self.SS, unaliasModNames)) {
+                                        fn.apply(null, utils.getModules(self.SS, modNames))
+                                    } else {
+                                        // new require is introduced by KISSY.add
+                                        // run again
+                                        self._use(modNames, fn)
+                                    }
                                 }
-                            }
-                        }, jss[p].charset);
-                    })(p);
+                            }, jss[p].charset);
+                        })(p);
+                    }
                 }
             },
 
@@ -3793,7 +3798,9 @@ build time: Jun 29 16:30
                 }
                 var ret2 = [];
                 for (var r in ret) {
-                    ret2.push(r);
+                    if (ret.hasOwnProperty(r)) {
+                        ret2.push(r);
+                    }
                 }
                 return ret2;
             },
@@ -3834,54 +3841,60 @@ build time: Jun 29 16:30
                     maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packageBase in combos) {
-                    for (var type in combos[packageBase]) {
-                        t = [];
-                        var jss = combos[packageBase][type],
-                            packageName = jss.name,
-                            packageNamePath = packageName + "/";
-                        res[type][packageBase] = [];
-                        res[type][packageBase].charset = jss.charset;
-                        // current package's mods
-                        res[type][packageBase].mods = [];
-                        // add packageName to common prefix
-                        // combo grouped by package
-                        var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
-                            path,
-                            tag,
-                            l = prefix.length;
-                        for (i = 0; i < jss.length; i++) {
-                            // remove packageName prefix from mod path
-                            path = jss[i].path;
-                            if (packageName) {
-                                path = utils.removePackageNameFromModName(packageName, path);
-                            }
-                            res[type][packageBase].mods.push(jss[i]);
-                            if (!jss.combine) {
-                                tag = jss[i].getTag();
-                                res[type][packageBase].push(utils.getMappedPath(SS,
-                                    prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
-                                continue;
-                            }
-                            t.push(path);
-                            if (l + t.join(comboSep).length > maxUrlLength) {
-                                t.pop();
-                                res[type][packageBase].push(self.getComboUrl(
-                                    prefix,
-                                    t,
-                                    comboSep,
-                                    jss.tag
-                                ));
+                    if (combos.hasOwnProperty(packageBase)) {
+                        for (var type in combos[packageBase]) {
+                            if (combos[packageBase].hasOwnProperty(type)) {
+
                                 t = [];
-                                i--;
+                                var jss = combos[packageBase][type],
+                                    packageName = jss.name,
+                                    packageNamePath = packageName + "/";
+                                res[type][packageBase] = [];
+                                res[type][packageBase].charset = jss.charset;
+                                // current package's mods
+                                res[type][packageBase].mods = [];
+                                // add packageName to common prefix
+                                // combo grouped by package
+                                var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
+                                    path,
+                                    tag,
+                                    l = prefix.length;
+                                for (i = 0; i < jss.length; i++) {
+                                    // remove packageName prefix from mod path
+                                    path = jss[i].path;
+                                    if (packageName) {
+                                        path = utils.removePackageNameFromModName(packageName, path);
+                                    }
+                                    res[type][packageBase].mods.push(jss[i]);
+                                    if (!jss.combine) {
+                                        tag = jss[i].getTag();
+                                        res[type][packageBase].push(utils.getMappedPath(SS,
+                                            prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
+                                        continue;
+                                    }
+                                    t.push(path);
+                                    if (l + t.join(comboSep).length > maxUrlLength) {
+                                        t.pop();
+                                        res[type][packageBase].push(self.getComboUrl(
+                                            prefix,
+                                            t,
+                                            comboSep,
+                                            jss.tag
+                                        ));
+                                        t = [];
+                                        i--;
+                                    }
+                                }
+                                if (t.length) {
+                                    res[type][packageBase].push(self.getComboUrl(
+                                        prefix,
+                                        t,
+                                        comboSep,
+                                        jss.tag
+                                    ));
+                                }
+
                             }
-                        }
-                        if (t.length) {
-                            res[type][packageBase].push(self.getComboUrl(
-                                prefix,
-                                t,
-                                comboSep,
-                                jss.tag
-                            ));
                         }
                     }
                 }
@@ -4113,7 +4126,7 @@ build time: Jun 29 16:30
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120629163043'
+        tag:'20120702114537'
     }, getBaseInfo()));
 
     /**
@@ -4150,7 +4163,7 @@ build time: Jun 29 16:30
         readyPromise = readyDefer.promise,
 
     // The number of poll times.
-        POLL_RETRYS = 500,
+        POLL_RETIRES = 500,
 
     // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
@@ -4250,7 +4263,7 @@ build time: Jun 29 16:30
                     node,
                     timer = S.later(function () {
                         if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                            ++retryCount > POLL_RETRYS) {
+                            ++retryCount > POLL_RETIRES) {
                             timer.cancel();
                         }
                     }, POLL_INTERVAL, true);
@@ -4475,7 +4488,7 @@ build time: Jun 29 16:30
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:30
+build time: Jul 2 11:45
 */
 /**
  * @fileOverview ua
@@ -4763,7 +4776,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:27
+build time: Jul 2 11:41
 */
 /**
  * @fileOverview dom-attr
@@ -9132,7 +9145,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:30
+build time: Jul 2 11:44
 */
 /**
  * @fileOverview responsible for registering event
@@ -11443,7 +11456,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:30
+build time: Jul 2 11:45
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11953,7 +11966,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:26
+build time: Jul 2 11:41
 */
 /**
  * @fileOverview form data  serialization util
@@ -13869,7 +13882,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:26
+build time: Jul 2 11:41
 */
 /**
  * @fileOverview cookie
@@ -13983,7 +13996,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:26
+build time: Jul 2 11:41
 */
 /**
  * @fileOverview attribute management
@@ -14638,7 +14651,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:26
+build time: Jul 2 11:41
 */
 /**
  * @fileOverview anim
@@ -16109,7 +16122,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jun 29 16:30
+build time: Jul 2 11:45
 */
 /**
  * @fileOverview anim-node-plugin
