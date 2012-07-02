@@ -10,7 +10,7 @@ KISSY.add("color", function (S, Base) {
     /**
      * @name Color
      * @class <p>
-     * Color for KISSY to normalize HSL, RGB and HEX.
+     * Color for KISSY to normalize HSL, HSV, RGB and HEX.
      * </p>
      */
     function Color() {
