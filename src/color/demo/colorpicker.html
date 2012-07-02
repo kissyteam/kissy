@@ -182,6 +182,12 @@
                 hue_thumb.css({
                     top:(e.pageY - hueBgOffset.top - hue_thumb_height / 2)
                 });
+
+                pickerBg.css("background-color", Color.fromHSV({
+                    h:h,
+                    s:1,
+                    v:1
+                }).toHex());
             }
 
             hueBg.on("click", updateHueThumb);
