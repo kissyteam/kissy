@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ColorPicker</title>
+<script src="../../../build/kissy.js"></script>
+<style>
+
+    .wrap {
+        overflow: hidden;
+        zoom: 1;
+    }
+
+    .picker-bg {
+        outline: 0 none;
+        height: 182px;
+        width: 182px;
+        cursor: default;
+        float: left;
+        position: relative;
+        background: url(assets/picker_mask.png) no-repeat;
+    }
+
+    .picker-hue-bg {
+        outline: 0 none;
+        float: left;
+        height: 183px;
+        width: 14px;
+        cursor: default;
+        margin-left: 10px;
+        position: relative;
+        background: url(assets/hue_bg.png) no-repeat;
+    }
+
+    .picker-thumb, .hue-thumb {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        cursor: default;
+    }
+
+    .hue-thumb {
+        left: 0;
+    }
+
+    #preview {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+</head>
+<body>
+
+<h1>HSV RGB Hex DEMO For KISSY</h1>
+
+<div class="wrap">
+    <div class="picker-bg">
+
+        <img src="assets/picker_thumb.png" class="picker-thumb" width="11" height="11"/>
+    </div>
+    <div class="picker-hue-bg">
+
+        <img src="assets/hue_thumb.png" class="hue-thumb" width="18" height="18"/>
+    </div>
+</div>
+
+<div>
+
+    <p>
+
+        hsl:<span id="hsl"></span>
+
+    </p>
+
+    <p>
+
+        rgb:<span id="rgb"></span>
+
+    </p>
+
+    <p>
+
+        hex:<span id="hex"></span>
+
+    </p>
+
+    <div id="preview">
+
+    </div>
+
+</div>
+
+<script src="../src/color.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        S.use("color,dd", function (S, Color, DD) {
+
+            var $ = S.all,
+                    hsl = $("#hsl"),
+                    rgb = $("#rgb"),
+                    hex = $("#hex"),
+                    preview = $("#preview"),
+                    pickerBg = $(".picker-bg"),
+                    pickDD = new DD.Draggable({
+                        node:pickerBg
+                    }),
+                    hueBg = $(".picker-hue-bg"),
+                    hueDD = new DD.Draggable({
+                        node:hueBg
+                    }),
+                    picker_thumb = pickerBg.first(),
+                    hue_thumb = hueBg.first(),
+                    picker_thumb_width = picker_thumb.width(),
+                    picker_thumb_height = picker_thumb.height(),
+                    hue_thumb_height = hue_thumb.height();
+
+            var color = new Color({
+                r:255,
+                g:0,
+                b:0
+            });
+
+            picker_thumb.css({
+                top:-picker_thumb_height / 2,
+                left:-picker_thumb_width / 2
+            });
+
+            hue_thumb.css({
+                top:-hue_thumb_height / 2
+            });
+
+            color.on("*Change", function (e) {
+                hsl.html(S.escapeHTML(color.toHSL()));
+                rgb.html(S.escapeHTML(color.toRGB()));
+                hex.html(S.escapeHTML(color.toHex()));
+                preview.css("background", color.toHex());
+            });
+
+            var pickerBgOffset = pickerBg.offset(),
+                    pickerBgWidth = pickerBg.width(),
+                    pickerBgHeight = pickerBg.height(),
+                    hueBgHeight = hueBg.height(),
+                    hueBgOffset = hueBg.offset();
+
+            pickerBg.css("background-color", "red");
+
+            function updatePickThumb(e) {
+                var s = (e.pageX - pickerBgOffset.left) / pickerBgWidth;
+                var v = (1 - (e.pageY - pickerBgOffset.top) / pickerBgHeight);
+                if (s < 0 || s > 1 || v < 0 || v > 1) {
+                    return;
+                }
+                color.setHSV({
+                    s:s,
+                    v:v
+                });
+                picker_thumb.css({
+                    left:(e.pageX - pickerBgOffset.left - picker_thumb_width / 2),
+                    top:(e.pageY - pickerBgOffset.top - picker_thumb_height / 2)
+                });
+            }
+
+
+            pickDD.on("drag", function (e) {
+                updatePickThumb(e);
+            });
+
+            hueDD.on("drag", function (e) {
+                updateHueThumb(e);
+            });
+
+            pickerBg.on("click", updatePickThumb);
+
+            function updateHueThumb(e) {
+                var h = (1 - (e.pageY - hueBgOffset.top) / hueBgHeight) * 360;
+                if (h < 0 || h > 360) {
+                    return;
+                }
+                color.setHSV({
+                    h:h
+                });
+                hue_thumb.css({
+                    top:(e.pageY - hueBgOffset.top - hue_thumb_height / 2)
+                });
+            }
+
+            hueBg.on("click", updateHueThumb);
+
+        });
+
+    });
+</script>
+</body>
+</html>
