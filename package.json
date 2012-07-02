@@ -1,6 +1,6 @@
 {
     "name":"KISSY",
-    "version":"1.3.0dev",
+    "version":"1.3.0rc",
     "description":"KISSY UI Library",
     "author":"yiminghe <yiminghe@gmail.com>",
     "homepage":"http://docs.kissyui.com",
@@ -8,8 +8,13 @@
         "url":"https://github.com/kissyteam/kissy/issues"
     },
     "contributors":[
+        "lifesinger <lifesinger@gmail.com>",
         "Jayli <lijing00333@163.com>",
-        "yiminghe <yiminghe@gmail.com>"
+        "dxq613 <dxq613@gmail.com>",
+        "fool2fish <fool2fish@gmail.com>",
+        "kingfo <oicuicu@gmail.com>",
+        "lizzie <shengyan1985@gmail.com>",
+        "satans17 <satans17@gmail.com>"
     ],
     "engines":{
         "node":">=0.4.0"
