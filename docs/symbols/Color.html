@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>Anim.Easing</title>
+        <title>Color</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -183,7 +183,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                Anim.Easing
+                                Color
                             </h2>
                             <!-- class title END-->
                             
@@ -191,7 +191,7 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">Provides methods for customizing how an animation behaves during each run.</p>
+                                    <p class="desc"><p>Color for KISSY to normalize HSL, RGB and HEX.</p></p>
                                     
 
                                     
@@ -202,7 +202,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html">easing.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html">color.js</a></p>
                                     
                                     
                                     
@@ -216,13 +216,13 @@ a.go-top:active{text-decoration:none;}
                             
                             <div class="box constructor-box">
                                 <div class="box-hd">
-                                    <h3>Namespace </h3>
+                                    <h3>Class </h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/Anim.Easing.html#constructor">Anim.Easing</a></b>
-                                                                            
+                                            <b class="name"><a href="../symbols/Color.html#constructor">Color</a></b>
+                                            <span class="param">()</span>                                
                                             
                                             
                                                                                         
@@ -234,6 +234,65 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Attributes</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#a">a</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Alpha.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#b">b</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Blue.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#g">g</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Green.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#r">r</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Red.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -249,163 +308,133 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.backBoth">backBoth</a></b>
-                                                <span class="param">(t)</span>
+                                                Color.
+                                                <b class="name"><a href="../symbols/Color.html#.fromHSL">fromHSL</a></b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Backtracks slightly, then reverses direction, overshoots end,then reverses and comes back to end.</span>                                                
+                                                <span class="desc">Construct color object from hsl.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.backIn">backIn</a></b>
-                                                <span class="param">(t)</span>
+                                                Color.
+                                                <b class="name"><a href="../symbols/Color.html#.fromHSV">fromHSV</a></b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Backtracks slightly, then reverses direction and moves to end.</span>                                                
+                                                <span class="desc">Construct color object from hsv.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.backOut">backOut</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#getHSL">getHSL</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Overshoots end, then reverses and comes back to end.</span>                                                
+                                                
+                                                <span class="desc">Return the color in the hsl format.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.bounceBoth">bounceBoth</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#getHSV">getHSV</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Bounces off start and end.</span>                                                
+                                                
+                                                <span class="desc">Return the color in the hsv format.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.bounceIn">bounceIn</a></b>
-                                                <span class="param">(t)</span>
+                                                Color.
+                                                <b class="name"><a href="../symbols/Color.html#.parse">parse</a></b>
+                                                <span class="param">(str)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Bounce off of start.</span>                                                
+                                                <span class="desc">Construct color object from String.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.bounceOut">bounceOut</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#setHSL">setHSL</a></b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Bounces off end.</span>                                                
+                                                
+                                                <span class="desc">Set value by hsl</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeBoth">easeBoth</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#setHSV">setHSV</a></b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins slowly and decelerates towards end.</span>                                                
+                                                
+                                                <span class="desc">Set value by hsv</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeBothStrong">easeBothStrong</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toHex">toHex</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins slowly and decelerates towards end.</span>                                                
+                                                
+                                                <span class="desc">To hex string format</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeIn">easeIn</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toHSL">toHSL</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins slowly and accelerates towards end.</span>                                                
+                                                
+                                                <span class="desc">To hsl string format</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeInStrong">easeInStrong</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toHSLA">toHSLA</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins slowly and accelerates towards end.</span>                                                
+                                                
+                                                <span class="desc">To hsla string format</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeNone">easeNone</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toRGB">toRGB</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Uniform speed between points.</span>                                                
+                                                
+                                                <span class="desc">To rgb string format</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeOut">easeOut</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toRGBA">toRGBA</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins quickly and decelerates towards end.</span>                                                
+                                                
+                                                <span class="desc">To rgba string format</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.easeOutStrong">easeOutStrong</a></b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name"><a href="../symbols/Color.html#toString">toString</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Begins quickly and decelerates towards end.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.elasticBoth">elasticBoth</a></b>
-                                                <span class="param">(t)</span>
                                                 
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Snap both elastic effect.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.elasticIn">elasticIn</a></b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Snap in elastic effect.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                Anim.Easing.
-                                                <b class="name"><a href="../symbols/Anim.Easing.html#.elasticOut">elasticOut</a></b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">Snap out elastic effect.</span>                                                
+                                                <span class="desc">Return the color in the rgba format.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -425,17 +454,17 @@ a.go-top:active{text-decoration:none;}
                             <div class="detail-box">
                                 <a name="constructor"></a>
                                 <div class="box-hd">
-                                    <h3>Namespace Detail</h3>
+                                    <h3>Class Detail</h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">Anim.Easing</b>
-                                                
+                                                <b class="name">Color</b>
+                                                <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">Provides methods for customizing how an animation behaves during each run.</div>
+                                            <div class="desc"><p>Color for KISSY to normalize HSL, RGB and HEX.</p></div>
                                             
                                             <dl>                                                
                                                 
@@ -463,6 +492,142 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Attributes Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="a"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">a</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Alpha.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Default Value</dt>
+                                                <dd>
+                                                    1
+                                                </dd>
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="b"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">b</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Blue.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="g"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">g</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Green.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="r"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">r</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Red.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -475,19 +640,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name=".backBoth"> </a>
+                                            <a name=".fromHSL"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">backBoth</b>
-                                                <span class="param">(t)</span>
+                                                <span>Color.</span>
+                                                <b class="name">fromHSL</b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line143">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line288">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Backtracks slightly, then reverses direction, overshoots end,then reverses and comes back to end.
+                                                Construct color object from hsl.
                                                 
                                                 
                                             </div>
@@ -501,7 +666,373 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">t</b>
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.h</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">Hue</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.s</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">Saturation</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.l</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">lightness</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.a</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">alpha</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".fromHSV"> </a>
+                                            <div class="title">
+                                                <span>Color.</span>
+                                                <b class="name">fromHSV</b>
+                                                <span class="param">(cfg)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line301">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Construct color object from hsv.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.h</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">Hue</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.s</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">Saturation</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.v</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">value</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.a</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc">alpha</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getHSL"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getHSL</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line138">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Return the color in the hsl format.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Object}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getHSV"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getHSV</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line174">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Return the color in the hsv format.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Object}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".parse"> </a>
+                                            <div class="title">
+                                                <span>Color.</span>
+                                                <b class="name">parse</b>
+                                                <span class="param">(str)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line243">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Construct color object from String.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">str</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">string format color( '#rrggbb'  '#rgb' or 'rgb(r,g,b)'  'rgba(r,g,b,a)' )</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="setHSL"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">setHSL</b>
+                                                <span class="param">(cfg)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line214">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Set value by hsl
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.h</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.s</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.l</b>
                                                             
                                                             
                                                             
@@ -530,19 +1061,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".backIn"> </a>
+                                            <a name="setHSV"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">backIn</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">setHSV</b>
+                                                <span class="param">(cfg)</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line127">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line189">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Backtracks slightly, then reverses direction and moves to end.
+                                                Set value by hsv
                                                 
                                                 
                                             </div>
@@ -556,7 +1087,34 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">t</b>
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.h</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.s</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.v</b>
                                                             
                                                             
                                                             
@@ -585,19 +1143,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".backOut"> </a>
+                                            <a name="toHex"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">backOut</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toHex</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line135">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line122">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Overshoots end, then reverses and comes back to end.
+                                                To hex string format
                                                 
                                                 
                                             </div>
@@ -605,29 +1163,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -640,19 +1194,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".bounceBoth"> </a>
+                                            <a name="toHSL"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">bounceBoth</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toHSL</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line186">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line89">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Bounces off start and end.
+                                                To hsl string format
                                                 
                                                 
                                             </div>
@@ -660,29 +1214,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -695,19 +1245,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".bounceIn"> </a>
+                                            <a name="toHSLA"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">bounceIn</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toHSLA</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line157">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line97">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Bounce off of start.
+                                                To hsla string format
                                                 
                                                 
                                             </div>
@@ -715,29 +1265,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -750,19 +1296,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".bounceOut"> </a>
+                                            <a name="toRGB"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">bounceOut</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toRGB</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line164">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line106">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Bounces off end.
+                                                To rgb string format
                                                 
                                                 
                                             </div>
@@ -770,29 +1316,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -805,19 +1347,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".easeBoth"> </a>
+                                            <a name="toRGBA"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeBoth</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toRGBA</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line61">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line114">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Begins slowly and decelerates towards end. (quadratic)
+                                                To rgba string format
                                                 
                                                 
                                             </div>
@@ -825,29 +1367,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -860,19 +1398,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name=".easeBothStrong"> </a>
+                                            <a name="toString"> </a>
                                             <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeBothStrong</b>
-                                                <span class="param">(t)</span>
+                                                
+                                                <b class="name">toString</b>
+                                                <span class="param">()</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line84">view source</a>
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_color_src_color.js.html#line131">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Begins slowly and decelerates towards end. (quartic)
+                                                Return the color in the rgba format.
                                                 
                                                 
                                             </div>
@@ -880,469 +1418,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".easeIn"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeIn</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line47">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Begins slowly and accelerates towards end. (quadratic)
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".easeInStrong"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeInStrong</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line70">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Begins slowly and accelerates towards end. (quartic)
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".easeNone"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeNone</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line40">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Uniform speed between points.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".easeOut"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeOut</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line54">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Begins quickly and decelerates towards end.  (quadratic)
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".easeOutStrong"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">easeOutStrong</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line77">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Begins quickly and decelerates towards end.  (quartic)
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".elasticBoth"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">elasticBoth</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line112">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Snap both elastic effect.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".elasticIn"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">elasticIn</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line94">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Snap in elastic effect.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".elasticOut"> </a>
-                                            <div class="title">
-                                                <span>Anim.Easing.</span>
-                                                <b class="name">elasticOut</b>
-                                                <span class="param">(t)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_anim_src_easing.js.html#line103">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Snap out elastic effect.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">t</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
