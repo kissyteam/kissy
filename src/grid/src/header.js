@@ -87,13 +87,14 @@ KISSY.add('grid/header',function(S,Component,Column){
 		},
 		/**
 		* remove a columns from header
-		* @param {Object|Grid.Column} c The column object or column config.
-		* @index {Number} index The position of the column in a header,0 based.
+		* @param {Grid.Column|Number} c is The column object£¬or The position of the column in a header,0 based.
 		*/
 		removeColumn : function(c){
 			var _self = this,
 				columns = _self.get('columns'),
-				index = S.indexOf(c,columns);
+				index = -1;
+			c = S.isNumber(c) ? columns[c] : c;
+			index = S.indexOf(c,columns);
 			columns.splice(index,1);
 			_self.fire('remove',{column : c, index : index});
 			return _self.removeChild(c,true);

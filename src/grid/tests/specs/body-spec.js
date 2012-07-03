@@ -7,6 +7,7 @@ KISSY.use('grid/gridbody,grid/header,grid/store',function(S,Body,Header,Store){
 				id: 'bkey',
 				title : '表头2',
 				dataIndex : 'b',
+				showTip : true,
 				sortable:false
 			},{
 				title : '表头3',
@@ -126,6 +127,13 @@ KISSY.use('grid/gridbody,grid/header,grid/store',function(S,Body,Header,Store){
 			expect(cell).not.toBe(null);
 			expect(cell.text()).toBe(record.b);
 		});
+		it('测试显示tip',function(){
+			var record = store.find('a','cdd'),
+				cell = body.findCell('bkey',record),
+				textEl = cell.one('.ks-grid-cell-text'); 
+			expect(textEl.attr('title')).toBe('dddd');
+		});
+
 		
 		it('测试renderer',function(){
 			var records = store.getResult();

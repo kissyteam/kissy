@@ -72,7 +72,7 @@ KISSY.add('grid/store',function(S){
 			* memeryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
 			* @type Object
-			* @default { method: 'post',url:'',memery : false }
+			* @default { method: 'post',url:'',memeryData : null }
 			* @example 
 			* var store = new Store({
 			*		autoLoad : true,

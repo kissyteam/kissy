@@ -223,7 +223,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				cellEl = _self.findCell(column.get('id'),rowEl),
 				text = _self._getCellText(column,record);
-			cellEl.one('.' + CLS_CELL_TEXT).html(text);
+			cellEl.one('.' + CLS_GRID_CELL_INNER).html(text);
 
 		},
 		//create row element and append to tbody
@@ -237,8 +237,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 				rowEl = null;
 			
 			S.each(columns,function(column,colIndex){
-				var dataIndex = column.get('dataIndex'),
-					text = _self._getCellText(column,record);
+				var dataIndex = column.get('dataIndex');
 				cellsTemplate.push(_self._getCellTemplate(column,dataIndex,record));
 			});
 			cellsTemplate.push(_self._getEmptyCellTemplate());
@@ -295,25 +294,37 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//get cell text by record and column
 		_getCellText : function(column,record){
 			var _self = this,
+				textTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
 				dataIndex = column.get('dataIndex'),
-				renderer = column.get('renderer');
-			return renderer ? renderer(record[dataIndex], record) : record[dataIndex];
+				renderer = column.get('renderer'),
+				text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
+			return Template(textTemplate).render({text : text,tips : _self._getTips(column, dataIndex,record)});
 		},
 		//get cell template by config and record
 		_getCellTemplate : function(column, dataIndex,record){
 			var _self = this,
 				value = record[dataIndex],
-				text = _self._getCellText(column,record),
-				cellTemplate = _self.get('cellTemplate'),
-				innerTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
-				cellText = Template(innerTemplate).render({text : text});
+				cellText = _self._getCellText(column,record),
+				cellTemplate = _self.get('cellTemplate');
 			return Template(cellTemplate)
 				.render({
 					id : column.get('id'),
-					dataIndex : column.get('dataIndex'),
+					dataIndex : dataIndex,
 					cellText : cellText,
 					hide : column.get('hide')
 				});
+		},
+		//get cell tips
+		_getTips : function(column,dataIndex,record){
+			var showTip = column.get('showTip'),
+				value = '';
+			if(showTip){
+				value = record[dataIndex];
+				if(S.isFunction(showTip)){
+					value = showTip(value,record);
+				}
+			}
+			return value;
 		},
 		_getHeaderCellTemplate : function(column){
 			var _self = this,
