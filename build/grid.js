@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 26 10:47
+build time: Jul 3 14:34
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -637,6 +637,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		ATTRS : {
 			/**
 			* the header of this grid
+			* @private
 			* @type {Grid.Header}
 			*/
 			header : {
@@ -644,6 +645,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			},
 			/**
 			* The table show data
+			* @private
 			* @type {Grid.GridBody}
 			*/
 			body : {
@@ -655,6 +657,9 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			bodyConfig : {
 				value : {}
 			},
+			/**
+			*@private
+			*/
 			checkable : {
 				value : false
 			},
@@ -734,6 +739,27 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 					*/
 					'aftershow'	,
 					/**  
+					* fired when click one cell of row
+					* @name Grid#cellclick
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {String} e.field the dataIndex of the column which this cell belong to
+					* @param {HTMLElement} e.row the dom elment of this row
+					* @param {HTMLElement} e.cell the dom elment of this cell
+					* @param {HTMLElement} e.domTarget the dom elment of the click target
+					*/
+					'cellclick',
+					/**  
+					* fired when click one row
+					* @name Grid#rowclick
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowclick',
+					/**  
 					* add a row in this component.in general,this event fired after adding a record to the store
 					* @name Grid#rowcreated
 					* @event  
@@ -750,7 +776,34 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 					* @param {Object} e.record the record removed from the store
 					* @param {HTMLElement} e.row the dom elment of this row
 					*/
-					'rowremoved'
+					'rowremoved',
+					/**  
+					* when click the row,in multiple select model the selected status toggled
+					* @name Grid#rowselected
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowselected',
+					/**  
+					* fire after cancel selected status
+					* @name Grid#rowunselected
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowunselected',
+					/**  
+					* remove a row from this component.in general,this event fired after delete a record from the store
+					* @name Grid#scroll
+					* @event  
+					* @param {event} e  event object
+					* @param {Number} e.scrollLeft the horizontal value that the body scroll to
+					* @param {Number} e.scrollTop the vertical value that the body scroll to
+					*/
+					'scroll'
 				]
 			}
 		}
@@ -1030,6 +1083,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 		},
 		/**
 		* {Component.Container#performActionInternal}
+		* @private
 		*/
 		performActionInternal : function(ev){
 			var _self = this,
@@ -1541,7 +1595,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				cellEl = _self.findCell(column.get('id'),rowEl),
 				text = _self._getCellText(column,record);
-			cellEl.one('.' + CLS_CELL_TEXT).html(text);
+			cellEl.one('.' + CLS_GRID_CELL_INNER).html(text);
 
 		},
 		//create row element and append to tbody
@@ -1555,8 +1609,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 				rowEl = null;
 			
 			S.each(columns,function(column,colIndex){
-				var dataIndex = column.get('dataIndex'),
-					text = _self._getCellText(column,record);
+				var dataIndex = column.get('dataIndex');
 				cellsTemplate.push(_self._getCellTemplate(column,dataIndex,record));
 			});
 			cellsTemplate.push(_self._getEmptyCellTemplate());
@@ -1613,25 +1666,37 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//get cell text by record and column
 		_getCellText : function(column,record){
 			var _self = this,
+				textTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
 				dataIndex = column.get('dataIndex'),
-				renderer = column.get('renderer');
-			return renderer ? renderer(record[dataIndex], record) : record[dataIndex];
+				renderer = column.get('renderer'),
+				text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
+			return Template(textTemplate).render({text : text,tips : _self._getTips(column, dataIndex,record)});
 		},
 		//get cell template by config and record
 		_getCellTemplate : function(column, dataIndex,record){
 			var _self = this,
 				value = record[dataIndex],
-				text = _self._getCellText(column,record),
-				cellTemplate = _self.get('cellTemplate'),
-				innerTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
-				cellText = Template(innerTemplate).render({text : text});
+				cellText = _self._getCellText(column,record),
+				cellTemplate = _self.get('cellTemplate');
 			return Template(cellTemplate)
 				.render({
 					id : column.get('id'),
-					dataIndex : column.get('dataIndex'),
+					dataIndex : dataIndex,
 					cellText : cellText,
 					hide : column.get('hide')
 				});
+		},
+		//get cell tips
+		_getTips : function(column,dataIndex,record){
+			var showTip = column.get('showTip'),
+				value = '';
+			if(showTip){
+				value = record[dataIndex];
+				if(S.isFunction(showTip)){
+					value = showTip(value,record);
+				}
+			}
+			return value;
 		},
 		_getHeaderCellTemplate : function(column){
 			var _self = this,
@@ -2277,13 +2342,14 @@ KISSY.add('grid/header',function(S,Component,Column){
 		},
 		/**
 		* remove a columns from header
-		* @param {Object|Grid.Column} c The column object or column config.
-		* @index {Number} index The position of the column in a header,0 based.
+		* @param {Grid.Column|Number} c is The column object��or The position of the column in a header,0 based.
 		*/
 		removeColumn : function(c){
 			var _self = this,
 				columns = _self.get('columns'),
-				index = S.indexOf(c,columns);
+				index = -1;
+			c = S.isNumber(c) ? columns[c] : c;
+			index = S.indexOf(c,columns);
 			columns.splice(index,1);
 			_self.fire('remove',{column : c, index : index});
 			return _self.removeChild(c,true);
@@ -3505,7 +3571,7 @@ KISSY.add('grid/plugins',function(S){
 			* memeryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
 			* @type Object
-			* @default { method: 'post',url:'',memery : false }
+			* @default { method: 'post',url:'',memeryData : null }
 			* @example 
 			* var store = new Store({
 			*		autoLoad : true,

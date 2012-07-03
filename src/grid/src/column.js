@@ -137,6 +137,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 		},
 		/**
 		* {Component.Container#performActionInternal}
+		* @private
 		*/
 		performActionInternal : function(ev){
 			var _self = this,

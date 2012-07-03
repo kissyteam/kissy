@@ -258,6 +258,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		ATTRS : {
 			/**
 			* the header of this grid
+			* @private
 			* @type {Grid.Header}
 			*/
 			header : {
@@ -265,6 +266,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			},
 			/**
 			* The table show data
+			* @private
 			* @type {Grid.GridBody}
 			*/
 			body : {
@@ -276,6 +278,9 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			bodyConfig : {
 				value : {}
 			},
+			/**
+			*@private
+			*/
 			checkable : {
 				value : false
 			},
@@ -355,6 +360,27 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 					*/
 					'aftershow'	,
 					/**  
+					* fired when click one cell of row
+					* @name Grid#cellclick
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {String} e.field the dataIndex of the column which this cell belong to
+					* @param {HTMLElement} e.row the dom elment of this row
+					* @param {HTMLElement} e.cell the dom elment of this cell
+					* @param {HTMLElement} e.domTarget the dom elment of the click target
+					*/
+					'cellclick',
+					/**  
+					* fired when click one row
+					* @name Grid#rowclick
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowclick',
+					/**  
 					* add a row in this component.in general,this event fired after adding a record to the store
 					* @name Grid#rowcreated
 					* @event  
@@ -371,7 +397,34 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 					* @param {Object} e.record the record removed from the store
 					* @param {HTMLElement} e.row the dom elment of this row
 					*/
-					'rowremoved'
+					'rowremoved',
+					/**  
+					* when click the row,in multiple select model the selected status toggled
+					* @name Grid#rowselected
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowselected',
+					/**  
+					* fire after cancel selected status
+					* @name Grid#rowunselected
+					* @event  
+					* @param {event} e  event object
+					* @param {Object} e.record the record showed by this row
+					* @param {HTMLElement} e.row the dom elment of this row
+					*/
+					'rowunselected',
+					/**  
+					* remove a row from this component.in general,this event fired after delete a record from the store
+					* @name Grid#scroll
+					* @event  
+					* @param {event} e  event object
+					* @param {Number} e.scrollLeft the horizontal value that the body scroll to
+					* @param {Number} e.scrollTop the vertical value that the body scroll to
+					*/
+					'scroll'
 				]
 			}
 		}

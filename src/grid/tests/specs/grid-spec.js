@@ -94,6 +94,7 @@ KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,Pag
 			store.setResult(data);
 			expect(gridEl.all('.ks-grid-row').length).toBe(data.length);
 		});
+
 	});
 
 	describe("测试 子模块之间的联动", function () {
@@ -312,12 +313,17 @@ KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,Pag
 			expect(tableEl.all('.ks-grid-row').item(index).hasClass(CLS_SELECTED)).toBeTruthy();
 		});
 		
-		it('测试Grid，列选中，取消选中，全选，全部取消选中',function(){
-			
-		});
 		
 		it('测试Grid，全选，全部取消选中',function(){
-			
+			var rows = tableEl.all('.ks-grid-row');
+			grid.setAllSelection();
+			rows.each(function(row){
+				expect(row.hasClass(CLS_SELECTED)).toBeTruthy();
+			});
+			grid.clearSelection();
+			rows.each(function(row){
+				expect(row.hasClass(CLS_SELECTED)).not.toBeTruthy();
+			});
 		});
 
 		
@@ -391,8 +397,6 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			grid.showData(data);
 			var height = 500;
 			grid.set('height',height);
-			//var emptyCell = header.get('el').one('.ks-grid-hd-empty');
-			//expect(emptyCell.width()).toBe(17);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
 		});/**/
 
