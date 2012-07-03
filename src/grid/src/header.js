@@ -87,7 +87,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 		},
 		/**
 		* remove a columns from header
-		* @param {Grid.Column|Number} c is The column object£¬or The position of the column in a header,0 based.
+		* @param {Grid.Column|Number} c is The column objectï¿½ï¿½or The position of the column in a header,0 based.
 		*/
 		removeColumn : function(c){
 			var _self = this,
@@ -260,7 +260,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 			var _self = this,
 				columns = _self.getColumns(),
 				width = _self.get('width'),
-				fixedWidth = 0,// some columns can't resizeable
+				fixedWidth = 0,// some columns can't resizable
 				allowScroll = _self._isAllowScrollLeft(),
 				realWidth = 0,//after forceFit ,the total width of columns
 				times = 1,    //Ratio of width : columnsWidth
@@ -277,7 +277,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 					var colWidth = column.get('originWidth') || column.get('width');
 					if (!column.get('hide') && colWidth) {
 						columnsWidth += colWidth;
-						if(!column.get('resizeable')){
+						if(!column.get('resizable')){
 							fixedWidth += column.get('width');
 						}
 						showCount ++;
@@ -290,7 +290,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 
 				if (times !== 1) {
 					S.each(columns, function (column) {
-						if (!column.get('hide') && column.get('resizeable')) {
+						if (!column.get('hide') && column.get('resizable')) {
 							var originWidth = column.get('originWidth') || column.get('width'),
 								changedWidth = Math.floor(originWidth * times);
 							column.set('width',changedWidth,{silent : true});

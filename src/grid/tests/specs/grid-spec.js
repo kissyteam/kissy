@@ -1,5 +1,5 @@
 /**/
-KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,PaggingBar){//
+KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,PagingBar){//
 	var columns = [{
 				title : '表头1',
 				dataIndex :'a',
@@ -42,7 +42,7 @@ KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,Pag
 						}
 					}]
 				},
-		bbar : {xclass:'number-paggingbar',store : store,pageSize : 3},
+		bbar : {xclass:'pagingbar-number',store : store,pageSize : 3},
 		store : store
 	});
 	grid.render();
@@ -88,7 +88,7 @@ KISSY.use('grid/base,grid/store,grid/numberpaggingbar',function(S,Grid,Store,Pag
 		});
 
 		it('测试Grid 分页栏的生成',function(){
-			expect(gridEl.one('.ks-paggingbar')).not.toBe(null);
+			expect(gridEl.one('.ks-pagingbar')).not.toBe(null);
 		});
 		it('测试Grid显示数据',function(){
 			store.setResult(data);

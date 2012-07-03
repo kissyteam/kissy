@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 14:34
+build time: Jul 3 21:19
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -969,20 +969,20 @@ KISSY.add('grid/column',function(S,Component,Template){
 		},
 		
 		//get the template of column
-		_getTemplate : function(){
+		_getTpl : function(){
 			var _self = this,
 				attrs = _self.__attrVals,
-				template = _self.get('template');
-			return Template(template).render(attrs);
+				tpl = _self.get('tpl');
+			return Template(tpl).render(attrs);
 
 		},
 		//use template to fill the column
 		_setContent : function(){
 			var _self = this,
 				el = _self.get('el'),
-				template = _self._getTemplate();
+				tpl = _self._getTpl();
 			el.children().remove();
-			new S.Node(template).appendTo(el);
+			new S.Node(tpl).appendTo(el);
 		},
 		//set the title of column
 		_uiSetTitle : function(title){
@@ -1010,7 +1010,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			this._setContent();
 		},
 		//set the sortable of column
-		_uiSetTemplate: function(v){
+		_uiSetTpl: function(v){
 			if(!this.get('rendered'))
 			{
 				return;
@@ -1186,7 +1186,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* @type {Function} 
 			* @default true
 			*/
-			resizeable : {
+			resizable : {
 				value : true
 			},
 			/* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort. 
@@ -1232,7 +1232,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* Only in the configuration of the column can set this property.
 			* @type String
 			*/
-			template :{
+			tpl :{
 				view:true,
 				value : '<div class="ks-grid-hd-inner">'+
 							'<span class="ks-'+CLS_HD_TITLE+'">{{title}}</span>'+
@@ -1246,7 +1246,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* Only in the configuration of the column can set this property.
 			* @type String
 			*/
-			cellTemplate :{
+			cellTpl :{
 				value : ''
 			},
 			/**
@@ -1331,7 +1331,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 				view : true,
 				value :  null
 			},
-			template : {
+			tpl : {
 				value : ''
 			}
 		}
@@ -1351,11 +1351,11 @@ KISSY.add('grid/column',function(S,Component,Template){
  * @fileOverview grid component for kissy
  * @author dxq613@gmail.com
  */
-KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins,Util) {
+KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Util) {
 	Grid.Bar = Bar;
 	Grid.Store = Store;
-	Grid.PaggingBar = PaggingBar;
-	Grid.PaggingBar.Number = NumberPaggingBar;
+	Grid.PagingBar = PagingBar;
+	Grid.PagingBar.Number = NumberPagingBar;
 	Grid.Plugins = Plugins;
 	Grid.Util = Util;
 
@@ -1365,8 +1365,8 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins
 		"grid/base",
 		"grid/bar",
 		"grid/store",
-		"grid/paggingbar",
-		"grid/numberpaggingbar",
+		"grid/pagingbar",
+		"grid/numberpagingbar",
 		"grid/plugins",
 		"grid/util"
 	]
@@ -1409,10 +1409,10 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		renderUI : function(){
 			var _self = this,
 				el = _self.get('el'),
-				template = _self._getTemplate(),
+				tpl = _self._getTpl(),
 				tbody = null,
 				headerRowEl = null;
-			new S.Node(template).appendTo(el);
+			new S.Node(tpl).appendTo(el);
 			tbody = el.one('tbody');
 			_self.set('tbodyEl',tbody,{silent : true});
 			headerRowEl = _self._createHeaderRow();
@@ -1603,18 +1603,18 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				columns = _self._getColumns(),
 				tbodyEl = _self.get('tbodyEl'),
-				rowTemplate = _self.get('rowTemplate'),
+				rowTpl = _self.get('rowTpl'),
 				oddCls = index % 2 === 0 ? CLS_ROW_ODD : CLS_ROW_EVEN,
-				cellsTemplate = [],
+				cellsTpl = [],
 				rowEl = null;
 			
 			S.each(columns,function(column,colIndex){
 				var dataIndex = column.get('dataIndex');
-				cellsTemplate.push(_self._getCellTemplate(column,dataIndex,record));
+				cellsTpl.push(_self._getCellTpl(column,dataIndex,record));
 			});
-			cellsTemplate.push(_self._getEmptyCellTemplate());
-			rowTemplate = Template(rowTemplate).render({cellsTemplate : cellsTemplate.join(''),oddCls : oddCls});
-			rowEl = new S.Node(rowTemplate).appendTo(tbodyEl);
+			cellsTpl.push(_self._getEmptyCellTpl());
+			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join(''),oddCls : oddCls});
+			rowEl = new S.Node(rowTpl).appendTo(tbodyEl);
 			//append record to the dom
 			rowEl.data(DATA_ELEMENT,record);
 			if(index === 0){
@@ -1627,19 +1627,19 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				columns = _self._getColumns(),
 				tbodyEl = _self.get('tbodyEl'),
-				rowTemplate = _self.get('headerRowTemplate')
+				rowTpl = _self.get('headerRowTpl')
 				rowEl = null,
 				hideText = '',
-				cellsTemplate = [];
+				cellsTpl = [];
 
 			S.each(columns,function(column,colIndex){
-				cellsTemplate.push(_self._getHeaderCellTemplate(column));
+				cellsTpl.push(_self._getHeaderCellTpl(column));
 			});
 			
 			//if this componet set width,add a empty column to fit row width
-			cellsTemplate.push(_self._getEmptyCellTemplate());
-			rowTemplate = Template(rowTemplate).render({cellsTemplate : cellsTemplate.join('')});
-			rowEl = S.Node(rowTemplate).appendTo(tbodyEl);
+			cellsTpl.push(_self._getEmptyCellTpl());
+			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join('')});
+			rowEl = S.Node(rowTpl).appendTo(tbodyEl);
 			return rowEl;
 		},
 		// 获取列配置项
@@ -1666,19 +1666,19 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//get cell text by record and column
 		_getCellText : function(column,record){
 			var _self = this,
-				textTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
+				textTpl = column.get('cellTpl') || _self.get('cellTextTpl'),
 				dataIndex = column.get('dataIndex'),
 				renderer = column.get('renderer'),
 				text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
-			return Template(textTemplate).render({text : text,tips : _self._getTips(column, dataIndex,record)});
+			return Template(textTpl).render({text : text,tips : _self._getTips(column, dataIndex,record)});
 		},
 		//get cell template by config and record
-		_getCellTemplate : function(column, dataIndex,record){
+		_getCellTpl : function(column, dataIndex,record){
 			var _self = this,
 				value = record[dataIndex],
 				cellText = _self._getCellText(column,record),
-				cellTemplate = _self.get('cellTemplate');
-			return Template(cellTemplate)
+				cellTpl = _self.get('cellTpl');
+			return Template(cellTpl)
 				.render({
 					id : column.get('id'),
 					dataIndex : dataIndex,
@@ -1698,24 +1698,24 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			}
 			return value;
 		},
-		_getHeaderCellTemplate : function(column){
+		_getHeaderCellTpl : function(column){
 			var _self = this,
-				headerCellTemplate = _self.get('headerCellTemplate');
-			return Template(headerCellTemplate).render({
+				headerCellTpl = _self.get('headerCellTpl');
+			return Template(headerCellTpl).render({
 				id : column.get('id'),
 				width : column.get('width'),
 				hide : column.get('hide')
 			});
 		},
-		_getEmptyCellTemplate : function(){
+		_getEmptyCellTpl : function(){
 			return '<td class="' + CLS_CELL_EMPYT + '"></td>';
 		},
 		//get the template of column
-		_getTemplate : function(){
+		_getTpl : function(){
 			var _self = this,
 				attrs = _self.__attrVals,
-				template = _self.get('template');
-			return Template(template).render(attrs);
+				tpl = _self.get('tpl');
+			return Template(tpl).render(attrs);
 		}
 	},{
 		ATTRS:{
@@ -2095,7 +2095,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			*
 			*</pre>
 			*/
-			template : {
+			tpl : {
 				view : true,
 				value : '<table cellspacing="0" cellpadding="0" class="ks-grid-table {{tableCls}}">'+
 							'<tbody></tbody>'+
@@ -2105,21 +2105,21 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			* An template of first row of this component ,which to fixed the width of every column.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
+			* @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
 			*/
-			headerRowTemplate : {
+			headerRowTpl : {
 				view : true,
-				value : '<tr class="ks-grid-header-row">{{cellsTemplate}}</tr>'
+				value : '<tr class="ks-grid-header-row">{{cellsTpl}}</tr>'
 			},
 			/**
 			* An template used to create the row which encapsulates cells.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
+			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
 			*/
-			rowTemplate : {
+			rowTpl : {
 				view : true,
-				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTemplate}}</tr>'
+				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTpl}}</tr>'
 			},
 			/**
 			* An template used to create the cell.
@@ -2130,7 +2130,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			*	'&lt;/td&gt;'
 			*</pre>
 			*/
-			cellTemplate : {
+			cellTpl : {
 				view : true,
 				value : '<td  class="' + CLS_GRID_CELL + ' ' + CLS_TD_PREFIX + '{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}  {{#if hide}} style="display : none" {{/if}}>'+
 							'<div class="' + CLS_GRID_CELL_INNER + '" >{{cellText}}</div>'+
@@ -2140,11 +2140,11 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			/**
 			* @default &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
 			*/
-			cellTextTemplate : {
+			cellTextTpl : {
 				view : true,
 				value : '<span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span>'
 			},
-			headerCellTemplate : {
+			headerCellTpl : {
 				view : true,
 				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
 			},
@@ -2515,7 +2515,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 			var _self = this,
 				columns = _self.getColumns(),
 				width = _self.get('width'),
-				fixedWidth = 0,// some columns can't resizeable
+				fixedWidth = 0,// some columns can't resizable
 				allowScroll = _self._isAllowScrollLeft(),
 				realWidth = 0,//after forceFit ,the total width of columns
 				times = 1,    //Ratio of width : columnsWidth
@@ -2532,7 +2532,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 					var colWidth = column.get('originWidth') || column.get('width');
 					if (!column.get('hide') && colWidth) {
 						columnsWidth += colWidth;
-						if(!column.get('resizeable')){
+						if(!column.get('resizable')){
 							fixedWidth += column.get('width');
 						}
 						showCount ++;
@@ -2545,7 +2545,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 
 				if (times !== 1) {
 					S.each(columns, function (column) {
-						if (!column.get('hide') && column.get('resizeable')) {
+						if (!column.get('hide') && column.get('resizable')) {
 							var originWidth = column.get('originWidth') || column.get('width'),
 								changedWidth = Math.floor(originWidth * times);
 							column.set('width',changedWidth,{silent : true});
@@ -2685,24 +2685,24 @@ KISSY.add('grid/header',function(S,Component,Column){
 },{
 	requires : ['component','./column']
 });/**
- * @fileOverview  a specialized paggingbar which use number buttons 
+ * @fileOverview  a specialized pagingbar which use number buttons
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
+KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
 		CLS_ACTIVE = 'ks-active';
 	/**
-	* specialized pagging bar auto show numberic buttons
+	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
 	* @name Number
     * @constructor
-    * @extends Grid.PaggingBar
-    * @memberOf Grid.PaggingBar
+    * @extends Grid.PagingBar
+    * @memberOf Grid.PagingBar
 	*/
-	var numberPaggingBar = PBar.extend({
+	var numberPagingBar = PBar.extend({
 		/**
-		* get the initial items of pagging bar
+		* get the initial items of paging bar
 		* @protected
 		* @override
 		*/
@@ -2746,7 +2746,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
-				_self.skipToPage(page);
+				_self.jumpToPage(page);
 			});
 		},
 		//设置页码信息，设置 页数 按钮
@@ -2824,7 +2824,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				xtype:'text',
-				text : _self.get('ellipsisTemplate')
+				text : _self.get('ellipsisTpl')
 			};
 		},
 		//生成页面按钮配置项
@@ -2870,7 +2870,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			/**
 			* the template of ellipsis which represent the omitted pages number
 			*/
-			ellipsisTemplate : {
+			ellipsisTpl : {
 				value : '...'
 			},
 			/**
@@ -2878,25 +2878,25 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			* @override
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			curPageTemplate : {
+			curPageTpl : {
 				value : '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			}
 		}
 	},{
-		xclass : 'number-paggingbar',
+		xclass : 'pagingbar-number',
 		priority : 3	
 	});
 
 
-	PBar.Number = numberPaggingBar;
-	return numberPaggingBar;
+	PBar.Number = numberPagingBar;
+	return numberPagingBar;
 },{
-	 requires:['component','./paggingbar','./bar']
+	 requires:['component','./pagingbar','./bar']
 });/**
  * @fileOverview  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control. 
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
+KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 
 	var ID_FIRST = 'first',
 		ID_PREV = 'prev',
@@ -2910,16 +2910,16 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 	/**
 	* specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
-	* @name PaggingBar
+	* @name PagingBar
     * @constructor
     * @extends Grid.Bar
     * @memberOf Grid
 	*/
-	var PaggingBar = Bar.extend([Bindable],
-	/** @lends Grid.PaggingBar.prototype*/
+	var PagingBar = Bar.extend([Bindable],
+	/** @lends Grid.PagingBar.prototype*/
 	{
 		/**
-		 * From Bar, Initialize this pagging bar items.
+		 * From Bar, Initialize this paging bar items.
 		 * @override
 		 * @protected
 		 */
@@ -2951,7 +2951,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 		* this method can fire "beforepagechange" event,if you return false in the handler the action will be canceled
 		* @param {Number} page target page
 		*/
-		skipToPage : function (page) {
+		jumpToPage : function (page) {
 			if(page <= 0 || page > this.get('totalPage')){
 				return ;
 			}
@@ -2965,7 +2965,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				store.load({ start : start, limit : pageSize, pageIndex : index });
 			}
 		},
-		//after store loaded data,reset the information of pagging bar and buttons state
+		//after store loaded data,reset the information of paging bar and buttons state
 		_afterStoreLoad : function (store, params) {
 			var _self = this,
 				pageSize = _self.get('pageSize'),
@@ -3003,22 +3003,22 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 
 			//first page handler
 			_self._bindButtonItemEvent(ID_FIRST,function(){
-				_self.skipToPage(1);
+				_self.jumpToPage(1);
 			});
 			
 			//previous page handler
 			_self._bindButtonItemEvent(ID_PREV,function(){
-				_self.skipToPage(_self.get('curPage') - 1);
+				_self.jumpToPage(_self.get('curPage') - 1);
 			});
 
 			//previous page next
 			_self._bindButtonItemEvent(ID_NEXT,function(){
-				_self.skipToPage(_self.get('curPage') + 1);
+				_self.jumpToPage(_self.get('curPage') + 1);
 			});
 
 			//previous page next
 			_self._bindButtonItemEvent(ID_LAST,function(){
-				_self.skipToPage(_self.get('totalPage'));
+				_self.jumpToPage(_self.get('totalPage'));
 			});
 			//skip to one page
 			_self._bindButtonItemEvent(ID_SKIP,function(){
@@ -3035,7 +3035,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 			function hadleSkip(){
 				var value = parseInt(_self._getCurrentPageValue(), 10);
 				if (_self._isPageAllowRedirect(value)) {
-					_self.skipToPage(value);
+					_self.jumpToPage(value);
 				} else {
 					_self._setCurrentPageValue(_self.get('curPage'));
 				}
@@ -3054,7 +3054,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				store = _self.get('store');
 			_self._afterStoreLoad(store,params);
 		},
-		//get the items of pagging bar 
+		//get the items of paging bar
 		_getItems : function(){
 			var _self = this,
 				items = _self.get('items');
@@ -3109,15 +3109,15 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 			return {
 				id : id,
 				xtype : 'text',
-				text : _self._getTextItemTemplate(id)
+				text : _self._getTextItemTpl(id)
 			};
 		},
 		//get text item's template
-		_getTextItemTemplate : function(id){
+		_getTextItemTpl : function(id){
 			var _self = this,
 				obj = {};
 			obj[id] = _self.get(id);
-			return S.substitute(this.get(id + 'Template'),obj);
+			return S.substitute(this.get(id + 'Tpl'),obj);
 		},
 		//Whether to allow jump, if it had been in the current page or not within the scope of effective page, not allowed to jump
 		_isPageAllowRedirect : function(value) {
@@ -3156,11 +3156,11 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				curItem = _self.getItem(ID_CURRENT_PAGE),
 				totalCountItem = _self.getItem(ID_TOTAL_COUNT);
 			if(totalPageItem){
-				totalPageItem.set('html',_self._getTextItemTemplate(ID_TOTAL_PAGE));
+				totalPageItem.set('html',_self._getTextItemTpl(ID_TOTAL_PAGE));
 			}
 			_self._setCurrentPageValue(_self.get(ID_CURRENT_PAGE));
 			if(totalCountItem){
-				totalCountItem.set('html',_self._getTextItemTemplate(ID_TOTAL_COUNT));
+				totalCountItem.set('html',_self._getTextItemTpl(ID_TOTAL_COUNT));
 			}
 		},
 		_getCurrentPageValue : function(){
@@ -3177,7 +3177,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 			textEl.val(value);
 		}
 	},{
-		ATTRS : /** @lends Grid.PaggingBar.prototype*/
+		ATTRS : /** @lends Grid.PagingBar.prototype*/
 		{
 			/**
 			* the text of button for first page
@@ -3253,25 +3253,25 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 			* the template of total page info
 			* @default {String} '共 {totalPage} 页'
 			*/
-			totalPageTemplate : {
+			totalPageTpl : {
 				value : '共 {totalPage} 页'
 			},
 			/**
 			* the template of current page info
 			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			curPageTemplate : {
+			curPageTpl : {
 				value : '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			},
 			/**
 			* the template of total count info
 			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			totalCountTemplate : {
+			totalCountTpl : {
 				value : '共{totalCount}条记录'
 			},
 			/**
-			* current page of the pagging bar
+			* current page of the paging bar
 			* @private
 			* @default {Number} 0
 			*/
@@ -3279,7 +3279,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				value : 0
 			},
 			/**
-			* total page of the pagging bar
+			* total page of the paging bar
 			* @private
 			* @default {Number} 0
 			*/
@@ -3287,7 +3287,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				value : 0	
 			},
 			/**
-			* total count of the store that the pagging bar bind to
+			* total count of the store that the paging bar bind to
 			* @private
 			* @default {Number} 0
 			*/
@@ -3318,11 +3318,11 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 		ID_CURRENT_PAGE : ID_CURRENT_PAGE,
 		ID_TOTAL_COUNT : ID_TOTAL_COUNT
 	},{
-		xclass : 'paggingbar',
+		xclass : 'pagingbar',
 		priority : 2	
 	});
 
-	return PaggingBar;
+	return PagingBar;
 	
 },{
     requires:['component','./bar','./bindable']
@@ -3378,10 +3378,10 @@ KISSY.add('grid/plugins',function(S){
 			var cfg = {
 						title : '',
 						width : _self.get('width'),
-						resizeable:false,
+						resizable:false,
 						sortable : false,
-						template : '<div class="ks-grid-hd-inner">' + _self.get('cellInner') + '</div>',
-						cellTemplate : _self.get('cellInner')
+						tpl : '<div class="ks-grid-hd-inner">' + _self.get('cellInner') + '</div>',
+						cellTpl : _self.get('cellInner')
 				},
 				checkColumn = grid.addColumn(cfg,0);
 			grid.set('multiSelect',true);
@@ -3457,9 +3457,9 @@ KISSY.add('grid/plugins',function(S){
 			var cfg = {
 						title : '',
 						width : _self.get('width'),
-						resizeable:false,
+						resizable:false,
 						sortable : false,
-						cellTemplate : _self.get('cellInner')
+						cellTpl : _self.get('cellInner')
 				},
 				column = grid.addColumn(cfg,0);
 			grid.set('multiSelect',false);
@@ -4252,7 +4252,7 @@ KISSY.add('grid/util',function(S){
 			var maskedEl = S.one(element),
 				maskedNode = maskedEl.getDOMNode(),
 				maskDiv = S.one('.'+ CLS_MASK ,maskedNode),
-				template = null,
+				tpl = null,
 				msgDiv = null,
 				top = null,
 				left = null;
@@ -4263,8 +4263,8 @@ KISSY.add('grid/util',function(S){
 					maskDiv.height(maskedEl.height());
 				}
 				if (msg) {
-					template = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
-					msgDiv = S.one(DOM.create(template)).appendTo(maskedNode);
+					tpl = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
+					msgDiv = S.one(DOM.create(tpl)).appendTo(maskedNode);
 					if (msgCls) {
 						msgDiv.addClass(msgCls);
 					}

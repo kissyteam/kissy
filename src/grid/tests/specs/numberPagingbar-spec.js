@@ -1,4 +1,4 @@
-KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
+KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 	
 	/**/
 	describe("测试初始化", function () {
@@ -6,9 +6,9 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 			render : '#nbar'
 		});
 		bar.render();
-		var barEl = S.one('#nbar').one('.ks-number-paggingbar'),
+		var barEl = S.one('#nbar').one('.ks-pagingbar-number'),
 			items = barEl.children();
-		it('测试paggingbar生成',function(){
+		it('测试pagingbar生成',function(){
 			expect(barEl).toNotBe(null);
 			expect(items.length).toBe(bar.get('children').length);
 		});
@@ -59,7 +59,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 			
 		});
 		it('跳转到首页,选中数字按钮 “1”',function(){
-			bar1.skipToPage(1);
+			bar1.jumpToPage(1);
 			waits(200);
 			runs(function(){
 				expect(barEl.one('.ks-button-checked').text()).toBe('1');
@@ -68,7 +68,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 		});
 		it('跳转到末页,选中最后一个按钮',function(){
 			var lastPage = bar1.get('totalPage');
-			bar1.skipToPage(lastPage);
+			bar1.jumpToPage(lastPage);
 			waits(200);
 			runs(function(){
 				expect(barEl.one('.ks-button-checked').text()).toBe(lastPage.toString());
@@ -79,7 +79,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 		it('跳转到中间页',function(){
 			var lastPage = bar1.get('totalPage'),
 				middle = parseInt((lastPage + 1) / 2);
-			bar1.skipToPage(middle);
+			bar1.jumpToPage(middle);
 			waits(200);
 			runs(function(){
 				expect(barEl.one('.ks-button-checked').text()).toBe(middle.toString());
@@ -115,7 +115,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 
 		it('跳到第六页',function(){
 			var count  = bar1.get('totalPage');
-			bar1.skipToPage(6);
+			bar1.jumpToPage(6);
 			waits(200);
 			runs(function(){
 				var count  = bar1.get('totalPage'),
@@ -128,7 +128,7 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 
 		it('跳到第九页',function(){
 			var count  = bar1.get('totalPage');
-			bar1.skipToPage(9);
+			bar1.jumpToPage(9);
 			waits(200);
 			runs(function(){
 				var count  = bar1.get('totalPage'),

@@ -1,22 +1,22 @@
 /**
- * @fileOverview  a specialized paggingbar which use number buttons 
+ * @fileOverview  a specialized pagingbar which use number buttons
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
+KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
 		CLS_ACTIVE = 'ks-active';
 	/**
-	* specialized pagging bar auto show numberic buttons
+	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
 	* @name Number
     * @constructor
-    * @extends Grid.PaggingBar
-    * @memberOf Grid.PaggingBar
+    * @extends Grid.PagingBar
+    * @memberOf Grid.PagingBar
 	*/
-	var numberPaggingBar = PBar.extend({
+	var numberPagingBar = PBar.extend({
 		/**
-		* get the initial items of pagging bar
+		* get the initial items of paging bar
 		* @protected
 		* @override
 		*/
@@ -60,7 +60,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
-				_self.skipToPage(page);
+				_self.jumpToPage(page);
 			});
 		},
 		//设置页码信息，设置 页数 按钮
@@ -138,7 +138,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				xtype:'text',
-				text : _self.get('ellipsisTemplate')
+				text : _self.get('ellipsisTpl')
 			};
 		},
 		//生成页面按钮配置项
@@ -184,7 +184,7 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			/**
 			* the template of ellipsis which represent the omitted pages number
 			*/
-			ellipsisTemplate : {
+			ellipsisTpl : {
 				value : '...'
 			},
 			/**
@@ -192,18 +192,18 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			* @override
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			curPageTemplate : {
+			curPageTpl : {
 				value : '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			}
 		}
 	},{
-		xclass : 'number-paggingbar',
+		xclass : 'pagingbar-number',
 		priority : 3	
 	});
 
 
-	PBar.Number = numberPaggingBar;
-	return numberPaggingBar;
+	PBar.Number = numberPagingBar;
+	return numberPagingBar;
 },{
-	 requires:['component','./paggingbar','./bar']
+	 requires:['component','./pagingbar','./bar']
 });

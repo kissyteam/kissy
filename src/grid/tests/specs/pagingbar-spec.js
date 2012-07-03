@@ -1,4 +1,4 @@
-KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
+KISSY.use('grid/pagingbar,grid/store',function(S,PBar,Store){
 	
 	var store = new Store({url:'../data/number40.php'}),
 		bar = new PBar({
@@ -13,11 +13,11 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 	function getLog(){
 		return S.one('#log').text();
 	}
-	var barEl = S.one('#pbar').one('.ks-paggingbar'),
+	var barEl = S.one('#pbar').one('.ks-pagingbar'),
 		items = barEl.children();
-	describe("测试PaggingBar以及主要子元素的生成", function () {
+	describe("测试PagingBar以及主要子元素的生成", function () {
 		
-		it('测试paggingbar生成',function(){
+		it('测试pagingbar生成',function(){
 			expect(barEl).toNotBe(null);
 			expect(items.length).toBe(bar.get('children').length);
 		});
@@ -105,7 +105,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 		//在第一页时，首页、前一页按钮不可用，末页，下一页可用
 		it('在第一页时，查看按钮状态，末页、下一页',function(){
-			bar.skipToPage(1);
+			bar.jumpToPage(1);
 			waits(500);
 			runs(function(){
 				expect(nextBtn.get('disabled')).not.toBeTruthy();
@@ -115,7 +115,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 
 		it('在第一页时，点击下一页',function(){
-			bar.skipToPage(1);
+			bar.jumpToPage(1);
 			waits(500);
 			runs(function(){
 				//模拟点击下一页按钮
@@ -129,7 +129,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 
 		it('在第一页时，点击末页',function(){
-			bar.skipToPage(1);
+			bar.jumpToPage(1);
 			waits(500);
 			runs(function(){
 				//模拟点击末页按钮
@@ -142,7 +142,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 
 		it('在第二页时，查看按钮状态，首页、前一页',function(){
-			bar.skipToPage(2);
+			bar.jumpToPage(2);
 			waits(200);
 			runs(function(){
 				expect(firstBtn.get('disabled')).not.toBeTruthy();
@@ -151,7 +151,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 
 		it('在第二页时，点击首页',function(){
-			bar.skipToPage(2);
+			bar.jumpToPage(2);
 			waits(200);
 			runs(function(){
 				//模拟点击首页按钮
@@ -165,7 +165,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 		});
 
 		it('在第二页时，点击前一页',function(){
-			bar.skipToPage(2);
+			bar.jumpToPage(2);
 			waits(200);
 			runs(function(){
 				//模拟点击前一页按钮
@@ -179,7 +179,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 
 		it('在第末页时，查看按钮状态，末页、下一页',function(){
 			var totalPage = bar.get('totalPage');
-			bar.skipToPage(totalPage);
+			bar.jumpToPage(totalPage);
 			waits(500);
 			runs(function(){
 				expect(nextBtn.get('disabled')).toBeTruthy();
@@ -189,7 +189,7 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 
 		it('在第末页时，末页、下一页',function(){
 			var totalPage = bar.get('totalPage');
-			bar.skipToPage(totalPage);
+			bar.jumpToPage(totalPage);
 			waits(200);
 			runs(function(){
 				//模拟点击末页按钮

@@ -29,7 +29,7 @@ KISSY.add('grid/util',function(S){
 			var maskedEl = S.one(element),
 				maskedNode = maskedEl.getDOMNode(),
 				maskDiv = S.one('.'+ CLS_MASK ,maskedNode),
-				template = null,
+				tpl = null,
 				msgDiv = null,
 				top = null,
 				left = null;
@@ -40,8 +40,8 @@ KISSY.add('grid/util',function(S){
 					maskDiv.height(maskedEl.height());
 				}
 				if (msg) {
-					template = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
-					msgDiv = S.one(DOM.create(template)).appendTo(maskedNode);
+					tpl = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
+					msgDiv = S.one(DOM.create(tpl)).appendTo(maskedNode);
 					if (msgCls) {
 						msgDiv.addClass(msgCls);
 					}

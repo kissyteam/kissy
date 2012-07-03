@@ -50,10 +50,10 @@ KISSY.add('grid/plugins',function(S){
 			var cfg = {
 						title : '',
 						width : _self.get('width'),
-						resizeable:false,
+						resizable:false,
 						sortable : false,
-						template : '<div class="ks-grid-hd-inner">' + _self.get('cellInner') + '</div>',
-						cellTemplate : _self.get('cellInner')
+						tpl : '<div class="ks-grid-hd-inner">' + _self.get('cellInner') + '</div>',
+						cellTpl : _self.get('cellInner')
 				},
 				checkColumn = grid.addColumn(cfg,0);
 			grid.set('multiSelect',true);
@@ -129,9 +129,9 @@ KISSY.add('grid/plugins',function(S){
 			var cfg = {
 						title : '',
 						width : _self.get('width'),
-						resizeable:false,
+						resizable:false,
 						sortable : false,
-						cellTemplate : _self.get('cellInner')
+						cellTpl : _self.get('cellInner')
 				},
 				column = grid.addColumn(cfg,0);
 			grid.set('multiSelect',false);

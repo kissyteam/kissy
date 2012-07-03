@@ -37,10 +37,10 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		renderUI : function(){
 			var _self = this,
 				el = _self.get('el'),
-				template = _self._getTemplate(),
+				tpl = _self._getTpl(),
 				tbody = null,
 				headerRowEl = null;
-			new S.Node(template).appendTo(el);
+			new S.Node(tpl).appendTo(el);
 			tbody = el.one('tbody');
 			_self.set('tbodyEl',tbody,{silent : true});
 			headerRowEl = _self._createHeaderRow();
@@ -231,18 +231,18 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				columns = _self._getColumns(),
 				tbodyEl = _self.get('tbodyEl'),
-				rowTemplate = _self.get('rowTemplate'),
+				rowTpl = _self.get('rowTpl'),
 				oddCls = index % 2 === 0 ? CLS_ROW_ODD : CLS_ROW_EVEN,
-				cellsTemplate = [],
+				cellsTpl = [],
 				rowEl = null;
 			
 			S.each(columns,function(column,colIndex){
 				var dataIndex = column.get('dataIndex');
-				cellsTemplate.push(_self._getCellTemplate(column,dataIndex,record));
+				cellsTpl.push(_self._getCellTpl(column,dataIndex,record));
 			});
-			cellsTemplate.push(_self._getEmptyCellTemplate());
-			rowTemplate = Template(rowTemplate).render({cellsTemplate : cellsTemplate.join(''),oddCls : oddCls});
-			rowEl = new S.Node(rowTemplate).appendTo(tbodyEl);
+			cellsTpl.push(_self._getEmptyCellTpl());
+			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join(''),oddCls : oddCls});
+			rowEl = new S.Node(rowTpl).appendTo(tbodyEl);
 			//append record to the dom
 			rowEl.data(DATA_ELEMENT,record);
 			if(index === 0){
@@ -255,19 +255,19 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			var _self = this,
 				columns = _self._getColumns(),
 				tbodyEl = _self.get('tbodyEl'),
-				rowTemplate = _self.get('headerRowTemplate')
+				rowTpl = _self.get('headerRowTpl')
 				rowEl = null,
 				hideText = '',
-				cellsTemplate = [];
+				cellsTpl = [];
 
 			S.each(columns,function(column,colIndex){
-				cellsTemplate.push(_self._getHeaderCellTemplate(column));
+				cellsTpl.push(_self._getHeaderCellTpl(column));
 			});
 			
 			//if this componet set width,add a empty column to fit row width
-			cellsTemplate.push(_self._getEmptyCellTemplate());
-			rowTemplate = Template(rowTemplate).render({cellsTemplate : cellsTemplate.join('')});
-			rowEl = S.Node(rowTemplate).appendTo(tbodyEl);
+			cellsTpl.push(_self._getEmptyCellTpl());
+			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join('')});
+			rowEl = S.Node(rowTpl).appendTo(tbodyEl);
 			return rowEl;
 		},
 		// 获取列配置项
@@ -294,19 +294,19 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//get cell text by record and column
 		_getCellText : function(column,record){
 			var _self = this,
-				textTemplate = column.get('cellTemplate') || _self.get('cellTextTemplate'),
+				textTpl = column.get('cellTpl') || _self.get('cellTextTpl'),
 				dataIndex = column.get('dataIndex'),
 				renderer = column.get('renderer'),
 				text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
-			return Template(textTemplate).render({text : text,tips : _self._getTips(column, dataIndex,record)});
+			return Template(textTpl).render({text : text,tips : _self._getTips(column, dataIndex,record)});
 		},
 		//get cell template by config and record
-		_getCellTemplate : function(column, dataIndex,record){
+		_getCellTpl : function(column, dataIndex,record){
 			var _self = this,
 				value = record[dataIndex],
 				cellText = _self._getCellText(column,record),
-				cellTemplate = _self.get('cellTemplate');
-			return Template(cellTemplate)
+				cellTpl = _self.get('cellTpl');
+			return Template(cellTpl)
 				.render({
 					id : column.get('id'),
 					dataIndex : dataIndex,
@@ -326,24 +326,24 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			}
 			return value;
 		},
-		_getHeaderCellTemplate : function(column){
+		_getHeaderCellTpl : function(column){
 			var _self = this,
-				headerCellTemplate = _self.get('headerCellTemplate');
-			return Template(headerCellTemplate).render({
+				headerCellTpl = _self.get('headerCellTpl');
+			return Template(headerCellTpl).render({
 				id : column.get('id'),
 				width : column.get('width'),
 				hide : column.get('hide')
 			});
 		},
-		_getEmptyCellTemplate : function(){
+		_getEmptyCellTpl : function(){
 			return '<td class="' + CLS_CELL_EMPYT + '"></td>';
 		},
 		//get the template of column
-		_getTemplate : function(){
+		_getTpl : function(){
 			var _self = this,
 				attrs = _self.__attrVals,
-				template = _self.get('template');
-			return Template(template).render(attrs);
+				tpl = _self.get('tpl');
+			return Template(tpl).render(attrs);
 		}
 	},{
 		ATTRS:{
@@ -723,7 +723,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			*
 			*</pre>
 			*/
-			template : {
+			tpl : {
 				view : true,
 				value : '<table cellspacing="0" cellpadding="0" class="ks-grid-table {{tableCls}}">'+
 							'<tbody></tbody>'+
@@ -733,21 +733,21 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			* An template of first row of this component ,which to fixed the width of every column.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
+			* @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
 			*/
-			headerRowTemplate : {
+			headerRowTpl : {
 				view : true,
-				value : '<tr class="ks-grid-header-row">{{cellsTemplate}}</tr>'
+				value : '<tr class="ks-grid-header-row">{{cellsTpl}}</tr>'
 			},
 			/**
 			* An template used to create the row which encapsulates cells.
 			* User can use the syntax of Kissy's template componet.
 			* @type String
-			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTemplate}}&lt;/tr&gt;'</pre>
+			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
 			*/
-			rowTemplate : {
+			rowTpl : {
 				view : true,
-				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTemplate}}</tr>'
+				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTpl}}</tr>'
 			},
 			/**
 			* An template used to create the cell.
@@ -758,7 +758,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			*	'&lt;/td&gt;'
 			*</pre>
 			*/
-			cellTemplate : {
+			cellTpl : {
 				view : true,
 				value : '<td  class="' + CLS_GRID_CELL + ' ' + CLS_TD_PREFIX + '{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}  {{#if hide}} style="display : none" {{/if}}>'+
 							'<div class="' + CLS_GRID_CELL_INNER + '" >{{cellText}}</div>'+
@@ -768,11 +768,11 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			/**
 			* @default &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
 			*/
-			cellTextTemplate : {
+			cellTextTpl : {
 				view : true,
 				value : '<span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span>'
 			},
-			headerCellTemplate : {
+			headerCellTpl : {
 				view : true,
 				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
 			},

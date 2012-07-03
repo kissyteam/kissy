@@ -41,3 +41,8 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
 }, {
     requires:['./controller', './delegateChildren', './decorateChildren']
 });
+
+/**
+ * TODO
+ *  - handleMouseEvents false for container ?
+ */
