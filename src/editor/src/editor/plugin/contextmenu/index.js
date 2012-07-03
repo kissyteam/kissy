@@ -28,6 +28,14 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
 
         focusFix.init(menu);
 
+        menu.on("afterRenderUI", function () {
+            menu.get("el").on("keydown", function (e) {
+                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                    menu.hide();
+                }
+            });
+        });
+
         self.docReady(function () {
             var doc = self.get("document");
             // 编辑器获得焦点，不会触发 menu el blur？

@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jul 3 19:11
 */
 /**
  * Set up editor constructor
@@ -2143,8 +2143,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (element.getAttribute('class') == 'Apple-style-span'
-                    || !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
+                    !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }
@@ -8066,7 +8066,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             syncUI:function () {
                 var self = this,
-                    h = self.get("height")
+                    h = self.get("height");
                 if (h) {
                     // 根据容器高度，设置内层高度
                     self._uiSetHeight(h);
@@ -8112,7 +8112,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     self.fire("wysiwygMode");
                 } else {
                     textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
                     textarea.show();
                     iframe.hide();
                     self.fire("sourceMode");
@@ -8121,9 +8120,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             // 覆盖 controller
             _uiSetFocused:function (v) {
+                var self = this;
                 // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
+                if (v && self.__docReady) {
+                    self.focus();
                 }
             },
 
@@ -8223,6 +8223,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            /**
+             * Return editor's value corresponding to command name.
+             * @param {String} name Command name.
+             * @return {*}
+             */
             queryCommandValue:function (name) {
                 return this.execCommand(Utils.getQueryCmd(name));
             },
@@ -8525,15 +8530,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (htmlDataProcessor = self.htmlDataProcessor) {
                     data = htmlDataProcessor.toDataFormat(data, dataFilter);
-                }
-
-                // webkit bug
-                if (UA.webkit) {
-                    var nodes = new Node(data, null, editorDoc);
-                    nodes.each(function (node) {
-                        self.insertElement(node);
-                    });
-                    return;
                 }
 
                 self.focus();
@@ -9747,6 +9743,14 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
 
         focusFix.init(menu);
 
+        menu.on("afterRenderUI", function () {
+            menu.get("el").on("keydown", function (e) {
+                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                    menu.hide();
+                }
+            });
+        });
+
         self.docReady(function () {
             var doc = self.get("document");
             // 编辑器获得焦点，不会触发 menu el blur？
@@ -10806,10 +10810,13 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
                     //align : realElement.attr("align") || '',
                     style:style
                 };
-            attrs && delete attrs.width;
-            attrs && delete attrs.height;
 
-            attrs && S.mix(attributes, attrs, false);
+            if (attrs) {
+                delete attrs.width;
+                delete attrs.height;
+                S.mix(attributes, attrs, false);
+            }
+
             if (realElementType)
                 attributes._ke_real_element_type = realElementType;
 
@@ -10893,19 +10900,29 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
             }
 
             S.mix(dataProcessor, {
+
+                restoreRealElement:function (fakeElement) {
+                    if (fakeElement.attr('_ke_real_node_type') != DOM.ELEMENT_NODE) {
+                        return null;
+                    }
+
+                    var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+
+                    var temp = new Node('<div>', null, editor.get("document")[0]);
+                    temp.html(html);
+                    // When returning the node, remove it from its parent to detach it.
+                    return temp.first().remove();
+                },
+
                 /**
                  * 从外边真实的html，转为为编辑器代码支持的替换元素
                  * @param realElement
                  * @param className
                  * @param realElementType
                  * @param [isResizable]
-                 * @param [attrs]
                  */
                 createFakeParserElement:function (realElement, className, realElementType, isResizable, attrs) {
-                    var html,
-                        writer = new HtmlParser.BasicWriter();
-                    realElement.writeHtml(writer);
-                    html = writer.getHtml();
+                    var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
                     if (realElement.getAttribute("width")) {
                         style = "width:" + realElement.getAttribute("width") + "px;" + style;
@@ -10924,10 +10941,11 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
                             align:realElement.getAttribute("align") || ''
                         };
 
-                    attrs && delete attrs.width;
-                    attrs && delete attrs.height;
-
-                    attrs && S.mix(attributes, attrs, false);
+                    if (attrs) {
+                        delete attrs.width;
+                        delete attrs.height;
+                        S.mix(attributes, attrs, false);
+                    }
 
                     if (realElementType) {
                         attributes._ke_real_element_type = realElementType;
@@ -11545,7 +11563,7 @@ KISSY.add("editor/plugin/flashCommon/utils", function (S) {
  * Add flash plugin.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
 
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
@@ -11556,6 +11574,9 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
 
     S.augment(FlashPlugin, {
         renderUI:function (editor) {
+
+            fakeObjects.init(editor);
+
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor.dataFilter;
 
@@ -11633,7 +11654,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     return FlashPlugin;
 
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
+    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
 });/**
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
@@ -14650,7 +14671,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
 
                             // Bookmark the range so we can re-select it after processing.
                             var bookmark = range.createBookmark(),
-                                // The style will be applied within the bookmark boundaries.
+                            // The style will be applied within the bookmark boundaries.
                                 startNode = bookmark.startNode,
                                 endNode = bookmark.endNode;
 
@@ -14706,7 +14727,11 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
 
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() == 'img' &&
-                                    currentNode.attr('_ke_realelement') )) {
+                                    (
+                                        currentNode.attr('_ke_realelement') ||
+                                            // 占位符
+                                            /\bke_/.test(currentNode[0].className)
+                                        ) )) {
                                     // Remove elements nodes that match with this style rules.
                                     if (tagsRegex.test(currentNode.nodeName()))
                                         currentNode._4e_remove(true);
@@ -14874,7 +14899,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,
@@ -14977,9 +15002,6 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                         } else {
                             editor.set("mode", WYSIWYG_MODE);
                         }
-
-                        editor.focus();
-
                     }
                 },
                 checkable:true
@@ -15047,7 +15069,7 @@ KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui, cmd) {
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, ContextMenu) {
+KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -15399,28 +15421,34 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName),
 
         extraDataFilter = {
-            elements:{
+            tags:{
                 'table':function (element) {
-                    var attributes = element.attributes,
-                        cssClass = attributes[ 'class' ],
-                        border = parseInt(attributes.border, 10);
+                    var cssClass = element.getAttribute("class"),
+                        border = parseInt(element.getAttribute("border"), 10);
 
-                    if (!border || border <= 0)
-                        attributes[ 'class' ] = ( cssClass || '' ) + ' ' +
-                            showBorderClassName;
+                    if (!border || border <= 0) {
+                        element.setAttribute("class", S.trim((cssClass || "") +
+                            ' ' + showBorderClassName));
+                    }
                 }
             }
         },
 
         extraHtmlFilter = {
-            elements:{
+            tags:{
                 'table':function (table) {
-                    var attributes = table.attributes,
-                        cssClass = attributes[ 'class' ];
+                    var cssClass = table.getAttribute("class"), v;
 
                     if (cssClass) {
-                        attributes[ 'class' ] = S.trim(cssClass.replace(showBorderClassName, ""));
+                        v = S.trim(cssClass.replace(showBorderClassName, ""));
+                        if (v) {
+                            table.setAttribute("class", v);
+                        } else {
+                            table.removeAttribute("class");
+                        }
                     }
+
+
                 }
 
             }
@@ -15431,9 +15459,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
     }
 
     S.augment(TablePlugin, {
-        init:function (editor) {
+        renderUI:function (editor) {
             /**
-             * 动态加入显表格border css，便于编辑
+             * 动态加入显表格 border css，便于编辑
              */
             editor.addCustomStyle(cssStyleText);
 
@@ -15470,6 +15498,8 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                             return;
                         }
 
+                        editor.execCommand("save");
+
                         // Maintain the selection point at where the table was deleted.
                         selection.selectElement(table);
                         var range = selection.getRanges()[0];
@@ -15486,43 +15516,56 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                         } else {
                             table.remove();
                         }
+                        editor.execCommand("save");
                     },
 
                     '删除行 ':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         placeCursorInCell(deleteRows(selection), undefined);
+                        editor.execCommand("save");
                     },
 
                     '删除列 ':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection(),
                             element = deleteColumns(selection);
                         element && placeCursorInCell(element, true);
+                        editor.execCommand("save");
                     },
 
                     '在上方插入行':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertRow(selection, true);
+                        editor.execCommand("save");
                     },
 
                     '在下方插入行':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertRow(selection, undefined);
+                        editor.execCommand("save");
                     },
 
                     '在左侧插入列':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertColumn(selection, true);
+                        editor.execCommand("save");
                     },
 
                     '在右侧插入列':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertColumn(selection, undefined);
+                        editor.execCommand("save");
                     }
                 };
 
@@ -16067,7 +16110,7 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
  * video button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
+KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass, fakeObjects) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
@@ -16077,6 +16120,9 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
     S.augment(video, {
         renderUI:function (editor) {
+
+            fakeObjects.init(editor);
+
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
@@ -16103,7 +16149,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             videoCfg.getProvider = getProvider;
 
             dataFilter && dataFilter.addRules({
-                elements:{
+                tags:{
                     'object':function (element) {
                         var classId = element.getAttribute("classid"), i;
                         var childNodes = element.childNodes;
@@ -16111,7 +16157,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
                             // Look for the inner <embed>
                             for (i = 0; i < childNodes.length; i++) {
-                                if (childNodes[ i ].name == 'embed') {
+                                if (childNodes[ i ].nodeName == 'embed') {
                                     if (!flashUtils.isFlashEmbed(childNodes[ i ])) {
                                         return null;
                                     }
@@ -16183,12 +16229,12 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']
+    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass', '../fakeObjects/']
 });/**
  * xiamiMusic button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic";
 
@@ -16210,12 +16256,13 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
 
     function XiamiMusicPlugin(config) {
-        this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(XiamiMusicPlugin, {
         renderUI:function (editor) {
 
+            fakeObjects.init(editor);
 
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
@@ -16311,7 +16358,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
     return XiamiMusicPlugin;
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
+    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
 });/**
  * For package Editor full.
  * @author yiminghe@gmail.com

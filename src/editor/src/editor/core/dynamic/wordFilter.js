@@ -197,15 +197,16 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         var result = {},
             tag;
         for (tag in dtd) {
-            if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
-                result[ tag ] = 1;
+            if (dtd.hasOwnProperty(tag)) {
+                if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
+                    result[ tag ] = 1;
+                }
             }
         }
         return result;
     }
 
-    var filters =
-    {
+    var filters = {
         // Transform a normal list into flat list items only presentation.
         // E.g. <ul><li>level1<ol><li>level2</li></ol></li> =>
         // <ke:li ke:listtype="ul" ke:indent="1">level1</ke:li>
@@ -359,25 +360,27 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                         }
                         else {
                             for (var type in listMarkerPatterns) {
-                                for (var style in listMarkerPatterns[ type ]) {
-                                    if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
-                                        // Small numbering has higher priority, when dealing with ambiguous
-                                        // between C(Alpha) and C.(Roman).
-                                        if (type == 'ol' && ( /alpha|roman/ ).test(style)) {
-                                            var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
-                                            if (!itemNumeric || num < itemNumeric) {
-                                                itemNumeric = num;
-                                                listType = type;
-                                                listStyleType = style;
+                                if (listMarkerPatterns.hasOwnProperty(type))
+                                    for (var style in listMarkerPatterns[ type ]) {
+                                        if (listMarkerPatterns[ type ].hasOwnProperty(style))
+                                            if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
+                                                // Small numbering has higher priority, when dealing with ambiguous
+                                                // between C(Alpha) and C.(Roman).
+                                                if (type == 'ol' && ( /alpha|roman/ ).test(style)) {
+                                                    var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
+                                                    if (!itemNumeric || num < itemNumeric) {
+                                                        itemNumeric = num;
+                                                        listType = type;
+                                                        listStyleType = style;
+                                                    }
+                                                }
+                                                else {
+                                                    listType = type;
+                                                    listStyleType = style;
+                                                    break;
+                                                }
                                             }
-                                        }
-                                        else {
-                                            listType = type;
-                                            listStyleType = style;
-                                            break;
-                                        }
                                     }
-                                }
                             }
                         }
 
@@ -708,7 +711,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             isListBulletIndicator = utils.isListBulletIndicator,
             containsNothingButSpaces = utils.isContainingOnlySpaces,
             resolveListItem = utils.resolveList,
-            convertToPx = function (value) {
+            convertToPxStr = function (value) {
                 value = convertToPx(value);
                 return isNaN(value) ? value : value + 'px';
             },
@@ -736,14 +739,14 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 },
 
                 $:function (element) {
-                    var tagName = element.nodeName || ''
+                    var tagName = element.nodeName || '';
 
                     // Convert length unit of width/height on blocks to
                     // a more editor-friendly way (px).
                     if (tagName in blockLike && element.getAttribute("style")) {
                         setStyle(element, stylesFilter(
                             [
-                                [ ( /^(:?width|height)$/ ), null, convertToPx ]
+                                [ ( /^(:?width|height)$/ ), null, convertToPxStr ]
                             ])(element.getAttribute("style")));
                     }
 
@@ -1162,10 +1165,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             }
 
             // 针对 word 一次
-            html = editor.htmlDataProcessor.toDataFormat(html, wordFilter);
-
-            // 普通的一次
-            html = editor.htmlDataProcessor.toDataFormat(html);
+            html = editor['htmlDataProcessor'].toDataFormat(html, wordFilter);
 
             return html;
         }

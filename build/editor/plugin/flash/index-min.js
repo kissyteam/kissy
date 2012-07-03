@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jul 3 19:11
 */
-KISSY.add("editor/plugin/flash/index",function(h,i,j,f){function g(b){this.config=b||{}}h.augment(g,{renderUI:function(b){var d=b.htmlDataProcessor;d.dataFilter.addRules({tags:{object:function(a){var c;if(!a.getAttribute("classid")){var b=a.childNodes;for(c=0;c<b.length;c++)if("embed"==b[c].nodeName)if(f.isFlashEmbed(b[c][c]))break;else return d.createFakeParserElement(a,"ke_flash","flash",!0);return null}return d.createFakeParserElement(a,"ke_flash","flash",!0)},embed:function(a){return f.isFlashEmbed(a)?
-d.createFakeParserElement(a,"ke_flash","flash",!0):null}}},5);var e=new j({editor:b,cls:"ke_flash",type:"flash",pluginConfig:this.config,bubbleId:"flash",contextMenuId:"flash",contextMenuHandlers:{"Flash属性":function(){var a=this.get("editorSelectedEl");a&&e.show(a)}}});this.flashControl=e;b.addButton("flash",{tooltip:"插入Flash",listeners:{click:function(){e.show()}},mode:i.WYSIWYG_MODE})}});return g},{requires:["editor","../flashCommon/baseClass","../flashCommon/utils"]});
+KISSY.add("editor/plugin/flash/index",function(g,h,i,e,j){function f(a){this.config=a||{}}g.augment(f,{renderUI:function(a){j.init(a);var c=a.htmlDataProcessor;c.dataFilter.addRules({tags:{object:function(d){var a;if(!d.getAttribute("classid")){var b=d.childNodes;for(a=0;a<b.length;a++)if("embed"==b[a].nodeName)if(e.isFlashEmbed(b[a][a]))break;else return c.createFakeParserElement(d,"ke_flash","flash",!0);return null}return c.createFakeParserElement(d,"ke_flash","flash",!0)},embed:function(a){return e.isFlashEmbed(a)?
+c.createFakeParserElement(a,"ke_flash","flash",!0):null}}},5);var b=new i({editor:a,cls:"ke_flash",type:"flash",pluginConfig:this.config,bubbleId:"flash",contextMenuId:"flash",contextMenuHandlers:{"Flash属性":function(){var a=this.get("editorSelectedEl");a&&b.show(a)}}});this.flashControl=b;a.addButton("flash",{tooltip:"插入Flash",listeners:{click:function(){b.show()}},mode:h.WYSIWYG_MODE})}});return f},{requires:["editor","../flashCommon/baseClass","../flashCommon/utils","../fakeObjects/"]});

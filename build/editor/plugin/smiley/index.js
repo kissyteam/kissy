@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jul 3 19:11
 */
 /**
  * smiley button
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,
