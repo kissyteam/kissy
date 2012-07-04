@@ -1,5 +1,6 @@
 /**/
 KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
+
 	var columns = [{
 				title : '表头1',
 				dataIndex :'a',
@@ -42,7 +43,8 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 						}
 					}]
 				},
-		bbar : {xclass:'number-pagingbar',store : store,pageSize : 3},
+
+		bbar : {xclass:'pagingbar-number',store : store,pageSize : 3},
 		store : store
 	});
 	grid.render();

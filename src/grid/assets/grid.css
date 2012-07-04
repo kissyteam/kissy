@@ -23,11 +23,11 @@
     vertical-align:middle;
 }
 
-.pagging-bar, .ks-grid-header-th-inner{
+.paging-bar, .ks-grid-header-th-inner{
 	background: url("../images/grid-back.gif") repeat-x scroll 0 0 transparent;
 }
 
-.pb-page-first ,.pb-page-last,.pb-page-next,.pb-page-prev,.pb-page-ok,.pb-item-input,.bar-item-separator,.pagging-bar .bar-item-over ,
+.pb-page-first ,.pb-page-last,.pb-page-next,.pb-page-prev,.pb-page-ok,.pb-item-input,.bar-item-separator,.paging-bar .bar-item-over ,
 .sorted-asc .ks-grid-header-sort-icon,.sorted-desc .ks-grid-header-sort-icon,.ks-grid-cell-error-icon,.ks-grid-error-editor-icon,.ks-grid-column-menu-trigger,.menu-item-icon,
 .bar-btn-add,.bar-btn-del,.bar-btn-close,.bar-btn-import,.bar-btn-export,.bar-btn-save,.bar-btn-create{
 	background-image:url("../images/grid.gif");
@@ -200,7 +200,7 @@
     width:30px;
 }
 
-/*ÐÐÊý¾Ý*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .ks-grid-row{
 	
 }
@@ -363,7 +363,7 @@
 	margin:0;
 }
 
- /** ¶àÑ¡±à¼­Æ÷ */
+ /** ï¿½ï¿½Ñ¡ï¿½à¼­ï¿½ï¿½ */
 
 .lp-multiple-wrap{
 	border:1px solid #98c0f4;

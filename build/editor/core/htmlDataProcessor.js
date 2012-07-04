@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jul 3 19:11
 */
 /**
  * Modified from ckeditor. Process malformed html for kissy editor.
@@ -22,8 +22,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (element.getAttribute('class') == 'Apple-style-span'
-                    || !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
+                    !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }

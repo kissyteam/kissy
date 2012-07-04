@@ -7,7 +7,7 @@
 }
 
 
-.ks-paggingbar {
+.ks-pagingbar {
 	font-size: 12px;
 	height: 24px;
 	background-color: white;
@@ -16,11 +16,11 @@
 .ks-bar-item-button{
 	margin-left:2px;
 }
-.ks-paggingbar .ks-button{
+.ks-pagingbar .ks-button{
 	height: 18px;
 	padding:2px 8px;
 }
-.ks-paggingbar .ks-pb-page{
+.ks-pagingbar .ks-pb-page{
 	color: red;
 	font: 11px tahoma,arial,verdana,sans-serif;
 	height: 14px;
@@ -30,7 +30,7 @@
 	text-align: center;
 }
 
-.ks-number-paggingbar .ks-active{
+.ks-pagingbar-number .ks-active{
 	border:1px solid #ff6600;
 }
 .ks-bar-item-text{

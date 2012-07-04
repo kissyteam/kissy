@@ -57,7 +57,7 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 		* this method can fire "beforepagechange" event,if you return false in the handler the action will be canceled
 		* @param {Number} page target page
 		*/
-		skipToPage : function (page) {
+		jumpToPage : function (page) {
 			if(page <= 0 || page > this.get('totalPage')){
 				return ;
 			}
@@ -109,22 +109,22 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 
 			//first page handler
 			_self._bindButtonItemEvent(ID_FIRST,function(){
-				_self.skipToPage(1);
+				_self.jumpToPage(1);
 			});
 			
 			//previous page handler
 			_self._bindButtonItemEvent(ID_PREV,function(){
-				_self.skipToPage(_self.get('curPage') - 1);
+				_self.jumpToPage(_self.get('curPage') - 1);
 			});
 
 			//previous page next
 			_self._bindButtonItemEvent(ID_NEXT,function(){
-				_self.skipToPage(_self.get('curPage') + 1);
+				_self.jumpToPage(_self.get('curPage') + 1);
 			});
 
 			//previous page next
 			_self._bindButtonItemEvent(ID_LAST,function(){
-				_self.skipToPage(_self.get('totalPage'));
+				_self.jumpToPage(_self.get('totalPage'));
 			});
 			//skip to one page
 			_self._bindButtonItemEvent(ID_SKIP,function(){
@@ -141,7 +141,7 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 			function hadleSkip(){
 				var value = parseInt(_self._getCurrentPageValue(), 10);
 				if (_self._isPageAllowRedirect(value)) {
-					_self.skipToPage(value);
+					_self.jumpToPage(value);
 				} else {
 					_self._setCurrentPageValue(_self.get('curPage'));
 				}
@@ -160,7 +160,7 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 				store = _self.get('store');
 			_self._afterStoreLoad(store,params);
 		},
-		//get the items of paging bar 
+		//get the items of paging bar
 		_getItems : function(){
 			var _self = this,
 				items = _self.get('items');
@@ -215,15 +215,15 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 			return {
 				id : id,
 				xtype : 'text',
-				text : _self._getTextItemTemplate(id)
+				text : _self._getTextItemTpl(id)
 			};
 		},
 		//get text item's template
-		_getTextItemTemplate : function(id){
+		_getTextItemTpl : function(id){
 			var _self = this,
 				obj = {};
 			obj[id] = _self.get(id);
-			return S.substitute(this.get(id + 'Template'),obj);
+			return S.substitute(this.get(id + 'Tpl'),obj);
 		},
 		//Whether to allow jump, if it had been in the current page or not within the scope of effective page, not allowed to jump
 		_isPageAllowRedirect : function(value) {
@@ -262,11 +262,11 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 				curItem = _self.getItem(ID_CURRENT_PAGE),
 				totalCountItem = _self.getItem(ID_TOTAL_COUNT);
 			if(totalPageItem){
-				totalPageItem.set('html',_self._getTextItemTemplate(ID_TOTAL_PAGE));
+				totalPageItem.set('html',_self._getTextItemTpl(ID_TOTAL_PAGE));
 			}
 			_self._setCurrentPageValue(_self.get(ID_CURRENT_PAGE));
 			if(totalCountItem){
-				totalCountItem.set('html',_self._getTextItemTemplate(ID_TOTAL_COUNT));
+				totalCountItem.set('html',_self._getTextItemTpl(ID_TOTAL_COUNT));
 			}
 		},
 		_getCurrentPageValue : function(){
@@ -359,21 +359,21 @@ KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 			* the template of total page info
 			* @default {String} '共 {totalPage} 页'
 			*/
-			totalPageTemplate : {
+			totalPageTpl : {
 				value : '共 {totalPage} 页'
 			},
 			/**
 			* the template of current page info
 			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			curPageTemplate : {
+			curPageTpl : {
 				value : '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			},
 			/**
 			* the template of total count info
 			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			totalCountTemplate : {
+			totalCountTpl : {
 				value : '共{totalCount}条记录'
 			},
 			/**

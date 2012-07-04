@@ -1,5 +1,5 @@
 /**
- * @fileOverview  a specialized paggingbar which use number buttons 
+ * @fileOverview  a specialized pagingbar which use number buttons
  * @author dxq613@gmail.com
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
@@ -60,7 +60,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
-				_self.skipToPage(page);
+				_self.jumpToPage(page);
 			});
 		},
 		//设置页码信息，设置 页数 按钮
@@ -138,7 +138,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				xtype:'text',
-				text : _self.get('ellipsisTemplate')
+				text : _self.get('ellipsisTpl')
 			};
 		},
 		//生成页面按钮配置项
@@ -184,7 +184,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			/**
 			* the template of ellipsis which represent the omitted pages number
 			*/
-			ellipsisTemplate : {
+			ellipsisTpl : {
 				value : '...'
 			},
 			/**
@@ -192,12 +192,12 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* @override
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
-			curPageTemplate : {
+			curPageTpl : {
 				value : '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			}
 		}
 	},{
-		xclass : 'number-pagingbar',
+		xclass : 'pagingbar-number',
 		priority : 3	
 	});
 

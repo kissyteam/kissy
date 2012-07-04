@@ -33,9 +33,6 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                         } else {
                             editor.set("mode", WYSIWYG_MODE);
                         }
-
-                        editor.focus();
-
                     }
                 },
                 checkable:true

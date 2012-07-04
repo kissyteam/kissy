@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>bar 测试</title>
-<link href="http://localhost:8080/bootstrap/kissy-bootstrap/docs/assets/css/dpl.css" rel="stylesheet"/>
+<link href="../../../../kissy-bootstrap/docs/assets/css/dpl.css" rel="stylesheet"/>
 <link href="../assets/bar.css" rel="stylesheet"/>
 </head>
 <body>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<h2>默认的paggingbar</h2>
+		<h2>默认的pagingbar</h2>
 		<div class="span20">
 			<div id="pbar"></div>
 		</div>
@@ -32,15 +32,26 @@
 
 <script src="../../../build/kissy.js"></script>
 
+<script src="../src/bar.js"></script>
 <script src="../src/baritem.js"></script>
 <script src="../src/barrender.js"></script>
-<script src="../src/bar.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/bindable.js"></script>
+<script src="../src/column.js"></script>
+<script src="../src/editgrid.js"></script>
+<script src="../src/editor.js"></script>
+<script src="../src/grid.js"></script>
+<script src="../src/gridbody.js"></script>
+<script src="../src/header.js"></script>
+<script src="../src/numberpagingbar.js"></script>
+<script src="../src/pagingbar.js"></script>
+<script src="../src/plugins.js"></script>
 <script src="../src/store.js"></script>
-<script src="../src/paggingbar.js"></script>
+<script src="../src/util.js"></script>
 
 <script>
 
-    KISSY.use("grid/bar,button,grid/paggingbar,grid/store",function(S, Bar,Button,PBar,Store) {
+    KISSY.use("grid/bar,button,grid/pagingbar,grid/store",function(S, Bar,Button,PBar,Store) {
       var bar = new Bar({
 				render : '#bar',
 				//elCls : 'ks-button-group',

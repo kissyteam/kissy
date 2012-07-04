@@ -9,7 +9,7 @@ KISSY.use('grid/header',function(S,Header){
 			},{
 				title : '表头3',
 				dataIndex : 'abc',
-				template : '<div class="ks-grid-hd-title">{{dataIndex}}</div>'
+				tpl : '<div class="ks-grid-hd-title">{{dataIndex}}</div>'
 		},{
 			id:'hide',
 			hide:true,
@@ -67,7 +67,7 @@ KISSY.use('grid/header',function(S,Header){
 				var el = S.one(children[index]),
 					sortEl = el.one('.ks-grid-sort-icon');
 				//用户自定义模板时，不一定支持排序
-				if(col.template){
+				if(col.tpl){
 					return;
 				}
 				if(col.sortable === false){

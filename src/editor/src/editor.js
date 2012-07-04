@@ -184,7 +184,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             syncUI:function () {
                 var self = this,
-                    h = self.get("height")
+                    h = self.get("height");
                 if (h) {
                     // 根据容器高度，设置内层高度
                     self._uiSetHeight(h);
@@ -230,7 +230,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     self.fire("wysiwygMode");
                 } else {
                     textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
                     textarea.show();
                     iframe.hide();
                     self.fire("sourceMode");
@@ -239,9 +238,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             // 覆盖 controller
             _uiSetFocused:function (v) {
+                var self = this;
                 // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
+                if (v && self.__docReady) {
+                    self.focus();
                 }
             },
 
@@ -341,6 +341,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            /**
+             * Return editor's value corresponding to command name.
+             * @param {String} name Command name.
+             * @return {*}
+             */
             queryCommandValue:function (name) {
                 return this.execCommand(Utils.getQueryCmd(name));
             },
@@ -643,15 +648,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (htmlDataProcessor = self.htmlDataProcessor) {
                     data = htmlDataProcessor.toDataFormat(data, dataFilter);
-                }
-
-                // webkit bug
-                if (UA.webkit) {
-                    var nodes = new Node(data, null, editorDoc);
-                    nodes.each(function (node) {
-                        self.insertElement(node);
-                    });
-                    return;
                 }
 
                 self.focus();

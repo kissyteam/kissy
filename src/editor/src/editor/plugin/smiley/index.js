@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        init:function (editor) {
+        renderUI:function (editor) {
             editor.addButton("smiley", {
                 tooltip:"插入表情",
                 checkable:true,

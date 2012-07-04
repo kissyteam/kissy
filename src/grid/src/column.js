@@ -23,20 +23,20 @@ KISSY.add('grid/column',function(S,Component,Template){
 		},
 		
 		//get the template of column
-		_getTemplate : function(){
+		_getTpl : function(){
 			var _self = this,
 				attrs = _self.__attrVals,
-				template = _self.get('template');
-			return Template(template).render(attrs);
+				tpl = _self.get('tpl');
+			return Template(tpl).render(attrs);
 
 		},
 		//use template to fill the column
 		_setContent : function(){
 			var _self = this,
 				el = _self.get('el'),
-				template = _self._getTemplate();
+				tpl = _self._getTpl();
 			el.children().remove();
-			new S.Node(template).appendTo(el);
+			new S.Node(tpl).appendTo(el);
 		},
 		//set the title of column
 		_uiSetTitle : function(title){
@@ -64,7 +64,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			this._setContent();
 		},
 		//set the sortable of column
-		_uiSetTemplate: function(v){
+		_uiSetTpl: function(v){
 			if(!this.get('rendered'))
 			{
 				return;
@@ -240,7 +240,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* @type {Function} 
 			* @default true
 			*/
-			resizeable : {
+			resizable : {
 				value : true
 			},
 			/* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort. 
@@ -286,7 +286,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* Only in the configuration of the column can set this property.
 			* @type String
 			*/
-			template :{
+			tpl :{
 				view:true,
 				value : '<div class="ks-grid-hd-inner">'+
 							'<span class="ks-'+CLS_HD_TITLE+'">{{title}}</span>'+
@@ -300,7 +300,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 			* Only in the configuration of the column can set this property.
 			* @type String
 			*/
-			cellTemplate :{
+			cellTpl :{
 				value : ''
 			},
 			/**
@@ -385,7 +385,7 @@ KISSY.add('grid/column',function(S,Component,Template){
 				view : true,
 				value :  null
 			},
-			template : {
+			tpl : {
 				value : ''
 			}
 		}

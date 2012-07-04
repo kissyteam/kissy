@@ -2,11 +2,11 @@
  * @fileOverview grid component for kissy
  * @author dxq613@gmail.com
  */
-KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins,Util) {
+KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Util) {
 	Grid.Bar = Bar;
 	Grid.Store = Store;
-	Grid.PaggingBar = PaggingBar;
-	Grid.PaggingBar.Number = NumberPaggingBar;
+	Grid.PagingBar = PagingBar;
+	Grid.PagingBar.Number = NumberPagingBar;
 	Grid.Plugins = Plugins;
 	Grid.Util = Util;
 
@@ -16,8 +16,8 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PaggingBar,NumberPaggingBar,Plugins
 		"grid/base",
 		"grid/bar",
 		"grid/store",
-		"grid/paggingbar",
-		"grid/numberpaggingbar",
+		"grid/pagingbar",
+		"grid/numberpagingbar",
 		"grid/plugins",
 		"grid/util"
 	]

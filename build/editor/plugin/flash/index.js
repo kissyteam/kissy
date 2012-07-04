@@ -1,13 +1,13 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 21:51
+build time: Jul 3 19:11
 */
 /**
  * Add flash plugin.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
 
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
@@ -18,6 +18,9 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
 
     S.augment(FlashPlugin, {
         renderUI:function (editor) {
+
+            fakeObjects.init(editor);
+
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor.dataFilter;
 
@@ -95,5 +98,5 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     return FlashPlugin;
 
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
+    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
 });
