@@ -70,6 +70,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             // for other browsers, the 'src' attribute should be left empty to
             // trigger iframe's 'load' event.
             (EMPTY_IFRAME_SRC ? (' src="' + EMPTY_IFRAME_SRC + '"') : '') +
+            '>' +
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +

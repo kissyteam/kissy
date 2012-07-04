@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:11
+build time: Jul 4 20:40
 */
 /**
  * Set up editor constructor
@@ -7952,6 +7952,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             // for other browsers, the 'src' attribute should be left empty to
             // trigger iframe's 'load' event.
             (EMPTY_IFRAME_SRC ? (' src="' + EMPTY_IFRAME_SRC + '"') : '') +
+            '>' +
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
@@ -8062,15 +8063,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 self.on("focus", function () {
                     self.get("el").addClass(prefixCls + "editor-focused");
                 });
-            },
-
-            syncUI:function () {
-                var self = this,
-                    h = self.get("height");
-                if (h) {
-                    // 根据容器高度，设置内层高度
-                    self._uiSetHeight(h);
-                }
             },
 
             /**

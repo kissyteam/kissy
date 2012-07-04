@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 18:11
+build time: Jul 4 20:35
 */
 /**
  * Setup component namespace.
@@ -2548,7 +2548,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
                 var el,
                     contentEl = self.get("contentEl");
 
-                el = $("<"+self.get("elTagName")+">");
+                el = $("<" + self.get("elTagName") + ">");
 
                 if (contentEl) {
                     el.append(contentEl);
@@ -2585,12 +2585,17 @@ KISSY.add('component/uibase/boxrender', function (S) {
         },
 
         _uiSetContent:function (c) {
-            var self = this,
+            var self = this, el;
+            // srcNode 时不重新渲染 content
+            // 防止内部有改变，而 content 则是老的 html 内容
+            if (self.get("srcNode") && !self.get("rendered")) {
+            } else {
                 el = self.get("contentEl");
-            if (typeof c == "string") {
-                el.html(c);
-            } else if (c) {
-                el.empty().append(c);
+                if (typeof c == "string") {
+                    el.html(c);
+                } else if (c) {
+                    el.empty().append(c);
+                }
             }
         },
 
