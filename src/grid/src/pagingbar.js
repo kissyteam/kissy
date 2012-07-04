@@ -2,7 +2,7 @@
  * @fileOverview  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control. 
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
+KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
 
 	var ID_FIRST = 'first',
 		ID_PREV = 'prev',
@@ -16,16 +16,16 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 	/**
 	* specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
-	* @name PaggingBar
+	* @name PagingBar
     * @constructor
     * @extends Grid.Bar
     * @memberOf Grid
 	*/
-	var PaggingBar = Bar.extend([Bindable],
-	/** @lends Grid.PaggingBar.prototype*/
+	var PagingBar = Bar.extend([Bindable],
+	/** @lends Grid.PagingBar.prototype*/
 	{
 		/**
-		 * From Bar, Initialize this pagging bar items.
+		 * From Bar, Initialize this paging bar items.
 		 * @override
 		 * @protected
 		 */
@@ -71,7 +71,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				store.load({ start : start, limit : pageSize, pageIndex : index });
 			}
 		},
-		//after store loaded data,reset the information of pagging bar and buttons state
+		//after store loaded data,reset the information of paging bar and buttons state
 		_afterStoreLoad : function (store, params) {
 			var _self = this,
 				pageSize = _self.get('pageSize'),
@@ -160,7 +160,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				store = _self.get('store');
 			_self._afterStoreLoad(store,params);
 		},
-		//get the items of pagging bar 
+		//get the items of paging bar 
 		_getItems : function(){
 			var _self = this,
 				items = _self.get('items');
@@ -283,7 +283,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 			textEl.val(value);
 		}
 	},{
-		ATTRS : /** @lends Grid.PaggingBar.prototype*/
+		ATTRS : /** @lends Grid.PagingBar.prototype*/
 		{
 			/**
 			* the text of button for first page
@@ -377,7 +377,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				value : '共{totalCount}条记录'
 			},
 			/**
-			* current page of the pagging bar
+			* current page of the paging bar
 			* @private
 			* @default {Number} 0
 			*/
@@ -385,7 +385,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				value : 0
 			},
 			/**
-			* total page of the pagging bar
+			* total page of the paging bar
 			* @private
 			* @default {Number} 0
 			*/
@@ -393,7 +393,7 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 				value : 0	
 			},
 			/**
-			* total count of the store that the pagging bar bind to
+			* total count of the store that the paging bar bind to
 			* @private
 			* @default {Number} 0
 			*/
@@ -424,11 +424,11 @@ KISSY.add('grid/paggingbar', function (S,Component,Bar,Bindable) {
 		ID_CURRENT_PAGE : ID_CURRENT_PAGE,
 		ID_TOTAL_COUNT : ID_TOTAL_COUNT
 	},{
-		xclass : 'paggingbar',
+		xclass : 'pagingbar',
 		priority : 2	
 	});
 
-	return PaggingBar;
+	return PagingBar;
 	
 },{
     requires:['component','./bar','./bindable']

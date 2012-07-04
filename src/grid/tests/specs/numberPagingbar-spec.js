@@ -1,4 +1,4 @@
-KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
+KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 	
 	/**/
 	describe("测试初始化", function () {
@@ -6,9 +6,9 @@ KISSY.use('grid/numberpaggingbar,grid/store',function(S,NBar,Store){
 			render : '#nbar'
 		});
 		bar.render();
-		var barEl = S.one('#nbar').one('.ks-number-paggingbar'),
+		var barEl = S.one('#nbar').one('.ks-number-pagingbar'),
 			items = barEl.children();
-		it('测试paggingbar生成',function(){
+		it('测试pagingbar生成',function(){
 			expect(barEl).toNotBe(null);
 			expect(items.length).toBe(bar.get('children').length);
 		});

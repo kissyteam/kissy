@@ -1,4 +1,4 @@
-KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
+KISSY.use('grid/pagingbar,grid/store',function(S,PBar,Store){
 	
 	var store = new Store({url:'../data/number40.php'}),
 		bar = new PBar({
@@ -13,11 +13,11 @@ KISSY.use('grid/paggingbar,grid/store',function(S,PBar,Store){
 	function getLog(){
 		return S.one('#log').text();
 	}
-	var barEl = S.one('#pbar').one('.ks-paggingbar'),
+	var barEl = S.one('#pbar').one('.ks-pagingbar'),
 		items = barEl.children();
-	describe("测试PaggingBar以及主要子元素的生成", function () {
+	describe("测试PagingBar以及主要子元素的生成", function () {
 		
-		it('测试paggingbar生成',function(){
+		it('测试pagingbar生成',function(){
 			expect(barEl).toNotBe(null);
 			expect(items.length).toBe(bar.get('children').length);
 		});

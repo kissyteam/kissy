@@ -2,21 +2,21 @@
  * @fileOverview  a specialized paggingbar which use number buttons 
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
+KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
 		CLS_ACTIVE = 'ks-active';
 	/**
-	* specialized pagging bar auto show numberic buttons
+	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
 	* @name Number
     * @constructor
-    * @extends Grid.PaggingBar
-    * @memberOf Grid.PaggingBar
+    * @extends Grid.PagingBar
+    * @memberOf Grid.PagingBar
 	*/
-	var numberPaggingBar = PBar.extend({
+	var numberPagingBar = PBar.extend({
 		/**
-		* get the initial items of pagging bar
+		* get the initial items of paging bar
 		* @protected
 		* @override
 		*/
@@ -197,13 +197,13 @@ KISSY.add('grid/numberpaggingbar', function (S,Component,PBar,Bar) {
 			}
 		}
 	},{
-		xclass : 'number-paggingbar',
+		xclass : 'number-pagingbar',
 		priority : 3	
 	});
 
 
-	PBar.Number = numberPaggingBar;
-	return numberPaggingBar;
+	PBar.Number = numberPagingBar;
+	return numberPagingBar;
 },{
-	 requires:['component','./paggingbar','./bar']
+	 requires:['component','./pagingbar','./bar']
 });
