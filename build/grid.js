@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 21:19
+build time: Jul 4 16:00
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -383,10 +383,10 @@ KISSY.add("grid/barrender", function(S,  Component) {
  */
 KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 
-	var CLS_GRID_WITH = 'ks-grid-width',
-		CLS_GRID_HEIGHT = 'ks-grid-height',
-		CLS_GREID_TBAR = 'ks-grid-tbar',
-		CLS_GREID_BBAR = 'ks-grid-bbar',
+	var CLS_GRID_WITH = 'grid-width',
+		CLS_GRID_HEIGHT = 'grid-height',
+		CLS_GREID_TBAR = 'grid-tbar',
+		CLS_GREID_BBAR = 'grid-bbar',
 		HEIGHT_BAR_PADDING = 10;
 		
 	/**
@@ -514,8 +514,8 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			var _self = this,
 				bbar = _self.get('bbar'),
 				tbar = _self.get('tbar');
-			_self._initBar(bbar,CLS_GREID_BBAR,'bbar');
-			_self._initBar(tbar,CLS_GREID_TBAR,'tbar');
+			_self._initBar(bbar,_self.get('prefixCls') + CLS_GREID_BBAR,'bbar');
+			_self._initBar(tbar,_self.get('prefixCls') + CLS_GREID_TBAR,'tbar');
 		},
 		//set bar's elCls to identify top bar or bottom bar
 		_initBar : function(bar,cls,name){
@@ -596,10 +596,11 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		},
 		//when set grid's width, the width of its children also chenged
 		_uiSetWidth : function(w){
-			var _self = this;
+			var _self = this,
+                prefixCls = _self.get('prefixCls');
 			_self.get('header').set('width',w);
 			_self.get('body').set('width',w);
-			_self.get("el").addClass(CLS_GRID_WITH);
+			_self.get("el").addClass( prefixCls + CLS_GRID_WITH);
 		},
 		//when set grid's height,the scroll can effect the width of its body and header
 		_uiSetHeight : function(h){
@@ -622,7 +623,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 				}
 				header.setTableWidth();
 			}
-			_self.get("el").addClass(CLS_GRID_HEIGHT);
+			_self.get("el").addClass(_self.get('prefixCls') + CLS_GRID_HEIGHT);
 		},
 		_uiSetForceFit : function(v){
 			var _self = this;
@@ -2377,7 +2378,8 @@ KISSY.add('grid/header',function(S,Component,Column){
 				children[index] = columnControl;
 				columns[index] = columnControl;
 			});
-			children.push(_self._createEmptyColumn());
+            _self.set('emptyColumn',emptyColumn);
+			children.push(emptyColumn);
 		},
 		/**
 		* get the columns of this header,the result equals the 'children' property .
@@ -2570,12 +2572,22 @@ KISSY.add('grid/header',function(S,Component,Column){
 		*/
 		setTableWidth : function(){
 			var _self = this,
-				columnsWidth = _self.getColumnsWidth();
+				columnsWidth = _self.getColumnsWidth(),
+                emptyColumn = _self.get('emptyColumn'),
+                width = _self.get('width');
 			if(_self.get('forceFit')){
 				_self.forceFitColumns();
 			}
 			if(_self._isAllowScrollLeft()){
 				columnsWidth += CLS_SCROLL_WITH;
+                var emptyEl = emptyColumn.get('el');
+                if(emptyEl){
+                    if(width > columnsWidth){
+                        emptyEl.css('width','auto');
+                    }else{
+                       emptyEl.css('width',CLS_SCROLL_WITH);
+                    }
+                }
 			}
 			_self.get('view')._setTableWidth(columnsWidth);
 		},

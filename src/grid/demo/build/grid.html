@@ -127,12 +127,13 @@
 				columns :  S.clone(columns),
 				height:500,
 				width:800,
-				forceFit:true,
+				//forceFit:true,
 				plugins:[Grid.Plugins.CheckSelection],
 				store : store,
 				bbar : {xclass:'pagingbar-number',store : store}
 			});
 			grid.render();
+			grid.addColumn({title:'附加列',width:500});
 			store.load();
 		})();/**/
 	 });
