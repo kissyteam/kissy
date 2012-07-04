@@ -1,6 +1,6 @@
 /**
  * @fileOverview grid component for kissy
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Util) {
 	Grid.Bar = Bar;

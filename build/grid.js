@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 21:19
+build time: Jul 4 19:55
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 
@@ -14,10 +14,10 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
      * Bar class is a collection of buttons,links and other command control.
      * @name Bar
      * @constructor
-     * @extends Component.Container
+     * @extends Component.Controller
      * @memberOf Grid
      */
-	var Bar = Component.Container.extend(
+	var Bar = Component.Controller.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	
@@ -60,7 +60,6 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 		//use BarRender.types to instantiate item
 		//and bind events to it
 		_createItem : function(item){
-			var _self = this;
 			if(item instanceof Component.Controller){
 				return item;
 			}
@@ -69,9 +68,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 				item.xtype = 'button';
 			}
 			var typeCls = BarItem.types[item.xtype] , 
-				itemControl = null,
-
-				listeners = item.listeners;
+				itemControl = null;
 			if(typeCls){
 				itemControl = new typeCls(item);
 			}else{
@@ -106,17 +103,13 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
     requires:['component','./barrender', './baritem']
 });/**
  * @fileOverview buttons or controls of toolbar
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/baritem',function(S,Component,Button){
-	
-	var BarItemRender =  Component.Render.extend({
+KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
-		renderUI:function(){
-			var el = this.get("el");
-			el.addClass("ks-inline-block");
-		}
-	});
+
+    var KeyCodes=Node.KeyCodes;
+
 	/**
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
      * @name BarItem
@@ -125,13 +118,13 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @memberOf Grid.Bar
      */
 	var BarItem = Component.Controller.extend({
-		/* render baritem's dom
+		/* render baritem 's dom
 		* @protected
         * @override
 		*/
-		renderUI:function() {
+		createDom:function() {
             var el = this.get("el");
- 
+            el.addClass("ks-inline-block");
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-bar-item"));
             }
@@ -172,16 +165,10 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 			/**
 			* Whether this component can get focus.
 			* @overrided
-			* @default {Bealoon} false
+			* @default {boolean} false
 			*/
 			focusable : {
 				value : false
-			},
-			/**
-			* @private
-			*/
-			xrender : {
-				value : BarItemRender	
 			}
 		}
 	},{
@@ -212,7 +199,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 				e.type == "keydown" ||
 				e.keyCode == KeyCodes.SPACE &&
 					e.type == "keyup") {
-				return this.performActionInternal(e);
+				return this.performActionInternal.call(this,e);
 			}
 			// Return true for space keypress (even though the event is handled on keyup)
 			// as preventDefault needs to be called up keypress to take effect in IE and
@@ -356,10 +343,10 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 
 	return	BarItem;
 },{
-	requires:['component','button']
+	requires:['component','button','node']
 });/**
  * @fileOverview bar aria from bar according to current baritem
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add("grid/barrender", function(S,  Component) {
 
@@ -379,442 +366,455 @@ KISSY.add("grid/barrender", function(S,  Component) {
 	requires:['component']
 });/**
  * @fileOverview This class specifies the definition for whow grid
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
+KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
 
-	var CLS_GRID_WITH = 'ks-grid-width',
-		CLS_GRID_HEIGHT = 'ks-grid-height',
-		CLS_GREID_TBAR = 'ks-grid-tbar',
-		CLS_GREID_BBAR = 'ks-grid-bbar',
-		HEIGHT_BAR_PADDING = 10;
-		
-	/**
-	 * This class specifies the definition for the grid which contains {@link Grid.Header},{@link Grid.GridBody}
+    var CLS_GRID_WITH = 'ks-grid-width',
+        CLS_GRID_HEIGHT = 'ks-grid-height',
+        CLS_GRID_TBAR = 'ks-grid-tbar',
+        CLS_GRID_BBAR = 'ks-grid-bbar',
+        HEIGHT_BAR_PADDING = 10;
+
+    /**
+     * This class specifies the definition for the grid which contains {@link Grid.Header},{@link Grid.GridBody}
      * @name Grid
      * @constructor
-     * @extends Component.Container
-	 * @extends Grid.Bindable
+     * @extends Component.Controller
+     * @extends Grid.Bindable
      */
-	var grid = Component.Container.extend({
-		/* 
-		* For overridden.
-		* @protected
-        * @override
-		*/
-		initializer : function(){
-			var _self = this,
-				children = _self.get('children'),
-				tbar = null,
-				bbar = null;
-			_self._initHeader();
-			_self._initBody();
-			_self._initBars();
-			tbar = _self.get('tbar'),
-			bbar = _self.get('bbar');
-			if(tbar){
-				children.push(tbar);
-			}
-			children.push(_self.get('header'));
-			children.push(_self.get('body'));
-			if(bbar){
-				children.push(bbar);
-			}
-			_self._initLoadMask();
-		},
-		/**
-		* add a column to grid
-		* @param {Objcet|Grid.Column} column a column config or an instance of {@link Grid.Column}
-		* @return {Grid.Column}
-		*/
-		addColumn : function(column,index){
-			var _self = this,
-				column = _self.get('header').addColumn(column,index);
-			//_self.get('body').resetColumns();
-			return column;
-		},
-		/**
-		* @private
-		*/
-		bindUI : function(){
-			var _self = this;
-			_self._bindHeaderEvent();
-			_self._bindBodyEvent();
-		},
-		/**
-		* clear the selected status of all the rows
-		*/
-		clearSelection : function(){
-			var _self = this;
-			_self.get('body').clearSelection();
-		},
-		/**
-		* remove one column from this grid
-		* @param {Grid.Column} column the removed column
-		*/
-		removeColumn : function(column){
-			var _self = this;
-			_self.get('header').removeColumn(column);
-			//_self.get('body').resetColumns();
-		},
-		/**
-		* set the rows' selected status
-		* @param {Array|Object} records the records which will be selected
-		*/
-		setSelection : function(records){
-			this.get('body').setSelection(records);
-		},
-		/**
-		* set all rows selected
-		*/
-		setAllSelection : function(){
-			this.get('body').setAllSelection();
-		},
-		/**
-		* show data in this grid
-		* @param {Array} data show the given data in table
-		*/
-		showData : function(data){
-			this.get('body').showData(data);
-		},
-		//init header,if there is not a header property in config,instance it
-		_initHeader : function(){
-			var _self = this,
-				header = _self.get('header');
-			if(!header){
-				header = new Header({
-					columns : _self.get('columns'),
-					tableCls : _self.get('tableCls'),
-					forceFit : _self.get('forceFit'),
-					width : _self.get('width')
-				});
-				_self.set('header',header);
-			}
-		},
-		//init grid body
-		_initBody : function(){
-			var _self = this,
-				body = _self.get('body');
-			if(!body){
-				var attrs = _self.getAttrs(),
-					toBody = {},
-					bodyConfig = null;
+    var grid = Component.Controller.extend({
 
-				for(var name in attrs){
-					if(attrs.hasOwnProperty(name) && attrs[name].toBody){
-						toBody[name] = _self.get(name);
-					}
-				}
-				bodyConfig = S.merge(toBody,_self.get('bodyConfig'));
-				body = new GridBody(bodyConfig);
-				_self.set('body',body);
-			}
-		},
-		_initBars : function(){
-			var _self = this,
-				bbar = _self.get('bbar'),
-				tbar = _self.get('tbar');
-			_self._initBar(bbar,CLS_GREID_BBAR,'bbar');
-			_self._initBar(tbar,CLS_GREID_TBAR,'tbar');
-		},
-		//set bar's elCls to identify top bar or bottom bar
-		_initBar : function(bar,cls,name){
-			var _self = this;
-			if(bar){
-				if(bar.xclass){
-					bar = Component.create(bar);
-				}
-				bar.set('elCls',cls);
-				_self.set(name,bar);
-			}
-			return bar;
-		},
-		//when set 'loadMask = true' ,create a loadMask instance
-		_initLoadMask : function(){
-			var _self = this,
-				loadMask = _self.get('loadMask');
-			if(loadMask && !loadMask.show){
-				loadMask = new Util.LoadMask(_self.get('el'));
-				_self.set('loadMask',loadMask);
-			}
-		},
-		//bind header event,when column changed,followed this componet
-		_bindHeaderEvent : function(){
-			var _self = this,
-				header = _self.get('header'),
-				body = _self.get('body'),
-				store = _self.get('store');
-			header.on('afterWidthChange',function(e){
-				var sender = e.target;
-				if(sender !== header){
-					body.resetColumnsWidth(sender);
-				}
-			});
+        createDom:function () {
+            var _self = this;
 
-			header.on('afterSortStateChange',function(e){
-				var column = e.target,
-					val = e.newVal;
-				if(val && store){
-					store.sort(column.get('dataIndex'),column.get('sortState'));
-				}
-			});
+            // 提前！！
+            if (_self.get("width")) {
+                _self.get("el").addClass(CLS_GRID_WITH);
+            }
 
-			header.on('afterVisibleChange',function(e){
-				var sender = e.target;
-				if(sender !== header){
-					body.setColumnVisible(sender);
-				}
-			});
+            if (_self.get("height")) {
+                _self.get("el").addClass(CLS_GRID_HEIGHT);
+            }
 
-			header.on('forceFitWidth',function(e){
-				if(_self.get('rendered')){
-					body.resetColumns();
-				}
-			});
-			
-			header.on('add',function(e){
-				if(_self.get('rendered')){
-					body.resetColumns();
-				}
-			});
+            _self._initHeader();
+            _self._initBody();
+            _self._initBars();
+            _self._initLoadMask();
+        },
 
-			header.on('remove',function(e){
-				if(_self.get('rendered')){
-					body.resetColumns();
-				}
-			});
+        /*
+         * For overridden.
+         * @protected
+         * @override
+         */
+        renderUI:function () {
+            var _self = this;
+            S.each(['header', 'body', 'tbar', 'bbar'], function (c) {
+                if (c = _self.get(c)) {
+                    c.render();
+                }
+            });
+        },
+        /**
+         * add a column to grid
+         * @param {Object|Grid.Column} column a column config or an instance of {@link Grid.Column}
+         * @return {Grid.Column}
+         */
+        addColumn:function (column, index) {
+            var _self = this;
+            column = _self.get('header').addColumn(column, index);
+            return column;
+        },
+        /**
+         * @private
+         */
+        bindUI:function () {
+            var _self = this;
+            _self._bindHeaderEvent();
+            _self._bindBodyEvent();
+        },
+        /**
+         * clear the selected status of all the rows
+         */
+        clearSelection:function () {
+            var _self = this;
+            _self.get('body').clearSelection();
+        },
+        /**
+         * remove one column from this grid
+         * @param {Grid.Column} column the removed column
+         */
+        removeColumn:function (column) {
+            var _self = this;
+            _self.get('header').removeColumn(column);
+            //_self.get('body').resetColumns();
+        },
+        /**
+         * set the rows' selected status
+         * @param {Array|Object} records the records which will be selected
+         */
+        setSelection:function (records) {
+            this.get('body').setSelection(records);
+        },
+        /**
+         * set all rows selected
+         */
+        setAllSelection:function () {
+            this.get('body').setAllSelection();
+        },
+        /**
+         * show data in this grid
+         * @param {Array} data show the given data in table
+         */
+        showData:function (data) {
+            this.get('body').showData(data);
+        },
+        //init header,if there is not a header property in config,instance it
+        _initHeader:function () {
+            var _self = this,
+                header = _self.get('header');
+            if (!header) {
+                header = new Header({
+                    columns:_self.get('columns'),
+                    tableCls:_self.get('tableCls'),
+                    forceFit:_self.get('forceFit'),
+                    width:_self.get('width'),
+                    render:_self.get("el"),
+                    parent:_self
+                }).create();
+                _self.set('header', header);
+            }
+        },
+        //init grid body
+        _initBody:function () {
+            var _self = this,
+                body = _self.get('body');
+            if (!body) {
+                var attrs = _self.getAttrs(),
+                    toBody = {},
+                    bodyConfig;
 
-		},
-		//when body scrolled, header can followed
-		_bindBodyEvent : function(){
-			var _self = this,
-				body = _self.get('body'),
-				header = _self.get('header');
-			body.on('scroll',function(event){
-				header.scrollTo({left : event.scrollLeft,top : event.scrollTop});
-			});
-		},
-		//when set grid's width, the width of its children also chenged
-		_uiSetWidth : function(w){
-			var _self = this;
-			_self.get('header').set('width',w);
-			_self.get('body').set('width',w);
-			_self.get("el").addClass(CLS_GRID_WITH);
-		},
-		//when set grid's height,the scroll can effect the width of its body and header
-		_uiSetHeight : function(h){
-			var _self = this,
-				bodyHeight = h,
-				header = _self.get('header'),
-				tbar = _self.get('tbar'),
-				bbar = _self.get('bbar');
-			bodyHeight -= header.get('el').height();
-			if(tbar){
-				bodyHeight -= tbar.get('el').height() + HEIGHT_BAR_PADDING;
-			}
-			if(bbar){
-				bodyHeight -= bbar.get('el').height() + HEIGHT_BAR_PADDING ;
-			}/**/
-			_self.get('body').set('height',bodyHeight);
-			if(_self.get('rendered')){
-				if(_self.get('forceFit')){
-					header.forceFitColumns();
-				}
-				header.setTableWidth();
-			}
-			_self.get("el").addClass(CLS_GRID_HEIGHT);
-		},
-		_uiSetForceFit : function(v){
-			var _self = this;
-			_self.get('header').set('forceFit',v);
-			_self.get('body').set('forceFit',v);
-		},
-		_uiSetMultiSelect : function(v){
-			this.get('body').set('multiSelect',v);
-		}
+                for (var name in attrs) {
+                    if (attrs.hasOwnProperty(name) && attrs[name].toBody) {
+                        toBody[name] = _self.get(name);
+                    }
+                }
+                bodyConfig = S.merge(toBody, _self.get('bodyConfig'));
+                bodyConfig.render = _self.get("el");
+                bodyConfig.parent=_self;
+                body = new GridBody(bodyConfig).create();
+                _self.set('body', body);
+            }
+        },
+        _initBars:function () {
+            var _self = this,
+                bbar = _self.get('bbar'),
+                tbar = _self.get('tbar');
+            _self._initBar(bbar, CLS_GRID_BBAR, 'bbar');
+            _self._initBar(tbar, CLS_GRID_TBAR, 'tbar');
+        },
+        //set bar's elCls to identify top bar or bottom bar
+        _initBar:function (bar, cls, name) {
+            var _self = this;
+            if (bar) {
+                if (bar.xclass) {
+                    bar.render = _self.get("el");
+                    bar.parent=_self;
+                    bar = Component.create(bar).create();
+                }
+                bar.set('elCls', cls);
+                _self.set(name, bar);
+            }
+            return bar;
+        },
+        //when set 'loadMask = true' ,create a loadMask instance
+        _initLoadMask:function () {
+            var _self = this,
+                loadMask = _self.get('loadMask');
+            if (loadMask && !loadMask.show) {
+                loadMask = new Util.LoadMask(_self.get('el'));
+                _self.set('loadMask', loadMask);
+            }
+        },
+        //bind header event,when column changed,followed this component
+        _bindHeaderEvent:function () {
+            var _self = this,
+                header = _self.get('header'),
+                body = _self.get('body'),
+                store = _self.get('store');
+            header.on('afterWidthChange', function (e) {
+                var sender = e.target;
+                if (sender !== header) {
+                    body.resetColumnsWidth(sender);
+                }
+            });
 
-	},{
-		ATTRS : {
-			/**
-			* the header of this grid
-			* @private
-			* @type {Grid.Header}
-			*/
-			header : {
-				
-			},
-			/**
-			* The table show data
-			* @private
-			* @type {Grid.GridBody}
-			*/
-			body : {
-				
-			},
-			/**
-			* the config of the body of this componet
-			*/
-			bodyConfig : {
-				value : {}
-			},
-			/**
-			*@private
-			*/
-			checkable : {
-				value : false
-			},
-			/**
-			* columns of this grid,use to initial header and body
-			* @see Grid.Column
-			* @private
-			*/
-			columns : {
-				toBody : true,
-				value : []
-			},
-			/**
-			* true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex. 
-			* Then they are all proportionally changed in width so that the entire content width is used.
-			* @type {Boolean}
-			* @default 'false'
-			*/
-			forceFit : {
-				toBody : true,
-				value : false
-			},
-			height :{
-				sync : true	
-			},
-			/**
-			* The CSS class to apply to this header's table and body's table elements.
-			* @type {String}
-			* @default 'ks-grid-table' this css cannot be ovrrided
-			*/
-			tableCls : {
-				toBody : true,
-				value : ''
-			},
-			/**
-			* Does it allow select multiple  rows
-			* @type {Boolean}
-			* @default false
-			*/
-			multiSelect : {
-				toBody : true,
-				value : false
-			},
-			/**
-			* True to stripe the rows.
-			* @type {Boolean}
-			* @default true
-			*/
-			stripeRows : {
-				toBody : true,
-				value : true
-			},
-			store : {
-				toBody : true	
-			},
-			loadMask : {
-				toBody : true		
-			},
-			/**
-			* @override 
-			* when set this grid's width ,the header and body changed
-			*/
-			width : {
-				toBody : true,
-				sync : true
-			},
-			/**
-			* the collection of body's events
-			* @type {Array}
-			*/
-			events : {
-				value : [
-					/**  
-					* after show a collection data in this component
-					* @name Grid#aftershow
-					* @event  
-					*/
-					'aftershow'	,
-					/**  
-					* fired when click one cell of row
-					* @name Grid#cellclick
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {String} e.field the dataIndex of the column which this cell belong to
-					* @param {HTMLElement} e.row the dom elment of this row
-					* @param {HTMLElement} e.cell the dom elment of this cell
-					* @param {HTMLElement} e.domTarget the dom elment of the click target
-					*/
-					'cellclick',
-					/**  
-					* fired when click one row
-					* @name Grid#rowclick
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowclick',
-					/**  
-					* add a row in this component.in general,this event fired after adding a record to the store
-					* @name Grid#rowcreated
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record adding to the store
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowcreated',
-					/**  
-					* remove a row from this component.in general,this event fired after delete a record from the store
-					* @name Grid#rowremoved
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record removed from the store
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowremoved',
-					/**  
-					* when click the row,in multiple select model the selected status toggled
-					* @name Grid#rowselected
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowselected',
-					/**  
-					* fire after cancel selected status
-					* @name Grid#rowunselected
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowunselected',
-					/**  
-					* remove a row from this component.in general,this event fired after delete a record from the store
-					* @name Grid#scroll
-					* @event  
-					* @param {event} e  event object
-					* @param {Number} e.scrollLeft the horizontal value that the body scroll to
-					* @param {Number} e.scrollTop the vertical value that the body scroll to
-					*/
-					'scroll'
-				]
-			}
-		}
-	},{
-		xclass : 'grid',
-		priority : 1	
-	});
-	return grid;
-},{
-	requires:['component','./header','./gridbody','./util']
-});KISSY.add('grid/bindable',function(S){
+            header.on('afterSortStateChange', function (e) {
+                var column = e.target,
+                    val = e.newVal;
+                if (val && store) {
+                    store.sort(column.get('dataIndex'), column.get('sortState'));
+                }
+            });
+
+            header.on('afterVisibleChange', function (e) {
+                var sender = e.target;
+                if (sender !== header) {
+                    body.setColumnVisible(sender);
+                }
+            });
+
+            header.on('forceFitWidth', function () {
+                if (_self.get('rendered')) {
+                    body.resetColumns();
+                }
+            });
+
+            header.on('add', function () {
+                if (_self.get('rendered')) {
+                    body.resetColumns();
+                }
+            });
+
+            header.on('remove', function () {
+                if (_self.get('rendered')) {
+                    body.resetColumns();
+                }
+            });
+
+        },
+        //when body scrolled, header can followed
+        _bindBodyEvent:function () {
+            var _self = this,
+                body = _self.get('body'),
+                header = _self.get('header');
+            body.on('scroll', function (event) {
+                header.scrollTo({left:event.scrollLeft, top:event.scrollTop});
+            });
+        },
+        //when set grid's width, the width of its children also changed
+        _uiSetWidth:function (w) {
+            var _self = this;
+            _self.get('header').set('width', w);
+            _self.get('body').set('width', w);
+        },
+        //when set grid's height,the scroll can effect the width of its body and header
+        _uiSetHeight:function (h) {
+            var _self = this,
+                bodyHeight = h,
+                header = _self.get('header'),
+                tbar = _self.get('tbar'),
+                bbar = _self.get('bbar');
+            bodyHeight -= header.get('el').height();
+            if (tbar) {
+                bodyHeight -= tbar.get('el').height() + HEIGHT_BAR_PADDING;
+            }
+            if (bbar) {
+                bodyHeight -= bbar.get('el').height() + HEIGHT_BAR_PADDING;
+            }
+            /**/
+            _self.get('body').set('height', bodyHeight);
+            if (_self.get('rendered')) {
+                if (_self.get('forceFit')) {
+                    header.forceFitColumns();
+                }
+                header.setTableWidth();
+            }
+        },
+        _uiSetForceFit:function (v) {
+            var _self = this;
+            _self.get('header').set('forceFit', v);
+            _self.get('body').set('forceFit', v);
+        },
+        _uiSetMultiSelect:function (v) {
+            this.get('body').set('multiSelect', v);
+        }
+    }, {
+        ATTRS:{
+            /**
+             * the header of this grid
+             * @private
+             * @type {Grid.Header}
+             */
+            header:{
+
+            },
+            /**
+             * The table show data
+             * @private
+             * @type {Grid.GridBody}
+             */
+            body:{
+
+            },
+            /**
+             * the config of the body of this component
+             */
+            bodyConfig:{
+                value:{}
+            },
+            /**
+             *@private
+             */
+            checkable:{
+                value:false
+            },
+            /**
+             * columns of this grid,use to initial header and body
+             * @see Grid.Column
+             * @private
+             */
+            columns:{
+                toBody:true,
+                value:[]
+            },
+            /**
+             * true to force the columns to fit into the available width.
+             * Headers are first sized according to configuration, whether that be a specific width, or flex.
+             * Then they are all proportionally changed in width so that the entire content width is used.
+             * @type {Boolean}
+             * @default 'false'
+             */
+            forceFit:{
+                toBody:true,
+                value:false
+            },
+            height:{
+            },
+            /**
+             * The CSS class to apply to this header's table and body's table elements.
+             * @type {String}
+             * @default 'ks-grid-table' this css cannot be overridden
+             */
+            tableCls:{
+                toBody:true,
+                value:''
+            },
+            /**
+             * Does it allow select multiple  rows
+             * @type {Boolean}
+             * @default false
+             */
+            multiSelect:{
+                toBody:true,
+                value:false
+            },
+            /**
+             * True to stripe the rows.
+             * @type {Boolean}
+             * @default true
+             */
+            stripeRows:{
+                toBody:true,
+                value:true
+            },
+            store:{
+                toBody:true
+            },
+            loadMask:{
+                toBody:true
+            },
+            /**
+             * @override
+             * when set this grid's width ,the header and body changed
+             */
+            width:{
+                toBody:true
+            },
+            /**
+             * the collection of body's events
+             * @type {Array}
+             */
+            events:{
+                value:[
+                /**
+                 * after show a collection data in this component
+                 * @name Grid#aftershow
+                 * @event
+                 */
+                    'aftershow'    ,
+                /**
+                 * fired when click one cell of row
+                 * @name Grid#cellclick
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record showed by this row
+                 * @param {String} e.field the dataIndex of the column which this cell belong to
+                 * @param {HTMLElement} e.row the dom element of this row
+                 * @param {HTMLElement} e.cell the dom element of this cell
+                 * @param {HTMLElement} e.domTarget the dom element of the click target
+                 */
+                    'cellclick',
+                /**
+                 * fired when click one row
+                 * @name Grid#rowclick
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record showed by this row
+                 * @param {HTMLElement} e.row the dom element of this row
+                 */
+                    'rowclick',
+                /**
+                 * add a row in this component.in general,this event fired after adding a record to the store
+                 * @name Grid#rowcreated
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record adding to the store
+                 * @param {HTMLElement} e.row the dom element of this row
+                 */
+                    'rowcreated',
+                /**
+                 * remove a row from this component.in general,this event fired after delete a record from the store
+                 * @name Grid#rowremoved
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record removed from the store
+                 * @param {HTMLElement} e.row the dom element of this row
+                 */
+                    'rowremoved',
+                /**
+                 * when click the row,in multiple select model the selected status toggled
+                 * @name Grid#rowselected
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record showed by this row
+                 * @param {HTMLElement} e.row the dom element of this row
+                 */
+                    'rowselected',
+                /**
+                 * fire after cancel selected status
+                 * @name Grid#rowunselected
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Object} e.record the record showed by this row
+                 * @param {HTMLElement} e.row the dom element of this row
+                 */
+                    'rowunselected',
+                /**
+                 * remove a row from this component.in general,this event fired after delete a record from the store
+                 * @name Grid#scroll
+                 * @event
+                 * @param {event} e  event object
+                 * @param {Number} e.scrollLeft the horizontal value that the body scroll to
+                 * @param {Number} e.scrollTop the vertical value that the body scroll to
+                 */
+                    'scroll'
+                ]
+            }
+        }
+    }, {
+        xclass:'grid',
+        priority:1
+    });
+    return grid;
+}, {
+    requires:['component', './header', './gridbody', './util']
+});/**
+ * @fileOverview bindable extension class.
+ * @author dxq613@gmail.com, yiminghe@gmail.com
+ */
+KISSY.add('grid/bindable',function(S){
 	
 	/**
      * bindable extension class.
@@ -825,6 +825,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 	function bindable(){
 		
 	}
+
 	bindable.ATTRS = {
 		/**
 		* The {@link Grid.Store} to bind this GridBody to
@@ -842,7 +843,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		loadMask : {
 			value : true
 		}
-	}
+	};
 
 
 	S.augment(bindable,
@@ -858,7 +859,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 			if(!store){
 				return;
 			}
-			store.on('beforeload',function(e){
+			store.on('beforeload',function(){
 				if(loadMask && loadMask.show){
 					loadMask.show();
 				}
@@ -891,7 +892,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		* after store load data
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:load
 		*/
 		onLoad : function(e){
@@ -900,7 +901,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		*  occurred exception when store is loading data
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:exception
 		*/
 		onException : function(e){
@@ -909,7 +910,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		* after added data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:addrecords
 		*/
 		onAdd : function(e){
@@ -918,7 +919,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		* after remvoed data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:removerecords
 		*/
 		onRemove : function(e){
@@ -927,7 +928,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		* after updated data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:updaterecord
 		*/
 		onUpdate : function(e){
@@ -936,7 +937,7 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 		/**
 		* @protected
 		* after local sorted data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:localsort
 		*/
 		onLocalSort : function(e){
@@ -946,410 +947,400 @@ KISSY.add('grid/base',function(S,Component,Header,GridBody,Util){
 	return bindable;
 });/**
  * @fileOverview This class specifies the definition for a column of a grid.
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/column',function(S,Component,Template){
+KISSY.add('grid/column', function (S, Component, Template) {
 
-	var CLS_HD_TITLE = 'grid-hd-title',
-		SORT_PREFIX = 'sort-',
-		SORT_ASC = 'ASC',
-		SORT_DESC = 'DESC',
-		CLS_HD_TRIGGER = 'grid-hd-menu-trigger';
+    var CLS_HD_TITLE = 'grid-hd-title',
+        SORT_PREFIX = 'sort-',
+        SORT_ASC = 'ASC',
+        SORT_DESC = 'DESC',
+        CLS_HD_TRIGGER = 'grid-hd-menu-trigger';
 
 
-	/**
-	* render of column
-	*/
-	var columnRender = Component.Render.extend({
-		/**
-		* @override
-		*/
-		renderUI : function(){
-			this._setContent();
-		},
-		
-		//get the template of column
-		_getTpl : function(){
-			var _self = this,
-				attrs = _self.__attrVals,
-				tpl = _self.get('tpl');
-			return Template(tpl).render(attrs);
+    /**
+     * render of column
+     */
+    var columnRender = Component.Render.extend({
+        /**
+         * @override
+         */
+        renderUI:function () {
+            this._setContent();
+        },
 
-		},
-		//use template to fill the column
-		_setContent : function(){
-			var _self = this,
-				el = _self.get('el'),
-				tpl = _self._getTpl();
-			el.children().remove();
-			new S.Node(tpl).appendTo(el);
-		},
-		//set the title of column
-		_uiSetTitle : function(title){
-			if(!this.get('rendered'))
-			{
-				return;
-			}
-			this._setContent();
-		},
-		//set the draggable of column
-		_uiSetDraggable : function(v){
-			if(!this.get('rendered'))
-			{
-				return;
-			}
-			this._setContent();
-		},
-		//set the sortableof column
-		_uiSetSortable : function(v){
+        //get the template of column
+        _getTpl:function () {
+            var _self = this,
+                attrs = _self.getAttrVals(),
+                tpl = _self.get('tpl');
+            return Template(tpl).render(attrs);
 
-			if(!this.get('rendered'))
-			{
-				return;
-			}
-			this._setContent();
-		},
-		//set the sortable of column
-		_uiSetTpl: function(v){
-			if(!this.get('rendered'))
-			{
-				return;
-			}
-			this._setContent();
-		},
-		//set the sort state of column
-		_uiSetSortState : function(v){
-			var _self = this,
-				el = _self.get('el'),
-				method = v ? 'addClass' : 'removeClass',
-				ascCls = SORT_PREFIX + 'asc',
-				desCls = SORT_PREFIX + 'desc';
-			el.removeClass(ascCls + ' ' + desCls);
-			if(v === 'ASC'){
-				el.addClass(ascCls);
-			}else if(v === 'DESC'){
-				el.addClass(desCls);
-			}
-			
-		}
-	},{
-		ATTRS:{
-			/**
-			* The tag name of the rendered column
-			* @private 
-			*/
-			elTagName : {
-				value : 'th'
-			}
-		}
-	});
-	
-	/**
-	 * This class specifies the definition for a column inside a {@link Grid}. 
-	 * It encompasses both the grid header configuration as well as displaying data within the grid itself. 
-	 * If the columns configuration is specified, this column will become a column group and can contain other columns inside. 
-	 * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
+        },
+        //use template to fill the column
+        _setContent:function () {
+            var _self = this,
+                el = _self.get('el'),
+                tpl = _self._getTpl();
+            el.empty();
+            new S.Node(tpl).appendTo(el);
+        },
+        //set the title of column
+        _uiSetTitle:function (title) {
+            if (!this.get('rendered')) {
+                return;
+            }
+            this._setContent();
+        },
+        //set the draggable of column
+        _uiSetDraggable:function (v) {
+            if (!this.get('rendered')) {
+                return;
+            }
+            this._setContent();
+        },
+        //set the sortableof column
+        _uiSetSortable:function (v) {
+
+            if (!this.get('rendered')) {
+                return;
+            }
+            this._setContent();
+        },
+        //set the sortable of column
+        _uiSetTpl:function (v) {
+            if (!this.get('rendered')) {
+                return;
+            }
+            this._setContent();
+        },
+        //set the sort state of column
+        _uiSetSortState:function (v) {
+            var _self = this,
+                el = _self.get('el'),
+                method = v ? 'addClass' : 'removeClass',
+                ascCls = SORT_PREFIX + 'asc',
+                desCls = SORT_PREFIX + 'desc';
+            el.removeClass(ascCls + ' ' + desCls);
+            if (v === 'ASC') {
+                el.addClass(ascCls);
+            } else if (v === 'DESC') {
+                el.addClass(desCls);
+            }
+
+        }
+    }, {
+        ATTRS:{
+            /**
+             * The tag name of the rendered column
+             * @private
+             */
+            elTagName:{
+                value:'th'
+            },
+            tpl:{
+            }
+        }
+    });
+
+    /**
+     * This class specifies the definition for a column inside a {@link Grid}.
+     * It encompasses both the grid header configuration as well as displaying data within the grid itself.
+     * If the columns configuration is specified, this column will become a column group and can contain other columns inside.
+     * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
      * @name Grid.Column
      * @constructor
-     * @extends Component.Container
+     * @extends Component.Controller
      */
-	var column = Component.Container.extend(
-	/**
-	 * @lends Grid.Column.prototype
-	 */		
-	{	//toggle sort state of this column ,if no sort state set 'ASC',else toggle 'ASC' and 'DESC'
-		 _toggleSortState : function(){
-			var _self = this,
-				sortState = _self.get('sortState'),
-				v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
-			_self.set('sortState',v);
-		 },
-		//set the value of hide to make this colomn hide or show
-		_uiSetHide : function(v){
-			this.set('visible',!v);
-		},	
-		/**
-		* @see {Component.Container#bindUI}
-		*/
-		bindUI : function(){
-			var _self = this,
-				events = _self.get('events');
-			S.each(events,function(event){
-				_self.publish(event,{
-					bubbles:1
-				});
-				_self.addTarget(_self.get('parent'));
-			});
-		},
-		/**
-		* {Component.Container#performActionInternal}
-		* @private
-		*/
-		performActionInternal : function(ev){
-			var _self = this,
-				sender = S.one(ev.target),
-				prefix = _self.get('prefixCls');
-			if(sender.hasClass(prefix + CLS_HD_TRIGGER)){
-				
-			}else{
-				if(_self.get('sortable')){
-					_self._toggleSortState();
-				}
-			}
-			_self.fire('click');
-		},
-		/**
-		* show this column
-		*/
-		show : function(){
-			var _self = this;
-			_self.fire('beforeshow');
-			this.set('hide',false);
-			_self.fire('show');
-		},
-		/**
-		* hide this column
-		*/
-		hide : function(){
-			_self.fire('beforehide');
-			this.set('hide',true);
-			_self.fire('hide');
-		}
-	},{
-		ATTRS:/*** @lends Grid.Column.prototype*/	
-		{	
-			
-			/**
-			* The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
-			* @type String
-			* @default {String} empty string
-			*/
-			dataIndex :{
-				view:true,
-				value : ''
-			},
-			/**
-			* 
-			* @type Bealoon
-			* @defalut true
-			*/
-			draggable : {
-				view:true,
-				value : true
-			},
-			/**
-			* An optional xtype or config object for a Field to use for editing. Only applicable if the grid is using an Editing plugin.
-			* @type Object
-			*/
-			editor : {
-				
-			},
-			/**
-			* @protected
-			*/
-			focusable : {
-				value : false
-			},
-			/**
-			* False to hide this column. 
-			* @type Bealoon
-			* @default false
-			*/
-			hide : {
-				value : false
-			},
-			/**
-			* The unique id of this component instance.
-			* @type String
-			* @default null
-			*/
-			id : {
-				
-			},
-			/**
-			* when the grid was config by 'forceFit = true',the width changed,so leave the origin width of this column.
-			* @private
-			*/
-			originWidth : {
-				view : true
-			},
-			/**
-			* A renderer is an 'interceptor' method which can be used transform data (value, appearance, etc.) before it is rendered. the function prototype is "function(value,obj,index){return value;}"
-			* @type {Function} 
-			* @default 
-			*/
-			renderer : {
-				
-			},
-			/**
-			* False to prevent the column from being resizable.
-			* @type {Function} 
-			* @default true
-			*/
-			resizable : {
-				value : true
-			},
-			/* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort. 
-			 * @type Bealoon
-			 * @Default true.
-			 */
-			sortable : {
-				view:true,
-				value : true
-			},
-			/**
-			* The sort state of this column. the state have three value : null, 'ASC','DESC'
-			* @type String
-			* @Default null
-			*/
-			sortState : {
-				view:true,
-				value : null	
-			},
-			/**
-			* The header text to be used as innerHTML (html tags are accepted) to display in the Grid. 
-			* Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
-			* @type String
-			* @default {String} &#160;
-			*/
-			title : {
-				view:true,
-				value : '&#160;'
-			},
-			/**
-			* The width of this component in pixels.
-			* @override
-			* @type Number
-			* @default {Number} 80
-			*/
-			width : {
-				view : true,
-				value : 100
-			},
-			/**
-			* An template used to create the internal structure inside this Component's encapsulating Element.
-			* User can use the syntax of Kissy's template componet.
-			* Only in the configuration of the column can set this property.
-			* @type String
-			*/
-			tpl :{
-				view:true,
-				value : '<div class="ks-grid-hd-inner">'+
-							'<span class="ks-'+CLS_HD_TITLE+'">{{title}}</span>'+
-							'{{#if sortable}}<span class="ks-grid-sort-icon">&nbsp;</span>{{/if}}'+
-							'<span class="ks-grid-hd-menu-trigger"></span>'+
-						'</div>'
-			},
-			/**
-			* An template used to create the internal structure inside the table which shows data of store.
-			* User can use the syntax of Kissy's template componet.
-			* Only in the configuration of the column can set this property.
-			* @type String
-			*/
-			cellTpl :{
-				value : ''
-			},
-			/**
-			* the collection of column's events
-			* @protected
-			* @type Array
-			*/
-			events : {
-				value : [
-					/**
-					 * @event afterWithChange
-					 * Fires when this column's width changed
-					 * @param {event} e the event object
-					 * @param {Grid.Column} target
-					 */
-					'afterWidthChange',
-					/**
-					 * @event afterSortStateChange
-					 * Fires when this column's sort changed
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.target
-					 */
-					'afterSortStateChange',
-					/**
-					 * @event afterVisibleChange
-					 * Fires when this column's hide or show
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.target
-					 */
-					'afterVisibleChange',
-					/**
-					 * @event click
-					 * Fires when use clicks the column
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.target
-					 */
-					'click',
-					/**
-					 * @event resize
-					 * Fires after the component is resized.
-					 * @param {Grid.Column} target
-					 * @param {Number} adjWidth The box-adjusted width that was set
-					 * @param {Number} adjHeight The box-adjusted height that was set
-					 */
-					'resize',
-					/**
-					 * @event move
-					 * Fires after the component is moved.
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.target
-					 * @param {Number} x The new x position
-					 * @param {Number} y The new y position
-					 */
-					'move'
-				]
-			},
-			/**
-			* @private
-			*/
-			xrender : {
-				value : columnRender	
-			}
-			
-		}
-	},{
-		xclass : 'grid-hd',
-		priority : 1	
-	});
-	
-	var emptyColumn = column.extend({
-		
-	},{
-		ATTRS : {
-			type : {
-				value : 'empty'
-			},
-			sortable : {
-				view : true,
-				value : false
-			},
-			width : {
-				view : true,
-				value :  null
-			},
-			tpl : {
-				value : ''
-			}
-		}
-	},{
-		xclass : 'grid-hd-empty',
-		priority : 1	
-	});
+    var column = Component.Controller.extend(
+        /**
+         * @lends Grid.Column.prototype
+         */
+        {    //toggle sort state of this column ,if no sort state set 'ASC',else toggle 'ASC' and 'DESC'
+            _toggleSortState:function () {
+                var _self = this,
+                    sortState = _self.get('sortState'),
+                    v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
+                _self.set('sortState', v);
+            },
+            //set the value of hide to make this colomn hide or show
+            _uiSetHide:function (v) {
+                this.set('visible', !v);
+            },
+            /**
+             * @see {Component.Controller#bindUI}
+             */
+            bindUI:function () {
+                var _self = this,
+                    events = _self.get('events');
+                S.each(events, function (event) {
+                    _self.publish(event, {
+                        bubbles:1
+                    });
+                });
+                _self.addTarget(_self.get('parent'));
+            },
+            /**
+             * {Component.Controller#performActionInternal}
+             * @private
+             */
+            performActionInternal:function (ev) {
+                var _self = this,
+                    sender = S.one(ev.target),
+                    prefix = _self.get('prefixCls');
+                if (sender.hasClass(prefix + CLS_HD_TRIGGER)) {
 
-	column.Empty = emptyColumn;
-	return column;
+                } else {
+                    if (_self.get('sortable')) {
+                        _self._toggleSortState();
+                    }
+                }
+                _self.fire('click');
+            },
+            /**
+             * show this column
+             */
+            show:function () {
+                var _self = this;
+                _self.fire('beforeshow');
+                this.set('hide', false);
+                _self.fire('show');
+            },
+            /**
+             * hide this column
+             */
+            hide:function () {
+                var _self = this;
+                _self.fire('beforehide');
+                _self.set('hide', true);
+                _self.fire('hide');
+            }
+        }, {
+            ATTRS:/*** @lends Grid.Column.prototype*/
+            {
 
-},{
-	requires:['component','template']
+                /**
+                 * The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
+                 * @type String
+                 * @default {String} empty string
+                 */
+                dataIndex:{
+                    view:true,
+                    value:''
+                },
+                /**
+                 *
+                 * @type Boolean
+                 * @defalut true
+                 */
+                draggable:{
+                    view:true,
+                    value:true
+                },
+                /**
+                 * An optional xtype or config object for a Field to use for editing. Only applicable if the grid is using an Editing plugin.
+                 * @type Object
+                 */
+                editor:{
+
+                },
+                /**
+                 * @protected
+                 */
+                focusable:{
+                    value:false
+                },
+                /**
+                 * False to hide this column.
+                 * @type Boolean
+                 * @default false
+                 */
+                hide:{
+                    value:false
+                },
+                /**
+                 * The unique id of this component instance.
+                 * @type String
+                 * @default null
+                 */
+                id:{
+
+                },
+                /**
+                 * A renderer is an 'interceptor' method which can be used transform data (value, appearance, etc.) before it is rendered. the function prototype is "function(value,obj,index){return value;}"
+                 * @type {Function}
+                 * @default
+                 */
+                renderer:{
+
+                },
+                /**
+                 * False to prevent the column from being resizable.
+                 * @type {Function}
+                 * @default true
+                 */
+                resizable:{
+                    value:true
+                },
+                /* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort.
+                 * @type Boolean
+                 * @Default true.
+                 */
+                sortable:{
+                    view:true,
+                    value:true
+                },
+                /**
+                 * The sort state of this column. the state have three value : null, 'ASC','DESC'
+                 * @type String
+                 * @Default null
+                 */
+                sortState:{
+                    view:true,
+                    value:null
+                },
+                /**
+                 * The header text to be used as innerHTML (html tags are accepted) to display in the Grid.
+                 * Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
+                 * @type String
+                 * @default {String} &#160;
+                 */
+                title:{
+                    view:true,
+                    value:'&#160;'
+                },
+                /**
+                 * The width of this component in pixels.
+                 * @override
+                 * @type Number
+                 * @default {Number} 80
+                 */
+                width:{
+                    value:100
+                },
+                /**
+                 * An template used to create the internal structure inside this Component's encapsulating Element.
+                 * User can use the syntax of KISSY 's template component.
+                 * Only in the configuration of the column can set this property.
+                 * @type String
+                 */
+                tpl:{
+                    view:true,
+                    value:'<div class="ks-grid-hd-inner">' +
+                        '<span class="ks-' + CLS_HD_TITLE + '">{{title}}</span>' +
+                        '{{#if sortable}}<span class="ks-grid-sort-icon">&nbsp;</span>{{/if}}' +
+                        '<span class="ks-grid-hd-menu-trigger"></span>' +
+                        '</div>'
+                },
+                /**
+                 * An template used to create the internal structure inside the table which shows data of store.
+                 * User can use the syntax of Kissy 's template component.
+                 * Only in the configuration of the column can set this property.
+                 * @type String
+                 */
+                cellTpl:{
+                    value:''
+                },
+                /**
+                 * the collection of column's events
+                 * @protected
+                 * @type Array
+                 */
+                events:{
+                    value:[
+                    /**
+                     * @event afterWithChange
+                     * Fires when this column's width changed
+                     * @param {event} e the event object
+                     * @param {Grid.Column} target
+                     */
+                        'afterWidthChange',
+                    /**
+                     * @event afterSortStateChange
+                     * Fires when this column's sort changed
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.target
+                     */
+                        'afterSortStateChange',
+                    /**
+                     * @event afterVisibleChange
+                     * Fires when this column's hide or show
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.target
+                     */
+                        'afterVisibleChange',
+                    /**
+                     * @event click
+                     * Fires when use clicks the column
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.target
+                     */
+                        'click',
+                    /**
+                     * @event resize
+                     * Fires after the component is resized.
+                     * @param {Grid.Column} target
+                     * @param {Number} adjWidth The box-adjusted width that was set
+                     * @param {Number} adjHeight The box-adjusted height that was set
+                     */
+                        'resize',
+                    /**
+                     * @event move
+                     * Fires after the component is moved.
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.target
+                     * @param {Number} x The new x position
+                     * @param {Number} y The new y position
+                     */
+                        'move'
+                    ]
+                },
+                /**
+                 * @private
+                 */
+                xrender:{
+                    value:columnRender
+                }
+
+            }
+        }, {
+            xclass:'grid-hd',
+            priority:1
+        });
+
+    column.Empty = column.extend({
+
+    }, {
+        ATTRS:{
+            type:{
+                value:'empty'
+            },
+            sortable:{
+                view:true,
+                value:false
+            },
+            width:{
+                view:true,
+                value:null
+            },
+            tpl:{
+                value:''
+            }
+        }
+    }, {
+        xclass:'grid-hd-empty',
+        priority:1
+    });
+
+    return column;
+
+}, {
+    requires:['component', 'template']
 });
 	
 /**
  * @fileOverview grid component for kissy
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Util) {
 	Grid.Bar = Bar;
@@ -1372,1326 +1363,1281 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,U
 	]
 });/**
  * @fileOverview This class specifies the definition for the body of grid.
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
+KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
-	var CLS_GRID_ROW = 'ks-grid-row',
-		CLS_ROW_ODD = 'ks-grid-row-odd',
-		CLS_ROW_EVEN = 'ks-grid-row-even',
-		CLS_ROW_FIRST = 'ks-grid-row-first',
-		CLS_ROW_SELECTED = 'ks-grid-row-selected',
-		CLS_ROW_HOVER = 'ks-grid-row-hover',
-		CLS_GRID_CELL = 'ks-grid-cell',
-		CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
-		CLS_TD_PREFIX = 'grid-td-',
-		CLS_CELL_TEXT = 'ks-grid-cell-text',
-		CLS_CELL_EMPYT = 'ks-grid-cell-empty',
-		CLS_SCROLL_WITH = '17',
-		ATTR_COLUMN_FIELD = 'data-column-field',
-		DATA_ELEMENT = 'row-element';
+    var CLS_GRID_ROW = 'ks-grid-row',
+        CLS_ROW_ODD = 'ks-grid-row-odd',
+        CLS_ROW_EVEN = 'ks-grid-row-even',
+        CLS_ROW_FIRST = 'ks-grid-row-first',
+        CLS_ROW_SELECTED = 'ks-grid-row-selected',
+        CLS_ROW_HOVER = 'ks-grid-row-hover',
+        CLS_GRID_CELL = 'ks-grid-cell',
+        CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
+        CLS_TD_PREFIX = 'grid-td-',
+        CLS_CELL_TEXT = 'ks-grid-cell-text',
+        CLS_CELL_EMPYT = 'ks-grid-cell-empty',
+        CLS_SCROLL_WITH = '17',
+        ATTR_COLUMN_FIELD = 'data-column-field',
+        DATA_ELEMENT = 'row-element';
 
-	function lookupByClass(el, css) {
-		el = S.one(el);
-		if(!el){
-			return null;
-		}
-		if (el.hasClass(css)) {
-			return el;
-		}
-		return el.parent('.' + css);
-	}
-	var GridBodyRender = Component.Render.extend({
-		
-		/**
-		* @see {Component.Controller#renderUI}
-		*/
-		renderUI : function(){
-			var _self = this,
-				el = _self.get('el'),
-				tpl = _self._getTpl(),
-				tbody = null,
-				headerRowEl = null;
-			new S.Node(tpl).appendTo(el);
-			tbody = el.one('tbody');
-			_self.set('tbodyEl',tbody,{silent : true});
-			headerRowEl = _self._createHeaderRow();
-			_self.set('headerRowEl',headerRowEl);
+    var GridBodyRender = Component.Render.extend({
 
-		},
-		//clear data in table
-		clearData : function(){
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl');
-			tbodyEl.children('.' + CLS_GRID_ROW).remove();
-		},
-		clearRowSelected : function(){
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl');
-			tbodyEl.all('.' + CLS_GRID_ROW).removeClass(CLS_ROW_SELECTED);
-		},
-		/**
-		* 
-		* @internal only used by Grid.GridBody
-		*/
-		findCell : function(id,rowEl){
-			var _self = this,
-				cls = CLS_TD_PREFIX + id;
-			return rowEl.one('.' + cls);
-		},
-		/**
-		* find the row dom in this view
-		* @internal only used by Grid.GridBody
-		*/
-		findRow : function(record){
-			if(!record){
-				return null;
-			}
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl'),
-				rows = tbodyEl.children('.' + CLS_GRID_ROW),
-				result = null;
-			rows.each(function(rowEl){
-				if(rowEl.data(DATA_ELEMENT) === record){
-					result = rowEl;
-					return false;
-				}
-			});
-			return result;
-		},
-		/**
-		* get selected rows
-		*/
-		getSelectedRows : function(){
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl');
-			return tbodyEl.all('.' + CLS_ROW_SELECTED);
-		},
-		//get all rows
-		getAllRows : function(){
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl');
-			return tbodyEl.all('.' + CLS_GRID_ROW);
-		},
-		/**
-		* identify  whether the row was selected
-		*/
-		isRowSelected : function(row){
-			var rowEl = S.one(row);
-			return rowEl.hasClass(CLS_ROW_SELECTED);
-		},
-		/**
-		* identify  whether the row has been hoverring
-		*/
-		isRowHover : function(row){
-			var rowEl = S.one(row);
-			return rowEl.hasClass(CLS_ROW_HOVER);
-		},
-		/**
-		* remove one record
-		* @internal only used by Grid.GridBody
-		*/
-		removeRow : function(record){
-			var _self = this,
-				rowEl = _self.findRow(record);
-			if(rowEl){
-				rowEl.remove();
-			}
-			return rowEl;
-		},
-		resetHeaderRow : function(){
-			var _self = this,
-				headerRowEl = _self.get('headerRowEl'),
-				tbodyEl = _self.get('tbodyEl');
-			headerRowEl.remove();
-			headerRowEl = _self._createHeaderRow();
-			headerRowEl.prependTo(tbodyEl);
-			_self.set('headerRowEl',headerRowEl);
-		},
-		/**
-		* make the row selected or cancel it.
-		*/
-		setRowSelected : function(row,selected){
-			var rowEl = S.one(row);
-			if(selected){
-				rowEl.addClass(CLS_ROW_SELECTED);
-			}else{
-				rowEl.removeClass(CLS_ROW_SELECTED);
-			}
-		},
-		/**
-		* set hover status or cancel it
-		*/
-		setRowHover : function(row,hover){
-			var rowEl = S.one(row);
-			if(hover){
-				rowEl.addClass(CLS_ROW_HOVER);
-			}else{
-				rowEl.removeClass(CLS_ROW_HOVER);
-			}
-		},
-		//show or hide column
-		setColumnVisible : function(column){
-			var _self = this,
-				hide = column.get('hide'),
-				colId = column.get('id'),
-				tbodyEl = _self.get('tbodyEl'),
-				cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
-			if(hide){
-				cells.hide();
-			}else{
-				cells.show();
-			}
-		},
-		/**
-		* when header's column width changed, column in this componet changed followed
-		*/
-		setColumnsWidth : function(column){
-			var _self = this,
-				headerRowEl = _self.get('headerRowEl'),
-				cell = _self.findCell(column.get('id'),headerRowEl);
-			if(cell){
-				cell.width(column.get('width'));
-			}
-			_self.setTableWidth();
-		},
-		//set table width 
-		setTableWidth : function(columnsWidth){
-			var _self = this,
-				columns = _self._getColumns(),
-				width = _self.get('width'),
-				height = _self.get('height'),
-				tableEl = _self.get('tbodyEl').parent(),
-				forceFit = _self.get('forceFit'),
-				headerRowEl = _self.get('headerRowEl'),
-				columnsWidth = columnsWidth || _self._getColumnsWidth();
-			if(!width){
-				return;
-			}
-			if(width >= columnsWidth){
-				columnsWidth = width;
-				if(height){
-					columnsWidth = width - CLS_SCROLL_WITH;
-				}
-			}
-			tableEl.width(columnsWidth);
-		},
-		/**
-		* update the row dom in this view
-		* @internal only used by Grid.GridBody
-		*/
-		updateRow : function(record){
-			var _self = this,
-				rowEl = _self.findRow(record),
-				columns = _self._getColumns();
-			if(rowEl){
-				S.each(columns,function(column){
-					_self._updateCell(column,record,rowEl);
-				});
-			}
-		},
-		//update cell dom
-		_updateCell : function(column,record,rowEl){
-			var _self = this,
-				cellEl = _self.findCell(column.get('id'),rowEl),
-				text = _self._getCellText(column,record);
-			cellEl.one('.' + CLS_GRID_CELL_INNER).html(text);
+        /**
+         * @see {Component.Controller#renderUI}
+         */
+        renderUI:function () {
+            var _self = this,
+                el = _self.get('el'),
+                tpl = _self._getTpl(),
+                tbody,
+                headerRowEl;
+            new S.Node(tpl).appendTo(el);
+            tbody = el.one('tbody');
+            _self.set('tbodyEl', tbody, {silent:1});
+            headerRowEl = _self._createHeaderRow();
+            _self.set('headerRowEl', headerRowEl);
 
-		},
-		//create row element and append to tbody
-		_createRow : function(record,index){
-			var _self = this,
-				columns = _self._getColumns(),
-				tbodyEl = _self.get('tbodyEl'),
-				rowTpl = _self.get('rowTpl'),
-				oddCls = index % 2 === 0 ? CLS_ROW_ODD : CLS_ROW_EVEN,
-				cellsTpl = [],
-				rowEl = null;
-			
-			S.each(columns,function(column,colIndex){
-				var dataIndex = column.get('dataIndex');
-				cellsTpl.push(_self._getCellTpl(column,dataIndex,record));
-			});
-			cellsTpl.push(_self._getEmptyCellTpl());
-			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join(''),oddCls : oddCls});
-			rowEl = new S.Node(rowTpl).appendTo(tbodyEl);
-			//append record to the dom
-			rowEl.data(DATA_ELEMENT,record);
-			if(index === 0){
-				rowEl.addClass(CLS_ROW_FIRST);
-			}
-			return rowEl;
-		},
-		//create the first row that it don't has any data,only to set columns' width
-		_createHeaderRow : function(){
-			var _self = this,
-				columns = _self._getColumns(),
-				tbodyEl = _self.get('tbodyEl'),
-				rowTpl = _self.get('headerRowTpl')
-				rowEl = null,
-				hideText = '',
-				cellsTpl = [];
+        },
+        //clear data in table
+        clearData:function () {
+            var _self = this,
+                tbodyEl = _self.get('tbodyEl');
+            tbodyEl.children('.' + CLS_GRID_ROW).remove();
+        },
+        clearRowSelected:function () {
+            var _self = this,
+                tbodyEl = _self.get('tbodyEl');
+            tbodyEl.all('.' + CLS_GRID_ROW).removeClass(CLS_ROW_SELECTED);
+        },
+        /**
+         *
+         * @internal only used by Grid.GridBody
+         */
+        findCell:function (id, rowEl) {
+            var cls = CLS_TD_PREFIX + id;
+            return rowEl.one('.' + cls);
+        },
+        /**
+         * find the row dom in this view
+         * @internal only used by Grid.GridBody
+         */
+        findRow:function (record) {
+            if (!record) {
+                return null;
+            }
+            var _self = this,
+                tbodyEl = _self.get('tbodyEl'),
+                rows = tbodyEl.children('.' + CLS_GRID_ROW),
+                result = null;
+            rows.each(function (rowEl) {
+                if (rowEl.data(DATA_ELEMENT) === record) {
+                    result = rowEl;
+                    return false;
+                }
+            });
+            return result;
+        },
+        /**
+         * get selected rows
+         */
+        getSelectedRows:function () {
+            var _self = this,
+                tbodyEl = _self.get('tbodyEl');
+            return tbodyEl.all('.' + CLS_ROW_SELECTED);
+        },
+        //get all rows
+        getAllRows:function () {
+            var _self = this,
+                tbodyEl = _self.get('tbodyEl');
+            return tbodyEl.all('.' + CLS_GRID_ROW);
+        },
+        /**
+         * identify  whether the row was selected
+         */
+        isRowSelected:function (row) {
+            var rowEl = S.one(row);
+            return rowEl.hasClass(CLS_ROW_SELECTED);
+        },
+        /**
+         * identify  whether the row has been hovering
+         */
+        isRowHover:function (row) {
+            var rowEl = S.one(row);
+            return rowEl.hasClass(CLS_ROW_HOVER);
+        },
+        /**
+         * remove one record
+         * @internal only used by Grid.GridBody
+         */
+        removeRow:function (record) {
+            var _self = this,
+                rowEl = _self.findRow(record);
+            if (rowEl) {
+                rowEl.remove();
+            }
+            return rowEl;
+        },
+        resetHeaderRow:function () {
+            var _self = this,
+                headerRowEl = _self.get('headerRowEl'),
+                tbodyEl = _self.get('tbodyEl');
+            headerRowEl.remove();
+            headerRowEl = _self._createHeaderRow();
+            headerRowEl.prependTo(tbodyEl);
+            _self.set('headerRowEl', headerRowEl);
+        },
+        /**
+         * make the row selected or cancel it.
+         */
+        setRowSelected:function (row, selected) {
+            var rowEl = S.one(row);
+            if (selected) {
+                rowEl.addClass(CLS_ROW_SELECTED);
+            } else {
+                rowEl.removeClass(CLS_ROW_SELECTED);
+            }
+        },
+        /**
+         * set hover status or cancel it
+         */
+        setRowHover:function (row, hover) {
+            var rowEl = S.one(row);
+            if (hover) {
+                rowEl.addClass(CLS_ROW_HOVER);
+            } else {
+                rowEl.removeClass(CLS_ROW_HOVER);
+            }
+        },
+        //show or hide column
+        setColumnVisible:function (column) {
+            var _self = this,
+                hide = column.get('hide'),
+                colId = column.get('id'),
+                tbodyEl = _self.get('tbodyEl'),
+                cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
+            if (hide) {
+                cells.hide();
+            } else {
+                cells.show();
+            }
+        },
+        /**
+         * when header's column width changed, column in this component changed followed
+         */
+        setColumnsWidth:function (column) {
+            var _self = this,
+                headerRowEl = _self.get('headerRowEl'),
+                cell = _self.findCell(column.get('id'), headerRowEl);
+            if (cell) {
+                cell.width(column.get('width'));
+            }
+            _self.setTableWidth();
+        },
+        //set table width
+        setTableWidth:function (columnsWidth) {
+            var _self = this,
+                width = _self.get('width'),
+                height = _self.get('height'),
+                tableEl = _self.get('tbodyEl').parent(),
+                forceFit = _self.get('forceFit'),
+                headerRowEl = _self.get('headerRowEl');
+            columnsWidth = columnsWidth || _self._getColumnsWidth();
+            if (!width) {
+                return;
+            }
+            if (width >= columnsWidth) {
+                columnsWidth = width;
+                if (height) {
+                    columnsWidth = width - CLS_SCROLL_WITH;
+                }
+            }
+            tableEl.width(columnsWidth);
+        },
+        /**
+         * update the row dom in this view
+         * @internal only used by Grid.GridBody
+         */
+        updateRow:function (record) {
+            var _self = this,
+                rowEl = _self.findRow(record),
+                columns = _self._getColumns();
+            if (rowEl) {
+                S.each(columns, function (column) {
+                    _self._updateCell(column, record, rowEl);
+                });
+            }
+        },
+        //update cell dom
+        _updateCell:function (column, record, rowEl) {
+            var _self = this,
+                cellEl = _self.findCell(column.get('id'), rowEl),
+                text = _self._getCellText(column, record);
+            cellEl.one('.' + CLS_GRID_CELL_INNER).html(text);
 
-			S.each(columns,function(column,colIndex){
-				cellsTpl.push(_self._getHeaderCellTpl(column));
-			});
-			
-			//if this componet set width,add a empty column to fit row width
-			cellsTpl.push(_self._getEmptyCellTpl());
-			rowTpl = Template(rowTpl).render({cellsTpl : cellsTpl.join('')});
-			rowEl = S.Node(rowTpl).appendTo(tbodyEl);
-			return rowEl;
-		},
-		// 获取列配置项
-		_getColumns : function(){
-			var _self = this;
-			return _self.get('columns');
-		},
-		//get the sum of the columns' width
-		_getColumnsWidth : function(){
-			var _self = this,
-				columns = null,
-				borderWidth = 0,
-				totalWidth = 0;
-				columns = _self.get('columns');
-			S.each(columns, function (column) {
-				if (!column.get('hide')) {
-					totalWidth += column.get('width');
-					borderWidth = S.UA.webkit ? 0 : 1;
-					totalWidth += borderWidth;
-				}
-			});
-			return totalWidth;
-		},
-		//get cell text by record and column
-		_getCellText : function(column,record){
-			var _self = this,
-				textTpl = column.get('cellTpl') || _self.get('cellTextTpl'),
-				dataIndex = column.get('dataIndex'),
-				renderer = column.get('renderer'),
-				text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
-			return Template(textTpl).render({text : text,tips : _self._getTips(column, dataIndex,record)});
-		},
-		//get cell template by config and record
-		_getCellTpl : function(column, dataIndex,record){
-			var _self = this,
-				value = record[dataIndex],
-				cellText = _self._getCellText(column,record),
-				cellTpl = _self.get('cellTpl');
-			return Template(cellTpl)
-				.render({
-					id : column.get('id'),
-					dataIndex : dataIndex,
-					cellText : cellText,
-					hide : column.get('hide')
-				});
-		},
-		//get cell tips
-		_getTips : function(column,dataIndex,record){
-			var showTip = column.get('showTip'),
-				value = '';
-			if(showTip){
-				value = record[dataIndex];
-				if(S.isFunction(showTip)){
-					value = showTip(value,record);
-				}
-			}
-			return value;
-		},
-		_getHeaderCellTpl : function(column){
-			var _self = this,
-				headerCellTpl = _self.get('headerCellTpl');
-			return Template(headerCellTpl).render({
-				id : column.get('id'),
-				width : column.get('width'),
-				hide : column.get('hide')
-			});
-		},
-		_getEmptyCellTpl : function(){
-			return '<td class="' + CLS_CELL_EMPYT + '"></td>';
-		},
-		//get the template of column
-		_getTpl : function(){
-			var _self = this,
-				attrs = _self.__attrVals,
-				tpl = _self.get('tpl');
-			return Template(tpl).render(attrs);
-		}
-	},{
-		ATTRS:{
-			tbodyEl : {},
-			headerRowEl : {}
-		}
-	});
+        },
+        //create row element and append to tbody
+        _createRow:function (record, index) {
+            var _self = this,
+                columns = _self._getColumns(),
+                tbodyEl = _self.get('tbodyEl'),
+                rowTpl = _self.get('rowTpl'),
+                oddCls = index % 2 === 0 ? CLS_ROW_ODD : CLS_ROW_EVEN,
+                cellsTpl = [],
+                rowEl;
 
-	/**
-	 * This class specifies the definition for the body of a {@link Grid}. 
-	 * In general, this class will not be instanced directly, instead a viewConfig option is passed to the grid
+            S.each(columns, function (column) {
+                var dataIndex = column.get('dataIndex');
+                cellsTpl.push(_self._getCellTpl(column, dataIndex, record));
+            });
+            cellsTpl.push(_self._getEmptyCellTpl());
+            rowTpl = Template(rowTpl).render({cellsTpl:cellsTpl.join(''), oddCls:oddCls});
+            rowEl = new S.Node(rowTpl).appendTo(tbodyEl);
+            //append record to the dom
+            rowEl.data(DATA_ELEMENT, record);
+            if (index === 0) {
+                rowEl.addClass(CLS_ROW_FIRST);
+            }
+            return rowEl;
+        },
+        //create the first row that it don't has any data,only to set columns' width
+        _createHeaderRow:function () {
+            var _self = this,
+                columns = _self._getColumns(),
+                tbodyEl = _self.get('tbodyEl'),
+                rowTpl = _self.get('headerRowTpl'),
+                rowEl,
+                cellsTpl = [];
+
+            S.each(columns, function (column) {
+                cellsTpl.push(_self._getHeaderCellTpl(column));
+            });
+
+            //if this component set width,add a empty column to fit row width
+            cellsTpl.push(_self._getEmptyCellTpl());
+            rowTpl = Template(rowTpl).render({cellsTpl:cellsTpl.join('')});
+            rowEl = S.Node(rowTpl).appendTo(tbodyEl);
+            return rowEl;
+        },
+        // 获取列配置项
+        _getColumns:function () {
+            var _self = this;
+            return _self.get('columns');
+        },
+        //get the sum of the columns' width
+        _getColumnsWidth:function () {
+            var _self = this,
+                columns,
+                totalWidth = 0;
+            columns = _self.get('columns');
+            S.each(columns, function (column) {
+                if (!column.get('hide')) {
+                    totalWidth += column.get("el").outerWidth();
+                }
+            });
+            return totalWidth;
+        },
+        //get cell text by record and column
+        _getCellText:function (column, record) {
+            var _self = this,
+                textTpl = column.get('cellTpl') || _self.get('cellTextTpl'),
+                dataIndex = column.get('dataIndex'),
+                renderer = column.get('renderer'),
+                text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
+            return Template(textTpl).render({text:text, tips:_self._getTips(column, dataIndex, record)});
+        },
+        //get cell template by config and record
+        _getCellTpl:function (column, dataIndex, record) {
+            var _self = this,
+                cellText = _self._getCellText(column, record),
+                cellTpl = _self.get('cellTpl');
+            return Template(cellTpl)
+                .render({
+                    id:column.get('id'),
+                    dataIndex:dataIndex,
+                    cellText:cellText,
+                    hide:column.get('hide')
+                });
+        },
+        //get cell tips
+        _getTips:function (column, dataIndex, record) {
+            var showTip = column.get('showTip'),
+                value = '';
+            if (showTip) {
+                value = record[dataIndex];
+                if (S.isFunction(showTip)) {
+                    value = showTip(value, record);
+                }
+            }
+            return value;
+        },
+        _getHeaderCellTpl:function (column) {
+            var _self = this,
+                headerCellTpl = _self.get('headerCellTpl');
+            return Template(headerCellTpl).render({
+                id:column.get('id'),
+                width:column.get('width'),
+                hide:column.get('hide')
+            });
+        },
+        _getEmptyCellTpl:function () {
+            return '<td class="' + CLS_CELL_EMPYT + '"></td>';
+        },
+        //get the template of column
+        _getTpl:function () {
+            var _self = this,
+                attrs = _self.getAttrVals(),
+                tpl = _self.get('tpl');
+            return Template(tpl).render(attrs);
+        }
+    }, {
+        ATTRS:{
+            tbodyEl:{},
+            headerRowEl:{}
+        }
+    });
+
+    /**
+     * This class specifies the definition for the body of a {@link Grid}.
+     * In general, this class will not be instanced directly, instead a viewConfig option is passed to the grid
      * @name Grid.GridBody
      * @constructor
-     * @extends Component.Container
-	 * @extends Grid.Bindable
+     * @extends Component.Controller
+     * @extends Grid.Bindable
      */
-	var GridBody = Component.Container.extend([Bindable],
-	/**
-	 * @lends Grid.GridBody.prototype
-	 */		
-	{	
-		
-		 /**
-		* @see Component.Controller#bindUI
-		*/
-		bindUI : function(){
-			var _self = this;
-			_self._publishEvent();
-			_self._bindScrollEvent();
-			_self._bindRowEvent();
-		},
-		/**
-		* clear data in this component
-		* @example:
-		* grid.clearData();
-		*/
-		clearData : function(){
-			var _self = this;
-			_self.get('view').clearData();
-		},
-		/**
-		* clear rows' selection
-		*/
-		clearSelection : function(){
-			var _self = this,
-				selectedRows = _self.get('view').getSelectedRows();
-			selectedRows.each(function(row){
-				_self.onRowSelected(row,false);
-			});
-		},
-		/**
-		* find the cell dom by record and column id
-		* @param {String|Number} id the column id 
-		* @param {Object} record the record that showed in this componet,if can not find ,return null
-		* @return  {Node} 
-		*/
-		findCell : function(id,record){
-			var _self = this,
-				rowEl = null;
-			if(record instanceof S.Node){
-				rowEl = record;
-			}else{
-				rowEl = _self.findRow(record);
-			}
-			if(rowEl){
-				return _self.get('view').findCell(id,rowEl);
-			}	
-			return null;
-		},
-		/**
-		* find the dom by the record in this componet
-		* @param {Object} record the record used to find row dom
-		* @return Node
-		*/
-		findRow : function(record){
-			var _self = this;
-			return _self.get('view').findRow(record);
-		},
-		/**
-		* show or hide the column
-		* @param {Grid.Column} column the column changed visible status. 
-		*/
-		setColumnVisible : function(column){
-			this.get('view').setColumnVisible(column);
-		},
-		/**
-		* @private
-		* @see Grid.Bindable#onLoad
-		*/
-		onLoad : function(){
-			var _self = this,
-				store = _self.get('store'),
-				records = store.getResult();
-			_self.showData(records);
-		},
-		/**
-		* @private
-		* @see Grid.Bindable#onAdd
-		*/
-		onAdd : function(e){
-			var _self = this,
-				data = e.data,
-				store = _self.get('store'),
-				count = store.getCount();
-			_self._addData(data,count);
-		},
-		/**
-		* @private
-		*/
-		onRemove : function(e){
-			var _self = this,
-				data = e.data,
-				removedRow = null;
-			S.each(data,function(record){
-				removedRow = _self.get('view').removeRow(record);
-				if(removedRow){
-					_self.fire('rowremoved',{record : record,row : removedRow[0]});
-				}
-			});
-		},
-		/**
-		* @private
-		*/
-		onUpdate : function(e){
-			var _self = this,
-				record = e.record;
-			_self.get('view').updateRow(record);
-		},
-		/**
-		* @private
-		*/
-		onLocalSort : function(){
-			var _self = this;
-			_self.onLoad();
-		},
-		/**
-		* @private
-		*/
-		onRowSelected : function(rowEl,selected){
-			var _self = this,
-				view = _self.get('view'),
-				//isSelected = view.isRowSelected(rowEl),
-				event = null;
-			//if(isSelected != selected){
-			event = selected ? 'rowselected' : 'rowunselected';
-			view.setRowSelected(rowEl,selected);
-			_self.fire(event,{row : rowEl[0],record : rowEl.data(DATA_ELEMENT)});
-			//}
-			
-		},
-		/**
-		* set the records selected by the key-value
-		* @param {Array|Object} key the records which will be set to selected
-		*/
-		setSelection : function(records){
-			var _self = this,
-				view = _self.get('view');
+    var GridBody = Component.Controller.extend([Bindable],
+        /**
+         * @lends Grid.GridBody.prototype
+         */
+        {
 
-			if(!records){
-				return;
-			}
-			if(!S.isArray(records)){
-				records = [records];
-			}
-			S.each(records,function(record){
-				var rowEl = _self.findRow(record);
-				if(rowEl && !view.isRowSelected(rowEl)){
-					_self.onRowSelected(rowEl,true);
-				}
-			});
-		},
-		/**
-		* show data in this controller
-		* @param {Array} data show the given data in table
-		*/
-		showData : function(data){
-			var _self = this;
-			var _self = this;
-			_self.clearData();
-			_self._addData(data);
-			_self.fire('aftershow');
-		},
-		/**
-		* when some columns changed,must reset body's column
-		*/
-		resetColumns : function(){
-			var _self = this,
-				store = _self.get('store');
-			//remove the rows of this table
-			//_self.clearData();
-			//recreate the header row
-			_self.get('view').resetHeaderRow();
-			//show data
-			if(store){
-				_self.onLoad();
-			}
-			//
-		},
-		/**
-		* change the column's width
-		* @param {Grid.Column} column a column in config
-		*/
-		resetColumnsWidth : function(column){
-			this.get('view').setColumnsWidth(column);
-		},
-		/**
-		* set all rows selected
-		*/
-		setAllSelection : function(){
-			var _self = this,
-				rows = _self.get('view').getAllRows();
-			rows.each(function(row){
-				_self.onRowSelected(row,true);
-			});
-		},
-		/**
-		* set the inner table width
-		* @param {Number} width the inner table's width
-		*/
-		setTableWidth : function(width){
-			var _self = this;
-			if(_self.get('forceFit')){
-				_self.resetColumns();
-			}
-			this.get('view').setTableWidth(width);
-		},
-		//add data to table
-		_addData : function(data,position){
-			position = position || 0;
-			var _self = this;
-			S.each(data,function(record,index){
-				var rowEl = _self.get('view')._createRow(record,position + index);
-				_self.fire('rowcreated',{record : record,data : record,row : rowEl[0]});
-			});
-		},
-		//when body scrolled,the other component of grid also scrolled
-		_bindScrollEvent : function(){
-			var _self = this,
-				el = _self.get('el');
-			el.on('scroll', function (event) {
-				var left = el.scrollLeft(),
-					top = el.scrollTop();
-				_self.fire('scroll',{scrollLeft : left,scrollTop : top});
-			});
-		},
-		//bind rows event of table
-		_bindRowEvent : function(){
-			var _self = this,
-				tbodyEl = _self.get('tbodyEl');
+            /**
+             * @see Component.Controller#bindUI
+             */
+            bindUI:function () {
+                var _self = this;
+                _self._publishEvent();
+                _self._bindScrollEvent();
+                _self._bindRowEvent();
+            },
+            /**
+             * clear data in this component
+             * @example:
+             * grid.clearData();
+             */
+            clearData:function () {
+                var _self = this;
+                _self.get('view').clearData();
+            },
+            /**
+             * clear rows' selection
+             */
+            clearSelection:function () {
+                var _self = this,
+                    selectedRows = _self.get('view').getSelectedRows();
+                selectedRows.each(function (row) {
+                    _self.onRowSelected(row, false);
+                });
+            },
+            /**
+             * find the cell dom by record and column id
+             * @param {String|Number} id the column id
+             * @param {Object} record the record that showed in this component,if can not find ,return null
+             * @return  {Node}
+             */
+            findCell:function (id, record) {
+                var _self = this,
+                    rowEl = null;
+                if (record instanceof S.Node) {
+                    rowEl = record;
+                } else {
+                    rowEl = _self.findRow(record);
+                }
+                if (rowEl) {
+                    return _self.get('view').findCell(id, rowEl);
+                }
+                return null;
+            },
+            /**
+             * find the dom by the record in this component
+             * @param {Object} record the record used to find row dom
+             * @return Node
+             */
+            findRow:function (record) {
+                var _self = this;
+                return _self.get('view').findRow(record);
+            },
+            /**
+             * show or hide the column
+             * @param {Grid.Column} column the column changed visible status.
+             */
+            setColumnVisible:function (column) {
+                this.get('view').setColumnVisible(column);
+            },
+            /**
+             * @private
+             * @see Grid.Bindable#onLoad
+             */
+            onLoad:function () {
+                var _self = this,
+                    store = _self.get('store'),
+                    records = store.getResult();
+                _self.showData(records);
+            },
+            /**
+             * @private
+             * @see Grid.Bindable#onAdd
+             */
+            onAdd:function (e) {
+                var _self = this,
+                    data = e.data,
+                    store = _self.get('store'),
+                    count = store.getCount();
+                _self._addData(data, count);
+            },
+            /**
+             * @private
+             */
+            onRemove:function (e) {
+                var _self = this,
+                    data = e.data,
+                    removedRow = null;
+                S.each(data, function (record) {
+                    removedRow = _self.get('view').removeRow(record);
+                    if (removedRow) {
+                        _self.fire('rowremoved', {record:record, row:removedRow[0]});
+                    }
+                });
+            },
+            /**
+             * @private
+             */
+            onUpdate:function (e) {
+                var _self = this,
+                    record = e.record;
+                _self.get('view').updateRow(record);
+            },
+            /**
+             * @private
+             */
+            onLocalSort:function () {
+                var _self = this;
+                _self.onLoad();
+            },
+            /**
+             * @private
+             */
+            onRowSelected:function (rowEl, selected) {
+                var _self = this,
+                    view = _self.get('view'),
+                //isSelected = view.isRowSelected(rowEl),
+                    event;
+                //if(isSelected != selected){
+                event = selected ? 'rowselected' : 'rowunselected';
+                view.setRowSelected(rowEl, selected);
+                _self.fire(event, {row:rowEl[0], record:rowEl.data(DATA_ELEMENT)});
+                //}
 
-			tbodyEl.delegate('click','.' + CLS_GRID_ROW,function(e){
-				_self._rowClickEvent(e);
-			});
-		},
-		//publish event to grid
-		_publishEvent : function(){
-			var _self = this,
-				parent = _self.get('parent'),
-				events = _self.get('events');
-			if(!parent){
-				return;
-			}
-			S.each(events,function(event){
-				_self.publish(event,{
-					bubbles:1
-				});
-				_self.addTarget(parent);
-			});
-		},
-		_rowClickEvent : function(event){
-			var _self = this,
-				multiSelect = _self.get('multiSelect'),
-				sender = S.one(event.currentTarget),
-				view = _self.get('view'),
-				record = sender.data(DATA_ELEMENT),
-				cell = lookupByClass(event.target,CLS_GRID_CELL),
-				selected = view.isRowSelected(sender);
-			//when in multiple select model,toggle the row's select status
-			if(cell){
-				_self.fire('cellclick',{record : record, row : sender[0], cell : cell[0], field : cell.attr(ATTR_COLUMN_FIELD), domTarget : event.target});
-			}
-			_self.fire('rowclick', {record : record, row : sender[0]});
-			if(multiSelect){
-				_self.onRowSelected(sender,!selected);
-			}else{
-				if(!selected){
-					_self.clearSelection();
-					_self.onRowSelected(sender,true);
-				}
-			}
-		},
-		/**
-		* when setting the componet width,the table's width alse changed
-		* @private 
-		* @override
-		*/
-		_uiSetWidth : function(v){
-			var _self = this;
-			//if(_self.get('rendered')){
-				_self.setTableWidth();
-			//}
-		},
-		//when set this componet's height ,the table's width is also changed
-		_uiSetHeight : function(h){
-			var _self = this;
-			//if(_self.get('rendered')){
-				_self.setTableWidth();
-			//}
-		}
-	},{
-		ATTRS : 
-		/**
-		 * @lends Grid.GridBody.prototype
-		 */		
-		{
-			
-			/**
-			* columns of the component
-			* @see Grid.Column
-			* @private
-			*/
-			columns : {
-				view : true,
-				value : []
-			},
-			/**
-			* @private
-			*/
-			tbodyEl:{
-				view : true
-			},
-			/**
-			* The CSS class to apply to this header's table element.
-			* @type {String}
-			* @default 'ks-grid-table' this css cannot be ovrrided, the other css can be added
-			*/
-			tableCls : {
-				view : true,
-				value : ''
-			},
-			/**
-			* true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex. 
-			* Then they are all proportionally changed in width so that the entire content width is used.
-			* @type {Boolean}
-			* @default 'false'
-			*/
-			forceFit : {
-				view : true,
-				value : false
-			},
-			/**
-			* @type {Boolean}
-			* @default false
-			*/
-			multiSelect : {
-				value : false
-			},
-			/**
-			* True to stripe the rows.
-			* @type {Boolean}
-			* @default true
-			*/
-			stripeRows : {
-				view : true,
-				value : true
-			},
-			/**
-			* An template used to create the internal structure inside this Component's encapsulating Element.
-			* User can use the syntax of Kissy's template componet.
-			* Only in the configuration of the column can set this property.
-			* @type String
-			* 
-			*	'&lt;table cellspacing="0" cellpadding="0" class="grid-table" &gt;'+
-			*		'&lt;tbody&gt;&lt;/tbody&gt;'+
-			*		'&lt;tfoot&gt;&lt;/tfoot&gt;'+
-			*	'&lt;/table&gt;'
-			*
-			*</pre>
-			*/
-			tpl : {
-				view : true,
-				value : '<table cellspacing="0" cellpadding="0" class="ks-grid-table {{tableCls}}">'+
-							'<tbody></tbody>'+
-						'</table>'
-			},
-			/**
-			* An template of first row of this component ,which to fixed the width of every column.
-			* User can use the syntax of Kissy's template componet.
-			* @type String
-			* @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
-			*/
-			headerRowTpl : {
-				view : true,
-				value : '<tr class="ks-grid-header-row">{{cellsTpl}}</tr>'
-			},
-			/**
-			* An template used to create the row which encapsulates cells.
-			* User can use the syntax of Kissy's template componet.
-			* @type String
-			* @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
-			*/
-			rowTpl : {
-				view : true,
-				value : '<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTpl}}</tr>'
-			},
-			/**
-			* An template used to create the cell.
-			* User can use the syntax of Kissy's template componet.
-			* @type String
-			* @default <pre>'&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
-			*		'&lt;div class="' + CLS_GRID_CELL_INNER + '" &gt;{{cellText}}&lt;/div&gt;'+
-			*	'&lt;/td&gt;'
-			*</pre>
-			*/
-			cellTpl : {
-				view : true,
-				value : '<td  class="' + CLS_GRID_CELL + ' ' + CLS_TD_PREFIX + '{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}  {{#if hide}} style="display : none" {{/if}}>'+
-							'<div class="' + CLS_GRID_CELL_INNER + '" >{{cellText}}</div>'+
-						'</td>'
-	
-			},
-			/**
-			* @default &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
-			*/
-			cellTextTpl : {
-				view : true,
-				value : '<span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span>'
-			},
-			headerCellTpl : {
-				view : true,
-				value : '<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
-			},
-			/**
-			* @override 
-			* when set this grid's width ,the header and body changed
-			*/
-			width : {
-				toBody : true,
-				sync : true
-			},
-			/**
-			* the collection of body's events
-			* @type {Array}
-			*/
-			events : {
-				value : [
-					
-					/**  
-					* after show a collection data in this component
-					* @name Grid.GridBody#aftershow
-					* @event  
-					*/
-					'aftershow'	,
-					/**  
-					* fired when click one cell of row
-					* @name Grid.GridBody#cellclick
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {String} e.field the dataIndex of the column which this cell belong to
-					* @param {HTMLElement} e.row the dom elment of this row
-					* @param {HTMLElement} e.cell the dom elment of this cell
-					* @param {HTMLElement} e.domTarget the dom elment of the click target
-					*/
-					'cellclick',
-					/**  
-					* fired when click one row
-					* @name Grid.GridBody#rowclick
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowclick',
-					/**  
-					* add a row in this component.in general,this event fired after adding a record to the store
-					* @name Grid.GridBody#rowcreated
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record adding to the store
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowcreated',
-					/**  
-					* remove a row from this component.in general,this event fired after delete a record from the store
-					* @name Grid.GridBody#rowremoved
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record removed from the store
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowremoved',
-					/**  
-					* when click the row,in multiple select model the selected status toggled
-					* @name Grid.GridBody#rowselected
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowselected',
-					/**  
-					* fire after cancel selected status
-					* @name Grid.GridBody#rowunselected
-					* @event  
-					* @param {event} e  event object
-					* @param {Object} e.record the record showed by this row
-					* @param {HTMLElement} e.row the dom elment of this row
-					*/
-					'rowunselected',
-					/**  
-					* remove a row from this component.in general,this event fired after delete a record from the store
-					* @name Grid.GridBody#scroll
-					* @event  
-					* @param {event} e  event object
-					* @param {Number} e.scrollLeft the horizontal value that the body scroll to
-					* @param {Number} e.scrollTop the vertical value that the body scroll to
-					*/
-					'scroll'
-				]
-			},
-			/**
-			* @private
-			*/
-			xrender : {
-				value : GridBodyRender	
-			}
-		}
-		
-	},{
-		xclass : 'grid-body',
-		priority : 1	
-	});
+            },
+            /**
+             * set the records selected by the key-value
+             * @param {Array|Object} records the records which will be set to selected
+             */
+            setSelection:function (records) {
+                var _self = this,
+                    view = _self.get('view');
 
-	return GridBody;
-},{
-	requires:['component','template','./bindable']
+                if (!records) {
+                    return;
+                }
+                if (!S.isArray(records)) {
+                    records = [records];
+                }
+                S.each(records, function (record) {
+                    var rowEl = _self.findRow(record);
+                    if (rowEl && !view.isRowSelected(rowEl)) {
+                        _self.onRowSelected(rowEl, true);
+                    }
+                });
+            },
+            /**
+             * show data in this controller
+             * @param {Array} data show the given data in table
+             */
+            showData:function (data) {
+                var _self = this;
+                _self.clearData();
+                _self._addData(data);
+                _self.fire('aftershow');
+            },
+            /**
+             * when some columns changed,must reset body's column
+             */
+            resetColumns:function () {
+                var _self = this,
+                    store = _self.get('store');
+                //remove the rows of this table
+                //_self.clearData();
+                //recreate the header row
+                _self.get('view').resetHeaderRow();
+                //show data
+                if (store) {
+                    _self.onLoad();
+                }
+                //
+            },
+            /**
+             * change the column's width
+             * @param {Grid.Column} column a column in config
+             */
+            resetColumnsWidth:function (column) {
+                this.get('view').setColumnsWidth(column);
+            },
+            /**
+             * set all rows selected
+             */
+            setAllSelection:function () {
+                var _self = this,
+                    rows = _self.get('view').getAllRows();
+                rows.each(function (row) {
+                    _self.onRowSelected(row, true);
+                });
+            },
+            /**
+             * set the inner table width
+             * @param {Number} width the inner table's width
+             */
+            setTableWidth:function (width) {
+                var _self = this;
+                if (_self.get('forceFit')) {
+                    _self.resetColumns();
+                }
+                this.get('view').setTableWidth(width);
+            },
+            //add data to table
+            _addData:function (data, position) {
+                position = position || 0;
+                var _self = this;
+                S.each(data, function (record, index) {
+                    var rowEl = _self.get('view')._createRow(record, position + index);
+                    _self.fire('rowcreated', {record:record, data:record, row:rowEl[0]});
+                });
+            },
+            //when body scrolled,the other component of grid also scrolled
+            _bindScrollEvent:function () {
+                var _self = this,
+                    el = _self.get('el');
+                el.on('scroll', function () {
+                    var left = el.scrollLeft(),
+                        top = el.scrollTop();
+                    _self.fire('scroll', {scrollLeft:left, scrollTop:top});
+                });
+            },
+            //bind rows event of table
+            _bindRowEvent:function () {
+                var _self = this,
+                    tbodyEl = _self.get('tbodyEl');
+
+                tbodyEl.delegate('click', '.' + CLS_GRID_ROW, function (e) {
+                    _self._rowClickEvent(e);
+                });
+            },
+            //publish event to grid
+            _publishEvent:function () {
+                var _self = this,
+                    parent = _self.get('parent'),
+                    events = _self.get('events');
+                if (!parent) {
+                    return;
+                }
+                S.each(events, function (event) {
+                    _self.publish(event, {
+                        bubbles:1
+                    });
+                });
+                _self.addTarget(parent);
+            },
+            _rowClickEvent:function (event) {
+                var _self = this,
+                    multiSelect = _self.get('multiSelect'),
+                    sender = S.one(event.currentTarget),
+                    view = _self.get('view'),
+                    record = sender.data(DATA_ELEMENT),
+                    cell = S.one(event.target).closest("." + CLS_GRID_CELL),
+                    selected = view.isRowSelected(sender);
+                //when in multiple select model,toggle the row's select status
+                if (cell) {
+                    _self.fire('cellclick', {record:record, row:sender[0], cell:cell[0], field:cell.attr(ATTR_COLUMN_FIELD), domTarget:event.target});
+                }
+                _self.fire('rowclick', {record:record, row:sender[0]});
+                if (multiSelect) {
+                    _self.onRowSelected(sender, !selected);
+                } else {
+                    if (!selected) {
+                        _self.clearSelection();
+                        _self.onRowSelected(sender, true);
+                    }
+                }
+            },
+            /**
+             * when setting the component width,the table's width also changed
+             * @private
+             * @override
+             */
+            _uiSetWidth:function () {
+                var _self = this;
+                //if(_self.get('rendered')){
+                _self.setTableWidth();
+                //}
+            },
+            //when set this component's height ,the table's width is also changed
+            _uiSetHeight:function () {
+                var _self = this;
+                //if(_self.get('rendered')){
+                _self.setTableWidth();
+                //}
+            }
+        }, {
+            ATTRS:/**
+             * @lends Grid.GridBody.prototype
+             */
+            {
+
+                /**
+                 * columns of the component
+                 * @see Grid.Column
+                 * @private
+                 */
+                columns:{
+                    view:true,
+                    value:[]
+                },
+                /**
+                 * @private
+                 */
+                tbodyEl:{
+                    view:true
+                },
+                /**
+                 * The CSS class to apply to this header's table element.
+                 * @type {String}
+                 * @default 'ks-grid-table' this css cannot be overridden, the other css can be added
+                 */
+                tableCls:{
+                    view:true,
+                    value:''
+                },
+                /**
+                 * true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex.
+                 * Then they are all proportionally changed in width so that the entire content width is used.
+                 * @type {Boolean}
+                 * @default 'false'
+                 */
+                forceFit:{
+                    view:true,
+                    value:false
+                },
+                /**
+                 * @type {Boolean}
+                 * @default false
+                 */
+                multiSelect:{
+                    value:false
+                },
+                /**
+                 * True to stripe the rows.
+                 * @type {Boolean}
+                 * @default true
+                 */
+                stripeRows:{
+                    view:true,
+                    value:true
+                },
+                /**
+                 * An template used to create the internal structure inside this Component's encapsulating Element.
+                 * User can use the syntax of KISSY 's template component.
+                 * Only in the configuration of the column can set this property.
+                 * @type String
+                 * <pre>
+                 *    '&lt;table cellspacing="0" cellpadding="0" class="grid-table" &gt;'+
+                 *        '&lt;tbody&gt;&lt;/tbody&gt;'+
+                 *        '&lt;tfoot&gt;&lt;/tfoot&gt;'+
+                 *    '&lt;/table&gt;'
+                 *
+                 * </pre>
+                 */
+                tpl:{
+                    view:true,
+                    value:'<table cellspacing="0" cellpadding="0" class="ks-grid-table {{tableCls}}">' +
+                        '<tbody></tbody>' +
+                        '</table>'
+                },
+                /**
+                 * An template of first row of this component ,which to fixed the width of every column.
+                 * User can use the syntax of KISSY 's template component.
+                 * @type String
+                 * @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
+                 */
+                headerRowTpl:{
+                    view:true,
+                    value:'<tr class="ks-grid-header-row">{{cellsTpl}}</tr>'
+                },
+                /**
+                 * An template used to create the row which encapsulates cells.
+                 * User can use the syntax of KISSY 's template component.
+                 * @type String
+                 * @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
+                 */
+                rowTpl:{
+                    view:true,
+                    value:'<tr class="' + CLS_GRID_ROW + ' {{oddCls}}">{{cellsTpl}}</tr>'
+                },
+                /**
+                 * An template used to create the cell.
+                 * User can use the syntax of KISSY 's template component.
+                 * @type String
+                 * @default
+                 * <pre>
+                 *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
+                 *        '&lt;div class="' + CLS_GRID_CELL_INNER + '" &gt;{{cellText}}&lt;/div&gt;'+
+                 *    '&lt;/td&gt;'
+                 *</pre>
+                 */
+                cellTpl:{
+                    view:true,
+                    value:'<td  class="' + CLS_GRID_CELL + ' ' + CLS_TD_PREFIX + '{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}  {{#if hide}} style="display : none" {{/if}}>' +
+                        '<div class="' + CLS_GRID_CELL_INNER + '" >{{cellText}}</div>' +
+                        '</td>'
+
+                },
+                /**
+                 * @default &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
+                 */
+                cellTextTpl:{
+                    view:true,
+                    value:'<span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}">{{text}}</span>'
+                },
+                headerCellTpl:{
+                    view:true,
+                    value:'<td class="' + CLS_TD_PREFIX + '{{id}}" style=" {{#if width}}width:{{width}}px;{{/if}}height:0;{{#if hide}} display : none {{/if}}"></td>'
+                },
+                /**
+                 * the collection of body's events
+                 * @type {Array}
+                 */
+                events:{
+                    value:[
+
+                    /**
+                     * after show a collection data in this component
+                     * @name Grid.GridBody#aftershow
+                     * @event
+                     */
+                        'aftershow'    ,
+                    /**
+                     * fired when click one cell of row
+                     * @name Grid.GridBody#cellclick
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record showed by this row
+                     * @param {String} e.field the dataIndex of the column which this cell belong to
+                     * @param {HTMLElement} e.row the dom element of this row
+                     * @param {HTMLElement} e.cell the dom element of this cell
+                     * @param {HTMLElement} e.domTarget the dom element of the click target
+                     */
+                        'cellclick',
+                    /**
+                     * fired when click one row
+                     * @name Grid.GridBody#rowclick
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record showed by this row
+                     * @param {HTMLElement} e.row the dom element of this row
+                     */
+                        'rowclick',
+                    /**
+                     * add a row in this component.in general,this event fired after adding a record to the store
+                     * @name Grid.GridBody#rowcreated
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record adding to the store
+                     * @param {HTMLElement} e.row the dom element of this row
+                     */
+                        'rowcreated',
+                    /**
+                     * remove a row from this component.in general,this event fired after delete a record from the store
+                     * @name Grid.GridBody#rowremoved
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record removed from the store
+                     * @param {HTMLElement} e.row the dom element of this row
+                     */
+                        'rowremoved',
+                    /**
+                     * when click the row,in multiple select model the selected status toggled
+                     * @name Grid.GridBody#rowselected
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record showed by this row
+                     * @param {HTMLElement} e.row the dom element of this row
+                     */
+                        'rowselected',
+                    /**
+                     * fire after cancel selected status
+                     * @name Grid.GridBody#rowunselected
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Object} e.record the record showed by this row
+                     * @param {HTMLElement} e.row the dom element of this row
+                     */
+                        'rowunselected',
+                    /**
+                     * remove a row from this component.in general,this event fired after delete a record from the store
+                     * @name Grid.GridBody#scroll
+                     * @event
+                     * @param {event} e  event object
+                     * @param {Number} e.scrollLeft the horizontal value that the body scroll to
+                     * @param {Number} e.scrollTop the vertical value that the body scroll to
+                     */
+                        'scroll'
+                    ]
+                },
+                /**
+                 * @private
+                 */
+                xrender:{
+                    value:GridBodyRender
+                }
+            }
+
+        }, {
+            xclass:'grid-body',
+            priority:1
+        });
+
+    return GridBody;
+}, {
+    requires:['component', 'template', './bindable']
 });/**
  * @fileOverview This class specifies the definition for a header of a grid.
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/header',function(S,Component,Column){
+KISSY.add('grid/header', function (S, Component, Column) {
 
-	var CLS_CELL_EMPTY = 'ks-grid-hd-empty',
-		CLS_SCROLL_WITH = 17;
-	var headerRender = Component.Render.extend({
+    var CLS_SCROLL_WITH = 17;
 
-		renderUI : function(){
-			var _self = this,
-				el = _self.get('el'),
-				tableCls = _self.get('tableCls'),
-				temp = '<table cellspacing="0" class="ks-grid-table" cellpadding="0"><thead><tr></tr></thead></table>',
-				tableEl = new S.Node(temp).appendTo(el);
-			tableEl.addClass(tableCls);
-			_self.set('tableEl',tableEl);
-		},
-		/**
-		* @see {Component.Render#getContentElement}
-		*/
-		getContentElement : function(){
-			return this.get('el').one('tr');
-		},
-		scrollTo : function(obj){
-			var _self = this,
-				el = _self.get('el');
-			if(obj.top !== undefined){
-				el.scrollTop(obj.top);
-			}
-			if(obj.left !== undefined){
-				el.scrollLeft(obj.left);
-			}
-		},
-		//set the table's width
-		_setTableWidth : function(w){
-			var _self = this,
-				width = _self.get('width'),
-				tableEl = _self.get('tableEl');
-			if(!width){
-				return;
-			}
-			if(width > w){
-				w = width;
-			}
-			
-			tableEl.width(w);
-		}
-	},{
-		ATTRS : {
-			emptyCellEl : {},
-			tableEl :{}
-		}
-	});
-	/**
-	 * Container which holds headers and is docked at the top or bottom of a Grid. 
-	 * The HeaderContainer drives resizing/moving/hiding of columns within the GridView. 
-	 * As headers are hidden, moved or resized the headercontainer is responsible for triggering changes within the view.
+    var headerRender = Component.Render.extend({
+
+        renderUI:function () {
+            var _self = this,
+                el = _self.get('el'),
+                tableCls = _self.get('tableCls'),
+                temp = '<table cellspacing="0" class="ks-grid-table" cellpadding="0">' +
+                    '<thead><tr></tr></thead>' +
+                    '</table>',
+                tableEl = new S.Node(temp).appendTo(el);
+            tableEl.addClass(tableCls);
+            _self.set('tableEl', tableEl);
+        },
+        /**
+         * @see {Component.Render#getContentElement}
+         */
+        getContentElement:function () {
+            return this.get('el').one('tr');
+        },
+        scrollTo:function (obj) {
+            var _self = this,
+                el = _self.get('el');
+            if (obj.top !== undefined) {
+                el.scrollTop(obj.top);
+            }
+            if (obj.left !== undefined) {
+                el.scrollLeft(obj.left);
+            }
+        },
+        //set the table's width
+        _setTableWidth:function (w) {
+            var _self = this,
+                width = _self.get('width'),
+                tableEl = _self.get('tableEl');
+            if (!width) {
+                return;
+            }
+            if (width > w) {
+                w = width;
+            }
+
+            tableEl.width(w);
+        }
+    }, {
+        ATTRS:{
+            emptyCellEl:{},
+            tableEl:{}
+        }
+    });
+    /**
+     * Container which holds headers and is docked at the top or bottom of a Grid.
+     * The HeaderContainer drives resizing/moving/hiding of columns within the GridView.
+     * As headers are hidden, moved or resized,
+     * the header container is responsible for triggering changes within the view.
      * @name Grid.Header
      * @constructor
-     * @extends Component.Container
+     * @extends Component.Controller
      */
-	var header = Component.Container.extend(
-	/**
-	 * @lends Grid.Header.prototype
-	 */		
-	{
-		/**
-		* add a columns to header
-		* @param {Object|Grid.Column} c The column object or column config.
-		* @index {Number} index The position of the column in a header,0 based.
-		*/
-		addColumn : function(c, index){
-			var _self = this,
-				insertIndex = 0,
-				columns = _self.get('columns');
-			c = _self._createColumn(c);
-			if(index === undefined){
-				index = columns.length;
-				insertIndex = _self.get('children').length - 1;
-			}
-			columns.splice(index,0,c);
-			_self.addChild(c,insertIndex);
-			_self.fire('add',{column : c, index : index});
-			return c;
-		},
-		/**
-		* remove a columns from header
-		* @param {Grid.Column|Number} c is The column object��or The position of the column in a header,0 based.
-		*/
-		removeColumn : function(c){
-			var _self = this,
-				columns = _self.get('columns'),
-				index = -1;
-			c = S.isNumber(c) ? columns[c] : c;
-			index = S.indexOf(c,columns);
-			columns.splice(index,1);
-			_self.fire('remove',{column : c, index : index});
-			return _self.removeChild(c,true);
-		},
-		/**
-		* For overridden.
-		* @see Component.Container#bindUI
-		*/
-		bindUI : function(){
-			var _self = this;
-			_self._bindColumnsEvent();
-		},
-		/* 
-		* For overridden.
-		* @protected
-        * @override
-		*/
-		initializer : function(){
-			var _self = this,
-				children = _self.get('children'),
-				columns = _self.get('columns'),
-				emptyColumn = _self._createEmptyColumn();
-			S.each(columns,function(item,index){
-				var columnControl = _self._createColumn(item);
-				children[index] = columnControl;
-				columns[index] = columnControl;
-			});
-			children.push(_self._createEmptyColumn());
-		},
-		/**
-		* get the columns of this header,the result equals the 'children' property .
-		* @return {Array} columns 
-		* @example var columns = header.getColumns();
-		*	<br>or</br>
-		* var columns = header.get('children');
-		*/
-		getColumns : function(){
-			return this.get('columns');
-		},
-		/**
-		* Obtain the sum of the width of all columns
-		* @return {Number}
-		*/
-		getColumnsWidth : function () {
-			var _self = this,
-				columns = _self.getColumns(),
-				//checkable = _self.get('checkable'),
-				totalWidth = 0,
-				borderWidth = 0;
+    var header = Component.Controller.extend(
+        /**
+         * @lends Grid.Header.prototype
+         */
+        {
+            /**
+             * add a columns to header
+             * @param {Object|Grid.Column} c The column object or column config.
+             * @index {Number} index The position of the column in a header,0 based.
+             */
+            addColumn:function (c, index) {
+                var _self = this,
+                    insertIndex = 0,
+                    columns = _self.get('columns');
+                c = _self._createColumn(c);
+                if (index === undefined) {
+                    index = columns.length;
+                    insertIndex = _self.get('children').length - 1;
+                }
+                columns.splice(index, 0, c);
+                _self.addChild(c, insertIndex);
+                _self.fire('add', {column:c, index:index});
+                return c;
+            },
+            /**
+             * remove a columns from header
+             * @param {Grid.Column|Number} c is The column object or The position of the column in a header,0 based.
+             */
+            removeColumn:function (c) {
+                var _self = this,
+                    columns = _self.get('columns'),
+                    index;
+                c = S.isNumber(c) ? columns[c] : c;
+                index = S.indexOf(c, columns);
+                columns.splice(index, 1);
+                _self.fire('remove', {column:c, index:index});
+                return _self.removeChild(c, true);
+            },
+            /**
+             * For overridden.
+             * @see Component.Controller#bindUI
+             */
+            bindUI:function () {
+                var _self = this;
+                _self._bindColumnsEvent();
+            },
+            /*
+             * For overridden.
+             * @protected
+             * @override
+             */
+            initializer:function () {
+                var _self = this,
+                    children = _self.get('children'),
+                    columns = _self.get('columns');
+                S.each(columns, function (item, index) {
+                    var columnControl = _self._createColumn(item);
+                    children[index] = columnControl;
+                    columns[index] = columnControl;
+                });
+                children.push(_self._createEmptyColumn());
+            },
+            /**
+             * get the columns of this header,the result equals the 'children' property .
+             * @return {Array} columns
+             * @example var columns = header.getColumns();
+             *    <br>or</br>
+             * var columns = header.get('children');
+             */
+            getColumns:function () {
+                return this.get('columns');
+            },
+            /**
+             * Obtain the sum of the width of all columns
+             * @return {Number}
+             */
+            getColumnsWidth:function () {
+                var _self = this,
+                    columns = _self.getColumns(),
+                    totalWidth = 0;
 
-			S.each(columns, function (column) {
-				if (!column.get('hide')) {
-					totalWidth += column.get('width');
-					borderWidth = S.UA.webkit ? 0 : 1;
-					totalWidth += borderWidth;
-				}
-			});
-			return totalWidth;
-		},
-		/**
-		* get {@link Grid.Column} instance by index,when column moved ,the index changed.
-		* @param {Number} index The index of columns
-		* @return {Grid.Column} the column in the header,if the index outof the range,the result is null
-		*/
-		getColumnByIndex : function(index){
-			var _self = this,
-				columns = _self.getColumns(),
-				result = columns[index];
-			return result;
-		},
-		/**
-		* get {@link Grid.Column} instance by id,when column rendered ,this id can't to be changed
-		* @param {String|Number}id The id of columns
-		* @return {Grid.Column} the column in the header,if the index outof the range,the result is null
-		*/
-		getColumnById : function(id){
-			var _self = this,
-				columns = _self.getColumns(),
-				result = null;
-			S.each(columns,function(column){
-				if(column.get('id') === id){
-					result = column;
-					return false;
-				}
-			});
-			return result;
-		},
-		/**
-		* get {@link Grid.Column} instance's index,when column moved ,the index changed.
-		* @param {Grid.Column} column The instance of column
-		* @return {Number} the index of column in the header,if the column not in the header,the index is -1
-		*/
-		getColumnIndex : function(column){
-			var _self = this,
-				columns = _self.getColumns();
-			return S.indexOf(column,columns);
-		},
-		/**
-		* move the header followed by body's or document's scrolling
-		* @param {Object} obj the scroll object which has two value:top(scrollTop),left(scrollLeft)
-		*/
-		scrollTo : function(obj){
-			this.get('view').scrollTo(obj);
-		},
-		//when column's event fire ,this header must handle them.
-		_bindColumnsEvent : function(){
-			var _self = this;
+                S.each(columns, function (column) {
+                    if (!column.get('hide')) {
+                        totalWidth += column.get("el").outerWidth();
+                    }
+                });
+                return totalWidth;
+            },
+            /**
+             * get {@link Grid.Column} instance by index,when column moved ,the index changed.
+             * @param {Number} index The index of columns
+             * @return {Grid.Column} the column in the header,if the index outof the range,the result is null
+             */
+            getColumnByIndex:function (index) {
+                var _self = this,
+                    columns = _self.getColumns(),
+                    result = columns[index];
+                return result;
+            },
+            /**
+             * get {@link Grid.Column} instance by id,when column rendered ,this id can't to be changed
+             * @param {String|Number}id The id of columns
+             * @return {Grid.Column} the column in the header,if the index out of the range,the result is null
+             */
+            getColumnById:function (id) {
+                var _self = this,
+                    columns = _self.getColumns(),
+                    result = null;
+                S.each(columns, function (column) {
+                    if (column.get('id') === id) {
+                        result = column;
+                        return false;
+                    }
+                });
+                return result;
+            },
+            /**
+             * get {@link Grid.Column} instance's index,when column moved ,the index changed.
+             * @param {Grid.Column} column The instance of column
+             * @return {Number} the index of column in the header,if the column not in the header,the index is -1
+             */
+            getColumnIndex:function (column) {
+                var _self = this,
+                    columns = _self.getColumns();
+                return S.indexOf(column, columns);
+            },
+            /**
+             * move the header followed by body's or document's scrolling
+             * @param {Object} obj the scroll object which has two value:top(scrollTop),left(scrollLeft)
+             */
+            scrollTo:function (obj) {
+                this.get('view').scrollTo(obj);
+            },
+            //when column's event fire ,this header must handle them.
+            _bindColumnsEvent:function () {
+                var _self = this;
 
-			_self.on('afterWidthChange',function(e){
-				var sender = e.target;
-				if(sender!== _self){
-					_self.setTableWidth();
-				}
-			});
-			_self.on('afterVisibleChange',function(e){
-				var sender = e.target;
-				if(sender!== _self){
-					_self.setTableWidth();
-				}
-			});
-			_self.on('afterSortStateChange',function(e){
-				var sender = e.target,
-					columns = _self.getColumns(),
-					val = e.newVal;
-				if(val){
-					S.each(columns,function(column){
-						if(column !== sender){
-							column.set('sortState','');
-						}
-					});
-				}
-			});
-		},
-		//create the column control
-		_createColumn : function(cfg){
-			if(cfg instanceof Column){
-				return cfg;
-			}
-			if(!cfg.id){
-				cfg.id = S.guid('col');
-			}
-			var column = new Column(cfg);
-			
-			return column;
-		},
-		_createEmptyColumn : function(){
-			return new Column.Empty();
-		},
-		//when set grid's height ,scroll bar emerged.
-		_isAllowScrollLeft : function(){
-			var _self = this,
-				parent = _self.get('parent');
-			if(parent && parent.get('height')){
-				return true;
-			}
-			return false;
-		},
-		/**
-		* force every column fit the table's width
-		*/
-		forceFitColumns : function(){
-			
-			var _self = this,
-				columns = _self.getColumns(),
-				width = _self.get('width'),
-				fixedWidth = 0,// some columns can't resizable
-				allowScroll = _self._isAllowScrollLeft(),
-				realWidth = 0,//after forceFit ,the total width of columns
-				times = 1,    //Ratio of width : columnsWidth
-				lastShowColumn = null,
-				showCount = 0,
-				extraWidth = 0,
-				appendWidth = 0,
-				borderWidth = 0,
-				columnsWidth = 0;
-			//if there is not a width config of grid ,The forceFit action can't work
-			if(width){
-				//Calculate the total width of columns,and the fixed width 
-				S.each(columns, function (column) {
-					var colWidth = column.get('originWidth') || column.get('width');
-					if (!column.get('hide') && colWidth) {
-						columnsWidth += colWidth;
-						if(!column.get('resizable')){
-							fixedWidth += column.get('width');
-						}
-						showCount ++;
-					}
-				});
-				borderWidth = S.UA.webkit ? 0 : showCount * 1;
-				extraWidth = (allowScroll ? CLS_SCROLL_WITH : 0) + borderWidth;//  + 2 + 
-				//Calculate how many times ( width / columnsWidth )
-				times = (width - extraWidth - fixedWidth)/ (columnsWidth - fixedWidth);
+                _self.on('afterWidthChange', function (e) {
+                    var sender = e.target;
+                    if (sender !== _self) {
+                        _self.setTableWidth();
+                    }
+                });
+                _self.on('afterVisibleChange', function (e) {
+                    var sender = e.target;
+                    if (sender !== _self) {
+                        _self.setTableWidth();
+                    }
+                });
+                _self.on('afterSortStateChange', function (e) {
+                    var sender = e.target,
+                        columns = _self.getColumns(),
+                        val = e.newVal;
+                    if (val) {
+                        S.each(columns, function (column) {
+                            if (column !== sender) {
+                                column.set('sortState', '');
+                            }
+                        });
+                    }
+                });
+            },
+            //create the column control
+            _createColumn:function (cfg) {
+                if (cfg instanceof Column) {
+                    return cfg;
+                }
+                if (!cfg.id) {
+                    cfg.id = S.guid('col');
+                }
+                return new Column(cfg);
+            },
+            _createEmptyColumn:function () {
+                return new Column.Empty();
+            },
+            //when set grid's height, scroll bar emerged.
+            _isAllowScrollLeft:function () {
+                var _self = this,
+                    parent = _self.get('parent');
 
-				if (times !== 1) {
-					S.each(columns, function (column) {
-						if (!column.get('hide') && column.get('resizable')) {
-							var originWidth = column.get('originWidth') || column.get('width'),
-								changedWidth = Math.floor(originWidth * times);
-							column.set('width',changedWidth,{silent : true});
-							column.get('el').width(changedWidth);
-							column.set('originWidth',changedWidth,{silent : true});
-							realWidth += changedWidth;
-							lastShowColumn = column;
-						}
-					});
-					appendWidth = width - (realWidth + extraWidth + fixedWidth);
-					if (showCount && lastShowColumn) {
-						var lastWidth = lastShowColumn.get('width') + appendWidth;
-						lastShowColumn.set('width',lastWidth,{silent : true});
-						lastShowColumn.get('el').width(lastWidth);
-					}
-				}
-				_self.fire('forceFitWidth');
-			}
-		},
-		/**
-		* set the header's inner table's width
-		*/
-		setTableWidth : function(){
-			var _self = this,
-				columnsWidth = _self.getColumnsWidth();
-			if(_self.get('forceFit')){
-				_self.forceFitColumns();
-			}
-			if(_self._isAllowScrollLeft()){
-				columnsWidth += CLS_SCROLL_WITH;
-			}
-			_self.get('view')._setTableWidth(columnsWidth);
-		},
-		//when header's width changed, it alse effects its columns. 
-		_uiSetWidth : function(w){
-			var _self = this;
-			_self.setTableWidth();
-		},
-		_uiSetForceFit : function(v){
-			var _self = this;
-			if(v){
-				_self.setTableWidth();
-			}
-		}
-		
-	},{
-		ATTRS:/** * @lends Grid.Header.prototype*/	
-		{
-			
-			/**
-			* A string column id or the numeric index of the column that should be initially activated within the container's layout on render. 
-			* @type String|Number
-			* @default null
-			*/
-			activeItem : {
-				value : null
-			},
-			/**
-			* the collection of columns
-			*/
-			columns : {
-				value :[]
-			},
-			/**
-			* @private
-			*/
-			emptyColumn : {
-				
-			},
-			/**
-			* @protected
-			*/
-			focusable : {
-				value : false
-			},
-			/**
-			* true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex. 
-			* Then they are all proportionally changed in width so that the entire content width is used.
-			* @type {Boolean}
-			* @default 'false'
-			*/
-			forceFit : {
-				view : true,
-				value : false
-			},
-			/**
-			* @override this
-			*/
-			width : {
-				view : true	
-			},
-			/**
-			* The CSS class to apply to this header's table element.
-			*/
-			tableCls : {
-				view : true,
-				value : 'ks-grid-table'
-			},
-			/**
-			* @private
-			*/
-			xrender : {
-				value : headerRender	
-			},
-			/**
-			* the collection of header's events
-			* @type Array
-			*/
-			events : {
-				value : [
-					/**
-					 * @event Grid.Header#add
-					 * Fires when this column's width changed
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.column which column added
-					 * @param {Number} index the add column's index in this header
-					 * 
-					 */
-					'add',
-					/**
-					 * @event Grid.Header#add
-					 * Fires when this column's width changed
-					 * @param {event} e the event object
-					 * @param {Grid.Column} e.column which column removed
-					 * @param {Number} index the removed column's index in this header
-					 */
-					'remove'
-				]	
-			}
-		}
-	},{
-		xclass : 'grid-header',
-		priority : 1	
-	});
-	
-	return header;
-},{
-	requires : ['component','./column']
+                return parent && !!parent.get('height');
+            },
+            /**
+             * force every column fit the table's width
+             */
+            forceFitColumns:function () {
+
+                var _self = this,
+                    columns = _self.getColumns(),
+                    width = _self.get('width'),
+                    allowScroll = _self._isAllowScrollLeft();
+
+                //if there is not a width config of grid ,The forceFit action can't work
+                if (width) {
+
+                    if (allowScroll) {
+                        width -= CLS_SCROLL_WITH;
+                    }
+
+                    var adjustCount = 0;
+
+                    S.each(columns, function (column) {
+                        if (!column.get('hide') && column.get('resizable')) {
+                            adjustCount++;
+                        }
+                        if (!column.get('hide') && !column.get('resizable')) {
+                            width -= column.get("el").outerWidth();
+                        }
+                    });
+
+                    var colWidth = width / adjustCount;
+
+                    S.each(columns, function (column) {
+                        if (!column.get('hide') && column.get('resizable')) {
+                            var columnEl = column.get("el");
+                            var borderWidth =
+                                parseInt(columnEl.css("border-left-width")) || 0 +
+                                    parseInt(columnEl.css("border-right-width")) || 0;
+                            // ！ note
+                            //
+                            // 会再调用 setTableWidth， 循环调用
+                            column.set("width", colWidth - borderWidth, {
+                                silent:1
+                            });
+                            columnEl.width(colWidth - borderWidth);
+                        }
+                    });
+
+                    _self.fire('forceFitWidth');
+                }
+            },
+            /**
+             * set the header's inner table's width
+             */
+            setTableWidth:function () {
+                var _self = this,
+                    columnsWidth = _self.getColumnsWidth();
+                if (_self.get('forceFit')) {
+                    _self.forceFitColumns();
+                    columnsWidth = _self.getColumnsWidth();
+                }
+                if (_self._isAllowScrollLeft()) {
+                    columnsWidth += CLS_SCROLL_WITH;
+                }
+                _self.get('view')._setTableWidth(columnsWidth);
+            },
+            //when header's width changed, it also effects its columns.
+            _uiSetWidth:function () {
+                var _self = this;
+                _self.setTableWidth();
+            },
+            _uiSetForceFit:function (v) {
+                var _self = this;
+                if (v) {
+                    _self.setTableWidth();
+                }
+            }
+
+        }, {
+            ATTRS:/** * @lends Grid.Header.prototype*/
+            {
+
+                /**
+                 *  A string column id or the numeric index of the column
+                 * that should be initially activated within the container's layout on render.
+                 * @type String|Number
+                 * @default null
+                 */
+                activeItem:{
+                    value:null
+                },
+                /**
+                 * the collection of columns
+                 */
+                columns:{
+                    value:[]
+                },
+                /**
+                 * @private
+                 */
+                emptyColumn:{
+
+                },
+                /**
+                 * @protected
+                 */
+                focusable:{
+                    value:false
+                },
+                /**
+                 * true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex.
+                 * Then they are all proportionally changed in width so that the entire content width is used.
+                 * @type {Boolean}
+                 * @default 'false'
+                 */
+                forceFit:{
+                    view:true,
+                    value:false
+                },
+                /**
+                 * The CSS class to apply to this header's table element.
+                 */
+                tableCls:{
+                    view:true,
+                    value:'ks-grid-table'
+                },
+                /**
+                 * @private
+                 */
+                xrender:{
+                    value:headerRender
+                },
+                /**
+                 * the collection of header's events
+                 * @type Array
+                 */
+                events:{
+                    value:[
+                    /**
+                     * @event Grid.Header#add
+                     * Fires when this column's width changed
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.column which column added
+                     * @param {Number} index the add column's index in this header
+                     *
+                     */
+                        'add',
+                    /**
+                     * @event Grid.Header#add
+                     * Fires when this column's width changed
+                     * @param {event} e the event object
+                     * @param {Grid.Column} e.column which column removed
+                     * @param {Number} index the removed column's index in this header
+                     */
+                        'remove'
+                    ]
+                }
+            }
+        }, {
+            xclass:'grid-header',
+            priority:1
+        });
+
+    return header;
+}, {
+    requires:['component', './column']
 });/**
  * @fileOverview  a specialized pagingbar which use number buttons
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
-	var NUMBER_CONTAINER = 'numberContainer',
-		CLS_ACTIVE = 'ks-active';
+	var NUMBER_CONTAINER = 'numberContainer';
 	/**
 	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
@@ -2709,7 +2655,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getItems : function(){
 			var _self = this,
 				items = _self.get('items'),
-				numberContainerBar = null;
+				numberContainerBar;
 			if(items)
 			{
 				return items;
@@ -2763,7 +2709,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 				curPage = _self.get('curPage'),
 				totalPage = _self.get('totalPage'),
 				numberItems = _self._getNumberItems(curPage,totalPage),
-				curItem = null;
+				curItem;
 			numberContainerBar.removeChildren(true);
 
 			S.each(numberItems,function(item){
@@ -2879,7 +2825,9 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
 			curPageTpl : {
-				value : '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+				value : '到第 <input type="text" '+
+                    'auto'+
+                    'complete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			}
 		}
 	},{
@@ -2893,442 +2841,442 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 },{
 	 requires:['component','./pagingbar','./bar']
 });/**
- * @fileOverview  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control. 
- * @author dxq613@gmail.com
+ * @fileOverview  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/pagingbar', function (S,Component,Bar,Bindable) {
+KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
 
-	var ID_FIRST = 'first',
-		ID_PREV = 'prev',
-		ID_NEXT = 'next',
-		ID_LAST = 'last',
-		ID_SKIP = 'skip',
-		ID_TOTAL_PAGE = 'totalPage',
-		ID_CURRENT_PAGE = 'curPage',
-		ID_TOTAL_COUNT = 'totalCount';
+    var ID_FIRST = 'first',
+        ID_PREV = 'prev',
+        ID_NEXT = 'next',
+        ID_LAST = 'last',
+        ID_SKIP = 'skip',
+        ID_TOTAL_PAGE = 'totalPage',
+        ID_CURRENT_PAGE = 'curPage',
+        ID_TOTAL_COUNT = 'totalCount';
 
-	/**
-	* specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
-	* Paging Toolbar is typically used as one of the Grid's toolbars.
-	* @name PagingBar
-    * @constructor
-    * @extends Grid.Bar
-    * @memberOf Grid
-	*/
-	var PagingBar = Bar.extend([Bindable],
-	/** @lends Grid.PagingBar.prototype*/
-	{
-		/**
-		 * From Bar, Initialize this paging bar items.
-		 * @override
-		 * @protected
-		 */
-		initializer:function () {
-			var _self = this,
-				children = _self.get('children'),
-				items = _self._getItems(),
-				store = _self.get('store');
-			S.each(items,function(item){
-				children.push(_self._createItem(item));
-			});
-			if(store && store.pageSize){
-				_self.set('pageSize',store.pageSize);
-			}
-		},
-		/**
-		* bind page change and store events
-		* @override
-		* @protected
-		*/
-		bindUI : function(){
-			var _self = this;
-			_self._bindButtonEvent();
-			//_self._bindStoreEvents();
+    /**
+     * specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
+     * Paging Toolbar is typically used as one of the Grid's toolbars.
+     * @name PagingBar
+     * @constructor
+     * @extends Grid.Bar
+     * @memberOf Grid
+     */
+    var PagingBar = Bar.extend([Bindable],
+        /** @lends Grid.PagingBar.prototype*/
+        {
+            /**
+             * From Bar, Initialize this paging bar items.
+             * @override
+             * @protected
+             */
+            initializer:function () {
+                var _self = this,
+                    children = _self.get('children'),
+                    items = _self._getItems(),
+                    store = _self.get('store');
+                S.each(items, function (item) {
+                    children.push(_self._createItem(item));
+                });
+                if (store && store.pageSize) {
+                    _self.set('pageSize', store.pageSize);
+                }
+            },
+            /**
+             * bind page change and store events
+             * @override
+             * @protected
+             */
+            bindUI:function () {
+                var _self = this;
+                _self._bindButtonEvent();
+                //_self._bindStoreEvents();
 
-		},
-		/**
-		* skip to page
-		* this method can fire "beforepagechange" event,if you return false in the handler the action will be canceled
-		* @param {Number} page target page
-		*/
-		jumpToPage : function (page) {
-			if(page <= 0 || page > this.get('totalPage')){
-				return ;
-			}
-			var _self = this,
-				store = _self.get('store'),
-				pageSize = _self.get('pageSize'),
-				index = page - 1,
-				start = index * pageSize;
-			var reslut = _self.fire('beforepagechange', {from : _self.get('curPage'), to : page});
-			if(store && reslut !== false){
-				store.load({ start : start, limit : pageSize, pageIndex : index });
-			}
-		},
-		//after store loaded data,reset the information of paging bar and buttons state
-		_afterStoreLoad : function (store, params) {
-			var _self = this,
-				pageSize = _self.get('pageSize'),
-				start = 0,  //页面的起始记录
-				end = 0,    //页面的结束记录
-				totalCount = 0, //记录的总数
-				curPage = 1,    //当前页
-				totalPage = 1;//总页数;
-            if (params) {
-                start = params.start || 0;
-            } else {
-                start  = 0;
+            },
+            /**
+             * skip to page
+             * this method can fire "beforepagechange" event,
+             * if you return false in the handler the action will be canceled
+             * @param {Number} page target page
+             */
+            jumpToPage:function (page) {
+                if (page <= 0 || page > this.get('totalPage')) {
+                    return;
+                }
+                var _self = this,
+                    store = _self.get('store'),
+                    pageSize = _self.get('pageSize'),
+                    index = page - 1,
+                    start = index * pageSize;
+                var result = _self.fire('beforepagechange', {from:_self.get('curPage'), to:page});
+                if (store && result !== false) {
+                    store.load({ start:start, limit:pageSize, pageIndex:index });
+                }
+            },
+            //after store loaded data,reset the information of paging bar and buttons state
+            _afterStoreLoad:function (store, params) {
+                var _self = this,
+                    pageSize = _self.get('pageSize'),
+                    start = 0, //页面的起始记录
+                    end, //页面的结束记录
+                    totalCount, //记录的总数
+                    curPage, //当前页
+                    totalPage;//总页数;
+                if (params) {
+                    start = params.start || 0;
+                } else {
+                    start = 0;
+                }
+                //设置加载数据后翻页栏的状态
+                totalCount = store.getTotalCount();
+                end = totalCount - start > pageSize ? start + store.getCount() : totalCount;
+                totalPage = parseInt((totalCount + pageSize - 1) / pageSize, 10);
+                totalPage = totalPage > 0 ? totalPage : 1;
+                curPage = parseInt(start / pageSize, 10) + 1;
+
+                _self.set('start', start);
+                _self.set('end', end);
+                _self.set('totalCount', totalCount);
+                _self.set('curPage', curPage);
+                _self.set('totalPage', totalPage);
+
+                //设置按钮状态
+                _self._setAllButtonsState();
+                _self._setNumberPages();
+            },
+
+            //bind page change events
+            _bindButtonEvent:function () {
+                var _self = this;
+
+                //first page handler
+                _self._bindButtonItemEvent(ID_FIRST, function () {
+                    _self.jumpToPage(1);
+                });
+
+                //previous page handler
+                _self._bindButtonItemEvent(ID_PREV, function () {
+                    _self.jumpToPage(_self.get('curPage') - 1);
+                });
+
+                //previous page next
+                _self._bindButtonItemEvent(ID_NEXT, function () {
+                    _self.jumpToPage(_self.get('curPage') + 1);
+                });
+
+                //previous page next
+                _self._bindButtonItemEvent(ID_LAST, function () {
+                    _self.jumpToPage(_self.get('totalPage'));
+                });
+                //skip to one page
+                _self._bindButtonItemEvent(ID_SKIP, function () {
+                    handleSkip();
+                });
+                //input page number and press key "enter"
+                _self.getItem(ID_CURRENT_PAGE).get('el').on('keyup', function (event) {
+                    event.stopPropagation();
+                    if (event.keyCode === 13) {
+                        handleSkip();
+                    }
+                });
+                //when click skip button or press key "enter",cause an action of skipping page
+                function handleSkip() {
+                    var value = parseInt(_self._getCurrentPageValue(), 10);
+                    if (_self._isPageAllowRedirect(value)) {
+                        _self.jumpToPage(value);
+                    } else {
+                        _self._setCurrentPageValue(_self.get('curPage'));
+                    }
+                }
+            },
+            // bind button item event
+            _bindButtonItemEvent:function (id, func) {
+                var _self = this,
+                    item = _self.getItem(id);
+                if (item) {
+                    item.get('el').on('click', func);
+                }
+            },
+            onLoad:function (params) {
+                var _self = this,
+                    store = _self.get('store');
+                _self._afterStoreLoad(store, params);
+            },
+            //get the items of paging bar
+            _getItems:function () {
+                var _self = this,
+                    items = _self.get('items');
+                if (items) {
+                    return items;
+                }
+                //default items
+                items = [];
+                //first item
+                items.push(_self._getButtonItem(ID_FIRST));
+                //previous item
+                items.push(_self._getButtonItem(ID_PREV));
+                //separator item
+                items.push(_self._getSeparator());
+                //total page of store
+                items.push(_self._getTextItem(ID_TOTAL_PAGE));
+                //current page of store
+                items.push(_self._getTextItem(ID_CURRENT_PAGE));
+                //button for skip to
+                items.push(_self._getButtonItem(ID_SKIP));
+                //separator item
+                items.push(_self._getSeparator());
+                //next item
+                items.push(_self._getButtonItem(ID_NEXT));
+                //last item
+                items.push(_self._getButtonItem(ID_LAST));
+                //separator item
+                items.push(_self._getSeparator());
+                //current page of store
+                items.push(_self._getTextItem(ID_TOTAL_COUNT));
+                return items;
+            },
+            //get item which the xtype is button
+            _getButtonItem:function (id) {
+                var _self = this;
+                return {
+                    id:id,
+                    xtype:'button',
+                    text:_self.get(id + 'Text'),
+                    disabled:true,
+                    elCls:_self.get(id + 'Cls')
+                };
+            },
+            //get separator item
+            _getSeparator:function () {
+                return {xtype:'separator'};
+            },
+            //get text item
+            _getTextItem:function (id) {
+                var _self = this;
+                return {
+                    id:id,
+                    xtype:'text',
+                    text:_self._getTextItemTpl(id)
+                };
+            },
+            //get text item's template
+            _getTextItemTpl:function (id) {
+                var _self = this,
+                    obj = {};
+                obj[id] = _self.get(id);
+                return S.substitute(this.get(id + 'Tpl'), obj);
+            },
+            //Whether to allow jump, if it had been in the current page or not within the scope of effective page, not allowed to jump
+            _isPageAllowRedirect:function (value) {
+                var _self = this;
+                return value && value > 0 && value <= _self.get('totalPage') && value !== _self.get('curPage');
+            },
+            //when page changed, reset all buttons state
+            _setAllButtonsState:function () {
+                var _self = this,
+                    store = _self.get('store');
+                if (store) {
+                    _self._setButtonsState([ID_PREV, ID_NEXT, ID_FIRST, ID_LAST, ID_SKIP], true);
+                }
+
+                if (_self.get('curPage') === 1) {
+                    _self._setButtonsState([ID_PREV, ID_FIRST], false);
+                }
+                if (_self.get('curPage') === _self.get('totalPage')) {
+                    _self._setButtonsState([ID_NEXT, ID_LAST], false);
+                }
+            },
+            //if button id in the param buttons,set the button state
+            _setButtonsState:function (buttons, enable) {
+                var _self = this,
+                    children = _self.get('children');
+                S.each(children, function (child) {
+                    if (child.get('xtype') === 'button' && S.inArray(child.get('id'), buttons)) {
+                        child.set('disabled', !enable);
+                    }
+                });
+            },
+            //show the information of current page , total count of pages and total count of records
+            _setNumberPages:function () {
+                var _self = this,
+                    totalPageItem = _self.getItem(ID_TOTAL_PAGE),
+                    totalCountItem = _self.getItem(ID_TOTAL_COUNT);
+                if (totalPageItem) {
+                    totalPageItem.set('html', _self._getTextItemTpl(ID_TOTAL_PAGE));
+                }
+                _self._setCurrentPageValue(_self.get(ID_CURRENT_PAGE));
+                if (totalCountItem) {
+                    totalCountItem.set('html', _self._getTextItemTpl(ID_TOTAL_COUNT));
+                }
+            },
+            _getCurrentPageValue:function (curItem) {
+                var _self = this;
+                curItem = curItem || _self.getItem(ID_CURRENT_PAGE);
+                var textEl = curItem.get('el').one('input');
+                return textEl.val();
+            },
+            //show current page in textbox
+            _setCurrentPageValue:function (value, curItem) {
+                var _self = this;
+                curItem = curItem || _self.getItem(ID_CURRENT_PAGE);
+                var textEl = curItem.get('el').one('input');
+                textEl.val(value);
             }
-            //设置加载数据后翻页栏的状态
-            totalCount = store.getTotalCount();
-            end = totalCount - start > pageSize ? start + store.getCount() : totalCount;
-            totalPage = parseInt((totalCount + pageSize - 1) / pageSize, 10);
-            totalPage = totalPage > 0 ? totalPage : 1;
-            curPage = parseInt(start / pageSize, 10) + 1;
+        }, {
+            ATTRS:/** @lends Grid.PagingBar.prototype*/
+            {
+                /**
+                 * the text of button for first page
+                 * @default {String} "首 页"
+                 */
+                firstText:{
+                    value:'首 页'
+                },
+                /**
+                 * the cls of button for first page
+                 * @default {String} "ks-pb-first"
+                 */
+                fistCls:{
+                    value:'ks-pb-first'
+                },
+                /**
+                 * the text for previous page button
+                 * @default {String} "前一页"
+                 */
+                prevText:{
+                    value:'上一页'
+                },
+                /**
+                 * the cls for previous page button
+                 * @default {String} "ks-pb-prev"
+                 */
+                prevCls:{
+                    value:'ks-pb-prev'
+                },
+                /**
+                 * the text for next page button
+                 * @default {String} "下一页"
+                 */
+                nextText:{
+                    value:'下一页'
+                },
+                /**
+                 * the cls for next page button
+                 * @default {String} "ks-pb-next"
+                 */
+                nextCls:{
+                    value:'ks-pb-next'
+                },
+                /**
+                 * the text for last page button
+                 * @default {String} "末 页"
+                 */
+                lastText:{
+                    value:'末 页'
+                },
+                /**
+                 * the cls for last page button
+                 * @default {String} "ks-pb-last"
+                 */
+                lastCls:{
+                    value:'ks-pb-last'
+                },
+                /**
+                 * the text for skip page button
+                 * @default {String} "跳 转"
+                 */
+                skipText:{
+                    value:'跳 转'
+                },
+                /**
+                 * the cls for skip page button
+                 * @default {String} "ks-pb-last"
+                 */
+                skipCls:{
+                    value:'ks-pb-skip'
+                },
+                /**
+                 * the template of total page info
+                 * @default {String} '共 {totalPage} 页'
+                 */
+                totalPageTpl:{
+                    value:'共 {totalPage} 页'
+                },
+                /**
+                 * the template of current page info
+                 * @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+                 */
+                curPageTpl:{
+                    value:'第 <input type="text" '+
+                        'autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+                },
+                /**
+                 * the template of total count info
+                 * @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+                 */
+                totalCountTpl:{
+                    value:'共{totalCount}条记录'
+                },
+                /**
+                 * current page of the paging bar
+                 * @private
+                 * @default {Number} 0
+                 */
+                curPage:{
+                    value:0
+                },
+                /**
+                 * total page of the paging bar
+                 * @private
+                 * @default {Number} 0
+                 */
+                totalPage:{
+                    value:0
+                },
+                /**
+                 * total count of the store that the paging bar bind to
+                 * @private
+                 * @default {Number} 0
+                 */
+                totalCount:{
+                    value:0
+                },
+                /**
+                 * The number of records considered to form a 'page'.
+                 * if store set the property ,override this value by store's pageSize
+                 * @private
+                 */
+                pageSize:{
+                    value:30
+                },
+                /**
+                 * The {@link Grid.Store} the paging toolbar should use as its data source.
+                 */
+                store:{
 
-			_self.set('start',start);
-			_self.set('end',end);
-			_self.set('totalCount',totalCount);
-			_self.set('curPage',curPage);
-			_self.set('totalPage',totalPage);
+                }
+            },
+            ID_FIRST:ID_FIRST,
+            ID_PREV:ID_PREV,
+            ID_NEXT:ID_NEXT,
+            ID_LAST:ID_LAST,
+            ID_SKIP:ID_SKIP,
+            ID_TOTAL_PAGE:ID_TOTAL_PAGE,
+            ID_CURRENT_PAGE:ID_CURRENT_PAGE,
+            ID_TOTAL_COUNT:ID_TOTAL_COUNT
+        }, {
+            xclass:'pagingbar',
+            priority:2
+        });
 
-            //设置按钮状态
-            _self._setAllButtonsState();
-            _self._setNumberPages();
-        },
-		
-		//bind page change events
-		_bindButtonEvent : function(){
-			var _self = this;
+    return PagingBar;
 
-			//first page handler
-			_self._bindButtonItemEvent(ID_FIRST,function(){
-				_self.jumpToPage(1);
-			});
-			
-			//previous page handler
-			_self._bindButtonItemEvent(ID_PREV,function(){
-				_self.jumpToPage(_self.get('curPage') - 1);
-			});
-
-			//previous page next
-			_self._bindButtonItemEvent(ID_NEXT,function(){
-				_self.jumpToPage(_self.get('curPage') + 1);
-			});
-
-			//previous page next
-			_self._bindButtonItemEvent(ID_LAST,function(){
-				_self.jumpToPage(_self.get('totalPage'));
-			});
-			//skip to one page
-			_self._bindButtonItemEvent(ID_SKIP,function(){
-				hadleSkip();
-			});
-			//input page number and press key "enter"
-			_self.getItem(ID_CURRENT_PAGE).get('el').on('keyup', function (event) {
-				event.stopPropagation();
-				if (event.keyCode === 13) {
-					hadleSkip();
-				}
-			});
-			//when click skip button or press key "enter",cause an action of skipping page
-			function hadleSkip(){
-				var value = parseInt(_self._getCurrentPageValue(), 10);
-				if (_self._isPageAllowRedirect(value)) {
-					_self.jumpToPage(value);
-				} else {
-					_self._setCurrentPageValue(_self.get('curPage'));
-				}
-			}
-		},
-		// bind button item event
-		_bindButtonItemEvent : function(id,func){
-			var _self = this,
-				item = _self.getItem(id);
-			if(item){
-				item.get('el').on('click',func);
-			}
-		},
-		onLoad : function(params){
-			var _self = this,
-				store = _self.get('store');
-			_self._afterStoreLoad(store,params);
-		},
-		//get the items of paging bar
-		_getItems : function(){
-			var _self = this,
-				items = _self.get('items');
-			if(items)
-			{
-				return items;
-			}
-			//default items
-			items = [];
-			//first item
-			items.push(_self._getButtonItem(ID_FIRST));
-			//previous item
-			items.push(_self._getButtonItem(ID_PREV));
-			//separator item
-			items.push(_self._getSeparator());
-			//total page of store
-			items.push(_self._getTextItem(ID_TOTAL_PAGE));
-			//current page of store
-			items.push(_self._getTextItem(ID_CURRENT_PAGE));
-			//button for skip to
-			items.push(_self._getButtonItem(ID_SKIP));
-			//separator item
-			items.push(_self._getSeparator());
-			//next item
-			items.push(_self._getButtonItem(ID_NEXT));
-			//last item
-			items.push(_self._getButtonItem(ID_LAST));
-			//separator item
-			items.push(_self._getSeparator());
-			//current page of store
-			items.push(_self._getTextItem(ID_TOTAL_COUNT));
-			return items;
-		},
-		//get item which the xtype is button
-		_getButtonItem : function(id){
-			var _self = this;
-			return {
-				id : id,
-				xtype : 'button',
-				text :_self.get(id + 'Text'),
-				disabled : true,
-				elCls : _self.get(id + 'Cls')
-			};
-		},
-		//get separator item
-		_getSeparator : function(){
-			return {xtype : 'separator'};
-		},
-		//get text item
-		_getTextItem : function(id){
-			var _self = this;
-			return {
-				id : id,
-				xtype : 'text',
-				text : _self._getTextItemTpl(id)
-			};
-		},
-		//get text item's template
-		_getTextItemTpl : function(id){
-			var _self = this,
-				obj = {};
-			obj[id] = _self.get(id);
-			return S.substitute(this.get(id + 'Tpl'),obj);
-		},
-		//Whether to allow jump, if it had been in the current page or not within the scope of effective page, not allowed to jump
-		_isPageAllowRedirect : function(value) {
-			var _self = this;
-			return value && value > 0 && value <= _self.get('totalPage') && value !== _self.get('curPage');
-		},
-		//when page changed, reset all buttons state
-		_setAllButtonsState : function(){
-			var _self = this,
-				store = _self.get('store')
-			if(store){
-                _self._setButtonsState([ID_PREV, ID_NEXT, ID_FIRST, ID_LAST, ID_SKIP], true);
-            }
-
-            if (_self.get('curPage') === 1) {
-                _self._setButtonsState([ID_PREV, ID_FIRST], false);
-            }
-            if (_self.get('curPage') === _self.get('totalPage')) {
-                _self._setButtonsState([ID_NEXT, ID_LAST], false);
-            }
-		},
-		//if button id in the param buttons,set the button state
-		_setButtonsState : function(buttons,enable){
-			var _self = this,
-				children = _self.get('children');
-			S.each(children,function(child){
-				if(child.get('xtype') === 'button' && S.inArray(child.get('id'),buttons)){
-					child.set('disabled',!enable);
-				}
-			});
-		},
-		//show the information of current page , total count of pages and total count of records
-		_setNumberPages : function(){
-			var _self = this,
-				totalPageItem = _self.getItem(ID_TOTAL_PAGE),
-				curItem = _self.getItem(ID_CURRENT_PAGE),
-				totalCountItem = _self.getItem(ID_TOTAL_COUNT);
-			if(totalPageItem){
-				totalPageItem.set('html',_self._getTextItemTpl(ID_TOTAL_PAGE));
-			}
-			_self._setCurrentPageValue(_self.get(ID_CURRENT_PAGE));
-			if(totalCountItem){
-				totalCountItem.set('html',_self._getTextItemTpl(ID_TOTAL_COUNT));
-			}
-		},
-		_getCurrentPageValue : function(){
-			var _self = this,
-				curItem = curItem || _self.getItem(ID_CURRENT_PAGE),
-				textEl = curItem.get('el').one('input');
-			return textEl.val();
-		},
-		//show current page in textbox
-		_setCurrentPageValue : function(value,curItem){
-			var _self = this,
-				curItem = curItem || _self.getItem(ID_CURRENT_PAGE),
-				textEl = curItem.get('el').one('input');
-			textEl.val(value);
-		}
-	},{
-		ATTRS : /** @lends Grid.PagingBar.prototype*/
-		{
-			/**
-			* the text of button for first page
-			* @default {String} "首 页"
-			*/
-			firstText : {
-				value : '首 页'
-			},
-			/**
-			* the cls of button for first page
-			* @default {String} "ks-pb-first"
-			*/
-			fistCls : {
-				value : 'ks-pb-first'
-			},
-			/**
-			* the text for previous page button
-			* @default {String} "前一页"
-			*/
-			prevText : {
-				value : '上一页'
-			},
-			/**
-			* the cls for previous page button
-			* @default {String} "ks-pb-prev"
-			*/
-			prevCls : {
-				value : 'ks-pb-prev'
-			},
-			/**
-			* the text for next page button
-			* @default {String} "下一页"
-			*/
-			nextText : {
-				value : '下一页'
-			},
-			/**
-			* the cls for next page button
-			* @default {String} "ks-pb-next"
-			*/
-			nextCls : {
-				value : 'ks-pb-next'
-			},
-			/**
-			* the text for last page button
-			* @default {String} "末 页"
-			*/
-			lastText : {
-				value : '末 页'
-			},
-			/**
-			* the cls for last page button
-			* @default {String} "ks-pb-last"
-			*/
-			lastCls : {
-				value : 'ks-pb-last'
-			},
-			/**
-			* the text for skip page button
-			* @default {String} "跳 转"
-			*/
-			skipText : {
-				value :'跳 转'
-			},
-			/**
-			* the cls for skip page button
-			* @default {String} "ks-pb-last"
-			*/
-			skipCls : {
-				value : 'ks-pb-skip'
-			},
-			/**
-			* the template of total page info
-			* @default {String} '共 {totalPage} 页'
-			*/
-			totalPageTpl : {
-				value : '共 {totalPage} 页'
-			},
-			/**
-			* the template of current page info
-			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
-			*/
-			curPageTpl : {
-				value : '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
-			},
-			/**
-			* the template of total count info
-			* @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
-			*/
-			totalCountTpl : {
-				value : '共{totalCount}条记录'
-			},
-			/**
-			* current page of the paging bar
-			* @private
-			* @default {Number} 0
-			*/
-			curPage : {
-				value : 0
-			},
-			/**
-			* total page of the paging bar
-			* @private
-			* @default {Number} 0
-			*/
-			totalPage : {
-				value : 0	
-			},
-			/**
-			* total count of the store that the paging bar bind to
-			* @private
-			* @default {Number} 0
-			*/
-			totalCount : {
-				value : 0	
-			},
-			/**
-			* The number of records considered to form a 'page'. 
-			* if store set the property ,override this value by store's pageSize
-			* @private
-			*/
-			pageSize : {
-				value : 30	
-			},
-			/**
-			* The {@link Grid.Store} the paging toolbar should use as its data source.
-			*/
-			store : {
-				
-			}
-		},
-		ID_FIRST : ID_FIRST,
-		ID_PREV : ID_PREV,
-		ID_NEXT : ID_NEXT,
-		ID_LAST : ID_LAST,
-		ID_SKIP : ID_SKIP,
-		ID_TOTAL_PAGE : ID_TOTAL_PAGE,
-		ID_CURRENT_PAGE : ID_CURRENT_PAGE,
-		ID_TOTAL_COUNT : ID_TOTAL_COUNT
-	},{
-		xclass : 'pagingbar',
-		priority : 2	
-	});
-
-	return PagingBar;
-	
-},{
-    requires:['component','./bar','./bindable']
+}, {
+    requires:['component', './bar', './bindable']
 });/**
  * @fileOverview There are some plugins in this class
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/plugins',function(S){
 
@@ -3367,13 +3315,14 @@ KISSY.add('grid/plugins',function(S){
 		cellInner : {
 			value : '<span class="ks-grid-checkBox-container"><input  class="' + CLS_CHECKBOX + '" type="checkbox"></span>'
 		}
-	}
+	};
+
 	S.augment(checkSelection, 
 	/**
 	 * @lends Grid.Plugins.CheckSelection.prototype
 	 */	
-	{   
-		initializer : function(grid){
+	{
+        createDom : function(grid){
 			var _self = this;
 			var cfg = {
 						title : '',
@@ -3394,7 +3343,7 @@ KISSY.add('grid/plugins',function(S){
 			var _self = this,
 				col = _self.get('column'),
 				checkBox = col.get('el').one('.' + CLS_CHECKBOX);
-			checkBox.on('click',function(e){
+			checkBox.on('click',function(){
 				//e.preventDefault();
 				var checked = checkBox.attr('checked');
 				checkBox.attr('checked',checked);
@@ -3415,8 +3364,7 @@ KISSY.add('grid/plugins',function(S){
 			});
 		},
 		_setRowChecked : function(row,checked){
-			var _self = this,
-				rowEl = S.one(row),
+			var rowEl = S.one(row),
 				checkBox = rowEl.one('.' + CLS_CHECKBOX);
 			checkBox.attr('checked',checked);
 		}
@@ -3424,7 +3372,8 @@ KISSY.add('grid/plugins',function(S){
 	
 	var radioSelection = function(config){
 		radioSelection.superclass.constructor.call(this, config);
-	}
+	};
+
 	S.extend(radioSelection,S.Base);
 
 	radioSelection.ATTRS = 
@@ -3452,7 +3401,7 @@ KISSY.add('grid/plugins',function(S){
 		}
 	};
 	S.augment(radioSelection, {
-		initializer : function(grid){
+        createDom : function(grid){
 			var _self = this;
 			var cfg = {
 						title : '',
@@ -3480,8 +3429,7 @@ KISSY.add('grid/plugins',function(S){
 			});
 		},
 		_setRowChecked : function(row,checked){
-			var _self = this,
-				rowEl = S.one(row),
+			var rowEl = S.one(row),
 				radio = rowEl.one('.' + CLS_RADIO);
 			radio.attr('checked',checked);
 		}
@@ -3497,7 +3445,11 @@ KISSY.add('grid/plugins',function(S){
 	
 	
 	return plugins;
-});KISSY.add('grid/store',function(S){
+});/**
+ * @fileOverview Store for grid.
+ * @author dxq613@gmail.com, yiminghe@gmail.com
+ */
+KISSY.add('grid/store',function(S){
 	/**
 	* 数据缓冲类，缓存数据在浏览器中
 	* @name Grid.Store
@@ -3508,7 +3460,7 @@ KISSY.add('grid/plugins',function(S){
 	* var store = new Store({
 	*	url : 'data.php',
 	*	autoLoad : true
-	*});
+	* });
 	*/
 	function Store(config){
 		var _self = this;
@@ -3568,10 +3520,10 @@ KISSY.add('grid/plugins',function(S){
 			* 连接信息，包含2个字段:<br>
 			* url : 加载数据的地址<br>
 			* method : 加载数据的方式"get","post"，默认值为"post"<br>
-			* memeryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
+			* memoryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
 			* @type Object
-			* @default { method: 'post',url:'',memeryData : null }
+			* @default { method: 'post',url:'',memoryData : null }
 			* @example 
 			* var store = new Store({
 			*		autoLoad : true,
@@ -3788,7 +3740,7 @@ KISSY.add('grid/plugins',function(S){
 		compare : function(obj1,obj2,field,direction){
 
 			var _self = this,
-				dir = 1;
+				dir;
 			field = field || _self.sortInfo.field;
 			direction = direction || _self.sortInfo.direction;
 			//如果未指定排序字段，或方向，则按照默认顺序
@@ -4013,9 +3965,9 @@ KISSY.add('grid/plugins',function(S){
 			_self.sortInfo.field = field || _self.sortInfo.field;
 			_self.sortInfo.direction = direction || _self.sortInfo.direction;
 			if(_self.remoteSort){	//如果远程排序，重新加载数据
-				var memeryData = _self.proxy.memeryData;
-				if(memeryData){
-					_self._sortData(field,direction,memeryData);
+				var memoryData = _self.proxy.memoryData;
+				if(memoryData){
+					_self._sortData(field,direction,memoryData);
 				}
 				this.load();
 			}else{
@@ -4066,7 +4018,7 @@ KISSY.add('grid/plugins',function(S){
 		_loadData : function(params){
 			var _self = this,
 			loadparams = params || {},
-			data = null;
+			data;
 			
 			/**
 			* @private 设置结果
@@ -4081,7 +4033,7 @@ KISSY.add('grid/plugins',function(S){
 			loadparams = S.merge(_self.oldParams, _self.sortInfo,loadparams);
 			_self.oldParams = loadparams;
 			if(!_self.proxy.url){
-				_self._loadByMemery(loadparams);
+				_self._loadByMemory(loadparams);
 				return;
 			}
 			data = _self.proxy.method === 'post' ? loadparams : (loadparams ? S.param(loadparams) : '');
@@ -4100,9 +4052,6 @@ KISSY.add('grid/plugins',function(S){
 						setResult(resultRows,rowCount,totalCount);
 						_self.fire('exception',{error:data.error});
 						return;
-					}
-					if(S.isString(data)){
-						data = S.json.parse(data);
 					}
                     if (S.isArray(data) || S.isObject(data)) {
 						if(S.isArray(data)){
@@ -4131,20 +4080,18 @@ KISSY.add('grid/plugins',function(S){
 				   _self.fire('exception',{error:textStatus,responseText:errorThrown.responseText});
                 }
 			});
-			
-			
 		},
 		
-		_loadByMemery : function(params){
+		_loadByMemory : function(params){
 			var _self = this,
-				memeryData = _self.proxy.memeryData,
+				memoryData = _self.proxy.memoryData,
 				temp = [],
 				data = [];
-			if(memeryData){
+			if(memoryData){
 				if(params.filter){
-					temp = S.filter(memeryData,params.filter);
+					temp = S.filter(memoryData,params.filter);
 				}else{
-					temp = memeryData;
+					temp = memoryData;
 				}
 				params.start = params.start || 0;
 				params.limit = params.limit || _self.pageSize;
@@ -4162,6 +4109,7 @@ KISSY.add('grid/plugins',function(S){
 				_self.fire('load',params);
 			}
 		},
+
 		//移除数据
 		_removeAt:function(index,array){
 			if(index < 0){
@@ -4184,7 +4132,6 @@ KISSY.add('grid/plugins',function(S){
 			_self.resultRows=resultRows;
 			_self.rowCount=rowCount;
 			_self.totalCount=totalCount;
-
 		},
 		//排序
 		_sortData : function(field,direction,records){
@@ -4223,319 +4170,319 @@ KISSY.add('grid/plugins',function(S){
 	return Store;
 });/**
  * @fileOverview this class details some util tools of grid,like loadMask, formatter for grid's cell render
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/util',function(S){
-	var DOM = S.DOM,
-		Node = S.Node,
-		UA = S.UA,
-		CLS_MASK = 'ks-ext-mask',
-		CLS_MASK_MSG = CLS_MASK + '-msg';
-	/**
-	 * This class specifies some util tools of grid
+KISSY.add('grid/util', function (S) {
+    var DOM = S.DOM,
+        UA = S.UA,
+        CLS_MASK = 'ks-ext-mask',
+        CLS_MASK_MSG = CLS_MASK + '-msg';
+    /**
+     * This class specifies some util tools of grid
      * @name Util
      * @class
      * @memberOf Grid
      */
-	var util = 
-	/** @lends Grid.Util */		
-	{
-		/**
-		* @description mask the dom element
-		* @param {[String|DOM|Node]} element the element such as selector,Dom or Node will be masked
-		* @param {String} [msg] when mask one element ,you can show some message to user
-		* @param {String} [msgCls] when show message, you can set it's style by this css class
-		* @example 
-		*	Grid.Util.maskElement('#domId');	
-		*/
-		maskElement: function (element, msg, msgCls) {
-			var maskedEl = S.one(element),
-				maskedNode = maskedEl.getDOMNode(),
-				maskDiv = S.one('.'+ CLS_MASK ,maskedNode),
-				tpl = null,
-				msgDiv = null,
-				top = null,
-				left = null;
-			if (!maskDiv) {
-				maskDiv = S.one(DOM.create('<div class="' + CLS_MASK + '"></div>')).appendTo(maskedNode);
-				maskedEl.addClass('x-masked-relative x-masked');
-				if(UA.ie === 6){
-					maskDiv.height(maskedEl.height());
-				}
-				if (msg) {
-					tpl = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
-					msgDiv = S.one(DOM.create(tpl)).appendTo(maskedNode);
-					if (msgCls) {
-						msgDiv.addClass(msgCls);
-					}
-					try{
-						top = (maskedEl.height() - msgDiv.height()) / 2;
-						left = (maskedEl.width()- msgDiv.width()) / 2;
-							
-						msgDiv.css({ left: left, top: top });
-					}catch(ex){
-						S.log('mask error occurred');
-					}
-				}
-			}
-			return maskDiv;
-		},
-		/**
-		* @description unmask the dom element
-		* @param {[String|DOM|Node]} element the element such as selector,Dom or Node will  unmask
-		* @example 
-		*	S.LP.unmaskElement('#domId');	
-		*/ 
-		unmaskElement: function (element) {
-			var maskedEl = S.one(element),
-				msgEl = maskedEl.children('.' + CLS_MASK_MSG),
-				maskDiv = maskedEl.children('.' + CLS_MASK);
-			if(msgEl){
-				msgEl.remove();
-			}
-			if(maskDiv){
-				maskDiv.remove();
-			}
-			maskedEl.removeClass('x-masked-relative x-masked');
+    var util =
+    /** @lends Grid.Util */
+    {
+        /**
+         * @description mask the dom element
+         * @param {String|HTMLElement} element the element such as selector,Dom or Node will be masked
+         * @param {String} [msg] when mask one element ,you can show some message to user
+         * @param {String} [msgCls] when show message, you can set it's style by this css class
+         * @example
+         *    Grid.Util.maskElement('#domId');
+         */
+        maskElement:function (element, msg, msgCls) {
+            var maskedEl = S.one(element),
+                maskedNode = maskedEl.getDOMNode(),
+                maskDiv = S.one('.' + CLS_MASK, maskedNode),
+                tpl = null,
+                msgDiv = null,
+                top = null,
+                left = null;
+            if (!maskDiv) {
+                maskDiv = S.one(DOM.create('<div class="' + CLS_MASK + '"></div>')).appendTo(maskedNode);
+                maskedEl.addClass('x-masked-relative x-masked');
+                if (UA.ie === 6) {
+                    maskDiv.height(maskedEl.height());
+                }
+                if (msg) {
+                    tpl = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
+                    msgDiv = S.one(DOM.create(tpl)).appendTo(maskedNode);
+                    if (msgCls) {
+                        msgDiv.addClass(msgCls);
+                    }
+                    try {
+                        top = (maskedEl.height() - msgDiv.height()) / 2;
+                        left = (maskedEl.width() - msgDiv.width()) / 2;
 
-		}
-	};
+                        msgDiv.css({ left:left, top:top });
+                    } catch (ex) {
+                        S.log('mask error occurred');
+                    }
+                }
+            }
+            return maskDiv;
+        },
+        /**
+         * @description unmask the dom element
+         * @param {String|HTMLElement} element the element such as selector,Dom or Node will  unmask
+         * @example
+         *    S.LP.unmaskElement('#domId');
+         */
+        unmaskElement:function (element) {
+            var maskedEl = S.one(element),
+                msgEl = maskedEl.children('.' + CLS_MASK_MSG),
+                maskDiv = maskedEl.children('.' + CLS_MASK);
+            if (msgEl) {
+                msgEl.remove();
+            }
+            if (maskDiv) {
+                maskDiv.remove();
+            }
+            maskedEl.removeClass('x-masked-relative x-masked');
 
-	function formateTimeUnit(v){
-		if(v < 10){
-			return '0'+v;
-		}
-		return v;
-	}
-	/**
-	 * This class specifies some formatter for grid's cell renderer
+        }
+    };
+
+    function formatTimeUnit(v) {
+        if (v < 10) {
+            return '0' + v;
+        }
+        return v;
+    }
+
+    /**
+     * This class specifies some formatter for grid's cell renderer
      * @name Format
      * @class
      * @memberOf Grid.Util
      */
-	util.Format = 
-	/** @lends Grid.Util.Format */	
-	{
-		/**
-			@description 日期格式化函数
-			@param {Number|Date} date 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数 
-			@return {String} 格式化后的日期格式为 2011-10-31
-			@example
-		* 一般用法：<br> 
-		* S.LP.Format.dateRenderer(1320049890544);输出：2011-10-31 <br>
-		* 表格中用于渲染列：<br>
-		* {title:"出库日期",dataIndex:"date",renderer:Grid.Util.Format.dateRenderer}
-		*/
-		dateRenderer: function (d) {
-			if(!d){
-				 return '';
-			}
-			if(S.isString(d)){
-				return d;
-			}
-			var date = null;
-			try {
-				date =new Date(d);
-			} catch (e) {
-				return '';
-			}
-			if (!date || !date.getFullYear){
-				return '';
-			}
-			return date.getFullYear() + '-' + formateTimeUnit(date.getMonth() + 1) + '-' + formateTimeUnit(date.getDate());//S.Date.format(d,'yyyy-mm-dd');
-		},
-		/**
-			@description 日期时间格式化函数
-			@param {Number|Date} date 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数 
-			@return {String} 格式化后的日期格式时间为 2011-10-31 16 : 41 : 02
-		*/
-		datetimeRenderer: function (d) {
-			if(!d){
-				 return '';
-			}
-			if(S.isString(d)){
-				return d;
-			}
-			var date = null;
-			try {
-				date =new Date(d);
-			} catch (e) {
-				return '';
-			}
-			if(!date || !date.getFullYear){
-				return '';
-			}
-			return date.getFullYear() + '-' + formateTimeUnit(date.getMonth() + 1) + '-' + formateTimeUnit(date.getDate()) +' ' + formateTimeUnit(date.getHours()) + ':' + formateTimeUnit(date.getMinutes()) +':' + formateTimeUnit(date.getSeconds());
-		},
-		/**
-			@description 文本截取函数，当文本超出一定数字时，会截取文本，添加...
-			@param {Number} length 截取多少字符
-			@return {function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
-		*/
-		cutTextRenderer : function(length){
-			return function(value){
-				value = value || '';
-				if(value.toString().length > length){
-					return value.toString().substring(0,length)+'...';
-				}
-				return value;
-			};
-		},
-		/**
-		* @description 枚举格式化函数
-		* @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
-		* @return {Function} 返回指定枚举的格式化函数
-		* @example 
-		* //Grid 的列定义
-		*  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.enumRenderer({"1":"入库","2":"出库"})}
-		*/
-		enumRenderer : function(enumObj){
-			return function(value){
-				return enumObj[value] || '';
-			};
-		},
-		/*
-		* @description 将多个值转换成一个字符串
-		* @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
-		* @return {Function} 返回指定枚举的格式化函数
-		* @example 
-		* //Grid 的列定义
-		*  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.multipleItemsRenderer({"1":"入库","2":"出库","3":"退货"})}
-		*  //数据源是[1,2] 时，则返回 "入库,出库"
-		*  
-		*/
-		multipleItemsRenderer : function(enumObj){
-			var enumFun = Grid.Util.Format.enumRenderer(enumObj);
-			return function(values){
-				var result = [];
-				if(!values){
-					return '';
-				}
-				if(S.isArray(values)){
-					values = values.toString().split(',');
-				}
-				S.each(values,function(value){
-					result.push(enumFun(value));
-				});
-				
-				return result.join(',');
-			};
-		},
-		/*
-		* @description 将财务数据分转换成元
-		* @param {Number|String} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
-		* @return {Number} 返回将分转换成元的数字
-		*/
-		moneyCentRenderer : function(v){
-			if(S.isString(v)){
-				v = parseFloat(v);
-			}
-			if(S.isNumber(v)){
-				return (v * 0.01).toFixed(2);
-			}
-			return v;
-		}
-	};
+    util.Format =
+    /** @lends Grid.Util.Format */
+    {
+        /**
+         @description 日期格式化函数
+         @param {Number|Date} d 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数
+         @return {String} 格式化后的日期格式为 2011-10-31
+         @example
+         * 一般用法：<br>
+         * S.LP.Format.dateRenderer(1320049890544);输出：2011-10-31 <br>
+         * 表格中用于渲染列：<br>
+         * {title:"出库日期",dataIndex:"date",renderer:Grid.Util.Format.dateRenderer}
+         */
+        dateRenderer:function (d) {
+            if (!d) {
+                return '';
+            }
+            if (S.isString(d)) {
+                return d;
+            }
+            var date = null;
+            try {
+                date = new Date(d);
+            } catch (e) {
+                return '';
+            }
+            if (!date || !date.getFullYear) {
+                return '';
+            }
+            return date.getFullYear() + '-' + formatTimeUnit(date.getMonth() + 1) + '-' + formatTimeUnit(date.getDate());//S.Date.format(d,'yyyy-mm-dd');
+        },
+        /**
+         @description 日期时间格式化函数
+         @param {Number|Date} d 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数
+         @return {String} 格式化后的日期格式时间为 2011-10-31 16 : 41 : 02
+         */
+        datetimeRenderer:function (d) {
+            if (!d) {
+                return '';
+            }
+            if (S.isString(d)) {
+                return d;
+            }
+            var date = null;
+            try {
+                date = new Date(d);
+            } catch (e) {
+                return '';
+            }
+            if (!date || !date.getFullYear) {
+                return '';
+            }
+            return date.getFullYear() + '-' + formatTimeUnit(date.getMonth() + 1) + '-' + formatTimeUnit(date.getDate()) + ' ' + formatTimeUnit(date.getHours()) + ':' + formatTimeUnit(date.getMinutes()) + ':' + formatTimeUnit(date.getSeconds());
+        },
+        /**
+         @description 文本截取函数，当文本超出一定数字时，会截取文本，添加...
+         @param {Number} length 截取多少字符
+         @return {function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
+         */
+        cutTextRenderer:function (length) {
+            return function (value) {
+                value = value || '';
+                if (value.toString().length > length) {
+                    return value.toString().substring(0, length) + '...';
+                }
+                return value;
+            };
+        },
+        /**
+         * @description 枚举格式化函数
+         * @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+         * @return {Function} 返回指定枚举的格式化函数
+         * @example
+         * //Grid 的列定义
+         *  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.enumRenderer({"1":"入库","2":"出库"})}
+         */
+        enumRenderer:function (enumObj) {
+            return function (value) {
+                return enumObj[value] || '';
+            };
+        },
+        /*
+         * @description 将多个值转换成一个字符串
+         * @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+         * @return {Function} 返回指定枚举的格式化函数
+         * @example
+         * //Grid 的列定义
+         *  {title:"状态",dataIndex:"status",renderer:Grid.Util.Format.multipleItemsRenderer({"1":"入库","2":"出库","3":"退货"})}
+         *  //数据源是[1,2] 时，则返回 "入库,出库"
+         *
+         */
+        multipleItemsRenderer:function (enumObj) {
+            var enumFun = Grid.Util.Format.enumRenderer(enumObj);
+            return function (values) {
+                var result = [];
+                if (!values) {
+                    return '';
+                }
+                if (!S.isArray(values)) {
+                    values = values.toString().split(',');
+                }
+                S.each(values, function (value) {
+                    result.push(enumFun(value));
+                });
 
-	/**
-	* 屏蔽指定元素，并显示加载信息
-	* @memberOf Grid.Util
-	* @class 加载屏蔽类
-	* @property {String|DOM|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
-	* @param {String|DOM|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
-	* @param {Object} config 配置信息<br>
-	* 1) msg :加载时显示的加载信息<br>
-	* 2) msgCls : 加载时显示信息的样式
-	*/
-    function LoadMask (element, config) {
-		var _self = this;
-		
+                return result.join(',');
+            };
+        },
+        /*
+         * @description 将财务数据分转换成元
+         * @param {Number|String} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
+         * @return {Number} 返回将分转换成元的数字
+         */
+        moneyCentRenderer:function (v) {
+            if (S.isString(v)) {
+                v = parseFloat(v);
+            }
+            if (S.isNumber(v)) {
+                return (v * 0.01).toFixed(2);
+            }
+            return v;
+        }
+    };
+
+    /**
+     * 屏蔽指定元素，并显示加载信息
+     * @memberOf Grid.Util
+     * @class 加载屏蔽类
+     * @property {String|DOM|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
+     * @param {String|DOM|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
+     * @param {Object} config 配置信息<br>
+     * 1) msg :加载时显示的加载信息<br>
+     * 2) msgCls : 加载时显示信息的样式
+     */
+    function LoadMask(element, config) {
+        var _self = this;
+
         _self.el = element;
-		LoadMask.superclass.constructor.call(_self, config);
-		_self._init();
+        LoadMask.superclass.constructor.call(_self, config);
+        _self._init();
     }
 
-	S.extend(LoadMask, S.Base);
+    S.extend(LoadMask, S.Base);
     //对象原型
-    S.augment(LoadMask, 
-	/** @lends Grid.Util.LoadMask.prototype */	
-	{
-		/**
-		* 加载时显示的加载信息
-		* @field 
-		* @default Loading...
-		*/
-        msg: 'Loading...',
-		/**
-		* 加载时显示的加载信息的样式
-		* @field
-		* @default x-mask-loading
-		*/
-        msgCls: 'x-mask-loading',
-		/**
-		* 加载控件是否禁用
-		* @type Boolean
-		* @field
-		* @default false
-		*/
-        disabled: false,
-		_init:function(){
-			var _self =this;
-			_self.msg = _self.get('msg')|| _self.msg;
-		},
-        /**
-		* @description 设置控件不可用
-		*/
-        disable: function () {
-            this.disabled = true;
-        },
-        /**
-		* @private 设置控件可用
-		*/
-        enable: function () {
-            this.disabled = false;
-        },
+    S.augment(LoadMask,
+        /** @lends Grid.Util.LoadMask.prototype */
+        {
+            /**
+             * 加载时显示的加载信息
+             * @field
+             * @default Loading...
+             */
+            msg:'Loading...',
+            /**
+             * 加载时显示的加载信息的样式
+             * @field
+             * @default x-mask-loading
+             */
+            msgCls:'x-mask-loading',
+            /**
+             * 加载控件是否禁用
+             * @type Boolean
+             * @field
+             * @default false
+             */
+            disabled:false,
+            _init:function () {
+                var _self = this;
+                _self.msg = _self.get('msg') || _self.msg;
+            },
+            /**
+             * @description 设置控件不可用
+             */
+            disable:function () {
+                this.disabled = true;
+            },
+            /**
+             * @private 设置控件可用
+             */
+            enable:function () {
+                this.disabled = false;
+            },
 
-        /**
-		* @private 加载已经完毕，解除屏蔽
-		*/ 
-        onLoad: function () {
-            util.unmaskElement(this.el);
-        },
+            /**
+             * @private 加载已经完毕，解除屏蔽
+             */
+            onLoad:function () {
+                util.unmaskElement(this.el);
+            },
 
-        /**
-		* @private 开始加载，屏蔽当前元素
-		*/ 
-        onBeforeLoad: function () {
-            if (!this.disabled) {
-                util.maskElement(this.el, this.msg, this.msgCls);
+            /**
+             * @private 开始加载，屏蔽当前元素
+             */
+            onBeforeLoad:function () {
+                if (!this.disabled) {
+                    util.maskElement(this.el, this.msg, this.msgCls);
 
+                }
+            },
+            /**
+             * 显示加载条，并遮盖元素
+             */
+            show:function () {
+                this.onBeforeLoad();
+            },
+
+            /**
+             * 隐藏加载条，并解除遮盖元素
+             */
+            hide:function () {
+                this.onLoad();
+            },
+
+            /*
+             * 清理资源
+             */
+            destroy:function () {
+                this.el = null;
             }
-        },
-        /**
-        * 显示加载条，并遮盖元素
-        */
-        show: function () {
-            this.onBeforeLoad();
-        },
+        });
 
-        /**
-        * 隐藏加载条，并解除遮盖元素
-        */
-        hide: function () {
-            this.onLoad();
-        },
+    util.LoadMask = LoadMask;
 
-        /*
-		* 清理资源
-		*/
-        destroy: function () {
-			this.el = null;   
-        }
-    });
 
-	util.LoadMask = LoadMask;
-	
-	
-	return util;
+    return util;
 });

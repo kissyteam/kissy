@@ -1,11 +1,10 @@
 /**
  * @fileOverview  a specialized pagingbar which use number buttons
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
-	var NUMBER_CONTAINER = 'numberContainer',
-		CLS_ACTIVE = 'ks-active';
+	var NUMBER_CONTAINER = 'numberContainer';
 	/**
 	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
@@ -23,7 +22,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getItems : function(){
 			var _self = this,
 				items = _self.get('items'),
-				numberContainerBar = null;
+				numberContainerBar;
 			if(items)
 			{
 				return items;
@@ -77,7 +76,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 				curPage = _self.get('curPage'),
 				totalPage = _self.get('totalPage'),
 				numberItems = _self._getNumberItems(curPage,totalPage),
-				curItem = null;
+				curItem;
 			numberContainerBar.removeChildren(true);
 
 			S.each(numberItems,function(item){
@@ -193,7 +192,9 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
 			curPageTpl : {
-				value : '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+				value : '到第 <input type="text" '+
+                    'auto'+
+                    'complete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			}
 		}
 	},{

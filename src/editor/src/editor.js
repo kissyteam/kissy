@@ -182,15 +182,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 });
             },
 
-            syncUI:function () {
-                var self = this,
-                    h = self.get("height");
-                if (h) {
-                    // 根据容器高度，设置内层高度
-                    self._uiSetHeight(h);
-                }
-            },
-
             /**
              * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
              * width 依然在 el 上设置

@@ -353,7 +353,7 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 		store = new Store({
 			autoLoad : true,
 			proxy :{
-				memeryData : data	
+				memoryData : data
 			}
 		});	
 	var grid = new Grid({

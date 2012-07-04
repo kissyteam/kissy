@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 20:10
+build time: Jul 4 18:11
 */
 /**
  * Setup component namespace.
@@ -120,7 +120,12 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
 
 }, {
     requires:['./controller', './delegateChildren', './decorateChildren']
-});/**
+});
+
+/**
+ * TODO
+ *  - handleMouseEvents false for container ?
+ *//**
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
@@ -2299,24 +2304,20 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String|NodeList
          */
         content:{
-            view:1,
-            sync:false
+            view:1
         },
         /**
          * component's width
          * @type Number|String
          */
         width:{
-            // 没有 _uiSetWidth，所以不需要设置 sync:false
-            view:1,
-            sync:false
+            view:1
         },
         /**
          * component's height
          * @type Number|String
          */
         height:{
-            sync:false,
             view:1
         },
         /**
@@ -2324,7 +2325,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String
          */
         elCls:{
-            sync:false,
             view:1
         },
         /**
@@ -2332,7 +2332,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Object
          */
         elStyle:{
-            sync:false,
             view:1
         },
         /**
@@ -2340,7 +2339,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Object
          */
         elAttrs:{
-            sync:false,
             view:1
         },
         /**
@@ -2348,7 +2346,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         elBefore:{
-            sync:false,
             view:1
         },
         /**
@@ -2378,8 +2375,10 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * whether this component is visible
          * @type Boolean
+         * @default true
          */
         visible:{
+            value:true,
             view:1
         },
 
@@ -2418,33 +2417,18 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * @private
          */
-        _uiSetVisible:function (isVisible) {
-            this.fire(isVisible ? "show" : "hide");
+        __bindUI:function () {
+            this.on("afterVisibleChange", function (e) {
+                this.fire(e.newVal ? "show" : "hide");
+            });
         },
 
         /**
          * show component
          */
         show:function () {
-            var self = this, view;
-            if (!self.get("rendered")) {
-                // 防止初始设置 false，导致触发 hide 事件
-                // show 里面的初始一定是 true，触发 show 事件
-                // 2012-03-28 : 用 set 而不是 __set :
-                // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
-                // - 也要设置 view
-                // self.set("visible", true);
-                // 2012-06-07 ，不能 set
-                // 初始监听 visible ，得不到 el
-
-                // 2012-06-12
-                // 复位 undefined，防止之前设置过
-                self.__set("visible", undefined);
-                if (view = self.get("view")) {
-                    view.__set("visible", undefined);
-                }
-                self.render();
-            }
+            var self = this;
+            self.render();
             self.set("visible", true);
             return self;
         },
@@ -2482,40 +2466,35 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
         // 构建时批量生成，不需要执行单个
         elCls:{
-            sync:false
         },
 
         elStyle:{
-            sync:false
         },
 
         width:{
-            sync:false
         },
 
         height:{
-            sync:false
         },
 
         elTagName:{
-            sync:false,
             // 生成标签名字
             value:"div"
         },
 
         elAttrs:{
-            sync:false
         },
 
         content:{
-            sync:false
         },
 
         elBefore:{},
 
         render:{},
 
-        visible:{},
+        visible:{
+            value:true
+        },
 
         visibleMode:{
             value:"display"
@@ -2535,52 +2514,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             return (contentElCls ? el.one("." + contentElCls) : el).html();
         }
     };
-
-    function wrapWH(v) {
-        return typeof v == "number" ? (v + "px") : v;
-    }
-
-    function constructEl(cls, style, width, height, tag, attrs, html) {
-        style = style || {};
-
-        if (width) {
-            style.width = wrapWH(width);
-        }
-
-        if (height) {
-            style.height = wrapWH(height);
-        }
-
-        var htmlStr = html || "", styleStr = '';
-
-        if (typeof html != 'string') {
-            htmlStr = '';
-        }
-
-        for (var s in style) {
-            if (style.hasOwnProperty(s)) {
-                styleStr += s + ":" + style[s] + ";";
-            }
-        }
-
-        var attrStr = '';
-
-        for (var a in attrs) {
-            if (attrs.hasOwnProperty(a)) {
-                attrStr += " " + a + "='" + attrs[a] + "'" + " ";
-            }
-        }
-
-        var node = $("<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
-            + attrStr + (cls ? (" class='" + cls + "' ") : "")
-            + ">" + htmlStr + "<" + "/" + tag + ">");
-
-        if (html && !S.isString(html)) {
-            node.append(html);
-        }
-
-        return node;
-    }
 
     BoxRender.prototype =
     /**
@@ -2612,56 +2545,21 @@ KISSY.add('component/uibase/boxrender', function (S) {
         __createDom:function () {
             var self = this;
             if (!self.get("srcNode")) {
-                var elCls = self.get("elCls"),
-                    elStyle = self.get("elStyle"),
-                    width = self.get("width"),
-                    height = self.get("height"),
-                    content = self.get("content"),
-                    elAttrs = self.get("elAttrs"),
-                    el,
+                var el,
                     contentEl = self.get("contentEl");
 
-                // 内容容器，content 需要设置到的容器
-                if (contentEl) {
-                    contentEl.html(content);
-                    content = "";
-                }
-                el = constructEl(elCls,
-                    elStyle,
-                    width,
-                    height,
-                    self.get("elTagName"),
-                    elAttrs,
-                    content);
+                el = $("<"+self.get("elTagName")+">");
+
                 if (contentEl) {
                     el.append(contentEl);
                 }
+
                 self.__set("el", el);
+
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
                     self.__set("contentEl", el);
                 }
-            }
-        },
-
-        __syncUI:function () {
-            var self = this;
-            // 通过 srcNode 过来的，最后调整，防止 plugin render 又改过!
-            if (self.get("srcNode")) {
-                var el = self.get("el"),
-                    attrs = [
-                        "elCls",
-                        "elStyle",
-                        "width",
-                        "height",
-                        "elAttrs"
-                    ];
-                S.each(attrs, function (attr) {
-                    var v;
-                    if (v = self.get(attr)) {
-                        self["_uiSet" + S.ucfirst(attr)](v);
-                    }
-                });
             }
         },
 
@@ -3495,6 +3393,14 @@ KISSY.add("component/uibase/position", function (S) {
          */
         zIndex:{
             view:1
+        },
+        /**
+         * Positionable element is by default visible false.
+         * For compatibility in overlay and PopupMenu.
+         * @default false
+         */
+        visible:{
+            value:false
         }
     };
 
@@ -3779,22 +3685,16 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         footer:{
         },
         bodyStyle:{
-            sync:false
         },
         footerStyle:{
-            sync:false
         },
         headerStyle:{
-            sync:false
         },
         headerContent:{
-            sync:false
         },
         bodyContent:{
-            sync:false
         },
         footerContent:{
-            sync:false
         }
     };
 
@@ -3824,26 +3724,15 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     function renderUI(self, part) {
         var el = self.get("contentEl"),
-            style = self.get(part + "Style"),
-            content = self.get(part + "Content"),
-            isString = S.isString(content),
             partEl = self.get(part);
         if (!partEl) {
-            style = serialize(style);
             partEl = new Node("<div class='" +
                 CLS_PREFIX + part + "'" +
                 " " +
-                (style ? ("style='" + style + "'") : "") +
                 " >" +
-                (isString ? content : "") +
                 "</div>");
-            if (!isString) {
-                partEl.append(content);
-            }
             partEl.appendTo(el);
             self.__set(part, partEl);
-        } else if (style) {
-            partEl.css(style);
         }
     }
 

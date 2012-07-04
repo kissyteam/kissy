@@ -1,6 +1,6 @@
 /**
  * @fileOverview There are some plugins in this class
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/plugins',function(S){
 
@@ -39,13 +39,14 @@ KISSY.add('grid/plugins',function(S){
 		cellInner : {
 			value : '<span class="ks-grid-checkBox-container"><input  class="' + CLS_CHECKBOX + '" type="checkbox"></span>'
 		}
-	}
+	};
+
 	S.augment(checkSelection, 
 	/**
 	 * @lends Grid.Plugins.CheckSelection.prototype
 	 */	
-	{   
-		initializer : function(grid){
+	{
+        createDom : function(grid){
 			var _self = this;
 			var cfg = {
 						title : '',
@@ -66,7 +67,7 @@ KISSY.add('grid/plugins',function(S){
 			var _self = this,
 				col = _self.get('column'),
 				checkBox = col.get('el').one('.' + CLS_CHECKBOX);
-			checkBox.on('click',function(e){
+			checkBox.on('click',function(){
 				//e.preventDefault();
 				var checked = checkBox.attr('checked');
 				checkBox.attr('checked',checked);
@@ -87,8 +88,7 @@ KISSY.add('grid/plugins',function(S){
 			});
 		},
 		_setRowChecked : function(row,checked){
-			var _self = this,
-				rowEl = S.one(row),
+			var rowEl = S.one(row),
 				checkBox = rowEl.one('.' + CLS_CHECKBOX);
 			checkBox.attr('checked',checked);
 		}
@@ -96,7 +96,8 @@ KISSY.add('grid/plugins',function(S){
 	
 	var radioSelection = function(config){
 		radioSelection.superclass.constructor.call(this, config);
-	}
+	};
+
 	S.extend(radioSelection,S.Base);
 
 	radioSelection.ATTRS = 
@@ -124,7 +125,7 @@ KISSY.add('grid/plugins',function(S){
 		}
 	};
 	S.augment(radioSelection, {
-		initializer : function(grid){
+        createDom : function(grid){
 			var _self = this;
 			var cfg = {
 						title : '',
@@ -152,8 +153,7 @@ KISSY.add('grid/plugins',function(S){
 			});
 		},
 		_setRowChecked : function(row,checked){
-			var _self = this,
-				rowEl = S.one(row),
+			var rowEl = S.one(row),
 				radio = rowEl.one('.' + CLS_RADIO);
 			radio.attr('checked',checked);
 		}

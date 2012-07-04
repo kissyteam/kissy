@@ -19,40 +19,35 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
         // 构建时批量生成，不需要执行单个
         elCls:{
-            sync:false
         },
 
         elStyle:{
-            sync:false
         },
 
         width:{
-            sync:false
         },
 
         height:{
-            sync:false
         },
 
         elTagName:{
-            sync:false,
             // 生成标签名字
             value:"div"
         },
 
         elAttrs:{
-            sync:false
         },
 
         content:{
-            sync:false
         },
 
         elBefore:{},
 
         render:{},
 
-        visible:{},
+        visible:{
+            value:true
+        },
 
         visibleMode:{
             value:"display"
@@ -72,52 +67,6 @@ KISSY.add('component/uibase/boxrender', function (S) {
             return (contentElCls ? el.one("." + contentElCls) : el).html();
         }
     };
-
-    function wrapWH(v) {
-        return typeof v == "number" ? (v + "px") : v;
-    }
-
-    function constructEl(cls, style, width, height, tag, attrs, html) {
-        style = style || {};
-
-        if (width) {
-            style.width = wrapWH(width);
-        }
-
-        if (height) {
-            style.height = wrapWH(height);
-        }
-
-        var htmlStr = html || "", styleStr = '';
-
-        if (typeof html != 'string') {
-            htmlStr = '';
-        }
-
-        for (var s in style) {
-            if (style.hasOwnProperty(s)) {
-                styleStr += s + ":" + style[s] + ";";
-            }
-        }
-
-        var attrStr = '';
-
-        for (var a in attrs) {
-            if (attrs.hasOwnProperty(a)) {
-                attrStr += " " + a + "='" + attrs[a] + "'" + " ";
-            }
-        }
-
-        var node = $("<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
-            + attrStr + (cls ? (" class='" + cls + "' ") : "")
-            + ">" + htmlStr + "<" + "/" + tag + ">");
-
-        if (html && !S.isString(html)) {
-            node.append(html);
-        }
-
-        return node;
-    }
 
     BoxRender.prototype =
     /**
@@ -149,56 +98,21 @@ KISSY.add('component/uibase/boxrender', function (S) {
         __createDom:function () {
             var self = this;
             if (!self.get("srcNode")) {
-                var elCls = self.get("elCls"),
-                    elStyle = self.get("elStyle"),
-                    width = self.get("width"),
-                    height = self.get("height"),
-                    content = self.get("content"),
-                    elAttrs = self.get("elAttrs"),
-                    el,
+                var el,
                     contentEl = self.get("contentEl");
 
-                // 内容容器，content 需要设置到的容器
-                if (contentEl) {
-                    contentEl.html(content);
-                    content = "";
-                }
-                el = constructEl(elCls,
-                    elStyle,
-                    width,
-                    height,
-                    self.get("elTagName"),
-                    elAttrs,
-                    content);
+                el = $("<"+self.get("elTagName")+">");
+
                 if (contentEl) {
                     el.append(contentEl);
                 }
+
                 self.__set("el", el);
+
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
                     self.__set("contentEl", el);
                 }
-            }
-        },
-
-        __syncUI:function () {
-            var self = this;
-            // 通过 srcNode 过来的，最后调整，防止 plugin render 又改过!
-            if (self.get("srcNode")) {
-                var el = self.get("el"),
-                    attrs = [
-                        "elCls",
-                        "elStyle",
-                        "width",
-                        "height",
-                        "elAttrs"
-                    ];
-                S.each(attrs, function (attr) {
-                    var v;
-                    if (v = self.get(attr)) {
-                        self["_uiSet" + S.ucfirst(attr)](v);
-                    }
-                });
             }
         },
 

@@ -1,3 +1,7 @@
+/**
+ * @fileOverview bindable extension class.
+ * @author dxq613@gmail.com, yiminghe@gmail.com
+ */
 KISSY.add('grid/bindable',function(S){
 	
 	/**
@@ -9,6 +13,7 @@ KISSY.add('grid/bindable',function(S){
 	function bindable(){
 		
 	}
+
 	bindable.ATTRS = {
 		/**
 		* The {@link Grid.Store} to bind this GridBody to
@@ -26,7 +31,7 @@ KISSY.add('grid/bindable',function(S){
 		loadMask : {
 			value : true
 		}
-	}
+	};
 
 
 	S.augment(bindable,
@@ -42,7 +47,7 @@ KISSY.add('grid/bindable',function(S){
 			if(!store){
 				return;
 			}
-			store.on('beforeload',function(e){
+			store.on('beforeload',function(){
 				if(loadMask && loadMask.show){
 					loadMask.show();
 				}
@@ -75,7 +80,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		* after store load data
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:load
 		*/
 		onLoad : function(e){
@@ -84,7 +89,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		*  occurred exception when store is loading data
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:exception
 		*/
 		onException : function(e){
@@ -93,7 +98,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		* after added data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:addrecords
 		*/
 		onAdd : function(e){
@@ -102,7 +107,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		* after remvoed data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:removerecords
 		*/
 		onRemove : function(e){
@@ -111,7 +116,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		* after updated data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:updaterecord
 		*/
 		onUpdate : function(e){
@@ -120,7 +125,7 @@ KISSY.add('grid/bindable',function(S){
 		/**
 		* @protected
 		* after local sorted data to store
-		* @param {evnent} e The event object
+		* @param {e} e The event object
 		* @see Grid.Store#event:localsort
 		*/
 		onLocalSort : function(e){

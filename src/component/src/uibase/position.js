@@ -65,6 +65,14 @@ KISSY.add("component/uibase/position", function (S) {
          */
         zIndex:{
             view:1
+        },
+        /**
+         * Positionable element is by default visible false.
+         * For compatibility in overlay and PopupMenu.
+         * @default false
+         */
+        visible:{
+            value:false
         }
     };
 

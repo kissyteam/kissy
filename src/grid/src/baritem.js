@@ -1,16 +1,12 @@
 /**
  * @fileOverview buttons or controls of toolbar
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid/baritem',function(S,Component,Button){
-	
-	var BarItemRender =  Component.Render.extend({
+KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
-		renderUI:function(){
-			var el = this.get("el");
-			el.addClass("ks-inline-block");
-		}
-	});
+
+    var KeyCodes=Node.KeyCodes;
+
 	/**
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
      * @name BarItem
@@ -19,13 +15,13 @@ KISSY.add('grid/baritem',function(S,Component,Button){
      * @memberOf Grid.Bar
      */
 	var BarItem = Component.Controller.extend({
-		/* render baritem's dom
+		/* render baritem 's dom
 		* @protected
         * @override
 		*/
-		renderUI:function() {
+		createDom:function() {
             var el = this.get("el");
- 
+            el.addClass("ks-inline-block");
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-bar-item"));
             }
@@ -66,16 +62,10 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 			/**
 			* Whether this component can get focus.
 			* @overrided
-			* @default {Bealoon} false
+			* @default {boolean} false
 			*/
 			focusable : {
 				value : false
-			},
-			/**
-			* @private
-			*/
-			xrender : {
-				value : BarItemRender	
 			}
 		}
 	},{
@@ -106,7 +96,7 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 				e.type == "keydown" ||
 				e.keyCode == KeyCodes.SPACE &&
 					e.type == "keyup") {
-				return this.performActionInternal(e);
+				return this.performActionInternal.call(this,e);
 			}
 			// Return true for space keypress (even though the event is handled on keyup)
 			// as preventDefault needs to be called up keypress to take effect in IE and
@@ -250,5 +240,5 @@ KISSY.add('grid/baritem',function(S,Component,Button){
 
 	return	BarItem;
 },{
-	requires:['component','button']
+	requires:['component','button','node']
 });

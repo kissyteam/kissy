@@ -1,6 +1,6 @@
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
- * @author dxq613@gmail.com
+ * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 
@@ -9,10 +9,10 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
      * Bar class is a collection of buttons,links and other command control.
      * @name Bar
      * @constructor
-     * @extends Component.Container
+     * @extends Component.Controller
      * @memberOf Grid
      */
-	var Bar = Component.Container.extend(
+	var Bar = Component.Controller.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	
@@ -55,7 +55,6 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 		//use BarRender.types to instantiate item
 		//and bind events to it
 		_createItem : function(item){
-			var _self = this;
 			if(item instanceof Component.Controller){
 				return item;
 			}
@@ -64,9 +63,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 				item.xtype = 'button';
 			}
 			var typeCls = BarItem.types[item.xtype] , 
-				itemControl = null,
-
-				listeners = item.listeners;
+				itemControl = null;
 			if(typeCls){
 				itemControl = new typeCls(item);
 			}else{
