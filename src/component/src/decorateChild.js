@@ -16,7 +16,7 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
                 child = element.one("." + ui);
             // 可以装饰?
             if (child) {
-                var UI = self.findUIConstructorByNode(child);
+                var UI = self.findUIConstructorByNode(child, 1);
                 if (UI) {
                     // 可以直接装饰
                     self.decorateChildrenInternal(UI, child);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * source editor for kissy editor
@@ -38,9 +38,6 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
                         } else {
                             editor.set("mode", WYSIWYG_MODE);
                         }
-
-                        editor.focus();
-
                     }
                 },
                 checkable:true

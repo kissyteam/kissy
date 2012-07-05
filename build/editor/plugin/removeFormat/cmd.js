@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * Add removeFormat command for KISSY Editor.
@@ -59,7 +59,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
 
                             // Bookmark the range so we can re-select it after processing.
                             var bookmark = range.createBookmark(),
-                                // The style will be applied within the bookmark boundaries.
+                            // The style will be applied within the bookmark boundaries.
                                 startNode = bookmark.startNode,
                                 endNode = bookmark.endNode;
 
@@ -115,7 +115,11 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
 
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() == 'img' &&
-                                    currentNode.attr('_ke_realelement') )) {
+                                    (
+                                        currentNode.attr('_ke_realelement') ||
+                                            // 占位符
+                                            /\bke_/.test(currentNode[0].className)
+                                        ) )) {
                                     // Remove elements nodes that match with this style rules.
                                     if (tagsRegex.test(currentNode.nodeName()))
                                         currentNode._4e_remove(true);

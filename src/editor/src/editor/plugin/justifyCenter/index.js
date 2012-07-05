@@ -37,6 +37,16 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 },
                 mode:Editor.WYSIWYG_MODE
             });
+
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.E) {
+                        editor.execCommand("justifyCenter");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 

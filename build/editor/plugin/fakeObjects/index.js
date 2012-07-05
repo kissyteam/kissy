@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * fakeObjects for music ,video,flash
@@ -35,10 +35,13 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
                     //align : realElement.attr("align") || '',
                     style:style
                 };
-            attrs && delete attrs.width;
-            attrs && delete attrs.height;
 
-            attrs && S.mix(attributes, attrs, false);
+            if (attrs) {
+                delete attrs.width;
+                delete attrs.height;
+                S.mix(attributes, attrs, false);
+            }
+
             if (realElementType)
                 attributes._ke_real_element_type = realElementType;
 
@@ -122,19 +125,29 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
             }
 
             S.mix(dataProcessor, {
+
+                restoreRealElement:function (fakeElement) {
+                    if (fakeElement.attr('_ke_real_node_type') != DOM.ELEMENT_NODE) {
+                        return null;
+                    }
+
+                    var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+
+                    var temp = new Node('<div>', null, editor.get("document")[0]);
+                    temp.html(html);
+                    // When returning the node, remove it from its parent to detach it.
+                    return temp.first().remove();
+                },
+
                 /**
                  * 从外边真实的html，转为为编辑器代码支持的替换元素
                  * @param realElement
                  * @param className
                  * @param realElementType
                  * @param [isResizable]
-                 * @param [attrs]
                  */
                 createFakeParserElement:function (realElement, className, realElementType, isResizable, attrs) {
-                    var html,
-                        writer = new HtmlParser.BasicWriter();
-                    realElement.writeHtml(writer);
-                    html = writer.getHtml();
+                    var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
                     if (realElement.getAttribute("width")) {
                         style = "width:" + realElement.getAttribute("width") + "px;" + style;
@@ -153,10 +166,11 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
                             align:realElement.getAttribute("align") || ''
                         };
 
-                    attrs && delete attrs.width;
-                    attrs && delete attrs.height;
-
-                    attrs && S.mix(attributes, attrs, false);
+                    if (attrs) {
+                        delete attrs.width;
+                        delete attrs.height;
+                        S.mix(attributes, attrs, false);
+                    }
 
                     if (realElementType) {
                         attributes._ke_real_element_type = realElementType;

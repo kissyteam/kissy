@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 KISSY.add("combobox/base",function(f,h,a,g,j,C,m){function d(b,e){var c=b.get("menu");if(c&&c.xclass)if(e)c=a.create(c,b),b.__set("menu",c);else return null;return c}function k(){var b=d(this);if(b&&b.get("visible"))if(this.get("multiple")&&this.get("alignWithCursor")){var e=t(this),c=e.tokens,b=this.get("menu"),i=e.cursorPosition,a=e.tokenIndex,e=this.get("input"),c=c.slice(0,a).join("").length;0<c&&++c;e.prop("selectionStart",c);e.prop("selectionEnd",c);c=e.prop("KsCursorOffset");e.prop("selectionStart",
 i);e.prop("selectionEnd",i);b.set("xy",[c.left,c.top])}else b=this.get("menu"),i=f.clone(b.get("align")),i.node=this.get("el"),f.mix(i,z,!1),b.set("align",i)}function s(){var b=this;b._focusoutDismissTimer=setTimeout(function(){b.set("collapsed",!0)},30)}function o(){var b;if(b=this._focusoutDismissTimer)clearTimeout(b),this._focusoutDismissTimer=null}function p(b,e){var c=b.get("input");if(b.get("multiple")){var i=t(b),a=i.tokens,i=Math.max(0,i.tokenIndex),d=b.get("separator"),g=b.get("separatorType"),

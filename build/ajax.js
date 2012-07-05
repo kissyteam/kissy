@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview form data  serialization util
@@ -1600,7 +1600,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * cross domain request config object
      *
      * @param {String} c.xdr.src <br/>
-     * Default: kissy's flash url
+     * Default: KISSY 's flash url
      * flash sender url
      *
      * @param {String} c.xdr.use <br/>

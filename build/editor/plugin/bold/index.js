@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * bold command.
@@ -19,6 +19,15 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
                 cmdType:'bold',
                 tooltip:"粗体 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.B) {
+                        editor.execCommand("bold");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 

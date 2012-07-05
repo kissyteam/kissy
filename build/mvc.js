@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:08
 */
 /**
  * @fileOverview collection of models
@@ -612,7 +612,7 @@ KISSY.add("mvc/model", function (S, Base) {
 }, {
     requires:['base']
 });/**
- * @fileOverview KISSY's MVC Framework for Page Application (Backbone Style)
+ * @fileOverview KISSY 's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {

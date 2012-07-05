@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY Decorated Simple Tree</title>
+<title>KISSY Simple Tree</title>
 <link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../assets/tree.css" rel="stylesheet"/>
 <style>
@@ -27,35 +27,13 @@
 <body>
 <div id="wrap">
 
-
-    <h1>KISSY Decorated Simple Tree</h1>
+    <h1>KISSY Simple Tree using xclass</h1>
 
     <h2>demo</h2>
 
     <a href="javascript:void(0)" id="expandAll">展开全部</a>&nbsp;
     <a href="javascript:void(0)" id="collapseAll">关闭全部</a>
     <div id="treeContainer" style="width: 200px;">
-
-        <div id='root' class="ks-tree">
-            <span class="ks-treeitem-content">淘宝网</span>
-            <div class="ks-tree-children">
-                <div class="ks-treeitem">
-                    <span class="ks-treeitem-content">收藏夹</span>
-                    <div class="ks-tree-children">
-                        <div class="ks-treeitem">
-                            <span class="ks-treeitem-content">收藏的宝贝</span>
-                        </div>
-
-                        <div class="ks-treeitem ks-treeitem-folder">
-                            <span class="ks-treeitem-content">收藏的店铺</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ks-treeitem">
-                    <span class="ks-treeitem-content">我要买</span>
-                </div>
-            </div>
-        </div>
 
     </div>
 
@@ -78,14 +56,62 @@
     <script>
         KISSY.use("tree", function (S, Tree) {
             var $ = S.all;
-
             var tree = new Tree({
+                content:"淘宝网",
+
                 expanded:true,
+                children:[
+                    {
+                        xclass:'treeitem',
+                        content:"收藏夹",
+                        children:[
+                            {
+                                xclass:'treeitem',
+                                content:"收藏的宝贝"
+                            },
+                            {
+                                xclass:'treeitem',
+                                content:"收藏的店铺"
+                            }
+                        ]
+                    },
+                    {
+                        xclass:'treeitem',
+                        content:'我要买'
+                    },
+                    {
+                        xclass:'treeitem',
+                        content:'我的淘宝',
+                        children:[
+                            {
+                                xclass:'treeitem',
+                                content:"已买到的宝贝"
+                            },
+                            {
+                                xclass:'treeitem',
+                                content:"已买到的宝贝"
+                            }
+                        ]
+                    }
+                ],
                 // showRootNode:false,
-                srcNode:"#root"
+                render:"#treeContainer"
             });
 
             tree.render();
+
+
+            tree.on("expand", function (e) {
+                S.log("expand : " + e.target.get("content"));
+                S.log("expandIconEl");
+                S.log(e.target.get("expandIconEl"));
+                S.log("iconEl");
+                S.log(e.target.get("iconEl"));
+            });
+
+            tree.on("collapse", function (e) {
+                S.log("collapse : " + e.target.get("content"));
+            });
 
             tree.on("click", function (e) {
                 S.log("action : " + e.target.get("content"));

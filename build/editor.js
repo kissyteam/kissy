@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * Set up editor constructor
@@ -814,7 +814,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode)) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
                         return NULL;
@@ -866,7 +866,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode )) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE)
                         return NULL;
@@ -2143,8 +2143,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (element.getAttribute('class') == 'Apple-style-span'
-                    || !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
+                    !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }
@@ -7952,6 +7952,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             // for other browsers, the 'src' attribute should be left empty to
             // trigger iframe's 'load' event.
             (EMPTY_IFRAME_SRC ? (' src="' + EMPTY_IFRAME_SRC + '"') : '') +
+            '>' +
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
@@ -8064,15 +8065,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 });
             },
 
-            syncUI:function () {
-                var self = this,
-                    h = self.get("height")
-                if (h) {
-                    // 根据容器高度，设置内层高度
-                    self._uiSetHeight(h);
-                }
-            },
-
             /**
              * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
              * width 依然在 el 上设置
@@ -8112,7 +8104,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     self.fire("wysiwygMode");
                 } else {
                     textarea.val(self._getData(1, WYSIWYG_MODE));
-                    textarea[0].focus();
                     textarea.show();
                     iframe.hide();
                     self.fire("sourceMode");
@@ -8121,9 +8112,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             // 覆盖 controller
             _uiSetFocused:function (v) {
+                var self = this;
                 // docReady 后才能调用
-                if (v && this.__docReady) {
-                    this.focus();
+                if (v && self.__docReady) {
+                    self.focus();
                 }
             },
 
@@ -8223,6 +8215,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            /**
+             * Return editor's value corresponding to command name.
+             * @param {String} name Command name.
+             * @return {*}
+             */
             queryCommandValue:function (name) {
                 return this.execCommand(Utils.getQueryCmd(name));
             },
@@ -8525,15 +8522,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (htmlDataProcessor = self.htmlDataProcessor) {
                     data = htmlDataProcessor.toDataFormat(data, dataFilter);
-                }
-
-                // webkit bug
-                if (UA.webkit) {
-                    var nodes = new Node(data, null, editorDoc);
-                    nodes.each(function (node) {
-                        self.insertElement(node);
-                    });
-                    return;
                 }
 
                 self.focus();

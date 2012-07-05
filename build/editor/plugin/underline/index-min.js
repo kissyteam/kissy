@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
-KISSY.add("editor/plugin/underline/index",function(b,e,c,d){function a(){}b.augment(a,{renderUI:function(a){d.init(a);a.addButton("underline",{cmdType:"underline",tooltip:"下划线 "},c.Button)}});return a},{requires:["editor","../font/ui","./cmd"]});
+KISSY.add("editor/plugin/underline/index",function(c,g,e,f){function d(){}c.augment(d,{renderUI:function(a){f.init(a);a.addButton("underline",{cmdType:"underline",tooltip:"下划线 "},e.Button);a.docReady(function(){a.get("document").on("keydown",function(b){b.ctrlKey&&b.keyCode==c.Node.KeyCodes.U&&(a.execCommand("underline"),b.preventDefault())})})}});return d},{requires:["editor","../font/ui","./cmd"]});

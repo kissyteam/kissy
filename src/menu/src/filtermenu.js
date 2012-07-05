@@ -15,7 +15,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
     /**
      * @class
      * Filter Menu for KISSY.
-     * xclass: 'filtermenu'.
+     * xclass: 'filter-menu'.
      * @extends Menu
      * @memberOf Menu
      * @name FilterMenu
@@ -224,7 +224,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             }
         }, {
-            xclass:'filtermenu',
+            xclass:'filter-menu',
             priority:20
         });
 

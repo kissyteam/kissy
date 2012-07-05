@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * xiamiMusic button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils) {
+KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiamiMusic";
 
@@ -29,12 +29,13 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
 
     function XiamiMusicPlugin(config) {
-        this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(XiamiMusicPlugin, {
         renderUI:function (editor) {
 
+            fakeObjects.init(editor);
 
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
@@ -130,5 +131,5 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
     return XiamiMusicPlugin;
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils']
+    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
 });

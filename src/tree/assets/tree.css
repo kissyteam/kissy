@@ -1,11 +1,11 @@
-.ks-tree-item-row {
+.ks-treeitem-row {
   white-space: nowrap;
   font: icon;
   line-height: 16px;
   height: 16px;
 }
 
-.ks-tree-item-row span {
+.ks-treeitem-row span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -98,7 +98,7 @@
   background-position: -48px -24px;
 }
 
-.ks-tree-item-content {
+.ks-treeitem-content {
   margin-left: 3px;
   padding: 1px 2px 1px 2px;
   text-decoration: none;
@@ -106,7 +106,7 @@
   cursor: default;
 }
 
-.ks-tree-item-content:hover {
+.ks-treeitem-content:hover {
   text-decoration: underline;
 }
 
@@ -118,16 +118,16 @@
     padding-left: 19px;
 }
 
-.ks-tree-item-selected .ks-tree-item-content {
+.ks-treeitem-selected .ks-treeitem-content {
     background: buttonface;
     color: buttontext;
 }
 
-.ks-tree-item-focused {
+.ks-treeitem-focused {
     outline: none;
 }
 
-.ks-tree-item-focused .ks-tree-item-selected .ks-tree-item-content {
+.ks-treeitem-focused .ks-treeitem-selected .ks-treeitem-content {
     background: highlight;
     color: highlighttext;
 }
@@ -136,21 +136,21 @@
   display: none;
 }
 
-.ks-tree-item-checked0 {
+.ks-treeitem-checked0 {
     background: url(../assets/check0.gif) 0 -2px;
     width: 16px;
     height: 16px;
     vertical-align: middle;
 }
 
-.ks-tree-item-checked1 {
+.ks-treeitem-checked1 {
     background: url(../assets/check1.gif) 0 -2px;
     width: 16px;
     height: 16px;
     vertical-align: middle;
 }
 
-.ks-tree-item-checked2 {
+.ks-treeitem-checked2 {
     background: url(../assets/check2.gif) 0 -2px;
     width: 16px;
     height: 16px;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * contextmenu for kissy editor
@@ -32,6 +32,14 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         var menu = new Menu.PopupMenu(cfg);
 
         focusFix.init(menu);
+
+        menu.on("afterRenderUI", function () {
+            menu.get("el").on("keydown", function (e) {
+                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                    menu.hide();
+                }
+            });
+        });
 
         self.docReady(function () {
             var doc = self.get("document");

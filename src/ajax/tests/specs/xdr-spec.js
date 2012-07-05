@@ -21,7 +21,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 },
                 dataType:'json',
                 url:'http://yiminghe.taobao.com/' +
-                    'kissy_git/kissy1.3/src/ajax/tests/others/xdr/xdr.php',
+                    'kissy_git/kissy/src/ajax/tests/others/xdr/xdr.php',
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
@@ -49,7 +49,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     },
                     dataType:'json',
                     url:'http://yiminghe.taobao.com/' +
-                        'kissy_git/kissy1.3/src/ajax/tests/others/xdr/xdr.php',
+                        'kissy_git/kissy/src/ajax/tests/others/xdr/xdr.php',
                     xhrFields:{
                         // Cannot use wildcard in Access-Control-Allow-Origin
                         // when credentials flag is true.
@@ -77,10 +77,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 ret = [];
 
             io({
-                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy1.3/src/ajax/tests/data/ajax.php',
+                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy/src/ajax/tests/data/ajax.php',
                 xdr:{
                     subDomain:{
-                        proxy:"/kissy_git/kissy1.3/src/ajax/tests/others/subdomain/proxy.html"
+                        proxy:"/kissy_git/kissy/src/ajax/tests/others/subdomain/proxy.html"
                     }
                 },
                 success:function () {
@@ -120,7 +120,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             io({
                 form:form[0],
                 dataType:'json',
-                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy1.3/src/ajax/tests/others/subdomain/upload.php',
+                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy/src/ajax/tests/others/subdomain/upload.php',
                 success:function (data) {
                     expect(data.test).toBe('1');
                     expect(data.test2).toBe('2');

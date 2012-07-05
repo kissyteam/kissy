@@ -22,10 +22,10 @@
         S.use("ajax", function(S, io) {
             document.domain = 'yiming.com';
             io({
-                url:'http://yy.yiming.com/kissy_git/kissy1.3/src/ajax/tests/ajax.php',
+                url:'http://yy.yiming.com/kissy_git/kissy/src/ajax/tests/ajax.php',
                 xdr:{
                     subDomain:{
-                        proxy:"/kissy_git/kissy1.3/src/ajax/tests/subdomain/proxy.html"
+                        proxy:"/kissy_git/kissy/src/ajax/tests/subdomain/proxy.html"
                     }
                 },
                 success:function() {
@@ -39,7 +39,7 @@
                 }
             });
             io({
-                url:'http://yy.yiming.com/kissy_git/kissy1.3/src/ajax/tests/ajax.php',
+                url:'http://yy.yiming.com/kissy_git/kissy/src/ajax/tests/ajax.php',
 
                 success:function() {
                     S.log("success");

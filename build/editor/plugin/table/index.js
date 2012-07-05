@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, ContextMenu) {
+KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -359,28 +359,34 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
         cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName),
 
         extraDataFilter = {
-            elements:{
+            tags:{
                 'table':function (element) {
-                    var attributes = element.attributes,
-                        cssClass = attributes[ 'class' ],
-                        border = parseInt(attributes.border, 10);
+                    var cssClass = element.getAttribute("class"),
+                        border = parseInt(element.getAttribute("border"), 10);
 
-                    if (!border || border <= 0)
-                        attributes[ 'class' ] = ( cssClass || '' ) + ' ' +
-                            showBorderClassName;
+                    if (!border || border <= 0) {
+                        element.setAttribute("class", S.trim((cssClass || "") +
+                            ' ' + showBorderClassName));
+                    }
                 }
             }
         },
 
         extraHtmlFilter = {
-            elements:{
+            tags:{
                 'table':function (table) {
-                    var attributes = table.attributes,
-                        cssClass = attributes[ 'class' ];
+                    var cssClass = table.getAttribute("class"), v;
 
                     if (cssClass) {
-                        attributes[ 'class' ] = S.trim(cssClass.replace(showBorderClassName, ""));
+                        v = S.trim(cssClass.replace(showBorderClassName, ""));
+                        if (v) {
+                            table.setAttribute("class", v);
+                        } else {
+                            table.removeAttribute("class");
+                        }
                     }
+
+
                 }
 
             }
@@ -391,9 +397,9 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
     }
 
     S.augment(TablePlugin, {
-        init:function (editor) {
+        renderUI:function (editor) {
             /**
-             * 动态加入显表格border css，便于编辑
+             * 动态加入显表格 border css，便于编辑
              */
             editor.addCustomStyle(cssStyleText);
 
@@ -430,6 +436,8 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                             return;
                         }
 
+                        editor.execCommand("save");
+
                         // Maintain the selection point at where the table was deleted.
                         selection.selectElement(table);
                         var range = selection.getRanges()[0];
@@ -446,43 +454,56 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader, Contex
                         } else {
                             table.remove();
                         }
+                        editor.execCommand("save");
                     },
 
                     '删除行 ':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         placeCursorInCell(deleteRows(selection), undefined);
+                        editor.execCommand("save");
                     },
 
                     '删除列 ':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection(),
                             element = deleteColumns(selection);
                         element && placeCursorInCell(element, true);
+                        editor.execCommand("save");
                     },
 
                     '在上方插入行':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertRow(selection, true);
+                        editor.execCommand("save");
                     },
 
                     '在下方插入行':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertRow(selection, undefined);
+                        editor.execCommand("save");
                     },
 
                     '在左侧插入列':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertColumn(selection, true);
+                        editor.execCommand("save");
                     },
 
                     '在右侧插入列':function () {
                         this.hide();
+                        editor.execCommand("save");
                         var selection = editor.getSelection();
                         insertColumn(selection, undefined);
+                        editor.execCommand("save");
                     }
                 };
 

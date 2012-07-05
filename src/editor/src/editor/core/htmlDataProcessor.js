@@ -17,8 +17,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (element.getAttribute('class') == 'Apple-style-span'
-                    || !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
+                    !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }

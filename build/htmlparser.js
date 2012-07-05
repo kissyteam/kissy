@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -1790,7 +1790,6 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         self.nodeType = 1;
 
         if (S.isString(page)) {
-            Tag.superclass.constructor.apply(self);
             createTag.apply(null, [self].concat(S.makeArray(arguments)));
         } else {
             Tag.superclass.constructor.apply(self, arguments);

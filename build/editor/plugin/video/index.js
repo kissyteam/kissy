@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * video button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass) {
+KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBaseClass, fakeObjects) {
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
@@ -17,6 +17,9 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
     S.augment(video, {
         renderUI:function (editor) {
+
+            fakeObjects.init(editor);
+
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
@@ -43,7 +46,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             videoCfg.getProvider = getProvider;
 
             dataFilter && dataFilter.addRules({
-                elements:{
+                tags:{
                     'object':function (element) {
                         var classId = element.getAttribute("classid"), i;
                         var childNodes = element.childNodes;
@@ -51,7 +54,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
                             // Look for the inner <embed>
                             for (i = 0; i < childNodes.length; i++) {
-                                if (childNodes[ i ].name == 'embed') {
+                                if (childNodes[ i ].nodeName == 'embed') {
                                     if (!flashUtils.isFlashEmbed(childNodes[ i ])) {
                                         return null;
                                     }
@@ -123,5 +126,5 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass']
+    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass', '../fakeObjects/']
 });

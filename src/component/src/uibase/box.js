@@ -25,24 +25,20 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String|NodeList
          */
         content:{
-            view:1,
-            sync:false
+            view:1
         },
         /**
          * component's width
          * @type Number|String
          */
         width:{
-            // 没有 _uiSetWidth，所以不需要设置 sync:false
-            view:1,
-            sync:false
+            view:1
         },
         /**
          * component's height
          * @type Number|String
          */
         height:{
-            sync:false,
             view:1
         },
         /**
@@ -50,7 +46,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type String
          */
         elCls:{
-            sync:false,
             view:1
         },
         /**
@@ -58,7 +53,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Object
          */
         elStyle:{
-            sync:false,
             view:1
         },
         /**
@@ -66,7 +60,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type Object
          */
         elAttrs:{
-            sync:false,
             view:1
         },
         /**
@@ -74,7 +67,6 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         elBefore:{
-            sync:false,
             view:1
         },
         /**
@@ -104,8 +96,10 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * whether this component is visible
          * @type Boolean
+         * @default true
          */
         visible:{
+            value:true,
             view:1
         },
 
@@ -144,33 +138,18 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * @private
          */
-        _uiSetVisible:function (isVisible) {
-            this.fire(isVisible ? "show" : "hide");
+        __bindUI:function () {
+            this.on("afterVisibleChange", function (e) {
+                this.fire(e.newVal ? "show" : "hide");
+            });
         },
 
         /**
          * show component
          */
         show:function () {
-            var self = this, view;
-            if (!self.get("rendered")) {
-                // 防止初始设置 false，导致触发 hide 事件
-                // show 里面的初始一定是 true，触发 show 事件
-                // 2012-03-28 : 用 set 而不是 __set :
-                // - 如果 show 前调用了 hide 和 create，view 已经根据 false 建立起来了
-                // - 也要设置 view
-                // self.set("visible", true);
-                // 2012-06-07 ，不能 set
-                // 初始监听 visible ，得不到 el
-
-                // 2012-06-12
-                // 复位 undefined，防止之前设置过
-                self.__set("visible", undefined);
-                if (view = self.get("view")) {
-                    view.__set("visible", undefined);
-                }
-                self.render();
-            }
+            var self = this;
+            self.render();
             self.set("visible", true);
             return self;
         },

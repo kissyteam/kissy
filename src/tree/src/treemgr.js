@@ -26,11 +26,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
          * @type Tree.Node
          */
         selectedItem:{},
-        tree:{
-            valueFn:function () {
-                return this;
-            }
-        },
+
         // only root node is focusable
         focusable:{
             value:true
@@ -41,12 +37,15 @@ KISSY.add("tree/treemgr", function (S, Event) {
         var el = c.get("el"),
             id = el.attr("id");
         if (!id) {
-            el.attr("id", id=S.guid("tree-node"));
+            el.attr("id", id = S.guid("tree-node"));
         }
         return id;
     }
 
     S.augment(TreeMgr, {
+
+        __isTree:1,
+
         /*
          加快从事件代理获取原事件节点
          */
@@ -56,14 +55,6 @@ KISSY.add("tree/treemgr", function (S, Event) {
                 self._allNodes = {};
             }
             return self._allNodes;
-        },
-
-        __renderUI:function () {
-            var self = this;
-            // add 过那么一定调用过 checkIcon 了
-            if (!self.get("children").length) {
-                self._computeClass("root_renderUI");
-            }
         },
 
         _register:function (c) {
@@ -84,7 +75,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         },
 
         // 重写 delegateChildren ，缓存加快从节点获取对象速度
-        getOwnerControl:function (node) {
+        getOwnerControl:function (node, e) {
             var self = this,
                 n,
                 allNodes = self.__getAllNodes(),
@@ -106,7 +97,6 @@ KISSY.add("tree/treemgr", function (S, Event) {
             }
             n.set("selected", true);
         },
-
 
         _uiSetFocused:function (v) {
             var self = this;

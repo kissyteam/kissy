@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:07
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -237,7 +237,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
     /**
      * @class
      * Filter Menu for KISSY.
-     * xclass: 'filtermenu'.
+     * xclass: 'filter-menu'.
      * @extends Menu
      * @memberOf Menu
      * @name FilterMenu
@@ -446,7 +446,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             }
         }, {
-            xclass:'filtermenu',
+            xclass:'filter-menu',
             priority:20
         });
 

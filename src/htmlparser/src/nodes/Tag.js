@@ -22,7 +22,6 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         self.nodeType = 1;
 
         if (S.isString(page)) {
-            Tag.superclass.constructor.apply(self);
             createTag.apply(null, [self].concat(S.makeArray(arguments)));
         } else {
             Tag.superclass.constructor.apply(self, arguments);
