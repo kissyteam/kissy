@@ -106,13 +106,13 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                         }
                     }
 
+                    // 儿子都没选，父亲也不选
+                    if (checkCount === 0) {
+                        parent.set("checkState", EMPTY);
+                    } else
                     // 儿子全都选了，父亲也全选
                     if (checkCount == cs.length) {
                         parent.set("checkState", CHECK);
-                    }
-                    // 儿子都没选，父亲也不选
-                    else if (checkCount === 0) {
-                        parent.set("checkState", EMPTY);
                     }
                     // 有的儿子选了，有的没选，父亲部分选
                     else {
