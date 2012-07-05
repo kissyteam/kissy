@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 10:58
+build time: Jul 5 23:29
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor

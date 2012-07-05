@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 10:58
+build time: Jul 5 23:29
 */
 /**
  * Set up editor constructor
@@ -814,7 +814,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode)) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
                         return NULL;
@@ -866,7 +866,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode )) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE)
                         return NULL;
@@ -8085,7 +8085,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             _uiSetMode:function (v) {
                 var self = this,
                     save,
-                    rendered = self.get("render"),
+                    rendered = self.get("rendered"),
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {
