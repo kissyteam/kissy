@@ -13,7 +13,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
      * @memberOf Tree
      * @class
      * Checked tree node.
-     * xclass: 'tree-check-item'.
+     * xclass: 'check-treeitem'.
      * @extends Tree.Node
      */
     var CheckNode = BaseNode.extend(
@@ -30,60 +30,73 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
             },
 
             performActionInternal:function (e) {
-                var self = this;
+
+                var self = this,
+                    checkState,
+                    expanded = self.get("expanded"),
+                    expandIconEl = self.get("expandIconEl"),
+                    tree = self.get("tree"),
+                    target = $(e.target);
+
                 // 需要通知 tree 获得焦点
-                self.get("tree").get("el")[0].focus();
-                var target = $(e.target),
-                    view = self.get("view"),
-                    tree = self.get("tree");
+                tree.get("el")[0].focus();
 
                 if (e.type == "dblclick") {
                     // 双击在 +- 号上无效
-                    if (target.equals(view.get("expandIconEl"))) {
+                    if (target.equals(expandIconEl)) {
                         return;
                     }
                     // 双击在 checkbox 上无效
-                    if (target.equals(view.get("checkEl"))) {
+                    if (target.equals(self.get("checkIconEl"))) {
                         return;
                     }
-                    // 双击在字或者图标上，切换 expand 装tai
-                    self.set("expanded", !self.get("expanded"));
+                    // 双击在字或者图标上，切换 expand
+                    self.set("expanded", !expanded);
                 }
 
                 // 点击在 +- 号，切换状态
-                if (target.equals(view.get("expandIconEl"))) {
-                    self.set("expanded", !self.get("expanded"));
+                if (target.equals(expandIconEl)) {
+                    self.set("expanded", !expanded);
                     return;
                 }
 
                 // 单击任何其他地方都切换 check 状态
-                var checkState = self.get("checkState");
+                checkState = self.get("checkState");
+
                 if (checkState == CHECK) {
                     checkState = EMPTY;
                 } else {
                     checkState = CHECK;
                 }
+
                 self.set("checkState", checkState);
-                tree.fire("click", {
-                    target:self
-                });
+
+                self.fire("click");
             },
 
             _uiSetCheckState:function (s) {
-                var self = this;
+                var self = this,
+                    parent = self.get("parent"),
+                    checkCount,
+                    i,
+                    c,
+                    cState,
+                    cs;
+
                 if (s == CHECK || s == EMPTY) {
                     S.each(self.get("children"), function (c) {
                         c.set("checkState", s);
                     });
                 }
+
                 // 每次状态变化都通知 parent 沿链检查，一层层向上通知
                 // 效率不高，但是结构清晰
-                var parent = self.get("parent");
                 if (parent) {
-                    var checkCount = 0;
-                    var cs = parent.get("children");
-                    for (var i = 0; i < cs.length; i++) {
-                        var c = cs[i], cState = c.get("checkState");
+                    checkCount = 0;
+                    cs = parent.get("children");
+                    for (i = 0; i < cs.length; i++) {
+                        c = cs[i];
+                        cState = c.get("checkState");
                         // 一个是部分选，父亲必定是部分选，立即结束
                         if (cState == PARTIAL_CHECK) {
                             parent.set("checkState", PARTIAL_CHECK);
@@ -112,6 +125,9 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
              * @lends Tree.CheckNode#
              */
             {
+                checkIconEl:{
+                    view:1
+                },
 
                 /**
                  * Enums for check states.
@@ -129,7 +145,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                 }
             }
         }, {
-            xclass:"tree-check-item",
+            xclass:"check-treeitem",
             priority:20
         });
 

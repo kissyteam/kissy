@@ -9,7 +9,7 @@ KISSY.add("component/delegateChildren", function (S) {
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target);
+        var control = this.getOwnerControl(e.target,e);
         if (control) {
             // Child control identified; forward the event.
             switch (e.type) {

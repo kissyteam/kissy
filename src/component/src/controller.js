@@ -180,6 +180,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     child = initChild(self, child);
                     children[i] = child;
                     child.render();
+                    self.fire("addChild", {
+                        child:child
+                    });
                 }
             },
 
@@ -254,6 +257,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 elBefore = children[index] && children[index].get("el") || null;
                 c = initChild(self, c, elBefore);
                 children.splice(index, 0, c);
+                self.fire("addChild", {
+                    child:c
+                });
                 return c;
             },
 
@@ -271,7 +277,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @return {Component.Controller} The removed component.
              */
             removeChild:function (c, destroy) {
-                var children = this.get("children"),
+                var self=this,
+                    children = self.get("children"),
                     index = S.indexOf(c, children);
                 if (index != -1) {
                     children.splice(index, 1);
@@ -281,6 +288,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
+                self.fire("removeChild", {
+                    child:c
+                });
                 return c;
             },
 
