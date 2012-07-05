@@ -14,6 +14,15 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
                 cmdType:'bold',
                 tooltip:"粗体 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.B) {
+                        editor.execCommand("bold");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 

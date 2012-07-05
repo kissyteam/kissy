@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:40
+build time: Jul 5 10:58
 */
 /**
  * italic button.
@@ -16,10 +16,20 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
     S.augment(italic, {
         renderUI:function (editor) {
             cmd.init(editor);
+
             editor.addButton("italic", {
                 cmdType:'italic',
                 tooltip:"斜体 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.I) {
+                        editor.execCommand("italic");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 

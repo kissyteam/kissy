@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 19:55
+build time: Jul 5 11:17
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -2255,20 +2255,6 @@ KISSY.add('grid/header', function (S, Component, Column) {
             if (obj.left !== undefined) {
                 el.scrollLeft(obj.left);
             }
-        },
-        //set the table's width
-        _setTableWidth:function (w) {
-            var _self = this,
-                width = _self.get('width'),
-                tableEl = _self.get('tableEl');
-            if (!width) {
-                return;
-            }
-            if (width > w) {
-                w = width;
-            }
-
-            tableEl.width(w);
         }
     }, {
         ATTRS:{
@@ -2471,7 +2457,6 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * force every column fit the table's width
              */
             forceFitColumns:function () {
-
                 var _self = this,
                     columns = _self.getColumns(),
                     width = _self.get('width'),
@@ -2520,16 +2505,10 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * set the header's inner table's width
              */
             setTableWidth:function () {
-                var _self = this,
-                    columnsWidth = _self.getColumnsWidth();
+                var _self = this;
                 if (_self.get('forceFit')) {
                     _self.forceFitColumns();
-                    columnsWidth = _self.getColumnsWidth();
                 }
-                if (_self._isAllowScrollLeft()) {
-                    columnsWidth += CLS_SCROLL_WITH;
-                }
-                _self.get('view')._setTableWidth(columnsWidth);
             },
             //when header's width changed, it also effects its columns.
             _uiSetWidth:function () {

@@ -15,7 +15,9 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
 
     S.augment(justifyRight, {
         renderUI:function (editor) {
+
             justifyCenterCmd.init(editor);
+
             editor.addButton("justifyRight", {
                 tooltip:"右对齐",
                 checkable:true,
@@ -37,6 +39,15 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
 
                 },
                 mode:Editor.WYSIWYG_MODE
+            });
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.R) {
+                        editor.execCommand("justifyRight");
+                        e.preventDefault();
+                    }
+                });
             });
         }
     });

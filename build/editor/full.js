@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:40
+build time: Jul 5 10:58
 */
 /**
  * Set up editor constructor
@@ -9152,6 +9152,15 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
                 cmdType:'bold',
                 tooltip:"粗体 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.B) {
+                        editor.execCommand("bold");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 
@@ -12575,10 +12584,20 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
     S.augment(italic, {
         renderUI:function (editor) {
             cmd.init(editor);
+
             editor.addButton("italic", {
                 cmdType:'italic',
                 tooltip:"斜体 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.I) {
+                        editor.execCommand("italic");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 
@@ -12638,6 +12657,16 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                 },
                 mode:Editor.WYSIWYG_MODE
             });
+
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.E) {
+                        editor.execCommand("justifyCenter");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 
@@ -12675,6 +12704,7 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
     S.augment(justifyLeft, {
         renderUI:function (editor) {
             justifyCenterCmd.init(editor);
+
             editor.addButton("justifyLeft", {
                 tooltip:"左对齐",
                 checkable:true,
@@ -12695,6 +12725,15 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
+            });
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.L) {
+                        editor.execCommand("justifyLeft");
+                        e.preventDefault();
+                    }
+                });
             });
         }
     });
@@ -12733,7 +12772,9 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
 
     S.augment(justifyRight, {
         renderUI:function (editor) {
+
             justifyCenterCmd.init(editor);
+
             editor.addButton("justifyRight", {
                 tooltip:"右对齐",
                 checkable:true,
@@ -12755,6 +12796,15 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
 
                 },
                 mode:Editor.WYSIWYG_MODE
+            });
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.R) {
+                        editor.execCommand("justifyRight");
+                        e.preventDefault();
+                    }
+                });
             });
         }
     });
@@ -15659,10 +15709,20 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     S.augment(Underline, {
         renderUI:function (editor) {
             cmd.init(editor);
+
             editor.addButton("underline", {
                 cmdType:"underline",
                 tooltip:"下划线 "
             }, ui.Button);
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.U) {
+                        editor.execCommand("underline");
+                        e.preventDefault();
+                    }
+                });
+            });
         }
     });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:40
+build time: Jul 5 10:58
 */
 /**
  * justifyCenter button.
@@ -41,6 +41,16 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
                     }
                 },
                 mode:Editor.WYSIWYG_MODE
+            });
+
+
+            editor.docReady(function () {
+                editor.get("document").on("keydown", function (e) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.E) {
+                        editor.execCommand("justifyCenter");
+                        e.preventDefault();
+                    }
+                });
             });
         }
     });
