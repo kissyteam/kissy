@@ -17,7 +17,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 			id : 'colhide',
 			title : '隐藏',
 			dataIndex : 'd',
-			hide : true
+			visible : false
 		}],
 		data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}],
 		store = new Store({
@@ -129,7 +129,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 					width = 150,
 					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
 				expect(cellEl.css('display')).toBe('none');
-				colObj.set('hide',false);
+				colObj.set('visible',true);
 				expect(cellEl.css('display')).toBe('table-cell');
 			});
 			it('添加列,删除列',function(){
@@ -379,10 +379,10 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 	it('测试列显示隐藏列后的自适应',function(){
 			var index = 2,
 				colObj = header.getColumnByIndex(index);
-			colObj.set('hide',true);
+			colObj.set('visible',false);
 			expect(header.getColumnsWidth()).toBe(header.get('width'));
 
-			colObj.set('hide',false);
+			colObj.set('visible',true);
 			expect(header.getColumnsWidth()).toBe(header.get('width'));
 		});
 

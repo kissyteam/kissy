@@ -98,7 +98,8 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 		it('测试按钮点击',function(){
 			var btn = bar.getItem('btn3');
 			expect(btn).not.toBe(null);
-			jasmine.simulate(btn.get('el')[0],'click');
+			//jasmine.simulate(btn.get('el')[0],'click');
+            btn.fire('click');
 			waits(100);
 			runs(function(){
 				expect(getLog()).toBe('button3');
@@ -107,7 +108,8 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 		it('测试链接点击',function(){
 			var linkItem = bar.getItem('link1');
 			expect(linkItem).not.toBe(null);
-			jasmine.simulate(linkItem.get('el')[0],'click');
+            linkItem.fire('click');
+			//jasmine.simulate(linkItem.get('el')[0],'click');
 			waits(100);
 			runs(function(){
 				expect(getLog()).toBe('link1');
@@ -119,8 +121,6 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 			expect(inputItem).not.toBe(null);
 			inputEl = inputItem.get('el').one('input');
 			inputEl.val('123');
-			//S.log(inputEl.val());
-			//jasmine.simulate(inputItem.get('el').one('input')[0],'change');
 			inputEl.fire('change');
 			waits(100);
 			runs(function(){

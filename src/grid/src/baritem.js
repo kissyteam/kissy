@@ -29,40 +29,11 @@ KISSY.add('grid/baritem',function(S,Component,Button){
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-bar-item"));
             }
-        },
-		/*
-		* bind custom event
-		* @protected
-        * @override
-		*/
-		bindUI : function(){
-			var _self = this,
-				listeners = _self.get('listeners');
-			
-			for(var name in listeners){
-				if(listeners.hasOwnProperty(name) && S.isFunction(listeners[name])){
-					_self.get('el').on(name,listeners[name]);
-				}
-			}
-		}
+        }
 	},{
 		ATTRS:/** @lends Grid.Bar.BarItem.prototype*/
 		{
-			/*
-			* custom listeners user can bind to barItem
-			* @example 
-			* listeners : {
-			*	'click' : function(event){
-			*		
-			*	},
-			*	'change' : function(){
-			*
-			*	}
-			* }
-			*/
-			listeners : {
-				value : {}
-			},
+
 			/**
 			* Whether this component can get focus.
 			* @overrided

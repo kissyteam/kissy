@@ -161,7 +161,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 		//show or hide column
 		setColumnVisible : function(column){
 			var _self = this,
-				hide = column.get('hide'),
+				hide = !column.get('visible'),
 				colId = column.get('id'),
 				tbodyEl = _self.get('tbodyEl'),
 				cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
@@ -257,7 +257,6 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 				tbodyEl = _self.get('tbodyEl'),
 				rowTpl = _self.get('headerRowTpl')
 				rowEl = null,
-				hideText = '',
 				cellsTpl = [];
 
 			S.each(columns,function(column,colIndex){
@@ -283,7 +282,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 				totalWidth = 0;
 				columns = _self.get('columns');
 			S.each(columns, function (column) {
-				if (!column.get('hide')) {
+				if (column.get('visible')) {
 					totalWidth += column.get('width');
 					borderWidth = S.UA.webkit ? 0 : 1;
 					totalWidth += borderWidth;
@@ -311,7 +310,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 					id : column.get('id'),
 					dataIndex : dataIndex,
 					cellText : cellText,
-					hide : column.get('hide')
+					hide : !column.get('visible')
 				});
 		},
 		//get cell tips
@@ -332,7 +331,7 @@ KISSY.add('grid/gridbody',function(S,Component,Template,Bindable){
 			return Template(headerCellTpl).render({
 				id : column.get('id'),
 				width : column.get('width'),
-				hide : column.get('hide')
+				hide : !column.get('visible')
 			});
 		},
 		_getEmptyCellTpl : function(){

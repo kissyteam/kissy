@@ -59,6 +59,11 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 			if(item instanceof Component.Controller){
 				return item;
 			}
+            
+            if(item.xclass){
+                return item;
+            }
+
 			//default type is button
 			if(!item.xtype){
 				item.xtype = 'button';

@@ -5,6 +5,7 @@
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
+	    CLS_NUMBER_BUTTON = 'ks-button-number',
 		CLS_ACTIVE = 'ks-active';
 	/**
 	* specialized paging bar auto show numberic buttons
@@ -57,7 +58,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this,
 				numberContainerBar = _self.get(NUMBER_CONTAINER);
 			_self.constructor.superclass._bindButtonEvent.call(this);
-			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
+			numberContainerBar.get('el').delegate('click','.' + CLS_NUMBER_BUTTON,function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
 				_self.jumpToPage(page);
@@ -179,7 +180,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* the css used on number button
 			*/
 			numberButtonCls:{
-				value : 'ks-number-button'
+				value : CLS_NUMBER_BUTTON
 			},
 			/**
 			* the template of ellipsis which represent the omitted pages number

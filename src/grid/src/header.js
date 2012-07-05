@@ -147,7 +147,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 				borderWidth = 0;
 
 			S.each(columns, function (column) {
-				if (!column.get('hide')) {
+				if (column.get('visible')) {
 					totalWidth += column.get('width');
 					borderWidth = S.UA.webkit ? 0 : 1;
 					totalWidth += borderWidth;
@@ -276,7 +276,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 				//Calculate the total width of columns,and the fixed width 
 				S.each(columns, function (column) {
 					var colWidth = column.get('originWidth') || column.get('width');
-					if (!column.get('hide') && colWidth) {
+					if (column.get('visible') && colWidth) {
 						columnsWidth += colWidth;
 						if(!column.get('resizable')){
 							fixedWidth += column.get('width');
@@ -291,7 +291,7 @@ KISSY.add('grid/header',function(S,Component,Column){
 
 				if (times !== 1) {
 					S.each(columns, function (column) {
-						if (!column.get('hide') && column.get('resizable')) {
+						if (column.get('visible') && column.get('resizable')) {
 							var originWidth = column.get('originWidth') || column.get('width'),
 								changedWidth = Math.floor(originWidth * times);
 							column.set('width',changedWidth,{silent : true});
