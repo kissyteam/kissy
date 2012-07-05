@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:07
+build time: Jul 5 23:31
 */
 .ks-editor-progressbar{border:1px solid #d6dee6;position:relative;margin-left:auto;margin-right:auto;background-color:#eaeff4;background:-webkit-gradient(linear,left top,left bottom,from(#eaeff4),to(#ebf0f3));background:-moz-linear-gradient(top,#eaeff4,#ebf0f3);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr = '#EAEFF4',endColorstr = '#EBF0F3')}.ks-editor-progressbar-inner{border:1px solid #3571b4;background-color:#6fa5db;padding:1px}.ks-editor-progressbar-inner-bg{height:100%;background-color:#73b1e9;background:-webkit-gradient(linear,left top,left bottom,from(#73b1e9),to(#3f81c8));background:-moz-linear-gradient(top,#73b1e9,#3f81c8);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr = '#73B1E9',endColorstr = '#3F81C8')}.ks-editor-progressbar-title{width:30px;top:0;left:40%;line-height:1.2;position:absolute}

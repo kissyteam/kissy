@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:07
+build time: Jul 5 23:31
 */
 /**
  * Set up editor constructor
@@ -8085,7 +8085,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             _uiSetMode:function (v) {
                 var self = this,
                     save,
-                    rendered = self.get("render"),
+                    rendered = self.get("rendered"),
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {

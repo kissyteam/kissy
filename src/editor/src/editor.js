@@ -203,7 +203,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             _uiSetMode:function (v) {
                 var self = this,
                     save,
-                    rendered = self.get("render"),
+                    rendered = self.get("rendered"),
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {
