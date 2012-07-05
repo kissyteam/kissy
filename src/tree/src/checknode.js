@@ -150,7 +150,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
              * not checked at all.
              */
             EMPTY:EMPTY
-        })
+        });
 
     return CheckNode;
 }, {
