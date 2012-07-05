@@ -334,9 +334,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                         while (from && !from.__isTree) {
                             from = from.get("parent");
                         }
-                        if (from.__isTree) {
-                            return from;
-                        }
+                        return from;
                     }
                 },
 

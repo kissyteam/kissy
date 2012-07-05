@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 23:00
+build time: Jul 5 23:06
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -391,9 +391,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                         while (from && !from.__isTree) {
                             from = from.get("parent");
                         }
-                        if (from.__isTree) {
-                            return from;
-                        }
+                        return from;
                     }
                 },
 
