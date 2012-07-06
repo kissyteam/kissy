@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 23:29
+build time: Jul 6 13:06
 */
 /**
  * Set up editor constructor
@@ -46,10 +46,15 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  */
                 iframe:{},
                 /**
-                 * iframe 's contentWindow
+                 * iframe 's contentWindow.
                  * @type Node
                  */
-                window:{},
+                window:{
+                    // ie6 一旦中途设置了 domain
+                    // 那么就不能从 document _getWin 获取对应的 window
+                    // 所以一开始设置下，和 document 有一定的信息冗余
+
+                },
                 /**
                  * iframe 's document
                  * @type Node

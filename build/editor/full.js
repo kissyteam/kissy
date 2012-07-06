@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 23:29
+build time: Jul 6 13:06
 */
 /**
  * Set up editor constructor
@@ -46,10 +46,15 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  */
                 iframe:{},
                 /**
-                 * iframe 's contentWindow
+                 * iframe 's contentWindow.
                  * @type Node
                  */
-                window:{},
+                window:{
+                    // ie6 一旦中途设置了 domain
+                    // 那么就不能从 document _getWin 获取对应的 window
+                    // 所以一开始设置下，和 document 有一定的信息冗余
+
+                },
                 /**
                  * iframe 's document
                  * @type Node
@@ -2068,7 +2073,7 @@ KISSY.add("editor/core/focusManager", function (S) {
                 return INSTANCES[id];
             },
             add:function (editor) {
-                var win = DOM._getWin(editor.get("document")[0]);
+                var win = editor.get("window")[0];
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
@@ -2077,7 +2082,7 @@ KISSY.add("editor/core/focusManager", function (S) {
             },
             remove:function (editor) {
                 delete INSTANCES[editor._UUID];
-                var win = DOM._getWin(editor.get("document")[0]);
+                var win = editor.get("window")[0];
                 Event.remove(win, "focus", focus, editor);
                 Event.remove(win, "blur", blur, editor);
             }
@@ -7142,28 +7147,21 @@ KISSY.add("editor/core/utils", function (S) {
             },
 
             /**
-             * srcDoc 中的位置在 destDoc 的对应位置
-             * @param x {number}
-             * @param y {number}
-             * @param srcDoc {Document}
-             * @param destDoc {Document}
-             * @return 在最终文档中的位置
+             * editor 元素在主窗口的位置
              */
-            getXY:function (x, y, srcDoc, destDoc) {
-                var currentWindow = srcDoc.defaultView || srcDoc.parentWindow;
-
+            getXY:function (offset, editor) {
+                var x = offset.left,
+                    y = offset.top,
+                    currentWindow = editor.get("window")[0];
                 //x,y相对于当前iframe文档,防止当前iframe有滚动条
                 x -= DOM.scrollLeft(currentWindow);
                 y -= DOM.scrollTop(currentWindow);
-                if (destDoc) {
-                    var refWindow = destDoc.defaultView || destDoc.parentWindow;
-                    if (currentWindow != refWindow && currentWindow['frameElement']) {
-                        //note:when iframe is static ,still some mistake
-                        var iframePosition = DOM.offset(currentWindow['frameElement'], undefined, refWindow);
-                        x += iframePosition.left;
-                        y += iframePosition.top;
-                    }
-                }
+
+                //note:when iframe is static ,still some mistake
+                var iframePosition = editor.get("iframe").offset();
+                x += iframePosition.left;
+                y += iframePosition.top;
+
                 return {left:x, top:y};
             },
 
@@ -7941,17 +7939,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             "</body>" +
             "</html>",
 
-        EMPTY_IFRAME_SRC = DOM.getEmptyIframeSrc(),
-
         IFRAME_TPL = '<iframe' +
             ' style="width:100%;height:100%;border:none;" ' +
             ' frameborder="0" ' +
             ' title="kissy-editor" ' +
             ' allowTransparency="true" ' +
-            // With IE, the custom domain has to be taken care at first,
-            // for other browsers, the 'src' attribute should be left empty to
-            // trigger iframe's 'load' event.
-            (EMPTY_IFRAME_SRC ? (' src="' + EMPTY_IFRAME_SRC + '"') : '') +
+            ' {iframeSrc} ' +
             '>' +
             '</iframe>' ,
 
@@ -7959,7 +7952,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '">' +
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
-
 
     S.mix(Editor,
         /**
@@ -8299,7 +8291,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             focus:function () {
                 var self = this,
                     doc = self.get("document")[0],
-                    win = DOM._getWin(doc);
+                    win = self.get("window")[0];
                 // firefox7 need this
                 if (!UA['ie']) {
                     // note : 2011-11-17 report by 石霸
@@ -8310,7 +8302,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // firefox 7 needs also?
                 win && win.focus();
                 // ie and firefox need body focus
-                doc.body.focus();
+                try {
+                    // 有时候 iframe 被隐藏了
+                    doc.body.focus();
+                } catch (e) {
+
+                }
                 self.notifySelectionChange();
             },
 
@@ -8319,7 +8316,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              */
             blur:function () {
                 var self = this,
-                    win = DOM._getWin(self.get("document")[0]);
+                    win = self.get("window")[0];
                 win.blur();
                 self.get("document")[0].body.blur();
             },
@@ -8941,6 +8938,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // is fully editable even before the editing iframe is fully loaded (#4455).
                 // 确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
                 ('<script id="ke_active_script">' +
+                    // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
+                    // 否则下面的 parent.KISSY.Editor._initIFrame 不能执行
                     ( DOM.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
@@ -8997,7 +8996,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
     }
 
     function createIframe(self, afterData) {
-        var iframe = new Node(IFRAME_TPL),
+        // With IE, the custom domain has to be taken care at first,
+        // for other browsers, the 'src' attribute should be left empty to
+        // trigger iframe 's 'load' event.
+        var iframeSrc = DOM.getEmptyIframeSrc() || "";
+        if (iframeSrc) {
+            iframeSrc = " src=\"" + iframeSrc + "\" ";
+        }
+        var iframe = new Node(S.substitute(IFRAME_TPL, {
+                iframeSrc:iframeSrc
+            })),
             textarea = self.get("textarea");
         if (textarea.hasAttr("tabindex")) {
             iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
@@ -9047,6 +9055,27 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
     ]
 });
 /**
+ * 2012-07-06 yiminghe@gmail.com note ie 的怪异:
+ *
+ *  -   如果一开始主页面设置了 domain
+ *
+ *      -   那么自己创建的 iframe src 要设置 getEmptyIframeSrc，
+ *          否则 load 后取不到 iframe.contentWindow 的 document.
+ *
+ *      -   自己创建的 iframe 里面 write 的内容要再次写 document.domain，
+ *          否则 iframe 内的脚本不能通知外边编辑器控制层 ready.
+ *
+ *  -   如果页面中途突然设置了 domain
+ *
+ *      - iframe 内的 document 仍然还可以被外层 editor 控制层使用.
+ *
+ *      - iframe 内的 window 的一些属性 (frameElement) 都不能访问了， 但是 focus 还是可以的.
+ *
+ *  因此 DOM.getEmptyIframeSrc 要用时再取不能缓存.
+ *
+ *  ie 不能访问 window 的属性（ ie 也不需要，还好 document 是可以的）
+ *
+ *
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
@@ -9239,9 +9268,16 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             top = iframeXY.top,
             left = iframeXY.left,
             right = left + DOM.width(editorWin),
-            bottom = top + DOM.height(editorWin),
-            elXY = el.offset(undefined, window),
-            elTop = elXY.top,
+            bottom = top + DOM.height(editorWin);
+
+        // ie 中途设置 domain 后，不能获取 window 的相关属性
+        // 例如 window.frameEl
+        // 所以不能直接用 el.offset(undefined,window);
+        var elXY = el.offset();
+
+        elXY=Editor.Utils.getXY(elXY,editor);
+
+        var elTop = elXY.top,
             elLeft = elXY.left,
             elRight = elLeft + el.width(),
             elBottom = elTop + el.height(),
@@ -9319,7 +9355,6 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         editor.on("sourceMode", onHide);
-
 
 
         function showImmediately() {
@@ -9770,11 +9805,12 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
                 var x = ev.pageX,
                     y = ev.pageY;
                 if (!x) {
-                    var xy = t.offset(document);
-                    x = xy.left;
-                    y = xy.top;
+                    return;
                 } else {
-                    var translate = Editor.Utils.getXY(x, y, doc[0], document);
+                    var translate = Editor.Utils.getXY({
+                        left:x,
+                        top:y
+                    }, self);
                     x = translate.left;
                     y = translate.top;
                 }
@@ -11682,8 +11718,14 @@ KISSY.add("editor/plugin/focusFix/index", function (S, Editor) {
             window['focus']();
             document.body.focus();
 
-            var $selection = editor.get("document")[0].selection,
+            var $selection = editor.get("document")[0].selection, $range;
+            // 中途更改了 domain，编辑器失去焦点，不能取得 range
+            // 拒绝访问错误
+            try {
                 $range = $selection.createRange();
+            } catch (e) {
+                $range = 0;
+            }
             if ($range) {
                 if (
                 // 如果单纯选择文字就不用管了

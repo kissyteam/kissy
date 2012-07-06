@@ -39,7 +39,7 @@ KISSY.add("editor/core/focusManager", function (S) {
                 return INSTANCES[id];
             },
             add:function (editor) {
-                var win = DOM._getWin(editor.get("document")[0]);
+                var win = editor.get("window")[0];
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
@@ -48,7 +48,7 @@ KISSY.add("editor/core/focusManager", function (S) {
             },
             remove:function (editor) {
                 delete INSTANCES[editor._UUID];
-                var win = DOM._getWin(editor.get("document")[0]);
+                var win = editor.get("window")[0];
                 Event.remove(win, "focus", focus, editor);
                 Event.remove(win, "blur", blur, editor);
             }

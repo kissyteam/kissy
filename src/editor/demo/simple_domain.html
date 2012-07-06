@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Editor Test</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+<link href="../src/editor/theme/editor-common.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/elementpath.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/upload.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/bubble.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/button.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/draft.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/editor.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/tab.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/table.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/select.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/resize-plugin.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/overlay.css" rel="stylesheet"/>
+<link href="../src/editor/theme/cool/menu.css" rel="stylesheet"/>
+</head>
+<body>
+<h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
+
+
+<div style="width: 90%;margin: 20px auto;">
+    <div id="container" class="ks-editor">
+        <textarea class="ks-editor-textarea"></textarea>
+    </div>
+    <button onclick="window.newEditor.destroy();">destroy</button>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/htmlparser.js"></script>
+<script src="../../../build/dd.js"></script>
+<script src="../../../build/component.js"></script>
+<script src="../../../build/overlay.js"></script>
+<script src="../../../build/button.js"></script>
+<script src="../../../build/switchable.js"></script>
+<script src="../../../build/menu.js"></script>
+<script src="../../../build/menubutton.js"></script>
+<!--
+core
+-->
+<script src="../src/editor/core/base.js"></script>
+<script src="../src/editor/core/dom.js"></script>
+<script src="../src/editor/core/domIterator.js"></script>
+<script src="../src/editor/core/meta.js"></script>
+<script src="../src/editor/core/elementPath.js"></script>
+<script src="../src/editor/core/focusManager.js"></script>
+<script src="../src/editor/core/range.js"></script>
+<script src="../src/editor/core/selection.js"></script>
+<script src="../src/editor/core/styles.js"></script>
+<script src="../src/editor/core/utils.js"></script>
+<script src="../src/editor/core/walker.js"></script>
+<script src="../src/editor/core/zIndexManager.js"></script>
+<script src="../src/editor.js"></script>
+<!--
+core plugins
+-->
+<script src="../src/editor/core/clipboard.js"></script>
+<script src="../src/editor/core/enterKey.js"></script>
+<script src="../src/editor/core/htmlDataProcessor.js"></script>
+<script src="../src/editor/core/selectionFix.js"></script>
+<!--
+other plugins
+-->
+<script>
+KISSY.config({
+    base:'../src/'
+});
+window.UPLOAD_SINGLE_URL="upload_domain.php";
+//document.domain = "ali.com";
+</script>
+<script src="./build/demo.js"></script>
+<script>
+    setTimeout(function () {
+        alert("set domain");
+        document.domain = "ali.com";
+    }, 5000);
+</script>
+</body>
+</html>

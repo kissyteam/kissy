@@ -68,7 +68,7 @@
             "image":{
                 defaultMargin:0,
                 upload:{
-                    serverUrl:"upload.php",
+                    serverUrl:window.UPLOAD_SINGLE_URL||"upload.php",
                     serverParams:{
                         waterMark:function () {
                             return S.one("#ke_img_up_watermark_1")[0].checked;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 23:29
+build time: Jul 6 13:06
 */
 /**
  * contextmenu for kissy editor
@@ -59,11 +59,12 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
                 var x = ev.pageX,
                     y = ev.pageY;
                 if (!x) {
-                    var xy = t.offset(document);
-                    x = xy.left;
-                    y = xy.top;
+                    return;
                 } else {
-                    var translate = Editor.Utils.getXY(x, y, doc[0], document);
+                    var translate = Editor.Utils.getXY({
+                        left:x,
+                        top:y
+                    }, self);
                     x = translate.left;
                     y = translate.top;
                 }

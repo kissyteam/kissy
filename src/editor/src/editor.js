@@ -59,17 +59,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             "</body>" +
             "</html>",
 
-        EMPTY_IFRAME_SRC = DOM.getEmptyIframeSrc(),
-
         IFRAME_TPL = '<iframe' +
             ' style="width:100%;height:100%;border:none;" ' +
             ' frameborder="0" ' +
             ' title="kissy-editor" ' +
             ' allowTransparency="true" ' +
-            // With IE, the custom domain has to be taken care at first,
-            // for other browsers, the 'src' attribute should be left empty to
-            // trigger iframe's 'load' event.
-            (EMPTY_IFRAME_SRC ? (' src="' + EMPTY_IFRAME_SRC + '"') : '') +
+            ' {iframeSrc} ' +
             '>' +
             '</iframe>' ,
 
@@ -77,7 +72,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '">' +
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
-
 
     S.mix(Editor,
         /**
@@ -417,7 +411,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             focus:function () {
                 var self = this,
                     doc = self.get("document")[0],
-                    win = DOM._getWin(doc);
+                    win = self.get("window")[0];
                 // firefox7 need this
                 if (!UA['ie']) {
                     // note : 2011-11-17 report by 石霸
@@ -428,7 +422,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // firefox 7 needs also?
                 win && win.focus();
                 // ie and firefox need body focus
-                doc.body.focus();
+                try {
+                    // 有时候 iframe 被隐藏了
+                    doc.body.focus();
+                } catch (e) {
+
+                }
                 self.notifySelectionChange();
             },
 
@@ -437,7 +436,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              */
             blur:function () {
                 var self = this,
-                    win = DOM._getWin(self.get("document")[0]);
+                    win = self.get("window")[0];
                 win.blur();
                 self.get("document")[0].body.blur();
             },
@@ -1059,6 +1058,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // is fully editable even before the editing iframe is fully loaded (#4455).
                 // 确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
                 ('<script id="ke_active_script">' +
+                    // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
+                    // 否则下面的 parent.KISSY.Editor._initIFrame 不能执行
                     ( DOM.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
@@ -1115,7 +1116,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
     }
 
     function createIframe(self, afterData) {
-        var iframe = new Node(IFRAME_TPL),
+        // With IE, the custom domain has to be taken care at first,
+        // for other browsers, the 'src' attribute should be left empty to
+        // trigger iframe 's 'load' event.
+        var iframeSrc = DOM.getEmptyIframeSrc() || "";
+        if (iframeSrc) {
+            iframeSrc = " src=\"" + iframeSrc + "\" ";
+        }
+        var iframe = new Node(S.substitute(IFRAME_TPL, {
+                iframeSrc:iframeSrc
+            })),
             textarea = self.get("textarea");
         if (textarea.hasAttr("tabindex")) {
             iframe.attr("tabIndex", UA['webkit'] ? -1 : textarea.attr("tabIndex"));
@@ -1165,6 +1175,27 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
     ]
 });
 /**
+ * 2012-07-06 yiminghe@gmail.com note ie 的怪异:
+ *
+ *  -   如果一开始主页面设置了 domain
+ *
+ *      -   那么自己创建的 iframe src 要设置 getEmptyIframeSrc，
+ *          否则 load 后取不到 iframe.contentWindow 的 document.
+ *
+ *      -   自己创建的 iframe 里面 write 的内容要再次写 document.domain，
+ *          否则 iframe 内的脚本不能通知外边编辑器控制层 ready.
+ *
+ *  -   如果页面中途突然设置了 domain
+ *
+ *      - iframe 内的 document 仍然还可以被外层 editor 控制层使用.
+ *
+ *      - iframe 内的 window 的一些属性 (frameElement) 都不能访问了， 但是 focus 还是可以的.
+ *
+ *  因此 DOM.getEmptyIframeSrc 要用时再取不能缓存.
+ *
+ *  ie 不能访问 window 的属性（ ie 也不需要，还好 document 是可以的）
+ *
+ *
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
