@@ -4,6 +4,11 @@
  */
 KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
+    var SHIFT_TYPE = 1;
+    var REDUCE_TYPE = 2;
+    var ACCEPT_TYPE = 0;
+
+
     var mix = S.mix, END_TAG = '$EOF';
 
     function mergeArray(from, to) {
@@ -32,6 +37,18 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
         return ret;
     }
 
+    function indexOf(obj, array) {
+        for (var i = 0; i < array.length; i++) {
+
+            if (obj.equals(array[i])) {
+                return i;
+            }
+
+        }
+
+        return -1;
+    }
+
     function Grammar() {
         var self = this;
         Grammar.superclass.constructor.apply(self, arguments);
@@ -42,6 +59,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
         self.buildFirsts();
         self.buildItemSet();
         self.buildLalrItemSets();
+        self.buildTable();
     }
 
 
@@ -108,11 +126,13 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
                 //check if each symbol is null able
                 for (symbol in nonTerminals) {
-                    if (!nonTerminals[symbol].get("nullAble")) {
-                        productions = nonTerminals[symbol].get("productions");
-                        for (i = 0; production = productions[i]; i++) {
-                            if (production.get("nullAble")) {
-                                nonTerminals[symbol].set("nullAble", cont = true);
+                    if (nonTerminals.hasOwnProperty(symbol)) {
+                        if (!nonTerminals[symbol].get("nullAble")) {
+                            productions = nonTerminals[symbol].get("productions");
+                            for (i = 0; production = productions[i]; i++) {
+                                if (production.get("nullAble")) {
+                                    nonTerminals[symbol].set("nullAble", cont = true);
+                                }
                             }
                         }
                     }
@@ -188,14 +208,18 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                 });
 
                 for (symbol in nonTerminals) {
-                    nonTerminal = nonTerminals[symbol];
-                    firsts = {};
-                    S.each(nonTerminal.get("productions"), function (production) {
-                        mix(firsts, production.get("firsts"));
-                    });
-                    if (setSize(firsts) !== setSize(nonTerminal.get("firsts"))) {
-                        nonTerminal.set("firsts", firsts);
-                        cont = true;
+
+                    if (nonTerminals.hasOwnProperty(symbol)) {
+
+                        nonTerminal = nonTerminals[symbol];
+                        firsts = {};
+                        S.each(nonTerminal.get("productions"), function (production) {
+                            mix(firsts, production.get("firsts"));
+                        });
+                        if (setSize(firsts) !== setSize(nonTerminal.get("firsts"))) {
+                            nonTerminal.set("firsts", firsts);
+                            cont = true;
+                        }
                     }
                 }
             }
@@ -282,7 +306,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                     items:[
                         new Item({
                             production:productions[0],
-                            lookAhead:['$EOF']
+                            lookAhead:[END_TAG]
                         })
                     ]
                 }));
@@ -293,7 +317,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
 
             var symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
 
-            delete  symbols["$EOF"];
+            delete  symbols[END_TAG];
 
             while (condition) {
                 condition = false;
@@ -366,10 +390,190 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
                     }
                 }
             }
+        },
+
+        buildTable:function () {
+            var self = this;
+            var table = self.get("table");
+            var itemSets = self.get("itemSets");
+            var gotos = {};
+            var action = {};
+            table.gotos = gotos;
+            table.action = action;
+            var nonTerminals = self.get("nonTerminals");
+            for (var i = 0; i < itemSets.length; i++) {
+                var itemSet = itemSets[i];
+
+                S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
+                    if (!nonTerminals[symbol]) {
+                        action[i] = action[i] || {};
+                        action[i][symbol] = {
+                            type:SHIFT_TYPE,
+                            to:indexOf(anotherItemSet, itemSets)
+                        };
+                    } else {
+                        gotos[i] = gotos[i] || {};
+                        gotos[i][symbol] = indexOf(anotherItemSet, itemSets);
+                    }
+                });
+
+                S.each(itemSet.get("items"), function (item) {
+                    var production = item.get("production");
+                    if (item.get("dotPosition") == production.get("rhs").length) {
+                        if (production.get("symbol") == 'S0') {
+                            if (S.inArray(END_TAG, item.get("lookAhead"))) {
+                                action[i] = action[i] || {};
+                                action[i][END_TAG] = {
+                                    type:ACCEPT_TYPE
+                                };
+                            }
+                        } else {
+                            action[i] = action[i] || {};
+                            S.each(item.get("lookAhead"), function (l) {
+                                action[i][l] = {
+                                    type:REDUCE_TYPE,
+                                    production:production
+                                };
+                            });
+                        }
+                    }
+                });
+            }
+        },
+
+
+        visualizeTable:function () {
+            var table = this.get("table");
+            var gotos = table.gotos;
+            var action = table.action;
+            var ret = [];
+
+            S.each(action, function (av, index) {
+                S.each(av, function (v, s) {
+                    var str, type = v.type;
+                    if (type == ACCEPT_TYPE) {
+                        str = "acc"
+                    } else if (type == REDUCE_TYPE) {
+                        str = "r" + v.to;
+                    } else if (type == SHIFT_TYPE) {
+                        str = "s" + v.to;
+                    }
+                    ret.push("action[" + index + "]" + "[" + s + "] = " + str);
+                });
+            });
+
+            S.each(gotos, function (sv, index) {
+                S.each(sv, function (v, s) {
+                    ret.push("goto[" + index + "]" + "[" + s + "] = " + v);
+                });
+            });
+
+            return ret;
+        },
+
+
+        parse:function (input) {
+
+            var self = this,
+                state,
+                symbol,
+                nonTerminals = self.get("nonTerminals"),
+                index = 0,
+                action,
+                table = self.get("table"),
+                gotos = table.gotos,
+                tableAction = table.action,
+                valueStack = [null],
+                stack = [0];
+
+            while (1) {
+                // retrieve state number from top of stack
+                state = stack[stack.length - 1];
+
+                if (!symbol) {
+                    if (index == input.length) {
+                        symbol = END_TAG;
+                    } else {
+                        symbol = input.charAt(index);
+                    }
+                    index++;
+                }
+
+                if (!symbol) {
+                    S.log("it is not a valid input : " + input, "error");
+                    return false;
+                }
+
+                // read action for current state and first input
+                action = tableAction[state] && tableAction[state][symbol];
+
+                if (!action) {
+                    S.log(" no action for : " + symbol, "error");
+                    S.log("it is not a valid input : " + input, "error");
+                    return false;
+                }
+
+                switch (action.type) {
+
+                    case SHIFT_TYPE:
+
+                        stack.push(symbol);
+
+                        valueStack.push(symbol);
+
+                        // push state
+                        stack.push(action.to);
+
+                        // allow to read more
+                        symbol = null;
+
+                        break;
+
+                    case REDUCE_TYPE:
+
+                        var production = action.production;
+
+                        var len = production.get("rhs").length;
+
+                        var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
+
+                        var args = valueStack.slice(-len);
+
+                        var ret = production.get("action").apply(null, args);
+
+                        if (ret !== undefined) {
+                            $$ = ret;
+                        }
+
+                        if (len) {
+                            stack = stack.slice(0, -1 * len * 2);
+                            valueStack = valueStack.slice(0, -1 * len);
+                        }
+
+                        stack.push(production.get("symbol"));
+
+                        valueStack.push($$);
+
+                        var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
+
+                        stack.push(newState);
+
+                        break;
+
+                    case ACCEPT_TYPE:
+
+                        return true;
+                }
+
+            }
+
         }
 
     }, {
         ATTRS:{
+            table:{
+                value:{}
+            },
             itemSets:{
                 value:[]
             },
@@ -402,4 +606,5 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal) {
  * Refer
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/
+ *   - http://www.gnu.org/software/bison/
  */
