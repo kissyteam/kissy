@@ -35,15 +35,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
                     parentMenu.on("hide", onParentHide, self);
 
-                    // 子菜单选中后也要通知父级菜单
-                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                    // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("click", function (ev) {
-                        parentMenu.fire("click", {
-                            target:ev.target
-                        });
-                    });
-
                     // if not bind doc click for parent menu
                     // if already bind, then if parent menu hide, menu will hide too
                     // !TODO 优化此处绑定！，不要特殊标记

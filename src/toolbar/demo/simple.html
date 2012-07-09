@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Toolbar 测试</title>
+<link href="../../../build/css/base.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../../menubutton/assets/menubutton.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<style>
+    .ks-toolbar {
+        border: 1px solid red;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
+</style>
+</head>
+<body style="width: 800px;margin: 10px auto;">
+<div>
+    <h1>
+        Toolbar For KISSY
+    </h1>
+
+    <div style="height: 80px"></div>
+
+
+    <div id="container">
+
+    </div>
+</div>
+<script src="../../../build/kissy.js"></script>
+<script src="../src/toolbar.js"></script>
+<script>
+    KISSY.use("toolbar,button,menubutton", function (S, Toolbar) {
+
+        new Toolbar({
+            render:"#container",
+            children:[
+                {
+                    content:"menu-button",
+                    width:120,
+                    collapseOnClick:true,
+                    xclass:'menu-button',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'item1',
+                                xclass:'submenu',
+                                menu:{
+                                    xclass:'popupmenu',
+                                    children:[
+                                        {
+                                            content:'item1-1',
+                                            xclass:'menuitem'
+                                        },
+                                        {
+                                            content:'item1-2',
+                                            xclass:'menuitem'
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                content:'item2',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                },
+                {
+                    content:'button',
+                    xclass:'button'
+                },
+                {
+                    content:"menu-button2",
+                    width:120,
+                    xclass:'menu-button',
+                    collapseOnClick:true,
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'item2-1',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'item2-2',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+
+    });
+</script>
+</body>
+</html>

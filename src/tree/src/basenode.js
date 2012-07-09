@@ -61,15 +61,9 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             bindUI:function () {
-                var self = this,
-                    parent = self.get("parent");
-                if (parent) {
-                    // 节点事件冒泡，直到 tree 根节点
-                    self.addTarget(parent);
-                    self.publish("click expand collapse", {
-                        bubbles:1
-                    });
-                }
+                this.publish("click expand collapse", {
+                    bubbles:1
+                });
             },
 
             syncUI:function () {
@@ -311,9 +305,25 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is expanded.
+                 * @type Boolean.
+                 * @default false.
                  */
                 expanded:{
                     view:1
+                },
+
+                /**
+                 * Whether current tree node is collapsed.
+                 * @type Boolean.
+                 * @default true.
+                 */
+                collapsed:{
+                    getter:function () {
+                        return !this.get("expanded");
+                    },
+                    setter:function (v) {
+                        this.set("expanded", !v);
+                    }
                 },
 
                 /**

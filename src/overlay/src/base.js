@@ -46,13 +46,15 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
              * @lends Overlay#
              */
             {
-                /**
-                 * whether this component can be focused.
-                 * @default false
-                 * @type Boolean
-                 */
+
+                // do not has focus
                 focusable:{
                     value:false
+                },
+
+                // allowTextSelection
+                allowTextSelection:{
+                    value:true
                 },
 
                 /**

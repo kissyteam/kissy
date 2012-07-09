@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 17:17
+build time: Jul 9 21:32
 */
 /**
  * Setup component namespace.
@@ -43,6 +43,9 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
                 component.prefixCls = self.get("prefixCls");
             }
             childConstructor = Manager.getConstructorByXClass(xclass);
+            if (!childConstructor) {
+                S.error("can not find class by xclass desc : " + xclass);
+            }
             component = new childConstructor(component);
         }
         return component;
@@ -98,6 +101,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
          * @lends Component.Container
          */
         {
+
 
             /**
              * Generate child component from root element.
@@ -277,9 +281,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 setViewCssClassByHierarchy(self, view);
                 view.create();
                 var el = view.getKeyEventTarget();
-                if (self.get("focusable")) {
-                    el.attr("tabIndex", 0);
-                }
                 if (!self.get("allowTextSelection")) {
                     el.unselectable(undefined);
                 }
@@ -295,41 +296,46 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 var self = this, i, children, child;
                 self.get("view").render();
                 //then render my children
-                children = self.get("children");
+                children = self.get("children").concat();
+                self.get("children").length = 0;
                 for (i = 0; i < children.length; i++) {
-                    child = children[i];
-                    // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
-                    child = initChild(self, child);
-                    children[i] = child;
+                    child = self.addChild(children[i]);
                     child.render();
-                    self.fire("addChild", {
-                        child:child
-                    });
                 }
             },
 
-            /**
-             * From UIBase. Bind focus event if component is focusable.
-             * @protected
-             * @override
-             */
-            bindUI:function () {
+            _uiSetFocusable:function (focusable) {
                 var self = this,
-                    focusable = self.get("focusable"),
-                    handleMouseEvents = self.get("handleMouseEvents"),
                     el = self.getKeyEventTarget();
                 if (focusable) {
-                    el.on("focus", self.handleFocus, self)
+                    el.attr("tabIndex", 0)
+                        .on("focus", self.handleFocus, self)
                         .on("blur", self.handleBlur, self)
                         .on("keydown", self.handleKeydown, self);
+                } else {
+                    el.removeAttr("tabIndex")
+                        .detach("focus", self.handleFocus, self)
+                        .detach("blur", self.handleBlur, self)
+                        .detach("keydown", self.handleKeydown, self);
                 }
+            },
+
+            _uiSetHandleMouseEvents:function (handleMouseEvents) {
+                var self = this, el = self.get("el");
                 if (handleMouseEvents) {
-                    el = self.get("el");
                     el.on("mouseenter", self.handleMouseEnter, self)
                         .on("mouseleave", self.handleMouseLeave, self)
+                        .on("contextmenu", self.handleContextMenu, self)
                         .on("mousedown", self.handleMouseDown, self)
                         .on("mouseup", self.handleMouseUp, self)
                         .on("dblclick", self.handleDblClick, self);
+                } else {
+                    el.detach("mouseenter", self.handleMouseEnter, self)
+                        .detach("mouseleave", self.handleMouseLeave, self)
+                        .detach("contextmenu", self.handleContextMenu, self)
+                        .detach("mousedown", self.handleMouseDown, self)
+                        .detach("mouseup", self.handleMouseUp, self)
+                        .detach("dblclick", self.handleDblClick, self);
                 }
             },
 
@@ -578,6 +584,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
+             * Handles context menu.
+             * @protected
+             * @param {Event.Object} ev DOM event to handle.
+             */
+            handleContextMenu:function (ev) {
+            },
+
+            /**
              * Handles focus events. Style focused class.
              * @protected
              * @param {Event.Object} ev DOM event to handle.
@@ -740,6 +754,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * @type Component.Controller
                  */
                 parent:{
+                    setter:function (p) {
+                        // 事件冒泡源
+                        this.addTarget(p);
+                    }
                 },
 
                 /**
@@ -773,7 +791,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     requires:['event', './base', './uibase', './manager', './render']
 });
 /**
- *
+ * 事件冒泡机制
+ *  - child 组件的冒泡源配置为其所属的 parent
+ *  - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡
  *
  * view 和 controller 的平行关系
  *  - controller 初始化 -> initializer -> new view()
@@ -781,7 +801,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
  *  - controller renderUI -> renderUI -> view.render()
  *
  *
- *  控制层元属性配置中 view 的作用
+ * 控制层元属性配置中 view 的作用
  *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
  *
@@ -915,11 +935,11 @@ KISSY.add("component/decorateChildren", function (S, Manager) {
 KISSY.add("component/delegateChildren", function (S) {
 
     function DelegateChildren() {
-
+        this.__childIdMap = {};
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target,e);
+        var control = this.getOwnerControl(e.target, e);
         if (control) {
             // Child control identified; forward the event.
             switch (e.type) {
@@ -935,6 +955,9 @@ KISSY.add("component/delegateChildren", function (S) {
                 case "mouseout":
                     control.handleMouseOut(e);
                     break;
+                case "contextmenu":
+                    control.handleContextMenu(e);
+                    break;
                 case "dblclick":
                     control.handleDblClick(e);
                     break;
@@ -948,7 +971,7 @@ KISSY.add("component/delegateChildren", function (S) {
 
         __bindUI:function () {
             var self = this;
-            self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
+            self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
                 handleChildMouseEvents, self);
         },
 

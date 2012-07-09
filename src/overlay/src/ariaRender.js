@@ -75,7 +75,6 @@ KISSY.add("overlay/ariaRender", function (S, Node) {
         },
 
         __bindUI:function () {
-
             var self = this;
             if (self.get("aria")) {
                 var el = self.get("el"),

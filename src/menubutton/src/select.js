@@ -74,6 +74,24 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         self.set("content", textContent || content || self.get("defaultCaption"));
     }
 
+
+    /**
+     * Handle click on drop down menu.
+     * Set selected menu item as current selectedItem and hide drop down menu.
+     * Protected, should only be overridden by subclasses.
+     * @protected
+     * @override
+     * @param {Event.Object} e
+     */
+    function handleMenuClick(e) {
+        var self = this,
+            target = e.target;
+        if (target instanceof  Menu.Item) {
+            self.set("value", getItemValue(target));
+        }
+    }
+
+
     /**
      * @class
      * Select component which supports single selection from a drop down menu
@@ -88,6 +106,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
          * @lends MenuButton.Select.prototype
          */
         {
+            bindUI:function () {
+                this.on("click", handleMenuClick, this);
+            },
 
             /**
              * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
@@ -97,26 +118,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 var self = this;
                 Select.superclass.bindMenu.call(self);
                 self.get("menu").on("show", _handleMenuShow, self);
-            },
-
-            /**
-             * Handle click on drop down menu.
-             * Set selected menu item as current selectedItem and hide drop down menu.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             * @param {Event.Object} e
-             */
-            handleMenuClick:function (e) {
-                var self = this,
-                    target = e.target,
-                    prevTarget = getSelectedItem(self);
-                self.set("value", getItemValue(target));
-                self.set("collapsed", true);
-                self.fire("click", {
-                    target:target,
-                    prevTarget:prevTarget
-                });
             },
 
             /**
@@ -170,6 +171,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                  */
                 defaultCaption:{
                     value:""
+                },
+
+                collapseOnClick:{
+                    value:true
                 }
             },
 
