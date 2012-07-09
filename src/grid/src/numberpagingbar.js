@@ -83,7 +83,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.removeChildren(true);
 
 			S.each(numberItems,function(item){
-				numberContainerBar.addChild(_self._createItem(item));
+				numberContainerBar.addChild(item);
 			});
 			curItem = numberContainerBar.getItem(curPage);
 			if(curItem){
@@ -139,7 +139,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getEllipsisItem : function(){
 			var _self = this;
 			return {
-				xtype:'text',
+				xclass:'bar-item-text',
 				text : _self.get('ellipsisTpl')
 			};
 		},
@@ -148,7 +148,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				id : page,
-				xtype : 'button',
+				xclass:'bar-item-button',
 				text : ''+page+'',
 				elCls : _self.get('numberButtonCls')
 			};
