@@ -12,7 +12,7 @@ KISSY.use('grid/header',function(S,Header){
 				tpl : '<div class="ks-grid-hd-title">{{dataIndex}}</div>'
 		},{
 			id:'hide',
-			hide:true,
+			//visible : false,
 			title:'隐藏列'
 		}];
 		header = new Header({
@@ -54,7 +54,7 @@ KISSY.use('grid/header',function(S,Header){
 
 		it('测试列隐藏',function(){
 			 S.each(columns,function(col,index){
-				if(col.hide === true){
+				if(col.visible === false){
 					var display = S.one(children[index]).css('display');
 					expect(display).toBe('none');
 				}
@@ -96,8 +96,10 @@ KISSY.use('grid/header',function(S,Header){
 		it('测试表头宽度',function(){
 			var width = 700,
 				tableEl = headerEl.one('table'),
-				columsWidth = header.getColumnsWidth();
+				columsWidth = 0;
 			header.set('width',width);
+			columsWidth = header.getColumnsWidth();
+            headerEl.addClass('ks-grid-width');
 			if(columsWidth > width){
 				expect(tableEl.width()).toBe(columsWidth);
 			}else{
@@ -167,10 +169,10 @@ KISSY.use('grid/header',function(S,Header){
 			var index = 1,
 				 colObj = header.getColumnByIndex(index),
 				 el = colObj.get('el');
-			colObj.set('hide',true);
+			colObj.set('visible',false);
 			expect(el.css('display')).toBe('none');
 
-			colObj.set('hide',false)
+			colObj.set('visible',true)
 			expect(el.css('display')).not.toBe('none');;
 
 		});

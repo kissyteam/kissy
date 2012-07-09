@@ -1,5 +1,6 @@
 /**/
-KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,PagingBar){//
+KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
+
 	var columns = [{
 				title : '表头1',
 				dataIndex :'a',
@@ -16,7 +17,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,Pagi
 			id : 'colhide',
 			title : '隐藏',
 			dataIndex : 'd',
-			hide : true
+			visible : false
 		}],
 		data = [{a:'123'},{a:'cdd',b:'edd'},{a:'1333',c:'eee',d:2}],
 		store = new Store({
@@ -42,6 +43,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,Pagi
 						}
 					}]
 				},
+
 		bbar : {xclass:'pagingbar-number',store : store,pageSize : 3},
 		store : store
 	});
@@ -127,7 +129,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,Pagi
 					width = 150,
 					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
 				expect(cellEl.css('display')).toBe('none');
-				colObj.set('hide',false);
+				colObj.set('visible',true);
 				expect(cellEl.css('display')).toBe('table-cell');
 			});
 			it('添加列,删除列',function(){
@@ -264,11 +266,11 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,Pagi
 			
 			var rows =  tableEl.all('.ks-grid-row'),
 				rowEl = S.one(rows[0]);
-			body._rowClickEvent({currentTarget : rowEl[0]});
+			body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 			waits(100);
 			runs(function(){
 				expect(rowEl.hasClass(CLS_SELECTED)).toBeTruthy();
-				body._rowClickEvent({currentTarget : rows[1]});
+				body._rowClickEvent({currentTarget : rows[1],target : rowEl.children()[0]});
 				waits(100);
 				runs(function(){
 					expect(tableEl.all('.'+CLS_SELECTED).length).toBe(1);
@@ -285,15 +287,15 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store,Pagi
 			var rows =  tableEl.all('.ks-grid-row'),
 			rowEl = S.one(rows[0]);
 			grid.set('multiSelect',true);
-			body._rowClickEvent({currentTarget : rowEl[0]});
+			body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 			waits(100);
 			runs(function(){
 				expect(rowEl.hasClass(CLS_SELECTED)).toBeTruthy();
-				body._rowClickEvent({currentTarget : rows[1]});
+				body._rowClickEvent({currentTarget : rows[1],target : rowEl.children()[0]});
 				waits(100);
 				runs(function(){
 					expect(tableEl.all('.'+CLS_SELECTED).length).toBe(2);
-					body._rowClickEvent({currentTarget : rowEl[0]});
+					body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 					waits(100);
 					runs(function(){
 						expect(rowEl.hasClass(CLS_SELECTED)).not.toBeTruthy();
@@ -377,10 +379,10 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 	it('测试列显示隐藏列后的自适应',function(){
 			var index = 2,
 				colObj = header.getColumnByIndex(index);
-			colObj.set('hide',true);
+			colObj.set('visible',false);
 			expect(header.getColumnsWidth()).toBe(header.get('width'));
 
-			colObj.set('hide',false);
+			colObj.set('visible',true);
 			expect(header.getColumnsWidth()).toBe(header.get('width'));
 		});
 
@@ -398,6 +400,13 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			var height = 500;
 			grid.set('height',height);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
+            grid.set('forceFit',false);
+            grid.set('width',300);
+            waits(100);
+            runs(function(){
+                grid.set('width',800);
+            });
+             
 		});/**/
 
 

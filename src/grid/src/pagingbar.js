@@ -35,8 +35,8 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                     items = _self._getItems(),
                     store = _self.get('store');
                 S.each(items, function (item) {
-                    children.push(_self._createItem(item));
-                });
+                    children.push(item);//item
+                }); /**/
                 if (store && store.pageSize) {
                     _self.set('pageSize', store.pageSize);
                 }
@@ -194,12 +194,12 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 items.push(_self._getTextItem(ID_TOTAL_COUNT));
                 return items;
             },
-            //get item which the xtype is button
+            //get item which the xclass is button
             _getButtonItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xtype:'button',
+                    xclass:'bar-item-button',
                     text:_self.get(id + 'Text'),
                     disabled:true,
                     elCls:_self.get(id + 'Cls')
@@ -207,14 +207,14 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             //get separator item
             _getSeparator:function () {
-                return {xtype:'separator'};
+                return {xclass:'bar-item-separator'};
             },
             //get text item
             _getTextItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xtype:'text',
+                    xclass:'bar-item-text',
                     text:_self._getTextItemTpl(id)
                 };
             },
@@ -250,7 +250,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 var _self = this,
                     children = _self.get('children');
                 S.each(children, function (child) {
-                    if (child.get('xtype') === 'button' && S.inArray(child.get('id'), buttons)) {
+                    if (S.inArray(child.get('id'), buttons)) {
                         child.set('disabled', !enable);
                     }
                 });

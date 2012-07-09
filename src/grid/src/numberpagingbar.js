@@ -4,7 +4,10 @@
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
-	var NUMBER_CONTAINER = 'numberContainer';
+	var NUMBER_CONTAINER = 'numberContainer',
+	    CLS_NUMBER_BUTTON = 'ks-button-number',
+		CLS_ACTIVE = 'ks-active';
+
 	/**
 	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
@@ -56,7 +59,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this,
 				numberContainerBar = _self.get(NUMBER_CONTAINER);
 			_self.constructor.superclass._bindButtonEvent.call(this);
-			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
+			numberContainerBar.get('el').delegate('click','.' + CLS_NUMBER_BUTTON,function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
 				_self.jumpToPage(page);
@@ -80,7 +83,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.removeChildren(true);
 
 			S.each(numberItems,function(item){
-				numberContainerBar.addChild(_self._createItem(item));
+				numberContainerBar.addChild(item);
 			});
 			curItem = numberContainerBar.getItem(curPage);
 			if(curItem){
@@ -136,7 +139,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getEllipsisItem : function(){
 			var _self = this;
 			return {
-				xtype:'text',
+				xclass:'bar-item-text',
 				text : _self.get('ellipsisTpl')
 			};
 		},
@@ -145,7 +148,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				id : page,
-				xtype : 'button',
+				xclass:'bar-item-button',
 				text : ''+page+'',
 				elCls : _self.get('numberButtonCls')
 			};
@@ -178,7 +181,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* the css used on number button
 			*/
 			numberButtonCls:{
-				value : 'ks-number-button'
+				value : CLS_NUMBER_BUTTON
 			},
 			/**
 			* the template of ellipsis which represent the omitted pages number

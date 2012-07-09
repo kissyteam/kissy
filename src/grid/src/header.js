@@ -104,13 +104,15 @@ KISSY.add('grid/header', function (S, Component, Column) {
             initializer:function () {
                 var _self = this,
                     children = _self.get('children'),
-                    columns = _self.get('columns');
+                    columns = _self.get('columns'),
+                    emptyColumn = _self._createEmptyColumn();
                 S.each(columns, function (item, index) {
                     var columnControl = _self._createColumn(item);
                     children[index] = columnControl;
                     columns[index] = columnControl;
                 });
-                children.push(_self._createEmptyColumn());
+                children.push(emptyColumn);
+                _self.set('emptyColumn',emptyColumn);
             },
             /**
              * get the columns of this header,the result equals the 'children' property .
@@ -132,7 +134,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                     totalWidth = 0;
 
                 S.each(columns, function (column) {
-                    if (!column.get('hide')) {
+                    if (column.get('visible')) {
                         totalWidth += column.get("el").outerWidth();
                     }
                 });
@@ -211,6 +213,13 @@ KISSY.add('grid/header', function (S, Component, Column) {
                         });
                     }
                 });
+
+                _self.on('add',function(){
+                    _self.setTableWidth();
+                })
+                _self.on('remove',function(){
+                    _self.setTableWidth();
+                })
             },
             //create the column control
             _createColumn:function (cfg) {
@@ -284,9 +293,20 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * set the header's inner table's width
              */
             setTableWidth:function () {
-                var _self = this;
+                var _self = this,
+                    width = _self.get('width'),
+                    totalWidth = 0,
+                    emptyColumn = null;
                 if (_self.get('forceFit')) {
                     _self.forceFitColumns();
+                }else if(_self._isAllowScrollLeft()){
+                    totalWidth = _self.getColumnsWidth();
+                    emptyColumn = _self.get('emptyColumn');
+                    if(width < totalWidth){
+                        emptyColumn.get('el').width(CLS_SCROLL_WITH);
+                    }else{
+                        emptyColumn.get('el').width('auto');
+                    }
                 }
             },
             //when header's width changed, it also effects its columns.

@@ -4,6 +4,7 @@
  */
 KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
 
+
     var CLS_GRID_WITH = 'ks-grid-width',
         CLS_GRID_HEIGHT = 'ks-grid-height',
         CLS_GRID_TBAR = 'ks-grid-tbar',
@@ -22,7 +23,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
         createDom:function () {
             var _self = this;
 
-            // 提前！！
+            // 提前,中途设置宽度时会失败！！
             if (_self.get("width")) {
                 _self.get("el").addClass(CLS_GRID_WITH);
             }
@@ -192,6 +193,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 }
             });
 
+
             header.on('afterVisibleChange', function (e) {
                 var sender = e.target;
                 if (sender !== header) {
@@ -232,6 +234,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             var _self = this;
             _self.get('header').set('width', w);
             _self.get('body').set('width', w);
+            _self.get("el").addClass(CLS_GRID_WITH);
         },
         //when set grid's height,the scroll can effect the width of its body and header
         _uiSetHeight:function (h) {
@@ -255,6 +258,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 }
                 header.setTableWidth();
             }
+            _self.get("el").addClass(CLS_GRID_HEIGHT);
         },
         _uiSetForceFit:function (v) {
             var _self = this;
@@ -272,6 +276,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
              * @type {Grid.Header}
              */
             header:{
+
 
             },
             /**

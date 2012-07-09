@@ -7,6 +7,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 		});
 		bar.render();
 		var barEl = S.one('#nbar').one('.ks-pagingbar-number'),
+
 			items = barEl.children();
 		it('测试pagingbar生成',function(){
 			expect(barEl).toNotBe(null);
@@ -53,7 +54,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-number-button').length).toBe(count);
+				expect(barEl.all('.ks-button-number').length).toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -107,7 +108,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-number-button').length).not.toBe(count);
+				expect(barEl.all('.ks-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -120,7 +121,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-number-button').length).not.toBe(count);
+				expect(barEl.all('.ks-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -133,7 +134,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-number-button').length).not.toBe(count);
+				expect(barEl.all('.ks-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
