@@ -46,7 +46,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         },
         /**
          * parse data function.
-         * Default: index of match.
+         * @default index of match.
          * @type Function
          */
         parse:{

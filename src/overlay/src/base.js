@@ -47,7 +47,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
              */
             {
                 /**
-                 * whether this component can be focused. Default:false
+                 * whether this component can be focused.
+                 * @default false
                  * @type Boolean
                  */
                 focusable:{
@@ -55,7 +56,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 },
 
                 /**
-                 * whether this component can be closed. Default:false
+                 * whether this component can be closed.
+                 * @default false
                  * @type Boolean
                  */
                 closable:{
@@ -63,7 +65,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 },
 
                 /**
-                 * whether this component can be responsive to mouse. Default:false
+                 * whether this component can be responsive to mouse.
+                 * @default false
                  * @type Boolean
                  */
                 handleMouseEvents:{
@@ -71,7 +74,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 },
 
                 /**
-                 * see {@link Component.UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link Component.UIBase.Box#visibleMode}.
+                 * @default "visibility"
                  */
                 visibleMode:{
                     value:"visibility"

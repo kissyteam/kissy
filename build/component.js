@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 23:52
+build time: Jul 9 17:17
 */
 /**
  * Setup component namespace.
@@ -151,7 +151,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         };
     }
 
-    function initChild(self, c, elBefore) {
+    function initChild(self, c, renderBefore) {
         // 生成父组件的 dom 结构
         self.create();
         var contentEl = self.getContentElement();
@@ -159,7 +159,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         c.__set("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
-        c.set("elBefore", elBefore);
+        c.set("elBefore", renderBefore);
         // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
         // 子组件和 parent 组件一起渲染
         // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
@@ -279,7 +279,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 var el = view.getKeyEventTarget();
                 if (self.get("focusable")) {
                     el.attr("tabIndex", 0);
-                } else {
+                }
+                if (!self.get("allowTextSelection")) {
                     el.unselectable(undefined);
                 }
                 self.__set("view", view);
@@ -371,12 +372,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             addChild:function (c, index) {
                 var self = this,
                     children = self.get("children"),
-                    elBefore;
+                    renderBefore;
                 if (index === undefined) {
                     index = children.length;
                 }
-                elBefore = children[index] && children[index].get("el") || null;
-                c = initChild(self, c, elBefore);
+                renderBefore = children[index] && children[index].get("el") || null;
+                c = initChild(self, c, renderBefore);
                 children.splice(index, 0, c);
                 // 先 create 占位 再 render
                 // 防止 render 逻辑里读 parent.get("children") 不同步
@@ -543,7 +544,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     if (self.get("focusable")) {
                         el[0].focus();
                         self.set("focused", true);
-                    } else {
+                    }
+
+                    if (!self.get("allowTextSelection")) {
                         // firefox /chrome 不会引起焦点转移
                         var n = ev.target.nodeName;
                         n = n && n.toLowerCase();
@@ -653,7 +656,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Enables or disables mouse event handling for the component.
                  * Containers may set this attribute to disable mouse event handling
                  * in their child component.
-                 * Default : true.
+                 * @default true.
                  * @type Boolean
                  */
                 handleMouseEvents:{
@@ -662,16 +665,29 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component can get focus.
-                 * Default : true.
+                 * @default true.
                  * @type Boolean
                  */
                 focusable:{
+                    value:true,
                     view:1
                 },
 
                 /**
+                 * 1. Whether allow select this component's text.<br/>
+                 * 2. Whether not to lose last component's focus if click current one (set false).
+                 * @default false
+                 * @type Boolean
+                 */
+                allowTextSelection:{
+                    // 和 focusable 分离
+                    // grid 需求：容器允许选择里面内容
+                    value:false
+                },
+
+                /**
                  * Whether this component can be activated.
-                 * Default : true.
+                 * @default true.
                  * @type Boolean
                  */
                 activeable:{
@@ -757,9 +773,25 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     requires:['event', './base', './uibase', './manager', './render']
 });
 /**
- * observer synchronization, model 分成两类：
+ *
+ *
+ * view 和 controller 的平行关系
+ *  - controller 初始化 -> initializer -> new view()
+ *  - controller createDom -> createDom -> view.createDom()
+ *  - controller renderUI -> renderUI -> view.render()
+ *
+ *
+ *  控制层元属性配置中 view 的作用
+ *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
+ *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
+ *
+ *
+ * observer synchronization, model 分成两类
  *  - view 负责监听 view 类 model 变化更新界面
  *  - control 负责监听 control 类变化改变逻辑
+ *
+ *
+ *
  * problem: Observer behavior is hard to understand and debug
  * because it's implicit behavior.
  *
@@ -781,9 +813,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
  *  Refer
  *    - http://martinfowler.com/eaaDev/uiArchs.html
  *
- *  控制层元属性配置中 view 的作用
- *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
- *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
  **//**
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
@@ -2356,6 +2385,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         elBefore:{
+            // better named to renderBefore, too late !
             view:1
         },
         /**
@@ -2498,7 +2528,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
         content:{
         },
 
-        elBefore:{},
+        elBefore:{
+            // better named to renderBefore, too late !
+        },
 
         render:{},
 
@@ -2537,9 +2569,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
             if (!self.get("srcNode")) {
                 var render = self.get("render"),
                     el = self.get("el"),
-                    elBefore = self.get("elBefore");
-                if (elBefore) {
-                    el.insertBefore(elBefore, undefined);
+                    renderBefore = self.get("elBefore");
+                if (renderBefore) {
+                    el.insertBefore(renderBefore, undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {
@@ -2655,7 +2687,7 @@ KISSY.add("component/uibase/close", function () {
     {
         /**
          * Whether close button is visible.
-         * Default: true.
+         * @default true.
          * @type Boolean
          */
         closable:{
@@ -2671,7 +2703,7 @@ KISSY.add("component/uibase/close", function () {
 
         /**
          * Whether to destroy or hide current element when click close button.
-         * Default: "hide". Can set "destroy" to destroy it when click close button.
+         * @default "hide". Can set "destroy" to destroy it when click close button.
          * @type String
          */
         closeAction:{
@@ -3170,7 +3202,7 @@ KISSY.add("component/uibase/mask", function () {
         },
         /**
          * Whether to share mask with other overlays.
-         * Default: true.
+         * @default true.
          * @type {Boolean}
          */
         maskShared:{

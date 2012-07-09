@@ -277,7 +277,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 /**
                  * Only For Config.
                  * Whether to force current tree node as a leaf.
-                 * Default:false.
+                 * @defaultfalse.
                  * It will change as children are added.
                  * @type Boolean
                  */

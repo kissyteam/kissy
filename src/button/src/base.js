@@ -71,7 +71,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button can be checkable(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checkable:{
@@ -79,7 +79,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button is checked(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checked:{

@@ -296,7 +296,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
                 /**
                  * Whether drop down menu is same width with button.
-                 * Default: true.
+                 * @default true.
                  * @type {Boolean}
                  */
                 matchElWidth:{

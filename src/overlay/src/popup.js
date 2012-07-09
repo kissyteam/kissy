@@ -165,8 +165,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     }
                 },
                 /**
-                 * How to activate trigger element.
-                 * "click" or "mouse",Default:"click".
+                 * How to activate trigger element, "click" or "mouse",
+                 * @default "click".
                  * @type String
                  */
                 triggerType:{
@@ -176,7 +176,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 currentTrigger:{},
                 /**
                  * When trigger type is mouse, the delayed time to show popup.
-                 * Default:0.1, in seconds.
+                 * @default0.1, in seconds.
                  * @type Number
                  */
                 mouseDelay:{
@@ -184,7 +184,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     value:0.1
                 },
                 /**
-                 * When trigger type is click, whether support toggle. Default:false
+                 * When trigger type is click, whether support toggle.
+                 * @default false
                  * @type Boolean
                  */
                 toggle:{

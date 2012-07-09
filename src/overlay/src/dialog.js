@@ -43,7 +43,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
             {
 
                 /**
-                 * whether this component can be closed. Default:true
+                 * whether this component can be closed.
+                 * @default true
                  * @type Boolean
                  */
                 closable:{
@@ -51,7 +52,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                 },
 
                 /**
-                 * Default: Dialog's header element
+                 * @default Dialog's header element
                  * see {@link DD.Draggable#handlers}
                  */
                 handlers:{

@@ -35,7 +35,7 @@ KISSY.add("component/uibase/mask", function () {
         },
         /**
          * Whether to share mask with other overlays.
-         * Default: true.
+         * @default true.
          * @type {Boolean}
          */
         maskShared:{
