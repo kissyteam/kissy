@@ -36,7 +36,7 @@
 <script>
     KISSY.use("toolbar,button,menubutton", function (S, Toolbar) {
 
-        new Toolbar({
+        var t = new Toolbar({
             render:"#container",
             children:[
                 {
@@ -96,6 +96,10 @@
                 }
             ]
         }).render();
+
+        t.on("click", function (e) {
+            S.log("click : " + e.target.get("content"));
+        });
 
     });
 </script>

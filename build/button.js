@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 23:25
+build time: Jul 9 22:40
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -22,6 +22,9 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
         {
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
+                this.publish("click", {
+                    bubbles:1
+                });
             },
 
             handleKeyEventInternal:function (e) {
@@ -76,7 +79,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button can be checkable(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checkable:{
@@ -84,7 +87,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button is checked(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checked:{
