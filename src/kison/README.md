@@ -1,7 +1,7 @@
 KISON
 =======================================
 
-KISSY parser generator version of Bison and Jison.
+KISSY parser generator version of Bison.
 
  Objective
 -------------------------------------------------------------------

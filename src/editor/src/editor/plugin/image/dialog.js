@@ -329,8 +329,13 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                         uploadIO.abort();
                     });
 
+                    var serverParams = Editor.Utils.normParams(self.cfg['serverParams']) || {};
+
+                    // 后端返回设置 domain 的 script，每次都传，防止 domain 中途变化
+                    serverParams['document-domain'] = document.domain;
+
                     var uploadIO = IO({
-                        data:Editor.Utils.normParams(self.cfg['serverParams']),
+                        data:serverParams,
                         url:self.cfg['serverUrl'],
                         form:self.uploadForm[0],
                         dataType:'json',

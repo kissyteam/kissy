@@ -48,7 +48,8 @@
             },
             {
                 title:'表头3',
-                dataIndex:'c'
+                dataIndex:'c',
+								width:400
             },
             {
                 id:'colhide',
@@ -134,7 +135,7 @@
             grid.render();
             store.load();
         })();
-
+				
         (function () {
             //return;
             var data = [
@@ -166,7 +167,9 @@
                 bbar:{xclass:'pagingbar-number', store:store}
             });
             grid.render();
+						grid.addColumn({title:'e w',width:300});
             store.load();
+						
         })();
         /**/
     });

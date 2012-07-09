@@ -6,11 +6,10 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     var $ = Node.all,
         KeyCodes = Node.KeyCodes;
 
-
     /**
      * @class
      * Tree Node.
-     * xclass: 'tree-item'.
+     * xclass: 'treeitem'.
      * @name Node
      * @memberOf Tree
      * @extends Component.Controller
@@ -24,10 +23,67 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
          * @lends Tree.Node#
          */
         {
+
+            initializer:function () {
+
+                var self = this;
+
+                self.on("addChild", function (e) {
+                    var c = e.child,
+                        tree = self.get("tree");
+                    c.set("depth", self.get('depth') + 1);
+                    if (tree) {
+                        recursive(tree, c, '_register');
+                    }
+                    refreshCssForSelfAndChildren(self);
+                });
+
+                function recursive(tree, node, action) {
+                    tree[action](node);
+                    var children = node.get("children"), i, c;
+                    for (i = 0; i < children.length; i++) {
+                        c = children[i];
+                        if (action == '_register') {
+                            c.set("depth", node.get('depth') + 1);
+                        }
+                        tree[action](c);
+                    }
+                }
+
+                self.on("removeChild", function (e) {
+                    var tree = self.get("tree");
+                    if (tree) {
+                        recursive(tree, e.child, '_unRegister');
+                    }
+                    refreshCssForSelfAndChildren(self);
+                });
+
+            },
+
+            bindUI:function () {
+                var self = this,
+                    parent = self.get("parent");
+                if (parent) {
+                    // 节点事件冒泡，直到 tree 根节点
+                    self.addTarget(parent);
+                    self.publish("click expand collapse", {
+                        bubbles:1
+                    });
+                }
+            },
+
+            syncUI:function () {
+                // 集中设置样式
+                refreshCss(this);
+            },
+
             _keyNav:function (e) {
                 var self = this,
                     processed = true,
-                    n,
+                    tree = self.get("tree"),
+                    expanded = self.get("expanded"),
+                    nodeToBeSelected,
+                    isLeaf = self.get("isLeaf"),
                     children = self.get("children"),
                     keyCode = e.keyCode;
 
@@ -36,45 +92,45 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     // home
                     // 移到树的顶层节点
                     case KeyCodes.HOME:
-                        n = self.get("tree");
+                        nodeToBeSelected = tree;
                         break;
 
                     // end
                     // 移到最后一个可视节点
                     case KeyCodes.END:
-                        n = self.get("tree").getLastVisibleDescendant();
+                        nodeToBeSelected = getLastVisibleDescendant(tree);
                         break;
 
                     // 上
                     // 当前节点的上一个兄弟节点的最后一个可显示节点
                     case KeyCodes.UP:
-                        n = self.getPreviousVisibleNode();
+                        nodeToBeSelected = getPreviousVisibleNode(self);
                         break;
 
                     // 下
                     // 当前节点的下一个可显示节点
                     case KeyCodes.DOWN:
-                        n = self.getNextVisibleNode();
+                        nodeToBeSelected = getNextVisibleNode(self);
                         break;
 
                     // 左
                     // 选择父节点或 collapse 当前节点
                     case KeyCodes.LEFT:
-                        if (self.get("expanded") && (children.length || self.get("isLeaf") === false)) {
+                        if (expanded && (children.length || isLeaf === false)) {
                             self.set("expanded", false);
                         } else {
-                            n = self.get("parent");
+                            nodeToBeSelected = self.get("parent");
                         }
                         break;
 
                     // 右
                     // expand 当前节点
                     case KeyCodes.RIGHT:
-                        if (children.length || self.get("isLeaf") === false) {
-                            if (!self.get("expanded")) {
+                        if (children.length || isLeaf === false) {
+                            if (!expanded) {
                                 self.set("expanded", true);
                             } else {
-                                children[0].select();
+                                nodeToBeSelected = children[0];
                             }
                         }
                         break;
@@ -82,58 +138,25 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     default:
                         processed = false;
                         break;
+                }
 
+                if (nodeToBeSelected) {
+                    nodeToBeSelected.select();
                 }
-                if (n) {
-                    n.select();
-                }
+
                 return processed;
             },
 
-            getLastVisibleDescendant:function () {
-                var self = this, children = self.get("children");
-                // 没有展开或者根本没有儿子节点，可视的只有自己
-                if (!self.get("expanded") || !children.length) {
-                    return self;
-                }
-                // 可视的最后一个子孙
-                return children[children.length - 1].getLastVisibleDescendant();
-            },
-
-            getNextVisibleNode:function () {
-                var self = this,
-                    children = self.get("children"),
-                    parent = self.get("parent");
-                if (self.get("expanded") && children.length) {
-                    return children[0];
-                }
-                // 没有展开或者根本没有儿子节点
-                // 深度遍历的下一个
-                var n = self.next();
-                while (parent && !n) {
-                    n = parent.next();
-                    parent = parent.get("parent");
-                }
-                return n;
-            },
-
-            getPreviousVisibleNode:function () {
-                var self = this, prev = self.prev();
-                if (!prev) {
-                    prev = self.get("parent");
-                } else {
-                    prev = prev.getLastVisibleDescendant();
-                }
-                return prev;
-            },
-
             next:function () {
-                var self = this, parent = self.get("parent");
+                var self = this,
+                    parent = self.get("parent"),
+                    siblings,
+                    index;
                 if (!parent) {
                     return null;
                 }
-                var siblings = parent.get('children');
-                var index = S.indexOf(self, siblings);
+                siblings = parent.get('children');
+                index = S.indexOf(self, siblings);
                 if (index == siblings.length - 1) {
                     return null;
                 }
@@ -141,12 +164,15 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             prev:function () {
-                var self = this, parent = self.get("parent");
+                var self = this,
+                    parent = self.get("parent"),
+                    siblings,
+                    index;
                 if (!parent) {
                     return null;
                 }
-                var siblings = parent.get('children');
-                var index = S.indexOf(self, siblings);
+                siblings = parent.get('children');
+                index = S.indexOf(self, siblings);
                 if (index === 0) {
                     return null;
                 }
@@ -162,67 +188,34 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             },
 
             performActionInternal:function (e) {
+
                 var self = this,
                     target = $(e.target),
-                    tree = self.get("tree"),
-                    view = self.get("view");
+                    type = e.type,
+                    expanded = self.get("expanded"),
+                    tree = self.get("tree");
                 tree.get("el")[0].focus();
-                if (target.equals(view.get("expandIconEl"))) {
+                if (target.equals(self.get("expandIconEl"))) {
                     // 忽略双击
-                    if (e.type != 'dblclick') {
-                        self.set("expanded", !self.get("expanded"));
+                    if (type != 'dblclick') {
+                        self.set("expanded", !expanded);
                     }
-                } else if (e.type == 'dblclick') {
-                    self.set("expanded", !self.get("expanded"));
+                } else if (type == 'dblclick') {
+                    self.set("expanded", !expanded);
                 }
                 else {
                     self.select();
-                    tree.fire("click", {
-                        target:self
-                    });
+                    self.fire("click");
                 }
             },
 
             // 默认 addChild，这里需要设置 tree 属性
-            decorateChildrenInternal:function (ui, c) {
+            decorateChildrenInternal:function (UI, c) {
                 var self = this;
-                self.addChild(new ui({
+                self.addChild(new UI({
                     srcNode:c,
-                    tree:self.get("tree"),
                     prefixCls:self.get("prefixCls")
                 }));
-            },
-
-            addChild:function (c) {
-                var self = this, tree = self.get("tree");
-                c.__set("tree", tree);
-                c.__set("depth", self.get('depth') + 1);
-                BaseNode.superclass.addChild.call(self, c);
-                self._updateRecursive();
-                tree._register(c);
-                S.each(c.get("children"), function (cc) {
-                    tree._register(cc);
-                });
-            },
-
-            /*
-             每次添加/删除节点，都检查自己以及自己子孙 class
-             每次 expand/collapse，都检查
-             */
-            _computeClass:function (cause) {
-                var self = this, view = self.get("view");
-                view._computeClass(self.get('children'), self.get("parent"), cause);
-            },
-
-            _updateRecursive:function () {
-                var self = this,
-                    len = self.get('children').length;
-                self._computeClass("_updateRecursive");
-                S.each(self.get("children"), function (c, index) {
-                    c._computeClass("_updateRecursive_children");
-                    c.get("view").set("ariaPosInSet", index + 1);
-                    c.get("view").set("ariaSize", len);
-                });
             },
 
             removeChild:function (c) {
@@ -233,21 +226,15 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     tree._unRegister(cc);
                 });
                 BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                self._updateRecursive();
+                refreshCssForSelfAndChildren(self);
             },
 
             _uiSetExpanded:function (v) {
                 var self = this,
                     tree = self.get("tree");
-                self._computeClass("expanded-" + v);
-                if (v) {
-                    tree.fire("expand", {
-                        target:self
-                    });
-                } else {
-                    tree.fire("collapse", {
-                        target:self
-                    });
+                if (self.get("rendered")) {
+                    refreshCss(self);
+                    self.fire(v ? "expand" : "collapse");
                 }
             },
 
@@ -342,6 +329,13 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type Tree
                  */
                 tree:{
+                    getter:function () {
+                        var from = this;
+                        while (from && !from.__isTree) {
+                            from = from.get("parent");
+                        }
+                        return from;
+                    }
                 },
 
                 /**
@@ -359,12 +353,105 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 }
             }
         }, {
-            xclass:'tree-item',
+            xclass:'treeitem',
             priority:10
         });
+
+
+    // # ------------------- private start
+
+    function isNodeSingleOrLast(self) {
+        var parent = self.get("parent"),
+            children = parent && parent.get("children"),
+            lastChild = children && children[children.length - 1];
+
+        // 根节点
+        // or
+        // 父亲的最后一个子节点
+        return !lastChild || lastChild == self;
+    }
+
+    function isNodeLeaf(self) {
+        var isLeaf = self.get("isLeaf");
+        // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
+        return !(isLeaf === false || (isLeaf === undefined && self.get("children").length));
+
+    }
+
+    function getLastVisibleDescendant(self) {
+        var children = self.get("children");
+        // 没有展开或者根本没有儿子节点，可视的只有自己
+        if (!self.get("expanded") || !children.length) {
+            return self;
+        }
+        // 可视的最后一个子孙
+        return getLastVisibleDescendant(children[children.length - 1]);
+    }
+
+    // not same with _4e_previousSourceNode in editor !
+    function getPreviousVisibleNode(self) {
+        var prev = self.prev();
+        if (!prev) {
+            prev = self.get("parent");
+        } else {
+            prev = getLastVisibleDescendant(prev);
+        }
+        return prev;
+    }
+
+    // similar to _4e_nextSourceNode in editor
+    function getNextVisibleNode(self) {
+        var children = self.get("children"),
+            n,
+            parent;
+        if (self.get("expanded") && children.length) {
+            return children[0];
+        }
+        // 没有展开或者根本没有儿子节点
+        // 深度遍历的下一个
+        n = self.next();
+        parent = self;
+        while (!n && (parent = parent.get("parent"))) {
+            n = parent.next();
+        }
+        return n;
+    }
+
+    /*
+     每次添加/删除节点，都检查自己以及自己子孙 class
+     每次 expand/collapse，都检查
+     */
+    function refreshCss(self) {
+        if (self.get && self.get("view")) {
+            self.get("view").refreshCss(isNodeSingleOrLast(self), isNodeLeaf(self));
+        }
+    }
+
+    function refreshCssForSelfAndChildren(self) {
+        var children = self.get('children'),
+            len = self.get('children').length;
+        refreshCss(self);
+        S.each(children, function (c, index) {
+            // 一个 c 初始化成功了
+            // 可能其他 c 仍是 { xclass }
+            if (c.get) {
+                refreshCss(c);
+                var el = c.get("el");
+                el.attr("aria-posinset", index + 1);
+                el.attr("aria-setsize", len);
+            }
+        });
+    }
+
+    // # ------------------- private end
 
     return BaseNode;
 
 }, {
     requires:['node', 'component', './basenodeRender']
 });
+
+/**
+ * TODO
+ *  tree 不能很好的结合 xclass
+ */

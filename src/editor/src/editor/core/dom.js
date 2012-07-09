@@ -368,7 +368,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode)) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
                         return NULL;
@@ -420,7 +420,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode )) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE)
                         return NULL;

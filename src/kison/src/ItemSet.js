@@ -84,4 +84,4 @@ KISSY.add("kison/ItemSet", function (S, Base) {
     return ItemSet;
 }, {
     requires:['base']
-})
+});

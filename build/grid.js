@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 13:23
+build time: Jul 9 13:24
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -365,14 +365,14 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
         createDom:function () {
             var _self = this;
 
-            // 提前！！
-            if (_self.get("width")) {
+            // 提前,中途设置宽度时会失败！！
+            /*if (_self.get("width")) {
                 _self.get("el").addClass(CLS_GRID_WITH);
             }
 
             if (_self.get("height")) {
                 _self.get("el").addClass(CLS_GRID_HEIGHT);
-            }
+            }             */
 
             _self._initHeader();
             _self._initBody();
@@ -576,6 +576,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             var _self = this;
             _self.get('header').set('width', w);
             _self.get('body').set('width', w);
+            _self.get("el").addClass(CLS_GRID_WITH);
         },
         //when set grid's height,the scroll can effect the width of its body and header
         _uiSetHeight:function (h) {
@@ -599,6 +600,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 }
                 header.setTableWidth();
             }
+            _self.get("el").addClass(CLS_GRID_HEIGHT);
         },
         _uiSetForceFit:function (v) {
             var _self = this;
@@ -1326,7 +1328,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
         CLS_TD_PREFIX = 'grid-td-',
         CLS_CELL_TEXT = 'ks-grid-cell-text',
-        CLS_CELL_EMPYT = 'ks-grid-cell-empty',
+        CLS_CELL_EMPTY = 'ks-grid-cell-empty',
         CLS_SCROLL_WITH = '17',
         ATTR_COLUMN_FIELD = 'data-column-field',
         DATA_ELEMENT = 'row-element';
@@ -1461,7 +1463,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         //show or hide column
         setColumnVisible:function (column) {
             var _self = this,
-                hide = column.get('hide'),
+                hide = !column.get('visible'),
                 colId = column.get('id'),
                 tbodyEl = _self.get('tbodyEl'),
                 cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
@@ -1580,7 +1582,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 totalWidth = 0;
             columns = _self.get('columns');
             S.each(columns, function (column) {
-                if (!column.get('hide')) {
+                if (column.get('visible')) {
                     totalWidth += column.get("el").outerWidth();
                 }
             });
@@ -1605,7 +1607,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                     id:column.get('id'),
                     dataIndex:dataIndex,
                     cellText:cellText,
-                    hide:column.get('hide')
+                    hide:!column.get('visible')
                 });
         },
         //get cell tips
@@ -1626,11 +1628,11 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             return Template(headerCellTpl).render({
                 id:column.get('id'),
                 width:column.get('width'),
-                hide:column.get('hide')
+                hide:!column.get('visible')
             });
         },
         _getEmptyCellTpl:function () {
-            return '<td class="' + CLS_CELL_EMPYT + '"></td>';
+            return '<td class="' + CLS_CELL_EMPTY + '"></td>';
         },
         //get the template of column
         _getTpl:function () {
@@ -2203,20 +2205,6 @@ KISSY.add('grid/header', function (S, Component, Column) {
             if (obj.left !== undefined) {
                 el.scrollLeft(obj.left);
             }
-        },
-        //set the table's width
-        _setTableWidth:function (w) {
-            var _self = this,
-                width = _self.get('width'),
-                tableEl = _self.get('tableEl');
-            if (!width) {
-                return;
-            }
-            if (width > w) {
-                w = width;
-            }
-
-            tableEl.width(w);
         }
     }, {
         ATTRS:{
@@ -2287,13 +2275,15 @@ KISSY.add('grid/header', function (S, Component, Column) {
             initializer:function () {
                 var _self = this,
                     children = _self.get('children'),
-                    columns = _self.get('columns');
+                    columns = _self.get('columns'),
+                    emptyColumn = _self._createEmptyColumn();
                 S.each(columns, function (item, index) {
                     var columnControl = _self._createColumn(item);
                     children[index] = columnControl;
                     columns[index] = columnControl;
                 });
-                children.push(_self._createEmptyColumn());
+                children.push(emptyColumn);
+                _self.set('emptyColumn',emptyColumn);
             },
             /**
              * get the columns of this header,the result equals the 'children' property .
@@ -2315,7 +2305,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                     totalWidth = 0;
 
                 S.each(columns, function (column) {
-                    if (!column.get('hide')) {
+                    if (column.get('visible')) {
                         totalWidth += column.get("el").outerWidth();
                     }
                 });
@@ -2394,6 +2384,13 @@ KISSY.add('grid/header', function (S, Component, Column) {
                         });
                     }
                 });
+
+                _self.on('add',function(){
+                    _self.setTableWidth();
+                })
+                _self.on('remove',function(){
+                    _self.setTableWidth();
+                })
             },
             //create the column control
             _createColumn:function (cfg) {
@@ -2419,7 +2416,6 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * force every column fit the table's width
              */
             forceFitColumns:function () {
-
                 var _self = this,
                     columns = _self.getColumns(),
                     width = _self.get('width'),
@@ -2469,15 +2465,20 @@ KISSY.add('grid/header', function (S, Component, Column) {
              */
             setTableWidth:function () {
                 var _self = this,
-                    columnsWidth = _self.getColumnsWidth();
+                    width = _self.get('width'),
+                    totalWidth = 0,
+                    emptyColumn = null;
                 if (_self.get('forceFit')) {
                     _self.forceFitColumns();
-                    columnsWidth = _self.getColumnsWidth();
+                }else if(_self._isAllowScrollLeft()){
+                    totalWidth = _self.getColumnsWidth();
+                    emptyColumn = _self.get('emptyColumn');
+                    if(width < totalWidth){
+                        emptyColumn.get('el').width(CLS_SCROLL_WITH);
+                    }else{
+                        emptyColumn.get('el').width('auto');
+                    }
                 }
-                if (_self._isAllowScrollLeft()) {
-                    columnsWidth += CLS_SCROLL_WITH;
-                }
-                _self.get('view')._setTableWidth(columnsWidth);
             },
             //when header's width changed, it also effects its columns.
             _uiSetWidth:function () {

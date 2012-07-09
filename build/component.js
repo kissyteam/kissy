@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:35
+build time: Jul 5 23:52
 */
 /**
  * Setup component namespace.
@@ -160,16 +160,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", elBefore);
-        // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
-        if (self.get("rendered")) {
-            c.render();
-        }
         // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
         // 子组件和 parent 组件一起渲染
-        else {
-            // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-            c.create(undefined);
-        }
+        // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+        c.create(undefined);
         return c;
     }
 
@@ -307,6 +301,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     child = initChild(self, child);
                     children[i] = child;
                     child.render();
+                    self.fire("addChild", {
+                        child:child
+                    });
                 }
             },
 
@@ -381,6 +378,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 elBefore = children[index] && children[index].get("el") || null;
                 c = initChild(self, c, elBefore);
                 children.splice(index, 0, c);
+                // 先 create 占位 再 render
+                // 防止 render 逻辑里读 parent.get("children") 不同步
+                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
+                if (self.get("rendered")) {
+                    c.render();
+                }
+                self.fire("addChild", {
+                    child:c
+                });
                 return c;
             },
 
@@ -398,7 +404,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @return {Component.Controller} The removed component.
              */
             removeChild:function (c, destroy) {
-                var children = this.get("children"),
+                var self = this,
+                    children = self.get("children"),
                     index = S.indexOf(c, children);
                 if (index != -1) {
                     children.splice(index, 1);
@@ -408,6 +415,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
+                self.fire("removeChild", {
+                    child:c
+                });
                 return c;
             },
 
@@ -792,7 +802,7 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
                 child = element.one("." + ui);
             // 可以装饰?
             if (child) {
-                var UI = self.findUIConstructorByNode(child);
+                var UI = self.findUIConstructorByNode(child, 1);
                 if (UI) {
                     // 可以直接装饰
                     self.decorateChildrenInternal(UI, child);
@@ -831,23 +841,23 @@ KISSY.add("component/decorateChildren", function (S, Manager) {
          * @protected
          * @param {NodeList} childNode Child component's root node.
          */
-        findUIConstructorByNode:function (childNode) {
+        findUIConstructorByNode:function (childNode, ignoreError) {
             var self = this,
                 cls = childNode.attr("class") || "",
                 prefixCls = self.get("prefixCls");
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
             var UI = Manager.getConstructorByXClass(cls);
-            if (!UI) {
+            if (!UI && !ignoreError) {
                 S.log(childNode);
-                S.log("can not find ui " + cls + " from this markup");
+                S.error("can not find ui " + cls + " from this markup");
             }
             return UI;
         },
 
         // 生成一个组件
         decorateChildrenInternal:function (UI, c) {
-            var self=this;
+            var self = this;
             self.addChild(new UI({
                 srcNode:c,
                 prefixCls:self.get("prefixCls")
@@ -880,7 +890,7 @@ KISSY.add("component/delegateChildren", function (S) {
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target);
+        var control = this.getOwnerControl(e.target,e);
         if (control) {
             // Child control identified; forward the event.
             switch (e.type) {

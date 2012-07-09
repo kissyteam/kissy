@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:40
+build time: Jul 6 13:06
 */
 /**
  * bubble or tip view for kissy editor
@@ -75,9 +75,16 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             top = iframeXY.top,
             left = iframeXY.left,
             right = left + DOM.width(editorWin),
-            bottom = top + DOM.height(editorWin),
-            elXY = el.offset(undefined, window),
-            elTop = elXY.top,
+            bottom = top + DOM.height(editorWin);
+
+        // ie 中途设置 domain 后，不能获取 window 的相关属性
+        // 例如 window.frameEl
+        // 所以不能直接用 el.offset(undefined,window);
+        var elXY = el.offset();
+
+        elXY=Editor.Utils.getXY(elXY,editor);
+
+        var elTop = elXY.top,
             elLeft = elXY.left,
             elRight = elLeft + el.width(),
             elBottom = elTop + el.height(),
@@ -155,7 +162,6 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         editor.on("sourceMode", onHide);
-
 
 
         function showImmediately() {

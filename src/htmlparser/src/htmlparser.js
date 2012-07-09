@@ -16,9 +16,9 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
         MinifyWriter:MinifyWriter,
         Filter:Filter,
         DTD:DTD,
-        serialize:function (n) {
+        serialize:function (n, filter) {
             var basicWriter = new BasicWriter();
-            n.writeHtml(basicWriter);
+            n.writeHtml(basicWriter, filter);
             return basicWriter.getHtml();
         },
         parse:function (html) {

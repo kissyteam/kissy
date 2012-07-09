@@ -96,8 +96,9 @@ KISSY.use('grid/header',function(S,Header){
 		it('测试表头宽度',function(){
 			var width = 700,
 				tableEl = headerEl.one('table'),
-				columsWidth = header.getColumnsWidth();
+				columsWidth = 0;
 			header.set('width',width);
+			columsWidth = header.getColumnsWidth();
             headerEl.addClass('ks-grid-width');
 			if(columsWidth > width){
 				expect(tableEl.width()).toBe(columsWidth);

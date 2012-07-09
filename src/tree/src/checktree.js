@@ -21,6 +21,10 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
              */
             expandAll:function () {
                 return CheckTree.superclass.expandAll.apply(this, arguments);
+            },
+
+            _uiSetFocused:function () {
+                // check tree 没有 selectedItem 概念，也没有选中状态
             }
         }, {
             ATTRS:/**

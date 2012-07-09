@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 4 20:40
+build time: Jul 6 13:06
 */
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -373,7 +373,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode)) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE) {
                         return NULL;
@@ -425,7 +425,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 while (!node && ( parent = parent.parentNode )) {
-                    // The guard check sends the "TRUE" paramenter to indicate that
+                    // The guard check sends the "TRUE" parameter to indicate that
                     // we are moving "out" of the element.
                     if (guard && guard(parent, TRUE) === FALSE)
                         return NULL;

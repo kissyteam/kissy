@@ -1,3 +1,6 @@
+/**
+ * TC for
+ */
 KISSY.use("kison", function (S, Kison) {
     var Production = Kison.Production;
     var Grammar = Kison.Grammar;
@@ -75,6 +78,205 @@ KISSY.use("kison", function (S, Kison) {
             expect(num).toBe(3);
 
         });
+
+
+        it("generate table ok", function () {
+
+            S.log('it("generate table ok", function () {');
+
+            var grammar = new Grammar({
+                productions:[
+                    new Production({
+                        symbol:"S0",
+                        rhs:[
+                            "S"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"S",
+                        rhs:[
+                            "C", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "c", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "d"
+                        ]
+                    })
+                ],
+                terminals:{
+                    "c":1,
+                    "d":1
+                }
+            });
+
+            var table = grammar.visualizeTable();
+
+            S.log(table.join("\n"));
+
+        });
+
+        it("parse ok", function () {
+
+            var grammar = new Grammar({
+                productions:[
+                    new Production({
+                        symbol:"S0",
+                        rhs:[
+                            "S"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"S",
+                        rhs:[
+                            "C", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "c", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "d"
+                        ]
+                    })
+                ],
+                terminals:{
+                    "c":1,
+                    "d":1
+                }
+            });
+
+            expect(grammar.parse("ccdd")).toBe(true);
+        });
+
+
+        it("can not parse invalid input", function () {
+
+            var grammar = new Grammar({
+                productions:[
+                    new Production({
+                        symbol:"S0",
+                        rhs:[
+                            "S"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"S",
+                        rhs:[
+                            "C", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "c", "C"
+                        ]
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "d"
+                        ]
+                    })
+                ],
+                terminals:{
+                    "c":1,
+                    "d":1
+                }
+            });
+
+            expect(grammar.parse("dc")).toBe(false);
+        });
+
+
+        it("parse ok with action", function () {
+
+            S.log("---------------- parse ok with action : ccdd by ");
+            S.log(" S0 => S ");
+            S.log(" S => CC ");
+            S.log(" C => cC ");
+            S.log(" C => d ");
+            S.log("------------------------------------------------\n");
+
+            // S0 => S
+            // S => CC
+            // C => cC
+            // C => d
+            var ret = [];
+
+            var grammar = new Grammar({
+                productions:[
+                    new Production({
+                        symbol:"S0",
+                        rhs:[
+                            "S"
+                        ],
+                        action:function (S) {
+                            ret.push("S0 => S");
+                            ret.push("|_____ " + S + " -> S0");
+                            ret.push("");
+                        }
+                    }),
+                    new Production({
+                        symbol:"S",
+                        rhs:[
+                            "C", "C"
+                        ],
+                        action:function (C1, C2) {
+                            ret.push("S => C C");
+                            ret.push("|_____ " + C1 + " + " + C2 + " -> S");
+                            ret.push("");
+                            return C1 + C2;
+                        }
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "c", "C"
+                        ],
+                        action:function (c, C) {
+                            ret.push("C => c C");
+                            ret.push("|_____ " + c + " + " + C + " -> C");
+                            ret.push("");
+                            return c + C;
+                        }
+                    }),
+                    new Production({
+                        symbol:"C",
+                        rhs:[
+                            "d"
+                        ],
+                        action:function (d) {
+                            ret.push("C => d");
+                            ret.push("|_____ " + d + " -> C");
+                            ret.push("");
+                            return d;
+                        }
+                    })
+                ],
+                terminals:{
+                    "c":1,
+                    "d":1
+                }
+            });
+
+            expect(grammar.parse("ccdd")).toBe(true);
+
+            S.log(ret.join("\n"));
+        });
+
 
     });
 });

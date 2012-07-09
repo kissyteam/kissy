@@ -22,23 +22,23 @@ KISSY.add("component/decorateChildren", function (S, Manager) {
          * @protected
          * @param {NodeList} childNode Child component's root node.
          */
-        findUIConstructorByNode:function (childNode) {
+        findUIConstructorByNode:function (childNode, ignoreError) {
             var self = this,
                 cls = childNode.attr("class") || "",
                 prefixCls = self.get("prefixCls");
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
             var UI = Manager.getConstructorByXClass(cls);
-            if (!UI) {
+            if (!UI && !ignoreError) {
                 S.log(childNode);
-                S.log("can not find ui " + cls + " from this markup");
+                S.error("can not find ui " + cls + " from this markup");
             }
             return UI;
         },
 
         // 生成一个组件
         decorateChildrenInternal:function (UI, c) {
-            var self=this;
+            var self = this;
             self.addChild(new UI({
                 srcNode:c,
                 prefixCls:self.get("prefixCls")

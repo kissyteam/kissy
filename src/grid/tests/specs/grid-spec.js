@@ -266,11 +266,11 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 			
 			var rows =  tableEl.all('.ks-grid-row'),
 				rowEl = S.one(rows[0]);
-			body._rowClickEvent({currentTarget : rowEl[0]});
+			body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 			waits(100);
 			runs(function(){
 				expect(rowEl.hasClass(CLS_SELECTED)).toBeTruthy();
-				body._rowClickEvent({currentTarget : rows[1]});
+				body._rowClickEvent({currentTarget : rows[1],target : rowEl.children()[0]});
 				waits(100);
 				runs(function(){
 					expect(tableEl.all('.'+CLS_SELECTED).length).toBe(1);
@@ -287,15 +287,15 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 			var rows =  tableEl.all('.ks-grid-row'),
 			rowEl = S.one(rows[0]);
 			grid.set('multiSelect',true);
-			body._rowClickEvent({currentTarget : rowEl[0]});
+			body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 			waits(100);
 			runs(function(){
 				expect(rowEl.hasClass(CLS_SELECTED)).toBeTruthy();
-				body._rowClickEvent({currentTarget : rows[1]});
+				body._rowClickEvent({currentTarget : rows[1],target : rowEl.children()[0]});
 				waits(100);
 				runs(function(){
 					expect(tableEl.all('.'+CLS_SELECTED).length).toBe(2);
-					body._rowClickEvent({currentTarget : rowEl[0]});
+					body._rowClickEvent({currentTarget : rowEl[0],target : rowEl.children()[0]});
 					waits(100);
 					runs(function(){
 						expect(rowEl.hasClass(CLS_SELECTED)).not.toBeTruthy();

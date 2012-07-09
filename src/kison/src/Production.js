@@ -15,10 +15,8 @@ KISSY.add("kison/Production", function (S, Base) {
             if (!S.equals(other.get("rhs"), self.get("rhs"))) {
                 return false;
             }
-            if (other.get("symbol") != self.get("symbol")) {
-                return false;
-            }
-            return true;
+            return other.get("symbol") == self.get("symbol");
+
         },
 
         toString:function (dot) {
@@ -50,6 +48,10 @@ KISSY.add("kison/Production", function (S, Base) {
             },
             nullAble:{
                 value:false
+            },
+            action:{
+                // action for this production
+                value:S.noop
             }
         }
     });
