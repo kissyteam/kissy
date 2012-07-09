@@ -52,16 +52,21 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
             t = e.target;
         if (
         // 不是自己本身的事件！
-            t != self &&
-                e.newVal) {
-            self.set("highlightedItem", t);
-            // 保持扩展状态，只不过扩展的 item 变了
-            if ((expandedItem = self.get("expandedItem")) &&
-                expandedItem.hasAttr("collapsed") &&
-                expandedItem != t) {
-                expandedItem.set("collapsed", true);
-                t.set("collapsed", false);
+            t != self) {
+
+            if (e.newVal) {
+                self.set("highlightedItem", t);
+                // 保持扩展状态，只不过扩展的 item 变了
+                if ((expandedItem = self.get("expandedItem")) &&
+                    expandedItem.hasAttr("collapsed") &&
+                    expandedItem != t) {
+                    expandedItem.set("collapsed", true);
+                    t.set("collapsed", false);
+                }
+            } else {
+                self.set("highlightedItem", null);
             }
+
         }
     }
 
@@ -77,6 +82,22 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
          * @lends Toolbar#
          */
         {
+            createDom:function () {
+                this.get("el").attr("role", "toolbar");
+            },
+
+            _uiSetHighlightedItem:function (item) {
+                var id;
+                if (item) {
+                    id = item.get("el").attr("id");
+                    if (!id) {
+                        item.get("el").attr("id", id = S.guid("ks-toolbar-item"));
+                    }
+                    this.get("el").attr("aria-activedescendant", id);
+                } else {
+                    this.get("el").attr("aria-activedescendant", "");
+                }
+            },
 
             /**
              * Protected.
