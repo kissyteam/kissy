@@ -65,11 +65,11 @@
 					new Bar.BarItem({
 						html : '<span class="label">Default</span>'
 					}),{
-						xtype : 'spacer',width : 50
+						xclass:'bar-item-spacer',width : 50
 					},{
 					
 						id :'link1',
-						xtype : 'link',
+						xclass:'bar-item',
 						html : '<a href="http://www.taobao.com">sssss</a>',
 						listeners : {
 							'click':function(event){
@@ -77,11 +77,10 @@
 							}
 						}
 					},{
-						xtype :'separator'
+						xclass:'bar-item-separator'
 					},{
-					
-						xtype : 'button',
-						content : '测试3',
+						xclass:'bar-item-button',
+						text : '测试3',
 						listeners : {
 							'click':function(event){
 								alert('测试3');
@@ -90,7 +89,7 @@
 					},{
 						xtype :'text',text:'only a text'
 					},{
-						xtype : 'custom',
+						xclass:'bar-item',
 						html : '<input class="span2" type="text"/>',
 						listeners : {
 							'change':function(event){

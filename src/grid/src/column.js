@@ -116,10 +116,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
                 _self.set('sortState', v);
             },
-            //set the value of hide to make this colomn hide or show
-            _uiSetHide:function (v) {
-                this.set('visible', !v);
-            },
             /**
              * @see {Component.Controller#bindUI}
              */
@@ -148,24 +144,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     }
                 }
                 _self.fire('click');
-            },
-            /**
-             * show this column
-             */
-            show:function () {
-                var _self = this;
-                _self.fire('beforeshow');
-                this.set('hide', false);
-                _self.fire('show');
-            },
-            /**
-             * hide this column
-             */
-            hide:function () {
-                var _self = this;
-                _self.fire('beforehide');
-                _self.set('hide', true);
-                _self.fire('hide');
             }
         }, {
             ATTRS:/*** @lends Grid.Column.prototype*/
@@ -200,14 +178,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * @protected
                  */
                 focusable:{
-                    value:false
-                },
-                /**
-                 * False to hide this column.
-                 * @type Boolean
-                 * @default false
-                 */
-                hide:{
                     value:false
                 },
                 /**

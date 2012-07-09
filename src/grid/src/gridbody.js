@@ -14,13 +14,12 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
         CLS_TD_PREFIX = 'grid-td-',
         CLS_CELL_TEXT = 'ks-grid-cell-text',
-        CLS_CELL_EMPYT = 'ks-grid-cell-empty',
+        CLS_CELL_EMPTY = 'ks-grid-cell-empty',
         CLS_SCROLL_WITH = '17',
         ATTR_COLUMN_FIELD = 'data-column-field',
         DATA_ELEMENT = 'row-element';
 
     var GridBodyRender = Component.Render.extend({
-
         /**
          * @see {Component.Controller#renderUI}
          */
@@ -150,7 +149,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         //show or hide column
         setColumnVisible:function (column) {
             var _self = this,
-                hide = column.get('hide'),
+                hide = !column.get('visible'),
                 colId = column.get('id'),
                 tbodyEl = _self.get('tbodyEl'),
                 cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
@@ -269,7 +268,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 totalWidth = 0;
             columns = _self.get('columns');
             S.each(columns, function (column) {
-                if (!column.get('hide')) {
+                if (column.get('visible')) {
                     totalWidth += column.get("el").outerWidth();
                 }
             });
@@ -294,7 +293,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                     id:column.get('id'),
                     dataIndex:dataIndex,
                     cellText:cellText,
-                    hide:column.get('hide')
+                    hide:!column.get('visible')
                 });
         },
         //get cell tips
@@ -315,11 +314,11 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             return Template(headerCellTpl).render({
                 id:column.get('id'),
                 width:column.get('width'),
-                hide:column.get('hide')
+                hide:!column.get('visible')
             });
         },
         _getEmptyCellTpl:function () {
-            return '<td class="' + CLS_CELL_EMPYT + '"></td>';
+            return '<td class="' + CLS_CELL_EMPTY + '"></td>';
         },
         //get the template of column
         _getTpl:function () {

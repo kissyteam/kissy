@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 5 11:17
+build time: Jul 9 13:24
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -63,6 +63,11 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 			if(item instanceof Component.Controller){
 				return item;
 			}
+            
+            if(item.xclass){
+                return item;
+            }
+
 			//default type is button
 			if(!item.xtype){
 				item.xtype = 'button';
@@ -128,40 +133,11 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-bar-item"));
             }
-        },
-		/*
-		* bind custom event
-		* @protected
-        * @override
-		*/
-		bindUI : function(){
-			var _self = this,
-				listeners = _self.get('listeners');
-			
-			for(var name in listeners){
-				if(listeners.hasOwnProperty(name) && S.isFunction(listeners[name])){
-					_self.get('el').on(name,listeners[name]);
-				}
-			}
-		}
+        }
 	},{
 		ATTRS:/** @lends Grid.Bar.BarItem.prototype*/
 		{
-			/*
-			* custom listeners user can bind to barItem
-			* @example 
-			* listeners : {
-			*	'click' : function(event){
-			*		
-			*	},
-			*	'change' : function(){
-			*
-			*	}
-			* }
-			*/
-			listeners : {
-				value : {}
-			},
+
 			/**
 			* Whether this component can get focus.
 			* @overrided
@@ -370,6 +346,7 @@ KISSY.add("grid/barrender", function(S,  Component) {
  */
 KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
 
+
     var CLS_GRID_WITH = 'ks-grid-width',
         CLS_GRID_HEIGHT = 'ks-grid-height',
         CLS_GRID_TBAR = 'ks-grid-tbar',
@@ -388,14 +365,14 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
         createDom:function () {
             var _self = this;
 
-            // 提前！！
-            if (_self.get("width")) {
+            // 提前,中途设置宽度时会失败！！
+            /*if (_self.get("width")) {
                 _self.get("el").addClass(CLS_GRID_WITH);
             }
 
             if (_self.get("height")) {
                 _self.get("el").addClass(CLS_GRID_HEIGHT);
-            }
+            }             */
 
             _self._initHeader();
             _self._initBody();
@@ -558,6 +535,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 }
             });
 
+
             header.on('afterVisibleChange', function (e) {
                 var sender = e.target;
                 if (sender !== header) {
@@ -598,6 +576,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             var _self = this;
             _self.get('header').set('width', w);
             _self.get('body').set('width', w);
+            _self.get("el").addClass(CLS_GRID_WITH);
         },
         //when set grid's height,the scroll can effect the width of its body and header
         _uiSetHeight:function (h) {
@@ -621,6 +600,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 }
                 header.setTableWidth();
             }
+            _self.get("el").addClass(CLS_GRID_HEIGHT);
         },
         _uiSetForceFit:function (v) {
             var _self = this;
@@ -638,6 +618,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
              * @type {Grid.Header}
              */
             header:{
+
 
             },
             /**
@@ -1063,10 +1044,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
                 _self.set('sortState', v);
             },
-            //set the value of hide to make this colomn hide or show
-            _uiSetHide:function (v) {
-                this.set('visible', !v);
-            },
             /**
              * @see {Component.Controller#bindUI}
              */
@@ -1096,24 +1073,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     }
                 }
                 _self.fire('click');
-            },
-            /**
-             * show this column
-             */
-            show:function () {
-                var _self = this;
-                _self.fire('beforeshow');
-                this.set('hide', false);
-                _self.fire('show');
-            },
-            /**
-             * hide this column
-             */
-            hide:function () {
-                var _self = this;
-                _self.fire('beforehide');
-                _self.set('hide', true);
-                _self.fire('hide');
             }
         }, {
             ATTRS:/*** @lends Grid.Column.prototype*/
@@ -1148,14 +1107,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * @protected
                  */
                 focusable:{
-                    value:false
-                },
-                /**
-                 * False to hide this column.
-                 * @type Boolean
-                 * @default false
-                 */
-                hide:{
                     value:false
                 },
                 /**
@@ -1377,13 +1328,12 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         CLS_GRID_CELL_INNER = 'ks-grid-cell-inner',
         CLS_TD_PREFIX = 'grid-td-',
         CLS_CELL_TEXT = 'ks-grid-cell-text',
-        CLS_CELL_EMPYT = 'ks-grid-cell-empty',
+        CLS_CELL_EMPTY = 'ks-grid-cell-empty',
         CLS_SCROLL_WITH = '17',
         ATTR_COLUMN_FIELD = 'data-column-field',
         DATA_ELEMENT = 'row-element';
 
     var GridBodyRender = Component.Render.extend({
-
         /**
          * @see {Component.Controller#renderUI}
          */
@@ -1513,7 +1463,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         //show or hide column
         setColumnVisible:function (column) {
             var _self = this,
-                hide = column.get('hide'),
+                hide = !column.get('visible'),
                 colId = column.get('id'),
                 tbodyEl = _self.get('tbodyEl'),
                 cells = tbodyEl.all('.' + CLS_TD_PREFIX + colId);
@@ -1632,7 +1582,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 totalWidth = 0;
             columns = _self.get('columns');
             S.each(columns, function (column) {
-                if (!column.get('hide')) {
+                if (column.get('visible')) {
                     totalWidth += column.get("el").outerWidth();
                 }
             });
@@ -1657,7 +1607,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                     id:column.get('id'),
                     dataIndex:dataIndex,
                     cellText:cellText,
-                    hide:column.get('hide')
+                    hide:!column.get('visible')
                 });
         },
         //get cell tips
@@ -1678,11 +1628,11 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             return Template(headerCellTpl).render({
                 id:column.get('id'),
                 width:column.get('width'),
-                hide:column.get('hide')
+                hide:!column.get('visible')
             });
         },
         _getEmptyCellTpl:function () {
-            return '<td class="' + CLS_CELL_EMPYT + '"></td>';
+            return '<td class="' + CLS_CELL_EMPTY + '"></td>';
         },
         //get the template of column
         _getTpl:function () {
@@ -2325,13 +2275,15 @@ KISSY.add('grid/header', function (S, Component, Column) {
             initializer:function () {
                 var _self = this,
                     children = _self.get('children'),
-                    columns = _self.get('columns');
+                    columns = _self.get('columns'),
+                    emptyColumn = _self._createEmptyColumn();
                 S.each(columns, function (item, index) {
                     var columnControl = _self._createColumn(item);
                     children[index] = columnControl;
                     columns[index] = columnControl;
                 });
-                children.push(_self._createEmptyColumn());
+                children.push(emptyColumn);
+                _self.set('emptyColumn',emptyColumn);
             },
             /**
              * get the columns of this header,the result equals the 'children' property .
@@ -2353,7 +2305,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                     totalWidth = 0;
 
                 S.each(columns, function (column) {
-                    if (!column.get('hide')) {
+                    if (column.get('visible')) {
                         totalWidth += column.get("el").outerWidth();
                     }
                 });
@@ -2432,6 +2384,13 @@ KISSY.add('grid/header', function (S, Component, Column) {
                         });
                     }
                 });
+
+                _self.on('add',function(){
+                    _self.setTableWidth();
+                })
+                _self.on('remove',function(){
+                    _self.setTableWidth();
+                })
             },
             //create the column control
             _createColumn:function (cfg) {
@@ -2505,9 +2464,20 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * set the header's inner table's width
              */
             setTableWidth:function () {
-                var _self = this;
+                var _self = this,
+                    width = _self.get('width'),
+                    totalWidth = 0,
+                    emptyColumn = null;
                 if (_self.get('forceFit')) {
                     _self.forceFitColumns();
+                }else if(_self._isAllowScrollLeft()){
+                    totalWidth = _self.getColumnsWidth();
+                    emptyColumn = _self.get('emptyColumn');
+                    if(width < totalWidth){
+                        emptyColumn.get('el').width(CLS_SCROLL_WITH);
+                    }else{
+                        emptyColumn.get('el').width('auto');
+                    }
                 }
             },
             //when header's width changed, it also effects its columns.
@@ -2616,7 +2586,10 @@ KISSY.add('grid/header', function (S, Component, Column) {
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
-	var NUMBER_CONTAINER = 'numberContainer';
+	var NUMBER_CONTAINER = 'numberContainer',
+	    CLS_NUMBER_BUTTON = 'ks-button-number',
+		CLS_ACTIVE = 'ks-active';
+
 	/**
 	* specialized paging bar auto show numberic buttons
 	* Paging Toolbar is typically used as one of the Grid's toolbars.
@@ -2668,7 +2641,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this,
 				numberContainerBar = _self.get(NUMBER_CONTAINER);
 			_self.constructor.superclass._bindButtonEvent.call(this);
-			numberContainerBar.get('el').delegate('click','.ks-number-button',function(event){
+			numberContainerBar.get('el').delegate('click','.' + CLS_NUMBER_BUTTON,function(event){
 				var btn = S.one(event.target),
 					page = parseInt(btn.text(),10);
 				_self.jumpToPage(page);
@@ -2790,7 +2763,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			* the css used on number button
 			*/
 			numberButtonCls:{
-				value : 'ks-number-button'
+				value : CLS_NUMBER_BUTTON
 			},
 			/**
 			* the template of ellipsis which represent the omitted pages number

@@ -34,7 +34,6 @@
 <script src="../../../../build/kissy.js"></script>
 <script>
     KISSY.use('grid', function (S, Grid, Plugins) {
-
         var columns = [
             {
                 title:'表头1',
@@ -49,13 +48,14 @@
             },
             {
                 title:'表头3',
-                dataIndex:'c'
+                dataIndex:'c',
+								width:400
             },
             {
                 id:'colhide',
                 title:'隐藏',
                 dataIndex:'d',
-                hide:true
+                visible:false
             }
         ];
 
@@ -135,7 +135,7 @@
             grid.render();
             store.load();
         })();
-
+				
         (function () {
             //return;
             var data = [
@@ -167,10 +167,13 @@
                 bbar:{xclass:'pagingbar-number', store:store}
             });
             grid.render();
+						grid.addColumn({title:'e w',width:300});
             store.load();
+						
         })();
         /**/
     });
+
 </script>
 
 </body>
