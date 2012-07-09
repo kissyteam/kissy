@@ -416,16 +416,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/Component.Controller.html#bindUI">bindUI</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">From UIBase.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/Component.Controller.html#createDom">createDom</a></b>
                                                 <span class="param">()</span>
                                                 
@@ -462,6 +452,16 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Handles blur events.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Component.Controller.html#handleContextMenu">handleContextMenu</a></b>
+                                                <span class="param">(ev)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Handles context menu.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -598,7 +598,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#render">render</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#bindUI">bindUI</a>, <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#render">render</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -740,7 +740,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    1. Whether allow select this component's text.<br/>2. Whether lose lost component's focus if click current one.
+                                                    1. Whether allow select this component's text.<br/>2. Whether not to lose last component's focus if click current one (set false).
                                                     
                                                     
                                                 </span>
@@ -1068,7 +1068,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line245">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line247">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1113,45 +1113,6 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="bindUI"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">bindUI</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line189">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                From UIBase. Bind focus event if component is focusable.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
                                                 
                                                 
                                                 
@@ -1219,7 +1180,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line319">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line321">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1353,11 +1314,66 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line468">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line478">view source</a>
                                             </div>
 
                                             <div class="desc">
                                                 Handles blur events. Remove focused class.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">ev</b>
+                                                            
+                                                            
+                                                            <span class="type">{<a href="../symbols/Event.Object.html">Event.Object</a>}</span> 
+                                                            <span class="desc">DOM event to handle.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="handleContextMenu"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">handleContextMenu</b>
+                                                <span class="param">(ev)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line460">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Handles context menu.
                                                 
                                                 
                                             </div>
@@ -1408,7 +1424,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line330">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line332">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1463,7 +1479,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line458">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line468">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1518,7 +1534,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line490">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line500">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1573,7 +1589,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line478">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line488">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1628,7 +1644,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line405">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line407">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1683,7 +1699,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line375">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line377">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1738,7 +1754,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line388">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line390">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1793,7 +1809,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line441">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line443">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1887,7 +1903,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line505">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line515">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1942,7 +1958,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line280">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line282">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2018,7 +2034,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line304">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line306">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2082,7 +2098,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line167">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_component_src_controller.js.html#line164">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -2418,6 +2434,9 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Resizable.html">Resizable</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.html">Toolbar</a></li>
             
             
             <li><a href="../symbols/Tree.html">Tree</a></li>

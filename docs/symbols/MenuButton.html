@@ -191,7 +191,7 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menubutton'.</p>
+                                    <p class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menu-button'.</p>
                                     
 
                                     
@@ -268,6 +268,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Whether drop menu is shown.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/MenuButton.html#collapseOnClick">collapseOnClick</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether hide drop down menu when click drop down menu item.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -378,16 +389,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/MenuButton.html#handleMenuClick">handleMenuClick</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">Handle click on drop down menu.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/MenuButton.html#performActionInternal">performActionInternal</a></b>
                                                 <span class="param">()</span>
                                                 
@@ -420,7 +421,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#render">render</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#bindUI">bindUI</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#render">render</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleContextMenu">handleContextMenu</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#bindUI">bindUI</a>, <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -451,7 +452,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menubutton'.</div>
+                                            <div class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menu-button'.</div>
                                             
                                             <dl>                                                
                                                 
@@ -547,6 +548,41 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
+                                            <a name="collapseOnClick"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">collapseOnClick</b>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether hide drop down menu when click drop down menu item.eg: u do not want to set true when menu has checked menuitem.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Default Value</dt>
+                                                <dd>
+                                                    false
+                                                </dd>
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
                                             <a name="matchElWidth"> </a>
                                             <div class="title">                                                
                                                 
@@ -635,7 +671,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line203">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line194">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -738,7 +774,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line260">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line251">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -802,7 +838,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line242">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line233">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -857,7 +893,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line191">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line182">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -912,7 +948,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line136">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line127">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -971,61 +1007,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="handleMenuClick"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">handleMenuClick</b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line119">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Handle click on drop down menu. Fire click event on menubutton.Protected, should only be overridden by subclasses.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">e</b>
-                                                            
-                                                            
-                                                            <span class="type">{<a href="../symbols/Event.Object.html">Event.Object</a>}</span> 
-                                                            <span class="desc">Click event object.</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
                                             <a name="performActionInternal"> </a>
                                             <div class="title">
                                                 
@@ -1034,7 +1015,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line178">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line169">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1073,7 +1054,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line213">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line204">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1137,7 +1118,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line227">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line218">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1489,6 +1470,9 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Resizable.html">Resizable</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.html">Toolbar</a></li>
             
             
             <li><a href="../symbols/Tree.html">Tree</a></li>
