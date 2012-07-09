@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 13:24
+build time: Jul 9 23:16
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -22,24 +22,7 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 	 * @lends Grid.Bar.prototype
 	 */	
 	{
-		/* 
-		* @protected
-        * @override
-		*/
-		initializer : function(){
-			var _self = this,
-				children = _self.get('children');
 
-			//if a child of config is not the instance of Component.Controller
-			//use BarRender.types to instantiate it
-			//and bind events to it
-			for(var i = 0; i < children.length; i++){
-				var item = children[i];
-				if(!(item instanceof Component.Controller)){
-					children[i] = _self._createItem(item);
-				}
-			}
-		},
 		/**
 		* get bar item by id
 		* @param {String|Number} id the id of item 
@@ -56,30 +39,6 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 				}
 			});
 			return result;
-		},
-		//use BarRender.types to instantiate item
-		//and bind events to it
-		_createItem : function(item){
-			if(item instanceof Component.Controller){
-				return item;
-			}
-            
-            if(item.xclass){
-                return item;
-            }
-
-			//default type is button
-			if(!item.xtype){
-				item.xtype = 'button';
-			}
-			var typeCls = BarItem.types[item.xtype] , 
-				itemControl = null;
-			if(typeCls){
-				itemControl = new typeCls(item);
-			}else{
-				itemControl = new BarItem(item);
-			}
-			return itemControl;
 		}
 	},{
 		ATTRS:/** @lends Grid.Bar.prototype*/
@@ -366,13 +325,13 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             var _self = this;
 
             // 提前,中途设置宽度时会失败！！
-            /*if (_self.get("width")) {
+            if (_self.get("width")) {
                 _self.get("el").addClass(CLS_GRID_WITH);
             }
 
             if (_self.get("height")) {
                 _self.get("el").addClass(CLS_GRID_HEIGHT);
-            }             */
+            }
 
             _self._initHeader();
             _self._initBody();
@@ -1055,7 +1014,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(_self.get('parent'));
             },
             /**
              * {Component.Controller#performActionInternal}
@@ -1906,7 +1864,6 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(parent);
             },
             _rowClickEvent:function (event) {
                 var _self = this,
@@ -2665,7 +2622,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			numberContainerBar.removeChildren(true);
 
 			S.each(numberItems,function(item){
-				numberContainerBar.addChild(_self._createItem(item));
+				numberContainerBar.addChild(item);
 			});
 			curItem = numberContainerBar.getItem(curPage);
 			if(curItem){
@@ -2721,7 +2678,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getEllipsisItem : function(){
 			var _self = this;
 			return {
-				xtype:'text',
+				xclass:'bar-item-text',
 				text : _self.get('ellipsisTpl')
 			};
 		},
@@ -2730,7 +2687,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				id : page,
-				xtype : 'button',
+				xclass:'bar-item-button',
 				text : ''+page+'',
 				elCls : _self.get('numberButtonCls')
 			};
@@ -2829,8 +2786,8 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                     items = _self._getItems(),
                     store = _self.get('store');
                 S.each(items, function (item) {
-                    children.push(_self._createItem(item));
-                });
+                    children.push(item);//item
+                }); /**/
                 if (store && store.pageSize) {
                     _self.set('pageSize', store.pageSize);
                 }
@@ -2988,12 +2945,12 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 items.push(_self._getTextItem(ID_TOTAL_COUNT));
                 return items;
             },
-            //get item which the xtype is button
+            //get item which the xclass is button
             _getButtonItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xtype:'button',
+                    xclass:'bar-item-button',
                     text:_self.get(id + 'Text'),
                     disabled:true,
                     elCls:_self.get(id + 'Cls')
@@ -3001,14 +2958,14 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             //get separator item
             _getSeparator:function () {
-                return {xtype:'separator'};
+                return {xclass:'bar-item-separator'};
             },
             //get text item
             _getTextItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xtype:'text',
+                    xclass:'bar-item-text',
                     text:_self._getTextItemTpl(id)
                 };
             },
@@ -3044,7 +3001,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 var _self = this,
                     children = _self.get('children');
                 S.each(children, function (child) {
-                    if (child.get('xtype') === 'button' && S.inArray(child.get('id'), buttons)) {
+                    if (S.inArray(child.get('id'), buttons)) {
                         child.set('disabled', !enable);
                     }
                 });
