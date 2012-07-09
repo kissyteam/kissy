@@ -282,7 +282,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * cross domain request config object
      *
      * @param {String} c.xdr.src <br/>
-     * Default: kissy's flash url
+     * Default: KISSY 's flash url
      * flash sender url
      *
      * @param {String} c.xdr.use <br/>

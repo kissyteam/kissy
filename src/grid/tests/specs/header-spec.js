@@ -12,7 +12,7 @@ KISSY.use('grid/header',function(S,Header){
 				tpl : '<div class="ks-grid-hd-title">{{dataIndex}}</div>'
 		},{
 			id:'hide',
-			visible : false,
+			//visible : false,
 			title:'隐藏列'
 		}];
 		header = new Header({
@@ -98,6 +98,7 @@ KISSY.use('grid/header',function(S,Header){
 				tableEl = headerEl.one('table'),
 				columsWidth = header.getColumnsWidth();
 			header.set('width',width);
+            headerEl.addClass('ks-grid-width');
 			if(columsWidth > width){
 				expect(tableEl.width()).toBe(columsWidth);
 			}else{

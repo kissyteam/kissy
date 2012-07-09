@@ -1,3 +1,7 @@
+/**
+ * @fileOverview Store for grid.
+ * @author dxq613@gmail.com, yiminghe@gmail.com
+ */
 KISSY.add('grid/store',function(S){
 	/**
 	* 数据缓冲类，缓存数据在浏览器中
@@ -9,7 +13,7 @@ KISSY.add('grid/store',function(S){
 	* var store = new Store({
 	*	url : 'data.php',
 	*	autoLoad : true
-	*});
+	* });
 	*/
 	function Store(config){
 		var _self = this;
@@ -69,10 +73,10 @@ KISSY.add('grid/store',function(S){
 			* 连接信息，包含2个字段:<br>
 			* url : 加载数据的地址<br>
 			* method : 加载数据的方式"get","post"，默认值为"post"<br>
-			* memeryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
+			* memoryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
 			* @type Object
-			* @default { method: 'post',url:'',memeryData : null }
+			* @default { method: 'post',url:'',memoryData : null }
 			* @example 
 			* var store = new Store({
 			*		autoLoad : true,
@@ -289,7 +293,7 @@ KISSY.add('grid/store',function(S){
 		compare : function(obj1,obj2,field,direction){
 
 			var _self = this,
-				dir = 1;
+				dir;
 			field = field || _self.sortInfo.field;
 			direction = direction || _self.sortInfo.direction;
 			//如果未指定排序字段，或方向，则按照默认顺序
@@ -514,9 +518,9 @@ KISSY.add('grid/store',function(S){
 			_self.sortInfo.field = field || _self.sortInfo.field;
 			_self.sortInfo.direction = direction || _self.sortInfo.direction;
 			if(_self.remoteSort){	//如果远程排序，重新加载数据
-				var memeryData = _self.proxy.memeryData;
-				if(memeryData){
-					_self._sortData(field,direction,memeryData);
+				var memoryData = _self.proxy.memoryData;
+				if(memoryData){
+					_self._sortData(field,direction,memoryData);
 				}
 				this.load();
 			}else{
@@ -567,7 +571,7 @@ KISSY.add('grid/store',function(S){
 		_loadData : function(params){
 			var _self = this,
 			loadparams = params || {},
-			data = null;
+			data;
 			
 			/**
 			* @private 设置结果
@@ -582,7 +586,7 @@ KISSY.add('grid/store',function(S){
 			loadparams = S.merge(_self.oldParams, _self.sortInfo,loadparams);
 			_self.oldParams = loadparams;
 			if(!_self.proxy.url){
-				_self._loadByMemery(loadparams);
+				_self._loadByMemory(loadparams);
 				return;
 			}
 			data = _self.proxy.method === 'post' ? loadparams : (loadparams ? S.param(loadparams) : '');
@@ -601,9 +605,6 @@ KISSY.add('grid/store',function(S){
 						setResult(resultRows,rowCount,totalCount);
 						_self.fire('exception',{error:data.error});
 						return;
-					}
-					if(S.isString(data)){
-						data = S.json.parse(data);
 					}
                     if (S.isArray(data) || S.isObject(data)) {
 						if(S.isArray(data)){
@@ -632,20 +633,18 @@ KISSY.add('grid/store',function(S){
 				   _self.fire('exception',{error:textStatus,responseText:errorThrown.responseText});
                 }
 			});
-			
-			
 		},
 		
-		_loadByMemery : function(params){
+		_loadByMemory : function(params){
 			var _self = this,
-				memeryData = _self.proxy.memeryData,
+				memoryData = _self.proxy.memoryData,
 				temp = [],
 				data = [];
-			if(memeryData){
+			if(memoryData){
 				if(params.filter){
-					temp = S.filter(memeryData,params.filter);
+					temp = S.filter(memoryData,params.filter);
 				}else{
-					temp = memeryData;
+					temp = memoryData;
 				}
 				params.start = params.start || 0;
 				params.limit = params.limit || _self.pageSize;
@@ -663,6 +662,7 @@ KISSY.add('grid/store',function(S){
 				_self.fire('load',params);
 			}
 		},
+
 		//移除数据
 		_removeAt:function(index,array){
 			if(index < 0){
@@ -685,7 +685,6 @@ KISSY.add('grid/store',function(S){
 			_self.resultRows=resultRows;
 			_self.rowCount=rowCount;
 			_self.totalCount=totalCount;
-
 		},
 		//排序
 		_sortData : function(field,direction,records){

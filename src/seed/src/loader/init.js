@@ -55,7 +55,7 @@
                 this.getLoader().use(names, callback);
             },
             /**
-             * get KISSY's loader instance
+             * get KISSY 's loader instance
              * @returns {KISSY.Loader}
              */
             getLoader:function () {
