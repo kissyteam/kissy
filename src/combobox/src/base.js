@@ -338,6 +338,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     view:1
                 },
 
+                allowTextSelection:{
+                    value:true
+                },
+
                 /**
                  * Whether show combobox trigger.
                  * @default true.
