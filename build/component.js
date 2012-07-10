@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 11:13
+build time: Jul 10 21:13
 */
 /**
  * Setup component namespace.
@@ -295,7 +295,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             renderUI:function () {
                 var self = this, i, children, child;
                 self.get("view").render();
-                //then render my children
+                // then render my children
                 children = self.get("children").concat();
                 self.get("children").length = 0;
                 for (i = 0; i < children.length; i++) {
