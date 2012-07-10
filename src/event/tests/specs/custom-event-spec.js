@@ -2,20 +2,20 @@
  * custom bubble mechanism tc
  * @author yiminghe@gmail.com *
  */
-KISSY.use("event", function(S, Event) {
+KISSY.use("event", function (S, Event) {
 
 
-    describe("custom event is same as native event.", function() {
+    describe("custom event is same as native event.", function () {
 
-        it("can fire more than one", function() {
+        it("can fire more than one", function () {
 
             var args = [];
 
             function Test() {
-                this.on("test", function(e) {
+                this.on("test", function (e) {
                     args.push(e.a);
                 });
-                this.on("test2", function(e) {
+                this.on("test2", function (e) {
                     args.push(e.a);
                 });
             }
@@ -28,21 +28,21 @@ KISSY.use("event", function(S, Event) {
                 a:1
             });
 
-            expect(args).toEqual([1,1]);
+            expect(args).toEqual([1, 1]);
 
         });
 
 
-        it("can bubble", function() {
+        it("can bubble", function () {
 
-            var ret = [],args = [];
+            var ret = [], args = [];
 
             function Test() {
                 this.publish("test", {
                     bubbles:1
                 });
 
-                this.on("test", function(e) {
+                this.on("test", function (e) {
                     ret.push(this.id);
                     args.push(e.a);
                     e.a++;
@@ -66,8 +66,8 @@ KISSY.use("event", function(S, Event) {
                 a:1
             });
 
-            expect(ret).toEqual([2,1]);
-            expect(args).toEqual([1,2]);
+            expect(ret).toEqual([2, 1]);
+            expect(args).toEqual([1, 2]);
 
             ret = [];
             args = [];
@@ -84,7 +84,7 @@ KISSY.use("event", function(S, Event) {
         });
 
 
-        it("can stop bubble by stopPropagation()", function() {
+        it("can stop bubble by stopPropagation()", function () {
             var ret = [];
 
             function Test() {
@@ -92,7 +92,7 @@ KISSY.use("event", function(S, Event) {
                     bubbles:1
                 });
 
-                this.on("test", function(e) {
+                this.on("test", function (e) {
                     ret.push(this.id);
                     e.stopPropagation();
                 });
@@ -114,6 +114,34 @@ KISSY.use("event", function(S, Event) {
             t2.fire("test");
 
             expect(ret).toEqual([2]);
+        });
+
+
+        it("can bubble more than one level", function () {
+
+            var r1 = S.mix({}, S.EventTarget);
+
+            var r2 = S.mix({}, S.EventTarget);
+
+            var r3 = S.mix({}, S.EventTarget);
+
+            r2.addTarget(r1);
+            r3.addTarget(r2);
+
+            r3.publish("click", {
+                bubbles:1
+            });
+
+            var ret = 0;
+
+            r1.on("click", function () {
+                ret = 1;
+            });
+
+            r3.fire("click");
+
+            expect(ret).toBe(1);
+
         });
     });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:31
+build time: Jul 10 10:47
 */
 /**
  * draft for kissy editor
@@ -119,6 +119,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 ).unselectable().appendTo(holder),
                 versions = new MenuButton({
                     render:holder,
+                    collapseOnClick:true,
                     width:"100px",
                     prefixCls:"ks-editor-",
                     menuCfg:{
@@ -338,7 +339,6 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 editor.set("data", drafts[v].content);
                 editor.execCommand("save");
             }
-            self.versions.set("collapsed", true);
             ev.halt();
         },
 

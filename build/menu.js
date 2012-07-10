@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:07
+build time: Jul 10 10:48
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -618,6 +618,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          * @lends Menu.Item#
          */
         {
+            bindUI:function () {
+                this.publish("click", {
+                    bubbles:1
+                });
+            },
 
             /**
              * Handle mouseenter event. Make parent menu to highlight itself.
@@ -667,9 +672,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 if (self.get("checkable")) {
                     self.set("checked", !self.get("checked"));
                 }
-                self.get("parent").fire("click", {
-                    target:self
-                });
+                self.fire("click");
                 return true;
             },
 
@@ -909,7 +912,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.
-                 * Default : false.
+                 * @default false.
                  * @type Boolean
                  */
                 focusable:{
@@ -921,7 +924,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 /**
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
-                 * Default : false.
+                 * @default false.
                  * @type Boolean
                  */
                 autoHideOnMouseLeave:{},
@@ -975,7 +978,7 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             /**
              * Un-focusable.
              * readonly.
-             * Default: false.
+             * @default false.
              */
             focusable:{
                 value:false
@@ -1052,15 +1055,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 if (parentMenu) {
 
                     parentMenu.on("hide", onParentHide, self);
-
-                    // 子菜单选中后也要通知父级菜单
-                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                    // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("click", function (ev) {
-                        parentMenu.fire("click", {
-                            target:ev.target
-                        });
-                    });
 
                     // if not bind doc click for parent menu
                     // if already bind, then if parent menu hide, menu will hide too

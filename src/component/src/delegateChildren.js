@@ -5,11 +5,10 @@
 KISSY.add("component/delegateChildren", function (S) {
 
     function DelegateChildren() {
-
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target,e);
+        var control = this.getOwnerControl(e.target, e);
         if (control) {
             // Child control identified; forward the event.
             switch (e.type) {
@@ -25,6 +24,9 @@ KISSY.add("component/delegateChildren", function (S) {
                 case "mouseout":
                     control.handleMouseOut(e);
                     break;
+                case "contextmenu":
+                    control.handleContextMenu(e);
+                    break;
                 case "dblclick":
                     control.handleDblClick(e);
                     break;
@@ -38,7 +40,7 @@ KISSY.add("component/delegateChildren", function (S) {
 
         __bindUI:function () {
             var self = this;
-            self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
+            self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
                 handleChildMouseEvents, self);
         },
 

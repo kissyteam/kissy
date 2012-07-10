@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:04
+build time: Jul 10 10:44
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -146,7 +146,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         },
         /**
          * Distance outside viewport or specified container to pre load.
-         * Default : pre load one screen height and width.
+         * @default pre load one screen height and width.
          * @type Number|Object
          * @example
          * <code>
@@ -165,7 +165,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         },
         /**
          * Placeholder img url for lazy loaded _images.
-         * Default : empty
+         * @default empty
          * @type String
          */
         placeholder:{
@@ -174,7 +174,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * Whether execute script in lazy loaded textarea.
-         * Default : true
+         * @default true
          * @type Boolean
          */
         execScript:{
@@ -183,7 +183,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * Containers which will be monitor scroll event to lazy load elements within it.
-         * Default : [ document ]
+         * @default [ document ]
          * @type HTMLElement[]
          */
         containers:{
@@ -194,7 +194,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * Whether destroy this component when all lazy loaded elements are loaded.
-         * Default : true
+         * @default true
          * @type Boolean
          * @since 1.3
          */

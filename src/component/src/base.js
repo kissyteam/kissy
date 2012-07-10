@@ -38,6 +38,9 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
                 component.prefixCls = self.get("prefixCls");
             }
             childConstructor = Manager.getConstructorByXClass(xclass);
+            if (!childConstructor) {
+                S.error("can not find class by xclass desc : " + xclass);
+            }
             component = new childConstructor(component);
         }
         return component;

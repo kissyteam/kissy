@@ -144,7 +144,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 /**
                  * handlers to initiate drag operation.
                  * can only be as form of tag.cls.
-                 * default:[selector]
+                 * @default[selector]
                  * @type {String[]}
                  **/
                 handlers:{

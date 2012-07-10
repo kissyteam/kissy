@@ -69,7 +69,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
     /**
      * @class
      * A menu button component, consist of a button and a drop down popup menu.
-     * xclass: 'menubutton'.
+     * xclass: 'menu-button'.
      * @name MenuButton
      * @extends Button
      */
@@ -99,28 +99,19 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     self.set("activeItem", ev.newVal);
                 });
 
-                menu.on("click", self.handleMenuClick, self);
-
                 // 窗口改变大小，重新调整
                 $(win).on("resize", repositionBuffer, self);
+
+                if (self.get("collapseOnClick")) {
+                    menu.on("click", function () {
+                        self.set("collapsed", true);
+                    });
+                }
 
                 /*
                  只绑定事件一次
                  */
                 self.bindMenu = S.noop;
-            },
-
-            /**
-             * Handle click on drop down menu. Fire click event on menubutton.
-             * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Click event object.
-             * @protected
-             */
-            handleMenuClick:function (e) {
-                var self = this;
-                self.fire("click", {
-                    target:e.target
-                });
             },
 
             /**
@@ -296,11 +287,21 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
                 /**
                  * Whether drop down menu is same width with button.
-                 * Default: true.
+                 * @default true.
                  * @type {Boolean}
                  */
                 matchElWidth:{
                     value:true
+                },
+
+                /**
+                 * Whether hide drop down menu when click drop down menu item.
+                 * eg: u do not want to set true when menu has checked menuitem.
+                 * @default false
+                 * @type {Boolean}
+                 */
+                collapseOnClick:{
+                    value:false
                 },
 
                 /**

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:08
+build time: Jul 10 10:48
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -74,7 +74,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
     /**
      * @class
      * A menu button component, consist of a button and a drop down popup menu.
-     * xclass: 'menubutton'.
+     * xclass: 'menu-button'.
      * @name MenuButton
      * @extends Button
      */
@@ -104,28 +104,19 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     self.set("activeItem", ev.newVal);
                 });
 
-                menu.on("click", self.handleMenuClick, self);
-
                 // 窗口改变大小，重新调整
                 $(win).on("resize", repositionBuffer, self);
+
+                if (self.get("collapseOnClick")) {
+                    menu.on("click", function () {
+                        self.set("collapsed", true);
+                    });
+                }
 
                 /*
                  只绑定事件一次
                  */
                 self.bindMenu = S.noop;
-            },
-
-            /**
-             * Handle click on drop down menu. Fire click event on menubutton.
-             * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Click event object.
-             * @protected
-             */
-            handleMenuClick:function (e) {
-                var self = this;
-                self.fire("click", {
-                    target:e.target
-                });
             },
 
             /**
@@ -301,11 +292,21 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
                 /**
                  * Whether drop down menu is same width with button.
-                 * Default: true.
+                 * @default true.
                  * @type {Boolean}
                  */
                 matchElWidth:{
                     value:true
+                },
+
+                /**
+                 * Whether hide drop down menu when click drop down menu item.
+                 * eg: u do not want to set true when menu has checked menuitem.
+                 * @default false
+                 * @type {Boolean}
+                 */
+                collapseOnClick:{
+                    value:false
                 },
 
                 /**
@@ -453,7 +454,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             {
                 /**
                  * Whether this option can be selected.
-                 * Default : true.
+                 * @default true.
                  * @type Boolean
                  */
                 selectable:{
@@ -552,6 +553,24 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         self.set("content", textContent || content || self.get("defaultCaption"));
     }
 
+
+    /**
+     * Handle click on drop down menu.
+     * Set selected menu item as current selectedItem and hide drop down menu.
+     * Protected, should only be overridden by subclasses.
+     * @protected
+     * @override
+     * @param {Event.Object} e
+     */
+    function handleMenuClick(e) {
+        var self = this,
+            target = e.target;
+        if (target instanceof  Menu.Item) {
+            self.set("value", getItemValue(target));
+        }
+    }
+
+
     /**
      * @class
      * Select component which supports single selection from a drop down menu
@@ -566,6 +585,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
          * @lends MenuButton.Select.prototype
          */
         {
+            bindUI:function () {
+                this.on("click", handleMenuClick, this);
+            },
 
             /**
              * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
@@ -575,26 +597,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 var self = this;
                 Select.superclass.bindMenu.call(self);
                 self.get("menu").on("show", _handleMenuShow, self);
-            },
-
-            /**
-             * Handle click on drop down menu.
-             * Set selected menu item as current selectedItem and hide drop down menu.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             * @override
-             * @param {Event.Object} e
-             */
-            handleMenuClick:function (e) {
-                var self = this,
-                    target = e.target,
-                    prevTarget = getSelectedItem(self);
-                self.set("value", getItemValue(target));
-                self.set("collapsed", true);
-                self.fire("click", {
-                    target:target,
-                    prevTarget:prevTarget
-                });
             },
 
             /**
@@ -648,6 +650,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                  */
                 defaultCaption:{
                     value:""
+                },
+
+                collapseOnClick:{
+                    value:true
                 }
             },
 

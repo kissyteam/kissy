@@ -207,7 +207,7 @@ KISSY.add("mvc/model", function (S, Base) {
             {
                 /**
                  * Attribute name used to store id from server.
-                 * Default: "id".
+                 * @default "id".
                  * @type String
                  */
                 idAttribute:{
@@ -226,7 +226,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Called to get url for delete/edit/new current model.
-                 * Default: collection.url+"/"+mode.id
+                 * @default collection.url+"/"+mode.id
                  * @type Function
                  */
                 url:{

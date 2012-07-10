@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:08
+build time: Jul 10 10:48
 */
 /**
  * @fileOverview collection of models
@@ -520,7 +520,7 @@ KISSY.add("mvc/model", function (S, Base) {
             {
                 /**
                  * Attribute name used to store id from server.
-                 * Default: "id".
+                 * @default "id".
                  * @type String
                  */
                 idAttribute:{
@@ -539,7 +539,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Called to get url for delete/edit/new current model.
-                 * Default: collection.url+"/"+mode.id
+                 * @default collection.url+"/"+mode.id
                  * @type Function
                  */
                 url:{

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:08
+build time: Jul 10 10:48
 */
 /**
  * patch for nodejs
@@ -214,7 +214,7 @@ build time: Jul 5 23:08
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:08
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -709,7 +709,7 @@ build time: Jul 2 11:45
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120702114537';
+        S.__BUILD_TIME = '20120705230834';
     })();
 
     return S;
@@ -4243,7 +4243,7 @@ build time: Jul 2 11:45
                 this.getLoader().use(names, callback);
             },
             /**
-             * get KISSY's loader instance
+             * get KISSY 's loader instance
              * @returns {KISSY.Loader}
              */
             getLoader:function () {
@@ -4339,7 +4339,7 @@ build time: Jul 2 11:45
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120702114537'
+        tag:'20120705230834'
     }, getBaseInfo()));
 
     /**
@@ -4701,7 +4701,7 @@ build time: Jul 2 11:45
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:08
 */
 /**
  * @fileOverview ua
@@ -4989,7 +4989,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview dom-attr
@@ -9358,7 +9358,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:44
+build time: Jul 5 23:07
 */
 /**
  * @fileOverview responsible for registering event
@@ -10791,7 +10791,7 @@ KISSY.add('event/object', function (S, undefined) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * @class KISSY's event system normalizes the event object according to
+     * @class KISSY 's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
@@ -11669,7 +11669,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:07
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -12179,7 +12179,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview form data  serialization util
@@ -13778,7 +13778,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * cross domain request config object
      *
      * @param {String} c.xdr.src <br/>
-     * Default: kissy's flash url
+     * Default: KISSY 's flash url
      * flash sender url
      *
      * @param {String} c.xdr.use <br/>
@@ -14095,7 +14095,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview cookie
@@ -14209,7 +14209,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview attribute management
@@ -14864,7 +14864,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:41
+build time: Jul 5 23:04
 */
 /**
  * @fileOverview anim
@@ -16335,7 +16335,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 2 11:45
+build time: Jul 5 23:08
 */
 /**
  * @fileOverview anim-node-plugin

@@ -22,7 +22,7 @@ KISSY.add("component/uibase/close", function () {
     {
         /**
          * Whether close button is visible.
-         * Default: true.
+         * @default true.
          * @type Boolean
          */
         closable:{
@@ -38,7 +38,7 @@ KISSY.add("component/uibase/close", function () {
 
         /**
          * Whether to destroy or hide current element when click close button.
-         * Default: "hide". Can set "destroy" to destroy it when click close button.
+         * @default "hide". Can set "destroy" to destroy it when click close button.
          * @type String
          */
         closeAction:{

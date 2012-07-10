@@ -92,7 +92,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Minimum col count of waterfall items.
          * Event window resize to 0.
-         * Default: 1.
+         * @default 1.
          * @type Number
          */
         minColCount:{
@@ -101,7 +101,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is added to container.
-         * Default: { effect:"fadeIn",duration:1 }
+         * @default { effect:"fadeIn",duration:1 }
          * @type Object
          * @example
          * <code>
@@ -139,7 +139,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
-         * Default: { easing:"",duration:1 }
+         * @default { easing:"",duration:1 }
          * @type Object
          * @example
          * <code>

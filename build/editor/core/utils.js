@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:31
+build time: Jul 10 10:47
 */
 /**
  * common utils for kissy editor
@@ -65,28 +65,21 @@ KISSY.add("editor/core/utils", function (S) {
             },
 
             /**
-             * srcDoc 中的位置在 destDoc 的对应位置
-             * @param x {number}
-             * @param y {number}
-             * @param srcDoc {Document}
-             * @param destDoc {Document}
-             * @return 在最终文档中的位置
+             * editor 元素在主窗口的位置
              */
-            getXY:function (x, y, srcDoc, destDoc) {
-                var currentWindow = srcDoc.defaultView || srcDoc.parentWindow;
-
+            getXY:function (offset, editor) {
+                var x = offset.left,
+                    y = offset.top,
+                    currentWindow = editor.get("window")[0];
                 //x,y相对于当前iframe文档,防止当前iframe有滚动条
                 x -= DOM.scrollLeft(currentWindow);
                 y -= DOM.scrollTop(currentWindow);
-                if (destDoc) {
-                    var refWindow = destDoc.defaultView || destDoc.parentWindow;
-                    if (currentWindow != refWindow && currentWindow['frameElement']) {
-                        //note:when iframe is static ,still some mistake
-                        var iframePosition = DOM.offset(currentWindow['frameElement'], undefined, refWindow);
-                        x += iframePosition.left;
-                        y += iframePosition.top;
-                    }
-                }
+
+                //note:when iframe is static ,still some mistake
+                var iframePosition = editor.get("iframe").offset();
+                x += iframePosition.left;
+                y += iframePosition.top;
+
                 return {left:x, top:y};
             },
 

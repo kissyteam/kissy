@@ -32,12 +32,14 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
             value:'q'
         },
         /**
-         * whether send empty to server when input val is empty.default:false
+         * whether send empty to server when input val is empty.
+         * @default false
          * @type Boolean
          */
         allowEmpty:{},
         /**
-         * Whether server response data is cached.default:false
+         * Whether server response data is cached.
+         * @default false
          * @type Boolean
          */
         cache:{},

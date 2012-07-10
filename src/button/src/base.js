@@ -17,6 +17,9 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
         {
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
+                this.publish("click", {
+                    bubbles:1
+                });
             },
 
             handleKeyEventInternal:function (e) {
@@ -71,7 +74,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button can be checkable(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checkable:{
@@ -79,7 +82,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
                 /**
                  * Whether button is checked(toggle).
-                 * Default: false.
+                 * @default false.
                  * @type Boolean
                  */
                 checked:{

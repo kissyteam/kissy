@@ -19,6 +19,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          * @lends Menu.Item#
          */
         {
+            bindUI:function () {
+                this.publish("click", {
+                    bubbles:1
+                });
+            },
 
             /**
              * Handle mouseenter event. Make parent menu to highlight itself.
@@ -68,9 +73,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 if (self.get("checkable")) {
                     self.set("checked", !self.get("checked"));
                 }
-                self.get("parent").fire("click", {
-                    target:self
-                });
+                self.fire("click");
                 return true;
             },
 

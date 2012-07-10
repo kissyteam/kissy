@@ -253,7 +253,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         dragNode:{},
 
         /**
-         * use protective shim to cross iframe.default:true
+         * use protective shim to cross iframe.
+         * @default true
          * @type Boolean
          */
         shim:{
@@ -318,7 +319,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * set to disable this draggable so that it can not be dragged. default:false
+         * set to disable this draggable so that it can not be dragged.
+         * @default false
          * @type Boolean
          */
         disabled:{
@@ -326,7 +328,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether the drag node moves with cursor.default:false,can be used to resize element.
+         * whether the drag node moves with cursor, can be used to resize element.
+         * @default false
          * @type Boolean
          */
         move:{
@@ -343,7 +346,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether halt mousedown event. default:true
+         * whether halt mousedown event.
+         * @default true
          * @type Boolean
          */
         halt:{

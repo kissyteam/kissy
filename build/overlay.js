@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 5 23:08
+build time: Jul 10 10:48
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -19,7 +19,7 @@ KISSY.add("overlay/aria", function (S, Event) {
         /**
          * Whether support aria.
          * Focus on show and trap focus in overlay when visible.
-         * Default: false.
+         * @default false.
          * @type Boolean
          */
         aria:{
@@ -121,7 +121,6 @@ KISSY.add("overlay/ariaRender", function (S, Node) {
         },
 
         __bindUI:function () {
-
             var self = this;
             if (self.get("aria")) {
                 var el = self.get("el"),
@@ -193,16 +192,20 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
              * @lends Overlay#
              */
             {
-                /**
-                 * whether this component can be focused. Default:false
-                 * @type Boolean
-                 */
+
+                // do not has focus
                 focusable:{
                     value:false
                 },
 
+                // allowTextSelection
+                allowTextSelection:{
+                    value:true
+                },
+
                 /**
-                 * whether this component can be closed. Default:false
+                 * whether this component can be closed.
+                 * @default false
                  * @type Boolean
                  */
                 closable:{
@@ -210,7 +213,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 },
 
                 /**
-                 * whether this component can be responsive to mouse. Default:false
+                 * whether this component can be responsive to mouse.
+                 * @default false
                  * @type Boolean
                  */
                 handleMouseEvents:{
@@ -218,7 +222,8 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 },
 
                 /**
-                 * see {@link Component.UIBase.Box#visibleMode}. Default:"visibility"
+                 * see {@link Component.UIBase.Box#visibleMode}.
+                 * @default "visibility"
                  */
                 visibleMode:{
                     value:"visibility"
@@ -280,7 +285,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
             {
 
                 /**
-                 * whether this component can be closed. Default:true
+                 * whether this component can be closed.
+                 * @default true
                  * @type Boolean
                  */
                 closable:{
@@ -288,7 +294,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                 },
 
                 /**
-                 * Default: Dialog's header element
+                 * @default Dialog's header element
                  * see {@link DD.Draggable#handlers}
                  */
                 handlers:{
@@ -715,8 +721,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     }
                 },
                 /**
-                 * How to activate trigger element.
-                 * "click" or "mouse",Default:"click".
+                 * How to activate trigger element, "click" or "mouse",
+                 * @default "click".
                  * @type String
                  */
                 triggerType:{
@@ -726,7 +732,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 currentTrigger:{},
                 /**
                  * When trigger type is mouse, the delayed time to show popup.
-                 * Default:0.1, in seconds.
+                 * @default0.1, in seconds.
                  * @type Number
                  */
                 mouseDelay:{
@@ -734,7 +740,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     value:0.1
                 },
                 /**
-                 * When trigger type is click, whether support toggle. Default:false
+                 * When trigger type is click, whether support toggle.
+                 * @default false
                  * @type Boolean
                  */
                 toggle:{

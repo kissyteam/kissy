@@ -22,7 +22,7 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
             /**
              * Un-focusable.
              * readonly.
-             * Default: false.
+             * @default false.
              */
             focusable:{
                 value:false
