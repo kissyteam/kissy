@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 6 13:06
+build time: Jul 10 10:41
 */
 KISSY.add("editor/core/utils",function(d){var g=d.Node,h=d.DOM,f=d.UA,i={debugUrl:function(a){var b=d.Config;b.debug||(a=a.replace(/\.(js|css)/i,"-min.$1"));-1==a.indexOf("?t")&&(a=-1!=a.indexOf("?")?a+"&":a+"?",a+="t="+encodeURIComponent(b.tag));return b.base+"editor/"+a},lazyRun:function(a,b,c){var e=a[b],d=a[c];a[b]=function(){e.apply(this,arguments);a[b]=a[c];return d.apply(this,arguments)}},getXY:function(a,b){var c=a.left,e=a.top,d=b.get("window")[0],c=c-h.scrollLeft(d),e=e-h.scrollTop(d),d=
 b.get("iframe").offset(),c=c+d.left,e=e+d.top;return{left:c,top:e}},tryThese:function(a){for(var b,c=0,d=arguments.length;c<d;c++){var f=arguments[c];try{b=f();break}catch(g){}}return b},arrayCompare:function(a,b){if(!a&&!b)return!0;if(!a||!b||a.length!=b.length)return!1;for(var c=0;c<a.length;c++)if(a[c]!==b[c])return!1;return!0},clearAllMarkers:function(a){for(var b in a)a.hasOwnProperty(b)&&a[b]._4e_clearMarkers(a,!0,void 0)},ltrim:function(a){return a.replace(/^\s+/,"")},rtrim:function(a){return a.replace(/\s+$/,
