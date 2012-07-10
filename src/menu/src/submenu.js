@@ -13,7 +13,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
      * @constructor
-     * @extends Menu.MenuItem
+     * @extends Menu.Item
      * @memberOf Menu
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
