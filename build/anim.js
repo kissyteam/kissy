@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 11:02
+build time: Jul 10 11:13
 */
 /**
  * @fileOverview anim
