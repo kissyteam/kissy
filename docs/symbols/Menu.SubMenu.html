@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>Component.UIBase.Resize</title>
+        <title>Menu.SubMenu</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -183,7 +183,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                Component.UIBase.Resize
+                                Menu.SubMenu
                             </h2>
                             <!-- class title END-->
                             
@@ -191,18 +191,20 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">Resizable extension class.Make component resizable</p>
-                                    
 
                                     
                                     
+                                    
+                                    <p>parents：
+                                        <a href="../symbols/Menu.Item.html">Menu.Item</a>
+                                    </p>                                                
                                     
 
                                     
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_component_src_uibase_resize.js.html">resize.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_submenu.js.html">submenu.js</a></p>
                                     
                                     
                                     
@@ -221,11 +223,11 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/Component.UIBase.Resize.html#constructor">Component.UIBase.Resize</a></b>
+                                            <b class="name"><a href="../symbols/Menu.SubMenu.html#constructor">Menu.SubMenu</a></b>
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">Class representing a submenu that can be added as an item to other menus.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -246,15 +248,31 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/Component.UIBase.Resize.html#resize">resize</a></b>
-                                                <span class="type">{Object}</span>
+                                                <b class="name"><a href="../symbols/Menu.SubMenu.html#menu">menu</a></b>
+                                                <span class="type">{}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">Resizable configuration.</span>                                                
+                                                <span class="desc">Menu config or instance.</span>                                                
                                             </li>
                                             
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.SubMenu.html#menuDelay">menuDelay</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">The delay before opening the sub menu in seconds.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="list summary-list">
+                                        <li class="li">Fields borrowed from class <a href="../symbols/Menu.Item.html">Menu.Item</a>: <a href="../symbols/Menu.Item.html#checkable">checkable</a>, <a href="../symbols/Menu.Item.html#checked">checked</a>, <a href="../symbols/Menu.Item.html#selectable">selectable</a>, <a href="../symbols/Menu.Item.html#selected">selected</a>, <a href="../symbols/Menu.Item.html#value">value</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#allowTextSelection">allowTextSelection</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#created">created</a>, <a href="../symbols/Component.UIBase.html#listeners">listeners</a>, <a href="../symbols/Component.UIBase.html#plugins">plugins</a>, <a href="../symbols/Component.UIBase.html#rendered">rendered</a>, <a href="../symbols/Component.UIBase.html#xclass">xclass</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#content">content</a>, <a href="../symbols/Component.UIBase.Box.html#el">el</a>, <a href="../symbols/Component.UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/Component.UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/Component.UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/Component.UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/Component.UIBase.Box.html#height">height</a>, <a href="../symbols/Component.UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/Component.UIBase.Box.html#visible">visible</a>, <a href="../symbols/Component.UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/Component.UIBase.Box.html#width">width</a></li>
                                         </ul>
                                         
                                     </div>
@@ -265,9 +283,62 @@ a.go-top:active{text-decoration:none;}
                             
                             <!-- methods START -->
                             
+                                
+                                
+                                <div class="box methods-box">
+                                    <div class="box-hd">
+                                        <h3>Methods</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.SubMenu.html#bindSubMenu">bindSubMenu</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Bind sub menu events.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.SubMenu.html#clearSubMenuTimers">clearSubMenuTimers</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Clears the show and hide timers for the sub menu.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/Menu.SubMenu.html#handleKeydown">handleKeydown</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Handles a key event that is passed to the menu item from its parent becauseit is highlighted.</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/Menu.Item.html">Menu.Item</a>: <a href="../symbols/Menu.Item.html#containsElement">containsElement</a>, <a href="../symbols/Menu.Item.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Menu.Item.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Menu.Item.html#performActionInternal">performActionInternal</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleBlur">handleBlur</a>, <a href="../symbols/Component.Controller.html#handleContextMenu">handleContextMenu</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeyEventInternal">handleKeyEventInternal</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#bindUI">bindUI</a>, <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#render">render</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                
+                            
                             <!-- methods END -->
                             
                             <!-- events START -->
+                            
+                                
+                                
                             
                             <!-- events END -->
 
@@ -282,11 +353,11 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">Component.UIBase.Resize</b>
+                                                <b class="name">Menu.SubMenu</b>
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">Resizable extension class.Make component resizable</div>
+                                            <div class="desc"></div>
                                             
                                             <dl>                                                
                                                 
@@ -322,17 +393,17 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name="resize"> </a>
+                                            <a name="menu"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">resize</b>
-                                                <span>{Object}</span>
+                                                <b class="name">menu</b>
+                                                
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    Resizable configuration.See <a href="../symbols/Resizable.html">Resizable</a>
+                                                    Menu config or instance.
                                                     
                                                     
                                                 </span>
@@ -342,22 +413,46 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <dl>
                                                 
-                                                <dt>Example</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="menuDelay"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">menuDelay</b>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    The delay before opening the sub menu in seconds.  (This number isarbitrary, it would be good to get some user studies or a designer to playwith some numbers).
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Default Value</dt>
                                                 <dd>
-                                                    <ul class="list">
-                                                    
-                                                    <li class="li">
-                                                        <pre class="code"><code> {   minWidth:100,   maxWidth:1000,   minHeight:100,   maxHeight:1000,   handlers:["b","t","r","l","tr","tl","br","bl"] }</code></pre>
-                                                    </li>
-                                                    
-                                                    </ul>
+                                                    0.15
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                             </dl>
                                         </li>
@@ -369,6 +464,162 @@ a.go-top:active{text-decoration:none;}
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Methods Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name="bindSubMenu"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">bindSubMenu</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_submenu.js.html#line31">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Bind sub menu events.Protected for subclass overridden.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="clearSubMenuTimers"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">clearSubMenuTimers</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_submenu.js.html#line110">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Clears the show and hide timers for the sub menu.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="handleKeydown"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">handleKeydown</b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menu_src_submenu.js.html#line143">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Handles a key event that is passed to the menu item from its parent becauseit is highlighted.  If the right key is pressed the sub menu takes controland delegates further key events to its menu until it is dismissed OR theleft key is pressed.Protected for subclass overridden.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">e</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">A key event.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span>Whether the event was handled.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
                             
                             <!-- methods detail END -->
 

@@ -8,18 +8,24 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     var KeyCodes = Event.KeyCodes,
         doc = S.Env.host.document,
-        MENU_DELAY = 150;
+        MENU_DELAY = 0.15;
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
+     * @name SubMenu
      * @constructor
      * @extends Menu.Item
      * @memberOf Menu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Component.DecorateChild],
+        /**
+         * @lends Menu.SubMenu#
+         */
+        {
 
             /**
              * Bind sub menu events.
+             * Protected for subclass overridden.
              * @protected
              */
             bindSubMenu:function () {
@@ -83,7 +89,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // 1. 停止孙子菜单的层层检查，导致 highlighted false 而 buffer 的隐藏
                 // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
-                self.showTimer_ = S.later(showMenu, self.get("menuDelay"), false, self);
+                self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
             },
 
             /**
@@ -94,7 +100,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             _uiSetHighlighted:function (e) {
                 var self = this;
                 if (!e) {
-                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay"), false, self);
+                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
                 }
             },
 
@@ -129,6 +135,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * it is highlighted.  If the right key is pressed the sub menu takes control
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
+             * Protected for subclass overridden.
              * @param e A key event.
              * @protected
              * @return {Boolean} Whether the event was handled.
@@ -196,7 +203,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                             popupmenu = submenu.get("menu");
                         }
                     },
-                    self.get("menuDelay"),
+                    self.get("menuDelay") * 1000,
                     false,
                     self);
             },
@@ -243,16 +250,24 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             }
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Menu.SubMenu#
+             */
+            {
                 /**
-                 * The delay before opening the sub menu in milliseconds.  (This number is
+                 * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
+                 * @default 0.15
                  * @type {number}
                  */
                 menuDelay:{
                     value:MENU_DELAY
                 },
+                /**
+                 * Menu config or instance.
+                 * @type {Menu|Object}
+                 */
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
