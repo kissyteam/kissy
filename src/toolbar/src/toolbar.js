@@ -32,7 +32,6 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
         }
 
         return null;
-
     }
 
     function afterCollapsedChange(e) {
@@ -70,6 +69,17 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
         }
     }
 
+    function processChild(e) {
+        var c = e.child;
+        // 交给容器代理
+        c.set("handleMouseEvents", false);
+        c.set("focusable", false);
+        // managed by parent toolbar
+        c.publish("afterCollapsedChange afterHighlightedChange", {
+            bubbles:1
+        });
+    }
+
     /**
      * @name Toolbar
      * @class
@@ -82,6 +92,11 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
          * @lends Toolbar#
          */
         {
+
+            initializer:function () {
+                this.on("addChild", processChild);
+            },
+
             createDom:function () {
                 this.get("el").attr("role", "toolbar");
             },
@@ -101,20 +116,7 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
 
             /**
              * Protected.
-             * @param c
              */
-            addChild:function (c) {
-                c = Toolbar.superclass.addChild.apply(this, arguments);
-                // 交给容器代理
-                c.set("handleMouseEvents", false);
-                c.set("focusable", false);
-                // managed by parent toolbar
-                c.publish("afterCollapsedChange afterHighlightedChange", {
-                    bubbles:1
-                });
-                return c;
-            },
-
             bindUI:function () {
                 var self = this;
                 self.on("afterCollapsedChange", afterCollapsedChange, self);
@@ -122,6 +124,7 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
             },
 
             handleBlur:function () {
+
                 var self = this,
                     highlightedItem,
                     expandedItem;
@@ -154,8 +157,8 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
                 // the key event, so attempt to handle it here.
                 switch (e.keyCode) {
                     case KeyCodes.ESC:
-                        self.getKeyEventTarget()[0].blur();
-                        break;
+                        self.getKeyEventTarget().fire("blur");
+                        return true;
 
                     case KeyCodes.HOME:
                         highlightedItem = getEnabledHighlightedItem(undefined, 1, self);
