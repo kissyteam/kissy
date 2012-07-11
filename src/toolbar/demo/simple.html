@@ -16,6 +16,18 @@
         *display: inline;
         *zoom: 1;
     }
+
+    .ks-toolbar-separator {
+        margin: 0 2px;
+        width: 0;
+        height: 18px;
+        font-size: 1px;
+        border-left: 1px solid #808080;
+        vertical-align: middle;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
 </style>
 </head>
 <body style="width: 800px;margin: 10px auto;">
@@ -33,6 +45,7 @@
 </div>
 <script src="../../../build/kissy.js"></script>
 <script src="../src/toolbar.js"></script>
+<script src="../src/separator.js"></script>
 <script>
     KISSY.use("toolbar,button,menubutton", function (S, Toolbar) {
 
@@ -72,8 +85,14 @@
                     }
                 },
                 {
+                    xclass:'toolbar-separator'
+                },
+                {
                     content:'button',
                     xclass:'button'
+                },
+                {
+                    xclass:'toolbar-separator'
                 },
                 {
                     content:"menu-button2",

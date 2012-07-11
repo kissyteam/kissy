@@ -47,26 +47,37 @@
                 },
 
                 /****************************
-                 *  UI Component
+                 *  Component
                  ****************************/
-
+                "color":{
+                    requires:['base']
+                },
+                "stylesheet":{
+                    requires:['dom']
+                },
                 "input-selection":{
                     requires:['dom']
                 },
                 "combobox":{
-                  requires:['input-selection','menu']
+                    requires:['input-selection', 'menu']
                 },
                 "button":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "overlay":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "resizable":{
                     requires:["base", "node"]
                 },
+                "separator":{
+                    requires:["component"]
+                },
                 "menu":{
-                    requires:["component", "node"]
+                    requires:["component", "separator"]
+                },
+                "toolbar":{
+                    requires:["component", "separator"]
                 },
                 "menubutton":{
                     requires:["menu", "button"]
@@ -78,7 +89,7 @@
                     requires:["node", "base", "ajax"]
                 },
                 "tree":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "suggest":{
                     requires:["dom", "event"]
@@ -102,10 +113,10 @@
                     requires:["node", "component"]
                 },
                 "editor":{
-                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
+                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
                 },
                 "editor/full":{
-                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
+                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
                 }
             }
         });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 21:28
+build time: Jul 11 21:00
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 9 21:28
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120709212835';
+        S.__BUILD_TIME = '20120711210030';
     })();
 
     return S;
@@ -2683,6 +2683,7 @@ build time: Jul 9 21:28
                     exName,
                     loaded = 0;
                 if (utils.isWebKit) {
+                    // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
                     if (node['sheet']) {
                         S.log("webkit loaded : " + url);
                         loaded = 1;
@@ -4126,7 +4127,7 @@ build time: Jul 9 21:28
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120709212835'
+        tag:'20120711210030'
     }, getBaseInfo()));
 
     /**
@@ -4417,26 +4418,37 @@ build time: Jul 9 21:28
                 },
 
                 /****************************
-                 *  UI Component
+                 *  Component
                  ****************************/
-
+                "color":{
+                    requires:['base']
+                },
+                "stylesheet":{
+                    requires:['dom']
+                },
                 "input-selection":{
                     requires:['dom']
                 },
                 "combobox":{
-                  requires:['input-selection','menu']
+                    requires:['input-selection', 'menu']
                 },
                 "button":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "overlay":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "resizable":{
                     requires:["base", "node"]
                 },
+                "separator":{
+                    requires:["component"]
+                },
                 "menu":{
-                    requires:["component", "node"]
+                    requires:["component", "separator"]
+                },
+                "toolbar":{
+                    requires:["component", "separator"]
                 },
                 "menubutton":{
                     requires:["menu", "button"]
@@ -4448,7 +4460,7 @@ build time: Jul 9 21:28
                     requires:["node", "base", "ajax"]
                 },
                 "tree":{
-                    requires:["component", "node"]
+                    requires:["component"]
                 },
                 "suggest":{
                     requires:["dom", "event"]
@@ -4472,10 +4484,10 @@ build time: Jul 9 21:28
                     requires:["node", "component"]
                 },
                 "editor":{
-                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
+                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
                 },
                 "editor/full":{
-                    requires:['htmlparser', 'core', 'overlay','menu','menubutton','button']
+                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
                 }
             }
         });

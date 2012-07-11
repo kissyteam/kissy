@@ -2,7 +2,7 @@
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("toolbar", function (S, Component, Node, undefined) {
+KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
     var KeyCodes = Node.KeyCodes;
 
@@ -250,5 +250,5 @@ KISSY.add("toolbar", function (S, Component, Node, undefined) {
     return Toolbar;
 
 }, {
-    requires:['component', 'node']
+    requires:['component', 'node', 'toolbar/separator']
 });
