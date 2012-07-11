@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 21:16
+build time: Jul 11 21:25
 */
 KISSY.add("waterfall/base",function(f,p,q){function d(){d.superclass.constructor.apply(this,arguments);this._init()}function r(a,c,b,e){var l={},g,i;l.stop=function(){g&&(clearTimeout(g),i=[],a.each(function(a){a.stop()}))};l.start=function(){i=[].concat(f.makeArray(a));0<i.length?function(){var l=+new Date;do{var k=i.shift();c.call(b,k)}while(0<i.length&&50>+new Date-l);0<i.length?g=setTimeout(arguments.callee,25):e&&e.call(b,a)}():e&&e.call(b,a)};return l}function s(){var a=this._containerRegion||
 {};a&&this.get("container").width()===a.width||this.adjust()}function o(){var a=this.get("container").width(),c=this.get("curColHeights");c.length=Math.max(parseInt(a/this.get("colWidth")),this.get("minColCount"));this._containerRegion={width:a};f.each(c,function(a,e){c[e]=0});this.set("colItems",[])}function n(a,c,b,e){var l=a.get("effect"),b=t(b),g=a.get("align"),i=a.get("curColHeights"),h=a.get("container"),k=i.length,j=0,f=a._containerRegion,d=Number.MAX_VALUE;if(k){if(b.hasClass("ks-waterfall-fixed-left"))j=

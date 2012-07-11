@@ -2,7 +2,7 @@
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Item.Render = ItemRender;
@@ -22,7 +22,6 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/submenu',
         'menu/submenuRender',
         'menu/separator',
-        'menu/separatorRender',
         'menu/popupmenu',
         'menu/popupmenuRender',
         'menu/filtermenu'

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 21:16
+build time: Jul 11 21:24
 */
 KISSY.add("imagezoom/base",function(d,h,k,i,m,n,g,j,a){function c(a){return d.require("component/uibase/"+a)}return n.UIBase.extend([c("boxrender"),c("contentboxrender"),c("positionrender"),c("loadingrender"),6==i.ie?c("shimrender"):null,c("align"),c("maskrender"),j],{initializer:function(){var a=this,c;(c=a.image=a.get("imageNode"))&&j.__imgOnLoad(c,function(){a.imageWrap||(a._render(),a._bind())})},destructor:function(){this.imageWrap&&(this.image.insertBefore(this.imageWrap,a),this.imageWrap.remove())},
 show:function(){this.render();this.set("visible",!0)},hide:function(){this.set("visible",!1)},_render:function(){var b=this.image;this.imageWrap=(new g(d.substitute("<span class='{wrapClass}'></span>",{wrapClass:this.get("wrapClass")}))).insertBefore(b,a);this.imageWrap.prepend(b);this.get("showIcon")&&(this.icon=new g(d.substitute("<span class='{iconClass}'></span>",{iconClass:this.get("iconClass")})),this.imageWrap.append(this.icon))},_bind:function(){var b=this,c;b.image.on("mouseenter",function(e){if(b.get("hasZoom")){var f=

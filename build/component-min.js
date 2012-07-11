@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 21:13
+build time: Jul 11 21:21
 */
 KISSY.add("component/base",function(d,f,e){return{Manager:e,UIBase:f,create:function(c,b){var a;if(c&&(a=c.xclass))b&&!c.prefixCls&&(c.prefixCls=b.get("prefixCls")),a=e.getConstructorByXClass(a),c=new a(c);return c}}},{requires:["./uibase","./manager"]});KISSY.add("component",function(d,f,e,c,b,a,g,m){d.mix(f,{Controller:e,Render:c,Container:b,DelegateChildren:a,DecorateChild:m,DecorateChildren:g});return f},{requires:"component/base,component/controller,component/render,component/container,component/delegateChildren,component/decorateChildren,component/decorateChild".split(",")});
 KISSY.add("component/container",function(d,f,e,c){return f.extend([e,c],{})},{requires:["./controller","./delegateChildren","./decorateChildren"]});

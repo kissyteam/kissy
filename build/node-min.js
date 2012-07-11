@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 21:16
+build time: Jul 11 21:24
 */
 KISSY.add("node/anim",function(b,g,e,f,h){function c(b,j,a){for(var d=[],e={},a=a||0;a<j;a++)d.push.apply(d,k[a]);for(a=0;a<d.length;a++)e[d[a]]=b;return e}var k=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]];b.augment(f,{animate:function(){var i=b.makeArray(arguments);b.each(this,function(b){e.apply(h,[b].concat(i)).run()});return this},stop:function(i,j,a){b.each(this,function(d){e.stop(d,i,j,a)});
 return this},pause:function(i,j){b.each(this,function(a){e.pause(a,j)});return this},resume:function(i,j){b.each(this,function(a){e.resume(a,j)});return this},isRunning:function(){for(var b=0;b<this.length;b++)if(e.isRunning(this[b]))return 1;return 0},isPaused:function(){for(var b=0;b<this.length;b++)if(e.isPaused(this[b]))return 1;return 0}});b.each({show:c("show",3),hide:c("hide",3),toggle:c("toggle",3),fadeIn:c("show",3,2),fadeOut:c("hide",3,2),fadeToggle:c("toggle",3,2),slideDown:c("show",1),

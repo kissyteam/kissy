@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 10 21:16
+build time: Jul 11 21:24
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -535,7 +535,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Item.Render = ItemRender;
@@ -555,7 +555,6 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/submenu',
         'menu/submenuRender',
         'menu/separator',
-        'menu/separatorRender',
         'menu/popupmenu',
         'menu/popupmenuRender',
         'menu/filtermenu'
@@ -963,53 +962,26 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, Component, Separator) {
 
     /**
-     * @extends Component.Controller
+     * @extends Separator
      * @class
      * Menu separator.
      * xclass: 'menuseparator'.
      * @memberOf Menu
      * @name Separator
      */
-    var Separator = Component.Controller.extend({
-    }, {
-        ATTRS:/**
-         * @lends Menu.Separator#
-         */
-        {
-
-            /**
-             * Un-focusable.
-             * readonly.
-             * @default false.
-             */
-            focusable:{
-                value:false
-            },
-
-            disabled:{
-                value:true
-            },
-
-            handleMouseEvents:{
-                value:false
-            },
-
-            xrender:{
-                value:SeparatorRender
-            }
-        }
-    }, {
+    var MenuSeparator = Separator.extend({
+    }, {}, {
         xclass:'menuseparator',
         priority:20
     });
 
-    return Separator;
+    return MenuSeparator;
 
 }, {
-    requires:['component', './separatorRender']
+    requires:['component', 'separator']
 });/**
  * @fileOverview menu separator render def
  * @author yiminghe@gmail.com

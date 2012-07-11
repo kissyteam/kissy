@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Menu Test Runner</title>
+<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+<link href="../../../../build/css/base.css" rel="stylesheet"/>
+<link href="../../assets/menu.css" rel="stylesheet"/>
+<link href="../../assets/menuitem.css" rel="stylesheet"/>
+<link href="../../assets/submenu.css" rel="stylesheet"/>
+<script src="../../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../../tools/jasmine/event-simulate.js"></script>
+
+<script src="../../../../build/kissy.js"></script>
+<script src="../../../../build/component.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/filtermenu.js"></script>
+<script src="../../src/filtermenuRender.js"></script>
+<script src="../../src/menu.js"></script>
+<script src="../../src/menuitem.js"></script>
+<script src="../../src/menuitemRender.js"></script>
+<script src="../../src/menuRender.js"></script>
+<script src="../../src/popupmenu.js"></script>
+<script src="../../src/popupmenuRender.js"></script>
+<script src="../../src/separator.js"></script>
+<script src="../../src/separatorRender.js"></script>
+<script src="../../src/submenu.js"></script>
+<script src="../../src/submenuRender.js"></script>
+</head>
+<body>
+<h1>Menu Test Cases</h1>
+<script src="../specs/menu-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function() {
+        jasmine.kissyNext(this.results().failedCount);
+    });
+</script>
+</body>
+</html>
