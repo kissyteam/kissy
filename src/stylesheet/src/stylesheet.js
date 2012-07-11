@@ -4,15 +4,14 @@
  */
 KISSY.add("stylesheet", function (S, DOM) {
 
-
     /**
-     * @class
      * @name StyleSheet
+     * @class
      * Normalize operation about stylesheet
      * @param ownerNode {HTMLElement} style/link element
      */
     function StyleSheet(ownerNode) {
-        this.ownerNode = DOM.get(ownerNode);
+        this['ownerNode'] = DOM.get(ownerNode);
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
         var sheet = ownerNode.sheet || ownerNode.styleSheet;
@@ -48,16 +47,28 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         constructor:StyleSheet,
 
+        /**
+         * Make current stylesheet enabled.
+         * @return {StyleSheet} current StyleSheet instance.
+         */
         enable:function () {
             this.sheet.disabled = false;
             return this;
         },
 
+        /**
+         * Make current stylesheet disabled.
+         * @return {StyleSheet} current StyleSheet instance.
+         */
         disable:function () {
             this.sheet.disabled = true;
             return this;
         },
 
+        /**
+         * Whether current stylesheet is enabled.
+         * @return {Boolean}
+         */
         isEnabled:function () {
             return !this.sheet.disabled;
         },
@@ -66,13 +77,14 @@ KISSY.add("stylesheet", function (S, DOM) {
          * Set sheet's rule by selectorText and css.
          * @param {String} selectorText selector text separated by ,
          * @param {Object} css style declaration object. set value to "" to unset
+         * @example
          * <code>
          *      // set
          *      set("p",{color:'red'})
          *      // unset
          *      set("p",{color:''})
          * </code>
-         * @return {*}
+         * @return {StyleSheet} current StyleSheet instance.
          */
         set:function (selectorText, css) {
             var sheet = this.sheet;
@@ -172,6 +184,7 @@ KISSY.add("stylesheet", function (S, DOM) {
     // # ------------------ private end
 
     return StyleSheet;
+
 }, {
     requires:['dom']
 });

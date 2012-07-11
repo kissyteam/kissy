@@ -65,6 +65,14 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 expect(n2.css("font-size")).toBe("12px");
 
+                // disable
+                styleSheet.disable();
+                expect(n2.css("font-size")).toBe("14px");
+
+                // enable
+                styleSheet.enable();
+                expect(n2.css("font-size")).toBe("12px");
+
                 ret = 1;
             });
 
@@ -138,6 +146,14 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 expect(filter(styleSheet.get())).toBe(filter(".test2 {font-size: 12px;}"));
 
+                expect(n2.css("font-size")).toBe("12px");
+
+                // disable
+                styleSheet.disable();
+                expect(n2.css("font-size")).toBe("14px");
+
+                // enable
+                styleSheet.enable();
                 expect(n2.css("font-size")).toBe("12px");
 
                 ret = 1;
