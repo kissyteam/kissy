@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:24
+build time: Jul 11 21:33
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -982,20 +982,6 @@ KISSY.add("menu/separator", function (S, Component, Separator) {
 
 }, {
     requires:['component', 'separator']
-});/**
- * @fileOverview menu separator render def
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/separatorRender", function (S, Component) {
-
-    return Component.Render.extend({
-        createDom:function () {
-            this.get("el").attr("role", "separator");
-        }
-    });
-
-}, {
-    requires:['component']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
