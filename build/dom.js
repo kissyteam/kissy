@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 14:32
+build time: Jul 12 14:57
 */
 /**
  * @fileOverview dom-attr
@@ -4069,45 +4069,32 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        documentElement = doc.documentElement,
         CONTAIN_MASK = 16,
-        __contains = doc.documentElement.contains ?
-            function (a, b) {
-                if (a.nodeType == DOM.TEXT_NODE) {
-                    return false;
-                }
-                var precondition;
-                if (b.nodeType == DOM.TEXT_NODE) {
-                    b = b.parentNode;
-                    // a 和 b父亲相等也就是返回 true
-                    precondition = true;
-                } else if (b.nodeType == DOM.DOCUMENT_NODE) {
-                    // b === document
-                    // 没有任何元素能包含 document
-                    return false;
-                } else {
-                    // a 和 b 相等返回 false
-                    precondition = a !== b;
-                }
-                // !a.contains => a===document
-                // 注意原生 contains 判断时 a===b 也返回 true
-                return precondition && (a.contains ? a.contains(b) : inDocument(b));
-            } : (
-            doc.documentElement.compareDocumentPosition ?
+        __contains =
+            documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
-                // it can not be true, pathetic browser
-                0
-            ),
-        inDocument = function (node) {
-            while (node) {
-                if (node.nodeName.toLowerCase() == 'html') {
-                    return true;
-                }
-                node = node.parentNode;
-            }
-            return false;
-        };
+                documentElement.contains ?
+                    function (a, b) {
+                        if (a.nodeType == DOM.DOCUMENT_NODE) {
+                            a = a.documentElement;
+                        }
+                        // !a.contains => a===document || text
+                        // 注意原生 contains 判断时 a===b 也返回 true
+                        b = b.parentNode;
+
+                        if (a == b) {
+                            return true;
+                        }
+
+                        if (b && b.nodeType == DOM.ELEMENT_NODE) {
+                            return a.contains && a.contains(b);
+                        } else {
+                            return false;
+                        }
+                    } : 0;
 
 
     S.mix(DOM,

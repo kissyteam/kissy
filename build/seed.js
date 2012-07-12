@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 14:32
+build time: Jul 12 14:57
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 12 14:32
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120712143240';
+        S.__BUILD_TIME = '20120712145745';
     })();
 
     return S;
@@ -4129,7 +4129,7 @@ build time: Jul 12 14:32
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120712143240'
+        tag:'20120712145745'
     }, getBaseInfo()));
 
     /**
