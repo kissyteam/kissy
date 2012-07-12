@@ -1,0 +1,20 @@
+<project name="kison.build" default="build" basedir=".">
+    <description>kison Build File</description>
+
+    <property name="component.name" value="kison"/>
+    <property name="src.dir" location="./src/"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+
+    <target name="concat">
+        <concat destfile="${component.src.dir.tmp}/kison-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="concat,common.build">
+    </target>
+</project>

@@ -1,3 +1,8 @@
+﻿/*
+Copyright 2012, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Jul 12 21:23
+*/
 /**
  * LALR grammar parser
  * @author yiminghe@gmail.com
@@ -631,4 +636,331 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/
  *   - http://www.gnu.org/software/bison/
+ *//**
+ * Item for KISON
+ * @author yiminghe@gmail.com
  */
+KISSY.add("kison/Item", function (S, Base) {
+
+    function Item() {
+        Item.superclass.constructor.apply(this, arguments);
+    }
+
+
+    S.extend(Item, Base, {
+
+        equals:function (other, ignoreLookAhead) {
+            var self = this;
+            if (!other.get("production").equals(self.get("production"))) {
+                return false;
+            }
+            if (other.get("dotPosition") != self.get("dotPosition")) {
+                return false;
+            }
+            if (!ignoreLookAhead) {
+                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        toString:function () {
+            return this.get("production").toString(this.get("dotPosition")) +
+                "," + this.get("lookAhead").join("/");
+        }
+
+    }, {
+        ATTRS:{
+            production:{},
+            dotPosition:{
+                value:0
+            },
+            lookAhead:{
+                value:[]
+            }
+        }
+    });
+
+    return Item;
+}, {
+    requires:['base']
+});/**
+ * Item Set for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/ItemSet", function (S, Base) {
+    function ItemSet() {
+        ItemSet.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(ItemSet, Base, {
+
+        /**
+         * Insert item by order
+         * @param item
+         */
+        addItem:function (item) {
+            var items = this.get("items");
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].get("production").toString() > item.get("production").toString()) {
+                    break;
+                }
+            }
+            items.splice(i, 0, item);
+        },
+
+        size:function () {
+            return this.get("items").length;
+        },
+
+        findItemIndex:function (item) {
+            var oneItems = this.get("items");
+            for (var i = 0; i < oneItems.length; i++) {
+                if (oneItems[i].equals(item)) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        equals:function (other, ignoreLookAhead) {
+            var oneItems = this.get("items"),
+                i,
+                otherItems = other.get("items");
+            if (oneItems.length != otherItems.length) {
+                return false;
+            }
+            for (i = 0; i < oneItems.length; i++) {
+                if (!oneItems[i].equals(otherItems[i], ignoreLookAhead)) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        toString:function () {
+            var ret = [];
+            S.each(this.get("items"), function (item) {
+                ret.push(item.toString());
+            });
+            return ret.join("\n");
+        },
+
+        addReverseGoto:function (symbol, item) {
+            var reverseGotos = this.get("reverseGotos");
+            reverseGotos[symbol] = reverseGotos[symbol] || [];
+            reverseGotos[symbol].push(item);
+        }
+
+    }, {
+        ATTRS:{
+            items:{
+                value:[]
+            },
+            gotos:{
+                value:{}
+            },
+            reverseGotos:{
+                // 多个来源同一个symbol指向自己
+                //{ c: [x,y]}
+                value:{}
+            }
+        }
+    });
+
+    return ItemSet;
+}, {
+    requires:['base']
+});/**
+ * Lexer to scan token.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/Lexer", function (S, Base) {
+
+    var END_TAG = '$EOF';
+
+    function Lexer() {
+        Lexer.superclass.constructor.apply(this, arguments);
+    }
+
+    Lexer.ATTRS = {
+        /**
+         * Input languages
+         * @type String
+         */
+        input:{
+            value:""
+        },
+
+        /**
+         * lex rules.
+         * @type Object[]
+         * @example
+         * [
+         *  {
+         *   regexp:/^\w+/,
+         *   token:'c',
+         *   action:function(match){}
+         *  }
+         * ]
+         */
+        rules:{
+            value:[]
+        }
+
+    };
+
+    S.extend(Lexer, Base, {
+        lex:function () {
+            var self = this,
+                input = self.get("input"),
+                i,
+                rule,
+                m,
+                ret,
+                rules = self.get("rules");
+
+            if (!S.trim(input)) {
+                return {
+                    token:END_TAG
+                };
+            }
+
+            for (i = 0; i < rules.length; i++) {
+                rule = rules[i];
+                if (m = input.match(rule.regexp)) {
+                    ret = rule.action && rule.action(m);
+                    if (ret == undefined) {
+                        ret = {
+                            token:rule.token,
+                            text:m[0]
+                        };
+                    }
+                    input = input.slice(m[0].length);
+                    self.set("input", input);
+                    if (ret.token) {
+                        return ret;
+                    } else {
+                        return self.lex();
+                    }
+                }
+            }
+
+            S.error("no lex rules for :\n" + input)
+        }
+    });
+
+    return Lexer;
+
+}, {
+    requires:['base']
+});/**
+ * NonTerminal Set for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/NonTerminal", function (S, Base) {
+
+    function NonTerminal() {
+        NonTerminal.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(NonTerminal, Base, {
+
+    }, {
+        ATTRS:{
+            productions:{
+                value:[]
+            },
+            firsts:{
+                value:{}
+            },
+            symbol:{
+
+            },
+            nullAble:{
+                value:false
+            }
+        }
+    });
+
+    return NonTerminal;
+
+}, {
+    requires:['base']
+});/**
+ * Production for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/Production", function (S, Base) {
+
+    function Production() {
+        Production.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(Production, Base, {
+
+        equals:function (other) {
+            var self = this;
+            if (!S.equals(other.get("rhs"), self.get("rhs"))) {
+                return false;
+            }
+            return other.get("symbol") == self.get("symbol");
+
+        },
+
+        toString:function (dot) {
+            var rhsStr = "";
+            var rhs = this.get("rhs");
+            S.each(rhs, function (r, index) {
+                if (index == dot) {
+                    rhsStr += ".";
+                }
+                rhsStr += r;
+            });
+            if (dot == rhs.length) {
+                rhsStr += ".";
+            }
+            return this.get("symbol") + "=>" + rhsStr;
+        }
+
+    }, {
+        ATTRS:{
+            firsts:{
+                value:{}
+            },
+            follows:{
+                value:[]
+            },
+            symbol:{},
+            rhs:{
+                value:[]
+            },
+            nullAble:{
+                value:false
+            },
+            action:{
+                // action for this production
+                value:S.noop
+            }
+        }
+    });
+
+    return Production;
+
+}, {
+    requires:['base']
+});/**
+ * Parser generator for kissy.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison", function (S, Grammar, Production, Lexer) {
+
+    var Kison = {};
+    Kison.Grammar = Grammar;
+    Kison.Production = Production;
+    Kison.Lexer = Lexer;
+    return Kison;
+
+}, {
+    requires:['kison/Grammar', 'kison/Production','kison/Lexer']
+});

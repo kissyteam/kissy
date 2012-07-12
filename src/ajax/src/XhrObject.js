@@ -250,6 +250,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             statusText = "success";
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, "error");
                             statusText = "parsererror : " + e;
                         }
                     }

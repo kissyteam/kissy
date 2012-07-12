@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 14:57
+build time: Jul 12 20:46
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 12 14:57
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120712145745';
+        S.__BUILD_TIME = '20120712204609';
     })();
 
     return S;
@@ -4129,7 +4129,7 @@ build time: Jul 12 14:57
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120712145745'
+        tag:'20120712204609'
     }, getBaseInfo()));
 
     /**
@@ -11992,9 +11992,9 @@ KISSY.add("json/json2", function(S, UA) {
     return JSON;
 }, {requires:['ua']});
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 15 17:19
+build time: Jul 12 20:46
 */
 /**
  * @fileOverview form data  serialization util
@@ -12838,6 +12838,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             statusText = "success";
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, "error");
                             statusText = "parsererror : " + e;
                         }
                     }
@@ -13593,7 +13594,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * cross domain request config object
      *
      * @param {String} c.xdr.src <br/>
-     * Default: kissy's flash url
+     * Default: KISSY 's flash url
      * flash sender url
      *
      * @param {String} c.xdr.use <br/>

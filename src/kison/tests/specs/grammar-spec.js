@@ -1,9 +1,10 @@
 /**
- * TC for
+ * TC for KISSY LALR Grammar Parser
  */
 KISSY.use("kison", function (S, Kison) {
     var Production = Kison.Production;
     var Grammar = Kison.Grammar;
+    var Lexer = Kison.Lexer;
 
     describe("grammar", function () {
 
@@ -12,30 +13,30 @@ KISSY.use("kison", function (S, Kison) {
 
             var grammar = new Grammar({
                 productions:[
-                    new Production({
+                    {
                         symbol:"S0",
                         rhs:[
                             "S"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"S",
                         rhs:[
                             "C", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "c", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "d"
                         ]
-                    })
+                    }
                 ],
                 terminals:{
                     "c":1,
@@ -86,30 +87,30 @@ KISSY.use("kison", function (S, Kison) {
 
             var grammar = new Grammar({
                 productions:[
-                    new Production({
+                    {
                         symbol:"S0",
                         rhs:[
                             "S"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"S",
                         rhs:[
                             "C", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "c", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "d"
                         ]
-                    })
+                    }
                 ],
                 terminals:{
                     "c":1,
@@ -127,34 +128,42 @@ KISSY.use("kison", function (S, Kison) {
 
             var grammar = new Grammar({
                 productions:[
-                    new Production({
+                    {
                         symbol:"S0",
                         rhs:[
                             "S"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"S",
                         rhs:[
                             "C", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "c", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "d"
                         ]
-                    })
+                    }
                 ],
-                terminals:{
-                    "c":1,
-                    "d":1
+                lexer:{
+                    rules:[
+                        {
+                            regexp:/^c/,
+                            token:'c'
+                        },
+                        {
+                            regexp:/^d/,
+                            token:'d'
+                        }
+                    ]
                 }
             });
 
@@ -166,34 +175,42 @@ KISSY.use("kison", function (S, Kison) {
 
             var grammar = new Grammar({
                 productions:[
-                    new Production({
+                    {
                         symbol:"S0",
                         rhs:[
                             "S"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"S",
                         rhs:[
                             "C", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "c", "C"
                         ]
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "d"
                         ]
-                    })
+                    }
                 ],
-                terminals:{
-                    "c":1,
-                    "d":1
+                lexer:{
+                    rules:[
+                        {
+                            regexp:/^c/,
+                            token:'c'
+                        },
+                        {
+                            regexp:/^d/,
+                            token:'d'
+                        }
+                    ]
                 }
             });
 
@@ -218,7 +235,7 @@ KISSY.use("kison", function (S, Kison) {
 
             var grammar = new Grammar({
                 productions:[
-                    new Production({
+                    {
                         symbol:"S0",
                         rhs:[
                             "S"
@@ -228,8 +245,8 @@ KISSY.use("kison", function (S, Kison) {
                             ret.push("|_____ " + S + " -> S0");
                             ret.push("");
                         }
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"S",
                         rhs:[
                             "C", "C"
@@ -240,8 +257,8 @@ KISSY.use("kison", function (S, Kison) {
                             ret.push("");
                             return C1 + C2;
                         }
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "c", "C"
@@ -252,8 +269,8 @@ KISSY.use("kison", function (S, Kison) {
                             ret.push("");
                             return c + C;
                         }
-                    }),
-                    new Production({
+                    },
+                    {
                         symbol:"C",
                         rhs:[
                             "d"
@@ -264,11 +281,19 @@ KISSY.use("kison", function (S, Kison) {
                             ret.push("");
                             return d;
                         }
-                    })
+                    }
                 ],
-                terminals:{
-                    "c":1,
-                    "d":1
+                lexer:{
+                    rules:[
+                        {
+                            regexp:/^c/,
+                            token:'c'
+                        },
+                        {
+                            regexp:/^d/,
+                            token:'d'
+                        }
+                    ]
                 }
             });
 
