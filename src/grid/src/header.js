@@ -245,6 +245,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * force every column fit the table's width
              */
             forceFitColumns:function () {
+                
                 var _self = this,
                     columns = _self.getColumns(),
                     width = _self.get('width'),
@@ -260,10 +261,10 @@ KISSY.add('grid/header', function (S, Component, Column) {
                     var adjustCount = 0;
 
                     S.each(columns, function (column) {
-                        if (!column.get('hide') && column.get('resizable')) {
+                        if (column.get('visible') && column.get('resizable')) {
                             adjustCount++;
                         }
-                        if (!column.get('hide') && !column.get('resizable')) {
+                        if (column.get('visible') && !column.get('resizable')) {
                             width -= column.get("el").outerWidth();
                         }
                     });
@@ -271,7 +272,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                     var colWidth = width / adjustCount;
 
                     S.each(columns, function (column) {
-                        if (!column.get('hide') && column.get('resizable')) {
+                        if (column.get('visible') && column.get('resizable')) {
                             var columnEl = column.get("el");
                             var borderWidth =
                                 parseInt(columnEl.css("border-left-width")) || 0 +
@@ -288,6 +289,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
 
                     _self.fire('forceFitWidth');
                 }
+
             },
             /**
              * set the header's inner table's width

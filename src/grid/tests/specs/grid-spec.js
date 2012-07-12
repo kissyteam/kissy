@@ -33,7 +33,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 		tbar : {
 					xclass : 'bar' , 
 					
-					children : [{xtype : 'button',
+					children : [{xclass : 'bar-item-button',
 						elCls : 'bar-test',
 						text : '测试3',
 						listeners : {
@@ -152,12 +152,12 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 				expect(index).toBe(-1);
 				rowEl = tableEl.one('.ks-grid-row');
 				cellEl = body.findCell(cfg.id, rowEl);
-				expect(cellEl).toBe(null);/**/
+				expect(cellEl).toBe(null);
 			});
 		});
 
 		
-/**/
+
 		describe("测试维度配置项", function () {
 			it('测试Grid，设置宽度',function(){
 				var width = 500;
@@ -330,7 +330,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 
 		
 	});
-});
+});/**/
 
 
 KISSY.use('grid/base,grid/store',function(S,Grid,Store){
@@ -400,14 +400,14 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			var height = 500;
 			grid.set('height',height);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
-            grid.set('forceFit',false);
+           /* grid.set('forceFit',false);
             grid.set('width',300);
             waits(100);
             runs(function(){
                 grid.set('width',800);
-            });
+            });*/
              
-		});/**/
+		});
 
 
 	});
