@@ -28,35 +28,7 @@ x({
             action:function (e) {
                 return Number(e);
             }
-        }/*,
-         {
-         symbol:"f",
-         rhs:["e","*","e"],
-         action:function(e1,e2){
-         return e1*e2;
-         }
-         },
-         {
-         symbol:"f",
-         rhs:["e","/","e"],
-         action:function(e1,e2){
-         return e1/e2;
-         }
-         },
-         {
-         symbol:"e",
-         rhs:["(","e",")"],
-         action:function(e){
-         return e;
-         }
-         },
-         {
-         symbol:"e",
-         rhs:["-","e"],
-         action:function(e){
-         return -e;
-         }
-         }*/
+        }
     ],
 
     lexer:{
