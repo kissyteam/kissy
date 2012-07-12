@@ -338,9 +338,13 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     view:1
                 },
 
+                allowTextSelection:{
+                    value:true
+                },
+
                 /**
                  * Whether show combobox trigger.
-                 * Default: true.
+                 * @default true.
                  * @type Boolean
                  */
                 hasTrigger:{
@@ -391,7 +395,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether drop down menu is same width with input.
-                 * Default: true.
+                 * @default true.
                  * @type {Boolean}
                  */
                 matchElWidth:{
@@ -408,7 +412,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether allow multiple input,separated by separator
-                 * Default : false
+                 * @default false
                  * @type Boolean
                  */
                 multiple:{
@@ -416,7 +420,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Separator chars used to separator multiple inputs.
-                 * Default: ;,
+                 * @default ;,
                  * @type String
                  */
                 separator:{
@@ -455,7 +459,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * If separator wrapped by literal chars,separator become normal chars.
-                 * Default : "
+                 * @default "
                  * @type String
                  */
                 literal:{
@@ -464,7 +468,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether align menu with individual token after separated by separator.
-                 * Default : false
+                 * @default false
                  * @type Boolean
                  */
                 alignWithCursor:{
@@ -472,7 +476,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether or not the first row should be highlighted by default.
-                 * Default : false
+                 * @default false
                  * @type Boolean
                  */
                 autoHighlightFirst:{

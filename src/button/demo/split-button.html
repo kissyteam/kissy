@@ -71,6 +71,7 @@
                 content:"",
                 render:'#container',
                 matchElWidth:false,
+                collapseOnClick:true,
                 elCls:'ks-button-collapse-left empty-button',
                 menu:{
                     xclass:'popupmenu',
@@ -88,7 +89,6 @@
                 listeners:{
                     click:function (e) {
                         b.set("content", e.target.get("content"));
-                        this.set("collapsed", true);
                     }
                 }
             }).render();

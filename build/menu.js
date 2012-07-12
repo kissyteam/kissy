@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 28 20:00
+build time: Jul 11 20:50
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -237,7 +237,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
     /**
      * @class
      * Filter Menu for KISSY.
-     * xclass: 'filtermenu'.
+     * xclass: 'filter-menu'.
      * @extends Menu
      * @memberOf Menu
      * @name FilterMenu
@@ -410,6 +410,11 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
              * @lends Menu.FilterMenu#
              */
             {
+
+                allowTextSelection:{
+                    value:true
+                },
+
                 /**
                  * Hit info string
                  * @type String
@@ -446,7 +451,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             }
         }, {
-            xclass:'filtermenu',
+            xclass:'filter-menu',
             priority:20
         });
 
@@ -530,7 +535,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Item.Render = ItemRender;
@@ -550,7 +555,6 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/submenu',
         'menu/submenuRender',
         'menu/separator',
-        'menu/separatorRender',
         'menu/popupmenu',
         'menu/popupmenuRender',
         'menu/filtermenu'
@@ -618,6 +622,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          * @lends Menu.Item#
          */
         {
+            bindUI:function () {
+                this.publish("click", {
+                    bubbles:1
+                });
+            },
 
             /**
              * Handle mouseenter event. Make parent menu to highlight itself.
@@ -667,9 +676,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 if (self.get("checkable")) {
                     self.set("checked", !self.get("checked"));
                 }
-                self.get("parent").fire("click", {
-                    target:self
-                });
+                self.fire("click");
                 return true;
             },
 
@@ -909,7 +916,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.
-                 * Default : false.
+                 * @default false.
                  * @type Boolean
                  */
                 focusable:{
@@ -921,7 +928,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 /**
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
-                 * Default : false.
+                 * @default false.
                  * @type Boolean
                  */
                 autoHideOnMouseLeave:{},
@@ -955,7 +962,7 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, Component, Separator) {
 
     /**
      * @extends Component.Controller
@@ -965,57 +972,16 @@ KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
      * @memberOf Menu
      * @name Separator
      */
-    var Separator = Component.Controller.extend({
-    }, {
-        ATTRS:/**
-         * @lends Menu.Separator#
-         */
-        {
-
-            /**
-             * Un-focusable.
-             * readonly.
-             * Default: false.
-             */
-            focusable:{
-                value:false
-            },
-
-            disabled:{
-                value:true
-            },
-
-            handleMouseEvents:{
-                value:false
-            },
-
-            xrender:{
-                value:SeparatorRender
-            }
-        }
-    }, {
+    var MenuSeparator = Separator.extend({
+    }, {}, {
         xclass:'menuseparator',
         priority:20
     });
 
-    return Separator;
+    return MenuSeparator;
 
 }, {
-    requires:['component', './separatorRender']
-});/**
- * @fileOverview menu separator render def
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/separatorRender", function (S, Component) {
-
-    return Component.Render.extend({
-        createDom:function () {
-            this.get("el").attr("role", "separator");
-        }
-    });
-
-}, {
-    requires:['component']
+    requires:['component', 'separator']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -1026,18 +992,24 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     var KeyCodes = Event.KeyCodes,
         doc = S.Env.host.document,
-        MENU_DELAY = 150;
+        MENU_DELAY = 0.15;
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
+     * @name SubMenu
      * @constructor
-     * @extends Menu.MenuItem
+     * @extends Menu.Item
      * @memberOf Menu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Component.DecorateChild],
+        /**
+         * @lends Menu.SubMenu#
+         */
+        {
 
             /**
              * Bind sub menu events.
+             * Protected for subclass overridden.
              * @protected
              */
             bindSubMenu:function () {
@@ -1052,15 +1024,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 if (parentMenu) {
 
                     parentMenu.on("hide", onParentHide, self);
-
-                    // 子菜单选中后也要通知父级菜单
-                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                    // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("click", function (ev) {
-                        parentMenu.fire("click", {
-                            target:ev.target
-                        });
-                    });
 
                     // if not bind doc click for parent menu
                     // if already bind, then if parent menu hide, menu will hide too
@@ -1110,7 +1073,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // 1. 停止孙子菜单的层层检查，导致 highlighted false 而 buffer 的隐藏
                 // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
-                self.showTimer_ = S.later(showMenu, self.get("menuDelay"), false, self);
+                self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
             },
 
             /**
@@ -1121,7 +1084,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             _uiSetHighlighted:function (e) {
                 var self = this;
                 if (!e) {
-                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay"), false, self);
+                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
                 }
             },
 
@@ -1156,6 +1119,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * it is highlighted.  If the right key is pressed the sub menu takes control
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
+             * Protected for subclass overridden.
              * @param e A key event.
              * @protected
              * @return {Boolean} Whether the event was handled.
@@ -1223,7 +1187,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                             popupmenu = submenu.get("menu");
                         }
                     },
-                    self.get("menuDelay"),
+                    self.get("menuDelay") * 1000,
                     false,
                     self);
             },
@@ -1270,16 +1234,24 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             }
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends Menu.SubMenu#
+             */
+            {
                 /**
-                 * The delay before opening the sub menu in milliseconds.  (This number is
+                 * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
+                 * @default 0.15
                  * @type {number}
                  */
                 menuDelay:{
                     value:MENU_DELAY
                 },
+                /**
+                 * Menu config or instance.
+                 * @type {Menu|Object}
+                 */
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {

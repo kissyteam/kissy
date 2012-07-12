@@ -30,7 +30,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             {
                 /**
                  * Whether this option can be selected.
-                 * Default : true.
+                 * @default true.
                  * @type Boolean
                  */
                 selectable:{

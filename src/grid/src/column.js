@@ -127,7 +127,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(_self.get('parent'));
             },
             /**
              * {Component.Controller#performActionInternal}

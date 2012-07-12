@@ -592,7 +592,6 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(parent);
             },
             _rowClickEvent:function (event) {
                 var _self = this,

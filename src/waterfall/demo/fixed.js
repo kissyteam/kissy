@@ -2,7 +2,7 @@
     var $ = Node.all;
 
     var tpl = Template($('#tpl').html()),
-        nextpage = 1,
+        nextPage = 1,
         waterfall = new Waterfall.Loader({
             container:"#ColumnContainer",
             load:function (success, end) {
@@ -12,7 +12,7 @@
                         'method':'flickr.photos.search',
                         'api_key':'5d93c2e473e39e9307e86d4a01381266',
                         'tags':'rose',
-                        'page':nextpage,
+                        'page':nextPage,
                         'per_page':20,
                         'format':'json'
                     },
@@ -26,18 +26,20 @@
                             end();
                             return;
                         }
+                        var photos=d.photos;
                         // 如果到最后一页了, 也结束加载
-                        nextpage = d.photos.page + 1;
-                        if (nextpage > d.photos.pages) {
+                        nextPage = photos.page + 1;
+                        if (nextPage > photos.pages) {
                             end();
                             return;
                         }
                         // 拼装每页数据
                         var items = [];
-                        S.each(d.photos.photo, function (item) {
+                        S.each(photos.photo, function (item) {
                             item.height = Math.round(Math.random() * (300 - 180) + 180); // fake height
                             items.push(new S.Node(tpl.render(item)));
                         });
+
                         var right = new S.Node('<div class="pin ks-waterfall ks-waterfall-fixed-right">' +
                             '<div style="height: 100px">' +
                             S.guid('always right') +

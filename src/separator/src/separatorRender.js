@@ -1,8 +1,8 @@
 /**
- * @fileOverview menu separator render def
+ * @fileOverview separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separatorRender", function (S, Component) {
+KISSY.add("separator/separatorRender", function (S, Component) {
 
     return Component.Render.extend({
         createDom:function () {

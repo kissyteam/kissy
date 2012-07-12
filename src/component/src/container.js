@@ -19,6 +19,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
          */
         {
 
+
             /**
              * Generate child component from root element.
              * @protected

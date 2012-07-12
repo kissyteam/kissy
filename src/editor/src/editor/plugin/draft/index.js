@@ -114,6 +114,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 ).unselectable().appendTo(holder),
                 versions = new MenuButton({
                     render:holder,
+                    collapseOnClick:true,
                     width:"100px",
                     prefixCls:"ks-editor-",
                     menuCfg:{
@@ -333,7 +334,6 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 editor.set("data", drafts[v].content);
                 editor.execCommand("save");
             }
-            self.versions.set("collapsed", true);
             ev.halt();
         },
 

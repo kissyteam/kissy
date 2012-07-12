@@ -188,6 +188,11 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
              * @lends Menu.FilterMenu#
              */
             {
+
+                allowTextSelection:{
+                    value:true
+                },
+
                 /**
                  * Hit info string
                  * @type String

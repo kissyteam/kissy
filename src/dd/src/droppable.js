@@ -119,7 +119,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         },
 
         /**
-         * groups this droppable object belongs to. Default:true
+         * groups this droppable object belongs to.
+         * @default  true
          * @type Object|Boolean true to match any group
          */
         groups:{

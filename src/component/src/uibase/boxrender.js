@@ -41,7 +41,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
         content:{
         },
 
-        elBefore:{},
+        elBefore:{
+            // better named to renderBefore, too late !
+        },
 
         render:{},
 
@@ -80,9 +82,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
             if (!self.get("srcNode")) {
                 var render = self.get("render"),
                     el = self.get("el"),
-                    elBefore = self.get("elBefore");
-                if (elBefore) {
-                    el.insertBefore(elBefore, undefined);
+                    renderBefore = self.get("elBefore");
+                if (renderBefore) {
+                    el.insertBefore(renderBefore, undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {

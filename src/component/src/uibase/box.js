@@ -67,6 +67,7 @@ KISSY.add('component/uibase/box', function (S) {
          * @type NodeList
          */
         elBefore:{
+            // better named to renderBefore, too late !
             view:1
         },
         /**

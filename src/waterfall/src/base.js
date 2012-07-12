@@ -18,27 +18,35 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         this._init();
     }
 
-
     function timedChunk(items, process, context, callback) {
-        var todo = [].concat(S.makeArray(items)),
-            stopper = {},
-            timer;
-        if (todo.length > 0) {
-            timer = setTimeout(function () {
-                var start = +new Date();
-                do {
-                    var item = todo.shift();
-                    process.call(context, item);
-                } while (todo.length > 0 && (+new Date() - start < 50));
 
-                if (todo.length > 0) {
-                    timer = setTimeout(arguments.callee, 25);
-                } else {
-                    callback && callback.call(context, items);
-                }
-            }, 25);
-        } else {
-            callback && S.later(callback, 0, false, context, [items]);
+        var stopper = {}, timer,todo;
+
+        function start() {
+
+            todo = [].concat(S.makeArray(items));
+
+            if (todo.length > 0) {
+                // 2012-07-10
+                // 第一次不延迟，防止
+                // adjust -> recalculate -> addItem -> adjustItemAction
+                // 打乱了固定在左上角的元素
+                (function () {
+                    var start = +new Date();
+                    do {
+                        var item = todo.shift();
+                        process.call(context, item);
+                    } while (todo.length > 0 && (+new Date() - start < 50));
+
+                    if (todo.length > 0) {
+                        timer = setTimeout(arguments.callee, 25);
+                    } else {
+                        callback && callback.call(context, items);
+                    }
+                })();
+            } else {
+                callback && callback.call(context, items);
+            }
         }
 
         stopper.stop = function () {
@@ -50,6 +58,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 });
             }
         };
+
+        // 启动函数，防止同步时立刻被清掉了
+        stopper.start = start;
 
         return stopper;
     }
@@ -92,7 +103,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Minimum col count of waterfall items.
          * Event window resize to 0.
-         * Default: 1.
+         * @default 1.
          * @type Number
          */
         minColCount:{
@@ -101,7 +112,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is added to container.
-         * Default: { effect:"fadeIn",duration:1 }
+         * @default { effect:"fadeIn",duration:1 }
          * @type Object
          * @example
          * <code>
@@ -139,7 +150,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
-         * Default: { easing:"",duration:1 }
+         * @default { easing:"",duration:1 }
          * @type Object
          * @example
          * <code>
@@ -153,9 +164,11 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     };
 
     function doResize() {
-        var self = this, containerRegion = self._containerRegion || {};
+        var self = this,
+            containerRegion = self._containerRegion || {};
         // 宽度没变就没必要调整
-        if (containerRegion && self.get("container").width() === containerRegion.width) {
+        if (containerRegion &&
+            self.get("container").width() === containerRegion.width) {
             return
         }
         self.adjust();
@@ -304,6 +317,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 var self = this;
                 // 一开始就 adjust 一次，可以对已有静态数据处理
                 doResize.call(self);
+                // windows ie<9
+                //  - 出滚动条就会触发 resize 事件
+                //  - ie<8 出不出滚动条，窗口区域一致
+                //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
                 self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
                 $(win).on("resize", self.__onResize);
             },
@@ -388,7 +405,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     effect = self.get("adjustEffect");
                 }
 
-                return self._adjuster = timedChunk(items, function (item) {
+                self._adjuster = timedChunk(items, function (item) {
                     if (effect) {
                         item.animate({
                                 top:parseInt(item.css("top")) + diff
@@ -401,6 +418,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                         check();
                     }
                 });
+
+                self._adjuster.start();
+
+                return self._adjuster;
             },
 
             /**
@@ -469,9 +490,13 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     return callback && callback.call(self);
                 }
 
-                return self._adjuster = timedChunk(items, function (item) {
+                self._adjuster = timedChunk(items, function (item) {
                     adjustItemAction(self, false, item, check);
                 });
+
+                self._adjuster.start();
+
+                return self._adjuster;
             },
 
             /**
@@ -497,6 +522,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                         });
                     });
 
+                self._adder.start();
+
                 return self._adder;
             },
 
@@ -515,6 +542,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     requires:['node', 'base']
 });
 /**
+ * 2012-07-10
+ *  - 注意滚动条在 ie 下导致的重新调整
+ *  - timeChunk 第一次不 setTimeout
+ *
  * 2012-03-21 yiminghe@gmail.com
  *  - 增加动画特效
  *  - 增加删除/调整接口

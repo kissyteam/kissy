@@ -44,34 +44,6 @@
         }
     }
 
-
-    function getPackageInfo(self, mod) {
-
-        var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
-            pName = "",
-            packageDesc;
-
-        for (var p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
-            }
-        }
-
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self}));
-
-        mod.packageInfo = packageDesc;
-
-        return packageDesc;
-    }
-
-
     var isWebKit = !!ua.match(/AppleWebKit/);
 
     S.mix(utils, {
@@ -214,15 +186,6 @@
                 name:modName,
                 SS:self
             }, cfg));
-
-            var packageInfo = getPackageInfo(self, mod),
-                path = defaultComponentJsName(modName, packageInfo);
-
-            // 用户配置的 path优先
-            S.mix(mod, {
-                path:path,
-                packageInfo:packageInfo
-            }, false);
 
             return mod;
         },
@@ -392,20 +355,6 @@
         }()
 
     });
-
-    function defaultComponentJsName(m, packageInfo) {
-        var suffix = ".js",
-            match;
-        if (match = m.match(/(.+)(\.css)$/i)) {
-            suffix = match[2];
-            m = match[1];
-        }
-        var min = "-min";
-        if (packageInfo.isDebug()) {
-            min = "";
-        }
-        return m + min + suffix;
-    }
 
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,

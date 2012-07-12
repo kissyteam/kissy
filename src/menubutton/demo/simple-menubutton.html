@@ -6,11 +6,9 @@
 <link href="../../../build/css/base.css" rel="stylesheet"/>
 <link href="../../button/assets/custombutton.css" rel="stylesheet"/>
 <link href="../assets/menubutton.css" rel="stylesheet"/>
-<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
 <link href="../../menu/assets/menu.css" rel="stylesheet"/>
 <link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
 <link href="../../menu/assets/submenu.css" rel="stylesheet"/>
-<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
 <style>
     .ks-menu {
         background: white;
@@ -155,6 +153,7 @@
                     content:"淘宝网",
                     describedby:"describe",
                     matchElWidth:false,
+                    collapseOnClick:true,
                     menu:{
                         width:200,
                         xclass:'popupmenu',
@@ -175,7 +174,6 @@
 
                 bbbbb.on("click", function (ev) {
                     S.log("selected : " + ev.target.get("content"));
-                    bbbbb.set("collapsed", true);
                 });
 
                 $('#destroy1').on("click", function () {

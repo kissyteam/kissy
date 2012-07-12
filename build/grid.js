@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 17:36
+build time: Jul 12 17:40
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -1014,7 +1014,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(_self.get('parent'));
             },
             /**
              * {Component.Controller#performActionInternal}
@@ -1865,7 +1864,6 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                         bubbles:1
                     });
                 });
-                _self.addTarget(parent);
             },
             _rowClickEvent:function (event) {
                 var _self = this,

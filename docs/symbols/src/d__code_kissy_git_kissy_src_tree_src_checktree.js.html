@@ -28,26 +28,30 @@
 <span id='line21' class='line'> 21</span>              */</span><span class="WHIT">
 <span id='line22' class='line'> 22</span> </span><span class="WHIT">            </span><span class="NAME">expandAll</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line23' class='line'> 23</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckTree.superclass.expandAll.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line24' class='line'> 24</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line25' class='line'> 25</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line26' class='line'> 26</span> </span><span class="WHIT">            </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="COMM">/**
-<span id='line27' class='line'> 27</span>              * @lends Tree.CheckTree#
-<span id='line28' class='line'> 28</span>              */</span><span class="WHIT">
-<span id='line29' class='line'> 29</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line30' class='line'> 30</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line31' class='line'> 31</span>                  * Readonly. Render class.
-<span id='line32' class='line'> 32</span>                  * @type function
-<span id='line33' class='line'> 33</span>                  */</span><span class="WHIT">
-<span id='line34' class='line'> 34</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line35' class='line'> 35</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">CheckTreeRender</span><span class="WHIT">
-<span id='line36' class='line'> 36</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line37' class='line'> 37</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line38' class='line'> 38</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'check-tree'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line40' class='line'> 40</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">40</span><span class="WHIT">
-<span id='line41' class='line'> 41</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line42' class='line'> 42</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckTree</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line43' class='line'> 43</span> 
-<span id='line44' class='line'> 44</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line45' class='line'> 45</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checknode'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checktreeRender'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./treemgr'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line46' class='line'> 46</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> 
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">            </span><span class="NAME">_uiSetFocused</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">                </span><span class="COMM">// check tree 没有 selectedItem 概念，也没有选中状态</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">            </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="COMM">/**
+<span id='line31' class='line'> 31</span>              * @lends Tree.CheckTree#
+<span id='line32' class='line'> 32</span>              */</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line35' class='line'> 35</span>                  * Readonly. Render class.
+<span id='line36' class='line'> 36</span>                  * @type function
+<span id='line37' class='line'> 37</span>                  */</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">CheckTreeRender</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'check-tree'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">40</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CheckTree</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> 
+<span id='line48' class='line'> 48</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checknode'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./checktreeRender'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./treemgr'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line50' class='line'> 50</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

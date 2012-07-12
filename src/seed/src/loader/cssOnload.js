@@ -37,6 +37,7 @@
                     exName,
                     loaded = 0;
                 if (utils.isWebKit) {
+                    // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
                     if (node['sheet']) {
                         S.log("webkit loaded : " + url);
                         loaded = 1;

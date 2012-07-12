@@ -217,5 +217,16 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.contains(document.body, document)).toBe(false);
         });
 
+        // https://github.com/kissyteam/kissy/issues/183
+        it("contains works for non-document node", function () {
+            var newNode = DOM.create("<div><div></div></div>");
+
+            expect(DOM.contains(document, newNode)).toBe(false);
+            expect(DOM.contains(document.body, newNode)).toBe(false);
+
+            expect(DOM.contains(document, newNode.firstChild)).toBe(false);
+            expect(DOM.contains(document.body, newNode.firstChild)).toBe(false);
+        });
+
     });
 });

@@ -22,7 +22,7 @@
 <span id='line15' class='line'> 15</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span id='line16' class='line'> 16</span>      * @class
 <span id='line17' class='line'> 17</span>      * Filter Menu for KISSY.
-<span id='line18' class='line'> 18</span>      * xclass: 'filtermenu'.
+<span id='line18' class='line'> 18</span>      * xclass: 'filter-menu'.
 <span id='line19' class='line'> 19</span>      * @extends Menu
 <span id='line20' class='line'> 20</span>      * @memberOf Menu
 <span id='line21' class='line'> 21</span>      * @name FilterMenu
@@ -195,47 +195,52 @@
 <span id='line188' class='line'>188</span>              * @lends Menu.FilterMenu#
 <span id='line189' class='line'>189</span>              */</span><span class="WHIT">
 <span id='line190' class='line'>190</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line191' class='line'>191</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line192' class='line'>192</span>                  * Hit info string
-<span id='line193' class='line'>193</span>                  * @type String
-<span id='line194' class='line'>194</span>                  */</span><span class="WHIT">
-<span id='line195' class='line'>195</span> </span><span class="WHIT">                </span><span class="NAME">label</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line196' class='line'>196</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
-<span id='line197' class='line'>197</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line198' class='line'>198</span> 
-<span id='line199' class='line'>199</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line200' class='line'>200</span>                  * Filter string
-<span id='line201' class='line'>201</span>                  * @type String
-<span id='line202' class='line'>202</span>                  */</span><span class="WHIT">
-<span id='line203' class='line'>203</span> </span><span class="WHIT">                </span><span class="NAME">filterStr</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line204' class='line'>204</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line205' class='line'>205</span> 
-<span id='line206' class='line'>206</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line207' class='line'>207</span>                  * user entered string list when allowMultiple.
-<span id='line208' class='line'>208</span>                  * @type String[]
-<span id='line209' class='line'>209</span>                  */</span><span class="WHIT">
-<span id='line210' class='line'>210</span> </span><span class="WHIT">                </span><span class="NAME">enteredItems</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line211' class='line'>211</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line212' class='line'>212</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line213' class='line'>213</span> 
-<span id='line214' class='line'>214</span> </span><span class="WHIT">                </span><span class="COMM">/**
-<span id='line215' class='line'>215</span>                  * Whether to allow input multiple.
-<span id='line216' class='line'>216</span>                  * @type Boolean
-<span id='line217' class='line'>217</span>                  */</span><span class="WHIT">
-<span id='line218' class='line'>218</span> </span><span class="WHIT">                </span><span class="NAME">allowMultiple</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line219' class='line'>219</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
-<span id='line220' class='line'>220</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line221' class='line'>221</span> 
-<span id='line222' class='line'>222</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
-<span id='line223' class='line'>223</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">FilterMenuRender</span><span class="WHIT">
-<span id='line224' class='line'>224</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line225' class='line'>225</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span id='line226' class='line'>226</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line227' class='line'>227</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'filtermenu'</span><span class="PUNC">,</span><span class="WHIT">
-<span id='line228' class='line'>228</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="WHIT">
-<span id='line229' class='line'>229</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line230' class='line'>230</span> 
-<span id='line231' class='line'>231</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">FilterMenu</span><span class="PUNC">;</span><span class="WHIT">
-<span id='line232' class='line'>232</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line233' class='line'>233</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./filtermenuRender'</span><span class="PUNC">]</span><span class="WHIT">
-<span id='line234' class='line'>234</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span id='line191' class='line'>191</span> 
+<span id='line192' class='line'>192</span> </span><span class="WHIT">                </span><span class="NAME">allowTextSelection</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line193' class='line'>193</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line194' class='line'>194</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line195' class='line'>195</span> 
+<span id='line196' class='line'>196</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line197' class='line'>197</span>                  * Hit info string
+<span id='line198' class='line'>198</span>                  * @type String
+<span id='line199' class='line'>199</span>                  */</span><span class="WHIT">
+<span id='line200' class='line'>200</span> </span><span class="WHIT">                </span><span class="NAME">label</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line201' class='line'>201</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line202' class='line'>202</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line203' class='line'>203</span> 
+<span id='line204' class='line'>204</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line205' class='line'>205</span>                  * Filter string
+<span id='line206' class='line'>206</span>                  * @type String
+<span id='line207' class='line'>207</span>                  */</span><span class="WHIT">
+<span id='line208' class='line'>208</span> </span><span class="WHIT">                </span><span class="NAME">filterStr</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line209' class='line'>209</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line210' class='line'>210</span> 
+<span id='line211' class='line'>211</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line212' class='line'>212</span>                  * user entered string list when allowMultiple.
+<span id='line213' class='line'>213</span>                  * @type String[]
+<span id='line214' class='line'>214</span>                  */</span><span class="WHIT">
+<span id='line215' class='line'>215</span> </span><span class="WHIT">                </span><span class="NAME">enteredItems</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line216' class='line'>216</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line217' class='line'>217</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line218' class='line'>218</span> 
+<span id='line219' class='line'>219</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line220' class='line'>220</span>                  * Whether to allow input multiple.
+<span id='line221' class='line'>221</span>                  * @type Boolean
+<span id='line222' class='line'>222</span>                  */</span><span class="WHIT">
+<span id='line223' class='line'>223</span> </span><span class="WHIT">                </span><span class="NAME">allowMultiple</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line224' class='line'>224</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line225' class='line'>225</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line226' class='line'>226</span> 
+<span id='line227' class='line'>227</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line228' class='line'>228</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">FilterMenuRender</span><span class="WHIT">
+<span id='line229' class='line'>229</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line230' class='line'>230</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line231' class='line'>231</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line232' class='line'>232</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'filter-menu'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line233' class='line'>233</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">20</span><span class="WHIT">
+<span id='line234' class='line'>234</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line235' class='line'>235</span> 
+<span id='line236' class='line'>236</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">FilterMenu</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line237' class='line'>237</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line238' class='line'>238</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'./base'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'./filtermenuRender'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line239' class='line'>239</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

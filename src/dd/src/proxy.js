@@ -27,7 +27,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
      */
     {
         /**
-         * how to get the proxy node. default:clone the node itself deeply.
+         * how to get the proxy node.
+         * @default clone the node itself deeply.
          * @type {Function}
          */
         node:{
@@ -36,7 +37,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
             }
         },
         /**
-         * destroy the proxy node at the end of this drag. default:false
+         * destroy the proxy node at the end of this drag.
+         * @default false
          * @type {Boolean}
          */
         destroyOnEnd:{
@@ -44,7 +46,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
         },
 
         /**
-         * move the original node at the end of the drag. default:true
+         * move the original node at the end of the drag.
+         * @default true
          * @type {Boolean}
          */
         moveOnEnd:{

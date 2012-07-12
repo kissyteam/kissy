@@ -2,51 +2,24 @@
  * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/separator", function (S, Component, SeparatorRender) {
+KISSY.add("menu/separator", function (S, Component, Separator) {
 
     /**
-     * @extends Component.Controller
+     * @extends Separator
      * @class
      * Menu separator.
      * xclass: 'menuseparator'.
      * @memberOf Menu
      * @name Separator
      */
-    var Separator = Component.Controller.extend({
-    }, {
-        ATTRS:/**
-         * @lends Menu.Separator#
-         */
-        {
-
-            /**
-             * Un-focusable.
-             * readonly.
-             * Default: false.
-             */
-            focusable:{
-                value:false
-            },
-
-            disabled:{
-                value:true
-            },
-
-            handleMouseEvents:{
-                value:false
-            },
-
-            xrender:{
-                value:SeparatorRender
-            }
-        }
-    }, {
+    var MenuSeparator = Separator.extend({
+    }, {}, {
         xclass:'menuseparator',
         priority:20
     });
 
-    return Separator;
+    return MenuSeparator;
 
 }, {
-    requires:['component', './separatorRender']
+    requires:['component', 'separator']
 });
