@@ -255,7 +255,7 @@
                     var mod = self.getModInfo(modName);
                     var packageInfo = mod.getPackageInfo();
                     var packageBase = packageInfo.getBase();
-                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
+                    var type = utils.isCss(mod.getPath()) ? "css" : "js", mods;
                     var packageName = packageInfo.getName();
                     combos[packageBase] = combos[packageBase] || {};
                     mods = combos[packageBase][type] = combos[packageBase][type] || [];

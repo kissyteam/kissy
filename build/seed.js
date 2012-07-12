@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 11 21:00
+build time: Jul 12 14:03
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 11 21:00
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120711210030';
+        S.__BUILD_TIME = '20120712140345';
     })();
 
     return S;
@@ -2010,7 +2010,8 @@ build time: Jul 11 21:00
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.SS.Config.tag;
+                var self = this;
+                return self.tag || self.SS.Config.tag;
             },
 
             /**
@@ -2026,7 +2027,8 @@ build time: Jul 11 21:00
              * @return {String}
              */
             getBase:function () {
-                return this.base || this.SS.Config.base;
+                var self = this;
+                return self.base || self.SS.Config.base;
             },
 
             /**
@@ -2034,8 +2036,8 @@ build time: Jul 11 21:00
              * @return {Boolean}
              */
             isDebug:function () {
-                var debug = this.debug;
-                return debug === undefined ? this.SS.Config.debug : debug;
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
             },
 
             /**
@@ -2043,7 +2045,8 @@ build time: Jul 11 21:00
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.SS.Config.charset;
+                var self = this;
+                return self.charset || self.SS.Config.charset;
             },
 
             /**
@@ -2051,13 +2054,12 @@ build time: Jul 11 21:00
              * @return {Boolean}
              */
             isCombine:function () {
-                var combine = this.combine;
-                return combine === undefined ? this.SS.Config.combine : combine;
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
             }
         });
 
     Loader.Package = Package;
-
 
     /**
      * @class KISSY Module constructor
@@ -2089,8 +2091,16 @@ build time: Jul 11 21:00
                 return self.fullpath || (self.fullpath =
                     Loader.Utils.getMappedPath(self.SS,
                         self.packageInfo.getBase() +
-                            self.path +
-                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
+                            self.getPath() +
+                            ((t = self.getTag()) ?
+                                ("?t=" + encodeURIComponent(t)) :
+                                "")));
+            },
+
+            getPath:function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
             },
 
             /**
@@ -2113,7 +2123,9 @@ build time: Jul 11 21:00
              * @return {Object}
              */
             getPackageInfo:function () {
-                return this.packageInfo;
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, this));
             },
 
             /**
@@ -2121,7 +2133,8 @@ build time: Jul 11 21:00
              * @return {String}
              */
             getTag:function () {
-                return (this.tag || this.packageInfo.getTag());
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
             },
 
             /**
@@ -2129,11 +2142,51 @@ build time: Jul 11 21:00
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.getCharset();
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
             }
         });
 
     Loader.Module = Module;
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            suffix = ".js",
+            min = "-min",
+            match;
+        if (match = name.match(/(.+)(\.css)$/i)) {
+            suffix = match[2];
+            name = match[1];
+        }
+        if (m.getPackageInfo().isDebug()) {
+            min = "";
+        }
+        return name + min + suffix;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = "",
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                if (S.startsWith(modName, p) &&
+                    p.length > pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
+
+        return packageDesc;
+    }
 
     // 模块(mod)状态
     Loader.STATUS = {
@@ -2263,34 +2316,6 @@ build time: Jul 11 21:00
             return s
         }
     }
-
-
-    function getPackageInfo(self, mod) {
-
-        var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
-            pName = "",
-            packageDesc;
-
-        for (var p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
-            }
-        }
-
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self}));
-
-        mod.packageInfo = packageDesc;
-
-        return packageDesc;
-    }
-
 
     var isWebKit = !!ua.match(/AppleWebKit/);
 
@@ -2434,15 +2459,6 @@ build time: Jul 11 21:00
                 name:modName,
                 SS:self
             }, cfg));
-
-            var packageInfo = getPackageInfo(self, mod),
-                path = defaultComponentJsName(modName, packageInfo);
-
-            // 用户配置的 path优先
-            S.mix(mod, {
-                path:path,
-                packageInfo:packageInfo
-            }, false);
 
             return mod;
         },
@@ -2612,20 +2628,6 @@ build time: Jul 11 21:00
         }()
 
     });
-
-    function defaultComponentJsName(m, packageInfo) {
-        var suffix = ".js",
-            match;
-        if (match = m.match(/(.+)(\.css)$/i)) {
-            suffix = match[2];
-            m = match[1];
-        }
-        var min = "-min";
-        if (packageInfo.isDebug()) {
-            min = "";
-        }
-        return m + min + suffix;
-    }
 
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
@@ -3818,7 +3820,7 @@ build time: Jul 11 21:00
                     var mod = self.getModInfo(modName);
                     var packageInfo = mod.getPackageInfo();
                     var packageBase = packageInfo.getBase();
-                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
+                    var type = utils.isCss(mod.getPath()) ? "css" : "js", mods;
                     var packageName = packageInfo.getName();
                     combos[packageBase] = combos[packageBase] || {};
                     mods = combos[packageBase][type] = combos[packageBase][type] || [];
@@ -4127,7 +4129,7 @@ build time: Jul 11 21:00
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120711210030'
+        tag:'20120712140345'
     }, getBaseInfo()));
 
     /**

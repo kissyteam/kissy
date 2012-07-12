@@ -45,7 +45,8 @@
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.SS.Config.tag;
+                var self = this;
+                return self.tag || self.SS.Config.tag;
             },
 
             /**
@@ -61,7 +62,8 @@
              * @return {String}
              */
             getBase:function () {
-                return this.base || this.SS.Config.base;
+                var self = this;
+                return self.base || self.SS.Config.base;
             },
 
             /**
@@ -69,8 +71,8 @@
              * @return {Boolean}
              */
             isDebug:function () {
-                var debug = this.debug;
-                return debug === undefined ? this.SS.Config.debug : debug;
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
             },
 
             /**
@@ -78,7 +80,8 @@
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.SS.Config.charset;
+                var self = this;
+                return self.charset || self.SS.Config.charset;
             },
 
             /**
@@ -86,13 +89,12 @@
              * @return {Boolean}
              */
             isCombine:function () {
-                var combine = this.combine;
-                return combine === undefined ? this.SS.Config.combine : combine;
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
             }
         });
 
     Loader.Package = Package;
-
 
     /**
      * @class KISSY Module constructor
@@ -124,8 +126,16 @@
                 return self.fullpath || (self.fullpath =
                     Loader.Utils.getMappedPath(self.SS,
                         self.packageInfo.getBase() +
-                            self.path +
-                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
+                            self.getPath() +
+                            ((t = self.getTag()) ?
+                                ("?t=" + encodeURIComponent(t)) :
+                                "")));
+            },
+
+            getPath:function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
             },
 
             /**
@@ -148,7 +158,9 @@
              * @return {Object}
              */
             getPackageInfo:function () {
-                return this.packageInfo;
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, this));
             },
 
             /**
@@ -156,7 +168,8 @@
              * @return {String}
              */
             getTag:function () {
-                return (this.tag || this.packageInfo.getTag());
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
             },
 
             /**
@@ -164,11 +177,51 @@
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.getCharset();
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
             }
         });
 
     Loader.Module = Module;
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            suffix = ".js",
+            min = "-min",
+            match;
+        if (match = name.match(/(.+)(\.css)$/i)) {
+            suffix = match[2];
+            name = match[1];
+        }
+        if (m.getPackageInfo().isDebug()) {
+            min = "";
+        }
+        return name + min + suffix;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = "",
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                if (S.startsWith(modName, p) &&
+                    p.length > pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
+
+        return packageDesc;
+    }
 
     // 模块(mod)状态
     Loader.STATUS = {
