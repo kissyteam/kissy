@@ -25,6 +25,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                             return true;
                         }
 
+                        // when b is document, a.contains(b) 不支持的接口 in ie
                         if (b && b.nodeType == DOM.ELEMENT_NODE) {
                             return a.contains && a.contains(b);
                         } else {
