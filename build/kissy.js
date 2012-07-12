@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 14:03
+build time: Jul 12 14:32
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 12 14:03
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120712140345';
+        S.__BUILD_TIME = '20120712143240';
     })();
 
     return S;
@@ -4129,7 +4129,7 @@ build time: Jul 12 14:03
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120712140345'
+        tag:'20120712143240'
     }, getBaseInfo()));
 
     /**
@@ -4788,9 +4788,9 @@ KISSY.add("ua", function (S, UA) {
     requires:["ua/extra", "ua/css"]
 });
 /*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 25 12:37
+build time: Jul 12 14:32
 */
 /**
  * @fileOverview dom-attr
@@ -8879,15 +8879,24 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 }
                 // !a.contains => a===document
                 // 注意原生 contains 判断时 a===b 也返回 true
-                return precondition && (a.contains ? a.contains(b) : true);
+                return precondition && (a.contains ? a.contains(b) : inDocument(b));
             } : (
             doc.documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
-                // it can not be true , pathetic browser
+                // it can not be true, pathetic browser
                 0
-            );
+            ),
+        inDocument = function (node) {
+            while (node) {
+                if (node.nodeName.toLowerCase() == 'html') {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        };
 
 
     S.mix(DOM,
