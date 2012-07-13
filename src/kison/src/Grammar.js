@@ -573,7 +573,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
                     case ACCEPT_TYPE:
 
-                        return true;
+                        return $$;
                 }
 
             }

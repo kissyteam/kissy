@@ -4,7 +4,7 @@ x({
             symbol:"expressions",
             rhs:["e"],
             action:function (e) {
-                alert(e);
+                return e;
             }
         },
 

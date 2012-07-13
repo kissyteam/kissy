@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 21:23
+build time: Jul 13 10:24
 */
 /**
  * LALR grammar parser
@@ -578,7 +578,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
                     case ACCEPT_TYPE:
 
-                        return true;
+                        return $$;
                 }
 
             }

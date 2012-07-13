@@ -39,8 +39,9 @@
         $("#p").on("click", function () {
             var start = S.now();
             var g = new KISON.Grammar(eval(S.trim($("#grammar").val())));
-            g.parse($("#source").val());
-            alert("耗时: " + (S.now() - start) + "毫秒")
+            var ret=g.parse($("#source").val());
+            alert("耗时: " + (S.now() - start) + "毫秒");
+            alert("最终结果："+ret);
         });
     });
 </script>
