@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 15 17:23
+build time: Jul 16 16:38
 */
 /**
  * @fileOverview accordion aria support
@@ -2522,10 +2522,10 @@ KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
 
                 if (effect == 'scrollx') {
                     prop = "left";
-                    realStep = Math.floor(viewSize[0] / (offsetXX = panels[0].offsetWidth));
+                    realStep = Math.floor(viewSize[0] / (offsetXX = DOM.outerWidth(panels[0], true)));
                 } else if (effect == 'scrolly') {
                     prop = "top";
-                    realStep = Math.floor(viewSize[1] / (offsetXX = panels[0].offsetHeight));
+                    realStep = Math.floor(viewSize[1] / (offsetXX = DOM.outerHeight(panels[0], true)));
                 }
 
                 if (realStep <= config.steps) {
@@ -2536,26 +2536,28 @@ KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
                 lastIndex = panels.length - realStep + 1;
 
                 self.on("beforeSwitch", function (e) {
-                    var toIndex = e.toIndex;
+                    var toIndex = e.toIndex,
+                        gap, v = {
+                            "position":"relative"
+                        };
                     if (toIndex >= lastIndex) {
-                        var gap = Math.abs(toIndex - lastIndex);
-                        DOM.css(panels[gap], "position", "relative");
-                        DOM.css(panels[gap], prop, totalXX);
+                        gap = Math.abs(toIndex - lastIndex);
+                        v[prop] = totalXX;
+                        DOM.css(panels[gap], v);
                     } else if (!toIndex) {
-                        DOM.css(panels[realStep - 1], {
-                            position:"relative"
-                        });
-                        DOM.css(panels[realStep - 1], prop, totalXX);
+                        v[prop] = totalXX;
+                        DOM.css(panels[realStep - 1], v);
                     }
                 });
 
                 self.on("switch", function (e) {
                     if (e.currentIndex == 0) {
-                        for (var i = 1; i < realStep; i++) {
-                            DOM.css(panels[i], {
-                                position:""
-                            });
-                            DOM.css(panels[i], prop, "");
+                        var i, v = {
+                            position:''
+                        };
+                        v[prop] = "";
+                        for (i = 1; i < realStep; i++) {
+                            DOM.css(panels[i], v);
                         }
                     }
                 });

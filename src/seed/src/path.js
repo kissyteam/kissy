@@ -6,7 +6,8 @@
 (function (S) {
 
     /**
-     * @namespace Path
+     * @namespace
+     * @name Path
      * @memberOf KISSY
      */
     var Path = {},
@@ -14,11 +15,6 @@
         splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
     KISSY.Path = Path;
-
-    function splitPath(filename) {
-        var m = filename.match(splitPathRe) || [];
-        return [m[1] || "", m[2] || "", m[3] || "", m[4] || ""];
-    }
 
     /**
      * Remove .. and . in path array
@@ -83,7 +79,6 @@
                 resolvedPathStr = normalizeArray(resolvedPath, !absolute).join("/");
 
                 return (absolute ? "/" : "" + resolvedPathStr) || ".";
-
             },
 
             /**
@@ -170,7 +165,52 @@
                 path = path.join("/");
 
                 return path;
+            },
 
+            /**
+             * Get base name of path
+             * @param {String} path
+             * @param {String} [ext] ext to be stripped from result returned.
+             * @return {String}
+             */
+            basename:function (path, ext) {
+                var result = path.match(splitPathRe) || [];
+                result = result[2];
+                if (result && result.slice(-1 * ext.length) == ext) {
+                    result = result.slice(0, -1 * ext.length);
+                }
+                return result;
+            },
+
+            /**
+             * Get dirname of path
+             * @return {String}
+             */
+            dirname:function (path) {
+                var result = path.match(splitPathRe) || [],
+                    root = result[0],
+                    dir = result[1];
+
+                if (!root && !dir) {
+                    // No dirname
+                    return '.';
+                }
+
+                if (dir) {
+                    // It has a dirname, strip trailing slash
+                    dir = dir.substring(0, dir.length - 1);
+                }
+
+                return root + dir;
+            },
+
+            /**
+             * Get extension name of file in path
+             * @param {String} path
+             * @return {String}
+             */
+            extname:function (path) {
+                return (path.match(splitPathRe) || [])[3];
             }
 
         });
