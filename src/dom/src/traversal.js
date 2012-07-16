@@ -258,6 +258,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     // 获取元素 elem 的 siblings, 不包括自身
     function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
+            tmp,
+            i,
+            el,
             elem = DOM.get(selector),
             parentNode = elem;
 
@@ -266,11 +269,16 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         }
 
         if (parentNode) {
-            ret = S.makeArray(parentNode.childNodes);
-            if (!allowText) {
-                ret = DOM.filter(ret, function (el) {
-                    return el.nodeType == 1;
-                });
+            tmp = S.makeArray(parentNode.childNodes);
+            for (i = 0; i < tmp.length; i++) {
+                el = tmp[i];
+                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                    continue;
+                }
+                if (el == elem) {
+                    continue;
+                }
+                ret.push(el);
             }
             if (filter) {
                 ret = DOM.filter(ret, filter);

@@ -124,8 +124,8 @@ KISSY.use("dom", function (S, DOM) {
             DOM.append(div, "body");
             var cs = div.childNodes;
 
-            expect(DOM.siblings(cs[2]).length).toBe(2);
-            expect(DOM.siblings(cs[2], undefined, 1).length).toBe(cs.length);
+            expect(DOM.siblings(cs[2]).length).toBe(1);
+            expect(DOM.siblings(cs[2], undefined, 1).length).toBe(2);
 
             DOM.remove(div);
         });
@@ -169,8 +169,8 @@ KISSY.use("dom", function (S, DOM) {
 
         it("siblings works", function () {
             var t = DOM.get('#test-prev');
-
-            expect(DOM.siblings(t).length).toBe(4);
+            // not include itself
+            expect(DOM.siblings(t).length).toBe(3);
 
             expect(DOM.siblings(t, '.test-none').length).toBe(0);
 
