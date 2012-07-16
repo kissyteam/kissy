@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview form data  serialization util
@@ -845,6 +845,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             statusText = "success";
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, "error");
                             statusText = "parsererror : " + e;
                         }
                     }

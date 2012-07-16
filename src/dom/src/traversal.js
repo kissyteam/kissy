@@ -5,36 +5,33 @@
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        documentElement = doc.documentElement,
         CONTAIN_MASK = 16,
-        __contains = doc.documentElement.contains ?
-            function (a, b) {
-                if (a.nodeType == DOM.TEXT_NODE) {
-                    return false;
-                }
-                var precondition;
-                if (b.nodeType == DOM.TEXT_NODE) {
-                    b = b.parentNode;
-                    // a 和 b父亲相等也就是返回 true
-                    precondition = true;
-                } else if (b.nodeType == DOM.DOCUMENT_NODE) {
-                    // b === document
-                    // 没有任何元素能包含 document
-                    return false;
-                } else {
-                    // a 和 b 相等返回 false
-                    precondition = a !== b;
-                }
-                // !a.contains => a===document
-                // 注意原生 contains 判断时 a===b 也返回 true
-                return precondition && (a.contains ? a.contains(b) : true);
-            } : (
-            doc.documentElement.compareDocumentPosition ?
+        __contains =
+            documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
-                // it can not be true , pathetic browser
-                0
-            );
+                documentElement.contains ?
+                    function (a, b) {
+                        if (a.nodeType == DOM.DOCUMENT_NODE) {
+                            a = a.documentElement;
+                        }
+                        // !a.contains => a===document || text
+                        // 注意原生 contains 判断时 a===b 也返回 true
+                        b = b.parentNode;
+
+                        if (a == b) {
+                            return true;
+                        }
+
+                        // when b is document, a.contains(b) 不支持的接口 in ie
+                        if (b && b.nodeType == DOM.ELEMENT_NODE) {
+                            return a.contains && a.contains(b);
+                        } else {
+                            return false;
+                        }
+                    } : 0;
 
 
     S.mix(DOM,
@@ -261,6 +258,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     // 获取元素 elem 的 siblings, 不包括自身
     function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
+            tmp,
+            i,
+            el,
             elem = DOM.get(selector),
             parentNode = elem;
 
@@ -269,11 +269,16 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         }
 
         if (parentNode) {
-            ret = S.makeArray(parentNode.childNodes);
-            if (!allowText) {
-                ret = DOM.filter(ret, function (el) {
-                    return el.nodeType == 1;
-                });
+            tmp = S.makeArray(parentNode.childNodes);
+            for (i = 0; i < tmp.length; i++) {
+                el = tmp[i];
+                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                    continue;
+                }
+                if (el == elem) {
+                    continue;
+                }
+                ret.push(el);
             }
             if (filter) {
                 ret = DOM.filter(ret, filter);

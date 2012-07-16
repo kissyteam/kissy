@@ -124,8 +124,8 @@ KISSY.use("dom", function (S, DOM) {
             DOM.append(div, "body");
             var cs = div.childNodes;
 
-            expect(DOM.siblings(cs[2]).length).toBe(2);
-            expect(DOM.siblings(cs[2], undefined, 1).length).toBe(cs.length);
+            expect(DOM.siblings(cs[2]).length).toBe(1);
+            expect(DOM.siblings(cs[2], undefined, 1).length).toBe(2);
 
             DOM.remove(div);
         });
@@ -169,8 +169,8 @@ KISSY.use("dom", function (S, DOM) {
 
         it("siblings works", function () {
             var t = DOM.get('#test-prev');
-
-            expect(DOM.siblings(t).length).toBe(4);
+            // not include itself
+            expect(DOM.siblings(t).length).toBe(3);
 
             expect(DOM.siblings(t, '.test-none').length).toBe(0);
 
@@ -215,6 +215,17 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.contains(document, document)).toBe(false);
 
             expect(DOM.contains(document.body, document)).toBe(false);
+        });
+
+        // https://github.com/kissyteam/kissy/issues/183
+        it("contains works for non-document node", function () {
+            var newNode = DOM.create("<div><div></div></div>");
+
+            expect(DOM.contains(document, newNode)).toBe(false);
+            expect(DOM.contains(document.body, newNode)).toBe(false);
+
+            expect(DOM.contains(document, newNode.firstChild)).toBe(false);
+            expect(DOM.contains(document.body, newNode.firstChild)).toBe(false);
         });
 
     });

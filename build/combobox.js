@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -750,10 +750,10 @@ KISSY.add("combobox/baseRender", function (S, Component) {
             '</div>',
         inputTpl = '<input ' +
             'aria-haspopup="true" ' +
-            'aria-combobox="list" ' +
+            'aria-autocomplete="list" ' +
             'aria-haspopup="true" ' +
-            'role="combobox" ' +
-            'combobox="off" ' +
+            'role="autocomplete" ' +
+            'autocomplete="off" ' +
             'class="ks-combobox-input" />';
 
     return Component.Render.extend({

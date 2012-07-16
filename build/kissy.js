@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:25
+build time: Jul 16 11:08
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 11 21:25
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120711212519';
+        S.__BUILD_TIME = '20120716110834';
     })();
 
     return S;
@@ -4127,7 +4127,7 @@ build time: Jul 11 21:25
     S.config(S.mix({
         comboMaxUrlLength:1024,
         charset:'utf-8',
-        tag:'20120711212519'
+        tag:'20120716110834'
     }, getBaseInfo()));
 
     /**
@@ -4500,7 +4500,7 @@ build time: Jul 11 21:25
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:25
+build time: Jul 16 11:08
 */
 /**
  * @fileOverview ua
@@ -4788,7 +4788,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview dom-attr
@@ -8856,36 +8856,33 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        documentElement = doc.documentElement,
         CONTAIN_MASK = 16,
-        __contains = doc.documentElement.contains ?
-            function (a, b) {
-                if (a.nodeType == DOM.TEXT_NODE) {
-                    return false;
-                }
-                var precondition;
-                if (b.nodeType == DOM.TEXT_NODE) {
-                    b = b.parentNode;
-                    // a 和 b父亲相等也就是返回 true
-                    precondition = true;
-                } else if (b.nodeType == DOM.DOCUMENT_NODE) {
-                    // b === document
-                    // 没有任何元素能包含 document
-                    return false;
-                } else {
-                    // a 和 b 相等返回 false
-                    precondition = a !== b;
-                }
-                // !a.contains => a===document
-                // 注意原生 contains 判断时 a===b 也返回 true
-                return precondition && (a.contains ? a.contains(b) : true);
-            } : (
-            doc.documentElement.compareDocumentPosition ?
+        __contains =
+            documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
-                // it can not be true , pathetic browser
-                0
-            );
+                documentElement.contains ?
+                    function (a, b) {
+                        if (a.nodeType == DOM.DOCUMENT_NODE) {
+                            a = a.documentElement;
+                        }
+                        // !a.contains => a===document || text
+                        // 注意原生 contains 判断时 a===b 也返回 true
+                        b = b.parentNode;
+
+                        if (a == b) {
+                            return true;
+                        }
+
+                        // when b is document, a.contains(b) 不支持的接口 in ie
+                        if (b && b.nodeType == DOM.ELEMENT_NODE) {
+                            return a.contains && a.contains(b);
+                        } else {
+                            return false;
+                        }
+                    } : 0;
 
 
     S.mix(DOM,
@@ -9112,6 +9109,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     // 获取元素 elem 的 siblings, 不包括自身
     function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
+            tmp,
+            i,
+            el,
             elem = DOM.get(selector),
             parentNode = elem;
 
@@ -9120,11 +9120,16 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         }
 
         if (parentNode) {
-            ret = S.makeArray(parentNode.childNodes);
-            if (!allowText) {
-                ret = DOM.filter(ret, function (el) {
-                    return el.nodeType == 1;
-                });
+            tmp = S.makeArray(parentNode.childNodes);
+            for (i = 0; i < tmp.length; i++) {
+                el = tmp[i];
+                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                    continue;
+                }
+                if (el == elem) {
+                    continue;
+                }
+                ret.push(el);
             }
             if (filter) {
                 ret = DOM.filter(ret, filter);
@@ -9157,7 +9162,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:24
+build time: Jul 16 11:07
 */
 /**
  * @fileOverview responsible for registering event
@@ -11486,7 +11491,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:24
+build time: Jul 16 11:07
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -11996,7 +12001,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview form data  serialization util
@@ -12840,6 +12845,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             statusText = "success";
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, "error");
                             statusText = "parsererror : " + e;
                         }
                     }
@@ -13912,7 +13918,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview cookie
@@ -14026,7 +14032,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview attribute management
@@ -14681,7 +14687,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:21
+build time: Jul 16 11:06
 */
 /**
  * @fileOverview anim
@@ -16152,7 +16158,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 11 21:24
+build time: Jul 16 11:08
 */
 /**
  * @fileOverview anim-node-plugin
