@@ -175,8 +175,8 @@
              */
             basename:function (path, ext) {
                 var result = path.match(splitPathRe) || [];
-                result = result[2];
-                if (result && result.slice(-1 * ext.length) == ext) {
+                result = result[3]||"";
+                if (ext && result && result.slice(-1 * ext.length) == ext) {
                     result = result.slice(0, -1 * ext.length);
                 }
                 return result;
@@ -188,8 +188,8 @@
              */
             dirname:function (path) {
                 var result = path.match(splitPathRe) || [],
-                    root = result[0],
-                    dir = result[1];
+                    root = result[1]||"",
+                    dir = result[2]||"";
 
                 if (!root && !dir) {
                     // No dirname
@@ -210,7 +210,7 @@
              * @return {String}
              */
             extname:function (path) {
-                return (path.match(splitPathRe) || [])[3];
+                return (path.match(splitPathRe) || [])[4]||"";
             }
 
         });

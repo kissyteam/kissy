@@ -30,4 +30,24 @@ describe("path", function () {
 
         expect(Path.relative("x/y", "x/y/z/q/")).toBe("z/q");
     });
+
+    it("basename works", function () {
+        expect(Path.basename("x/y")).toBe("y");
+        expect(Path.basename("x/")).toBe("x/");
+        expect(Path.basename("x")).toBe("x");
+        expect(Path.basename("x.htm")).toBe("x.htm");
+        expect(Path.basename("x.htm", ".htm")).toBe("x");
+    });
+
+    it("dirname works", function () {
+        expect(Path.dirname("x/y")).toBe("x");
+        expect(Path.dirname("x/")).toBe(".");
+        expect(Path.dirname("/x/")).toBe("/");
+    });
+
+    it("extname works", function () {
+        expect(Path.extname("x.htm")).toBe(".htm");
+        expect(Path.extname("x")).toBe("");
+    });
+
 });

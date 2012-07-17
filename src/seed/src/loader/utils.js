@@ -9,42 +9,38 @@
     }
 
     var Loader = S.Loader,
+        Path = S.Path,
+        Uri = S.Uri,
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
         host = S.Env.host,
-        win = host,
+        isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
-        loc = host.location,
-    // 当前页面所在的目录
-    // http://xx.com/y/z.htm#!/f/g
-    // ->
-    // http://xx.com/y/
-        __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
+        simulatedLocation = new Uri(location.href);
+
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
         if (S.isArray(s)) {
-            var ret = [];
-            S.each(s, function (si) {
-                ret.push(indexMap(si));
-            });
+            var ret = [], i = 0;
+            for (; i < s.length; i++) {
+                ret[i] = indexMapStr(s[i]);
+            }
             return ret;
         }
         return indexMapStr(s);
     }
 
     function indexMapStr(s) {
-        if (/(.+\/)(\?t=.+)?$/.test(s)) {
-            return RegExp.$1 + "index" + RegExp.$2;
-        } else {
-            return s
+        // "x/" "x/y/z/"
+        if (S.endsWith(Path.basename(s), "/")) {
+            s += "index";
         }
+        return s;
     }
-
-    var isWebKit = !!ua.match(/AppleWebKit/);
 
     S.mix(utils, {
 
@@ -62,31 +58,7 @@
         IE:!!ua.match(/MSIE/),
 
         isCss:function (url) {
-            return /\.css(?:\?|$)/i.test(url);
-        },
-
-        /**
-         * resolve relative part of path
-         * x/../y/z -> y/z
-         * x/./y/z -> x/y/z
-         * @param path uri path
-         * @return {string} resolved path
-         * @description similar to path.normalize in nodejs
-         */
-        normalizePath:function (path) {
-            var paths = path.split("/"),
-                re = [],
-                p;
-            for (var i = 0; i < paths.length; i++) {
-                p = paths[i];
-                if (p == ".") {
-                } else if (p == "..") {
-                    re.pop();
-                } else {
-                    re.push(p);
-                }
-            }
-            return re.join("/");
+            return Path.extname(new Uri(url).getPath()) == ".css";
         },
 
         /**
@@ -97,74 +69,37 @@
          * @description similar to path.resolve in nodejs
          */
         normalDepModuleName:function (moduleName, depName) {
+            var i = 0;
+
             if (!depName) {
                 return depName;
             }
+
             if (S.isArray(depName)) {
-                for (var i = 0; i < depName.length; i++) {
+                for (; i < depName.length; i++) {
                     depName[i] = utils.normalDepModuleName(moduleName, depName[i]);
                 }
                 return depName;
             }
+
             if (startsWith(depName, "../") || startsWith(depName, "./")) {
-                var anchor = "", index;
                 // x/y/z -> x/y/
-                if ((index = moduleName.lastIndexOf("/")) != -1) {
-                    anchor = moduleName.substring(0, index + 1);
-                }
-                return normalizePath(anchor + depName);
-            } else if (depName.indexOf("./") != -1
-                || depName.indexOf("../") != -1) {
-                return normalizePath(depName);
-            } else {
-                return depName;
+                return Path.resolve(Path.dirname(moduleName), depName);
             }
+
+            return Path.normalize(depName);
         },
 
-        //去除后缀名，要考虑时间戳!
-        removePostfix:function (path) {
-            return path.replace(/(-min)?\.js[^/]*$/i, "");
+        //去除后缀名
+        removeSuffix:function (path) {
+            return path.replace(/(-min)?\.js$/i, "");
         },
 
         /**
-         * 路径正则化，不能是相对地址
-         * 相对地址则转换成相对页面的绝对地址
-         * 用途:
-         * package path 相对地址则相对于当前页面获取绝对地址
+         * 相对地址则转换成相对当前页面的绝对地址
          */
-        normalBasePath:function (path) {
-            path = S.trim(path);
-
-            // path 为空时，不能变成 "/"
-            if (path &&
-                path.charAt(path.length - 1) != '/') {
-                path += "/";
-            }
-
-            /**
-             * 一定要正则化，防止出现 ../ 等相对路径
-             * 考虑本地路径
-             */
-            if (!path.match(/^(http(s)?)|(file):/i) &&
-                !startsWith(path, "/")) {
-                path = __pagePath + path;
-            }
-
-            if (startsWith(path, "/")) {
-                var loc = win.location;
-                path = loc.protocol + "//" + loc.host + path;
-            }
-
-            return normalizePath(path);
-        },
-
-        /**
-         * 相对路径文件名转换为绝对路径
-         * @param path
-         */
-        absoluteFilePath:function (path) {
-            path = utils.normalBasePath(path);
-            return path.substring(0, path.length - 1);
+        resolveByPage:function (path) {
+            return simulatedLocation.resolve(path).toString();
         },
 
         createModulesInfo:function (self, modNames) {
@@ -174,6 +109,8 @@
         },
 
         createModuleInfo:function (self, modName, cfg) {
+            modName = indexMapStr(modName);
+
             var mods = self.Env.mods,
                 mod = mods[modName];
 
@@ -211,7 +148,6 @@
         },
 
         attachMod:function (self, mod) {
-
             if (mod.status != data.LOADED) {
                 return;
             }
@@ -246,9 +182,6 @@
             }
             return modNames;
         },
-
-
-        indexMapStr:indexMapStr,
 
         /**
          * Three effects:
@@ -315,7 +248,6 @@
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-
             mod.fn = fn;
 
             S.mix((mods[name] = mod), config);
@@ -324,36 +256,18 @@
         },
 
         getMappedPath:function (self, path) {
-            var __mappedRules = self.Config.mappedRules || [];
-            for (var i = 0; i < __mappedRules.length; i++) {
-                var m, rule = __mappedRules[i];
+            var __mappedRules = self.Config.mappedRules || [],
+                i,
+                m,
+                rule;
+            for (i = 0; i < __mappedRules.length; i++) {
+                rule = __mappedRules[i];
                 if (m = path.match(rule[0])) {
                     return path.replace(rule[0], rule[1]);
                 }
             }
             return path;
-        },
-
-        /**
-         * test3,test3/a/b => a/b
-         */
-        removePackageNameFromModName:function () {
-            var cache = {};
-            return function (packageName, modName) {
-                if (!packageName) {
-                    return modName;
-                }
-                if (!S.endsWith(packageName, "/")) {
-                    packageName += "/";
-                }
-                var reg;
-                if (!(reg = cache[packageName])) {
-                    reg = cache[packageName] = new RegExp("^" + S.escapeRegExp(packageName));
-                }
-                return modName.replace(reg, "");
-            }
-        }()
-
+        }
     });
 
     function isStatus(self, modNames, status) {
@@ -368,8 +282,6 @@
         }
         return true;
     }
-
-    var normalizePath = utils.normalizePath;
 
     Loader.Utils = utils;
 

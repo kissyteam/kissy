@@ -27,6 +27,7 @@
     }
 
     var Loader = S.Loader,
+        Path = S.Path,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -100,7 +101,7 @@
                         loadScripts(css[p], function () {
                             if (!(--countCss)) {
                                 S.each(unaliasModNames, function (name) {
-                                    utils.attachMod(self.SS, self.getModInfo(name));
+                                    utils.attachMod(SS, self.getModInfo(name));
                                 });
                                 self._useJs(comboUrls, fn, modNames);
                             }
@@ -181,7 +182,7 @@
             add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS;
-                // 兼容 1.3.0pr1
+                // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
                         modules:name
@@ -199,17 +200,20 @@
             },
 
             attachMod:function (modName) {
-                var SS = this.SS,
-                    mod = this.getModInfo(modName);
+                var self = this,
+                    SS = self.SS,
+                    i,
+                    requires,
+                    mod = self.getModInfo(modName);
                 if (
                 // new require after add
                 // not register yet!
                     !mod || utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = utils.normalizeModNames(SS, mod.requires, modName);
-                for (var i = 0; i < requires.length; i++) {
-                    this.attachMod(requires[i]);
+                requires = utils.normalizeModNames(SS, mod.requires, modName);
+                for (i = 0; i < requires.length; i++) {
+                    self.attachMod(requires[i]);
                 }
                 for (i = 0; i < requires.length; i++) {
                     if (!utils.isAttached(SS, requires[i])) {
@@ -221,21 +225,26 @@
 
             calculate:function (modNames) {
                 var ret = {},
-                    SS = this.SS,
-                // 提高性能，不用每个模块都再次提柜计算
+                    i,
+                    m,
+                    r,
+                    ret2,
+                    self = this,
+                    SS = self.SS,
+                // 提高性能，不用每个模块都再次全部依赖计算
                 // 做个缓存，每个模块对应的待动态加载模块
                     cache = {};
-                for (var i = 0; i < modNames.length; i++) {
-                    var m = modNames[i];
+                for (i = 0; i < modNames.length; i++) {
+                    m = modNames[i];
                     if (!utils.isAttached(SS, m)) {
                         if (!utils.isLoaded(SS, m)) {
                             ret[m] = 1;
                         }
-                        S.mix(ret, this.getRequires(m, cache));
+                        S.mix(ret, self.getRequires(m, cache));
                     }
                 }
-                var ret2 = [];
-                for (var r in ret) {
+                ret2 = [];
+                for (r in ret) {
                     if (ret.hasOwnProperty(r)) {
                         ret2.push(r);
                     }
@@ -246,7 +255,6 @@
             getComboUrls:function (modNames) {
                 var self = this,
                     i,
-                    SS = self.SS,
                     Config = S.Config,
                     packageBase,
                     combos = {};
@@ -293,21 +301,20 @@
                                 res[type][packageBase].mods = [];
                                 // add packageName to common prefix
                                 // combo grouped by package
-                                var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
+                                var prefix = packageBase +
+                                        (packageName ? packageNamePath : "") +
+                                        comboPrefix,
                                     path,
-                                    tag,
                                     l = prefix.length;
                                 for (i = 0; i < jss.length; i++) {
                                     // remove packageName prefix from mod path
                                     path = jss[i].path;
                                     if (packageName) {
-                                        path = utils.removePackageNameFromModName(packageName, path);
+                                        path = Path.relative(path, packageName);
                                     }
                                     res[type][packageBase].mods.push(jss[i]);
                                     if (!jss.combine) {
-                                        tag = jss[i].getTag();
-                                        res[type][packageBase].push(utils.getMappedPath(SS,
-                                            prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
+                                        res[type][packageBase].push(jss[i].getFullPath());
                                         continue;
                                     }
                                     t.push(path);

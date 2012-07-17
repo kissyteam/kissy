@@ -100,56 +100,49 @@
     function getBaseInfo() {
         // get base from current script file path
         // notice: timestamp
-        var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-            baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
+        var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
+            baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
+            comboPrefix,
+            comboSep,
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
-            src = utils.absoluteFilePath(script.src),
+            src = utils.resolveByPage(script.src),
             baseInfo = script.getAttribute("data-config");
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
         } else {
             baseInfo = {};
         }
-        baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        baseInfo.comboSep = baseInfo.comboSep || ',';
 
-        var comboPrefix = baseInfo.comboPrefix,
-            comboSep = baseInfo.comboSep,
-            parts = src.split(comboSep),
+        comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+
+        var parts ,
             base,
-            part0 = parts[0],
-            part01,
-            index = part0.indexOf(comboPrefix);
+            index = src.indexOf(comboPrefix);
 
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
         } else {
-            base = part0.substring(0, index);
-            part01 = part0.substring(index + 2, part0.length);
-            // combo first
-            // notice use match better than test
-            if (part01.match(baseTestReg)) {
-                base += part01.replace(baseReg, '$1');
-            }
-            // combo after first
-            else {
-                S.each(parts, function (part) {
-                    if (part.match(baseTestReg)) {
-                        base += part.replace(baseReg, '$1');
-                        return false;
-                    }
-                });
-            }
+            base = src.substring(0, index);
+            parts = src.substring(index + comboPrefix.length).split(comboSep);
+            S.each(parts, function (part) {
+                if (part.match(baseTestReg)) {
+                    base += part.replace(baseReg, '$1');
+                    return false;
+                }
+            });
         }
         return S.mix({
-            base:base
+            base:base,
+            baseUri:new S.Uri(base)
         }, baseInfo);
     }
 
     S.config(S.mix({
-        comboMaxUrlLength:1024,
+        // 2k
+        comboMaxUrlLength:2048,
         charset:'utf-8',
         tag:'@TIMESTAMP@'
     }, getBaseInfo()));

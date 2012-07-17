@@ -73,21 +73,23 @@ describe('lang.js', function () {
         expect(S.param({foo:function () {
         }, bar:2})).toBe('bar=2');
 
-        expect(S.param({foo:undefined, bar:2})).toBe('foo=undefined&bar=2');
+        expect(S.param({foo:undefined, bar:2})).toBe('foo&bar=2');
         expect(S.param({foo:null, bar:2})).toBe('foo=null&bar=2');
         expect(S.param({foo:true, bar:2})).toBe('foo=true&bar=2');
         expect(S.param({foo:false, bar:2})).toBe('foo=false&bar=2');
         expect(S.param({foo:'', bar:2})).toBe('foo=&bar=2');
         expect(S.param({foo:NaN, bar:2})).toBe('foo=NaN&bar=2');
 
-        expect(S.param({b:[2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3')
+        expect(S.param({b:[2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
+
+        expect(S.param({b:undefined})).toBe("b")
     });
 
     it('S.unparam', function () {
         expect(S.unparam('foo=1&bar=2').foo).toBe('1');
         expect(S.unparam('foo=1&bar=2').bar).toBe('2');
 
-        expect(S.unparam('foo').foo).toBe('');
+        expect(S.unparam('foo').foo).toBe(undefined);
         expect(S.unparam('foo=').foo).toBe('');
 
         expect(S.unparam('foo=1&bar=2&bar=3').bar[0]).toBe('2');
@@ -95,7 +97,7 @@ describe('lang.js', function () {
 
         expect(S.unparam('foo=null&bar=2').foo).toBe('null');
         expect(S.unparam('foo=&bar=2').foo).toBe('');
-        expect(S.unparam('foo&bar=2').foo).toBe('');
+        expect(S.unparam('foo&bar=2').foo).toBe(undefined);
 
         expect(S.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
 

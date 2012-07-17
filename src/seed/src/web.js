@@ -187,7 +187,7 @@
                 notframe = false;
             }
 
-            // can not use in iframe,parent window is dom ready so doScoll is ready too
+            // can not use in iframe,parent window is dom ready so doScroll is ready too
             if (doScroll && notframe) {
                 function readyScroll() {
                     try {

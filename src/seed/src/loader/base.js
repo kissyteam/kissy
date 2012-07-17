@@ -122,14 +122,16 @@
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
-                var self = this, t;
-                return self.fullpath || (self.fullpath =
-                    Loader.Utils.getMappedPath(self.SS,
-                        self.packageInfo.getBase() +
-                            self.getPath() +
-                            ((t = self.getTag()) ?
-                                ("?t=" + encodeURIComponent(t)) :
-                                "")));
+                var self = this, t, fullpathUri, packageBaseUri;
+                if (!self.fullpath) {
+                    packageBaseUri = self.getPackageInfo().baseUri;
+                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    if (t = self.getTag()) {
+                        fullpathUri.query.set("t", t);
+                    }
+                    self.fullpath = fullpathUri.toString();
+                }
+                return self.fullpath;
             },
 
             getPath:function () {
@@ -209,6 +211,7 @@
 
         for (p in packages) {
             if (packages.hasOwnProperty(p)) {
+                // longest match
                 if (S.startsWith(modName, p) &&
                     p.length > pName.length) {
                     pName = p;

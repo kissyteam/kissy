@@ -4,35 +4,73 @@
  */
 (function (S, undefined) {
 
-    var // from closure library
+    var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
+        reDisallowedInPathName = /[#\?]/g,
+    // ?? combo of taobao
+        reDisallowedInQuery = /[#@]/g,
+        reDisallowedInFragment = /#/g,
+
         URI_SPLIT_REG = new RegExp(
             '^' +
-                '([^:/?#.]+:)' + // protocol - ignore special characters
-                // used by other URL parts such as :,
-                // ?, /, #, and .
+                /*
+                 Scheme names consist of a sequence of characters beginning with a
+                 letter and followed by any combination of letters, digits, plus
+                 ("+"), period ("."), or hyphen ("-").
+                 */
+                '(?:([\\w\\d+.-]+):)?' + // scheme
 
                 '(?://' +
-                '(?:([^/?#]*)@)?' + // userInfo
-                '([\\w\\d\\-\\u0100-\\uffff.%]*)' + // hostname - restrict to letters,
+                /*
+                 The authority component is preceded by a double slash ("//") and is
+                 terminated by the next slash ("/"), question mark ("?"), or number
+                 sign ("#") character, or by the end of the URI.
+                 */
+                '(?:([^/?#@]*)@)?' + // userInfo
+
+                '(' +
+                '[\\w\\d\\-\\u0100-\\uffff.+%]*' +
+                '|' +
+                // ipv6
+                '\\[[^\\]]+\\]' +
+                ')' + // hostname - restrict to letters,
                 // digits, dashes, dots, percent
                 // escapes, and unicode characters.
                 '(?::([0-9]+))?' + // port
                 ')?' +
-                '([^?#]+)?' + // path
-                '(?:\\?([^#]*))?' + // query
-                '(#.*)?' + // hash
+                /*
+                 The path is terminated
+                 by the first question mark ("?") or number sign ("#") character, or
+                 by the end of the URI.
+                 */
+                '([^?#]+)?' + // path. hierarchical part
+                /*
+                 The query component is indicated by the first question
+                 mark ("?") character and terminated by a number sign ("#") character
+                 or by the end of the URI.
+                 */
+                '(?:\\?([^#]*))?' + // query. non-hierarchical data
+                /*
+                 The fragment identifier component of a URI allows indirect
+                 identification of a secondary resource by reference to a primary
+                 resource and additional identifying information.
+
+                 A
+                 fragment identifier component is indicated by the presence of a
+                 number sign ("#") character and terminated by the end of the URI.
+                 */
+                '(?:#(.*))?' + // fragment
                 '$'),
 
         Path = S.Path,
 
         REG_INFO = {
-            protocol:1,
+            scheme:1,
             userInfo:2,
             hostname:3,
             port:4,
-            pathname:5,
+            path:5,
             query:6,
-            hash:7
+            fragment:7
         };
 
     function parseQuery(self) {
@@ -134,6 +172,7 @@
 
     // www.ta#bao.com // => www.ta.com/#bao.com
     // www.ta%23bao.com
+    // Percent-Encoding
     function encodeSpecialChars(str, specialCharsReg) {
         // encodeURI( ) is intended to encode complete URIs,
         // the following ASCII punctuation characters,
@@ -144,19 +183,20 @@
         });
     }
 
-    var reDisallowedInProtocolOrUserInfo = /[#\/\?@]/g,
-        reDisallowedInPathName = /[\#\?]/g,
-        reDisallowedInQuery = /[\#\?@]/g,
-        reDisallowedInHash = /#/g;
 
     /**
      * @class
      * Uri class for KISSY.
      * Most of its interfaces are same with window.location.
-     * @param {String} [uriStr] Encoded uri string.
+     * @param {String|KISSY.Uri} [uriStr] Encoded uri string.
      * @memberOf KISSY
      */
     function Uri(uriStr) {
+
+        if (uriStr instanceof  Uri) {
+            return uriStr.clone();
+        }
+
         var m, self = this;
 
         S.mix(self,
@@ -165,10 +205,10 @@
              */
             {
                 /**
-                 * protocol such as "http:". aka scheme
+                 * scheme such as "http:". aka protocol without colon
                  * @type String
                  */
-                protocol:"",
+                scheme:"",
                 /**
                  * User credentials such as "yiminghe:gmail"
                  * @type {String}
@@ -185,28 +225,35 @@
                  */
                 port:"",
                 /**
-                 * pathname such as "/index.htm"
+                 * path such as "/index.htm". aka pathname
                  * @type {String}
                  */
-                pathname:"",
+                path:"",
                 /**
                  * Query object for search string. aka search
                  * @type {KISSY.Uri.Query}
                  */
                 query:"",
                 /**
-                 * Hash fragment such as "#!/test/2". aka fragment
+                 * fragment such as "#!/test/2". aka hash
                  */
-                hash:""
+                fragment:""
             });
 
-        if (uriStr) {
-            m = uriStr.match(URI_SPLIT_REG);
-            S.each(REG_INFO, function (index, key) {
-                self[key] = m[index] || "";
-            });
-            self.query = new Query(self.query);
-        }
+        uriStr = uriStr || "";
+        m = uriStr.match(URI_SPLIT_REG) || [];
+
+        S.each(REG_INFO, function (index, key) {
+            var match = m[index] || "";
+            if (key == "query") {
+                // need encoded content
+                self.query = new Query(match);
+            } else {
+                // need to decode to get data structure in memory
+                self[key] = decodeURIComponent(match);
+            }
+        });
+
     }
 
     Uri.prototype =
@@ -227,12 +274,14 @@
                 uri[key] = self[key];
             });
             uri.query = uri.query.clone();
+            return uri;
         },
 
 
         /**
+         * The reference resolution algorithm.rfc 5.2
          * return a resolved uri corresponding to current uri
-         * @param {KISSY.Uri} relativeUri
+         * @param {KISSY.Uri|String} relativeUri
          * @example
          * <code>
          *   this: "http://y/yy/z.com?t=1#v=2"
@@ -247,48 +296,72 @@
          */
         resolve:function (relativeUri) {
 
+            if (S.isString(relativeUri)) {
+                relativeUri = new Uri(relativeUri);
+            }
+
             var self = this,
                 override = 0,
-                order = ["protocol", "userInfo", "hostname", "port", "pathname", "query", "hash"],
-                ret = self.clone();
+                lastSlashIndex,
+                order = ["scheme", "userInfo", "hostname", "port", "path", "query", "fragment"],
+                target = self.clone();
 
             S.each(order, function (o) {
-                if (o == "pathname") {
-                    // relativeUri does not set for protocol/userInfo/hostname/port
+                if (o == "path") {
+                    // relativeUri does not set for scheme/userInfo/hostname/port
                     if (override) {
-                        ret[o] = relativeUri[o];
+                        target[o] = relativeUri[o];
                     } else {
-                        var pathname = relativeUri.pathname;
-                        if (pathname) {
+                        var path = relativeUri['path'];
+                        if (path) {
+                            // force to override target 's query with relative
                             override = 1;
                             if (!S.startsWith(path, "/")) {
-                                if (ret.hostname && !ret.pathname) {
+                                if (target.hostname && !target.path) {
                                     // RFC 3986, section 5.2.3, case 1
-                                    pathname = "/" + pathname;
-                                } else if (ret.pathname) {
+                                    path = "/" + path;
+                                } else if (target.path) {
                                     // RFC 3986, section 5.2.3, case 2
-                                    var lastSlashIndex = ret.pathname.lastIndexOf('/');
+                                    lastSlashIndex = target.path.lastIndexOf('/');
                                     if (lastSlashIndex != -1) {
-                                        pathname = ret.pathname.slice(0, lastSlashIndex + 1) + path;
+                                        path = target.path.slice(0, lastSlashIndex + 1) + path;
                                     }
                                 }
                             }
-                            // remove .. / .
-                            ret.pathname = Path.normalize(pathname);
+                            // remove .. / .  as part of the resolution process
+                            target.path = Path.normalize(path);
                         }
                     }
                 } else if (o == "query") {
-                    if (override || relativeUri.query.toString()) {
-                        ret.query = relativeUri.query.clone();
+                    if (override || relativeUri['query'].toString()) {
+                        target.query = relativeUri['query'].clone();
                         override = 1;
                     }
-                } else if (self[o]) {
-                    if (override || relativeUri[o]) {
-                        ret[o] = relativeUri[o];
-                        override = 1;
-                    }
+                } else if (override || relativeUri[o]) {
+                    target[o] = relativeUri[o];
+                    override = 1;
                 }
             });
+
+            return target;
+
+        },
+
+        /**
+         * Get scheme part
+         */
+        getScheme:function () {
+            return this.scheme;
+        },
+
+        /**
+         * Set scheme part
+         * @param {String} scheme
+         * @return this
+         */
+        setScheme:function (scheme) {
+            this.scheme = scheme;
+            return this;
         },
 
         /**
@@ -346,21 +419,21 @@
         },
 
         /**
-         * Set pathname
-         * @param {string} pathname
+         * Set path
+         * @param {string} path
          * @return this
          */
-        setPathname:function (pathname) {
-            this.pathname = pathname;
+        setPath:function (path) {
+            this.path = path;
             return this;
         },
 
         /**
-         * Get pathname
+         * Get path
          * @return {String}
          */
-        getPathname:function () {
-            return this.pathname;
+        getPath:function () {
+            return this.path;
         },
 
         /**
@@ -388,23 +461,23 @@
         },
 
         /**
-         * Get hash
+         * Get fragment
          * @return {String}
          */
-        getHash:function () {
-            return this.hash;
+        getFragment:function () {
+            return this.fragment;
         },
 
         /**
-         * Set hash
-         * @param {String} hash
+         * Set fragment
+         * @param {String} fragment
          * @return this
          */
-        setHash:function (hash) {
-            if (!S.startsWith(hash, "#")) {
-                hash = "#" + hash;
+        setFragment:function (fragment) {
+            if (!S.startsWith(fragment, "#")) {
+                fragment = "#" + fragment;
             }
-            this.hash = hash;
+            this.fragment = fragment;
             return this;
         },
 
@@ -416,13 +489,15 @@
         hasSameDomainAs:function (other) {
             var self = this;
             // port and hostname has to be same
-            return self.hostname == other.hostname &&
-                self.protocol == other.protocol &&
-                self.port == other.port;
+            return self.hostname == other['hostname'] &&
+                self.scheme == other['scheme'] &&
+                self.port == other['port'];
         },
 
         /**
-         * serialize to string
+         * serialize to string.
+         * rfc 5.3 Component Recomposition.
+         * but kissy does not differentiate between undefined and empty.
          * @param {boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
@@ -430,45 +505,50 @@
         toString:function (serializeArray) {
 
             var out = [], self = this,
-                protocol,
+                scheme,
                 hostname,
-                pathname,
+                path,
                 port,
-                hash,
+                fragment,
                 query,
                 userInfo;
 
-            if (protocol = self.protocol) {
-                out.push(encodeSpecialChars(protocol, reDisallowedInProtocolOrUserInfo));
+            if (scheme = self.scheme) {
+                out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
+                out.push(":");
             }
 
             if (hostname = self.hostname) {
                 out.push("//");
                 if (userInfo = self.userInfo) {
-                    out.push(encodeSpecialChars(userInfo, reDisallowedInProtocolOrUserInfo)).push("@");
+                    out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
+                    out.push("@");
                 }
 
                 out.push(encodeURIComponent(hostname));
 
                 if (port = self.port) {
-                    out.push(":").push(port);
+                    out.push(":");
+                    out.push(port);
                 }
             }
 
-            if (pathname = self.pathname) {
-                if (hostname && !S.startsWith(pathname, "/")) {
-                    pathname = "/" + pathname;
+            if (path = self.path) {
+                if (hostname && !S.startsWith(path, "/")) {
+                    path = "/" + path;
                 }
-
-                out.push(encodeSpecialChars(pathname, reDisallowedInPathName));
+                path = Path.normalize(path);
+                out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if (query = self.query) {
-                out.push("?").push(query.toString(serializeArray));
+            if (query = ( self.query.toString(serializeArray))) {
+                out.push("?");
+                out.push(query);
             }
 
-            if (hash = self.hash) {
-                out.push("#").push(encodeSpecialChars(hash.slice(1), reDisallowedInHash))
+            if (fragment = self.fragment) {
+                out.push("#");
+                out.push(encodeSpecialChars(fragment, reDisallowedInFragment))
             }
 
             return out.join("");

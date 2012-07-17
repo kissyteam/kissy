@@ -4,10 +4,11 @@
  */
 (function (S) {
     if (S.Loader) {
+        var Uri = S.Uri;
         S.config({
             packages:{
                 gallery:{
-                    path:S.Loader.Utils.normalizePath(S.Config.base + '../')
+                    path:new Uri(S.Config.base).resolve(new Uri("../")).toString()
                 }
             },
             modules:{

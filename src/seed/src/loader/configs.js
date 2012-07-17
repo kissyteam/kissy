@@ -45,7 +45,8 @@
 
                 // 注意正则化
                 cfg.name = name;
-                cfg.base = base && utils.normalBasePath(base);
+                base = cfg.base = base && utils.resolveByPage(base);
+                cfg.baseUri = base && new S.Uri(base);
                 cfg.SS = S;
                 delete cfg.path;
 
@@ -85,7 +86,6 @@
         var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                modName = utils.indexMapStr(modName);
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(self.Env.mods[modName], modCfg);
             });
@@ -102,6 +102,7 @@
         if (!base) {
             return self.Config.base;
         }
-        self.Config.base = utils.normalBasePath(base);
+        base = self.Config.base = utils.resolveByPage(base);
+        self.Config.baseUri = new S.Uri(base);
     };
 })(KISSY);

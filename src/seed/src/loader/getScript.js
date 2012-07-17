@@ -31,7 +31,7 @@
                 success = config.success;
                 charset = config.charset;
             }
-            var src = utils.absoluteFilePath(url),
+            var src = utils.resolveByPage(url),
                 callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
 
             callbacks.push(success);
@@ -107,7 +107,7 @@
                 charset = config.charset;
             }
 
-            var src = utils.absoluteFilePath(url),
+            var src = utils.resolveByPage(url),
                 callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
 
             callbacks.push([success, error]);

@@ -113,18 +113,35 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             });
 
             it('带参数提交jsonp，获取回调参数', function () {
-
+                var ok = 0;
                 IO.jsonp('../data/interface.php?sleep=0', {
                     myparam:'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
                     expect(data['myparam']).toBe('taobao');
-
+                    ok = 1;
                 });
-
+                waitsFor(function () {
+                    return ok;
+                });
             });
 
+            // https://github.com/kissyteam/kissy/issues/187
+            it("can ignore protocol", function () {
+                var ok = 0;
+                IO.jsonp('//yiminghe.taobao.com/kissy_git/kissy/src/ajax/tests/data/interface.php', {
+                    myparam:'taobao'
+                }, function (data) {
+                    expect(typeof data).toBe('object');
+                    expect(data).not.toBe(undefined);
+                    expect(data['myparam']).toBe('taobao');
+                    ok = 1;
+                });
+                waitsFor(function () {
+                    return ok;
+                });
+            });
 
         });
 

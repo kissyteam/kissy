@@ -224,13 +224,14 @@
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success:function () {
                     if (!isCss) {
+                        var currentModule;
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                        if (self[CURRENT_MODULE]) {
+                        if (currentModule = self[CURRENT_MODULE]) {
                             S.log("standard browser get modname after load : " + mod.name);
                             utils.registerModule(SS,
-                                mod.name, self[CURRENT_MODULE].fn,
-                                self[CURRENT_MODULE].config);
+                                mod.name, currentModule.fn,
+                                currentModule.config);
                             self[CURRENT_MODULE] = null;
                         }
                     }

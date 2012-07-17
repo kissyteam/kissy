@@ -43,7 +43,7 @@
                     requires,
                     mods = SS.Env.mods;
 
-                // 兼容 1.3.0pr1
+                // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
                         modules:name
@@ -122,7 +122,6 @@
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
         var SS = self.SS,
-            base,
             scripts = S.Env.host.document.getElementsByTagName("script"),
             re,
             script;
@@ -151,34 +150,37 @@
         // <script src='/x.js'></script>
         // ie6-8 => re.src == '/x.js'
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
-        var src = utils.absoluteFilePath(re.src);
+        var srcStr = utils.resolveByPage(re.src),
+            src = new S.Uri(srcStr);
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径
         // 需要 base norm , 防止 base 被指定为相对路径
         // configs 统一处理
-        // SS.Config.base = SS.normalBasePath(self.Config.base);
-        if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
-            return utils.removePostfix(src.substring(base.length));
+        if (S.startsWith(srcStr, SS.Config.base)) {
+            return utils.removeSuffix(Path.relative(SS.Config.baseUri.getPath(),
+                src.getPath()));
         }
         var packages = SS.Env.packages,
             finalPackagePath,
+            finalPackageUri,
             finalPackageLength = -1;
         // 外部模块去除包路径，得到模块名
         for (var p in packages) {
             if (packages.hasOwnProperty(p)) {
                 var packageBase = packages[p].base;
-                if (packages.hasOwnProperty(p) &&
-                    src.lastIndexOf(packageBase, 0) === 0) {
+                if (S.startsWith(srcStr, packageBase)) {
                     // longest match
                     if (packageBase.length > finalPackageLength) {
                         finalPackageLength = packageBase.length;
                         finalPackagePath = packageBase;
+                        finalPackageUri = packageBase.baseUri;
                     }
                 }
             }
         }
         if (finalPackagePath) {
-            return utils.removePostfix(src.substring(finalPackagePath.length));
+            return utils.removeSuffix(Path.relative(finalPackageUri.getPath(),
+                src.getPath()));
         }
         S.log("interactive script does not have package config ：" + src, "error");
         return undefined;

@@ -688,7 +688,7 @@
                 if (S.isUndefined(arr)) {
                     arr = TRUE;
                 }
-                var buf = [], key, val;
+                var buf = [], key, i, v, len, val;
                 for (key in o) {
                     if (o.hasOwnProperty(key)) {
                         val = o[key];
@@ -696,15 +696,22 @@
 
                         // val is valid non-array value
                         if (isValidParamValue(val)) {
-                            buf.push(key, eq, encode(val + EMPTY), sep);
+                            buf.push(key);
+                            if (val !== undefined) {
+                                buf.push(eq, encode(val + EMPTY));
+                            }
+                            buf.push(sep);
                         }
                         // val is not empty array
                         else if (S.isArray(val) && val.length) {
-                            for (var i = 0, len = val.length; i < len; ++i) {
-                                if (isValidParamValue(val[i])) {
-                                    buf.push(key,
-                                        (arr ? encode("[]") : EMPTY),
-                                        eq, encode(val[i] + EMPTY), sep);
+                            for (i = 0, len = val.length; i < len; ++i) {
+                                v = val[i];
+                                if (isValidParamValue(v)) {
+                                    buf.push(key, (arr ? encode("[]") : EMPTY));
+                                    if (v !== undefined) {
+                                        buf.push(eq, encode(v + EMPTY));
+                                    }
+                                    buf.push(sep);
                                 }
                             }
                         }
@@ -743,14 +750,18 @@
                 for (; i < len; ++i) {
                     pair = pairs[i].split(eq);
                     key = decode(pair[0]);
-                    try {
-                        val = decode(pair[1] || EMPTY);
-                    } catch (e) {
-                        S.log(e + "decodeURIComponent error : " + pair[1], "error");
-                        val = pair[1] || EMPTY;
-                    }
-                    if (S.endsWith(key, "[]")) {
-                        key = key.substring(0, key.length - 2);
+                    if (pair.length == 1) {
+                        val = undefined;
+                    } else {
+                        try {
+                            val = decode(pair[1] || EMPTY);
+                        } catch (e) {
+                            S.log(e + "decodeURIComponent error : " + pair[1], "error");
+                            val = pair[1] || EMPTY;
+                        }
+                        if (S.endsWith(key, "[]")) {
+                            key = key.substring(0, key.length - 2);
+                        }
                     }
                     if (hasOwnProperty(ret, key)) {
                         if (S.isArray(ret[key])) {
@@ -1078,4 +1089,4 @@
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
 
-})(KISSY, undefined);
+})(KISSY);
