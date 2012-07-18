@@ -57,10 +57,6 @@
 
         IE:!!ua.match(/MSIE/),
 
-        isCss:function (url) {
-            return Path.extname(new Uri(url).getPath()) == ".css";
-        },
-
         /**
          * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
          * @param moduleName 当前模块
@@ -91,7 +87,7 @@
         },
 
         //去除后缀名
-        removeSuffix:function (path) {
+        removeExtname:function (path) {
             return path.replace(/(-min)?\.js$/i, "");
         },
 
@@ -99,7 +95,7 @@
          * 相对地址则转换成相对当前页面的绝对地址
          */
         resolveByPage:function (path) {
-            return simulatedLocation.resolve(path).toString();
+            return simulatedLocation.resolve(path);
         },
 
         createModulesInfo:function (self, modNames) {
@@ -136,10 +132,11 @@
         },
 
         getModules:function (self, modNames) {
-            var mods = [self];
+            var mods = [self], mod;
 
             S.each(modNames, function (modName) {
-                if (!utils.isCss(modName)) {
+                mod = self.Env.mods[modName];
+                if (!mod || mod.getType() != "css") {
                     mods.push(self.require(modName));
                 }
             });

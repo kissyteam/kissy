@@ -1,5 +1,5 @@
 /**
- * @fileOverview use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @fileOverview use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
@@ -45,8 +45,8 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         send:function () {
             var self = this,
                 xhrObj = self.xhrObj,
-                c = xhrObj.config;
-            var xdr = c['xdr'] || {};
+                c = xhrObj.config,
+                xdr = c['xdr'] || {};
             // 不提供则使用 cdn 默认的 flash
             _swf(xdr.src || (S.Config.base + "ajax/io.swf"), 1, 1);
             // 简便起见，用轮训
@@ -61,11 +61,11 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
             maps[self._uid] = self;
 
             // ie67 send 出错？
-            flash.send(c.url, {
+            flash.send(c.uri.toString(c.serializeArray), {
                 id:self._uid,
                 uid:self._uid,
                 method:c.type,
-                data:c.hasContent && c.data || {}
+                data:c.hasContent && c.query.toString(c.serializeArray) || {}
             });
         },
 
@@ -74,9 +74,10 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         },
 
         _xdrResponse:function (e, o) {
-            S.log(e);
+            // S.log(e);
             var self = this,
                 ret,
+                id= o.id,
                 xhrObj = self.xhrObj;
 
             // need decodeURI to get real value from flash returned value
@@ -85,15 +86,15 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
             switch (e) {
                 case 'success':
                     ret = { status:200, statusText:"success" };
-                    delete maps[o.id];
+                    delete maps[id];
                     break;
                 case 'abort':
-                    delete maps[o.id];
+                    delete maps[id];
                     break;
                 case 'timeout':
                 case 'transport error':
                 case 'failure':
-                    delete maps[o.id];
+                    delete maps[id];
                     ret = { status:500, statusText:e };
                     break;
             }
@@ -123,11 +124,10 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
      * when response is returned from server
      * @param e response status
      * @param o internal data
-     * @param c internal data
      */
-    io['xdrResponse'] = function (e, o, c) {
+    io['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
-        xhr && xhr._xdrResponse(e, o, c);
+        xhr && xhr._xdrResponse(e, o);
     };
 
     return XdrFlashTransport;

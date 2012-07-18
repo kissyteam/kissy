@@ -32,6 +32,41 @@ describe("uri", function () {
         query.remove("x");
 
         expect(query.toString()).toBe("y=2&z=5");
+
+        query.set({
+            x:6,
+            y:7
+        });
+
+        expect(query.toString()).toBe("y=7&z=5&x=6");
+
+        expect(query.count()).toBe(3);
+
+        query.add({
+            x:61,
+            y:71
+        });
+
+        expect(query.toString(false)).toBe("y=7&y=71&z=5&x=6&x=61");
+
+        expect(query.count()).toBe(5);
+
+        var q2=new Uri.Query("x1=1&y1=2");
+
+        query.reset("x1=3&y1=4");
+
+        query.add(q2);
+
+        expect(query.toString(false)).toBe("x1=3&x1=1&y1=4&y1=2");
+
+        expect(query.count()).toBe(4);
+
+        query.set(q2);
+
+        expect(query.toString(false)).toBe("x1=1&y1=2");
+
+        expect(query.count()).toBe(2);
+
     });
 
     it("resolve works", function () {

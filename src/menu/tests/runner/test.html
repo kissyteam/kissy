@@ -14,6 +14,7 @@
 
 <script src="../../../../build/kissy.js"></script>
 <script src="../../../../build/component.js"></script>
+<script src="../../../../build/separator.js"></script>
 <script src="../../src/base.js"></script>
 <script src="../../src/filtermenu.js"></script>
 <script src="../../src/filtermenuRender.js"></script>
@@ -24,7 +25,6 @@
 <script src="../../src/popupmenu.js"></script>
 <script src="../../src/popupmenuRender.js"></script>
 <script src="../../src/separator.js"></script>
-<script src="../../src/separatorRender.js"></script>
 <script src="../../src/submenu.js"></script>
 <script src="../../src/submenuRender.js"></script>
 </head>
@@ -33,7 +33,7 @@
 <script src="../specs/menu-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
+    jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });
 </script>

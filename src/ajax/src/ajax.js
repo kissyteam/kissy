@@ -5,7 +5,7 @@
 KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
     var undef = undefined;
 
-    function get(url, data, callback, dataType, _t) {
+    function get(url, data, callback, dataType, type) {
         // data 参数可省略
         if (S.isFunction(data)) {
             dataType = callback;
@@ -14,7 +14,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
         }
 
         return IO({
-            type:_t || "get",
+            type:type || "get",
             url:url,
             data:data,
             success:callback,

@@ -4,40 +4,39 @@
  */
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        win = S.Env.host,
+    var win = S.Env.host,
         _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
 
-        // slice last two pars
         // xx.taobao.com => taobao.com
+        // xx.sina.com.cn => sina.com.cn
         function getMainDomain(host) {
-            var t = host.split('.');
-            if (t.length < 2) {
+            var t = host.split('.'), len = t.length, limit = len > 3 ? 3 : 2;
+            if (len < limit) {
                 return t.join(".");
             } else {
-                return t.reverse().slice(0, 2).reverse().join('.');
+                return t.reverse().slice(0, limit).reverse().join('.');
             }
         }
 
 
         function XhrTransport(xhrObj) {
             var c = xhrObj.config,
+                crossDomain= c.crossDomain,
+                self=this,
                 xdrCfg = c['xdr'] || {};
 
-            if (c.crossDomain) {
-
-                var parts = c.url.match(rurl);
+            if (crossDomain) {
 
                 // 跨子域
-                if (getMainDomain(location.hostname) == getMainDomain(parts[2])) {
+                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
                     return new SubDomainTransport(xhrObj);
                 }
 
                 /**
-                 * ie>7 强制使用 flash xdr
+                 * ie>7 通过配置 use='flash' 强制使用 flash xdr
                  * 使用 withCredentials 检测是否支持 CORS
                  * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
                  */
@@ -47,8 +46,8 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
                 }
             }
 
-            this.xhrObj = xhrObj;
-            this.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
+            self.xhrObj = xhrObj;
+            self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return undefined;
         }
 

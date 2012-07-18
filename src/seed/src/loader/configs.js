@@ -43,10 +43,16 @@
                 // 兼容 path
                 base = cfg.base || cfg.path;
 
+                // must be folder
+                if (!S.endsWith(base, "/")) {
+                    base += "/";
+                }
+
                 // 注意正则化
                 cfg.name = name;
-                base = cfg.base = base && utils.resolveByPage(base);
-                cfg.baseUri = base && new S.Uri(base);
+                var baseUri = utils.resolveByPage(base);
+                cfg.base = baseUri.toString();
+                cfg.baseUri = baseUri;
                 cfg.SS = S;
                 delete cfg.path;
 
@@ -98,11 +104,12 @@
      KISSY 's base path.
      */
     S.configs.base = function (base) {
-        var self = this;
+        var self = this, baseUri, Config = self.Config;
         if (!base) {
-            return self.Config.base;
+            return Config.base;
         }
-        base = self.Config.base = utils.resolveByPage(base);
-        self.Config.baseUri = new S.Uri(base);
+        baseUri = utils.resolveByPage(base);
+        Config.base = baseUri.toString();
+        Config.baseUri = baseUri;
     };
 })(KISSY);

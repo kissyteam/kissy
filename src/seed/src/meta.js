@@ -8,7 +8,7 @@
         S.config({
             packages:{
                 gallery:{
-                    path:new Uri(S.Config.base).resolve(new Uri("../")).toString()
+                    path:S.Config.baseUri.resolve("../").toString()
                 }
             },
             modules:{

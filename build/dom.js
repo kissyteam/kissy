@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 14:57
+build time: Jul 18 23:23
 */
 /**
  * @fileOverview dom-attr
@@ -4089,6 +4089,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                             return true;
                         }
 
+                        // when b is document, a.contains(b) 不支持的接口 in ie
                         if (b && b.nodeType == DOM.ELEMENT_NODE) {
                             return a.contains && a.contains(b);
                         } else {
@@ -4321,6 +4322,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
     // 获取元素 elem 的 siblings, 不包括自身
     function getSiblings(selector, filter, parent, allowText) {
         var ret = [],
+            tmp,
+            i,
+            el,
             elem = DOM.get(selector),
             parentNode = elem;
 
@@ -4329,11 +4333,16 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         }
 
         if (parentNode) {
-            ret = S.makeArray(parentNode.childNodes);
-            if (!allowText) {
-                ret = DOM.filter(ret, function (el) {
-                    return el.nodeType == 1;
-                });
+            tmp = S.makeArray(parentNode.childNodes);
+            for (i = 0; i < tmp.length; i++) {
+                el = tmp[i];
+                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                    continue;
+                }
+                if (el == elem) {
+                    continue;
+                }
+                ret.push(el);
             }
             if (filter) {
                 ret = DOM.filter(ret, filter);

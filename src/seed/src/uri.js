@@ -82,7 +82,7 @@
     /**
      * @class
      * Query data structure.
-     * @param {String} query encoded query string(without question mask).
+     * @param {String} [query] encoded query string(without question mask).
      * @memberOf KISSY.Uri
      */
     function Query(query) {
@@ -101,6 +101,30 @@
             return new Query(this.toString());
         },
 
+
+        reset:function (query) {
+            var self = this;
+            self._query = query || "";
+            self._queryMap = 0;
+        },
+
+        count:function () {
+            var self = this, count = 0,
+                _queryMap = self._queryMap,
+                k;
+            parseQuery(self);
+            for (k in _queryMap) {
+                if (_queryMap.hasOwnProperty(k)) {
+                    if (S.isArray(_queryMap[k])) {
+                        count += _queryMap[k].length;
+                    } else {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        },
+
         /**
          * Return parameter value corresponding to current key
          * @param {String} key
@@ -108,7 +132,17 @@
         get:function (key) {
             var self = this;
             parseQuery(self);
-            return self._queryMap[key];
+            if (key) {
+                return self._queryMap[key];
+            } else {
+                return self._queryMap;
+            }
+        },
+
+        keys:function () {
+            var self = this;
+            parseQuery(self);
+            return S.keys(self._queryMap);
         },
 
         /**
@@ -117,9 +151,19 @@
          * @param value
          */
         set:function (key, value) {
-            var self = this;
+            var self = this, _queryMap;
             parseQuery(self);
-            self._queryMap[key] = value;
+            _queryMap = self._queryMap;
+            if (S.isString(key)) {
+                self._queryMap[key] = value;
+            } else {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                S.each(key, function (v, k) {
+                    _queryMap[k] = v;
+                });
+            }
             return self;
         },
 
@@ -130,7 +174,11 @@
         remove:function (key) {
             var self = this;
             parseQuery(self);
-            delete self._queryMap[key];
+            if (key) {
+                delete self._queryMap[key];
+            } else {
+                self._queryMap = {};
+            }
             return self;
 
         },
@@ -142,15 +190,26 @@
          */
         add:function (key, value) {
             var self = this,
+                _queryMap,
                 currentValue;
-            parseQuery(self);
-            currentValue = self._query[key];
-            if (currentValue === undefined) {
-                currentValue = value;
+            if (S.isObject(key)) {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                S.each(key, function (v, k) {
+                    self.add(k, v);
+                });
             } else {
-                currentValue = [].concat(currentValue).concat(value);
+                parseQuery(self);
+                _queryMap = self._queryMap;
+                currentValue = _queryMap[key];
+                if (currentValue === undefined) {
+                    currentValue = value;
+                } else {
+                    currentValue = [].concat(currentValue).concat(value);
+                }
+                _queryMap[key] = currentValue;
             }
-            self._queryMap[key] = currentValue;
             return self;
         },
 
@@ -168,6 +227,10 @@
 
     function padding2(str) {
         return str.length == 1 ? "0" + str : str;
+    }
+
+    function equalsIgnoreCase(str1, str2) {
+        return str1.toLowerCase() == str2.toLowerCase();
     }
 
     // www.ta#bao.com // => www.ta.com/#bao.com
@@ -489,9 +552,9 @@
         hasSameDomainAs:function (other) {
             var self = this;
             // port and hostname has to be same
-            return self.hostname == other['hostname'] &&
-                self.scheme == other['scheme'] &&
-                self.port == other['port'];
+            return equalsIgnoreCase(self.hostname, other['hostname']) &&
+                equalsIgnoreCase(self.scheme, other['scheme']) &&
+                equalsIgnoreCase(self.port, other['port']);
         },
 
         /**

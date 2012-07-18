@@ -9,6 +9,7 @@
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
+        Path = S.Path,
         jsCallbacks = {},
         cssCallbacks = {};
 
@@ -31,7 +32,7 @@
                 success = config.success;
                 charset = config.charset;
             }
-            var src = utils.resolveByPage(url),
+            var src = utils.resolveByPage(url).toString(),
                 callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
 
             callbacks.push(success);
@@ -91,11 +92,13 @@
          * @memberOf KISSY
          */
         getScript:function (url, success, charset) {
-            if (utils.isCss(url)) {
+
+            if (S.startsWith(Path.extname(url).toLowerCase(), ".css")) {
                 return S.getStyle(url, success, charset);
             }
 
-            var config = success,
+            var src = utils.resolveByPage(url),
+                config = success,
                 error,
                 timeout,
                 timer;
@@ -107,8 +110,7 @@
                 charset = config.charset;
             }
 
-            var src = utils.resolveByPage(url),
-                callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+            var callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
 
             callbacks.push([success, error]);
 

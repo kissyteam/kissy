@@ -1,6 +1,6 @@
 /**
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
 
@@ -89,12 +89,9 @@
      * @private
      * @example
      * <pre>
-     *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
-     *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
+     *   http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
      *   note about custom combo rules, such as yui3:
-     *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     *   combo-prefix="combo?" combo-sep="&"
      * <pre>
      */
     function getBaseInfo() {
@@ -106,8 +103,9 @@
             comboSep,
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
-            src = utils.resolveByPage(script.src),
+            src = utils.resolveByPage(script.src).toString(),
             baseInfo = script.getAttribute("data-config");
+
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
         } else {

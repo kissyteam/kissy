@@ -60,7 +60,7 @@
              */
             resolve:function () {
 
-                var resolvedPath = [],
+                var resolvedPath = "",
                     resolvedPathStr,
                     i,
                     args = S.makeArray(arguments),
@@ -72,11 +72,13 @@
                     if (typeof path != "string" || !path) {
                         continue;
                     }
-                    resolvedPath.unshift(path);
+                    resolvedPath = path + "/" + resolvedPath;
                     absolute = path.charAt(0) == "/";
                 }
 
-                resolvedPathStr = normalizeArray(resolvedPath, !absolute).join("/");
+                resolvedPathStr = normalizeArray(S.filter(resolvedPath.split("/"), function (p) {
+                    return !!p;
+                }), !absolute).join("/");
 
                 return (absolute ? "/" : "" + resolvedPathStr) || ".";
             },
@@ -175,7 +177,7 @@
              */
             basename:function (path, ext) {
                 var result = path.match(splitPathRe) || [];
-                result = result[3]||"";
+                result = result[3] || "";
                 if (ext && result && result.slice(-1 * ext.length) == ext) {
                     result = result.slice(0, -1 * ext.length);
                 }
@@ -188,8 +190,8 @@
              */
             dirname:function (path) {
                 var result = path.match(splitPathRe) || [],
-                    root = result[1]||"",
-                    dir = result[2]||"";
+                    root = result[1] || "",
+                    dir = result[2] || "";
 
                 if (!root && !dir) {
                     // No dirname
@@ -210,7 +212,7 @@
              * @return {String}
              */
             extname:function (path) {
-                return (path.match(splitPathRe) || [])[4]||"";
+                return (path.match(splitPathRe) || [])[4] || "";
             }
 
         });

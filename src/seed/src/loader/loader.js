@@ -1,6 +1,6 @@
 /**
  * @fileOverview simple loader from KISSY<=1.2
- * @author yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
 
@@ -16,7 +16,7 @@
         Loader.Target,
         {
 
-            //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
+            //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
             __currentModule:null,
 
             //ie6,7,8开始载入脚本的时间
@@ -124,9 +124,10 @@
         var SS = self.SS,
             scripts = S.Env.host.document.getElementsByTagName("script"),
             re,
+            i,
             script;
 
-        for (var i = 0; i < scripts.length; i++) {
+        for (i = 0; i < scripts.length; i++) {
             script = scripts[i];
             if (script.readyState == "interactive") {
                 re = script;
@@ -138,9 +139,8 @@
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
             S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-            S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
+            S.log("old_ie get mod name from cache : " + self.__startLoadModuleName);
             return self.__startLoadModuleName;
-            //S.error("找不到 interactive 状态的 script");
         }
 
         // src 必定是绝对路径
@@ -150,38 +150,42 @@
         // <script src='/x.js'></script>
         // ie6-8 => re.src == '/x.js'
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
-        var srcStr = utils.resolveByPage(re.src),
-            src = new S.Uri(srcStr);
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        if (S.startsWith(srcStr, SS.Config.base)) {
-            return utils.removeSuffix(Path.relative(SS.Config.baseUri.getPath(),
-                src.getPath()));
-        }
-        var packages = SS.Env.packages,
+        var src = utils.resolveByPage(re.src),
+            srcStr = src.toString(),
+            packages = SS.Env.packages,
             finalPackagePath,
+            p,
+            packageBase,
+            Config = SS.Config,
             finalPackageUri,
             finalPackageLength = -1;
+
         // 外部模块去除包路径，得到模块名
-        for (var p in packages) {
+        for (p in packages) {
             if (packages.hasOwnProperty(p)) {
-                var packageBase = packages[p].base;
+                packageBase = packages[p].getBase();
                 if (S.startsWith(srcStr, packageBase)) {
                     // longest match
                     if (packageBase.length > finalPackageLength) {
                         finalPackageLength = packageBase.length;
                         finalPackagePath = packageBase;
-                        finalPackageUri = packageBase.baseUri;
+                        finalPackageUri = packageBase.getBaseUri();
                     }
                 }
             }
         }
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
         if (finalPackagePath) {
-            return utils.removeSuffix(Path.relative(finalPackageUri.getPath(),
+            return utils.removeExtname(Path.relative(finalPackageUri.getPath(),
+                src.getPath()));
+        } else if (S.startsWith(srcStr, Config.base)) {
+            return utils.removeExtname(Path.relative(Config.baseUri.getPath(),
                 src.getPath()));
         }
+
         S.log("interactive script does not have package config ：" + src, "error");
         return undefined;
     }

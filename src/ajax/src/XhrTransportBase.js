@@ -5,7 +5,7 @@
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
-        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+    // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
@@ -49,16 +49,23 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
             var self = this,
                 xhrObj = self.xhrObj,
-                c = xhrObj.config;
-
-            var nativeXhr = self.nativeXhr,
+                c = xhrObj.config,
+                nativeXhr = self.nativeXhr,
+                type = c.type,
+                async = c.async,
+                username,
+                crossDomain = c.crossDomain,
+                mimeType = xhrObj.mimeType,
+                requestHeaders = xhrObj.requestHeaders,
+                serializeArray= c.serializeArray,
+                url = c.uri.toString(serializeArray),
                 xhrFields,
                 i;
 
-            if (c['username']) {
-                nativeXhr.open(c.type, c.url, c.async, c['username'], c.password)
+            if (username = c['username']) {
+                nativeXhr.open(type, url, async, username, c.password)
             } else {
-                nativeXhr.open(c.type, c.url, c.async);
+                nativeXhr.open(type, url, async);
             }
 
             if (xhrFields = c['xhrFields']) {
@@ -70,19 +77,21 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
             }
 
             // Override mime type if supported
-            if (xhrObj.mimeType && nativeXhr.overrideMimeType) {
-                nativeXhr.overrideMimeType(xhrObj.mimeType);
+            if (mimeType && nativeXhr.overrideMimeType) {
+                nativeXhr.overrideMimeType(mimeType);
             }
             // yui3 and jquery both have
-            if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+            if (!crossDomain && !requestHeaders["X-Requested-With"]) {
+                requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
             }
             try {
                 // 跨域时，不能设，否则请求变成
                 // OPTIONS /xhr/r.php HTTP/1.1
-                if (!c.crossDomain) {
-                    for (i in xhrObj.requestHeaders) {
-                        nativeXhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                if (!crossDomain) {
+                    for (i in requestHeaders) {
+                        if (requestHeaders.hasOwnProperty(i)) {
+                            nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
+                        }
                     }
                 }
             } catch (e) {
@@ -90,9 +99,9 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 S.log(e);
             }
 
-            nativeXhr.send(c.hasContent && c.data || null);
+            nativeXhr.send(c.hasContent && c.query.toString(serializeArray) || null);
 
-            if (!c.async || nativeXhr.readyState == 4) {
+            if (!async || nativeXhr.readyState == 4) {
                 self._callback();
             } else {
                 // _XDomainRequest 单独的回调机制
@@ -166,7 +175,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statustext error : ");
+                            S.log("xhr statusText error : ");
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = "";

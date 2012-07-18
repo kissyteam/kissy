@@ -242,7 +242,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             it('能正确发起 post 请求 参数为string，并正确获取参数', function () {
                 var ok = false;
                 IO.post('../data/interface.php?t=post',
-                    'name=test&company=www.taobao.com&exp=>,?/\%."`~',
+                    'name=test&company=www.taobao.com&exp='+encodeURIComponent('>,?/\%."`~'),
                     function (data, textStatus, xhr) {
                         ok = true;
 

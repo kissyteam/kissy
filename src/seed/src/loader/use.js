@@ -1,6 +1,6 @@
 /**
  * @fileOverview use and attach mod
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -57,8 +57,7 @@
             S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 attachModByName(self, modName, function () {
-                    currentIndex++;
-                    if (currentIndex == count) {
+                    if ((++currentIndex) == count) {
                         end();
                     }
                 });
@@ -70,7 +69,8 @@
 
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
-        var SS = self.SS, mod;
+        var SS = self.SS,
+            mod;
         utils.createModuleInfo(SS, modName);
         mod = SS.Env.mods[modName];
         if (mod.status === ATTACHED) {
@@ -90,7 +90,7 @@
             rMod,
             i,
             callbackBeCalled = 0,
-        // 最终有效的 require ，add 处声明为准
+        // 最终有效的 require, add 处声明为准
             newRequires,
             mods = SS.Env.mods;
 
@@ -103,16 +103,16 @@
          * @private
          */
         function cyclicCheck() {
-            // one mod's all requires mods to run its callback
+            // one mod 's all requires mods to run its callback
             var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
                 myName = mod.name,
-                rmod,
+                rMod,
                 r__allRequires;
 
             S.each(requires, function (r) {
-                rmod = mods[r];
+                rMod = mods[r];
                 __allRequires[r] = 1;
-                if (rmod && (r__allRequires = rmod[ALL_REQUIRES])) {
+                if (rMod && (r__allRequires = rMod[ALL_REQUIRES])) {
                     S.mix(__allRequires, r__allRequires);
                 }
             });
@@ -207,30 +207,34 @@
      */
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
+            modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = utils.isCss(url);
+            isCss = mod.getType() == "css";
 
         mod.status = mod.status || INIT;
 
         if (mod.status < LOADING) {
             mod.status = LOADING;
             if (IE && !isCss) {
-                self.__startLoadModuleName = mod.name;
+                self.__startLoadModuleName = modName;
                 self.__startLoadTime = Number(+new Date());
             }
             S.getScript(url, {
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success:function () {
-                    if (!isCss) {
+                    if (isCss) {
+                        // css 不会设置 LOADED! 必须外部设置
+                        utils.registerModule(SS, modName, S.noop);
+                    } else {
                         var currentModule;
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                         if (currentModule = self[CURRENT_MODULE]) {
-                            S.log("standard browser get modname after load : " + mod.name);
+                            S.log("standard browser get mod name after load : " + modName);
                             utils.registerModule(SS,
-                                mod.name, currentModule.fn,
+                                modName, currentModule.fn,
                                 currentModule.config);
                             self[CURRENT_MODULE] = null;
                         }
@@ -258,11 +262,7 @@
         }
 
         function checkAndHandle() {
-            if (isCss || mod.fn) {
-                // css 不会设置 LOADED! 必须外部设置
-                if (isCss && mod.status != ATTACHED) {
-                    mod.status = LOADED;
-                }
+            if (mod.fn) {
                 callback();
             } else {
                 // ie will call success even when getScript error(404)
@@ -271,7 +271,7 @@
         }
 
         function _modError() {
-            S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
+            S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
             mod.status = ERROR;
         }
     }

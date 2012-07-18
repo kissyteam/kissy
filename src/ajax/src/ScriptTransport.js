@@ -3,7 +3,7 @@
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/ScriptTransport", function (S, io) {
+KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -47,11 +47,12 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
         send:function () {
             var self = this,
                 script,
-                xhrObj = this.xhrObj,
+                xhrObj = self.xhrObj,
                 c = xhrObj.config,
                 head = doc['head'] ||
                     doc.getElementsByTagName("head")[0] ||
                     doc.documentElement;
+
             self.head = head;
             script = doc.createElement("script");
             self.script = script;
@@ -61,7 +62,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
                 script.charset = c['scriptCharset'];
             }
 
-            script.src = c.url;
+            script.src = c.uri.toString(c.serializeArray);
 
             script.onerror =
                 script.onload =
@@ -75,9 +76,10 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
         },
 
         _callback:function (event, abort) {
-            var script = this.script,
-                xhrObj = this.xhrObj,
-                head = this.head;
+            var self = this,
+                script = self.script,
+                xhrObj = self.xhrObj,
+                head = self.head;
 
             // 防止重复调用,成功后 abort
             if (!script) {
@@ -101,8 +103,8 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
                     head.removeChild(script);
                 }
 
-                this.script = undefined;
-                this.head = undefined;
+                self.script = undefined;
+                self.head = undefined;
 
                 // Callback if not abort
                 if (!abort && event != "error") {

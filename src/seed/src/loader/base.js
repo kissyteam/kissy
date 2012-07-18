@@ -1,11 +1,13 @@
 /**
  * @fileOverview setup data structure for kissy loader
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
+
+    var Path = S.Path;
 
     /**
      * @class KISSY Loader constructor
@@ -66,6 +68,11 @@
                 return self.base || self.SS.Config.base;
             },
 
+            getBaseUri:function(){
+                var self = this;
+                return self.baseUri||self.SS.Config.baseUri;
+            },
+
             /**
              * Whether is debug for this package.
              * @return {Boolean}
@@ -118,18 +125,31 @@
                 this.value = v;
             },
 
+            getType:function () {
+                var self = this, v;
+                if ((v = self.type) === undefined) {
+                    if (Path.extname(self.name).toLowerCase() == ".css") {
+                        v = "css";
+                    } else {
+                        v = "js";
+                    }
+                    self.type = v;
+                }
+                return v;
+            },
+
             /**
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
                 var self = this, t, fullpathUri, packageBaseUri;
                 if (!self.fullpath) {
-                    packageBaseUri = self.getPackageInfo().baseUri;
+                    packageBaseUri = self.getPackageInfo().getBaseUri();
                     fullpathUri = packageBaseUri.resolve(self.getPath());
                     if (t = self.getTag()) {
                         fullpathUri.query.set("t", t);
                     }
-                    self.fullpath = fullpathUri.toString();
+                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
                 }
                 return self.fullpath;
             },
@@ -162,7 +182,7 @@
             getPackageInfo:function () {
                 var self = this;
                 return self.packageInfo ||
-                    (self.packageInfo = getPackageInfo(self.SS, this));
+                    (self.packageInfo = getPackageInfo(self.SS, self));
             },
 
             /**
@@ -188,17 +208,15 @@
 
     function defaultComponentJsName(m) {
         var name = m.name,
-            suffix = ".js",
-            min = "-min",
-            match;
-        if (match = name.match(/(.+)(\.css)$/i)) {
-            suffix = match[2];
-            name = match[1];
-        }
+            extname = Path.extname(name) || ".js",
+            min = "-min";
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
         if (m.getPackageInfo().isDebug()) {
             min = "";
         }
-        return name + min + suffix;
+        return name + min + extname;
     }
 
     function getPackageInfo(self, mod) {

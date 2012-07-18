@@ -202,7 +202,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 '</form>').appendTo("body");
 
 
-            var re = [], ok, d;
+            var  ok, d;
+
             var xhr = io({
                 url:'../others/form/upload.php',
                 form:"#" + f.prop("id"),

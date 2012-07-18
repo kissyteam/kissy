@@ -20,6 +20,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             cConverts = c.converters,
             xConverts = xhrObject.converters || {},
             type,
+            contentType,
             responseData,
             contents = c.contents,
             dataType = c.dataType;
@@ -28,7 +29,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         // jsonp 时还需要把 script 转换成 json，后面还得自己来
         if (text || xml) {
 
-            var contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
+            contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
 
             // 去除无用的通用格式
             while (dataType[0] == "*") {
@@ -38,7 +39,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             if (!dataType.length) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
-                    if (contents[type].test(contentType)) {
+                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
                         if (dataType[0] != type) {
                             dataType.unshift(type);
                         }
@@ -178,15 +179,15 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * @return {String} header value
              */
             getResponseHeader:function (name) {
-                var match, self = this;
+                var match, self = this,responseHeaders;
                 if (self.state === 2) {
-                    if (!self.responseHeaders) {
-                        self.responseHeaders = {};
+                    if (!(responseHeaders=self.responseHeaders)) {
+                        responseHeaders=self.responseHeaders = {};
                         while (( match = rheaders.exec(self.responseHeadersString) )) {
-                            self.responseHeaders[ match[1] ] = match[ 2 ];
+                            responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = self.responseHeaders[ name ];
+                    match = responseHeaders[ name ];
                 }
                 return match === undefined ? null : match;
             },
