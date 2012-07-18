@@ -97,17 +97,29 @@
     {
         constructor:Query,
 
+        /**
+         * Cloned new instance.
+         * @return {Query}
+         */
         clone:function () {
             return new Query(this.toString());
         },
 
 
+        /**
+         * reset to a new query string
+         * @param {String} query
+         */
         reset:function (query) {
             var self = this;
             self._query = query || "";
             self._queryMap = 0;
         },
 
+        /**
+         * Parameter count.
+         * @return {Number}
+         */
         count:function () {
             var self = this, count = 0,
                 _queryMap = self._queryMap,
@@ -139,6 +151,10 @@
             }
         },
 
+        /**
+         * Parameter names.
+         * @return {String[]}
+         */
         keys:function () {
             var self = this;
             parseQuery(self);

@@ -246,13 +246,13 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#hash">hash</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#fragment">fragment</a></b>
                                                 <span class="type">{}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">Hash fragment such as "#!/test/2".</span>                                                
+                                                <span class="desc">fragment such as "#!/test/2".</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -268,13 +268,13 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#pathname">pathname</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#path">path</a></b>
                                                 <span class="type">{}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">pathname such as "/index.htm"</span>                                                
+                                                <span class="desc">path such as "/index.htm".</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -290,17 +290,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#protocol">protocol</a></b>
-                                                <span class="type">{String}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">protocol such as "http:".</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/KISSY.Uri.html#query">query</a></b>
                                                 <span class="type">{}</span>
                                                 
@@ -308,6 +297,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Query object for search string.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#scheme">scheme</a></b>
+                                                <span class="type">{String}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">scheme such as "http:".</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -352,12 +352,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#getHash">getHash</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#getFragment">getFragment</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">Get hash</span>                                                
+                                                <span class="desc">Get fragment</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -372,12 +372,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#getPathname">getPathname</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#getPath">getPath</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">Get pathname</span>                                                
+                                                <span class="desc">Get path</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -398,6 +398,16 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">Get query</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#getScheme">getScheme</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Get scheme part</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -427,17 +437,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">return a resolved uri corresponding to current uri</span>                                                
+                                                <span class="desc">The reference resolution algorithm.rfc 5.2return a resolved uri corresponding to current uri</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#setHash">setHash</a></b>
-                                                <span class="param">(hash)</span>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#setFragment">setFragment</a></b>
+                                                <span class="param">(fragment)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">Set hash</span>                                                
+                                                <span class="desc">Set fragment</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -452,12 +462,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/KISSY.Uri.html#setPathname">setPathname</a></b>
-                                                <span class="param">(pathname)</span>
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#setPath">setPath</a></b>
+                                                <span class="param">(path)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">Set pathname</span>                                                
+                                                <span class="desc">Set path</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -482,6 +492,16 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
+                                                <b class="name"><a href="../symbols/KISSY.Uri.html#setScheme">setScheme</a></b>
+                                                <span class="param">(scheme)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">Set scheme part</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
                                                 <b class="name"><a href="../symbols/KISSY.Uri.html#setUserInfo">setUserInfo</a></b>
                                                 <span class="param">(userInfo)</span>
                                                 
@@ -497,7 +517,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">serialize to string</span>                                                
+                                                <span class="desc">serialize to string.</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -542,7 +562,7 @@ a.go-top:active{text-decoration:none;}
                                                                 <b>uriStr</b>
                                                             
                                                             <span> ]</span>
-                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="type"><span class="light fixedFont">{String|<a href="../symbols/KISSY.Uri.html">KISSY.Uri</a>}</span> </span>
                                                             <span class="desc">Encoded uri string.</span>
                                                         </li>
                                                         
@@ -579,17 +599,17 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name="hash"> </a>
+                                            <a name="fragment"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">hash</b>
+                                                <b class="name">fragment</b>
                                                 
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    Hash fragment such as "#!/test/2". aka fragment
+                                                    fragment such as "#!/test/2". aka hash
                                                     
                                                     
                                                 </span>
@@ -639,17 +659,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="pathname"> </a>
+                                            <a name="path"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">pathname</b>
+                                                <b class="name">path</b>
                                                 
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    pathname such as "/index.htm"
+                                                    path such as "/index.htm". aka pathname
                                                     
                                                     
                                                 </span>
@@ -699,17 +719,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="protocol"> </a>
+                                            <a name="query"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">protocol</b>
-                                                <span>{String}</span>
+                                                <b class="name">query</b>
+                                                
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    protocol such as "http:". aka scheme
+                                                    Query object for search string. aka search
                                                     
                                                     
                                                 </span>
@@ -729,17 +749,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="query"> </a>
+                                            <a name="scheme"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">query</b>
-                                                
+                                                <b class="name">scheme</b>
+                                                <span>{String}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    Query object for search string. aka search
+                                                    scheme such as "http:". aka protocol without colon
                                                     
                                                     
                                                 </span>
@@ -812,7 +832,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line224">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line350">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -855,19 +875,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="getHash"> </a>
+                                            <a name="getFragment"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">getHash</b>
+                                                <b class="name">getFragment</b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line394">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line546">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Get hash
+                                                Get fragment
                                                 
                                                 
                                             </div>
@@ -914,7 +934,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line298">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line450">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -957,19 +977,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="getPathname"> </a>
+                                            <a name="getPath"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">getPathname</b>
+                                                <b class="name">getPath</b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line362">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line514">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Get pathname
+                                                Get path
                                                 
                                                 
                                             </div>
@@ -1016,7 +1036,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line344">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line496">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1067,7 +1087,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line386">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line538">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1110,6 +1130,45 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name="getScheme"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getScheme</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line432">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Get scheme part
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="getUserInfo"> </a>
                                             <div class="title">
                                                 
@@ -1118,7 +1177,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line326">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line478">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1169,7 +1228,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line416">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line568">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1236,11 +1295,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line248">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line376">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                return a resolved uri corresponding to current uri
+                                                The reference resolution algorithm.rfc 5.2return a resolved uri corresponding to current uri
                                                 
                                                 
                                             </div>
@@ -1257,7 +1316,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">relativeUri</b>
                                                             
                                                             
-                                                            <span class="type">{<a href="../symbols/KISSY.Uri.html">KISSY.Uri</a>}</span> 
+                                                            <span class="type">{<a href="../symbols/KISSY.Uri.html">KISSY.Uri</a>|String}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -1306,19 +1365,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="setHash"> </a>
+                                            <a name="setFragment"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">setHash</b>
-                                                <span class="param">(hash)</span>
+                                                <b class="name">setFragment</b>
+                                                <span class="param">(fragment)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line403">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line555">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Set hash
+                                                Set fragment
                                                 
                                                 
                                             </div>
@@ -1332,7 +1391,7 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">hash</b>
+                                                            <b class="name">fragment</b>
                                                             
                                                             
                                                             <span class="type">{String}</span> 
@@ -1381,7 +1440,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line307">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line459">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1440,19 +1499,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="setPathname"> </a>
+                                            <a name="setPath"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">setPathname</b>
-                                                <span class="param">(pathname)</span>
+                                                <b class="name">setPath</b>
+                                                <span class="param">(path)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line353">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line505">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                Set pathname
+                                                Set path
                                                 
                                                 
                                             </div>
@@ -1466,7 +1525,7 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">pathname</b>
+                                                            <b class="name">path</b>
                                                             
                                                             
                                                             <span class="type">{string}</span> 
@@ -1515,7 +1574,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line335">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line487">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1582,7 +1641,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line371">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line523">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1641,6 +1700,73 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
+                                            <a name="setScheme"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">setScheme</b>
+                                                <span class="param">(scheme)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line441">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Set scheme part
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">scheme</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            
+                                                            <span>this</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="setUserInfo"> </a>
                                             <div class="title">
                                                 
@@ -1649,7 +1775,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line317">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line469">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1716,11 +1842,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line430">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_uri.js.html#line584">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                serialize to string
+                                                serialize to string.rfc 5.3 Component Recomposition.but kissy does not differentiate between undefined and empty.
                                                 
                                                 
                                             </div>
@@ -1948,60 +2074,6 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
-            
-            
-            <li><a href="../symbols/Grid.html">Grid</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.html">Grid.Bar</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.BarItem.html">Grid.Bar.BarItem</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.Button.html">Grid.Bar.Button</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.Separator.html">Grid.Bar.Separator</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.Spacer.html">Grid.Bar.Spacer</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bar.TextItem.html">Grid.Bar.TextItem</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Bindable.html">Grid.Bindable</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Column.html">Grid.Column</a></li>
-            
-            
-            <li><a href="../symbols/Grid.GridBody.html">Grid.GridBody</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Header.html">Grid.Header</a></li>
-            
-            
-            <li><a href="../symbols/Grid.PagingBar.html">Grid.PagingBar</a></li>
-            
-            
-            <li><a href="../symbols/Grid.PagingBar.Number.html">Grid.PagingBar.Number</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Plugins.CheckSelection.html">Grid.Plugins.CheckSelection</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Store.html">Grid.Store</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Util.html">Grid.Util</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Util.Format.html">Grid.Util.Format</a></li>
-            
-            
-            <li><a href="../symbols/Grid.Util.LoadMask.html">Grid.Util.LoadMask</a></li>
             
             
             <li><a href="../symbols/IO.html">IO</a></li>

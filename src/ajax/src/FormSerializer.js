@@ -8,9 +8,9 @@ KISSY.add("ajax/FormSerializer", function (S, DOM) {
         FormSerializer,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
     return FormSerializer = {
-        /**
-         * 序列化表单元素
-         * @param {String|HTMLElement[]|HTMLElement|NodeList} forms
+        /*
+         序列化表单元素
+         @param {String|HTMLElement[]|HTMLElement|NodeList} forms
          */
         serialize:function (forms) {
             // 名值键值对序列化,数组元素名字前不加 []

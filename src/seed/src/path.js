@@ -7,6 +7,7 @@
 
     /**
      * @namespace
+     * Path Utils For KISSY from nodejs
      * @name Path
      * @memberOf KISSY
      */
