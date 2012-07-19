@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 22:37
+build time: Jul 20 01:09
 */
 /**
  * @fileOverview accordion aria support
@@ -631,6 +631,9 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
     function Switchable(container, config) {
         var self = this;
 
+        self._triggerInternalCls = S.guid(CLS_TRIGGER_INTERNAL);
+        self._panelInternalCls = S.guid(CLS_PANEL_INTERNAL);
+
         // 调整配置信息
         config = config || {};
 
@@ -716,6 +719,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         if (willSwitch !== undefined) {
             self.switchTo(willSwitch);
         }
+
+
     }
 
     function getDomEvent(e) {
@@ -923,6 +928,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         _bindTriggers:function () {
             var self = this,
                 cfg = self.config,
+                _triggerInternalCls = self._triggerInternalCls,
                 navEl = S.one(self.nav),
                 triggers = self.triggers;
             // 给 trigger 添加class，使用委托
@@ -930,26 +936,26 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 self._initTrigger(trigger);
             });
 
-            navEl.delegate('click', '.' + CLS_TRIGGER_INTERNAL, function (e) {
+            navEl.delegate('click', '.' + _triggerInternalCls, function (e) {
                 var trigger = e.currentTarget,
                     index = self._getTriggerIndex(trigger);
                 self._onFocusTrigger(index, e);
             });
 
             if (cfg.triggerType === 'mouse') {
-                navEl.delegate('mouseenter', '.' + CLS_TRIGGER_INTERNAL,
+                navEl.delegate('mouseenter', '.' + _triggerInternalCls,
                     function (e) {
                         var trigger = e.currentTarget,
                             index = self._getTriggerIndex(trigger);
                         self._onMouseEnterTrigger(index, e);
-                    }).delegate('mouseleave', '.' + CLS_TRIGGER_INTERNAL, function () {
+                    }).delegate('mouseleave', '.' + _triggerInternalCls, function () {
                         self._onMouseLeaveTrigger();
                     });
             }
         },
         // 初始化 Trigger，添加样式
         _initTrigger:function (trigger) {
-            DOM.addClass(trigger, CLS_TRIGGER_INTERNAL);
+            DOM.addClass(trigger, this._triggerInternalCls);
         },
 
         _bindPanels:function () {
@@ -962,7 +968,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
         // 初始化panel,添加class
         _initPanel:function (panel) {
-            DOM.addClass(panel, CLS_PANEL_INTERNAL);
+            DOM.addClass(panel, this._panelInternalCls);
         },
         /**
          * click or tab 键激活 trigger 时触发的事件
@@ -1099,7 +1105,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 nextTrigger = null;
 
             // 如果 index 大于集合的总数，添加到最后
-            index = Math.max(0, Math.min(index, count))
+            index = Math.max(0, Math.min(index, count));
 
             var nextPanel = panels[index] || null;
             panels.splice(index, 0, panelDom);
@@ -1862,7 +1868,6 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
         EVENT_REMOVED = 'removed',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn',
-        CLS_PANEL_INTERNAL = CLS_PREFIX + 'panel-internal',
         DOM_EVENT = {originalEvent:{target:1}};
 
     /**
@@ -1951,7 +1956,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
                 });
             }
             // 触发 itemSelected 事件
-            Event.delegate(self.content, 'click', DOT + CLS_PANEL_INTERNAL, function (e) {
+            Event.delegate(self.content, 'click', DOT + self._panelInternalCls, function (e) {
                 var item = e.currentTarget;
                 self.fire('itemSelected', { item:item });
             });
@@ -1989,12 +1994,90 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
  */
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
+    var clearPosition = {
+        position:'',
+        left:'',
+        top:''
+    };
+
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
         circular:false
     });
+
+
+    function seamlessCircularScroll(callback) {
+        var self = this,
+            fromIndex = self.fromIndex,
+            cfg = self.config,
+            len = self.length,
+            isX = cfg.scrollType === 'scrollx',
+            prop = isX ? 'left' : 'top',
+            index = self.activeIndex,
+            viewDiff = self.viewSize[isX ? 0 : 1],
+            panels = self.panels,
+            props = {},
+            v = {},
+            _realStep = self._realStep,
+            totalXX = viewDiff * len;
+
+        props[prop] = -viewDiff * index;
+
+        if (fromIndex == -1) {
+            // 初始化
+            DOM.css(self.content, props);
+            callback && callback();
+            return;
+        }
+
+        // realStep 补帧
+        if (index + _realStep > len && DOM.css(panels[0], "position") != 'relative') {
+            v = { position:'relative'};
+            v[prop] = totalXX;
+
+            // 关键要同步！ realStep 取消或设定相对定位的同时要设置 left，保持在用户的显示位置不变
+            DOM.css(panels.slice(0, _realStep), v);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop,
+                    -(viewDiff * (len + fromIndex)));
+            }
+        }
+        // 补帧了，但是 index 在补帧内，恢复原始位置，取消补帧
+        else if (index > 0 && index < _realStep && DOM.css(panels[0], "position") == 'relative') {
+            DOM.css(panels.slice(0, _realStep), clearPosition);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop, -(viewDiff * (fromIndex)));
+            }
+        }
+
+        // 只有 index==0 情况 last->0 平滑过渡
+        if (panels[index].style.position == "relative") {
+            // S.log(index+"");
+            props[prop] = -viewDiff * (len + index);
+        }
+
+        if (self.anim) {
+            self.anim.stop();
+        }
+
+        self.anim = new Anim(self.content,
+            props,
+            cfg.duration,
+            cfg.easing,
+            function () {
+                if (index == 0) {
+                    DOM.css(panels.slice(0, _realStep), clearPosition);
+                    DOM.css(self.content, prop, "");
+                }
+                // free
+                self.anim = 0;
+                callback && callback();
+            }).run();
+
+
+    }
 
     /**
      * 循环滚动效果函数
@@ -2069,10 +2152,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 调整 panels 到下一个视图中
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', 'relative');
         DOM.css(actionPanels, prop, (start ? -1 : 1) * viewDiff * len);
 
@@ -2089,10 +2173,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 滚动完成后，复位到正常状态
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', '');
         DOM.css(actionPanels, prop, '');
 
@@ -2113,19 +2198,55 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
         name:'circular',
 
+        priority:5,
+
         /**
          * 根据 effect, 调整初始状态
          */
         init:function (host) {
             var cfg = host.config,
+                realStep,
+                scroller,
+                viewSize,
+                panels,
+                container,
                 effect = cfg.effect;
 
             // 仅有滚动效果需要下面的调整
-            if (cfg.circular &&
-                (effect === 'scrollx' || effect === 'scrolly')) {
+            if (cfg.circular && (effect === 'scrollx' || effect === 'scrolly')) {
+
                 // 覆盖滚动效果函数
                 cfg.scrollType = effect; // 保存到 scrollType 中
-                cfg.effect = circularScroll;
+
+                /*
+                 特殊处理：容器宽度比单个 item 宽，但是要求 item 一个个循环滚动，关键在于动画中补全帧的处理
+                 */
+                panels = host.panels;
+                container = host.container;
+
+                if (cfg.steps == 1 && panels.length) {
+                    realStep = 1;
+                    scroller = panels[0].parentNode.parentNode;
+                    viewSize = [Math.min(DOM.width(container), DOM.width(scroller)),
+                        Math.min(DOM.height(container), DOM.height(scroller))];
+
+                    if (effect == 'scrollx') {
+                        realStep = Math.floor(viewSize[0] /
+                            ( DOM.outerWidth(panels[0], true)));
+                    } else if (effect == 'scrolly') {
+                        realStep = Math.floor(viewSize[1] /
+                            (DOM.outerHeight(panels[0], true)));
+                    }
+
+                    if (realStep > cfg.steps) {
+                        host._realStep = realStep;
+                        cfg.effect = seamlessCircularScroll;
+                    }
+                }
+
+                if (!host._realStep) {
+                    cfg.effect = circularScroll;
+                }
             }
         }
     });
@@ -2338,8 +2459,8 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         // 其他情况下不需要
                         // 1. 获取高宽
                         host.viewSize = [
-                            cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
-                            cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
+                            cfg.viewSize[0] || panels0 && DOM.outerWidth(panels0, true) * steps,
+                            cfg.viewSize[1] || panels0 && DOM.outerHeight(panels0, true) * steps
                         ];
 
                         if (!host.viewSize[0]) {
@@ -2497,76 +2618,6 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
  * 承玉：2011.06.02 review switchable
  */
 /**
- * @fileOverview Seamless support for switchable
- * @author yiminghe@gmail.com
- */
-KISSY.add("switchable/seamless", function (S, DOM, Switchable) {
-    Switchable.addPlugin({
-        name:'seamless',
-
-        priority:5,
-
-        init:function (self) {
-            var config = self.config,
-                panels = self.panels,
-                container = self.container,
-                effect = config.effect;
-
-            if (config.steps == 1 && panels.length && config.circular) {
-                var realStep = 1,
-                    offsetXX,
-                    prop,
-                    lastIndex,
-                    viewSize = [DOM.width(container), DOM.height(container)],
-                    totalXX;
-
-                if (effect == 'scrollx') {
-                    prop = "left";
-                    realStep = Math.floor(viewSize[0] / (offsetXX = DOM.outerWidth(panels[0], true)));
-                } else if (effect == 'scrolly') {
-                    prop = "top";
-                    realStep = Math.floor(viewSize[1] / (offsetXX = DOM.outerHeight(panels[0], true)));
-                }
-
-                if (realStep <= config.steps) {
-                    return;
-                }
-
-                totalXX = offsetXX * panels.length;
-                lastIndex = panels.length - realStep + 1;
-
-                self.on("beforeSwitch", function (e) {
-                    var toIndex = e.toIndex,
-                        gap, v = {
-                            "position":"relative"
-                        };
-                    if (toIndex >= lastIndex) {
-                        gap = Math.abs(toIndex - lastIndex);
-                        v[prop] = totalXX;
-                        DOM.css(panels[gap], v);
-                    } else if (!toIndex) {
-                        v[prop] = totalXX;
-                        DOM.css(panels[realStep - 1], v);
-                    }
-                });
-
-                self.on("switch", function (e) {
-                    if (e.currentIndex == 0) {
-                        var i, v = {
-                            position:''
-                        };
-                        v[prop] = "";
-                        for (i = 1; i < realStep; i++) {
-                            DOM.css(panels[i], v);
-                        }
-                    }
-                });
-            }
-        }
-    });
-}, {
-    requires:['dom', './base']
-});/**
  * @fileOverview Tabs Widget
  * @author lifesinger@gmail.com
  */
@@ -2606,13 +2657,12 @@ KISSY.add('switchable/slide/base', function (S, Switchable) {
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPlay, Carousel, CAria, circular, effect, LazyLoad, Slide, Tabs) {
+KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tabs) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
-        Tabs:Tabs,
-        "Aria":Aria
+        Tabs:Tabs
     };
     S.mix(Switchable, re);
 
@@ -2622,19 +2672,18 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, AutoPla
 }, {
     requires:[
         "switchable/base",
-        "switchable/aria",
         "switchable/accordion/base",
-        "switchable/accordion/aria",
-        "switchable/autoplay",
         "switchable/carousel/base",
-        "switchable/carousel/aria",
-        "switchable/circular",
-        "switchable/effect",
-        "switchable/lazyload",
         "switchable/slide/base",
         "switchable/tabs/base",
+        "switchable/lazyload",
+        "switchable/effect",
+        "switchable/circular",
+        "switchable/carousel/aria",
+        "switchable/autoplay",
+        "switchable/aria",
         "switchable/tabs/aria",
-        "switchable/seamless"
+        "switchable/accordion/aria"
     ]
 });
 /**
@@ -2945,15 +2994,21 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
 
     Switchable.addPlugin({
 
-        priority:5,
+
 
         name:'touch',
 
         init:function (self) {
 
+            // TODO 单步不支持 touch
+            if (self._realStep) {
+                return;
+            }
+
             var cfg = self.config,
             // circular 会修改 cfg.effect
                 effect = cfg.scrollType || cfg.effect;
+
 
             if (effect == 'scrolly' ||
                 effect == 'scrollx') {

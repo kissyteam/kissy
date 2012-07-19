@@ -4,6 +4,12 @@
  */
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
+    var clearPosition = {
+        position:'',
+        left:'',
+        top:''
+    };
+
     /**
      * 添加默认配置
      */
@@ -11,7 +17,8 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         circular:false
     });
 
-    function seamlessCircularScroll(callback, direction) {
+
+    function seamlessCircularScroll(callback) {
         var self = this,
             fromIndex = self.fromIndex,
             cfg = self.config,
@@ -24,73 +31,61 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             props = {},
             v = {},
             _realStep = self._realStep,
-            totalXX = viewDiff * len,
-            isBackward = direction === 'backward';
+            totalXX = viewDiff * len;
 
         props[prop] = -viewDiff * index;
 
-        if (isBackward) {
-            if (fromIndex == 0) {
-                v.position = "relative";
-                v[prop] = -totalXX;
-                DOM.css(panels.slice(-_realStep), v);
-            }
-            if (index < len && index >= len - _realStep) {
-                props[prop] = viewDiff * (len - index);
-            }
-            if (self.anim) {
-                self.anim.stop();
-                if (fromIndex == len - _realStep && DOM.css(panels[fromIndex], "position") == "relative") {
-                    v.position = "";
-                    v[prop] = "";
-                    DOM.css(panels.slice(-_realStep), v);
-                    DOM.css(self.content, prop, -viewDiff * fromIndex);
-                }
-            }
-        } else {
-            if (fromIndex == len - _realStep) {
-                v.position = "relative";
-                v[prop] = totalXX;
-                DOM.css(panels.slice(0, _realStep), v);
-            }
-            if (index == 0) {
-                props[prop] = -totalXX;
-            }
-            if (self.anim) {
-                self.anim.stop();
-                if (fromIndex == 0 && DOM.css(panels[fromIndex], "position") == "relative") {
-                    v.position = "";
-                    v[prop] = "";
-                    DOM.css(panels.slice(0, _realStep), v);
-                    DOM.css(self.content, prop, "");
-                }
-            }
-        }
-
-        if (fromIndex > -1) {
-            self.anim = new Anim(self.content,
-                props,
-                cfg.duration,
-                cfg.easing,
-                function () {
-                    var v = {position:""};
-                    v[prop] = "";
-                    if (index == 0 && !isBackward) {
-                        DOM.css(panels.slice(0, _realStep), v);
-                        DOM.css(self.content, prop, "");
-                    } else if (index == len - _realStep && isBackward) {
-                        DOM.css(panels.slice(-_realStep), v);
-                        DOM.css(self.content, prop, -viewDiff * index);
-                    }
-                    // free
-                    self.anim = undefined;
-                    callback && callback();
-                }).run();
-        } else {
+        if (fromIndex == -1) {
             // 初始化
             DOM.css(self.content, props);
             callback && callback();
+            return;
         }
+
+        // realStep 补帧
+        if (index + _realStep > len && DOM.css(panels[0], "position") != 'relative') {
+            v = { position:'relative'};
+            v[prop] = totalXX;
+
+            // 关键要同步！ realStep 取消或设定相对定位的同时要设置 left，保持在用户的显示位置不变
+            DOM.css(panels.slice(0, _realStep), v);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop,
+                    -(viewDiff * (len + fromIndex)));
+            }
+        }
+        // 补帧了，但是 index 在补帧内，恢复原始位置，取消补帧
+        else if (index > 0 && index < _realStep && DOM.css(panels[0], "position") == 'relative') {
+            DOM.css(panels.slice(0, _realStep), clearPosition);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop, -(viewDiff * (fromIndex)));
+            }
+        }
+
+        // 只有 index==0 情况 last->0 平滑过渡
+        if (panels[index].style.position == "relative") {
+            // S.log(index+"");
+            props[prop] = -viewDiff * (len + index);
+        }
+
+        if (self.anim) {
+            self.anim.stop();
+        }
+
+        self.anim = new Anim(self.content,
+            props,
+            cfg.duration,
+            cfg.easing,
+            function () {
+                if (index == 0) {
+                    DOM.css(panels.slice(0, _realStep), clearPosition);
+                    DOM.css(self.content, prop, "");
+                }
+                // free
+                self.anim = 0;
+                callback && callback();
+            }).run();
+
 
     }
 
@@ -212,6 +207,8 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
     Switchable.addPlugin({
 
         name:'circular',
+
+        priority:5,
 
         /**
          * 根据 effect, 调整初始状态

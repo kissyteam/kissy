@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 23:23
+build time: Jul 19 23:47
 */
 /**
  * @fileOverview dom-attr
@@ -3427,7 +3427,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
+        return String(name).replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
     }
 
     var defaultDisplayDetectIframe,

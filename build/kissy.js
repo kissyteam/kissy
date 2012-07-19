@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 23:23
+build time: Jul 19 23:47
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 18 23:23
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120718232351';
+        S.__BUILD_TIME = '20120719234736';
     })();
 
     return S;
@@ -1983,6 +1983,7 @@ build time: Jul 18 23:23
 
     /**
      * @namespace
+     * Path Utils For KISSY from nodejs
      * @name Path
      * @memberOf KISSY
      */
@@ -2296,17 +2297,29 @@ build time: Jul 18 23:23
     {
         constructor:Query,
 
+        /**
+         * Cloned new instance.
+         * @return {Query}
+         */
         clone:function () {
             return new Query(this.toString());
         },
 
 
+        /**
+         * reset to a new query string
+         * @param {String} query
+         */
         reset:function (query) {
             var self = this;
             self._query = query || "";
             self._queryMap = 0;
         },
 
+        /**
+         * Parameter count.
+         * @return {Number}
+         */
         count:function () {
             var self = this, count = 0,
                 _queryMap = self._queryMap,
@@ -2338,6 +2351,10 @@ build time: Jul 18 23:23
             }
         },
 
+        /**
+         * Parameter names.
+         * @return {String[]}
+         */
         keys:function () {
             var self = this;
             parseQuery(self);
@@ -4958,7 +4975,7 @@ build time: Jul 18 23:23
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120718232351'
+        tag:'20120719234736'
     }, getBaseInfo()));
 
     /**
@@ -5620,7 +5637,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 23:23
+build time: Jul 19 23:47
 */
 /**
  * @fileOverview dom-attr
@@ -9046,7 +9063,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
+        return String(name).replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
     }
 
     var defaultDisplayDetectIframe,
