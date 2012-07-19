@@ -38,8 +38,15 @@
 </head>
 <body>
 <h1 id="title">circular picture gallery</h1>
-<div id="list" style="overflow: hidden;margin: 100px auto;width:1470px;height: 170px ">
+<div id="list" style="overflow: hidden;margin: 100px auto;width:1470px;height: 200px ">
+    <span id="scroller-prev" class="prev">&lsaquo; 上一页</span>
+    <span id="scroller-next" class="next">下一页 &rsaquo;</span>
     <ul id="content" class="pic-list">
+        <li class="picture" style="display: block; float: left;">
+            <div style="width:488px;height: 168px;border: 1px solid red;">
+                0
+            </div>
+        </li>
         <li class="picture" style="display: block; float: left;">
             <div style="width:488px;height: 168px;border: 1px solid red;">
                 1
@@ -71,11 +78,16 @@
 <script>
     KISSY.use("switchable", function (S, Switchable) {
         var DOM = S.DOM;
-        var s = new Switchable.Slide('#list', {
+        var s = new Switchable.Carousel('#list', {
             contentCls:'pic-list',
             hasTriggers:false,
             effect:'scrollx',
             interval:2,
+            steps:1,
+            prevBtnCls:'prev',
+            autoplay:false,
+            circular:true,
+            nextBtnCls:'next',
             easing:"easeOutStrong"
         });
 
