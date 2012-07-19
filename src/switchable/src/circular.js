@@ -11,6 +11,89 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         circular:false
     });
 
+    function seamlessCircularScroll(callback, direction) {
+        var self = this,
+            fromIndex = self.fromIndex,
+            cfg = self.config,
+            len = self.length,
+            isX = cfg.scrollType === 'scrollx',
+            prop = isX ? 'left' : 'top',
+            index = self.activeIndex,
+            viewDiff = self.viewSize[isX ? 0 : 1],
+            panels = self.panels,
+            props = {},
+            v = {},
+            _realStep = self._realStep,
+            totalXX = viewDiff * len,
+            isBackward = direction === 'backward';
+
+        props[prop] = -viewDiff * index;
+
+        if (isBackward) {
+            if (fromIndex == 0) {
+                v.position = "relative";
+                v[prop] = -totalXX;
+                DOM.css(panels.slice(-_realStep), v);
+            }
+            if (index < len && index >= len - _realStep) {
+                props[prop] = viewDiff * (len - index);
+            }
+            if (self.anim) {
+                self.anim.stop();
+                if (fromIndex == len - _realStep && DOM.css(panels[fromIndex], "position") == "relative") {
+                    v.position = "";
+                    v[prop] = "";
+                    DOM.css(panels.slice(-_realStep), v);
+                    DOM.css(self.content, prop, -viewDiff * fromIndex);
+                }
+            }
+        } else {
+            if (fromIndex == len - _realStep) {
+                v.position = "relative";
+                v[prop] = totalXX;
+                DOM.css(panels.slice(0, _realStep), v);
+            }
+            if (index == 0) {
+                props[prop] = -totalXX;
+            }
+            if (self.anim) {
+                self.anim.stop();
+                if (fromIndex == 0 && DOM.css(panels[fromIndex], "position") == "relative") {
+                    v.position = "";
+                    v[prop] = "";
+                    DOM.css(panels.slice(0, _realStep), v);
+                    DOM.css(self.content, prop, "");
+                }
+            }
+        }
+
+        if (fromIndex > -1) {
+            self.anim = new Anim(self.content,
+                props,
+                cfg.duration,
+                cfg.easing,
+                function () {
+                    var v = {position:""};
+                    v[prop] = "";
+                    if (index == 0 && !isBackward) {
+                        DOM.css(panels.slice(0, _realStep), v);
+                        DOM.css(self.content, prop, "");
+                    } else if (index == len - _realStep && isBackward) {
+                        DOM.css(panels.slice(-_realStep), v);
+                        DOM.css(self.content, prop, -viewDiff * index);
+                    }
+                    // free
+                    self.anim = undefined;
+                    callback && callback();
+                }).run();
+        } else {
+            // 初始化
+            DOM.css(self.content, props);
+            callback && callback();
+        }
+
+    }
+
     /**
      * 循环滚动效果函数
      */
@@ -84,10 +167,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 调整 panels 到下一个视图中
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', 'relative');
         DOM.css(actionPanels, prop, (start ? -1 : 1) * viewDiff * len);
 
@@ -104,10 +188,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 滚动完成后，复位到正常状态
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', '');
         DOM.css(actionPanels, prop, '');
 
@@ -133,14 +218,48 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
          */
         init:function (host) {
             var cfg = host.config,
+                realStep,
+                scroller,
+                viewSize,
+                panels,
+                container,
                 effect = cfg.effect;
 
             // 仅有滚动效果需要下面的调整
-            if (cfg.circular &&
-                (effect === 'scrollx' || effect === 'scrolly')) {
+            if (cfg.circular && (effect === 'scrollx' || effect === 'scrolly')) {
+
                 // 覆盖滚动效果函数
                 cfg.scrollType = effect; // 保存到 scrollType 中
-                cfg.effect = circularScroll;
+
+                /*
+                 特殊处理：容器宽度比单个 item 宽，但是要求 item 一个个循环滚动，关键在于动画中补全帧的处理
+                 */
+                panels = host.panels;
+                container = host.container;
+
+                if (cfg.steps == 1 && panels.length) {
+                    realStep = 1;
+                    scroller = panels[0].parentNode.parentNode;
+                    viewSize = [Math.min(DOM.width(container), DOM.width(scroller)),
+                        Math.min(DOM.height(container), DOM.height(scroller))];
+
+                    if (effect == 'scrollx') {
+                        realStep = Math.floor(viewSize[0] /
+                            ( DOM.outerWidth(panels[0], true)));
+                    } else if (effect == 'scrolly') {
+                        realStep = Math.floor(viewSize[1] /
+                            (DOM.outerHeight(panels[0], true)));
+                    }
+
+                    if (realStep > cfg.steps) {
+                        host._realStep = realStep;
+                        cfg.effect = seamlessCircularScroll;
+                    }
+                }
+
+                if (!host._realStep) {
+                    cfg.effect = circularScroll;
+                }
             }
         }
     });

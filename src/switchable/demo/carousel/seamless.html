@@ -114,61 +114,38 @@
 功能：旋转木马
     </pre>
 
-    <h3 class="s-title">Carousel - 可添加删除的旋转木马</h3>
-
     <div class="s-section">
 
         <div id="demo4" class="s-demo scrollable">
-            <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
+            <span id="scroller-prev" class="prev">&lsaquo; 上一页</span>
             <span id="scroller-next" class="next">下一页 &rsaquo;</span>
             <div class="scroller">
                 <div class="ks-switchable-content">
                     <!-- 1-5 -->
-                    <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1.XGaXalnXXXXXXXX-110-135.png"/>
-                    <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
-                    <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
-                    <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1Hm1XXipvXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://placehold.it/100x75&text=1"/>
+                    <img alt="" src="http://placehold.it/100x75&text=2"/>
+                    <img alt="" src="http://placehold.it/100x75&text=3"/>
+                    <img alt="" src="http://placehold.it/100x75&text=4"/>
+                    <img alt="" src="http://placehold.it/100x75&text=5"/>
                     <!-- 5-10 -->
-                    <img id='carousel_lazy1' alt=""
-                         data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://placehold.it/100x75&text=6"/>
+                    <img alt="" src="http://placehold.it/100x75&text=7"/>
+                    <img alt="" src="http://placehold.it/100x75&text=8"/>
+                    <img alt="" src="http://placehold.it/100x75&text=9"/>
+                    <img alt="" src="http://placehold.it/100x75&text=10"/>
                     <!-- 10-15 -->
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
-                    <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+                    <img alt="" src="http://placehold.it/100x75&text=11"/>
+                    <img alt="" src="http://placehold.it/100x75&text=12"/>
+                    <img alt="" src="http://placehold.it/100x75&text=13"/>
+                    <img alt="" src="http://placehold.it/100x75&text=14"/>
                     <!--测试不为倍数的情况<img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>-->
                 </div>
                 <ul class="ks-switchable-nav">
-                    <li class="ks-active">&bull;</li>
-                    <li>&bull;</li>
-                    <li>&bull;</li>
                 </ul>
 
             </div>
         </div>
-        <div style="margin:10px;">
-            <label>
-                位置（整数）：
-                <input type="text" id="addIndex"/>
-                <input type="checkbox" id="checkIndex"/>激活
-            </label>
-            <button id="btnAdd" type="button">添加</button>
-        </div>
-        <div style="margin:10px;">
-            <label>
-                位置（整数）：
-                <input type="text" id="deleteIndex"/>
-            </label>
-            <button id="btnDelete" type="button">删除</button>
-        </div>
-        <div style="margin:10px;">
-            <button id="btnDestroy" type="button">销毁</button>
-        </div>
+
         <a class="s-view-code" href="#">显示源码</a>
     </div>
 
@@ -182,42 +159,15 @@
             var carousel = new Carousel('#demo4', {
                 effect:'scrollx',
                 easing:'easeOutStrong',
-                steps:5,
-                viewSize:[680],
-                circular:false,
+                steps:1,
+                // viewSize:[100],
                 prevBtnCls:'prev',
                 nextBtnCls:'next',
                 mouseAsTouch:true,
-                //autoplay:true,
+                //circular:false,
+                // autoplay:true,
                 disableBtnCls:'disable',
                 lazyDataType:'img-src'
-            });
-
-            var btnAdd = S.one('#btnAdd'),
-                    i = 1,
-                    btnDelete = S.one("#btnDelete"),
-                    checkIndex = S.one("#checkIndex"),
-                    btnDestroy = S.one("#btnDestroy"),
-                    deleteIndex=S.one("#deleteIndex"),
-                    txtAdd = S.one('#addIndex');
-
-            btnDelete.on("click", function () {
-                var index = deleteIndex.val();
-                carousel.remove({index:parseInt(index)});
-            });
-
-            btnAdd.on('click', function () {
-                var index = txtAdd.val();
-                carousel.add({
-                    index:parseInt(index),
-                    active:checkIndex.attr("checked"),
-                    trigger:DOM.create('<li>&bull;</li>'),
-                    panel:DOM.create('<img alt="" src="http://img03.taobaocdn.com/tps/i3/T1Hm1XXipvXXXXXXXX-110-135.png"/>')
-                });
-                i++;
-            });
-            btnDestroy.on("click", function () {
-                carousel.destroy();
             });
             window.carousel = carousel;
         });

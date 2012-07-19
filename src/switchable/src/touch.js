@@ -175,11 +175,13 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         if (diff < 0 && activeIndex == lastIndex ||
                             diff > 0 && activeIndex == 0) {
                             // 强制动画恢复到初始位置
-                            Switchable.Effects[effect].call(self, undefined, undefined, true);
+                            Switchable.Effects[effect]
+                                .call(self, undefined, undefined, true);
                             return;
                         }
                     }
 
+                    /*
                     if (diff < 0 && activeIndex == lastIndex) {
                         // 最后一个到第一个
                     } else if (diff > 0 && activeIndex == 0) {
@@ -191,7 +193,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                             activeIndex == 0 ? lastIndex : 0,
                             prop,
                             viewSize);
-                    }
+                    }*/
 
                     self[diff < 0 ? 'next' : 'prev']();
 
