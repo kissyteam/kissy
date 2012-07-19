@@ -36,6 +36,9 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
     function Switchable(container, config) {
         var self = this;
 
+        self._triggerInternalCls = S.guid(CLS_TRIGGER_INTERNAL);
+        self._panelInternalCls = S.guid(CLS_PANEL_INTERNAL);
+
         // 调整配置信息
         config = config || {};
 
@@ -121,6 +124,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         if (willSwitch !== undefined) {
             self.switchTo(willSwitch);
         }
+
+
     }
 
     function getDomEvent(e) {
@@ -328,6 +333,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
         _bindTriggers:function () {
             var self = this,
                 cfg = self.config,
+                _triggerInternalCls = self._triggerInternalCls,
                 navEl = S.one(self.nav),
                 triggers = self.triggers;
             // 给 trigger 添加class，使用委托
@@ -335,26 +341,26 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 self._initTrigger(trigger);
             });
 
-            navEl.delegate('click', '.' + CLS_TRIGGER_INTERNAL, function (e) {
+            navEl.delegate('click', '.' + _triggerInternalCls, function (e) {
                 var trigger = e.currentTarget,
                     index = self._getTriggerIndex(trigger);
                 self._onFocusTrigger(index, e);
             });
 
             if (cfg.triggerType === 'mouse') {
-                navEl.delegate('mouseenter', '.' + CLS_TRIGGER_INTERNAL,
+                navEl.delegate('mouseenter', '.' + _triggerInternalCls,
                     function (e) {
                         var trigger = e.currentTarget,
                             index = self._getTriggerIndex(trigger);
                         self._onMouseEnterTrigger(index, e);
-                    }).delegate('mouseleave', '.' + CLS_TRIGGER_INTERNAL, function () {
+                    }).delegate('mouseleave', '.' + _triggerInternalCls, function () {
                         self._onMouseLeaveTrigger();
                     });
             }
         },
         // 初始化 Trigger，添加样式
         _initTrigger:function (trigger) {
-            DOM.addClass(trigger, CLS_TRIGGER_INTERNAL);
+            DOM.addClass(trigger, this._triggerInternalCls);
         },
 
         _bindPanels:function () {
@@ -367,7 +373,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
         // 初始化panel,添加class
         _initPanel:function (panel) {
-            DOM.addClass(panel, CLS_PANEL_INTERNAL);
+            DOM.addClass(panel, this._panelInternalCls);
         },
         /**
          * click or tab 键激活 trigger 时触发的事件
@@ -504,7 +510,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                 nextTrigger = null;
 
             // 如果 index 大于集合的总数，添加到最后
-            index = Math.max(0, Math.min(index, count))
+            index = Math.max(0, Math.min(index, count));
 
             var nextPanel = panels[index] || null;
             panels.splice(index, 0, panelDom);

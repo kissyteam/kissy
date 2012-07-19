@@ -10,7 +10,6 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
         EVENT_REMOVED = 'removed',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn',
-        CLS_PANEL_INTERNAL = CLS_PREFIX + 'panel-internal',
         DOM_EVENT = {originalEvent:{target:1}};
 
     /**
@@ -99,7 +98,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
                 });
             }
             // 触发 itemSelected 事件
-            Event.delegate(self.content, 'click', DOT + CLS_PANEL_INTERNAL, function (e) {
+            Event.delegate(self.content, 'click', DOT + self._panelInternalCls, function (e) {
                 var item = e.currentTarget;
                 self.fire('itemSelected', { item:item });
             });

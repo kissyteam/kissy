@@ -194,8 +194,8 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         // 其他情况下不需要
                         // 1. 获取高宽
                         host.viewSize = [
-                            cfg.viewSize[0] || panels0 && panels0.offsetWidth * steps,
-                            cfg.viewSize[1] || panels0 && panels0.offsetHeight * steps
+                            cfg.viewSize[0] || panels0 && DOM.outerWidth(panels0, true) * steps,
+                            cfg.viewSize[1] || panels0 && DOM.outerHeight(panels0, true) * steps
                         ];
 
                         if (!host.viewSize[0]) {

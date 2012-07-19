@@ -4,12 +4,90 @@
  */
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
+    var clearPosition = {
+        position:'',
+        left:'',
+        top:''
+    };
+
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
         circular:false
     });
+
+
+    function seamlessCircularScroll(callback) {
+        var self = this,
+            fromIndex = self.fromIndex,
+            cfg = self.config,
+            len = self.length,
+            isX = cfg.scrollType === 'scrollx',
+            prop = isX ? 'left' : 'top',
+            index = self.activeIndex,
+            viewDiff = self.viewSize[isX ? 0 : 1],
+            panels = self.panels,
+            props = {},
+            v = {},
+            _realStep = self._realStep,
+            totalXX = viewDiff * len;
+
+        props[prop] = -viewDiff * index;
+
+        if (fromIndex == -1) {
+            // 初始化
+            DOM.css(self.content, props);
+            callback && callback();
+            return;
+        }
+
+        // realStep 补帧
+        if (index + _realStep > len && DOM.css(panels[0], "position") != 'relative') {
+            v = { position:'relative'};
+            v[prop] = totalXX;
+
+            // 关键要同步！ realStep 取消或设定相对定位的同时要设置 left，保持在用户的显示位置不变
+            DOM.css(panels.slice(0, _realStep), v);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop,
+                    -(viewDiff * (len + fromIndex)));
+            }
+        }
+        // 补帧了，但是 index 在补帧内，恢复原始位置，取消补帧
+        else if (index > 0 && index < _realStep && DOM.css(panels[0], "position") == 'relative') {
+            DOM.css(panels.slice(0, _realStep), clearPosition);
+            if (fromIndex >= 0 && fromIndex < _realStep) {
+                DOM.css(self.content, prop, -(viewDiff * (fromIndex)));
+            }
+        }
+
+        // 只有 index==0 情况 last->0 平滑过渡
+        if (panels[index].style.position == "relative") {
+            // S.log(index+"");
+            props[prop] = -viewDiff * (len + index);
+        }
+
+        if (self.anim) {
+            self.anim.stop();
+        }
+
+        self.anim = new Anim(self.content,
+            props,
+            cfg.duration,
+            cfg.easing,
+            function () {
+                if (index == 0) {
+                    DOM.css(panels.slice(0, _realStep), clearPosition);
+                    DOM.css(self.content, prop, "");
+                }
+                // free
+                self.anim = 0;
+                callback && callback();
+            }).run();
+
+
+    }
 
     /**
      * 循环滚动效果函数
@@ -84,10 +162,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 调整 panels 到下一个视图中
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', 'relative');
         DOM.css(actionPanels, prop, (start ? -1 : 1) * viewDiff * len);
 
@@ -104,10 +183,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             steps = cfg.steps,
             len = self.length,
             from = start * steps,
+            actionPanels,
             to = (start + 1) * steps;
 
         // 滚动完成后，复位到正常状态
-        var actionPanels = panels.slice(from, to);
+        actionPanels = panels.slice(from, to);
         DOM.css(actionPanels, 'position', '');
         DOM.css(actionPanels, prop, '');
 
@@ -128,19 +208,55 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
         name:'circular',
 
+        priority:5,
+
         /**
          * 根据 effect, 调整初始状态
          */
         init:function (host) {
             var cfg = host.config,
+                realStep,
+                scroller,
+                viewSize,
+                panels,
+                container,
                 effect = cfg.effect;
 
             // 仅有滚动效果需要下面的调整
-            if (cfg.circular &&
-                (effect === 'scrollx' || effect === 'scrolly')) {
+            if (cfg.circular && (effect === 'scrollx' || effect === 'scrolly')) {
+
                 // 覆盖滚动效果函数
                 cfg.scrollType = effect; // 保存到 scrollType 中
-                cfg.effect = circularScroll;
+
+                /*
+                 特殊处理：容器宽度比单个 item 宽，但是要求 item 一个个循环滚动，关键在于动画中补全帧的处理
+                 */
+                panels = host.panels;
+                container = host.container;
+
+                if (cfg.steps == 1 && panels.length) {
+                    realStep = 1;
+                    scroller = panels[0].parentNode.parentNode;
+                    viewSize = [Math.min(DOM.width(container), DOM.width(scroller)),
+                        Math.min(DOM.height(container), DOM.height(scroller))];
+
+                    if (effect == 'scrollx') {
+                        realStep = Math.floor(viewSize[0] /
+                            ( DOM.outerWidth(panels[0], true)));
+                    } else if (effect == 'scrolly') {
+                        realStep = Math.floor(viewSize[1] /
+                            (DOM.outerHeight(panels[0], true)));
+                    }
+
+                    if (realStep > cfg.steps) {
+                        host._realStep = realStep;
+                        cfg.effect = seamlessCircularScroll;
+                    }
+                }
+
+                if (!host._realStep) {
+                    cfg.effect = circularScroll;
+                }
             }
         }
     });
