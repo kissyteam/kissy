@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 20 03:09
+build time: Jul 20 13:58
 */
 /**
  * @fileOverview accordion aria support
@@ -2007,8 +2007,9 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         circular:false
     });
 
-
-    function seamlessCircularScroll(callback) {
+    // 限制条件：总 item 数必须至少等于 一屏数
+    // 当前帧 fromIndex 总位于总左边，所以 forward 情况下一定不是补帧
+    function seamlessCircularScroll(callback, direction) {
         var self = this,
             fromIndex = self.fromIndex,
             cfg = self.config,
@@ -2020,6 +2021,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             panels = self.panels,
             props = {},
             v = {},
+            correction,
             _realStep = self._realStep,
             totalXX = viewDiff * len;
 
@@ -2032,30 +2034,57 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             return;
         }
 
+        // 最终补帧状态对了
         // realStep 补帧
-        if (index + _realStep > len && DOM.css(panels[0], "position") != 'relative') {
+        // 等于时不要补帧，所以限制条件为：总个数至少等于一屏个数
+        if (index + _realStep > len) {
             v = { position:'relative'};
             v[prop] = totalXX;
 
+            // 补帧数
+            correction = index + _realStep - len;
+
             // 关键要同步！ realStep 取消或设定相对定位的同时要设置 left，保持在用户的显示位置不变
-            DOM.css(panels.slice(0, _realStep), v);
-            if (fromIndex >= 0 && fromIndex < _realStep) {
-                DOM.css(self.content, prop,
-                    -(viewDiff * (len + fromIndex)));
-            }
-        }
-        // 补帧了，但是 index 在补帧内，恢复原始位置，取消补帧
-        else if (index > 0 && index < _realStep && DOM.css(panels[0], "position") == 'relative') {
+            // 最小补帧
+            DOM.css(panels.slice(0, correction), v);
+            // 取消其他补帧
+            DOM.css(panels.slice(correction, _realStep), clearPosition);
+        } else {
             DOM.css(panels.slice(0, _realStep), clearPosition);
-            if (fromIndex >= 0 && fromIndex < _realStep) {
-                DOM.css(self.content, prop, -(viewDiff * (fromIndex)));
-            }
         }
 
-        // 只有 index==0 情况 last->0 平滑过渡
-        if (panels[index].style.position == "relative") {
-            // S.log(index+"");
-            props[prop] = -viewDiff * (len + index);
+
+        // 调整当前位置
+        var fromIndexPosition = DOM.css(panels[fromIndex], "position");
+
+        var dl = (fromIndex + len - index) % len;
+        var dr = (index - fromIndex + len) % len;
+
+
+        // 当前位于补帧，左转比较容易，移到补帧处
+        // ??
+        // 什么情况下位于补帧并且需要右转?? 除非不满足限制条件
+        // dl >= dr && fromIndexPosition == 'relative'
+
+        if (dl < dr && fromIndexPosition == 'relative') {
+            DOM.css(self.content, prop,
+                -(viewDiff * (len + fromIndex)));
+        } else
+        // dl > dr
+        // || fromIndexPosition != 'relative' 可忽略
+        {
+            // 当前即使位于补帧，但是之前不是，右转更方便
+            // 不移动到补帧新位置
+            // 保持原有位置
+
+            //  edge case
+            if (fromIndex == len - 1 && index == 0) {
+                // 从 viewDiff 到 0，而不是 -(viewDiff * (fromIndex) 到 0，距离最短
+                DOM.css(self.content, prop, viewDiff);
+            } else {
+                // 正常水平 :  -(viewDiff * (fromIndex) ->  -(viewDiff * (index)
+                DOM.css(self.content, prop, -(viewDiff * (fromIndex)));
+            }
         }
 
         if (self.anim) {
@@ -2067,10 +2096,6 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             cfg.duration,
             cfg.easing,
             function () {
-                if (index == 0) {
-                    DOM.css(panels.slice(0, _realStep), clearPosition);
-                    DOM.css(self.content, prop, "");
-                }
                 // free
                 self.anim = 0;
                 callback && callback();
@@ -2254,6 +2279,11 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 }, { requires:["dom", "anim", "./base", "./effect"]});
 
 /**
+ * 2012-07-20 yiminghe@gmail.com
+ *  - 增强 steps=1 时并且容器可视区域包括多个 item 的单步循环
+ *  - 多补帧技术
+ *
+ *
  * 2012-04-12 yiminghe@gmail.com
  *  - 修复速度过快时从 0 到最后或从最后到 0 时的 bug ： 'relative' 位置没有 reset
  *
