@@ -34,6 +34,18 @@
         text-align: center;
         font-weight: bold;
     }
+
+
+    .ks-switchable-nav {
+        position: absolute;
+        right:0;
+        top:0;
+    }
+
+    .ks-switchable-nav li {
+        float: right;
+        margin: 0 10px;
+    }
 </style>
 </head>
 <body>
@@ -41,7 +53,7 @@
 <div id="list" style="overflow: hidden;margin: 100px auto;width:1470px;height: 200px ">
     <span id="scroller-prev" class="prev">&lsaquo; 上一个</span>
     <span id="scroller-next" class="next">下一个 &rsaquo;</span>
-    <ul id="content" class="pic-list">
+    <ul id="content" class="pic-list" style="overflow: hidden;">
         <li class="picture" style="display: block; float: left;">
             <div style="width:488px;height: 168px;border: 1px solid red;">
                 0
@@ -57,22 +69,13 @@
                 2
             </div>
         </li>
-        <li class="picture" style="display: block; float: left;">
-            <div style="width:488px;height: 168px;border: 1px solid red;">
-                3
-            </div>
-        </li>
-        <li class="picture" style="display: block; float: left;">
-            <div style="width:488px;height: 168px;border: 1px solid red;">
-                4
-            </div>
-        </li>
-        <li class="picture" style="display: block; float: left;">
-            <div style="width:488px;height: 168px;border: 1px solid red;">
-                5
-            </div>
-        </li>
 
+
+
+
+    </ul>
+
+    <ul class="ks-switchable-nav">
     </ul>
 </div>
 <script>
@@ -80,7 +83,7 @@
         var DOM = S.DOM;
         var s = new Switchable.Carousel('#list', {
             contentCls:'pic-list',
-            hasTriggers:false,
+            hasTriggers:true,
             effect:'scrollx',
             interval:2,
             steps:1,
