@@ -27,10 +27,8 @@
     KISSY.use("kison", function (S, KISON) {
         S.io({
             url:'cal.js',
-            dataType:'jsonp',
-            jsonpCallback:'x',
-            success:function (data, status, xhr) {
-                var data = xhr.responseText;
+            dataType:'text',
+            success:function (data) {
                 $("#grammar").val(data.slice(1, data.length - 1));
             }
         });
