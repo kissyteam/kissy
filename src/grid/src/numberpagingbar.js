@@ -5,7 +5,7 @@
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
-	    CLS_NUMBER_BUTTON = 'ks-button-number',
+	    CLS_NUMBER_BUTTON = 'ks-grid-button-number',
 		CLS_ACTIVE = 'ks-active';
 
 	/**
@@ -139,7 +139,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getEllipsisItem : function(){
 			var _self = this;
 			return {
-				xclass:'bar-item-text',
+				xclass:'grid-bar-item-text',
 				text : _self.get('ellipsisTpl')
 			};
 		},
@@ -148,7 +148,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				id : page,
-				xclass:'bar-item-button',
+				xclass:'grid-bar-item-button',
 				text : ''+page+'',
 				elCls : _self.get('numberButtonCls')
 			};
@@ -201,7 +201,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			}
 		}
 	},{
-		xclass : 'pagingbar-number',
+		xclass : 'grid-pagingbar-number',
 		priority : 3	
 	});
 
