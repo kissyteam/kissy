@@ -31,10 +31,10 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 		height:500,
 		tableCls : '',
 		tbar : {
-					xclass : 'bar' , 
+					xclass : 'grid-bar' , 
 					
-					children : [{xclass : 'bar-item-button',
-						elCls : 'bar-test',
+					children : [{xclass : 'grid-bar-item-button',
+						elCls : 'grid-bar-test',
 						text : '测试3',
 						listeners : {
 							'click':function(event){
@@ -44,7 +44,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 					}]
 				},
 
-		bbar : {xclass:'pagingbar-number',store : store,pageSize : 3},
+		bbar : {xclass:'grid-pagingbar-number',store : store,pageSize : 3},
 		store : store
 	});
 	grid.render();
@@ -86,11 +86,11 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 		});
 		
 		it('测试Grid 命令栏的生成',function(){
-			expect(gridEl.one('.bar-test')).not.toBe(null);
+			expect(gridEl.one('.grid-bar-test')).not.toBe(null);
 		});
 
 		it('测试Grid 分页栏的生成',function(){
-			expect(gridEl.one('.ks-pagingbar')).not.toBe(null);
+			expect(gridEl.one('.ks-grid-pagingbar')).not.toBe(null);
 		});
 		it('测试Grid显示数据',function(){
 			store.setResult(data);
@@ -400,9 +400,9 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			var height = 500;
 			grid.set('height',height);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
-           /* grid.set('forceFit',false);
+            grid.set('forceFit',false);
             grid.set('width',300);
-            waits(100);
+            /*waits(100);
             runs(function(){
                 grid.set('width',800);
             });*/

@@ -6,7 +6,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			render : '#nbar'
 		});
 		bar.render();
-		var barEl = S.one('#nbar').one('.ks-pagingbar-number'),
+		var barEl = S.one('#nbar').one('.ks-grid-pagingbar-number'),
 
 			items = barEl.children();
 		it('测试pagingbar生成',function(){
@@ -31,7 +31,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 		it('测试生成 number button container',function(){
 			var nbar = bar.get('numberContainer');
 			expect(nbar).not.toBe(null);
-			expect(nbar.get('el').hasClass('.ks-bar')).toBeTruthy();
+			expect(nbar.get('el').hasClass('.ks-grid-bar')).toBeTruthy();
 			expect(barEl.contains(nbar.get('el'))).toBeTruthy();
 		});
 
@@ -46,7 +46,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			store : store
 		});
 		bar1.render();
-		var barEl = bar1.get('el').one('.ks-bar');
+		var barEl = bar1.get('el').one('.ks-grid-bar');
 		it('测试生成的页码是否正确',function(){
 			var count  = bar1.get('totalPage');
 			store.load();
@@ -54,7 +54,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-button-number').length).toBe(count);
+				expect(barEl.all('.ks-grid-button-number').length).toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -99,7 +99,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 		});
 		bar1.render();
 
-		var barEl = bar1.get('el').one('.ks-bar'),
+		var barEl = bar1.get('el').one('.ks-grid-bar'),
 			limitCount = bar1.get('maxLimitCount');
 		it('测试生成的页码是否正确',function(){
 			var count  = bar1.get('totalPage');
@@ -108,7 +108,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-button-number').length).not.toBe(count);
+				expect(barEl.all('.ks-grid-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -121,7 +121,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-button-number').length).not.toBe(count);
+				expect(barEl.all('.ks-grid-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -134,7 +134,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			runs(function(){
 				var count  = bar1.get('totalPage'),
 					curPage = bar1.get('curPage');
-				expect(barEl.all('.ks-button-number').length).not.toBe(count);
+				expect(barEl.all('.ks-grid-button-number').length).not.toBe(count);
 				expect(barEl.one('.ks-button-checked').text()).toBe(curPage.toString());
 			});
 			
@@ -150,7 +150,7 @@ KISSY.use('grid/numberpagingbar,grid/store',function(S,NBar,Store){
 			store : store
 		});
 		bar1.render();
-		var barEl = bar1.get('el').one('.ks-bar');
+		var barEl = bar1.get('el').one('.ks-grid-bar');
 		it('测试点击首页',function(){
 			//跳转到第11页
 			store.load({start:10});

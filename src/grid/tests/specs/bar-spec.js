@@ -14,7 +14,7 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 				}),
 				{
 					id :'link1',
-					xclass:'bar-item',
+					xclass:'grid-bar-item',
 					content : '<a href="http://www.taobao.com">sssss</a>',
 					listeners : {
 						'click':function(event){
@@ -24,16 +24,16 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 					}
 				},{
 					id : 'btn3',
-					xclass:'bar-item-button',
+					xclass:'grid-bar-item-button',
 					text : '测试3',
 					listeners : {
 						'click':function(event){
 							log('button3');
 						}
 					}
-				},{xclass:'bar-item-separator'},{
+				},{xclass:'grid-bar-item-separator'},{
 					id : 'input',
-					xclass : 'bar-item',
+					xclass : 'grid-bar-item',
 					content : '<input class="span2" type="text"/>',
 					listeners : {
 						'change':function(event){
@@ -53,7 +53,7 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 		return S.one('#log').text();
 	}
 
-	var barEl = S.one('#bar').one('.ks-bar'),
+	var barEl = S.one('#bar').one('.ks-grid-bar'),
 		items = barEl.children();
 	describe("测试Bar以及BarItem的生成", function () {
 		
@@ -73,23 +73,23 @@ KISSY.use('grid/bar,button',function(S,Bar,Button){
 		it('测试BarItem生成,测试xtype 为 separator 的子元素',function(){
 			var separator = S.one(items[5]);
 			expect(separator).not.toBe(null);
-			expect(separator.hasClass('ks-bar-item-separator')).toBeTruthy();
+			expect(separator.hasClass('ks-grid-bar-item-separator')).toBeTruthy();
 		});
 		it('测试BarItem生成,测试xtype 为"button"的子元素',function(){
 			var btn4 = S.one(items[4]);
 			expect(btn4).not.toBe(null);
-			expect(btn4.hasClass('ks-bar-item-button')).toBeTruthy();
+			expect(btn4.hasClass('ks-grid-bar-item-button')).toBeTruthy();
 		});
 		it('测试BarItem生成,生成文本框作为子元素',function(){
 			var inputItem = S.one(items[6]);
 			expect(inputItem).not.toBe(null);
-			expect(inputItem.hasClass('ks-bar-item')).toBeTruthy();
+			expect(inputItem.hasClass('ks-grid-bar-item')).toBeTruthy();
 			expect(inputItem.children('input').length).not.toBe(0);
 		});
 		it('测试BarItem生成,生成链接作为子元素',function(){
 			var inputItem = S.one(items[3]);
 			expect(inputItem).not.toBe(null);
-			expect(inputItem.hasClass('ks-bar-item')).toBeTruthy();
+			expect(inputItem.hasClass('ks-grid-bar-item')).toBeTruthy();
 			expect(inputItem.children('a').length).not.toBe(0);
 		});
 	});

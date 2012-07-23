@@ -1,23 +1,23 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 12 17:40
+build time: Jul 23 21:06
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
+KISSY.add("grid/bar", function (S,ToolBar,BarRender,BarItem) {
 
 	/**
 	 * This class specifies the definition for a toolbar. 
      * Bar class is a collection of buttons,links and other command control.
      * @name Bar
      * @constructor
-     * @extends Component.Controller
+     * @extends ToolBar
      * @memberOf Grid
      */
-	var Bar = Component.Controller.extend(
+	var Bar = ToolBar.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	
@@ -58,13 +58,13 @@ KISSY.add("grid/bar", function (S,Component,BarRender,BarItem) {
 		},
 		BarItem : BarItem
 	},{
-		xclass : 'bar',
+		xclass : 'grid-bar',
 		priority : 1	
 	});
 
 	return Bar;
 }, {
-    requires:['component','./barrender', './baritem']
+    requires:['toolbar','./barrender', './baritem']
 });/**
  * @fileOverview buttons or controls of toolbar
  * @author dxq613@gmail.com, yiminghe@gmail.com
@@ -107,7 +107,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item',
+		xclass : 'grid-bar-item',
 		priority : 1	
 	});
 	/**
@@ -186,7 +186,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-button',
+		xclass : 'grid-bar-item-button',
 		priority : 2	
 	});
 	
@@ -207,7 +207,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
             el .attr("role", "separator");
         }
 	},{
-		xclass : 'bar-item-separator',
+		xclass : 'grid-bar-item-separator',
 		priority : 2	
 	});
 
@@ -233,7 +233,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-spacer',
+		xclass : 'grid-bar-item-spacer',
 		priority : 2	
 	});
 	
@@ -263,7 +263,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-text',
+		xclass : 'grid-bar-item-text',
 		priority : 2	
 	});
 	
@@ -2546,7 +2546,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
-	    CLS_NUMBER_BUTTON = 'ks-button-number',
+	    CLS_NUMBER_BUTTON = 'ks-grid-button-number',
 		CLS_ACTIVE = 'ks-active';
 
 	/**
@@ -2680,7 +2680,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		_getEllipsisItem : function(){
 			var _self = this;
 			return {
-				xclass:'bar-item-text',
+				xclass:'grid-bar-item-text',
 				text : _self.get('ellipsisTpl')
 			};
 		},
@@ -2689,7 +2689,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			var _self = this;
 			return {
 				id : page,
-				xclass:'bar-item-button',
+				xclass:'grid-bar-item-button',
 				text : ''+page+'',
 				elCls : _self.get('numberButtonCls')
 			};
@@ -2742,7 +2742,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			}
 		}
 	},{
-		xclass : 'pagingbar-number',
+		xclass : 'grid-pagingbar-number',
 		priority : 3	
 	});
 
@@ -2952,7 +2952,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 var _self = this;
                 return {
                     id:id,
-                    xclass:'bar-item-button',
+                    xclass:'grid-bar-item-button',
                     text:_self.get(id + 'Text'),
                     disabled:true,
                     elCls:_self.get(id + 'Cls')
@@ -2960,14 +2960,14 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             //get separator item
             _getSeparator:function () {
-                return {xclass:'bar-item-separator'};
+                return {xclass:'grid-bar-item-separator'};
             },
             //get text item
             _getTextItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xclass:'bar-item-text',
+                    xclass:'grid-bar-item-text',
                     text:_self._getTextItemTpl(id)
                 };
             },
@@ -3177,7 +3177,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             ID_CURRENT_PAGE:ID_CURRENT_PAGE,
             ID_TOTAL_COUNT:ID_TOTAL_COUNT
         }, {
-            xclass:'pagingbar',
+            xclass:'grid-pagingbar',
             priority:2
         });
 

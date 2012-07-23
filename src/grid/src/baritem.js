@@ -40,7 +40,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item',
+		xclass : 'grid-bar-item',
 		priority : 1	
 	});
 	/**
@@ -119,7 +119,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-button',
+		xclass : 'grid-bar-item-button',
 		priority : 2	
 	});
 	
@@ -140,7 +140,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
             el .attr("role", "separator");
         }
 	},{
-		xclass : 'bar-item-separator',
+		xclass : 'grid-bar-item-separator',
 		priority : 2	
 	});
 
@@ -166,7 +166,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-spacer',
+		xclass : 'grid-bar-item-spacer',
 		priority : 2	
 	});
 	
@@ -196,7 +196,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'bar-item-text',
+		xclass : 'grid-bar-item-text',
 		priority : 2	
 	});
 	
