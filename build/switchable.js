@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 20 13:58
+build time: Jul 23 10:50
 */
 /**
  * @fileOverview accordion aria support
