@@ -13,7 +13,7 @@ KISSY.use('grid/pagingbar,grid/store',function(S,PBar,Store){
 	function getLog(){
 		return S.one('#log').text();
 	}
-	var barEl = S.one('#pbar').one('.ks-pagingbar'),
+	var barEl = S.one('#pbar').one('.ks-grid-pagingbar'),
 		items = barEl.children();
 	describe("测试PagingBar以及主要子元素的生成", function () {
 		

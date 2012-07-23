@@ -199,7 +199,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 var _self = this;
                 return {
                     id:id,
-                    xclass:'bar-item-button',
+                    xclass:'grid-bar-item-button',
                     text:_self.get(id + 'Text'),
                     disabled:true,
                     elCls:_self.get(id + 'Cls')
@@ -207,14 +207,14 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             //get separator item
             _getSeparator:function () {
-                return {xclass:'bar-item-separator'};
+                return {xclass:'grid-bar-item-separator'};
             },
             //get text item
             _getTextItem:function (id) {
                 var _self = this;
                 return {
                     id:id,
-                    xclass:'bar-item-text',
+                    xclass:'grid-bar-item-text',
                     text:_self._getTextItemTpl(id)
                 };
             },
@@ -424,7 +424,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             ID_CURRENT_PAGE:ID_CURRENT_PAGE,
             ID_TOTAL_COUNT:ID_TOTAL_COUNT
         }, {
-            xclass:'pagingbar',
+            xclass:'grid-pagingbar',
             priority:2
         });
 
