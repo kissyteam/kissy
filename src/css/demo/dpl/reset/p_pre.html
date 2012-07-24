@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>p pre</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+
+
+<p id="t">
+    Here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation.
+</p>
+
+<pre id="t2">
+    Here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation here is a long quotation.
+</pre>
+
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        var offset = $("#t").offset();
+        $("#t").hide();
+        var offset2 = $("#t2").offset();
+        alert("p left: " + offset.left + "\n" + "p top : " + offset.top+"\n"+
+                "pre left: " + offset2.left + "\n" + "pre top : " + offset2.top);
+    });
+</script>
+</body>
+</html>

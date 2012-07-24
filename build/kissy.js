@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 19 23:47
+build time: Jul 24 21:25
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 19 23:47
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120719234736';
+        S.__BUILD_TIME = '20120724212522';
     })();
 
     return S;
@@ -4975,7 +4975,7 @@ build time: Jul 19 23:47
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120719234736'
+        tag:'20120724212522'
     }, getBaseInfo()));
 
     /**
@@ -5637,7 +5637,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 19 23:47
+build time: Jul 24 21:25
 */
 /**
  * @fileOverview dom-attr
@@ -8889,7 +8889,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                         // style.removeAttribute is IE Only, but so apparently is this code path...
                         style.removeAttribute(FILTER);
 
-                        // if there there is no filter style applied in a css rule, we are done
+                        // if there is no filter style applied in a css rule, we are done
                         if (currentStyle && !currentStyle[FILTER]) {
                             return;
                         }
@@ -8966,7 +8966,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
+            if ((!RE_NUMPX.test(ret) &&
+                RE_NUM.test(ret)) &&
+                // "0px 0px"
+                ret.indexOf(" ") == -1) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
@@ -9063,7 +9066,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     function camelCase(name) {
         // fix #92, ms!
-        return String(name).replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
+        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
     }
 
     var defaultDisplayDetectIframe,

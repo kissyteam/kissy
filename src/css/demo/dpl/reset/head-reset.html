@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>head reset</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+<div style="margin: 100px;font-size: 8px">
+
+    <h1 id="h1"> h1 </h1>
+
+    <h2 id="h2"> h2 </h2>
+
+</div>
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        var ret = [];
+        ret.push("h1 font-size : " + $("#h1").height());
+        ret.push("h2 font-size : " + $("#h2").height());
+
+        alert(ret.join("\n"));
+    });
+</script>
+</body>
+</html>

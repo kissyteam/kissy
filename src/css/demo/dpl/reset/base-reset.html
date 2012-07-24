@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>base reset</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+
+<div id="t">
+    test
+</div>
+<textarea id="textarea">
+
+</textarea>
+<button id="button">
+
+</button>
+<input id="input">
+
+</input>
+<select id="select">
+
+</select>
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        var ret = [];
+        ret.push("div font-size : " + $("#t").css("font-size"));
+        ret.push("div font-family : " + $("#t").css("font-family"));
+        ret.push("div line-height : " + $("#t").css("line-height"));
+        ret.push("div height : " + $("#t").css("height"));
+
+        ret.push("body margin-left : " + $("body").css("margin-left"));
+        ret.push("body padding-left : " + $("body").css("padding-left"));
+        ret.push("body color : " + $("body").css("color"));
+        ret.push("body background-color : " + $("body").css("background-color"));
+        ret.push("body line-height : " + $("body").css("line-height"));
+
+        ret.push("textarea font-family : " + $("#textarea").css("font-family"));
+        ret.push("button font-family : " + $("#button").css("font-family"));
+        ret.push("input font-family : " + $("#input").css("font-family"));
+        ret.push("select font-family : " + $("#select").css("font-family"));
+
+        alert(ret.join("\n"));
+    });
+</script>
+</body>
+</html>

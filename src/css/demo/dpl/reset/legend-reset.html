@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>legend reset</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+
+
+    <fieldset style="width: 100px;height: 100px;">
+        <legend id="t"> 123 123 </legend>
+    </fieldset>
+
+
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+
+    KISSY.ready(function (S) {
+        var $ = S.all, ret = [];
+        ret.push("border-left-width : " + $("#t").css("border-left-width"));
+        ret.push("border-left-style : " + $("#t").css("border-left-style"));
+        ret.push("border-left-color : " + $("#t").css("border-left-color"));
+        ret.push("margin-left : " + $("#t").css("margin-left"));
+        ret.push("margin-right : " + $("#t").css("margin-right"));
+        ret.push("margin-top : " + $("#t").css("margin-top"));
+        ret.push("margin-bottom : " + $("#t").css("margin-bottom"));
+        ret.push("padding-left : " + $("#t").css("padding-left"));
+        ret.push("padding-right : " + $("#t").css("padding-right"));
+        ret.push("padding-top : " + $("#t").css("padding-top"));
+        ret.push("padding-bottom : " + $("#t").css("padding-bottom"));
+        alert(ret.join("\n"));
+    });
+
+</script>
+</body>
+</html>

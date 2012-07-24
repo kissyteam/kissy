@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>code</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+
+<code id="code">
+    i = 1
+</code>
+<pre id="pre">
+    i = 1
+</pre>
+<kbd id="kbd">
+    i = 1
+</kbd>
+<samp id="samp">
+    i = 1
+</samp>
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        var ret = [];
+        ret.push("code font-family : "+$("#code").css("font-family"));
+        ret.push("code font-size : "+$("#code").css("font-size"));
+
+        ret.push("pre font-family : "+$("#pre").css("font-family"));
+        ret.push("pre font-size : "+$("#pre").css("font-size"));
+
+        ret.push("kbd font-family : "+$("#kbd").css("font-family"));
+        ret.push("kbd font-size : "+$("#kbd").css("font-size"));
+
+        ret.push("samp font-family : "+$("#samp").css("font-family"));
+        ret.push("samp font-size : "+$("#samp").css("font-size"));
+        alert(ret.join("\n"));
+    });
+</script>
+</body>
+</html>
