@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:08
+build time: Jul 26 02:09
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -52,15 +52,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                     }
                     index = (index + dir + len) % len;
                 } while (index != o);
-                return undefined;
-            },
-
-            handleKeydown:function (e) {
-                if (this.handleKeyEventInternal(e)) {
-                    e.halt();
-                    return true;
-                }
-                // return false , 会阻止 tab 键 ....
                 return undefined;
             },
 

@@ -45,20 +45,21 @@
          * if undefined remove all callbacks fro this event
          */
         detach:function (eventName, callback) {
+            var self = this, fns, index;
             if (!eventName) {
-                delete this[p];
+                delete self[p];
                 return;
             }
-            var fns = getEventHolder(this, eventName);
+            fns = getEventHolder(self, eventName);
             if (fns) {
                 if (callback) {
-                    var index = S.indexOf(callback, fns);
+                    index = S.indexOf(callback, fns);
                     if (index != -1) {
                         fns.splice(index, 1);
                     }
                 }
                 if (!callback || !fns.length) {
-                    delete getHolder(this)[eventName];
+                    delete getHolder(self)[eventName];
                 }
             }
         },

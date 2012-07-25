@@ -11,7 +11,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             if (self == ev.target) {
                 var value = ev.newVal,
                     view = self.get("view");
-                view && view.set(attrName, value);
+                view.set(attrName, value);
             }
         };
     }
@@ -20,7 +20,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         return function (v) {
             var self = this,
                 view = self.get("view");
-            return v === undefined ? view && view.get(attrName) : v;
+            return v === undefined ? view.get(attrName) : v;
         };
     }
 
@@ -53,45 +53,45 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             v,
             Render = self.get('xrender');
 
-        if (Render) {
-            /**
-             * 将渲染层初始化所需要的属性，直接构造器设置过去
-             */
-            attrs = self.getAttrs();
+        /**
+         * 将渲染层初始化所需要的属性，直接构造器设置过去
+         */
+        attrs = self.getAttrs();
 
-            // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
-            for (attrName in attrs) {
-                if (attrs.hasOwnProperty(attrName)) {
-                    attrCfg = attrs[attrName];
-                    if (attrCfg.view) {
+        // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+        for (attrName in attrs) {
+            if (attrs.hasOwnProperty(attrName)) {
+                attrCfg = attrs[attrName];
+                if (attrCfg.view) {
 
-                        // 先取后 getter
-                        // 防止死循环
-                        if (( v = self.get(attrName) ) !== undefined) {
-                            cfg[attrName] = v;
-                        }
-
-                        // setter 不应该有实际操作，仅用于正规化比较好
-                        // attrCfg.setter = wrapperViewSetter(attrName);
-                        self.on("after" + S.ucfirst(attrName) + "Change",
-                            wrapperViewSetter(attrName));
-                        // 逻辑层读值直接从 view 层读
-                        // 那么如果存在默认值也设置在 view 层
-                        // 逻辑层不要设置 getter
-                        attrCfg.getter = wrapperViewGetter(attrName);
+                    // 先取后 getter
+                    // 防止死循环
+                    if (( v = self.get(attrName) ) !== undefined) {
+                        cfg[attrName] = v;
                     }
+
+                    // setter 不应该有实际操作，仅用于正规化比较好
+                    // attrCfg.setter = wrapperViewSetter(attrName);
+                    self.on("after" + S.ucfirst(attrName) + "Change",
+                        wrapperViewSetter(attrName));
+                    // 逻辑层读值直接从 view 层读
+                    // 那么如果存在默认值也设置在 view 层
+                    // 逻辑层不要设置 getter
+                    attrCfg.getter = wrapperViewGetter(attrName);
                 }
             }
-            return new Render(cfg);
         }
-        return 0;
+        // does not autoRender for view
+        delete cfg.autoRender;
+        return new Render(cfg);
     }
 
     function setViewCssClassByHierarchy(self, view) {
         var constructor = self.constructor,
+            cls,
             re = [];
         while (constructor && constructor != Controller) {
-            var cls = Manager.getXClassByConstructor(constructor);
+            cls = Manager.getXClassByConstructor(constructor);
             if (cls) {
                 re.push(cls);
             }
@@ -106,6 +106,18 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         return relatedTarget &&
             ( relatedTarget === elem[0] ||
                 elem.contains(relatedTarget) );
+    }
+
+    function wrapBehavior(self, action) {
+        return self["__ks_wrap_" + action] = function (e) {
+            if (!self.get("disabled")) {
+                self[action](e);
+            }
+        };
+    }
+
+    function getWrapBehavior(self, action) {
+        return self["__ks_wrap_" + action];
     }
 
     /**
@@ -136,7 +148,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             initializer:function () {
                 // initialize view
-                this.get("view");
+                this.__set("view", constructView(this));
             },
 
             /**
@@ -146,14 +158,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             createDom:function () {
                 var self = this,
+                    el,
                     view = self.get("view");
                 setViewCssClassByHierarchy(self, view);
-                view.create();
-                var el = view.getKeyEventTarget();
+                view.create(undefined);
+                el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
                     el.unselectable(undefined);
                 }
-                self.__set("view", view);
             },
 
             /**
@@ -175,36 +187,49 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             _uiSetFocusable:function (focusable) {
                 var self = this,
+                    t,
                     el = self.getKeyEventTarget();
                 if (focusable) {
                     el.attr("tabIndex", 0)
-                        .on("focus", self.handleFocus, self)
-                        .on("blur", self.handleBlur, self)
-                        .on("keydown", self.handleKeydown, self);
+                        .on("focus", wrapBehavior(self, "handleFocus"))
+                        .on("blur", wrapBehavior(self, "handleBlur"))
+                        .on("keydown", wrapBehavior(self, "handleKeydown"));
                 } else {
-                    el.removeAttr("tabIndex")
-                        .detach("focus", self.handleFocus, self)
-                        .detach("blur", self.handleBlur, self)
-                        .detach("keydown", self.handleKeydown, self);
+                    el.removeAttr("tabIndex");
+                    if (t = getWrapBehavior(self, "handleFocus")) {
+                        el.detach("focus", t);
+                    }
+                    if (t = getWrapBehavior(self, "handleBlur")) {
+                        el.detach("blur", t);
+                    }
+                    if (t = getWrapBehavior(self, "handleKeydown")) {
+                        el.detach("keydown", t);
+                    }
                 }
             },
 
             _uiSetHandleMouseEvents:function (handleMouseEvents) {
-                var self = this, el = self.get("el");
+                var self = this, el = self.get("el"), t;
                 if (handleMouseEvents) {
-                    el.on("mouseenter", self.handleMouseEnter, self)
-                        .on("mouseleave", self.handleMouseLeave, self)
-                        .on("contextmenu", self.handleContextMenu, self)
-                        .on("mousedown", self.handleMouseDown, self)
-                        .on("mouseup", self.handleMouseUp, self)
-                        .on("dblclick", self.handleDblClick, self);
+                    el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
+                        .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
+                        .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                        .on("mousedown", wrapBehavior(self, "handleMouseDown"))
+                        .on("mouseup", wrapBehavior(self, "handleMouseUp"))
+                        .on("dblclick", wrapBehavior(self, "handleDblClick"));
                 } else {
-                    el.detach("mouseenter", self.handleMouseEnter, self)
-                        .detach("mouseleave", self.handleMouseLeave, self)
-                        .detach("contextmenu", self.handleContextMenu, self)
-                        .detach("mousedown", self.handleMouseDown, self)
-                        .detach("mouseup", self.handleMouseUp, self)
-                        .detach("dblclick", self.handleDblClick, self);
+                    t = getWrapBehavior(self, "handleMouseEnter") &&
+                        el.detach("mouseenter", t);
+                    t = getWrapBehavior(self, "handleMouseLeave") &&
+                        el.detach("mouseleave", t);
+                    t = getWrapBehavior(self, "handleContextMenu") &&
+                        el.detach("contextmenu", t);
+                    t = getWrapBehavior(self, "handleMouseDown") &&
+                        el.detach("mousedown", t);
+                    t = getWrapBehavior(self, "handleMouseUp") &&
+                        el.detach("mouseup", t);
+                    t = getWrapBehavior(self, "handleDblClick") &&
+                        el.detach("dblclick", t);
                 }
             },
 
@@ -219,8 +244,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @private
              */
             getContentElement:function () {
-                var view = this.get('view');
-                return view && view.getContentElement();
+                return this.get('view').getContentElement();
             },
 
             /**
@@ -228,8 +252,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @private
              */
             getKeyEventTarget:function () {
-                var view = this.get('view');
-                return view && view.getKeyEventTarget();
+                return this.get('view').getKeyEventTarget();
             },
 
             /**
@@ -310,7 +333,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 for (i = 0; i < t.length; i++) {
                     self.removeChild(t[i], destroy);
                 }
-                self.__set("children", []);
             },
 
             /**
@@ -330,11 +352,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Event.Object} ev DOM event to handle.
              */
             handleDblClick:function (ev) {
-                var self = this;
-                if (self.get("disabled")) {
-                    return true;
-                }
-                self.performActionInternal(ev);
+                this.performActionInternal(ev);
             },
 
             /**
@@ -345,9 +363,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             handleMouseOver:function (ev) {
                 var self = this,
                     el = self.get("el");
-                if (self.get("disabled")) {
-                    return true;
-                }
                 if (!isMouseEventWithinElement(ev, el)) {
                     self.handleMouseEnter(ev);
                 }
@@ -361,9 +376,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             handleMouseOut:function (ev) {
                 var self = this,
                     el = self.get("el");
-                if (self.get("disabled")) {
-                    return true;
-                }
                 if (!isMouseEventWithinElement(ev, el)) {
                     self.handleMouseLeave(ev);
                 }
@@ -375,11 +387,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Event.Object} ev DOM event to handle.
              */
             handleMouseEnter:function (ev) {
-                var self = this;
-                if (self.get("disabled")) {
-                    return true;
-                }
-                self.set("highlighted", !!ev);
+                this.set("highlighted", !!ev);
             },
 
             /**
@@ -389,9 +397,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             handleMouseLeave:function (ev) {
                 var self = this;
-                if (self.get("disabled")) {
-                    return true;
-                }
                 self.set("active", false);
                 self.set("highlighted", !ev);
             },
@@ -406,11 +411,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             handleMouseDown:function (ev) {
                 var self = this,
+                    n,
                     isMouseActionButton = ev['which'] == 1,
                     el;
-                if (self.get("disabled")) {
-                    return true;
-                }
                 if (isMouseActionButton) {
                     el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
@@ -423,7 +426,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                     if (!self.get("allowTextSelection")) {
                         // firefox /chrome 不会引起焦点转移
-                        var n = ev.target.nodeName;
+                        n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
                         if (n != "input" && n != "textarea") {
@@ -442,9 +445,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             handleMouseUp:function (ev) {
                 var self = this;
-                if (self.get("disabled")) {
-                    return true;
-                }
                 // 左键
                 if (self.get("active") && ev.which == 1) {
                     self.performActionInternal(ev);
@@ -499,11 +499,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             handleKeydown:function (ev) {
                 var self = this;
-                if (self.get("disabled")) {
-                    return true;
-                }
                 if (self.handleKeyEventInternal(ev)) {
                     ev.halt();
+                    return true;
                 }
             },
 
@@ -523,10 +521,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 for (i = 0; i < children.length; i++) {
                     children[i].destroy && children[i].destroy();
                 }
-                view = self.get("view");
-                if (view) {
-                    view.destroy();
-                }
+                self.get("view").destroy();
             }
         },
         {
@@ -626,16 +621,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     setter:function (p) {
                         // 事件冒泡源
                         this.addTarget(p);
-                    }
-                },
-
-                /**
-                 * Renderer used to render this component.
-                 * @type Component.Render
-                 */
-                view:{
-                    valueFn:function () {
-                        return constructView(this);
                     }
                 },
 

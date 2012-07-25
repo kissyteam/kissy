@@ -10,7 +10,6 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 <h1>KISSY 集成化测试</h1>
 <button id='retry'>retry</button>
 <iframe id="test" src=''
-        scrolling="no"
         style="width:100%;height:600px;border:1px solid red;"></iframe>
 <script src='test.js'></script>
 <script type="text/javascript">

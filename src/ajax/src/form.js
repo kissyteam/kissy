@@ -9,37 +9,33 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
             form,
             d,
             enctype,
+            dataType,
             formParam,
+            tmpForm,
             c = xhrObject.config;
         // serialize form if needed
-        if (c.form) {
-            form = DOM.get(c.form);
+        if (tmpForm = c.form) {
+            form = DOM.get(tmpForm);
             enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
-                formParam = FormSerializer.serialize(form);
-                if (formParam) {
-                    if (c.hasContent) {
-                        // post 加到 data 中
-                        c.data = c.data || "";
-                        if (c.data) {
-                            c.data += "&";
-                        }
-                        c.data += formParam;
-                    } else {
-                        // get 直接加到 url
-                        c.url += ( /\?/.test(c.url) ? "&" : "?" ) + formParam;
-                    }
+                formParam = FormSerializer.getFormData(form);
+                if (c.hasContent) {
+                    c.query.add(formParam);
+                } else {
+                    // get 直接加到 url
+                    c.uri.query.add(formParam);
                 }
             } else {
-                d = c.dataType[0];
+                dataType = c.dataType;
+                d = dataType[0];
                 if (d == "*") {
                     d = "text";
                 }
-                c.dataType.length = 2;
-                c.dataType[0] = "iframe";
-                c.dataType[1] = d;
+                dataType.length = 2;
+                dataType[0] = "iframe";
+                dataType[1] = d;
             }
         }
     });

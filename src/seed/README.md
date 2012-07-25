@@ -1,12 +1,15 @@
 
 kissy seed 的层次结构为：
+
 <pre><code>
     |          web app ...         |
     |------------------------------|
     |    web.js      |             |
     |----------------|             |
     |    promise.js  |             |
-    |    lang.js     | loader      |
+    |    uri         |   loader    |
+    |    path        |             |
+    |    lang.js     |             |
     |    kissy.js    |             |
     |----------------|-------------|
 </code></pre>
@@ -14,11 +17,15 @@ kissy seed 的层次结构为：
 
 非常感谢周爱民老师(aimingoo)对 kissy 进行 review 和重构。
 
-### 2011 - 2012 yiminghe@gmail.com:
+### 2012 yiminghe@gmail.com
+ - 增加 defer (promise)
+ - 增加 Path (nodejs)
+ - 增加 Uri (rfc3986)
+
+### 2011 yiminghe@gmail.com
 
  - 重构 loader(AMD)
  - 增强 lang
- - 增加 defer(promise)
 
 ### 2010/12 yubo:
 

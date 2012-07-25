@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:08
+build time: Jul 26 02:09
 */
 /**
  * @fileOverview collection of models
@@ -637,12 +637,11 @@ KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function (S, Event, Base) {
-    var queryReg = /\?(.*)/,
-        each = S.each,
-        // take a breath to avoid duplicate hashchange
+    var each = S.each,
+    // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
-        // all registered route instance
+    // all registered route instance
         allRoutes = [],
         win = S.Env.host,
         history = win.history ,
@@ -668,7 +667,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
-        return location.href.replace(/^[^#]*#?!?(.*)$/, '$1');
+        return new S.Uri(location.href).getFragment().replace(/^!/, "");
     }
 
     /**
@@ -740,25 +739,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     }
 
     /**
-     * get query object from query string
-     * @param path
-     */
-    function getQuery(path) {
-        var m,
-            ret = {};
-        if (m = path.match(queryReg)) {
-            return S.unparam(m[1]);
-        }
-        return ret;
-    }
-
-    /**
      * match url with route intelligently (always get optimal result)
      */
     function dispatch() {
-        var path = getFragment(),
-            fullPath = path,
-            query,
+        var query,
+            path,
             arg,
             finalRoute = 0,
             finalMatchLength = -1,
@@ -766,13 +751,17 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             finalFirstCaptureGroupIndex = -1,
             finalCallback = 0,
             finalRouteName = "",
+            pathUri = new S.Uri(getFragment()),
             finalParam = 0;
 
-        path = fullPath.replace(queryReg, "");
+        path = pathUri.clone();
+        path.query.reset();
+        path = path.toString();
+
         // user input : /xx/yy/zz
         each(allRoutes, function (route) {
             var routeRegs = route[ROUTER_MAP],
-                // match exactly
+            // match exactly
                 exactlyMatch = 0;
             each(routeRegs, function (desc) {
                     var reg = desc.reg,
@@ -849,7 +838,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                         // 用户设置的正则表达式具备高优先级
                         else {
                             upToFinal();
-                            exactlyMatch=1;
+                            exactlyMatch = 1;
                             return false;
                         }
                     }
@@ -863,7 +852,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
 
         if (finalParam) {
-            query = getQuery(fullPath);
+            query = pathUri.query.get();
             finalCallback.apply(finalRoute, [finalParam, query]);
             arg = {
                 name:finalRouteName,

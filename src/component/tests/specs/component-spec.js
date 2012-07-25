@@ -30,13 +30,17 @@ KISSY.use("component", function (S, Component) {
                 });
 
                 var child1 = new Component.Controller({
-                    html:"yy"
+                    html:"yy",
+                    handleMouseEvents:false,
+                    focusable:false
                 });
 
                 c.addChild(child1);
 
                 var child2 = new Component.Controller({
-                    html:"yy"
+                    html:"yy",
+                    handleMouseEvents:false,
+                    focusable:false
                 });
 
                 c.addChild(child2);

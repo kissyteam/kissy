@@ -12,6 +12,8 @@
             <path location="${src.dir}/kissy.js"/>
             <path location="${src.dir}/lang.js"/>
             <path location="${src.dir}/promise.js"/>
+            <path location="${src.dir}/path.js"/>
+            <path location="${src.dir}/uri.js"/>
 
             <!--kissy loader start-->
             <path location="${src.dir}/loader/base.js"/>

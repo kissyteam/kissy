@@ -43,9 +43,16 @@
                 // 兼容 path
                 base = cfg.base || cfg.path;
 
+                // must be folder
+                if (!S.endsWith(base, "/")) {
+                    base += "/";
+                }
+
                 // 注意正则化
                 cfg.name = name;
-                cfg.base = base && utils.normalBasePath(base);
+                var baseUri = utils.resolveByPage(base);
+                cfg.base = baseUri.toString();
+                cfg.baseUri = baseUri;
                 cfg.SS = S;
                 delete cfg.path;
 
@@ -85,7 +92,6 @@
         var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                modName = utils.indexMapStr(modName);
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(self.Env.mods[modName], modCfg);
             });
@@ -98,10 +104,12 @@
      KISSY 's base path.
      */
     S.configs.base = function (base) {
-        var self = this;
+        var self = this, baseUri, Config = self.Config;
         if (!base) {
-            return self.Config.base;
+            return Config.base;
         }
-        self.Config.base = utils.normalBasePath(base);
+        baseUri = utils.resolveByPage(base);
+        Config.base = baseUri.toString();
+        Config.baseUri = baseUri;
     };
 })(KISSY);

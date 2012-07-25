@@ -31,8 +31,8 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // http://xx.com/#yy?z=1
                 // ie6 => location.hash = #yy
                 // 其他浏览器 => location.hash = #yy?z=1
-                var url = location.href;
-                return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+                var uri = new S.Uri(location.href);
+                return '#' + uri.getFragment();
             },
 
             timer,

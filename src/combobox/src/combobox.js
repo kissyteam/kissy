@@ -12,4 +12,4 @@ KISSY.add("combobox", function (S, ComboBox, LocalDataSource, RemoteDataSource) 
         'combobox/LocalDataSource',
         'combobox/RemoteDataSource'
     ]
-})
+});

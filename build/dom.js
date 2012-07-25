@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:06
 */
 /**
  * @fileOverview dom-attr
@@ -3253,7 +3253,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                         // style.removeAttribute is IE Only, but so apparently is this code path...
                         style.removeAttribute(FILTER);
 
-                        // if there there is no filter style applied in a css rule, we are done
+                        // if there is no filter style applied in a css rule, we are done
                         if (currentStyle && !currentStyle[FILTER]) {
                             return;
                         }
@@ -3330,7 +3330,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
+            if ((!RE_NUMPX.test(ret) &&
+                RE_NUM.test(ret)) &&
+                // "0px 0px"
+                ret.indexOf(" ") == -1) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],

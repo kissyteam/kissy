@@ -14,16 +14,18 @@ KISSY.add("ajax/jsonp", function (S, io) {
 
     io.on("start", function (e) {
         var xhrObject = e.xhr,
-            c = xhrObject.config;
-        if (c.dataType[0] == "jsonp") {
+            c = xhrObject.config,
+            dataType= c.dataType;
+        if (dataType[0] == "jsonp") {
             var response,
                 cJsonpCallback = c.jsonpCallback,
+                converters,
                 jsonpCallback = S.isFunction(cJsonpCallback) ?
                     cJsonpCallback() :
                     cJsonpCallback,
                 previous = win[ jsonpCallback ];
 
-            c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
+            c.uri.query.set(c.jsonp,jsonpCallback);
 
             // build temporary JSONP function
             win[jsonpCallback] = function (r) {
@@ -52,8 +54,8 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 }
             });
 
-            xhrObject.converters = xhrObject.converters || {};
-            xhrObject.converters.script = xhrObject.converters.script || {};
+            converters=xhrObject.converters = xhrObject.converters || {};
+            converters.script = converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
             // if ie onload a 404 file or all browsers onload an invalid script
@@ -61,17 +63,17 @@ KISSY.add("ajax/jsonp", function (S, io) {
             // because response is undefined( jsonp callback is never called)
             // error throwed will be caught in conversion step
             // and KISSY will notify user by error callback
-            xhrObject.converters.script.json = function () {
+            converters.script.json = function () {
                 if (!response) {
                     S.error(" not call jsonpCallback : " + jsonpCallback)
                 }
                 return response[0];
             };
 
-            c.dataType.length = 2;
+            dataType.length = 2;
             // 利用 script transport 发送 script 请求
-            c.dataType[0] = 'script';
-            c.dataType[1] = 'json';
+            dataType[0] = 'script';
+            dataType[1] = 'json';
         }
     });
 

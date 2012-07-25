@@ -15,9 +15,6 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
         var self = this,
             c = xhrObj.config;
         self.xhrObj = xhrObj;
-        var m = c.url.match(rurl);
-        self.hostname = m[2];
-        self.protocol = m[1];
         c.crossDomain = false;
     }
 
@@ -28,8 +25,10 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
         send:function () {
             var self = this,
                 c = self.xhrObj.config,
-                hostname = self.hostname,
+                uri = c.uri,
+                hostname = uri.getHostname(),
                 iframe,
+                iframeUri,
                 iframeDesc = iframeMap[hostname];
 
             var proxy = PROXY_PAGE;
@@ -57,7 +56,11 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
                     top:'-9999px'
                 });
                 DOM.prepend(iframe, doc.body || doc.documentElement);
-                iframe.src = self.protocol + "//" + hostname + proxy;
+                iframeUri = new S.Uri();
+                iframeUri.setScheme(uri.getScheme());
+                iframeUri.setHostname(hostname);
+                iframeUri.setPath(proxy);
+                iframe.src = iframeUri.toString();
             } else {
                 iframe = iframeDesc.iframe;
             }
@@ -69,7 +72,9 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
     function _onLoad() {
         var self = this,
-            hostname = self.hostname,
+            c = self.xhrObj.config,
+            uri = c.uri,
+            hostname = uri.getHostname(),
             iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
         Event.detach(iframeDesc.iframe, "load", _onLoad, self);

@@ -58,7 +58,9 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         }
     }, {
         ATTRS:{
-            collapsed:{},
+            collapsed:{
+                value:true
+            },
             hasTrigger:{
                 value:true
             },

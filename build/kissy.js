@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:08
+build time: Jul 26 02:10
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 16 11:08
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120716110834';
+        S.__BUILD_TIME = '20120726021007';
     })();
 
     return S;
@@ -1192,7 +1192,7 @@ build time: Jul 16 11:08
                 if (S.isUndefined(arr)) {
                     arr = TRUE;
                 }
-                var buf = [], key, val;
+                var buf = [], key, i, v, len, val;
                 for (key in o) {
                     if (o.hasOwnProperty(key)) {
                         val = o[key];
@@ -1200,15 +1200,22 @@ build time: Jul 16 11:08
 
                         // val is valid non-array value
                         if (isValidParamValue(val)) {
-                            buf.push(key, eq, encode(val + EMPTY), sep);
+                            buf.push(key);
+                            if (val !== undefined) {
+                                buf.push(eq, encode(val + EMPTY));
+                            }
+                            buf.push(sep);
                         }
                         // val is not empty array
                         else if (S.isArray(val) && val.length) {
-                            for (var i = 0, len = val.length; i < len; ++i) {
-                                if (isValidParamValue(val[i])) {
-                                    buf.push(key,
-                                        (arr ? encode("[]") : EMPTY),
-                                        eq, encode(val[i] + EMPTY), sep);
+                            for (i = 0, len = val.length; i < len; ++i) {
+                                v = val[i];
+                                if (isValidParamValue(v)) {
+                                    buf.push(key, (arr ? encode("[]") : EMPTY));
+                                    if (v !== undefined) {
+                                        buf.push(eq, encode(v + EMPTY));
+                                    }
+                                    buf.push(sep);
                                 }
                             }
                         }
@@ -1247,14 +1254,18 @@ build time: Jul 16 11:08
                 for (; i < len; ++i) {
                     pair = pairs[i].split(eq);
                     key = decode(pair[0]);
-                    try {
-                        val = decode(pair[1] || EMPTY);
-                    } catch (e) {
-                        S.log(e + "decodeURIComponent error : " + pair[1], "error");
-                        val = pair[1] || EMPTY;
-                    }
-                    if (S.endsWith(key, "[]")) {
-                        key = key.substring(0, key.length - 2);
+                    if (pair.length == 1) {
+                        val = undefined;
+                    } else {
+                        try {
+                            val = decode(pair[1] || EMPTY);
+                        } catch (e) {
+                            S.log(e + "decodeURIComponent error : " + pair[1], "error");
+                            val = pair[1] || EMPTY;
+                        }
+                        if (S.endsWith(key, "[]")) {
+                            key = key.substring(0, key.length - 2);
+                        }
                     }
                     if (hasOwnProperty(ret, key)) {
                         if (S.isArray(ret[key])) {
@@ -1582,7 +1593,7 @@ build time: Jul 16 11:08
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
 
-})(KISSY, undefined);
+})(KISSY);
 /**
  * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
@@ -1964,13 +1975,884 @@ build time: Jul 16 11:08
  *  - http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/
  *  - http://dojotoolkit.org/documentation/tutorials/1.6/deferreds/
  **//**
+ * Port Node Path Utils For KISSY.
+ * Note: Only posix mode.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    /**
+     * @namespace
+     * Path Utils For KISSY from nodejs
+     * @name Path
+     * @memberOf KISSY
+     */
+    var Path = {},
+    // [root, dir, basename, ext]
+        splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
+
+    KISSY.Path = Path;
+
+    /**
+     * Remove .. and . in path array
+     * @param parts
+     * @param allowAboveRoot
+     * @return {*}
+     */
+    function normalizeArray(parts, allowAboveRoot) {
+        // level above root
+        var up = 0;
+        for (var i = parts.length - 1; i >= 0; i--) {
+            var last = parts[i];
+            if (last == ".") {
+                parts.splice(i, 1);
+            } else if (last === "..") {
+                parts.splice(i, 1);
+                up++;
+            } else if (up) {
+                parts.splice(i, 1);
+                up--;
+            }
+        }
+
+        // if allow above root, has to add ..
+        if (allowAboveRoot) {
+            for (; up--; up) {
+                parts.unshift("..");
+            }
+        }
+
+        return parts;
+    }
+
+    S.mix(Path,
+        /**
+         * @lends KISSY.Path
+         */
+        {
+
+            /**
+             * resolve([from ...], to)
+             * @return {String} Resolved path.
+             */
+            resolve:function () {
+
+                var resolvedPath = "",
+                    resolvedPathStr,
+                    i,
+                    args = S.makeArray(arguments),
+                    path,
+                    absolute = 0;
+
+                for (i = args.length - 1; i >= 0 && !absolute; i--) {
+                    path = args[i];
+                    if (typeof path != "string" || !path) {
+                        continue;
+                    }
+                    resolvedPath = path + "/" + resolvedPath;
+                    absolute = path.charAt(0) == "/";
+                }
+
+                resolvedPathStr = normalizeArray(S.filter(resolvedPath.split("/"), function (p) {
+                    return !!p;
+                }), !absolute).join("/");
+
+                return ((absolute ? "/" : "") + resolvedPathStr) || ".";
+            },
+
+            /**
+             * normalize .. and . in path
+             * @param {String} path Path tobe normalized
+             * @example
+             * <code>
+             * "x/y/../z" => "x/z"
+             * "x/y/z/../" => "x/y/"
+             * </code>
+             * @return {String}
+             */
+            normalize:function (path) {
+                var absolute = path.charAt(0) == "/",
+                    trailingSlash = path.slice(-1) == "/";
+
+                path = normalizeArray(S.filter(path.split("/"), function (p) {
+                    return !!p;
+                }), !absolute).join("/");
+
+                if (!path && !absolute) {
+                    path = ".";
+                }
+
+                if (path && trailingSlash) {
+                    path += "/";
+                }
+
+
+                return (absolute ? "/" : "") + path;
+            },
+
+            /**
+             * join([path ...]) and normalize
+             * @return {String}
+             */
+            join:function () {
+                var args = S.makeArray(arguments);
+                return Path.normalize(S.filter(args,function (p) {
+                    return p && (typeof p == "string");
+                }).join("/"));
+            },
+
+            /**
+             * Get string which is to relative to from
+             * @param {String} from
+             * @param {String} to
+             * @example
+             * <code>
+             * relative("x/","x/y/z") => "y/z"
+             * relative("x/t/z","x/") => "../../"
+             * </code>
+             * @return {String}
+             */
+            relative:function (from, to) {
+                from = Path.normalize(from);
+                to = Path.normalize(to);
+
+                var fromParts = S.filter(from.split("/"), function (p) {
+                        return !!p;
+                    }),
+                    path = [],
+                    sameIndex,
+                    sameIndex2,
+                    toParts = S.filter(to.split("/"), function (p) {
+                        return !!p;
+                    }), commonLength = Math.min(fromParts.length, toParts.length);
+
+                for (sameIndex = 0; sameIndex < commonLength; sameIndex++) {
+                    if (fromParts[sameIndex] != toParts[sameIndex]) {
+                        break;
+                    }
+                }
+
+                sameIndex2 = sameIndex;
+
+                while (sameIndex < fromParts.length) {
+                    path.push("..");
+                    sameIndex++;
+                }
+
+                path = path.concat(toParts.slice(sameIndex2));
+
+                path = path.join("/");
+
+                return path;
+            },
+
+            /**
+             * Get base name of path
+             * @param {String} path
+             * @param {String} [ext] ext to be stripped from result returned.
+             * @return {String}
+             */
+            basename:function (path, ext) {
+                var result = path.match(splitPathRe) || [];
+                result = result[3] || "";
+                if (ext && result && result.slice(-1 * ext.length) == ext) {
+                    result = result.slice(0, -1 * ext.length);
+                }
+                return result;
+            },
+
+            /**
+             * Get dirname of path
+             * @return {String}
+             */
+            dirname:function (path) {
+                var result = path.match(splitPathRe) || [],
+                    root = result[1] || "",
+                    dir = result[2] || "";
+
+                if (!root && !dir) {
+                    // No dirname
+                    return '.';
+                }
+
+                if (dir) {
+                    // It has a dirname, strip trailing slash
+                    dir = dir.substring(0, dir.length - 1);
+                }
+
+                return root + dir;
+            },
+
+            /**
+             * Get extension name of file in path
+             * @param {String} path
+             * @return {String}
+             */
+            extname:function (path) {
+                return (path.match(splitPathRe) || [])[4] || "";
+            }
+
+        });
+
+})(KISSY);
+/**
+ * Refer
+ *  - https://github.com/joyent/node/blob/master/lib/path.js
+ *//**
+ * Uri class for KISSY.
+ * @author yiminghe@gmail.com
+ */
+(function (S, undefined) {
+
+    var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
+        reDisallowedInPathName = /[#\?]/g,
+    // ?? combo of taobao
+        reDisallowedInQuery = /[#@]/g,
+        reDisallowedInFragment = /#/g,
+
+        URI_SPLIT_REG = new RegExp(
+            '^' +
+                /*
+                 Scheme names consist of a sequence of characters beginning with a
+                 letter and followed by any combination of letters, digits, plus
+                 ("+"), period ("."), or hyphen ("-").
+                 */
+                '(?:([\\w\\d+.-]+):)?' + // scheme
+
+                '(?://' +
+                /*
+                 The authority component is preceded by a double slash ("//") and is
+                 terminated by the next slash ("/"), question mark ("?"), or number
+                 sign ("#") character, or by the end of the URI.
+                 */
+                '(?:([^/?#@]*)@)?' + // userInfo
+
+                '(' +
+                '[\\w\\d\\-\\u0100-\\uffff.+%]*' +
+                '|' +
+                // ipv6
+                '\\[[^\\]]+\\]' +
+                ')' + // hostname - restrict to letters,
+                // digits, dashes, dots, percent
+                // escapes, and unicode characters.
+                '(?::([0-9]+))?' + // port
+                ')?' +
+                /*
+                 The path is terminated
+                 by the first question mark ("?") or number sign ("#") character, or
+                 by the end of the URI.
+                 */
+                '([^?#]+)?' + // path. hierarchical part
+                /*
+                 The query component is indicated by the first question
+                 mark ("?") character and terminated by a number sign ("#") character
+                 or by the end of the URI.
+                 */
+                '(?:\\?([^#]*))?' + // query. non-hierarchical data
+                /*
+                 The fragment identifier component of a URI allows indirect
+                 identification of a secondary resource by reference to a primary
+                 resource and additional identifying information.
+
+                 A
+                 fragment identifier component is indicated by the presence of a
+                 number sign ("#") character and terminated by the end of the URI.
+                 */
+                '(?:#(.*))?' + // fragment
+                '$'),
+
+        Path = S.Path,
+
+        REG_INFO = {
+            scheme:1,
+            userInfo:2,
+            hostname:3,
+            port:4,
+            path:5,
+            query:6,
+            fragment:7
+        };
+
+    function parseQuery(self) {
+        if (!self._queryMap) {
+            self._queryMap = S.unparam(self._query);
+        }
+    }
+
+    /**
+     * @class
+     * Query data structure.
+     * @param {String} [query] encoded query string(without question mask).
+     * @memberOf KISSY.Uri
+     */
+    function Query(query) {
+        this._query = query || "";
+    }
+
+
+    Query.prototype =
+    /**
+     * @lends KISSY.Uri.Query#
+     */
+    {
+        constructor:Query,
+
+        /**
+         * Cloned new instance.
+         * @return {Query}
+         */
+        clone:function () {
+            return new Query(this.toString());
+        },
+
+
+        /**
+         * reset to a new query string
+         * @param {String} query
+         */
+        reset:function (query) {
+            var self = this;
+            self._query = query || "";
+            self._queryMap = 0;
+        },
+
+        /**
+         * Parameter count.
+         * @return {Number}
+         */
+        count:function () {
+            var self = this, count = 0,
+                _queryMap = self._queryMap,
+                k;
+            parseQuery(self);
+            for (k in _queryMap) {
+                if (_queryMap.hasOwnProperty(k)) {
+                    if (S.isArray(_queryMap[k])) {
+                        count += _queryMap[k].length;
+                    } else {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        },
+
+        /**
+         * Return parameter value corresponding to current key
+         * @param {String} key
+         */
+        get:function (key) {
+            var self = this;
+            parseQuery(self);
+            if (key) {
+                return self._queryMap[key];
+            } else {
+                return self._queryMap;
+            }
+        },
+
+        /**
+         * Parameter names.
+         * @return {String[]}
+         */
+        keys:function () {
+            var self = this;
+            parseQuery(self);
+            return S.keys(self._queryMap);
+        },
+
+        /**
+         * Set parameter value corresponding to current key
+         * @param {String} key
+         * @param value
+         */
+        set:function (key, value) {
+            var self = this, _queryMap;
+            parseQuery(self);
+            _queryMap = self._queryMap;
+            if (S.isString(key)) {
+                self._queryMap[key] = value;
+            } else {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                S.each(key, function (v, k) {
+                    _queryMap[k] = v;
+                });
+            }
+            return self;
+        },
+
+        /**
+         * Remove parameter with specified name.
+         * @param {String} key
+         */
+        remove:function (key) {
+            var self = this;
+            parseQuery(self);
+            if (key) {
+                delete self._queryMap[key];
+            } else {
+                self._queryMap = {};
+            }
+            return self;
+
+        },
+
+        /**
+         * Add parameter value corresponding to current key
+         * @param {String} key
+         * @param value
+         */
+        add:function (key, value) {
+            var self = this,
+                _queryMap,
+                currentValue;
+            if (S.isObject(key)) {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                S.each(key, function (v, k) {
+                    self.add(k, v);
+                });
+            } else {
+                parseQuery(self);
+                _queryMap = self._queryMap;
+                currentValue = _queryMap[key];
+                if (currentValue === undefined) {
+                    currentValue = value;
+                } else {
+                    currentValue = [].concat(currentValue).concat(value);
+                }
+                _queryMap[key] = currentValue;
+            }
+            return self;
+        },
+
+        /**
+         * Serialize query to string.
+         * @param {Boolean} [serializeArray=true]
+         * whether append [] to key name when value 's type is array
+         */
+        toString:function (serializeArray) {
+            var self = this;
+            parseQuery(self);
+            return S.param(self._queryMap, undefined, undefined, serializeArray);
+        }
+    };
+
+    function padding2(str) {
+        return str.length == 1 ? "0" + str : str;
+    }
+
+    function equalsIgnoreCase(str1, str2) {
+        return str1.toLowerCase() == str2.toLowerCase();
+    }
+
+    // www.ta#bao.com // => www.ta.com/#bao.com
+    // www.ta%23bao.com
+    // Percent-Encoding
+    function encodeSpecialChars(str, specialCharsReg) {
+        // encodeURI( ) is intended to encode complete URIs,
+        // the following ASCII punctuation characters,
+        // which have special meaning in URIs, are not escaped either:
+        // ; / ? : @ & = + $ , #
+        return encodeURI(str).replace(specialCharsReg, function (m) {
+            return "%" + padding2(m.charCodeAt(0).toString(16));
+        });
+    }
+
+
+    /**
+     * @class
+     * Uri class for KISSY.
+     * Most of its interfaces are same with window.location.
+     * @param {String|KISSY.Uri} [uriStr] Encoded uri string.
+     * @memberOf KISSY
+     */
+    function Uri(uriStr) {
+
+        if (uriStr instanceof  Uri) {
+            return uriStr.clone();
+        }
+
+        var m, self = this;
+
+        S.mix(self,
+            /**
+             * @lends KISSY.Uri#
+             */
+            {
+                /**
+                 * scheme such as "http:". aka protocol without colon
+                 * @type String
+                 */
+                scheme:"",
+                /**
+                 * User credentials such as "yiminghe:gmail"
+                 * @type {String}
+                 */
+                userInfo:"",
+                /**
+                 * hostname such as "docs.kissyui.com". aka domain
+                 * @type {String}
+                 */
+                hostname:"",
+                /**
+                 * Port such as "8080"
+                 * @type {String}
+                 */
+                port:"",
+                /**
+                 * path such as "/index.htm". aka pathname
+                 * @type {String}
+                 */
+                path:"",
+                /**
+                 * Query object for search string. aka search
+                 * @type {KISSY.Uri.Query}
+                 */
+                query:"",
+                /**
+                 * fragment such as "#!/test/2". aka hash
+                 */
+                fragment:""
+            });
+
+        uriStr = uriStr || "";
+        m = uriStr.match(URI_SPLIT_REG) || [];
+
+        S.each(REG_INFO, function (index, key) {
+            var match = m[index] || "";
+            if (key == "query") {
+                // need encoded content
+                self.query = new Query(match);
+            } else {
+                // need to decode to get data structure in memory
+                self[key] = decodeURIComponent(match);
+            }
+        });
+
+    }
+
+    Uri.prototype =
+    /**
+     * @lends KISSY.Uri#
+     */
+    {
+
+        constructor:Uri,
+
+        /**
+         * Return a cloned new instance.
+         * @return {KISSY.Uri}
+         */
+        clone:function () {
+            var uri = new Uri(), self = this;
+            S.each(REG_INFO, function (index, key) {
+                uri[key] = self[key];
+            });
+            uri.query = uri.query.clone();
+            return uri;
+        },
+
+
+        /**
+         * The reference resolution algorithm.rfc 5.2
+         * return a resolved uri corresponding to current uri
+         * @param {KISSY.Uri|String} relativeUri
+         * @example
+         * <code>
+         *   this: "http://y/yy/z.com?t=1#v=2"
+         *   "https:/y/" => "https:/y/"
+         *   "//foo" => "http://foo"
+         *   "foo" => "http://y/yy/foo"
+         *   "/foo" => "http://y/foo"
+         *   "?foo" => "http://y/yy/z.com?foo"
+         *   "#foo" => http://y/yy/z.com?t=1#foo"
+         * </code>
+         * @return {KISSY.Uri}
+         */
+        resolve:function (relativeUri) {
+
+            if (S.isString(relativeUri)) {
+                relativeUri = new Uri(relativeUri);
+            }
+
+            var self = this,
+                override = 0,
+                lastSlashIndex,
+                order = ["scheme", "userInfo", "hostname", "port", "path", "query", "fragment"],
+                target = self.clone();
+
+            S.each(order, function (o) {
+                if (o == "path") {
+                    // relativeUri does not set for scheme/userInfo/hostname/port
+                    if (override) {
+                        target[o] = relativeUri[o];
+                    } else {
+                        var path = relativeUri['path'];
+                        if (path) {
+                            // force to override target 's query with relative
+                            override = 1;
+                            if (!S.startsWith(path, "/")) {
+                                if (target.hostname && !target.path) {
+                                    // RFC 3986, section 5.2.3, case 1
+                                    path = "/" + path;
+                                } else if (target.path) {
+                                    // RFC 3986, section 5.2.3, case 2
+                                    lastSlashIndex = target.path.lastIndexOf('/');
+                                    if (lastSlashIndex != -1) {
+                                        path = target.path.slice(0, lastSlashIndex + 1) + path;
+                                    }
+                                }
+                            }
+                            // remove .. / .  as part of the resolution process
+                            target.path = Path.normalize(path);
+                        }
+                    }
+                } else if (o == "query") {
+                    if (override || relativeUri['query'].toString()) {
+                        target.query = relativeUri['query'].clone();
+                        override = 1;
+                    }
+                } else if (override || relativeUri[o]) {
+                    target[o] = relativeUri[o];
+                    override = 1;
+                }
+            });
+
+            return target;
+
+        },
+
+        /**
+         * Get scheme part
+         */
+        getScheme:function () {
+            return this.scheme;
+        },
+
+        /**
+         * Set scheme part
+         * @param {String} scheme
+         * @return this
+         */
+        setScheme:function (scheme) {
+            this.scheme = scheme;
+            return this;
+        },
+
+        /**
+         * Return hostname
+         * @return {String}
+         */
+        getHostname:function () {
+            return this.hostname;
+        },
+
+        /**
+         * Set hostname
+         * @param {String} hostname
+         * @return this
+         */
+        setHostname:function (hostname) {
+            this.hostname = hostname;
+            return this;
+        },
+
+        /**
+         * Set user info
+         * @param {String} userInfo
+         * @return this
+         */
+        setUserInfo:function (userInfo) {
+            this.userInfo = userInfo;
+            return this;
+        },
+
+        /**
+         * Get user info
+         * @return {String}
+         */
+        getUserInfo:function () {
+            return this.userInfo;
+        },
+
+        /**
+         * Set port
+         * @param {String} port
+         * @return this
+         */
+        setPort:function (port) {
+            this.port = port;
+            return this;
+        },
+
+        /**
+         * Get port
+         * @return {String}
+         */
+        getPort:function () {
+            return this.port;
+        },
+
+        /**
+         * Set path
+         * @param {string} path
+         * @return this
+         */
+        setPath:function (path) {
+            this.path = path;
+            return this;
+        },
+
+        /**
+         * Get path
+         * @return {String}
+         */
+        getPath:function () {
+            return this.path;
+        },
+
+        /**
+         * Set query
+         * @param {String|KISSY.Uri.Query} query
+         * @return this
+         */
+        setQuery:function (query) {
+            if (S.isString(query)) {
+                if (S.startsWith(query, "?")) {
+                    query = query.slice(1);
+                }
+                query = new Query(encodeSpecialChars(query, reDisallowedInQuery));
+            }
+            this.query = query;
+            return this;
+        },
+
+        /**
+         * Get query
+         * @return {KISSY.Uri.Query}
+         */
+        getQuery:function () {
+            return this.query;
+        },
+
+        /**
+         * Get fragment
+         * @return {String}
+         */
+        getFragment:function () {
+            return this.fragment;
+        },
+
+        /**
+         * Set fragment
+         * @param {String} fragment
+         * @return this
+         */
+        setFragment:function (fragment) {
+            if (!S.startsWith(fragment, "#")) {
+                fragment = "#" + fragment;
+            }
+            this.fragment = fragment;
+            return this;
+        },
+
+        /**
+         * Judge whether two uri has same domain.
+         * @param {KISSY.Uri} other
+         * @return {Boolean}
+         */
+        hasSameDomainAs:function (other) {
+            var self = this;
+            // port and hostname has to be same
+            return equalsIgnoreCase(self.hostname, other['hostname']) &&
+                equalsIgnoreCase(self.scheme, other['scheme']) &&
+                equalsIgnoreCase(self.port, other['port']);
+        },
+
+        /**
+         * serialize to string.
+         * rfc 5.3 Component Recomposition.
+         * but kissy does not differentiate between undefined and empty.
+         * @param {boolean} [serializeArray=true]
+         * whether append [] to key name when value 's type is array
+         * @return {String}
+         */
+        toString:function (serializeArray) {
+
+            var out = [], self = this,
+                scheme,
+                hostname,
+                path,
+                port,
+                fragment,
+                query,
+                userInfo;
+
+            if (scheme = self.scheme) {
+                out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
+                out.push(":");
+            }
+
+            if (hostname = self.hostname) {
+                out.push("//");
+                if (userInfo = self.userInfo) {
+                    out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
+                    out.push("@");
+                }
+
+                out.push(encodeURIComponent(hostname));
+
+                if (port = self.port) {
+                    out.push(":");
+                    out.push(port);
+                }
+            }
+
+            if (path = self.path) {
+                if (hostname && !S.startsWith(path, "/")) {
+                    path = "/" + path;
+                }
+                path = Path.normalize(path);
+                out.push(encodeSpecialChars(path, reDisallowedInPathName));
+            }
+
+            if (query = ( self.query.toString(serializeArray))) {
+                out.push("?");
+                out.push(query);
+            }
+
+            if (fragment = self.fragment) {
+                out.push("#");
+                out.push(encodeSpecialChars(fragment, reDisallowedInFragment))
+            }
+
+            return out.join("");
+        }
+    };
+
+    Uri.Query = Query;
+
+    S.Uri = Uri;
+
+})(KISSY);
+/**
+ * Refer
+ *  - http://www.ietf.org/rfc/rfc3986.txt
+ *  - http://en.wikipedia.org/wiki/URI_scheme
+ *//**
  * @fileOverview setup data structure for kissy loader
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
+
+    var Path = S.Path;
 
     /**
      * @class KISSY Loader constructor
@@ -2010,7 +2892,8 @@ build time: Jul 16 11:08
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.SS.Config.tag;
+                var self = this;
+                return self.tag || self.SS.Config.tag;
             },
 
             /**
@@ -2026,7 +2909,13 @@ build time: Jul 16 11:08
              * @return {String}
              */
             getBase:function () {
-                return this.base || this.SS.Config.base;
+                var self = this;
+                return self.base || self.SS.Config.base;
+            },
+
+            getBaseUri:function(){
+                var self = this;
+                return self.baseUri||self.SS.Config.baseUri;
             },
 
             /**
@@ -2034,8 +2923,8 @@ build time: Jul 16 11:08
              * @return {Boolean}
              */
             isDebug:function () {
-                var debug = this.debug;
-                return debug === undefined ? this.SS.Config.debug : debug;
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
             },
 
             /**
@@ -2043,7 +2932,8 @@ build time: Jul 16 11:08
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.SS.Config.charset;
+                var self = this;
+                return self.charset || self.SS.Config.charset;
             },
 
             /**
@@ -2051,13 +2941,12 @@ build time: Jul 16 11:08
              * @return {Boolean}
              */
             isCombine:function () {
-                var combine = this.combine;
-                return combine === undefined ? this.SS.Config.combine : combine;
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
             }
         });
 
     Loader.Package = Package;
-
 
     /**
      * @class KISSY Module constructor
@@ -2081,16 +2970,39 @@ build time: Jul 16 11:08
                 this.value = v;
             },
 
+            getType:function () {
+                var self = this, v;
+                if ((v = self.type) === undefined) {
+                    if (Path.extname(self.name).toLowerCase() == ".css") {
+                        v = "css";
+                    } else {
+                        v = "js";
+                    }
+                    self.type = v;
+                }
+                return v;
+            },
+
             /**
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
-                var self = this, t;
-                return self.fullpath || (self.fullpath =
-                    Loader.Utils.getMappedPath(self.SS,
-                        self.packageInfo.getBase() +
-                            self.path +
-                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
+                var self = this, t, fullpathUri, packageBaseUri;
+                if (!self.fullpath) {
+                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    if (t = self.getTag()) {
+                        fullpathUri.query.set("t", t);
+                    }
+                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
+                }
+                return self.fullpath;
+            },
+
+            getPath:function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
             },
 
             /**
@@ -2113,7 +3025,9 @@ build time: Jul 16 11:08
              * @return {Object}
              */
             getPackageInfo:function () {
-                return this.packageInfo;
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, self));
             },
 
             /**
@@ -2121,7 +3035,8 @@ build time: Jul 16 11:08
              * @return {String}
              */
             getTag:function () {
-                return (this.tag || this.packageInfo.getTag());
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
             },
 
             /**
@@ -2129,11 +3044,50 @@ build time: Jul 16 11:08
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.getCharset();
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
             }
         });
 
     Loader.Module = Module;
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            extname = Path.extname(name) || ".js",
+            min = "-min";
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (m.getPackageInfo().isDebug()) {
+            min = "";
+        }
+        return name + min + extname;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = "",
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                // longest match
+                if (S.startsWith(modName, p) &&
+                    p.length > pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
+
+        return packageDesc;
+    }
 
     // 模块(mod)状态
     Loader.STATUS = {
@@ -2190,20 +3144,21 @@ build time: Jul 16 11:08
          * if undefined remove all callbacks fro this event
          */
         detach:function (eventName, callback) {
+            var self = this, fns, index;
             if (!eventName) {
-                delete this[p];
+                delete self[p];
                 return;
             }
-            var fns = getEventHolder(this, eventName);
+            fns = getEventHolder(self, eventName);
             if (fns) {
                 if (callback) {
-                    var index = S.indexOf(callback, fns);
+                    index = S.indexOf(callback, fns);
                     if (index != -1) {
                         fns.splice(index, 1);
                     }
                 }
                 if (!callback || !fns.length) {
-                    delete getHolder(this)[eventName];
+                    delete getHolder(self)[eventName];
                 }
             }
         },
@@ -2229,70 +3184,38 @@ build time: Jul 16 11:08
     }
 
     var Loader = S.Loader,
+        Path = S.Path,
+        Uri = S.Uri,
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
         host = S.Env.host,
-        win = host,
+        isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
-        loc = host.location,
-    // 当前页面所在的目录
-    // http://xx.com/y/z.htm#!/f/g
-    // ->
-    // http://xx.com/y/
-        __pagePath = loc.href.replace(loc.hash, "").replace(/[^/]*$/i, "");
+        simulatedLocation = new Uri(location.href);
+
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
         if (S.isArray(s)) {
-            var ret = [];
-            S.each(s, function (si) {
-                ret.push(indexMap(si));
-            });
+            var ret = [], i = 0;
+            for (; i < s.length; i++) {
+                ret[i] = indexMapStr(s[i]);
+            }
             return ret;
         }
         return indexMapStr(s);
     }
 
     function indexMapStr(s) {
-        if (/(.+\/)(\?t=.+)?$/.test(s)) {
-            return RegExp.$1 + "index" + RegExp.$2;
-        } else {
-            return s
+        // "x/" "x/y/z/"
+        if (S.endsWith(Path.basename(s), "/")) {
+            s += "index";
         }
+        return s;
     }
-
-
-    function getPackageInfo(self, mod) {
-
-        var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
-            pName = "",
-            packageDesc;
-
-        for (var p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
-            }
-        }
-
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self}));
-
-        mod.packageInfo = packageDesc;
-
-        return packageDesc;
-    }
-
-
-    var isWebKit = !!ua.match(/AppleWebKit/);
 
     S.mix(utils, {
 
@@ -2309,34 +3232,6 @@ build time: Jul 16 11:08
 
         IE:!!ua.match(/MSIE/),
 
-        isCss:function (url) {
-            return /\.css(?:\?|$)/i.test(url);
-        },
-
-        /**
-         * resolve relative part of path
-         * x/../y/z -> y/z
-         * x/./y/z -> x/y/z
-         * @param path uri path
-         * @return {string} resolved path
-         * @description similar to path.normalize in nodejs
-         */
-        normalizePath:function (path) {
-            var paths = path.split("/"),
-                re = [],
-                p;
-            for (var i = 0; i < paths.length; i++) {
-                p = paths[i];
-                if (p == ".") {
-                } else if (p == "..") {
-                    re.pop();
-                } else {
-                    re.push(p);
-                }
-            }
-            return re.join("/");
-        },
-
         /**
          * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
          * @param moduleName 当前模块
@@ -2345,74 +3240,37 @@ build time: Jul 16 11:08
          * @description similar to path.resolve in nodejs
          */
         normalDepModuleName:function (moduleName, depName) {
+            var i = 0;
+
             if (!depName) {
                 return depName;
             }
+
             if (S.isArray(depName)) {
-                for (var i = 0; i < depName.length; i++) {
+                for (; i < depName.length; i++) {
                     depName[i] = utils.normalDepModuleName(moduleName, depName[i]);
                 }
                 return depName;
             }
+
             if (startsWith(depName, "../") || startsWith(depName, "./")) {
-                var anchor = "", index;
                 // x/y/z -> x/y/
-                if ((index = moduleName.lastIndexOf("/")) != -1) {
-                    anchor = moduleName.substring(0, index + 1);
-                }
-                return normalizePath(anchor + depName);
-            } else if (depName.indexOf("./") != -1
-                || depName.indexOf("../") != -1) {
-                return normalizePath(depName);
-            } else {
-                return depName;
+                return Path.resolve(Path.dirname(moduleName), depName);
             }
+
+            return Path.normalize(depName);
         },
 
-        //去除后缀名，要考虑时间戳!
-        removePostfix:function (path) {
-            return path.replace(/(-min)?\.js[^/]*$/i, "");
+        //去除后缀名
+        removeExtname:function (path) {
+            return path.replace(/(-min)?\.js$/i, "");
         },
 
         /**
-         * 路径正则化，不能是相对地址
-         * 相对地址则转换成相对页面的绝对地址
-         * 用途:
-         * package path 相对地址则相对于当前页面获取绝对地址
+         * 相对地址则转换成相对当前页面的绝对地址
          */
-        normalBasePath:function (path) {
-            path = S.trim(path);
-
-            // path 为空时，不能变成 "/"
-            if (path &&
-                path.charAt(path.length - 1) != '/') {
-                path += "/";
-            }
-
-            /**
-             * 一定要正则化，防止出现 ../ 等相对路径
-             * 考虑本地路径
-             */
-            if (!path.match(/^(http(s)?)|(file):/i) &&
-                !startsWith(path, "/")) {
-                path = __pagePath + path;
-            }
-
-            if (startsWith(path, "/")) {
-                var loc = win.location;
-                path = loc.protocol + "//" + loc.host + path;
-            }
-
-            return normalizePath(path);
-        },
-
-        /**
-         * 相对路径文件名转换为绝对路径
-         * @param path
-         */
-        absoluteFilePath:function (path) {
-            path = utils.normalBasePath(path);
-            return path.substring(0, path.length - 1);
+        resolveByPage:function (path) {
+            return simulatedLocation.resolve(path);
         },
 
         createModulesInfo:function (self, modNames) {
@@ -2422,6 +3280,8 @@ build time: Jul 16 11:08
         },
 
         createModuleInfo:function (self, modName, cfg) {
+            modName = indexMapStr(modName);
+
             var mods = self.Env.mods,
                 mod = mods[modName];
 
@@ -2435,15 +3295,6 @@ build time: Jul 16 11:08
                 SS:self
             }, cfg));
 
-            var packageInfo = getPackageInfo(self, mod),
-                path = defaultComponentJsName(modName, packageInfo);
-
-            // 用户配置的 path优先
-            S.mix(mod, {
-                path:path,
-                packageInfo:packageInfo
-            }, false);
-
             return mod;
         },
 
@@ -2456,10 +3307,11 @@ build time: Jul 16 11:08
         },
 
         getModules:function (self, modNames) {
-            var mods = [self];
+            var mods = [self], mod;
 
             S.each(modNames, function (modName) {
-                if (!utils.isCss(modName)) {
+                mod = self.Env.mods[modName];
+                if (!mod || mod.getType() != "css") {
                     mods.push(self.require(modName));
                 }
             });
@@ -2468,7 +3320,6 @@ build time: Jul 16 11:08
         },
 
         attachMod:function (self, mod) {
-
             if (mod.status != data.LOADED) {
                 return;
             }
@@ -2503,9 +3354,6 @@ build time: Jul 16 11:08
             }
             return modNames;
         },
-
-
-        indexMapStr:indexMapStr,
 
         /**
          * Three effects:
@@ -2572,7 +3420,6 @@ build time: Jul 16 11:08
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-
             mod.fn = fn;
 
             S.mix((mods[name] = mod), config);
@@ -2581,51 +3428,19 @@ build time: Jul 16 11:08
         },
 
         getMappedPath:function (self, path) {
-            var __mappedRules = self.Config.mappedRules || [];
-            for (var i = 0; i < __mappedRules.length; i++) {
-                var m, rule = __mappedRules[i];
+            var __mappedRules = self.Config.mappedRules || [],
+                i,
+                m,
+                rule;
+            for (i = 0; i < __mappedRules.length; i++) {
+                rule = __mappedRules[i];
                 if (m = path.match(rule[0])) {
                     return path.replace(rule[0], rule[1]);
                 }
             }
             return path;
-        },
-
-        /**
-         * test3,test3/a/b => a/b
-         */
-        removePackageNameFromModName:function () {
-            var cache = {};
-            return function (packageName, modName) {
-                if (!packageName) {
-                    return modName;
-                }
-                if (!S.endsWith(packageName, "/")) {
-                    packageName += "/";
-                }
-                var reg;
-                if (!(reg = cache[packageName])) {
-                    reg = cache[packageName] = new RegExp("^" + S.escapeRegExp(packageName));
-                }
-                return modName.replace(reg, "");
-            }
-        }()
-
+        }
     });
-
-    function defaultComponentJsName(m, packageInfo) {
-        var suffix = ".js",
-            match;
-        if (match = m.match(/(.+)(\.css)$/i)) {
-            suffix = match[2];
-            m = match[1];
-        }
-        var min = "-min";
-        if (packageInfo.isDebug()) {
-            min = "";
-        }
-        return m + min + suffix;
-    }
 
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
@@ -2639,8 +3454,6 @@ build time: Jul 16 11:08
         }
         return true;
     }
-
-    var normalizePath = utils.normalizePath;
 
     Loader.Utils = utils;
 
@@ -2773,6 +3586,7 @@ build time: Jul 16 11:08
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
+        Path = S.Path,
         jsCallbacks = {},
         cssCallbacks = {};
 
@@ -2795,7 +3609,7 @@ build time: Jul 16 11:08
                 success = config.success;
                 charset = config.charset;
             }
-            var src = utils.absoluteFilePath(url),
+            var src = utils.resolveByPage(url).toString(),
                 callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
 
             callbacks.push(success);
@@ -2855,11 +3669,13 @@ build time: Jul 16 11:08
          * @memberOf KISSY
          */
         getScript:function (url, success, charset) {
-            if (utils.isCss(url)) {
+
+            if (S.startsWith(Path.extname(url).toLowerCase(), ".css")) {
                 return S.getStyle(url, success, charset);
             }
 
-            var config = success,
+            var src = utils.resolveByPage(url),
+                config = success,
                 error,
                 timeout,
                 timer;
@@ -2871,8 +3687,7 @@ build time: Jul 16 11:08
                 charset = config.charset;
             }
 
-            var src = utils.absoluteFilePath(url),
-                callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+            var callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
 
             callbacks.push([success, error]);
 
@@ -2996,9 +3811,16 @@ build time: Jul 16 11:08
                 // 兼容 path
                 base = cfg.base || cfg.path;
 
+                // must be folder
+                if (!S.endsWith(base, "/")) {
+                    base += "/";
+                }
+
                 // 注意正则化
                 cfg.name = name;
-                cfg.base = base && utils.normalBasePath(base);
+                var baseUri = utils.resolveByPage(base);
+                cfg.base = baseUri.toString();
+                cfg.baseUri = baseUri;
                 cfg.SS = S;
                 delete cfg.path;
 
@@ -3038,7 +3860,6 @@ build time: Jul 16 11:08
         var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                modName = utils.indexMapStr(modName);
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(self.Env.mods[modName], modCfg);
             });
@@ -3051,15 +3872,17 @@ build time: Jul 16 11:08
      KISSY 's base path.
      */
     S.configs.base = function (base) {
-        var self = this;
+        var self = this, baseUri, Config = self.Config;
         if (!base) {
-            return self.Config.base;
+            return Config.base;
         }
-        self.Config.base = utils.normalBasePath(base);
+        baseUri = utils.resolveByPage(base);
+        Config.base = baseUri.toString();
+        Config.baseUri = baseUri;
     };
 })(KISSY);/**
  * @fileOverview simple loader from KISSY<=1.2
- * @author yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
 
@@ -3068,6 +3891,7 @@ build time: Jul 16 11:08
     }
 
     var Loader = S.Loader,
+        Path= S.Path,
         utils = Loader.Utils;
 
 
@@ -3075,7 +3899,7 @@ build time: Jul 16 11:08
         Loader.Target,
         {
 
-            //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
+            //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
             __currentModule:null,
 
             //ie6,7,8开始载入脚本的时间
@@ -3102,7 +3926,7 @@ build time: Jul 16 11:08
                     requires,
                     mods = SS.Env.mods;
 
-                // 兼容 1.3.0pr1
+                // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
                         modules:name
@@ -3181,12 +4005,12 @@ build time: Jul 16 11:08
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
         var SS = self.SS,
-            base,
             scripts = S.Env.host.document.getElementsByTagName("script"),
             re,
+            i,
             script;
 
-        for (var i = 0; i < scripts.length; i++) {
+        for (i = 0; i < scripts.length; i++) {
             script = scripts[i];
             if (script.readyState == "interactive") {
                 re = script;
@@ -3198,9 +4022,8 @@ build time: Jul 16 11:08
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
             S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-            S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
+            S.log("old_ie get mod name from cache : " + self.__startLoadModuleName);
             return self.__startLoadModuleName;
-            //S.error("找不到 interactive 状态的 script");
         }
 
         // src 必定是绝对路径
@@ -3210,35 +4033,42 @@ build time: Jul 16 11:08
         // <script src='/x.js'></script>
         // ie6-8 => re.src == '/x.js'
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
-        var src = utils.absoluteFilePath(re.src);
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        // SS.Config.base = SS.normalBasePath(self.Config.base);
-        if (src.lastIndexOf(base = SS.Config.base, 0) === 0) {
-            return utils.removePostfix(src.substring(base.length));
-        }
-        var packages = SS.Env.packages,
+        var src = utils.resolveByPage(re.src),
+            srcStr = src.toString(),
+            packages = SS.Env.packages,
             finalPackagePath,
+            p,
+            packageBase,
+            Config = SS.Config,
+            finalPackageUri,
             finalPackageLength = -1;
+
         // 外部模块去除包路径，得到模块名
-        for (var p in packages) {
+        for (p in packages) {
             if (packages.hasOwnProperty(p)) {
-                var packageBase = packages[p].base;
-                if (packages.hasOwnProperty(p) &&
-                    src.lastIndexOf(packageBase, 0) === 0) {
+                packageBase = packages[p].getBase();
+                if (S.startsWith(srcStr, packageBase)) {
                     // longest match
                     if (packageBase.length > finalPackageLength) {
                         finalPackageLength = packageBase.length;
                         finalPackagePath = packageBase;
+                        finalPackageUri = packages[p].getBaseUri();
                     }
                 }
             }
         }
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
         if (finalPackagePath) {
-            return utils.removePostfix(src.substring(finalPackagePath.length));
+            return utils.removeExtname(Path.relative(finalPackageUri.getPath(),
+                src.getPath()));
+        } else if (S.startsWith(srcStr, Config.base)) {
+            return utils.removeExtname(Path.relative(Config.baseUri.getPath(),
+                src.getPath()));
         }
+
         S.log("interactive script does not have package config ：" + src, "error");
         return undefined;
     }
@@ -3287,7 +4117,7 @@ build time: Jul 16 11:08
  */
 /**
  * @fileOverview use and attach mod
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
@@ -3344,8 +4174,7 @@ build time: Jul 16 11:08
             S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 attachModByName(self, modName, function () {
-                    currentIndex++;
-                    if (currentIndex == count) {
+                    if ((++currentIndex) == count) {
                         end();
                     }
                 });
@@ -3357,7 +4186,8 @@ build time: Jul 16 11:08
 
     // 加载指定模块名模块，如果不存在定义默认定义为内部模块
     function attachModByName(self, modName, callback) {
-        var SS = self.SS, mod;
+        var SS = self.SS,
+            mod;
         utils.createModuleInfo(SS, modName);
         mod = SS.Env.mods[modName];
         if (mod.status === ATTACHED) {
@@ -3377,7 +4207,7 @@ build time: Jul 16 11:08
             rMod,
             i,
             callbackBeCalled = 0,
-        // 最终有效的 require ，add 处声明为准
+        // 最终有效的 require, add 处声明为准
             newRequires,
             mods = SS.Env.mods;
 
@@ -3390,16 +4220,16 @@ build time: Jul 16 11:08
          * @private
          */
         function cyclicCheck() {
-            // one mod's all requires mods to run its callback
+            // one mod 's all requires mods to run its callback
             var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
                 myName = mod.name,
-                rmod,
+                rMod,
                 r__allRequires;
 
             S.each(requires, function (r) {
-                rmod = mods[r];
+                rMod = mods[r];
                 __allRequires[r] = 1;
-                if (rmod && (r__allRequires = rmod[ALL_REQUIRES])) {
+                if (rMod && (r__allRequires = rMod[ALL_REQUIRES])) {
                     S.mix(__allRequires, r__allRequires);
                 }
             });
@@ -3494,30 +4324,35 @@ build time: Jul 16 11:08
      */
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
+            modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = utils.isCss(url);
+            isCss = mod.getType() == "css";
 
         mod.status = mod.status || INIT;
 
         if (mod.status < LOADING) {
             mod.status = LOADING;
             if (IE && !isCss) {
-                self.__startLoadModuleName = mod.name;
+                self.__startLoadModuleName = modName;
                 self.__startLoadTime = Number(+new Date());
             }
             S.getScript(url, {
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success:function () {
-                    if (!isCss) {
+                    if (isCss) {
+                        // css 不会设置 LOADED! 必须外部设置
+                        utils.registerModule(SS, modName, S.noop);
+                    } else {
+                        var currentModule;
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                        if (self[CURRENT_MODULE]) {
-                            S.log("standard browser get modname after load : " + mod.name);
+                        if (currentModule = self[CURRENT_MODULE]) {
+                            S.log("standard browser get mod name after load : " + modName);
                             utils.registerModule(SS,
-                                mod.name, self[CURRENT_MODULE].fn,
-                                self[CURRENT_MODULE].config);
+                                modName, currentModule.fn,
+                                currentModule.config);
                             self[CURRENT_MODULE] = null;
                         }
                     }
@@ -3544,11 +4379,7 @@ build time: Jul 16 11:08
         }
 
         function checkAndHandle() {
-            if (isCss || mod.fn) {
-                // css 不会设置 LOADED! 必须外部设置
-                if (isCss && mod.status != ATTACHED) {
-                    mod.status = LOADED;
-                }
+            if (mod.fn) {
                 callback();
             } else {
                 // ie will call success even when getScript error(404)
@@ -3557,7 +4388,7 @@ build time: Jul 16 11:08
         }
 
         function _modError() {
-            S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
+            S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
             mod.status = ERROR;
         }
     }
@@ -3572,24 +4403,22 @@ build time: Jul 16 11:08
     }
 
     function loadScripts(urls, callback, charset) {
-        var count = urls && urls.length,
-            i,
-            url;
+        var count = urls && urls.length;
         if (!count) {
             callback();
             return;
         }
-        for (i = 0; i < urls.length; i++) {
-            url = urls[i];
+        S.each(urls, function (url) {
             S.getScript(url, function () {
                 if (!(--count)) {
                     callback();
                 }
             }, charset || "utf-8");
-        }
+        });
     }
 
     var Loader = S.Loader,
+        Path = S.Path,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -3613,9 +4442,9 @@ build time: Jul 16 11:08
          */
         {
             next:function () {
-                var self = this;
+                var self = this, args;
                 if (self.queue.length) {
-                    var args = self.queue.shift();
+                    args = self.queue.shift();
                     self._use(args.modNames, args.fn);
                 }
             },
@@ -3629,7 +4458,14 @@ build time: Jul 16 11:08
             },
 
             _use:function (modNames, fn) {
-                var self = this, SS = self.SS;
+                var self = this,
+                    unaliasModNames,
+                    allModNames,
+                    comboUrls,
+                    css,
+                    countCss,
+                    p,
+                    SS = self.SS;
 
                 self.loading = 1;
 
@@ -3637,19 +4473,19 @@ build time: Jul 16 11:08
 
                 modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-                var unaliasModNames = utils.unalias(SS, modNames);
+                unaliasModNames = utils.unalias(SS, modNames);
 
-                var allModNames = self.calculate(unaliasModNames);
+                allModNames = self.calculate(unaliasModNames);
 
                 utils.createModulesInfo(SS, allModNames);
 
-                var comboUrls = self.getComboUrls(allModNames);
+                comboUrls = self.getComboUrls(allModNames);
 
                 // load css first to avoid page blink
-                var css = comboUrls.css,
-                    countCss = 0;
+                css = comboUrls.css;
+                countCss = 0;
 
-                for (var p in css) {
+                for (p in css) {
                     countCss++;
                 }
 
@@ -3662,9 +4498,14 @@ build time: Jul 16 11:08
                     if (css.hasOwnProperty(p)) {
                         loadScripts(css[p], function () {
                             if (!(--countCss)) {
-                                S.each(unaliasModNames, function (name) {
-                                    utils.attachMod(self.SS, self.getModInfo(name));
-                                });
+                                // mark all css mods to be loaded
+                                for (var p in css) {
+                                    if (css.hasOwnProperty(p)) {
+                                        S.each(css[p].mods, function (m) {
+                                            utils.registerModule(SS, m.name, S.noop);
+                                        });
+                                    }
+                                }
                                 self._useJs(comboUrls, fn, modNames);
                             }
                         }, css[p].charset);
@@ -3692,29 +4533,33 @@ build time: Jul 16 11:08
 
             _useJs:function (comboUrls, fn, modNames) {
                 var self = this,
+                    p,
+                    success,
+                    SS = self.SS,
+                    unaliasModNames,
                     jss = comboUrls.js,
                     countJss = 0;
 
 
-                for (var p in jss) {
+                for (p in jss) {
                     countJss++;
                 }
 
                 if (!countJss) {
                     // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-                    var unaliasModNames = utils.unalias(self.SS, modNames);
+                    unaliasModNames = utils.unalias(SS, modNames);
                     self.attachMods(unaliasModNames);
-                    fn.apply(null, utils.getModules(self.SS, modNames));
+                    fn.apply(null, utils.getModules(SS, modNames));
                     return;
                 }
-                var success = 1;
+                success = 1;
                 for (p in jss) {
                     if (jss.hasOwnProperty(p)) {
                         (function (p) {
                             loadScripts(jss[p], function () {
-                                var mods = jss[p].mods;
-                                for (var i = 0; i < mods.length; i++) {
-                                    var mod = mods[i];
+                                var mods = jss[p].mods, mod, unaliasModNames, i;
+                                for (i = 0; i < mods.length; i++) {
+                                    mod = mods[i];
                                     // fix #111
                                     // https://github.com/kissyteam/kissy/issues/111
                                     if (!mod.fn) {
@@ -3725,10 +4570,10 @@ build time: Jul 16 11:08
                                     }
                                 }
                                 if (success && !(--countJss)) {
-                                    var unaliasModNames = utils.unalias(self.SS, modNames);
+                                    unaliasModNames = utils.unalias(SS, modNames);
                                     self.attachMods(unaliasModNames);
-                                    if (utils.isAttached(self.SS, unaliasModNames)) {
-                                        fn.apply(null, utils.getModules(self.SS, modNames))
+                                    if (utils.isAttached(SS, unaliasModNames)) {
+                                        fn.apply(null, utils.getModules(SS, modNames))
                                     } else {
                                         // new require is introduced by KISSY.add
                                         // run again
@@ -3744,7 +4589,7 @@ build time: Jul 16 11:08
             add:function (name, fn, config) {
                 var self = this,
                     SS = self.SS;
-                // 兼容 1.3.0pr1
+                // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
                         modules:name
@@ -3762,20 +4607,24 @@ build time: Jul 16 11:08
             },
 
             attachMod:function (modName) {
-                var SS = this.SS,
-                    mod = this.getModInfo(modName);
-                if (
+                var self = this,
+                    SS = self.SS,
+                    i,
+                    len,
+                    requires,
+                    r,
+                    mod = self.getModInfo(modName);
                 // new require after add
                 // not register yet!
-                    !mod || utils.isAttached(SS, modName)) {
+                if (!mod || utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = utils.normalizeModNames(SS, mod.requires, modName);
-                for (var i = 0; i < requires.length; i++) {
-                    this.attachMod(requires[i]);
-                }
-                for (i = 0; i < requires.length; i++) {
-                    if (!utils.isAttached(SS, requires[i])) {
+                requires = utils.normalizeModNames(SS, mod.requires, modName);
+                len = requires.length;
+                for (i = 0; i < len; i++) {
+                    r = requires[i];
+                    self.attachMod(r);
+                    if (!utils.isAttached(SS, r)) {
                         return false;
                     }
                 }
@@ -3784,21 +4633,26 @@ build time: Jul 16 11:08
 
             calculate:function (modNames) {
                 var ret = {},
-                    SS = this.SS,
-                // 提高性能，不用每个模块都再次提柜计算
+                    i,
+                    m,
+                    r,
+                    ret2,
+                    self = this,
+                    SS = self.SS,
+                // 提高性能，不用每个模块都再次全部依赖计算
                 // 做个缓存，每个模块对应的待动态加载模块
                     cache = {};
-                for (var i = 0; i < modNames.length; i++) {
-                    var m = modNames[i];
+                for (i = 0; i < modNames.length; i++) {
+                    m = modNames[i];
                     if (!utils.isAttached(SS, m)) {
                         if (!utils.isLoaded(SS, m)) {
                             ret[m] = 1;
                         }
-                        S.mix(ret, this.getRequires(m, cache));
+                        S.mix(ret, self.getRequires(m, cache));
                     }
                 }
-                var ret2 = [];
-                for (var r in ret) {
+                ret2 = [];
+                for (r in ret) {
                     if (ret.hasOwnProperty(r)) {
                         ret2.push(r);
                     }
@@ -3810,16 +4664,17 @@ build time: Jul 16 11:08
                 var self = this,
                     i,
                     SS = self.SS,
-                    Config = S.Config,
+                    Config = SS.Config,
                     packageBase,
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    var mod = self.getModInfo(modName);
-                    var packageInfo = mod.getPackageInfo();
-                    var packageBase = packageInfo.getBase();
-                    var type = utils.isCss(mod.path) ? "css" : "js", mods;
-                    var packageName = packageInfo.getName();
+                    var mod = self.getModInfo(modName),
+                        packageInfo = mod.getPackageInfo(),
+                        packageBase = packageInfo.getBase(),
+                        type = mod.getType(),
+                        mods,
+                        packageName = packageInfo.getName();
                     combos[packageBase] = combos[packageBase] || {};
                     mods = combos[packageBase][type] = combos[packageBase][type] || [];
                     mods.combine = 1;
@@ -3837,62 +4692,64 @@ build time: Jul 16 11:08
                         css:{}
                     },
                     t,
+                    type,
                     comboPrefix = Config.comboPrefix,
                     comboSep = Config.comboSep,
                     maxUrlLength = Config.comboMaxUrlLength;
 
                 for (packageBase in combos) {
                     if (combos.hasOwnProperty(packageBase)) {
-                        for (var type in combos[packageBase]) {
+                        for (type in combos[packageBase]) {
                             if (combos[packageBase].hasOwnProperty(type)) {
-
                                 t = [];
+
                                 var jss = combos[packageBase][type],
+                                    tag = jss.tag,
                                     packageName = jss.name,
+                                    prefix,
+                                    path,
+                                    l,
                                     packageNamePath = packageName + "/";
+
                                 res[type][packageBase] = [];
                                 res[type][packageBase].charset = jss.charset;
                                 // current package's mods
                                 res[type][packageBase].mods = [];
                                 // add packageName to common prefix
                                 // combo grouped by package
-                                var prefix = packageBase + (packageName ? packageNamePath : "") + comboPrefix,
-                                    path,
-                                    tag,
-                                    l = prefix.length;
+                                prefix = packageBase +
+                                    (packageName ? packageNamePath : "") +
+                                    comboPrefix;
+                                l = prefix.length;
+
+                                function pushComboUrl() {
+                                    res[type][packageBase].push(utils.getMappedPath(
+                                        SS,
+                                        prefix + t.join(comboSep) + (tag ? ("?t=" +
+                                            encodeURIComponent(tag)) : "")));
+                                }
+
                                 for (i = 0; i < jss.length; i++) {
                                     // remove packageName prefix from mod path
-                                    path = jss[i].path;
-                                    if (packageName) {
-                                        path = utils.removePackageNameFromModName(packageName, path);
-                                    }
+                                    path = jss[i].getPath();
                                     res[type][packageBase].mods.push(jss[i]);
                                     if (!jss.combine) {
-                                        tag = jss[i].getTag();
-                                        res[type][packageBase].push(utils.getMappedPath(SS,
-                                            prefix + path + (tag ? ("?t=" + encodeURIComponent(tag)) : "")));
+                                        res[type][packageBase].push(jss[i].getFullPath());
                                         continue;
+                                    }
+                                    if (packageName) {
+                                        path = Path.relative(packageName, path);
                                     }
                                     t.push(path);
                                     if (l + t.join(comboSep).length > maxUrlLength) {
                                         t.pop();
-                                        res[type][packageBase].push(self.getComboUrl(
-                                            prefix,
-                                            t,
-                                            comboSep,
-                                            jss.tag
-                                        ));
+                                        pushComboUrl();
                                         t = [];
                                         i--;
                                     }
                                 }
                                 if (t.length) {
-                                    res[type][packageBase].push(self.getComboUrl(
-                                        prefix,
-                                        t,
-                                        comboSep,
-                                        jss.tag
-                                    ));
+                                    pushComboUrl();
                                 }
 
                             }
@@ -3903,46 +4760,47 @@ build time: Jul 16 11:08
                 return res;
             },
 
-            getComboUrl:function (prefix, t, comboSep, tag) {
-                return utils.getMappedPath(
-                    this.SS,
-                    prefix + t.join(comboSep) + (tag ? ("?t=" +
-                        encodeURIComponent(tag)) : "")
-                );
-            },
-
             getModInfo:function (modName) {
-                var SS = this.SS, mods = SS.Env.mods;
-                return mods[modName];
+                return this.SS.Env.mods[modName];
             },
 
             // get requires mods need to be loaded dynamically
             getRequires:function (modName, cache) {
                 var self = this,
                     SS = self.SS,
+                    requires,
+                    i,
+                    rMod,
+                    r,
+                    allRequires,
+                    ret2,
                     mod = self.getModInfo(modName),
                 // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
                     ret = cache[modName];
+
                 if (ret) {
                     return ret;
                 }
-                ret = {};
+
+                cache[modName] = ret = {};
+
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = utils.normalizeModNames(SS, mod.requires, modName);
+                    requires = utils.normalizeModNames(SS, mod.requires, modName);
                     // circular dependency check
                     if (S.Config.debug) {
-                        var allRequires = mod.__allRequires || (mod.__allRequires = {});
+                        allRequires = mod.__allRequires || (mod.__allRequires = {});
                         if (allRequires[modName]) {
                             S.error("detect circular dependency among : ");
                             S.error(allRequires);
+                            return ret;
                         }
                     }
-                    for (var i = 0; i < requires.length; i++) {
-                        var r = requires[i];
+                    for (i = 0; i < requires.length; i++) {
+                        r = requires[i];
                         if (S.Config.debug) {
                             // circular dependency check
-                            var rMod = self.getModInfo(r);
+                            rMod = self.getModInfo(r);
                             allRequires[r] = 1;
                             if (rMod && rMod.__allRequires) {
                                 S.each(rMod.__allRequires, function (_, r2) {
@@ -3956,12 +4814,12 @@ build time: Jul 16 11:08
                             !utils.isAttached(SS, r)) {
                             ret[r] = 1;
                         }
-                        var ret2 = self.getRequires(r, cache);
+                        ret2 = self.getRequires(r, cache);
                         S.mix(ret, ret2);
                     }
                 }
 
-                return cache[modName] = ret;
+                return ret;
             }
         });
 
@@ -3976,7 +4834,7 @@ build time: Jul 16 11:08
  *      ATTACHED : fn executed
  **//**
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
 
@@ -4065,69 +4923,60 @@ build time: Jul 16 11:08
      * @private
      * @example
      * <pre>
-     *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
-     *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
+     *   http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
      *   note about custom combo rules, such as yui3:
-     *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     *   combo-prefix="combo?" combo-sep="&"
      * <pre>
      */
     function getBaseInfo() {
         // get base from current script file path
         // notice: timestamp
-        var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-            baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
+        var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
+            baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
+            comboPrefix,
+            comboSep,
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
-            src = utils.absoluteFilePath(script.src),
+            src = utils.resolveByPage(script.src).toString(),
             baseInfo = script.getAttribute("data-config");
+
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
         } else {
             baseInfo = {};
         }
-        baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        baseInfo.comboSep = baseInfo.comboSep || ',';
 
-        var comboPrefix = baseInfo.comboPrefix,
-            comboSep = baseInfo.comboSep,
-            parts = src.split(comboSep),
+        comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+
+        var parts ,
             base,
-            part0 = parts[0],
-            part01,
-            index = part0.indexOf(comboPrefix);
+            index = src.indexOf(comboPrefix);
 
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
         } else {
-            base = part0.substring(0, index);
-            part01 = part0.substring(index + 2, part0.length);
-            // combo first
-            // notice use match better than test
-            if (part01.match(baseTestReg)) {
-                base += part01.replace(baseReg, '$1');
-            }
-            // combo after first
-            else {
-                S.each(parts, function (part) {
-                    if (part.match(baseTestReg)) {
-                        base += part.replace(baseReg, '$1');
-                        return false;
-                    }
-                });
-            }
+            base = src.substring(0, index);
+            parts = src.substring(index + comboPrefix.length).split(comboSep);
+            S.each(parts, function (part) {
+                if (part.match(baseTestReg)) {
+                    base += part.replace(baseReg, '$1');
+                    return false;
+                }
+            });
         }
         return S.mix({
-            base:base
+            base:base,
+            baseUri:new S.Uri(base)
         }, baseInfo);
     }
 
     S.config(S.mix({
-        comboMaxUrlLength:1024,
+        // 2k
+        comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120716110834'
+        tag:'20120726021007'
     }, getBaseInfo()));
 
     /**
@@ -4329,7 +5178,7 @@ build time: Jul 16 11:08
                 notframe = false;
             }
 
-            // can not use in iframe,parent window is dom ready so doScoll is ready too
+            // can not use in iframe,parent window is dom ready so doScroll is ready too
             if (doScroll && notframe) {
                 function readyScroll() {
                     try {
@@ -4375,10 +5224,11 @@ build time: Jul 16 11:08
  */
 (function (S) {
     if (S.Loader) {
+        var Uri = S.Uri;
         S.config({
             packages:{
                 gallery:{
-                    path:S.Loader.Utils.normalizePath(S.Config.base + '../')
+                    path:S.Config.baseUri.resolve("../").toString()
                 }
             },
             modules:{
@@ -4500,7 +5350,7 @@ build time: Jul 16 11:08
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:08
+build time: Jul 26 02:10
 */
 /**
  * @fileOverview ua
@@ -4788,7 +5638,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:06
 */
 /**
  * @fileOverview dom-attr
@@ -8040,7 +8890,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                         // style.removeAttribute is IE Only, but so apparently is this code path...
                         style.removeAttribute(FILTER);
 
-                        // if there there is no filter style applied in a css rule, we are done
+                        // if there is no filter style applied in a css rule, we are done
                         if (currentStyle && !currentStyle[FILTER]) {
                             return;
                         }
@@ -8117,7 +8967,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
+            if ((!RE_NUMPX.test(ret) &&
+                RE_NUM.test(ret)) &&
+                // "0px 0px"
+                ret.indexOf(" ") == -1) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
@@ -9162,7 +10015,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:07
+build time: Jul 26 02:09
 */
 /**
  * @fileOverview responsible for registering event
@@ -10038,8 +10891,8 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // http://xx.com/#yy?z=1
                 // ie6 => location.hash = #yy
                 // 其他浏览器 => location.hash = #yy?z=1
-                var url = location.href;
-                return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+                var uri = new S.Uri(location.href);
+                return '#' + uri.getFragment();
             },
 
             timer,
@@ -11491,7 +12344,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:07
+build time: Jul 26 02:09
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -12001,31 +12854,37 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:05
 */
 /**
  * @fileOverview form data  serialization util
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/FormSerializer", function(S, DOM) {
+KISSY.add("ajax/FormSerializer", function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
+        FormSerializer,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
-    return {
-        /**
-         * 序列化表单元素
-         * @param {String|HTMLElement[]|HTMLElement|NodeList} forms
+    return FormSerializer = {
+        /*
+         序列化表单元素
+         @param {String|HTMLElement[]|HTMLElement|NodeList} forms
          */
-        serialize:function(forms) {
-            var elements = [],data = {};
-            S.each(DOM.query(forms),function(el) {
+        serialize:function (forms) {
+            // 名值键值对序列化,数组元素名字前不加 []
+            return S.param(FormSerializer.getFormData(forms), undefined, undefined, false);
+        },
+
+        getFormData:function (forms) {
+            var elements = [], data = {};
+            S.each(DOM.query(forms), function (el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
                 var subs = el.elements ? S.makeArray(el.elements) : [el];
                 elements.push.apply(elements, subs);
             });
             // 对表单元素进行过滤，具备有效值的才保留
-            elements = S.filter(elements, function(el) {
+            elements = S.filter(elements, function (el) {
                 // 有名字
                 return el.name &&
                     // 不被禁用
@@ -12041,18 +12900,17 @@ KISSY.add("ajax/FormSerializer", function(S, DOM) {
 
                 // 这样子才取值
             });
-            S.each(elements, function(el) {
-                var val = DOM.val(el),vs;
+            S.each(elements, function (el) {
+                var val = DOM.val(el), vs;
                 // 字符串换行平台归一化
-                val = S.map(S.makeArray(val), function(v) {
+                val = S.map(S.makeArray(val), function (v) {
                     return v.replace(rCRLF, "\r\n");
                 });
                 // 全部搞成数组，防止同名
                 vs = data[el.name] = data[el.name] || [];
                 vs.push.apply(vs, val);
             });
-            // 名值键值对序列化,数组元素名字前不加 []
-            return S.param(data, undefined, undefined, false);
+            return data;
         }
     };
 }, {
@@ -12105,22 +12963,22 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         return iframe;
     }
 
-    function addDataToForm(data, form, serializeArray) {
-        data = S.unparam(data);
-        var ret = [], d, isArray, vs, i, e;
-        for (d in data) {
-            isArray = S.isArray(data[d]);
-            vs = S.makeArray(data[d]);
+    function addDataToForm(query, form, serializeArray) {
+        var ret = [], isArray, vs, i, e, keys = query.keys();
+        S.each(keys, function (k) {
+            var data = query.get(k);
+            isArray = S.isArray(data);
+            vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
             for (i = 0; i < vs.length; i++) {
                 e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d + (isArray && serializeArray ? "[]" : "");
+                e.name = k + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
             }
-        }
+        });
         return ret;
     }
 
@@ -12140,6 +12998,7 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 c = xhrObject.config,
                 fields,
                 iframe,
+                query = c.query,
                 form = DOM.get(c.form);
 
             self.attrs = {
@@ -12157,14 +13016,14 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
                 target:iframe.id,
-                action:c.url,
+                action:c.uri.toString(c.serializeArray),
                 method:"post"
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
             });
 
-            if (c.data) {
-                fields = addDataToForm(c.data, form, c.serializeArray);
+            if (query.count()) {
+                fields = addDataToForm(query, form, c.serializeArray);
             }
 
             self.fields = fields;
@@ -12252,7 +13111,7 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/ScriptTransport", function (S, io) {
+KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -12296,11 +13155,12 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
         send:function () {
             var self = this,
                 script,
-                xhrObj = this.xhrObj,
+                xhrObj = self.xhrObj,
                 c = xhrObj.config,
                 head = doc['head'] ||
                     doc.getElementsByTagName("head")[0] ||
                     doc.documentElement;
+
             self.head = head;
             script = doc.createElement("script");
             self.script = script;
@@ -12310,7 +13170,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
                 script.charset = c['scriptCharset'];
             }
 
-            script.src = c.url;
+            script.src = c.uri.toString(c.serializeArray);
 
             script.onerror =
                 script.onload =
@@ -12324,9 +13184,10 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
         },
 
         _callback:function (event, abort) {
-            var script = this.script,
-                xhrObj = this.xhrObj,
-                head = this.head;
+            var self = this,
+                script = self.script,
+                xhrObj = self.xhrObj,
+                head = self.head;
 
             // 防止重复调用,成功后 abort
             if (!script) {
@@ -12350,8 +13211,8 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
                     head.removeChild(script);
                 }
 
-                this.script = undefined;
-                this.head = undefined;
+                self.script = undefined;
+                self.head = undefined;
 
                 // Callback if not abort
                 if (!abort && event != "error") {
@@ -12392,9 +13253,6 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
         var self = this,
             c = xhrObj.config;
         self.xhrObj = xhrObj;
-        var m = c.url.match(rurl);
-        self.hostname = m[2];
-        self.protocol = m[1];
         c.crossDomain = false;
     }
 
@@ -12405,8 +13263,10 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
         send:function () {
             var self = this,
                 c = self.xhrObj.config,
-                hostname = self.hostname,
+                uri = c.uri,
+                hostname = uri.getHostname(),
                 iframe,
+                iframeUri,
                 iframeDesc = iframeMap[hostname];
 
             var proxy = PROXY_PAGE;
@@ -12434,7 +13294,11 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
                     top:'-9999px'
                 });
                 DOM.prepend(iframe, doc.body || doc.documentElement);
-                iframe.src = self.protocol + "//" + hostname + proxy;
+                iframeUri = new S.Uri();
+                iframeUri.setScheme(uri.getScheme());
+                iframeUri.setHostname(hostname);
+                iframeUri.setPath(proxy);
+                iframe.src = iframeUri.toString();
             } else {
                 iframe = iframeDesc.iframe;
             }
@@ -12446,7 +13310,9 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
     function _onLoad() {
         var self = this,
-            hostname = self.hostname,
+            c = self.xhrObj.config,
+            uri = c.uri,
+            hostname = uri.getHostname(),
             iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
         Event.detach(iframeDesc.iframe, "load", _onLoad, self);
@@ -12458,7 +13324,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 }, {
     requires:['./XhrTransportBase', 'event', 'dom']
 });/**
- * @fileOverview use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @fileOverview use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
@@ -12504,8 +13370,8 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         send:function () {
             var self = this,
                 xhrObj = self.xhrObj,
-                c = xhrObj.config;
-            var xdr = c['xdr'] || {};
+                c = xhrObj.config,
+                xdr = c['xdr'] || {};
             // 不提供则使用 cdn 默认的 flash
             _swf(xdr.src || (S.Config.base + "ajax/io.swf"), 1, 1);
             // 简便起见，用轮训
@@ -12520,11 +13386,11 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
             maps[self._uid] = self;
 
             // ie67 send 出错？
-            flash.send(c.url, {
+            flash.send(c.uri.toString(c.serializeArray), {
                 id:self._uid,
                 uid:self._uid,
                 method:c.type,
-                data:c.hasContent && c.data || {}
+                data:c.hasContent && c.query.toString(c.serializeArray) || {}
             });
         },
 
@@ -12533,9 +13399,10 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         },
 
         _xdrResponse:function (e, o) {
-            S.log(e);
+            // S.log(e);
             var self = this,
                 ret,
+                id= o.id,
                 xhrObj = self.xhrObj;
 
             // need decodeURI to get real value from flash returned value
@@ -12544,15 +13411,15 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
             switch (e) {
                 case 'success':
                     ret = { status:200, statusText:"success" };
-                    delete maps[o.id];
+                    delete maps[id];
                     break;
                 case 'abort':
-                    delete maps[o.id];
+                    delete maps[id];
                     break;
                 case 'timeout':
                 case 'transport error':
                 case 'failure':
-                    delete maps[o.id];
+                    delete maps[id];
                     ret = { status:500, statusText:e };
                     break;
             }
@@ -12582,11 +13449,10 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
      * when response is returned from server
      * @param e response status
      * @param o internal data
-     * @param c internal data
      */
-    io['xdrResponse'] = function (e, o, c) {
+    io['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
-        xhr && xhr._xdrResponse(e, o, c);
+        xhr && xhr._xdrResponse(e, o);
     };
 
     return XdrFlashTransport;
@@ -12615,6 +13481,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             cConverts = c.converters,
             xConverts = xhrObject.converters || {},
             type,
+            contentType,
             responseData,
             contents = c.contents,
             dataType = c.dataType;
@@ -12623,7 +13490,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         // jsonp 时还需要把 script 转换成 json，后面还得自己来
         if (text || xml) {
 
-            var contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
+            contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
 
             // 去除无用的通用格式
             while (dataType[0] == "*") {
@@ -12633,7 +13500,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             if (!dataType.length) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
-                    if (contents[type].test(contentType)) {
+                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
                         if (dataType[0] != type) {
                             dataType.unshift(type);
                         }
@@ -12773,15 +13640,15 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * @return {String} header value
              */
             getResponseHeader:function (name) {
-                var match, self = this;
+                var match, self = this,responseHeaders;
                 if (self.state === 2) {
-                    if (!self.responseHeaders) {
-                        self.responseHeaders = {};
+                    if (!(responseHeaders=self.responseHeaders)) {
+                        responseHeaders=self.responseHeaders = {};
                         while (( match = rheaders.exec(self.responseHeadersString) )) {
-                            self.responseHeaders[ match[1] ] = match[ 2 ];
+                            responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = self.responseHeaders[ name ];
+                    match = responseHeaders[ name ];
                 }
                 return match === undefined ? null : match;
             },
@@ -12872,40 +13739,39 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
  */
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        win = S.Env.host,
+    var win = S.Env.host,
         _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
 
-        // slice last two pars
         // xx.taobao.com => taobao.com
+        // xx.sina.com.cn => sina.com.cn
         function getMainDomain(host) {
-            var t = host.split('.');
-            if (t.length < 2) {
+            var t = host.split('.'), len = t.length, limit = len > 3 ? 3 : 2;
+            if (len < limit) {
                 return t.join(".");
             } else {
-                return t.reverse().slice(0, 2).reverse().join('.');
+                return t.reverse().slice(0, limit).reverse().join('.');
             }
         }
 
 
         function XhrTransport(xhrObj) {
             var c = xhrObj.config,
+                crossDomain= c.crossDomain,
+                self=this,
                 xdrCfg = c['xdr'] || {};
 
-            if (c.crossDomain) {
-
-                var parts = c.url.match(rurl);
+            if (crossDomain) {
 
                 // 跨子域
-                if (getMainDomain(location.hostname) == getMainDomain(parts[2])) {
+                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
                     return new SubDomainTransport(xhrObj);
                 }
 
                 /**
-                 * ie>7 强制使用 flash xdr
+                 * ie>7 通过配置 use='flash' 强制使用 flash xdr
                  * 使用 withCredentials 检测是否支持 CORS
                  * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
                  */
@@ -12915,8 +13781,8 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
                 }
             }
 
-            this.xhrObj = xhrObj;
-            this.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
+            self.xhrObj = xhrObj;
+            self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return undefined;
         }
 
@@ -12946,7 +13812,7 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
-        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+    // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
@@ -12990,16 +13856,23 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
             var self = this,
                 xhrObj = self.xhrObj,
-                c = xhrObj.config;
-
-            var nativeXhr = self.nativeXhr,
+                c = xhrObj.config,
+                nativeXhr = self.nativeXhr,
+                type = c.type,
+                async = c.async,
+                username,
+                crossDomain = c.crossDomain,
+                mimeType = xhrObj.mimeType,
+                requestHeaders = xhrObj.requestHeaders,
+                serializeArray= c.serializeArray,
+                url = c.uri.toString(serializeArray),
                 xhrFields,
                 i;
 
-            if (c['username']) {
-                nativeXhr.open(c.type, c.url, c.async, c['username'], c.password)
+            if (username = c['username']) {
+                nativeXhr.open(type, url, async, username, c.password)
             } else {
-                nativeXhr.open(c.type, c.url, c.async);
+                nativeXhr.open(type, url, async);
             }
 
             if (xhrFields = c['xhrFields']) {
@@ -13011,19 +13884,21 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
             }
 
             // Override mime type if supported
-            if (xhrObj.mimeType && nativeXhr.overrideMimeType) {
-                nativeXhr.overrideMimeType(xhrObj.mimeType);
+            if (mimeType && nativeXhr.overrideMimeType) {
+                nativeXhr.overrideMimeType(mimeType);
             }
             // yui3 and jquery both have
-            if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+            if (!crossDomain && !requestHeaders["X-Requested-With"]) {
+                requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
             }
             try {
                 // 跨域时，不能设，否则请求变成
                 // OPTIONS /xhr/r.php HTTP/1.1
-                if (!c.crossDomain) {
-                    for (i in xhrObj.requestHeaders) {
-                        nativeXhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                if (!crossDomain) {
+                    for (i in requestHeaders) {
+                        if (requestHeaders.hasOwnProperty(i)) {
+                            nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
+                        }
                     }
                 }
             } catch (e) {
@@ -13031,9 +13906,9 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 S.log(e);
             }
 
-            nativeXhr.send(c.hasContent && c.data || null);
+            nativeXhr.send(c.hasContent && c.query.toString(serializeArray) || null);
 
-            if (!c.async || nativeXhr.readyState == 4) {
+            if (!async || nativeXhr.readyState == 4) {
                 self._callback();
             } else {
                 // _XDomainRequest 单独的回调机制
@@ -13107,7 +13982,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statustext error : ");
+                            S.log("xhr statusText error : ");
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = "";
@@ -13146,7 +14021,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
     var undef = undefined;
 
-    function get(url, data, callback, dataType, _t) {
+    function get(url, data, callback, dataType, type) {
         // data 参数可省略
         if (S.isFunction(data)) {
             dataType = callback;
@@ -13155,7 +14030,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
         }
 
         return IO({
-            type:_t || "get",
+            type:type || "get",
             url:url,
             data:data,
             success:callback,
@@ -13323,20 +14198,18 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
  */
 KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
-    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
-        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         mirror = function (s) {
             return s;
         },
-        HTTP_PORT = 80,
-        HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
+        Uri = S.Uri,
         win = S.Env.host,
         doc = win.document,
         location = win.location,
-        curLocationParts;
+        simulatedLocation;
 
     try {
         curLocation = location.href;
@@ -13350,10 +14223,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocation = curLocation.href;
     }
 
-    // fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"
-    curLocationParts = rurl.exec(curLocation) || ["", "", "", ""];
+    simulatedLocation = new Uri(curLocation);
 
-    var isLocal = rlocalProtocol.test(curLocationParts[1]),
+    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type:"GET",
@@ -13387,51 +14259,51 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
     function setUpConfig(c) {
         // deep mix,exclude context!
-        var context = c.context;
+
+        var context= c.context;
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
             deep:true
         });
-        c.context = context;
+        c.context=context||c;
+
+        var data, uri, type = c.type, dataType = c.dataType, query;
+
+        query = c.query = new S.Uri.Query();
+
+        uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!("crossDomain" in c)) {
-            var parts = rurl.exec(c.url.toLowerCase());
-            c.crossDomain = !!( parts &&
-                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
-                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
-                        !=
-                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
-                );
+            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
         }
 
-        if (c.processData && c.data && !S.isString(c.data)) {
+        if (c.processData && (data = c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
+            if (S.isObject(data)) {
+                query.add(data);
+            } else {
+                query.reset(data);
+            }
         }
 
-        // fix #90 ie7 about "//x.htm"
-        c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
-        c.type = c.type.toUpperCase();
-        c.hasContent = !rnoContent.test(c.type);
+        type = c.type = type.toUpperCase();
+        c.hasContent = !rnoContent.test(type);
 
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-        c.dataType = S.trim(c.dataType || "*").split(rspace);
+        dataType = c.dataType = S.trim(dataType || "*").split(rspace);
 
-        if (!("cache" in c) && S.inArray(c.dataType[0], ["script", "jsonp"])) {
+        if (!("cache" in c) && S.inArray(dataType[0], ["script", "jsonp"])) {
             c.cache = false;
         }
 
         if (!c.hasContent) {
-            if (c.data) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
-                delete c.data;
+            if (query.count()) {
+                uri.query.add(query);
             }
             if (c.cache === false) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+                uri.query.set("_ksTS", (S.now() + "_" + S.guid()));
             }
         }
-
-        c.context = c.context || c;
         return c;
     }
 
@@ -13627,7 +14499,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         c = setUpConfig(c);
 
-        var xhrObject = new XhrObject(c);
+        var xhrObject = new XhrObject(c),
+            transportConstructor,
+            transport;
 
         /**
          * @name IO#start
@@ -13640,15 +14514,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         fire("start", xhrObject);
 
-        var transportConstructor = transports[c.dataType[0]] || transports["*"],
-            transport = new transportConstructor(xhrObject);
+        transportConstructor = transports[c.dataType[0]] || transports["*"];
+        transport = new transportConstructor(xhrObject);
+
         xhrObject.transport = transport;
 
         if (c.contentType) {
             xhrObject.setRequestHeader("Content-Type", c.contentType);
         }
+
         var dataType = c.dataType[0],
+            timeoutTimer,
+            i,
+            timeout = c.timeout,
+            context = c.context,
+            headers = c.headers,
             accepts = c.accepts;
+
         // Set the Accepts header for the server, depending on the dataType
         xhrObject.setRequestHeader(
             "Accept",
@@ -13658,25 +14540,27 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         );
 
         // Check for headers option
-        for (var i in c.headers) {
-            xhrObject.setRequestHeader(i, c.headers[ i ]);
+        for (i in headers) {
+            if (headers.hasOwnProperty(i)) {
+                xhrObject.setRequestHeader(i, headers[ i ]);
+            }
         }
 
 
         // allow setup native listener
         // such as xhr.upload.addEventListener('progress', function (ev) {})
-        if (c.beforeSend && ( c.beforeSend.call(c.context || c, xhrObject, c) === false)) {
+        if (c.beforeSend && ( c.beforeSend.call(context, xhrObject, c) === false)) {
             return undefined;
         }
 
         function genHandler(handleStr) {
             return function (v) {
-                if (xhrObject.timeoutTimer) {
-                    clearTimeout(xhrObject.timeoutTimer);
+                if (timeoutTimer = xhrObject.timeoutTimer) {
+                    clearTimeout(timeoutTimer);
                     xhrObject.timeoutTimer = 0;
                 }
                 var h = c[handleStr];
-                h && h.apply(c.context, v);
+                h && h.apply(context, v);
                 fire(handleStr, xhrObject);
             };
         }
@@ -13699,10 +14583,10 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         fire("send", xhrObject);
 
         // Timeout
-        if (c.async && c.timeout > 0) {
+        if (c.async && timeout > 0) {
             xhrObject.timeoutTimer = setTimeout(function () {
                 xhrObject.abort("timeout");
-            }, c.timeout * 1000);
+            }, timeout * 1000);
         }
 
         try {
@@ -13772,18 +14656,21 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 });
 
 /**
- * 2012-2-07 yiminghe@gmail.com:
+ * 2012-07-18 yiminghe@gmail.com
+ *  - refactor by KISSY.Uri
  *
- *  返回 Promise 类型对象，可以链式操作啦！
+ * 2012-2-07 yiminghe@gmail.com
+ *  - 返回 Promise 类型对象，可以链式操作啦！
  *
- * 借鉴 jquery，优化减少闭包使用
+ * 2011 yiminghe@gmail.com
+ *  - 借鉴 jquery，优化减少闭包使用
  *
  * TODO:
- *  ifModified mode 是否需要？
- *  优点：
- *      不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
- *  缺点：
- *      内存占用
+ *  - ifModified mode 是否需要？
+ *      优点：
+ *          不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
+ *      缺点：
+ *          内存占用
  **//**
  * @fileOverview process form config
  * @author yiminghe@gmail.com
@@ -13795,37 +14682,33 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
             form,
             d,
             enctype,
+            dataType,
             formParam,
+            tmpForm,
             c = xhrObject.config;
         // serialize form if needed
-        if (c.form) {
-            form = DOM.get(c.form);
+        if (tmpForm = c.form) {
+            form = DOM.get(tmpForm);
             enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
-                formParam = FormSerializer.serialize(form);
-                if (formParam) {
-                    if (c.hasContent) {
-                        // post 加到 data 中
-                        c.data = c.data || "";
-                        if (c.data) {
-                            c.data += "&";
-                        }
-                        c.data += formParam;
-                    } else {
-                        // get 直接加到 url
-                        c.url += ( /\?/.test(c.url) ? "&" : "?" ) + formParam;
-                    }
+                formParam = FormSerializer.getFormData(form);
+                if (c.hasContent) {
+                    c.query.add(formParam);
+                } else {
+                    // get 直接加到 url
+                    c.uri.query.add(formParam);
                 }
             } else {
-                d = c.dataType[0];
+                dataType = c.dataType;
+                d = dataType[0];
                 if (d == "*") {
                     d = "text";
                 }
-                c.dataType.length = 2;
-                c.dataType[0] = "iframe";
-                c.dataType[1] = d;
+                dataType.length = 2;
+                dataType[0] = "iframe";
+                dataType[1] = d;
             }
         }
     });
@@ -13850,16 +14733,18 @@ KISSY.add("ajax/jsonp", function (S, io) {
 
     io.on("start", function (e) {
         var xhrObject = e.xhr,
-            c = xhrObject.config;
-        if (c.dataType[0] == "jsonp") {
+            c = xhrObject.config,
+            dataType= c.dataType;
+        if (dataType[0] == "jsonp") {
             var response,
                 cJsonpCallback = c.jsonpCallback,
+                converters,
                 jsonpCallback = S.isFunction(cJsonpCallback) ?
                     cJsonpCallback() :
                     cJsonpCallback,
                 previous = win[ jsonpCallback ];
 
-            c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
+            c.uri.query.set(c.jsonp,jsonpCallback);
 
             // build temporary JSONP function
             win[jsonpCallback] = function (r) {
@@ -13888,8 +14773,8 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 }
             });
 
-            xhrObject.converters = xhrObject.converters || {};
-            xhrObject.converters.script = xhrObject.converters.script || {};
+            converters=xhrObject.converters = xhrObject.converters || {};
+            converters.script = converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
             // if ie onload a 404 file or all browsers onload an invalid script
@@ -13897,17 +14782,17 @@ KISSY.add("ajax/jsonp", function (S, io) {
             // because response is undefined( jsonp callback is never called)
             // error throwed will be caught in conversion step
             // and KISSY will notify user by error callback
-            xhrObject.converters.script.json = function () {
+            converters.script.json = function () {
                 if (!response) {
                     S.error(" not call jsonpCallback : " + jsonpCallback)
                 }
                 return response[0];
             };
 
-            c.dataType.length = 2;
+            dataType.length = 2;
             // 利用 script transport 发送 script 请求
-            c.dataType[0] = 'script';
-            c.dataType[1] = 'json';
+            dataType[0] = 'script';
+            dataType[1] = 'json';
         }
     });
 
@@ -13918,7 +14803,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:06
 */
 /**
  * @fileOverview cookie
@@ -14032,7 +14917,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:06
 */
 /**
  * @fileOverview attribute management
@@ -14687,7 +15572,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:06
+build time: Jul 26 02:06
 */
 /**
  * @fileOverview anim
@@ -16158,7 +17043,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 16 11:08
+build time: Jul 26 02:09
 */
 /**
  * @fileOverview anim-node-plugin

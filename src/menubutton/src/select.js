@@ -87,7 +87,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         var self = this,
             target = e.target;
         if (target instanceof  Menu.Item) {
+            var newValue = getItemValue(target),
+                oldValue = self.get("value");
             self.set("value", getItemValue(target));
+            if (newValue != oldValue) {
+                self.fire("change", {
+                    prevVal:oldValue,
+                    newVal:newValue
+                });
+            }
         }
     }
 

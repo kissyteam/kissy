@@ -31,18 +31,6 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    function serialize(css) {
-        var str = "";
-        if (css) {
-            for (var i in css) {
-                if (css.hasOwnProperty(i)) {
-                    str += i + ":" + css[i] + ";"
-                }
-            }
-        }
-        return str;
-    }
-
     StdMod.HTML_PARSER = {
         header:function (el) {
             return el.one("." + CLS_PREFIX + "header");

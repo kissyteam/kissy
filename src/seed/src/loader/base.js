@@ -1,11 +1,13 @@
 /**
  * @fileOverview setup data structure for kissy loader
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
+
+    var Path = S.Path;
 
     /**
      * @class KISSY Loader constructor
@@ -45,7 +47,8 @@
              * @return {String}
              */
             getTag:function () {
-                return this.tag || this.SS.Config.tag;
+                var self = this;
+                return self.tag || self.SS.Config.tag;
             },
 
             /**
@@ -61,7 +64,13 @@
              * @return {String}
              */
             getBase:function () {
-                return this.base || this.SS.Config.base;
+                var self = this;
+                return self.base || self.SS.Config.base;
+            },
+
+            getBaseUri:function(){
+                var self = this;
+                return self.baseUri||self.SS.Config.baseUri;
             },
 
             /**
@@ -69,8 +78,8 @@
              * @return {Boolean}
              */
             isDebug:function () {
-                var debug = this.debug;
-                return debug === undefined ? this.SS.Config.debug : debug;
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
             },
 
             /**
@@ -78,7 +87,8 @@
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.SS.Config.charset;
+                var self = this;
+                return self.charset || self.SS.Config.charset;
             },
 
             /**
@@ -86,13 +96,12 @@
              * @return {Boolean}
              */
             isCombine:function () {
-                var combine = this.combine;
-                return combine === undefined ? this.SS.Config.combine : combine;
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
             }
         });
 
     Loader.Package = Package;
-
 
     /**
      * @class KISSY Module constructor
@@ -116,16 +125,39 @@
                 this.value = v;
             },
 
+            getType:function () {
+                var self = this, v;
+                if ((v = self.type) === undefined) {
+                    if (Path.extname(self.name).toLowerCase() == ".css") {
+                        v = "css";
+                    } else {
+                        v = "js";
+                    }
+                    self.type = v;
+                }
+                return v;
+            },
+
             /**
              * Get the fullpath of current module if load dynamically
              */
             getFullPath:function () {
-                var self = this, t;
-                return self.fullpath || (self.fullpath =
-                    Loader.Utils.getMappedPath(self.SS,
-                        self.packageInfo.getBase() +
-                            self.path +
-                            ((t = self.getTag()) ? ("?t=" + encodeURIComponent(t)) : "")));
+                var self = this, t, fullpathUri, packageBaseUri;
+                if (!self.fullpath) {
+                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    if (t = self.getTag()) {
+                        fullpathUri.query.set("t", t);
+                    }
+                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
+                }
+                return self.fullpath;
+            },
+
+            getPath:function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
             },
 
             /**
@@ -148,7 +180,9 @@
              * @return {Object}
              */
             getPackageInfo:function () {
-                return this.packageInfo;
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, self));
             },
 
             /**
@@ -156,7 +190,8 @@
              * @return {String}
              */
             getTag:function () {
-                return (this.tag || this.packageInfo.getTag());
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
             },
 
             /**
@@ -164,11 +199,50 @@
              * @return {String}
              */
             getCharset:function () {
-                return this.charset || this.packageInfo.getCharset();
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
             }
         });
 
     Loader.Module = Module;
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            extname = Path.extname(name) || ".js",
+            min = "-min";
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (m.getPackageInfo().isDebug()) {
+            min = "";
+        }
+        return name + min + extname;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = "",
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                // longest match
+                if (S.startsWith(modName, p) &&
+                    p.length > pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({SS:self}));
+
+        return packageDesc;
+    }
 
     // 模块(mod)状态
     Loader.STATUS = {

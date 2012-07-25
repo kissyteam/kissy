@@ -26,7 +26,6 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             var a = new ImageZoom({
                 imageNode:"#standard",
                 align:{
-                    node:"#standard",
                     points:["tr", "tl"],
                     offset:[0, 0]
                 },

@@ -4,20 +4,18 @@
  */
 KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
-    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
-        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         mirror = function (s) {
             return s;
         },
-        HTTP_PORT = 80,
-        HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
+        Uri = S.Uri,
         win = S.Env.host,
         doc = win.document,
         location = win.location,
-        curLocationParts;
+        simulatedLocation;
 
     try {
         curLocation = location.href;
@@ -31,10 +29,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocation = curLocation.href;
     }
 
-    // fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"
-    curLocationParts = rurl.exec(curLocation) || ["", "", "", ""];
+    simulatedLocation = new Uri(curLocation);
 
-    var isLocal = rlocalProtocol.test(curLocationParts[1]),
+    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type:"GET",
@@ -68,51 +65,51 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
     function setUpConfig(c) {
         // deep mix,exclude context!
-        var context = c.context;
+
+        var context= c.context;
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
             deep:true
         });
-        c.context = context;
+        c.context=context||c;
+
+        var data, uri, type = c.type, dataType = c.dataType, query;
+
+        query = c.query = new S.Uri.Query();
+
+        uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!("crossDomain" in c)) {
-            var parts = rurl.exec(c.url.toLowerCase());
-            c.crossDomain = !!( parts &&
-                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
-                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
-                        !=
-                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
-                );
+            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
         }
 
-        if (c.processData && c.data && !S.isString(c.data)) {
+        if (c.processData && (data = c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
+            if (S.isObject(data)) {
+                query.add(data);
+            } else {
+                query.reset(data);
+            }
         }
 
-        // fix #90 ie7 about "//x.htm"
-        c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
-        c.type = c.type.toUpperCase();
-        c.hasContent = !rnoContent.test(c.type);
+        type = c.type = type.toUpperCase();
+        c.hasContent = !rnoContent.test(type);
 
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-        c.dataType = S.trim(c.dataType || "*").split(rspace);
+        dataType = c.dataType = S.trim(dataType || "*").split(rspace);
 
-        if (!("cache" in c) && S.inArray(c.dataType[0], ["script", "jsonp"])) {
+        if (!("cache" in c) && S.inArray(dataType[0], ["script", "jsonp"])) {
             c.cache = false;
         }
 
         if (!c.hasContent) {
-            if (c.data) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
-                delete c.data;
+            if (query.count()) {
+                uri.query.add(query);
             }
             if (c.cache === false) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+                uri.query.set("_ksTS", (S.now() + "_" + S.guid()));
             }
         }
-
-        c.context = c.context || c;
         return c;
     }
 
@@ -308,7 +305,9 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         c = setUpConfig(c);
 
-        var xhrObject = new XhrObject(c);
+        var xhrObject = new XhrObject(c),
+            transportConstructor,
+            transport;
 
         /**
          * @name IO#start
@@ -321,15 +320,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         fire("start", xhrObject);
 
-        var transportConstructor = transports[c.dataType[0]] || transports["*"],
-            transport = new transportConstructor(xhrObject);
+        transportConstructor = transports[c.dataType[0]] || transports["*"];
+        transport = new transportConstructor(xhrObject);
+
         xhrObject.transport = transport;
 
         if (c.contentType) {
             xhrObject.setRequestHeader("Content-Type", c.contentType);
         }
+
         var dataType = c.dataType[0],
+            timeoutTimer,
+            i,
+            timeout = c.timeout,
+            context = c.context,
+            headers = c.headers,
             accepts = c.accepts;
+
         // Set the Accepts header for the server, depending on the dataType
         xhrObject.setRequestHeader(
             "Accept",
@@ -339,25 +346,27 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         );
 
         // Check for headers option
-        for (var i in c.headers) {
-            xhrObject.setRequestHeader(i, c.headers[ i ]);
+        for (i in headers) {
+            if (headers.hasOwnProperty(i)) {
+                xhrObject.setRequestHeader(i, headers[ i ]);
+            }
         }
 
 
         // allow setup native listener
         // such as xhr.upload.addEventListener('progress', function (ev) {})
-        if (c.beforeSend && ( c.beforeSend.call(c.context || c, xhrObject, c) === false)) {
+        if (c.beforeSend && ( c.beforeSend.call(context, xhrObject, c) === false)) {
             return undefined;
         }
 
         function genHandler(handleStr) {
             return function (v) {
-                if (xhrObject.timeoutTimer) {
-                    clearTimeout(xhrObject.timeoutTimer);
+                if (timeoutTimer = xhrObject.timeoutTimer) {
+                    clearTimeout(timeoutTimer);
                     xhrObject.timeoutTimer = 0;
                 }
                 var h = c[handleStr];
-                h && h.apply(c.context, v);
+                h && h.apply(context, v);
                 fire(handleStr, xhrObject);
             };
         }
@@ -380,10 +389,10 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         fire("send", xhrObject);
 
         // Timeout
-        if (c.async && c.timeout > 0) {
+        if (c.async && timeout > 0) {
             xhrObject.timeoutTimer = setTimeout(function () {
                 xhrObject.abort("timeout");
-            }, c.timeout * 1000);
+            }, timeout * 1000);
         }
 
         try {
@@ -453,16 +462,19 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 });
 
 /**
- * 2012-2-07 yiminghe@gmail.com:
+ * 2012-07-18 yiminghe@gmail.com
+ *  - refactor by KISSY.Uri
  *
- *  返回 Promise 类型对象，可以链式操作啦！
+ * 2012-2-07 yiminghe@gmail.com
+ *  - 返回 Promise 类型对象，可以链式操作啦！
  *
- * 借鉴 jquery，优化减少闭包使用
+ * 2011 yiminghe@gmail.com
+ *  - 借鉴 jquery，优化减少闭包使用
  *
  * TODO:
- *  ifModified mode 是否需要？
- *  优点：
- *      不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
- *  缺点：
- *      内存占用
+ *  - ifModified mode 是否需要？
+ *      优点：
+ *          不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
+ *      缺点：
+ *          内存占用
  **/

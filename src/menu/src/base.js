@@ -50,15 +50,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 return undefined;
             },
 
-            handleKeydown:function (e) {
-                if (this.handleKeyEventInternal(e)) {
-                    e.halt();
-                    return true;
-                }
-                // return false , 会阻止 tab 键 ....
-                return undefined;
-            },
-
             /**
              * Attempts to handle a keyboard event;
              * returns true if the event was handled,

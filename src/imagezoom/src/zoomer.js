@@ -96,23 +96,25 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
                 '" />')
                 .appendTo(contentEl, undefined);
 
+            self._bigImageCopy = new Node(
+                '<img src="' +
+                    self.image.attr('src') +
+                    '" width="' +
+                    self.get('bigImageWidth')
+                    + '" ' +
+                    'height="' +
+                    self.get('bigImageHeight') +
+                    '"' +
+                    '/>')
+                .prependTo(contentEl, undefined);
+
             if (self._isInner) {
                 // inner 位置强制修改
                 self.set('align', {
                     node:self.image,
                     points:['cc', 'cc']
                 });
-                self._bigImageCopy = new Node(
-                    '<img src="' +
-                        self.image.attr('src') +
-                        '" width="' +
-                        self.get('bigImageWidth')
-                        + '" ' +
-                        'height="' +
-                        self.get('bigImageHeight') +
-                        '"' +
-                        '/>')
-                    .prependTo(contentEl, undefined);
+
             }
             // 标准模式, 添加镜片
             else {
@@ -125,10 +127,6 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function () {
                 self.unloading();
-                if (self._bigImageCopy) {
-                    self._bigImageCopy.remove();
-                    self._bigImageCopy = null;
-                }
             });
         },
 
@@ -189,8 +187,11 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
 
             var rl = self.get('imageLeft'), rt = self.get('imageTop'),
                 rw = self.get('imageWidth'), rh = self.get('imageHeight'),
-                lensWidth = self.get('lensWidth'), lensHeight = self.get('lensHeight'),
-                lensLeft = ev.pageX - lensWidth / 2, lensTop = ev.pageY - lensHeight / 2;
+                lensWidth = self.get('lensWidth'),
+                lensHeight = self.get('lensHeight'),
+            // 保证鼠标在镜片中央
+                lensLeft = ev.pageX - lensWidth / 2,
+                lensTop = ev.pageY - lensHeight / 2;
 
             if (lensLeft <= rl) {
                 lensLeft = rl;
@@ -247,14 +248,13 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
                 top:0
             });
 
-            if (self._bigImageCopy) {
-                self._bigImageCopy.css({
-                    width:rw,
-                    height:rh,
-                    left:0,
-                    top:0
-                });
-            }
+
+            self._bigImageCopy.css({
+                width:rw,
+                height:rh,
+                left:0,
+                top:0
+            });
 
 
             tmpWidth = rw + ( bw - rw);
@@ -268,14 +268,13 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
                 top:max_top
             }, seconds);
 
-            if (self._bigImageCopy) {
-                self._bigImageCopy.animate({
-                    width:tmpWidth,
-                    height:tmpHeight,
-                    left:max_left,
-                    top:max_top
-                }, seconds);
-            }
+
+            self._bigImageCopy.animate({
+                width:tmpWidth,
+                height:tmpHeight,
+                left:max_left,
+                top:max_top
+            }, seconds);
         },
 
         _uiSetCurrentMouse:function (ev) {
@@ -306,7 +305,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
 
             };
 
-            self._bigImageCopy && self._bigImageCopy.css(lt);
+            self._bigImageCopy.css(lt);
             self.bigImage.css(lt);
         },
 
@@ -345,6 +344,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         changeImageSrc:function (src) {
             var self = this;
             self.image.attr('src', src);
+            self._bigImageCopy.attr('src', src);
             self._uiSetHasZoom(self.get("hasZoom"));
             self.loading();
         }

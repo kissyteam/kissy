@@ -50,12 +50,11 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             d.create();
             expect(d.get("header")).not.toBe(undefined);
             if (d.get("header")) {
-                expect(d.get("header").html()).toBe("2");
+                expect(d.get("header").nodeName()).toBe("div");
             }
             expect(d.get("el").one(".ks-ext-close")).not.toBe(undefined);
             d.destroy();
         });
-
 
         describe("完全由 javascript 创建", function () {
 

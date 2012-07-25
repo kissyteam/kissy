@@ -46,22 +46,22 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         return iframe;
     }
 
-    function addDataToForm(data, form, serializeArray) {
-        data = S.unparam(data);
-        var ret = [], d, isArray, vs, i, e;
-        for (d in data) {
-            isArray = S.isArray(data[d]);
-            vs = S.makeArray(data[d]);
+    function addDataToForm(query, form, serializeArray) {
+        var ret = [], isArray, vs, i, e, keys = query.keys();
+        S.each(keys, function (k) {
+            var data = query.get(k);
+            isArray = S.isArray(data);
+            vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
             for (i = 0; i < vs.length; i++) {
                 e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d + (isArray && serializeArray ? "[]" : "");
+                e.name = k + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
             }
-        }
+        });
         return ret;
     }
 
@@ -81,6 +81,7 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 c = xhrObject.config,
                 fields,
                 iframe,
+                query = c.query,
                 form = DOM.get(c.form);
 
             self.attrs = {
@@ -98,14 +99,14 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
                 target:iframe.id,
-                action:c.url,
+                action:c.uri.toString(c.serializeArray),
                 method:"post"
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
             });
 
-            if (c.data) {
-                fields = addDataToForm(c.data, form, c.serializeArray);
+            if (query.count()) {
+                fields = addDataToForm(query, form, c.serializeArray);
             }
 
             self.fields = fields;
