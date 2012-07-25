@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 13 10:26
+build time: Jul 25 15:43
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -797,7 +797,9 @@ KISSY.add("combobox/baseRender", function (S, Component) {
         }
     }, {
         ATTRS:{
-            collapsed:{},
+            collapsed:{
+                value:true
+            },
             hasTrigger:{
                 value:true
             },
@@ -829,7 +831,7 @@ KISSY.add("combobox", function (S, ComboBox, LocalDataSource, RemoteDataSource) 
         'combobox/LocalDataSource',
         'combobox/RemoteDataSource'
     ]
-})/**
+});/**
  * @fileOverview Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
