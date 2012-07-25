@@ -117,8 +117,8 @@
     <div class="s-section">
 
         <div id="demo4" class="s-demo scrollable">
-            <span id="scroller-prev" class="prev">&lsaquo; 上一个</span>
-            <span id="scroller-next" class="next">下一个 &rsaquo;</span>
+            <span class="prev">&lsaquo; 上一个</span>
+            <span class="next">下一个 &rsaquo;</span>
             <div class="scroller">
                 <div class="ks-switchable-content">
                     <!-- 1-5 -->
@@ -137,6 +137,29 @@
 
             </div>
         </div>
+
+
+
+        <div class="s-section">
+
+            <div id="demo5" class="s-demo scrollable">
+                <span  class="prev">&lsaquo; 上一个</span>
+                <span  class="next">下一个 &rsaquo;</span>
+                <div class="scroller">
+                    <div class="ks-switchable-content">
+                        <!-- 1-5 -->
+                        <img alt="" src="http://placehold.it/100x75&text=a"/>
+                        <img alt="" src="http://placehold.it/100x75&text=1"/>
+                        <img alt="" src="http://placehold.it/100x75&text=2"/>
+                        <img alt="" src="http://placehold.it/100x75&text=3"/>
+                        <img alt="" src="http://placehold.it/100x75&text=4"/>
+
+
+
+                        <!--测试不为倍数的情况<img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>-->
+                    </div>
+                </div>
+            </div>
 
         <a class="s-view-code" href="#">显示源码</a>
     </div>
@@ -162,6 +185,24 @@
                 disableBtnCls:'disable',
                 lazyDataType:'img-src'
             });
+
+
+            new Carousel('#demo5', {
+                effect:'scrollx',
+                easing:'easeOutStrong',
+                steps:1,
+                interval:1,
+                // viewSize:[100],
+                prevBtnCls:'prev',
+                nextBtnCls:'next',
+                mouseAsTouch:true,
+                //circular:false,
+                // autoplay:true,
+                hasTriggers:false,
+                disableBtnCls:'disable',
+                lazyDataType:'img-src'
+            });
+
             window.carousel = carousel;
         });
     });
