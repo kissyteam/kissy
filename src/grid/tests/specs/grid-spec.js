@@ -232,31 +232,6 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 		});
 	});
 
-	describe("测试Grid 显示数据", function () {
-		it('测试Grid直接显示数据，不通过store',function(){
-			
-		});
-
-		it('测试Grid，通过store显示数据',function(){
-			
-		});
-
-		it('测试Grid，通过store异步加载数据',function(){
-			
-		});
-
-		it('测试Grid，分页',function(){
-			
-		});
-
-		it('测试Grid，前端排序',function(){
-			
-		});
-
-		it('测试Grid，远程排序',function(){
-			
-		});
-	});
 
 	describe("测试Grid 事件", function () {
 		var CLS_SELECTED = 'ks-grid-row-selected',
@@ -376,7 +351,7 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			expect(header.getColumnsWidth()).toBe(width);
 		});
 
-	it('测试列显示隐藏列后的自适应',function(){
+		it('测试列显示隐藏列后的自适应',function(){
 			var index = 2,
 				colObj = header.getColumnByIndex(index);
 			colObj.set('visible',false);
@@ -400,16 +375,11 @@ KISSY.use('grid/base,grid/store',function(S,Grid,Store){
 			var height = 500;
 			grid.set('height',height);
 			expect(header.getColumnsWidth()).toBe(header.get('width') - 17);
-            grid.set('forceFit',false);
-            grid.set('width',300);
-            /*waits(100);
-            runs(function(){
-                grid.set('width',800);
-            });*/
+            
              
 		});
 
 
 	});
 
-});
+});/**/
