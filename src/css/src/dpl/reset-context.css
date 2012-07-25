@@ -26,7 +26,7 @@
 *
 * @author yiminghe@gmail.com
 */
-.kissy-cssreset {
+.ks-cssreset {
   font-size: 12px;
   font-family: tahoma, arial, \5b8b\4f53, sans-serif;
   color: #333333;
@@ -271,42 +271,42 @@
  */
 
 }
-.kissy-cssreset article,
-.kissy-cssreset aside,
-.kissy-cssreset details,
-.kissy-cssreset figcaption,
-.kissy-cssreset figure,
-.kissy-cssreset footer,
-.kissy-cssreset header,
-.kissy-cssreset hgroup,
-.kissy-cssreset nav,
-.kissy-cssreset section,
-.kissy-cssreset summary {
+.ks-cssreset article,
+.ks-cssreset aside,
+.ks-cssreset details,
+.ks-cssreset figcaption,
+.ks-cssreset figure,
+.ks-cssreset footer,
+.ks-cssreset header,
+.ks-cssreset hgroup,
+.ks-cssreset nav,
+.ks-cssreset section,
+.ks-cssreset summary {
   display: block;
 }
-.kissy-cssreset audio,
-.kissy-cssreset canvas,
-.kissy-cssreset video {
+.ks-cssreset audio,
+.ks-cssreset canvas,
+.ks-cssreset video {
   display: inline-block;
   *display: inline;
   *zoom: 1;
 }
-.kissy-cssreset audio:not([controls]) {
+.ks-cssreset audio:not([controls]) {
   display: none;
   height: 0;
   width: 0;
 }
-.kissy-cssreset [hidden] {
+.ks-cssreset [hidden] {
   display: none;
 }
-.kissy-cssreset mark {
+.ks-cssreset mark {
   background: #ff0;
   color: #000;
 }
-.kissy-cssreset figure {
+.ks-cssreset figure {
   margin: 1em 40px 1em 40px;
 }
-.kissy-cssreset html {
+.ks-cssreset html {
   font-size: 12px;
   /* 1 */
 
@@ -317,22 +317,22 @@
   /* 2 */
 
 }
-.kissy-cssreset html,
-.kissy-cssreset button,
-.kissy-cssreset input,
-.kissy-cssreset select,
-.kissy-cssreset textarea {
+.ks-cssreset html,
+.ks-cssreset button,
+.ks-cssreset input,
+.ks-cssreset select,
+.ks-cssreset textarea {
   font-family: tahoma, arial, \5b8b\4f53, sans-serif;
   /* 1 */
 
 }
-.kissy-cssreset button,
-.kissy-cssreset input,
-.kissy-cssreset select,
-.kissy-cssreset textarea {
+.ks-cssreset button,
+.ks-cssreset input,
+.ks-cssreset select,
+.ks-cssreset textarea {
   font-size: 100%;
 }
-.kissy-cssreset body {
+.ks-cssreset body {
   margin: 0;
   /* 1 */
 
@@ -344,7 +344,7 @@
   /* 3 */
 
 }
-.kissy-cssreset a {
+.ks-cssreset a {
   color: #0088cc;
   text-decoration: none;
   /*
@@ -353,61 +353,61 @@
      */
 
 }
-.kissy-cssreset a:focus {
+.ks-cssreset a:focus {
   outline: thin dotted;
 }
-.kissy-cssreset a:active,
-.kissy-cssreset a:hover {
+.ks-cssreset a:active,
+.ks-cssreset a:hover {
   outline: 0;
 }
-.kissy-cssreset a:hover {
+.ks-cssreset a:hover {
   color: #005580;
 }
-.kissy-cssreset h1 {
+.ks-cssreset h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-.kissy-cssreset h2 {
+.ks-cssreset h2 {
   font-size: 1.5em;
   margin: 0.83em 0;
 }
-.kissy-cssreset h3 {
+.ks-cssreset h3 {
   font-size: 1.17em;
   margin: 1em 0;
 }
-.kissy-cssreset h4 {
+.ks-cssreset h4 {
   font-size: 1em;
   margin: 1.33em 0;
 }
-.kissy-cssreset h5 {
+.ks-cssreset h5 {
   font-size: 0.83em;
   margin: 1.67em 0;
 }
-.kissy-cssreset h6 {
+.ks-cssreset h6 {
   font-size: 0.75em;
   margin: 2.33em 0;
 }
-.kissy-cssreset abbr[title] {
+.ks-cssreset abbr[title] {
   border-bottom: 1px dotted;
 }
-.kissy-cssreset b,
-.kissy-cssreset strong {
+.ks-cssreset b,
+.ks-cssreset strong {
   font-weight: bold;
 }
-.kissy-cssreset blockquote {
+.ks-cssreset blockquote {
   margin: 1em 40px;
 }
-.kissy-cssreset dfn {
+.ks-cssreset dfn {
   font-style: italic;
 }
-.kissy-cssreset p,
-.kissy-cssreset pre {
+.ks-cssreset p,
+.ks-cssreset pre {
   margin: 1em 0;
 }
-.kissy-cssreset code,
-.kissy-cssreset kbd,
-.kissy-cssreset pre,
-.kissy-cssreset samp {
+.ks-cssreset code,
+.ks-cssreset kbd,
+.ks-cssreset pre,
+.ks-cssreset samp {
   font-family: monospace, serif;
   /* 1 */
 
@@ -415,52 +415,52 @@
   /* 2 */
 
 }
-.kissy-cssreset pre {
+.ks-cssreset pre {
   white-space: pre;
   white-space: pre-wrap;
   /*ie*/
 
   word-wrap: break-word;
 }
-.kissy-cssreset q {
+.ks-cssreset q {
   quotes: none;
 }
-.kissy-cssreset q:before,
-.kissy-cssreset q:after {
+.ks-cssreset q:before,
+.ks-cssreset q:after {
   content: '';
   content: none;
 }
-.kissy-cssreset small {
+.ks-cssreset small {
   font-size: 75%;
 }
-.kissy-cssreset sub,
-.kissy-cssreset sup {
+.ks-cssreset sub,
+.ks-cssreset sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
-.kissy-cssreset sup {
+.ks-cssreset sup {
   top: -0.5em;
 }
-.kissy-cssreset sub {
+.ks-cssreset sub {
   bottom: -0.25em;
 }
-.kissy-cssreset dl,
-.kissy-cssreset menu,
-.kissy-cssreset ol,
-.kissy-cssreset ul {
+.ks-cssreset dl,
+.ks-cssreset menu,
+.ks-cssreset ol,
+.ks-cssreset ul {
   margin: 1em 0;
 }
-.kissy-cssreset dd {
+.ks-cssreset dd {
   margin: 0 0 0 40px;
 }
-.kissy-cssreset menu,
-.kissy-cssreset ol,
-.kissy-cssreset ul {
+.ks-cssreset menu,
+.ks-cssreset ol,
+.ks-cssreset ul {
   padding: 0 0 0 40px;
 }
-.kissy-cssreset img {
+.ks-cssreset img {
   border: 0;
   /* 1 */
 
@@ -468,18 +468,18 @@
   /* 2 */
 
 }
-.kissy-cssreset svg:not(:root) {
+.ks-cssreset svg:not(:root) {
   overflow: hidden;
 }
-.kissy-cssreset form {
+.ks-cssreset form {
   margin: 0;
 }
-.kissy-cssreset fieldset {
+.ks-cssreset fieldset {
   border: 2px groove #f0f0f0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
-.kissy-cssreset legend {
+.ks-cssreset legend {
   border: 0;
   /* 1 */
 
@@ -492,10 +492,10 @@
   /* 3 */
 
 }
-.kissy-cssreset button,
-.kissy-cssreset input,
-.kissy-cssreset select,
-.kissy-cssreset textarea {
+.ks-cssreset button,
+.ks-cssreset input,
+.ks-cssreset select,
+.ks-cssreset textarea {
   margin: 0;
   /* 2 */
 
@@ -506,7 +506,7 @@
   /* 3 */
 
 }
-.kissy-cssreset textarea {
+.ks-cssreset textarea {
   overflow: auto;
   /* 1 */
 
@@ -514,20 +514,20 @@
   /* 2 */
 
 }
-.kissy-cssreset button {
+.ks-cssreset button {
   padding: 0px 6px;
   /* ie6 fix*/
 
   _padding: 0;
 }
-.kissy-cssreset button,
-.kissy-cssreset input {
+.ks-cssreset button,
+.ks-cssreset input {
   line-height: normal;
 }
-.kissy-cssreset button,
-.kissy-cssreset html input[type="button"],
-.kissy-cssreset input[type="reset"],
-.kissy-cssreset input[type="submit"] {
+.ks-cssreset button,
+.ks-cssreset html input[type="button"],
+.ks-cssreset input[type="reset"],
+.ks-cssreset input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
 
@@ -538,17 +538,17 @@
   /* 4 */
 
 }
-.kissy-cssreset button[disabled],
-.kissy-cssreset input[disabled] {
+.ks-cssreset button[disabled],
+.ks-cssreset input[disabled] {
   cursor: default;
 }
-.kissy-cssreset button::-moz-focus-inner,
-.kissy-cssreset input::-moz-focus-inner {
+.ks-cssreset button::-moz-focus-inner,
+.ks-cssreset input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-.kissy-cssreset input[type="checkbox"],
-.kissy-cssreset input[type="radio"] {
+.ks-cssreset input[type="checkbox"],
+.ks-cssreset input[type="radio"] {
   box-sizing: border-box;
   /* 1 */
 
@@ -562,7 +562,7 @@
   /* 3 */
 
 }
-.kissy-cssreset input[type="search"] {
+.ks-cssreset input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
 
@@ -570,11 +570,11 @@
   /* 2 */
 
 }
-.kissy-cssreset input[type="search"]::-webkit-search-cancel-button,
-.kissy-cssreset input[type="search"]::-webkit-search-decoration {
+.ks-cssreset input[type="search"]::-webkit-search-cancel-button,
+.ks-cssreset input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-.kissy-cssreset table {
+.ks-cssreset table {
   border-collapse: collapse;
   border-spacing: 0;
 }
