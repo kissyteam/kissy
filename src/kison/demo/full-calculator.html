@@ -24,6 +24,7 @@
 </div>
 <script src="../../../build/kissy.js"></script>
 <script>
+    var MAPS = {};
     KISSY.use("kison", function (S, KISON) {
         S.io({
             url:'full-cal.js',
@@ -36,7 +37,8 @@
         var $ = S.all;
         $("#p").on("click", function () {
             var start = S.now();
-            var g = new KISON.Grammar(eval(S.trim($("#grammar").val())));
+            var grammar = S.trim($("#grammar").val());
+            var g = MAPS[grammar] || (MAPS[grammar] = new KISON.Grammar(eval(grammar)));
             var ret=g.parse($("#source").val());
             alert("耗时: " + (S.now() - start) + "毫秒");
             alert("最终结果："+ret);
