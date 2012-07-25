@@ -10,24 +10,24 @@
 <script src="../../../../tools/jasmine/jasmine-html.js"></script>
 <script src="../../../../tools/jasmine/event-simulate.js"></script>
 <script>
-	
+
 </script>
 </head>
 <body>
 
 
 <div class="container">
-	<div class="page-header">
-		<h1>util 测试 </h1>
-	</div>
-	<div class="row">
-		<h3>mask 测试</h3>
-		<div id="J_Mask" style ="width:200px;height:200px"></div>
-	</div>
-	<div class="row">
-		<h3>load mask 测试</h3>
-		<div id="J_LoadMask"  style ="width:200px;height:200px"></div>
-	</div>
+    <div class="page-header">
+        <h1>util 测试 </h1>
+    </div>
+    <div class="row">
+        <h3>mask 测试</h3>
+        <div id="J_Mask" style="width:200px;height:200px"></div>
+    </div>
+    <div class="row">
+        <h3>load mask 测试</h3>
+        <div id="J_LoadMask" style="width:200px;height:200px"></div>
+    </div>
 </div>
 <script src="../../../../build/kissy.js"></script>
 <script src="../../src/util.js"></script>
@@ -35,8 +35,11 @@
 <script src="../specs/util-spec.js"></script>
 <script>
     KISSY.use("grid/util", function () {
-			jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-			jasmine.getEnv().execute();
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function () {
+            jasmine.kissyNext(this.results().failedCount);
+
+        });
     });
 </script>
 

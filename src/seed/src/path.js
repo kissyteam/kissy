@@ -81,7 +81,7 @@
                     return !!p;
                 }), !absolute).join("/");
 
-                return (absolute ? "/" : "" + resolvedPathStr) || ".";
+                return ((absolute ? "/" : "") + resolvedPathStr) || ".";
             },
 
             /**
@@ -137,8 +137,8 @@
              * @return {String}
              */
             relative:function (from, to) {
-                from = Path.resolve(from);
-                to = Path.resolve(to);
+                from = Path.normalize(from);
+                to = Path.normalize(to);
 
                 var fromParts = S.filter(from.split("/"), function (p) {
                         return !!p;

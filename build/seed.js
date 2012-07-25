@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 24 21:25
+build time: Jul 25 22:02
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 24 21:25
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120724212522';
+        S.__BUILD_TIME = '20120725220227';
     })();
 
     return S;
@@ -2057,7 +2057,7 @@ build time: Jul 24 21:25
                     return !!p;
                 }), !absolute).join("/");
 
-                return (absolute ? "/" : "" + resolvedPathStr) || ".";
+                return ((absolute ? "/" : "") + resolvedPathStr) || ".";
             },
 
             /**
@@ -2113,8 +2113,8 @@ build time: Jul 24 21:25
              * @return {String}
              */
             relative:function (from, to) {
-                from = Path.resolve(from);
-                to = Path.resolve(to);
+                from = Path.normalize(from);
+                to = Path.normalize(to);
 
                 var fromParts = S.filter(from.split("/"), function (p) {
                         return !!p;
@@ -3891,6 +3891,7 @@ build time: Jul 24 21:25
     }
 
     var Loader = S.Loader,
+        Path= S.Path,
         utils = Loader.Utils;
 
 
@@ -4051,7 +4052,7 @@ build time: Jul 24 21:25
                     if (packageBase.length > finalPackageLength) {
                         finalPackageLength = packageBase.length;
                         finalPackagePath = packageBase;
-                        finalPackageUri = packageBase.getBaseUri();
+                        finalPackageUri = packages[p].getBaseUri();
                     }
                 }
             }
@@ -4975,7 +4976,7 @@ build time: Jul 24 21:25
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120724212522'
+        tag:'20120725220227'
     }, getBaseInfo()));
 
     /**

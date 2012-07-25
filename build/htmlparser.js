@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:09
+build time: Jul 25 18:18
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -615,9 +615,9 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
         MinifyWriter:MinifyWriter,
         Filter:Filter,
         DTD:DTD,
-        serialize:function (n) {
+        serialize:function (n, filter) {
             var basicWriter = new BasicWriter();
-            n.writeHtml(basicWriter);
+            n.writeHtml(basicWriter, filter);
             return basicWriter.getHtml();
         },
         parse:function (html) {
@@ -2567,7 +2567,7 @@ KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, Speci
  * @fileOverview basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/basic", function(S) {
+KISSY.add("htmlparser/writer/basic", function() {
 
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");

@@ -9,6 +9,7 @@
     }
 
     var Loader = S.Loader,
+        Path= S.Path,
         utils = Loader.Utils;
 
 
@@ -169,7 +170,7 @@
                     if (packageBase.length > finalPackageLength) {
                         finalPackageLength = packageBase.length;
                         finalPackagePath = packageBase;
-                        finalPackageUri = packageBase.getBaseUri();
+                        finalPackageUri = packages[p].getBaseUri();
                     }
                 }
             }

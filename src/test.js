@@ -32,6 +32,10 @@ function kissyNext() {
     // event hash change ,ie error
     index++;
     if (tests[index]) {
-        testIframe.src = tests[index] + "?" + (+new Date());
+        if (tests[index].indexOf("grid") == -1) {
+            testIframe.src = tests[index] + "?" + (+new Date());
+        } else {
+            kissyNext();
+        }
     }
 }

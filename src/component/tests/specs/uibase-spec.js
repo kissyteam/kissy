@@ -188,6 +188,7 @@ KISSY.use("component", function (S, Component) {
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxRender({
                     srcNode:node,
+                    el:node,
                     content:'4',
                     autoRender:true
                 });
@@ -228,8 +229,8 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content")).toBe("23");
 
-                    expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox\">23</div>");
+                    expect(el.html().toLowerCase().replace('"',""))
+                        .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
 
@@ -246,8 +247,8 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content")).toBe("4");
 
-                    expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox\">23</div>");
+                    expect(el.html().toLowerCase().replace('"',""))
+                        .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
                 });
@@ -264,8 +265,8 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content").html()).toBe("4");
 
-                    expect(el.html().toLowerCase())
-                        .toBe("<div class=\"ks-contentbox\">23</div>");
+                    expect(el.html().toLowerCase().replace('"',""))
+                        .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
 

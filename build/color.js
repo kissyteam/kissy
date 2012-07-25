@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 2 21:57
+build time: Jul 25 18:15
 */
 /**
  * Color For KISSY.
@@ -15,7 +15,7 @@ KISSY.add("color", function (S, Base) {
     /**
      * @name Color
      * @class <p>
-     * Color for KISSY for normalize HSL and RGB or HEX.
+     * Color for KISSY to normalize HSL, HSV, RGB and HEX.
      * </p>
      */
     function Color() {

@@ -9,6 +9,8 @@ describe("path", function () {
         expect(Path.resolve("x", "y", "..", "z", ".")).toBe("x/z");
 
         expect(Path.resolve("x","./y")).toBe("x/y");
+
+        expect(Path.resolve("/x","./y")).toBe("/x/y");
     });
 
     it("normalize works", function () {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 15:43
+build time: Jul 25 18:15
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.

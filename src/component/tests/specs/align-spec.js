@@ -74,12 +74,16 @@ KISSY.use("component", function (S, Component) {
                 DOM.prepend(dom[i], "body");
             }
 
+
+
+            // 1
+            window.scrollTo(10, 10);
+
+
             var right = 10 + DOM.viewportWidth(),
                 rect,
                 bottom = 10 + DOM.viewportHeight();
 
-            // 1
-            window.scrollTo(10, 10);
             rect = getVisibleRectForElement(dom[0].firstChild);
             expect(rect).toEqual({
                 left:10,

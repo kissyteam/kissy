@@ -38,7 +38,10 @@
 <script>
     KISSY.use("grid/base,grid/plugins", function () {
 			jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-			jasmine.getEnv().execute();
+        jasmine.getEnv().execute(function() {
+            jasmine.kissyNext(this.results().failedCount);
+
+        });
     });/**/
 </script>
 

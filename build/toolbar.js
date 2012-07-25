@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 11 20:49
+build time: Jul 25 18:18
 */
 /**
  * @fileOverview toolbar separator def
@@ -10,7 +10,7 @@ build time: Jul 11 20:49
 KISSY.add("toolbar/separator", function (S, Component, Separator) {
 
     /**
-     * @extends Component.Controller
+     * @extends Separator
      * @class
      * toolbar separator.
      * xclass: 'toolbar-separator'.

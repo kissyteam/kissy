@@ -63,9 +63,9 @@
                     var ret = [];
                     for (var i = 0; i < data.length; i++) {
                         ret[i] = {
-                            content:(data[i] + "")
+                            content:query?(data[i] + "")
                                     .replace(new RegExp(S.escapeRegExp(query), "g"),
-                                    i % 2 ? "$&" : "<b>$&</b>"),
+                                    i % 2 ? "$&" : "<b>$&</b>"):(data[i] + ""),
                             disabled:(i % 2 ? true : false)
                         };
                     }

@@ -1,13 +1,11 @@
 /**
  * @fileOverview 图片放大效果 ImageZoom.
  */
-KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, Zoomer, undefined) {
+KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
     var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
         IMAGEZOOM_WRAP_TMPL = "<span class='{wrapClass}'></span>";
 
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
+    var $=Node.all;
 
     function show(obj) {
         obj && obj.show();
@@ -17,14 +15,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
         obj && obj.hide();
     }
 
-    return Component.UIBase.extend([
-        require("boxrender"),
-        require("contentboxrender"),
-        require("positionrender"),
-        require("loadingrender"),
-        UA['ie'] == 6 ? require("shimrender") : null,
-        require("align"),
-        require("maskrender"),
+    return Overlay.extend([
         Zoomer
     ], {
 
@@ -49,15 +40,6 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
                     self.image.insertBefore(self.imageWrap, undefined);
                     self.imageWrap.remove();
                 }
-            },
-
-            show:function () {
-                this.render();
-                this.set("visible", true);
-            },
-
-            hide:function () {
-                this.set("visible", false);
             },
 
             _render:function () {
@@ -154,6 +136,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
                 },
 
                 // width/height 默认和原小图大小保持一致
+                // 小图和大图同比例情况下，len 为正方形
                 width:{
                     valueFn:function () {
                         return this.get("imageWidth");
@@ -208,7 +191,7 @@ KISSY.add('imagezoom/base', function (S, DOM, Event, UA, Anim, Component, Node, 
             }
         });
 }, {
-    requires:['dom', 'event', 'ua', 'anim', 'component', 'node', './zoomer']
+    requires:['node', 'overlay', './zoomer']
 });
 
 

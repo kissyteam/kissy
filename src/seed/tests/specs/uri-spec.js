@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 describe("uri", function () {
-    var Uri = KISSY.Uri;
+    var Uri = KISSY.Uri,S=KISSY;
 
 
     it("create works", function () {
@@ -19,26 +19,26 @@ describe("uri", function () {
     it('query works', function () {
         var query = new Uri.Query("x=1&y=2");
 
-        expect(query.toString()).toBe("x=1&y=2");
+        expect(S.unparam(query.toString())).toEqual(S.unparam("x=1&y=2"));
 
         query.set("x", "3");
 
-        expect(query.toString()).toBe("x=3&y=2");
+        expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2"));
 
         query.set("z", "5");
 
-        expect(query.toString()).toBe("x=3&y=2&z=5");
+        expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2&z=5"));
 
         query.remove("x");
 
-        expect(query.toString()).toBe("y=2&z=5");
+        expect(S.unparam(query.toString())).toEqual(S.unparam("y=2&z=5"));
 
         query.set({
             x:6,
             y:7
         });
 
-        expect(query.toString()).toBe("y=7&z=5&x=6");
+        expect(S.unparam(query.toString())).toEqual(S.unparam("y=7&z=5&x=6"));
 
         expect(query.count()).toBe(3);
 
@@ -47,7 +47,7 @@ describe("uri", function () {
             y:71
         });
 
-        expect(query.toString(false)).toBe("y=7&y=71&z=5&x=6&x=61");
+        expect(S.unparam(query.toString(false))).toEqual(S.unparam("y=7&y=71&z=5&x=6&x=61"));
 
         expect(query.count()).toBe(5);
 
@@ -57,13 +57,13 @@ describe("uri", function () {
 
         query.add(q2);
 
-        expect(query.toString(false)).toBe("x1=3&x1=1&y1=4&y1=2");
+        expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=3&x1=1&y1=4&y1=2"));
 
         expect(query.count()).toBe(4);
 
         query.set(q2);
 
-        expect(query.toString(false)).toBe("x1=1&y1=2");
+        expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=1&y1=2"));
 
         expect(query.count()).toBe(2);
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 20 13:29
+build time: Jul 25 18:18
 */
 /**
  * @fileOverview accordion aria support
@@ -2008,6 +2008,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
     });
 
     // 限制条件：总 item 数必须至少等于 一屏数
+    // 当前帧 fromIndex 总位于总左边，所以 forward 情况下一定不是补帧
     function seamlessCircularScroll(callback, direction) {
         var self = this,
             fromIndex = self.fromIndex,
@@ -2061,9 +2062,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
 
         // 当前位于补帧，左转比较容易，移到补帧处
-
         // ??
-
         // 什么情况下位于补帧并且需要右转?? 除非不满足限制条件
         // dl >= dr && fromIndexPosition == 'relative'
 
@@ -2071,12 +2070,12 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
             DOM.css(self.content, prop,
                 -(viewDiff * (len + fromIndex)));
         } else
-        // dl > dr || fromIndexPosition == 'relative'
+        // dl > dr
+        // || fromIndexPosition != 'relative' 可忽略
         {
             // 当前即使位于补帧，但是之前不是，右转更方便
             // 不移动到补帧新位置
             // 保持原有位置
-
 
             //  edge case
             if (fromIndex == len - 1 && index == 0) {

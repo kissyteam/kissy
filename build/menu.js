@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 11 20:50
+build time: Jul 25 18:18
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -52,15 +52,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                     }
                     index = (index + dir + len) % len;
                 } while (index != o);
-                return undefined;
-            },
-
-            handleKeydown:function (e) {
-                if (this.handleKeyEventInternal(e)) {
-                    e.halt();
-                    return true;
-                }
-                // return false , 会阻止 tab 键 ....
                 return undefined;
             },
 
@@ -965,7 +956,7 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
 KISSY.add("menu/separator", function (S, Component, Separator) {
 
     /**
-     * @extends Component.Controller
+     * @extends Separator
      * @class
      * Menu separator.
      * xclass: 'menuseparator'.

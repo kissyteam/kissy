@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 10 10:41
+build time: Jul 25 18:18
 */
 KISSY.add("editor/plugin/orderedList/cmd",function(g,d,b){var e=b.queryActive,f=new b.ListCommand("ol");return{init:function(c){c.hasCommand("insertOrderedList")||c.addCommand("insertOrderedList",{exec:function(a){a.focus();f.exec(a)}});var b=d.Utils.getQueryCmd("insertOrderedList");c.hasCommand(b)||c.addCommand(b,{exec:function(a){if((a=a.getSelection())&&!a.isInvalid)return a=a.getStartElement(),a=new d.ElementPath(a),e("ol",a)}})}}},{requires:["editor","../listUtils/cmd"]});

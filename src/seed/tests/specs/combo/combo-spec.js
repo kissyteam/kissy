@@ -107,9 +107,9 @@ describe("KISSY ComboLoader", function () {
         S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
         var cjs = c.js[S.Config.base];
-        expect(cjs.length).toBe(6);
+        expect(cjs.length).toBe(3);
         S.each(cjs, function (j) {
-            expect(j.length < 1054).toBe(true);
+            expect(j.length < S.Config.comboMaxUrlLength).toBe(true);
         });
     });
 
@@ -278,9 +278,9 @@ describe("KISSY ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??y.js");
-            expect(jss[1]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??x.js");
-            expect(jss[2]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??z.js");
+            expect(jss[0]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/z.js");
 
         });
     });

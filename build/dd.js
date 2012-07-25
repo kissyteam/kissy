@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 2 21:56
+build time: Jul 25 18:15
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -745,7 +745,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 /**
                  * handlers to initiate drag operation.
                  * can only be as form of tag.cls.
-                 * default:[selector]
+                 * @default[selector]
                  * @type {String[]}
                  **/
                 handlers:{
@@ -1014,7 +1014,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         dragNode:{},
 
         /**
-         * use protective shim to cross iframe.default:true
+         * use protective shim to cross iframe.
+         * @default true
          * @type Boolean
          */
         shim:{
@@ -1079,7 +1080,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * set to disable this draggable so that it can not be dragged. default:false
+         * set to disable this draggable so that it can not be dragged.
+         * @default false
          * @type Boolean
          */
         disabled:{
@@ -1087,7 +1089,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether the drag node moves with cursor.default:false,can be used to resize element.
+         * whether the drag node moves with cursor, can be used to resize element.
+         * @default false
          * @type Boolean
          */
         move:{
@@ -1104,7 +1107,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether halt mousedown event. default:true
+         * whether halt mousedown event.
+         * @default true
          * @type Boolean
          */
         halt:{
@@ -1744,7 +1748,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         },
 
         /**
-         * groups this droppable object belongs to. Default:true
+         * groups this droppable object belongs to.
+         * @default  true
          * @type Object|Boolean true to match any group
          */
         groups:{
@@ -1892,7 +1897,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
      */
     {
         /**
-         * how to get the proxy node. default:clone the node itself deeply.
+         * how to get the proxy node.
+         * @default clone the node itself deeply.
          * @type {Function}
          */
         node:{
@@ -1901,7 +1907,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
             }
         },
         /**
-         * destroy the proxy node at the end of this drag. default:false
+         * destroy the proxy node at the end of this drag.
+         * @default false
          * @type {Boolean}
          */
         destroyOnEnd:{
@@ -1909,7 +1916,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
         },
 
         /**
-         * move the original node at the end of the drag. default:true
+         * move the original node at the end of the drag.
+         * @default true
          * @type {Boolean}
          */
         moveOnEnd:{
@@ -2075,15 +2083,16 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
             }
         },
         /**
-         * adjust velocity. default:[10,10]. larger faster
+         * adjust velocity, larger faster
+         * @default [10,10]
          * @type Number[]
          */
         rate:{
             value:RATE
         },
         /**
-         * the margin to make node scroll. default: [20,20].
-         * easier to scroll for node if larger.
+         * the margin to make node scroll, easier to scroll for node if larger.
+         * @default  [20,20]
          * @type number[]
          */
         diff:{

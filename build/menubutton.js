@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 22:31
+build time: Jul 25 18:18
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -566,7 +566,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         var self = this,
             target = e.target;
         if (target instanceof  Menu.Item) {
+            var newValue = getItemValue(target),
+                oldValue = self.get("value");
             self.set("value", getItemValue(target));
+            if (newValue != oldValue) {
+                self.fire("change", {
+                    prevVal:oldValue,
+                    newVal:newValue
+                });
+            }
         }
     }
 

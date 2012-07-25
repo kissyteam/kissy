@@ -26,7 +26,7 @@
                     expect(getStyle(document.getElementById("special"), "fontSize")).toBe("33px");
                     state++;
                     // breath
-                }, 10);
+                }, 100);
 
             });
 
@@ -37,7 +37,7 @@
                     expect(getStyle(document.getElementById("special2"), "fontSize")).toBe("44px");
                     state++;
                     // breath
-                }, 10);
+                }, 100);
             });
 
             waitsFor(function () {
