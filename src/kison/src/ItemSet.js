@@ -27,14 +27,18 @@ KISSY.add("kison/ItemSet", function (S, Base) {
             return this.get("items").length;
         },
 
-        findItemIndex:function (item) {
+        findItemIndex:function (item, ignoreLookAhead) {
             var oneItems = this.get("items");
             for (var i = 0; i < oneItems.length; i++) {
-                if (oneItems[i].equals(item)) {
+                if (oneItems[i].equals(item, ignoreLookAhead)) {
                     return i;
                 }
             }
             return -1;
+        },
+
+        getItemAt:function (index) {
+            return this.get("items")[index];
         },
 
         equals:function (other, ignoreLookAhead) {

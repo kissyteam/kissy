@@ -19,6 +19,13 @@
             <textarea id="source" rows="8" cols="100">10 + 2*-3+10/2 +2*-(5+1)</textarea><br/>
             <button id="p">Parse using kison from KISSY</button>
         </div>
+
+        <div>
+            <button id="visualize">visualize above grammar</button>
+            <br/>
+            <textarea id="visual" rows="55" cols="100"></textarea>
+
+        </div>
     </div>
 
 </div>
@@ -34,14 +41,25 @@
             }
         });
 
+        function getGrammar(grammar) {
+            return MAPS[grammar] || (MAPS[grammar] = new KISON.Grammar(eval(grammar)));
+        }
+
         var $ = S.all;
+
+        $("#visualize").on("click", function () {
+            var grammar = S.trim($("#grammar").val());
+            var ret = getGrammar(grammar);
+            $("#visual").val(ret.visualizeTable().join("\n"));
+        });
+
         $("#p").on("click", function () {
             var start = S.now();
             var grammar = S.trim($("#grammar").val());
-            var g = MAPS[grammar] || (MAPS[grammar] = new KISON.Grammar(eval(grammar)));
-            var ret=g.parse($("#source").val());
+            var g = getGrammar(grammar);
+            var ret = g.parse($("#source").val());
             alert("耗时: " + (S.now() - start) + "毫秒");
-            alert("最终结果："+ret);
+            alert("最终结果：" + ret);
         });
     });
 </script>

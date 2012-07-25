@@ -10,14 +10,6 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
     var mix = S.mix, END_TAG = '$EOF', START_TAG = '$START';
 
-    function mergeArray(from, to) {
-        for (var i = 0; i < to.length; i++) {
-            if (!S.inArray(to[i], from)) {
-                from.push(to[i]);
-            }
-        }
-    }
-
     function setSize(set3) {
         var count = 0;
         for (var i in set3) {
@@ -26,14 +18,6 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         }
         return count;
-    }
-
-    function ObjectToArray(obj) {
-        var ret = [];
-        S.each(obj, function (v, k) {
-            ret.push(k);
-        });
-        return ret;
     }
 
     function indexOf(obj, array) {
@@ -120,6 +104,10 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             // loop until no further changes have been made
             while (cont) {
                 cont = false;
+                // 传递
+                // S -> T
+                // T -> t
+
 
                 // check if each production is null able
                 S.each(self.get("productions"), function (production) {
@@ -211,6 +199,12 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             while (cont) {
                 cont = false;
 
+                // 传递
+                // S -> T
+                // T -> t
+
+                // S -> S y
+                // S -> t
                 S.each(self.get("productions"), function (production) {
                     var firsts = self.findFirst(production.get("rhs"));
                     if (setSize(firsts) !== setSize(production.get("firsts"))) {
@@ -253,21 +247,48 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                         lookAhead = item.get("lookAhead"),
                         finalFirsts = {};
 
-                    S.each(lookAhead, function (ahead) {
+                    S.each(lookAhead, function (_, ahead) {
                         var rightRhs = rhs.slice(dotPosition + 1);
                         rightRhs.push(ahead);
                         S.mix(finalFirsts, self.findFirst(rightRhs));
                     });
 
                     S.each(productions, function (p2) {
-                        var itemNew = new Item({
-                            production:p2,
-                            lookAhead:ObjectToArray(finalFirsts)
-                        });
-                        if (p2.get("symbol") == dotSymbol &&
-                            itemSet.findItemIndex(itemNew) == -1) {
-                            itemSet.addItem(itemNew);
-                            cont = true;
+                        if (p2.get("symbol") == dotSymbol) {
+
+                            var newItem = new Item({
+                                production:p2
+                            });
+
+
+//                            newItem.addLookAhead(finalFirsts);
+//                            if(itemSet.findItemIndex(newItem)==-1){
+//                                newItem.addLookAhead(finalFirsts);
+//                                itemSet.addItem(newItem);
+//                                cont = true;
+//                            }
+//
+//                            return;
+
+                            /*
+                             2012-07-26
+                             improve performance,
+                             reduce item number,
+                             merge lookahead with same production
+                             and dotPosition
+                             */
+
+                            var itemIndex = itemSet.findItemIndex(newItem, true),
+                                findItem;
+
+                            if (itemIndex != -1) {
+                                findItem = itemSet.getItemAt(itemIndex);
+                                cont = cont || (!!findItem.addLookAhead(finalFirsts));
+                            } else {
+                                newItem.addLookAhead(finalFirsts);
+                                itemSet.addItem(newItem);
+                                cont = true;
+                            }
                         }
                     });
                 });
@@ -283,11 +304,20 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     dotPosition = item.get("dotPosition"),
                     markSymbol = production.get("rhs")[dotPosition];
                 if (markSymbol == x) {
-                    j.addItem(new Item({
+                    var newItem = new Item({
                         production:production,
-                        dotPosition:dotPosition + 1,
-                        lookAhead:item.get("lookAhead").concat()
-                    }));
+                        dotPosition:dotPosition + 1
+                    });
+
+                    var itemIndex = j.findItemIndex(newItem, true), findItem;
+
+                    if (itemIndex != -1) {
+                        findItem = j.getItemAt(itemIndex);
+                        findItem.addLookAhead(item.get("lookAhead"));
+                    } else {
+                        newItem.addLookAhead(item.get("lookAhead"));
+                        j.addItem(newItem);
+                    }
                 }
             });
             return this.closure(j);
@@ -311,14 +341,17 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
         buildItemSet:function () {
             var self = this,
                 itemSets = self.get("itemSets"),
+                lookAheadTmp = {},
                 productions = self.get("productions");
+
+            lookAheadTmp[END_TAG] = 1;
 
             var initItemSet = self.closure(
                 new ItemSet({
                     items:[
                         new Item({
                             production:productions[0],
-                            lookAhead:[END_TAG]
+                            lookAhead:lookAheadTmp
                         })
                     ]
                 }));
@@ -341,6 +374,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             itemSet.__cache = {};
                         }
 
+                        // already computed itemSet 's symbol closure
                         if (itemSet.__cache[symbol]) {
                             return;
                         }
@@ -380,8 +414,9 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     if (one.equals(two, true)) {
 
                         for (var k = 0; k < one.get("items").length; k++) {
-                            mergeArray(one.get("items")[k].get("lookAhead"),
-                                two.get("items")[k].get("lookAhead"));
+                            one.get("items")[k]
+                                .addLookAhead(two.get("items")[k]
+                                .get("lookAhead"));
                         }
 
                         var oneGotos = one.get("gotos");
@@ -433,7 +468,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     var production = item.get("production");
                     if (item.get("dotPosition") == production.get("rhs").length) {
                         if (production.get("symbol") == START_TAG) {
-                            if (S.inArray(END_TAG, item.get("lookAhead"))) {
+                            if (item.get("lookAhead")[END_TAG]) {
                                 action[i] = action[i] || {};
                                 action[i][END_TAG] = {
                                     type:ACCEPT_TYPE
@@ -441,10 +476,16 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             }
                         } else {
                             action[i] = action[i] || {};
-                            S.each(item.get("lookAhead"), function (l) {
+                            // 移入，规约冲突
+                            // 1+ 2*3
+                            // 2 -> f, f 's lookahead contains *
+                            // f !-> e, e 's lookahead does not contain *
+                            S.each(item.get("lookAhead"), function (_, l) {
                                 action[i][l] = {
                                     type:REDUCE_TYPE,
-                                    production:production
+                                    symbol:production.get("symbol"),
+                                    rhs:production.get("rhs"),
+                                    action:production.get("action")
                                 };
                             });
                         }
@@ -460,19 +501,31 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             var action = table.action;
             var ret = [];
 
+            S.each(this.get("itemSets"), function (itemSet, i) {
+                ret.push(new Array(70).join("*") + " itemSet : " + i);
+                ret.push(itemSet.toString());
+                ret.push("");
+            });
+
+            ret.push("");
+
+            ret.push(new Array(70).join("*") + " table : ");
+
             S.each(action, function (av, index) {
                 S.each(av, function (v, s) {
                     var str, type = v.type;
                     if (type == ACCEPT_TYPE) {
                         str = "acc"
                     } else if (type == REDUCE_TYPE) {
-                        str = "r" + v.to;
+                        str = "r, " + v.symbol + "=" + v.rhs.join("");
                     } else if (type == SHIFT_TYPE) {
-                        str = "s" + v.to;
+                        str = "s, " + v.to;
                     }
                     ret.push("action[" + index + "]" + "[" + s + "] = " + str);
                 });
             });
+
+            ret.push("");
 
             S.each(gotos, function (sv, index) {
                 S.each(sv, function (v, s) {
@@ -542,15 +595,17 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
                     case REDUCE_TYPE:
 
-                        var production = action.production;
+                        var reducedSymbol = action.symbol,
+                            reducedAction = action.action,
+                            reducedRhs = action.rhs;
 
-                        var len = production.get("rhs").length;
+                        var len = reducedRhs.length;
 
                         var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                         var args = valueStack.slice(-len);
 
-                        var ret = production.get("action").apply(null, args);
+                        var ret = reducedAction.apply(null, args);
 
                         if (ret !== undefined) {
                             $$ = ret;
@@ -561,7 +616,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             valueStack = valueStack.slice(0, -1 * len);
                         }
 
-                        stack.push(production.get("symbol"));
+                        stack.push(reducedSymbol);
 
                         valueStack.push($$);
 
