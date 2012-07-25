@@ -269,7 +269,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             columns = _self.get('columns');
             S.each(columns, function (column) {
                 if (column.get('visible')) {
-                    totalWidth += column.get("el").outerWidth();
+                    totalWidth += column.get("el").outerWidth();//column.get('width');
                 }
             });
             return totalWidth;
