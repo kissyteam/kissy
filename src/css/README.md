@@ -12,5 +12,6 @@ Includes:
 * fly-swing.css: fly-swing grids system
 * grids.css: bootstrap grids system (fixed and fluid)
 * responsive.css: responsive web design For Phone and tablet
-
+* dpl.css = reset.css + fly-swing.css + grids.css + common.css
+* dpl-responsive.css = reset.css + fly-swing.css + grids.css + common.css + responsive.css
 
