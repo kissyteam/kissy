@@ -318,6 +318,19 @@
             .ks-clear_();
         }
 
+        .spanFloatX (@index) when(@index>0){
+            (~".span@{index}") {
+                _float: left;
+                // ie6 bug...
+                _display: inline;
+                _margin-left: @gridGutterWidth;
+            }
+            .spanFloatX(@index - 1);
+        }
+
+        .spanFloatX (0) {
+        }
+
         [class*="span"] {
             float: left;
             margin-left: @gridGutterWidth;
@@ -325,6 +338,10 @@
 
         // generate .spanX and .offsetX
         .spanX (@gridColumns);
+
+        // consider ie6
+        .spanFloatX (@gridColumns);
+
         .offsetX (@gridColumns);
 
     }
@@ -333,6 +350,7 @@
 
         .spanX (@index) when (@index > 0) {
             (~"> .span@{index}") { .span(@index); }
+            (~" .span@{index}") { .spanIE6(@index); }
             .spanX(@index - 1);
         }
 
@@ -342,9 +360,28 @@
             width: (@fluidGridColumnWidth * @columns) + (@fluidGridGutterWidth * (@columns - 1));
         }
 
+        .spanIE6 (@columns) {
+            _width: (@fluidGridColumnWidth * @columns) + (@fluidGridGutterWidth * (@columns - 1));
+        }
+
         .row-fluid {
+
             width: 100%;
+
             .ks-clear_();
+
+            .spanFloatX (@index) when(@index>0){
+                (~".span@{index}") {
+                    _float: left;
+                    // ie6 bug...
+                    _display: inline;
+                    _margin-left: @fluidGridGutterWidth;
+                }
+                .spanFloatX(@index - 1);
+            }
+
+            .spanFloatX (0) {
+            }
 
             > [class*="span"] {
                   float: left;
@@ -357,6 +394,12 @@
 
             // generate .spanX
             .spanX (@gridColumns);
+
+            .spanFloatX (@gridColumns);
+
+            .span-first {
+                _margin-left: 0;
+            }
         }
 
      }

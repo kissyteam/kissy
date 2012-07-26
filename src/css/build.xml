@@ -8,14 +8,22 @@
 
     <target name="concat">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${src.dir}" includes="*.css"></fileset>
+            <fileset dir="${src.dir}" includes="*.css" excludes="old/**/*"></fileset>
         </copy>
-        <concat destfile="${component.src.dir.tmp}/base.css" encoding="${charset}" outputencoding="${charset}">
-            <path path="${src.dir}/reset.css"/>
-            <path path="${src.dir}/grids.css"/>
-            <path path="${src.dir}/common.css"/>
+        <concat destfile="${component.src.dir.tmp}/dpl.css" encoding="${charset}" outputencoding="${charset}">
+            <path location="${src.dir}/dpl/reset.css"/>
+            <path location="${src.dir}/dpl/flying-swing.css"/>
+            <path location="${src.dir}/dpl/grids.css"/>
+            <path location="${src.dir}/dpl/common.css"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
+        </concat>
+        <concat destfile="${component.src.dir.tmp}/dpl-responsive.css" encoding="${charset}" outputencoding="${charset}">
+            <path location="${component.src.dir.tmp}/dpl.css"/>
+            <path location="${src.dir}/dpl/responsive.css"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
             </filterchain>
         </concat>
     </target>
