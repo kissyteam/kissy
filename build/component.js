@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 20:56
+build time: Jul 27 16:08
 */
 /**
  * Setup component namespace.
@@ -1238,7 +1238,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
@@ -1250,7 +1250,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         Align:Align,
         Box:Box,
         Close:Close,
-        Constrain:Constrain,
         ContentBox:ContentBox,
         Drag:Drag,
         Loading:Loading,
@@ -1270,7 +1269,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         "./uibase/boxrender",
         "./uibase/close",
         "./uibase/closerender",
-        "./uibase/constrain",
         "./uibase/contentbox",
         "./uibase/contentboxrender",
         "./uibase/drag",
@@ -1665,11 +1663,19 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
             // 新区域位置发生了变化
             if (newElRegion.left != elRegion.left) {
-                self.set("x", newElRegion.left)
+                self.__set("x", null);
+                self.get("view").__set("x", null);
+                self.set("x", newElRegion.left);
             }
 
             if (newElRegion.top != elRegion.top) {
-                self.set("y", newElRegion.top)
+                // https://github.com/kissyteam/kissy/issues/190
+                // 相对于屏幕位置没变，而 left/top 变了
+                // 例如 <div 'relative'><el absolute></div>
+                // el.align(div)
+                self.__set("y", null);
+                self.get("view").__set("y", null);
+                self.set("y", newElRegion.top);
             }
 
             // 新区域高宽发生了变化
@@ -2800,123 +2806,6 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 }, {
     requires:["node"]
 });/**
- * @fileOverview constrain extension for kissy
- * @author yiminghe@gmail.com, qiaohua@taobao.com
- */
-KISSY.add("component/uibase/constrain", function (S, DOM, Node) {
-
-    /**
-     * @name Constrain
-     * @class
-     * Constrain extension class.
-     * Constrain component to specified region
-     * @memberOf Component.UIBase
-     */
-    function Constrain() {
-
-    }
-
-    Constrain.ATTRS =
-    /**
-     * @lends Component.UIBase.Constrain.prototype
-     */
-    {
-        /**
-         * Config constrain region.
-         * True: viewport
-         * Node: specified element.
-         * false: no constrain region.
-         * @type NodeList|Boolean
-         */
-        constrain:{
-            //不限制
-            //true:viewport限制
-            //node:限制在节点范围
-            value:false
-        }
-    };
-
-    /**
-     * 获取受限区域的宽高, 位置
-     * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
-     */
-    function _getConstrainRegion(constrain) {
-        var ret = null;
-        if (!constrain) {
-            return ret;
-        }
-        var el = this.get("el");
-        if (constrain !== true) {
-            constrain = Node.one(constrain);
-            ret = constrain.offset();
-            S.mix(ret, {
-                maxLeft:ret.left + constrain.outerWidth() - el.outerWidth(),
-                maxTop:ret.top + constrain.outerHeight() - el.outerHeight()
-            });
-        }
-        // 没有指定 constrain, 表示受限于可视区域
-        else {
-            ret = {
-                left:DOM.scrollLeft(),
-                top:DOM.scrollTop()
-            };
-            S.mix(ret, {
-                maxLeft:ret.left + DOM.viewportWidth() - el.outerWidth(),
-                maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
-            });
-        }
-
-        return ret;
-    }
-
-    Constrain.prototype = {
-
-        __renderUI:function () {
-            var self = this,
-                attrs = self.getAttrs(),
-                xAttr = attrs["x"],
-                yAttr = attrs["y"],
-                oriXSetter = xAttr["setter"],
-                oriYSetter = yAttr["setter"];
-            xAttr.setter = function (v) {
-                var r = oriXSetter && oriXSetter.call(self, v);
-                if (r === undefined) {
-                    r = v;
-                }
-                if (!self.get("constrain")) {
-                    return r;
-                }
-                var _ConstrainExtRegion = _getConstrainRegion.call(
-                    self, self.get("constrain"));
-                return Math.min(Math.max(r,
-                    _ConstrainExtRegion.left),
-                    _ConstrainExtRegion.maxLeft);
-            };
-            yAttr.setter = function (v) {
-                var r = oriYSetter && oriYSetter.call(self, v);
-                if (r === undefined) {
-                    r = v;
-                }
-                if (!self.get("constrain")) {
-                    return r;
-                }
-                var _ConstrainExtRegion = _getConstrainRegion.call(
-                    self, self.get("constrain"));
-                return Math.min(Math.max(r,
-                    _ConstrainExtRegion.top),
-                    _ConstrainExtRegion.maxTop);
-            };
-            self.addAttr("x", xAttr);
-            self.addAttr("y", yAttr);
-        }
-    };
-
-
-    return Constrain;
-
-}, {
-    requires:["dom", "node"]
-});/**
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
@@ -3011,61 +2900,60 @@ KISSY.add("component/uibase/drag", function (S) {
      */
     {
         /**
-         * Current draggable element's handlers.
-         * See {@link DD.Draggable#handlers}
-         */
-        handlers:{
-            value:[]
-        },
-        /**
          * Whether current element is draggable.
          * @type Boolean
          */
-        draggable:{value:true}
+        draggable:{
+            setter:function (v) {
+                if (v === true) {
+                    return {};
+                }
+            },
+            value:{}
+        }
     };
-
-    function dragExtAction(ev) {
-        this.set("xy", [ev.left, ev.top]);
-    }
 
     Drag.prototype = {
 
-        _uiSetHandlers:function (v) {
-            var d;
-            if (v && v.length > 0 && (d = this.__drag)) {
-                d.set("handlers", v);
-            }
-        },
-
-        __bindUI:function () {
-            var DD = S.require("dd") || {},
-                Draggable = DD.Draggable,
-                d,
-                self = this,
-                dragCfg = self.get("draggable"),
+        _uiSetDraggable:function (dragCfg) {
+            var self = this,
+                handlers,
+                DD = S.require("dd"),
+                Draggable,
+                p,
+                d = self.__drag,
+                __constrain = self.__constrain,
                 el = self.get("el");
-            if (dragCfg && Draggable) {
-                if (dragCfg === true) {
-                    dragCfg = {};
-                }
+
+            if (dragCfg && !d && DD) {
+
+                Draggable = DD.Draggable;
+
                 d = self.__drag = new Draggable({
                     node:el,
-                    move:dragCfg.proxy
+                    move:1
                 });
 
                 if (dragCfg.proxy) {
                     dragCfg.proxy.moveOnEnd = false;
-                    d.on("dragend", function () {
-                        var proxyOffset = p.get("proxyNode").offset();
-                        el.css("visibility", "");
-                        self.set("x", proxyOffset.left);
-                        self.set("y", proxyOffset.top);
-                    });
-                    var p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+
+                    p = self.__proxy = new DD.Proxy(dragCfg.proxy);
                     p.attachDrag(d);
-                } else {
-                    d.on("drag", dragExtAction, self);
                 }
+
+                __constrain = self.__constrain = new DD.Constrain().attachDrag(d);
+
+                d.on("dragend", function () {
+                    var proxyOffset;
+                    if (p) {
+                        proxyOffset = p.get("proxyNode").offset();
+                        el.css("visibility", "");
+                    } else {
+                        proxyOffset = el.offset();
+                    }
+                    self.set("x", proxyOffset.left);
+                    self.set("y", proxyOffset.top);
+                });
 
                 if (dragCfg.scroll) {
                     var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
@@ -3073,24 +2961,36 @@ KISSY.add("component/uibase/drag", function (S) {
                 }
 
             }
-        },
 
-        _uiSetDraggable:function (v) {
-            var d = this.__drag;
-            d && d.set("disabled", !v);
+            if (d) {
+                d.set("disabled", !dragCfg);
+            }
+
+            if (dragCfg && d) {
+                handlers = dragCfg.handlers;
+                if ("constrain" in dragCfg) {
+                    __constrain.set("constrain", dragCfg.constrain);
+                }
+                if (handlers && handlers.length > 0) {
+                    d.set("handlers", handlers);
+                }
+            }
         },
 
         __destructor:function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
+                __constrain = self.__constrain,
                 d = self.__drag;
-            d && d.destroy();
             s && s.destroy();
             p && p.destroy();
+            __constrain && __constrain.destroy();
+            d && d.destroy();
         }
 
     };
+
     return Drag;
 
 });/**
@@ -3493,7 +3393,7 @@ KISSY.add("component/uibase/position", function (S) {
  */
 KISSY.add("component/uibase/positionrender", function () {
 
-    var ZINDEX = 9999;
+    var Z_INDEX = 9999;
 
     function Position() {
     }
@@ -3516,8 +3416,8 @@ KISSY.add("component/uibase/positionrender", function () {
                 return self.get("el") && self.get("el").offset().top;
             }
         },
-        zIndex:{
-            value:ZINDEX
+        Z_INDEX:{
+            value:Z_INDEX
         }
     };
 
@@ -3528,20 +3428,24 @@ KISSY.add("component/uibase/positionrender", function () {
             this.get("el").addClass("ks-ext-position");
         },
 
-        _uiSetZIndex:function (x) {
+        _uiSetZ_INDEX:function (x) {
             this.get("el").css("z-index", x);
         },
 
         _uiSetX:function (x) {
-            this.get("el").offset({
-                left:x
-            });
+            if (x != null) {
+                this.get("el").offset({
+                    left:x
+                });
+            }
         },
 
         _uiSetY:function (y) {
-            this.get("el").offset({
-                top:y
-            });
+            if (y != null) {
+                this.get("el").offset({
+                    top:y
+                });
+            }
         }
     };
 

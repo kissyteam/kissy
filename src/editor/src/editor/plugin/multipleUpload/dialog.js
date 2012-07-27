@@ -60,7 +60,9 @@ KISSY.add("editor/plugin/multipleUpload/dialog", function (S, Editor, ProgressBa
             self.dialog = new Dialog({
                 headerContent:"批量上传",
                 mask:false,
-                constrain:false,
+                draggable:{
+                  constrain:false
+                },
                 autoRender:true,
                 focus4e:false,
                 width:"600px"

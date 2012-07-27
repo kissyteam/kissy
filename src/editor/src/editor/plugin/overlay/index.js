@@ -48,10 +48,9 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
             draggable:{
-                value:true
-            },
-            constrain:{
-                value:true
+                value:{
+                    constrain:true
+                }
             },
             aria:{
                 value:true

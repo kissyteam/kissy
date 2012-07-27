@@ -21,61 +21,60 @@ KISSY.add("component/uibase/drag", function (S) {
      */
     {
         /**
-         * Current draggable element's handlers.
-         * See {@link DD.Draggable#handlers}
-         */
-        handlers:{
-            value:[]
-        },
-        /**
          * Whether current element is draggable.
          * @type Boolean
          */
-        draggable:{value:true}
+        draggable:{
+            setter:function (v) {
+                if (v === true) {
+                    return {};
+                }
+            },
+            value:{}
+        }
     };
-
-    function dragExtAction(ev) {
-        this.set("xy", [ev.left, ev.top]);
-    }
 
     Drag.prototype = {
 
-        _uiSetHandlers:function (v) {
-            var d;
-            if (v && v.length > 0 && (d = this.__drag)) {
-                d.set("handlers", v);
-            }
-        },
-
-        __bindUI:function () {
-            var DD = S.require("dd") || {},
-                Draggable = DD.Draggable,
-                d,
-                self = this,
-                dragCfg = self.get("draggable"),
+        _uiSetDraggable:function (dragCfg) {
+            var self = this,
+                handlers,
+                DD = S.require("dd"),
+                Draggable,
+                p,
+                d = self.__drag,
+                __constrain = self.__constrain,
                 el = self.get("el");
-            if (dragCfg && Draggable) {
-                if (dragCfg === true) {
-                    dragCfg = {};
-                }
+
+            if (dragCfg && !d && DD) {
+
+                Draggable = DD.Draggable;
+
                 d = self.__drag = new Draggable({
                     node:el,
-                    move:dragCfg.proxy
+                    move:1
                 });
 
                 if (dragCfg.proxy) {
                     dragCfg.proxy.moveOnEnd = false;
-                    d.on("dragend", function () {
-                        var proxyOffset = p.get("proxyNode").offset();
-                        el.css("visibility", "");
-                        self.set("x", proxyOffset.left);
-                        self.set("y", proxyOffset.top);
-                    });
-                    var p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+
+                    p = self.__proxy = new DD.Proxy(dragCfg.proxy);
                     p.attachDrag(d);
-                } else {
-                    d.on("drag", dragExtAction, self);
                 }
+
+                __constrain = self.__constrain = new DD.Constrain().attachDrag(d);
+
+                d.on("dragend", function () {
+                    var proxyOffset;
+                    if (p) {
+                        proxyOffset = p.get("proxyNode").offset();
+                        el.css("visibility", "");
+                    } else {
+                        proxyOffset = el.offset();
+                    }
+                    self.set("x", proxyOffset.left);
+                    self.set("y", proxyOffset.top);
+                });
 
                 if (dragCfg.scroll) {
                     var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
@@ -83,24 +82,36 @@ KISSY.add("component/uibase/drag", function (S) {
                 }
 
             }
-        },
 
-        _uiSetDraggable:function (v) {
-            var d = this.__drag;
-            d && d.set("disabled", !v);
+            if (d) {
+                d.set("disabled", !dragCfg);
+            }
+
+            if (dragCfg && d) {
+                handlers = dragCfg.handlers;
+                if ("constrain" in dragCfg) {
+                    __constrain.set("constrain", dragCfg.constrain);
+                }
+                if (handlers && handlers.length > 0) {
+                    d.set("handlers", handlers);
+                }
+            }
         },
 
         __destructor:function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
+                __constrain = self.__constrain,
                 d = self.__drag;
-            d && d.destroy();
             s && s.destroy();
             p && p.destroy();
+            __constrain && __constrain.destroy();
+            d && d.destroy();
         }
 
     };
+
     return Drag;
 
 });

@@ -21,8 +21,9 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             var d = new Dialog({
                 srcNode:"#drender",
                 width:200,
-                drag:true,
-                constrain:true
+                drag:{
+                    constrain:true
+                }
             });
 
             d.render();
@@ -36,6 +37,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 expect(d.get("header").html()).toBe("prerender header");
                 expect(d.get("body").html()).toBe("prerender body");
                 expect(d.get("footer").html()).toBe("prerender footer");
+            });
+
+            runs(function(){
+                d.destroy();
             });
 
         });
@@ -63,8 +68,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 bodyContent:"体",
                 footerContent:"尾",
                 width:200,
-                drag:true,
-                constrain:true
+                draggable:{
+                    constrain:true
+                }
+
             });
 
             d.render();
@@ -72,7 +79,6 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             d.show();
 
             window.dialog = d;
-
 
             it("头体尾已经渲染完毕", function () {
                 expect(d.get("header").html()).toBe("头");
@@ -171,6 +177,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                     expect(DOM.viewportWidth() - width).toBeEqual(dxy[0]);
                     expect(DOM.viewportHeight() - height).toBeEqual(dxy[1]);
                 });
+            });
+
+            runs(function(){
+                d.destroy();
             });
 
 
