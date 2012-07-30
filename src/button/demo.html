@@ -2,43 +2,62 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>CustomRender for button 测试</title>
+<title>KISSY Buttons</title>
 <link href="../../build/css/dpl/base.css" rel="stylesheet"/>
-<link href="assets/custombutton.css" rel="stylesheet"/>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-    }
-
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-    }
-
-    #wrap {
-        width: 990px;
-        margin: 0 auto;
-    }
-</style>
+<link href="../menu/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="wrap">
+
+<div class="container">
     <h1>KISSY Buttons</h1>
-
-    <h2>dpl button</h2>
-    <a href="./demo/dpl/demo.html">demo</a>
-
-    <h2>other style button</h2>
-
-    <h3>simple button</h3>
-    <a href="./demo/other/simple-button.html">demo</a>
-
-    <h3>split button</h3>
-    <a href="./demo/other/split-button.html">demo</a>
-
-    <h3>toggle button</h3>
-    <a href="./demo/other/toggle-button.html">demo</a>
 </div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"dpl",
+                    href:'demo/dpl/demo.html',
+                    xclass:'menuitem'
+                },
+                {
+                    content:'other',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'simple button',
+                                href:'demo/other/simple-button.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'split button',
+                                href:'demo/other/split-button.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'toggle button',
+                                href:'demo/other/toggle-button.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
 </body>
 </html>

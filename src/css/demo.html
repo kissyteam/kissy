@@ -1,23 +1,110 @@
-
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY New DPL Demo</title>
-<style>
-    #wrap {
-        width:950px;
-        margin: 10px auto;
-    }
-</style>
+<title>KISSY DPL</title>
+<link href="../../build/css/dpl/base.css" rel="stylesheet"/>
+<link href="../menu/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="wrap">
-    <h1>KISSY New DPL Demo</h1>
-
-    <a target="_blank" href="./demo/dpl/demo.html">KISSY New DPL Demo</a>
-    <br>
-
+<div class="container">
+    <h1>KISSY DPL</h1>
 </div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"css reset",
+                    href:'demo/dpl/reset.html',
+                    xclass:'menuitem'
+                },
+                {
+                    content:"grids system",
+                    href:'demo/dpl/grids.html',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'固定布局',
+                                href:'demo/dpl/grids/fixed.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'流式布局',
+                                href:'demo/dpl/grids/fluid.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                },
+                {
+                    content:'双飞翼布局',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'fly-swing demo',
+                                href:'demo/dpl/fly-swing/demo.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'layout generator',
+                                href:'demo/dpl/fly-swing/css-generator.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                },
+                {
+                    content:'simple ui',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'table',
+                                href:'demo/dpl/table.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                },
+                {
+                    content:'complex ui',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'button',
+                                href:'../button/demo.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'menu',
+                                href:'../menu/demo.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
 </body>
 </html>

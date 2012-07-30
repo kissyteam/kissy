@@ -1,20 +1,17 @@
 .nav-menu {
-
+    outline: none;
 }
 
 .nav-menu a {
     text-decoration: none;
 }
-
 .nav-menu a, .nav-menu a:link, .nav-menu a:visited {
     color: #333;
 }
-
 .nav-menu a:hover, .nav-menu .nav-menuitem-hover a, .nav-menu a:active {
     text-decoration: none;
     color: #F96400;
 }
-
 .horizonal {
     background-color: #f0f0f0;
     border-top: 1px solid #dcdcdc;
@@ -24,10 +21,10 @@
     *zoom: 1;
 }
 
+
 .nav-menu .nav-menuitem {
     white-space: nowrap;
 }
-
 .nav-menu .nav-menuitem .title {
     display: block;
     font-size: 14px;
@@ -36,15 +33,12 @@
     line-height: 33px;
     padding: 0 30px;
 }
-
 .nav-menu .nav-menuitem span.title {
     padding: 0 20px 0 12px;
 }
-
 .horizonal .nav-menuitem {
     float: left;
 }
-
 .nav-menu .nav-menuitem-hover a.title {
     border-top: 2px solid #F96400;
     margin-top: -1px;
@@ -69,11 +63,10 @@
     position: relative;
     z-index: 10000;
 }
-
-.nav-menu .nav-submenu .nav-submenu-arrow {
+.nav-menu .nav-submenu .ks-submenu-arrow {
     position: absolute;
     top: 46%;
-    top: 40% \9;
+    top: 40%\9;
     right: 6px;
     width: 0;
     height: 0;
@@ -90,7 +83,7 @@
     transition: transform 0.2s ease-in;
 }
 
-.nav-menu .nav-submenu-hover .nav-submenu-arrow {
+.nav-menu .nav-submenu-hover .ks-submenu-arrow {
     -moz-transform: rotate(180deg);
     -moz-transform-origin: 50% 30%;
     -webkit-transform: rotate(180deg);
@@ -103,9 +96,9 @@
 }
 
 .nav-popupmenu {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
+    position:absolute;
+    left:-9999px;
+    top:-9999px;
     background-color: #f5f5f5;
     border: 1px solid #CBCBCB;
 }
