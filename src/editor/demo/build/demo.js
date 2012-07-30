@@ -17,43 +17,43 @@
             height:"400px"
         };
 
-        var plugins = ("sourceArea" +
+        var plugins = ("sourcearea" +
             ",separator" +
             ",bold" +
             ",italic," +
-            "fontFamily," +
-            "fontSize," +
-            "strikeThrough," +
+            "font-family," +
+            "font-size," +
+            "strike-through," +
             "underline," +
             "separator," +
-            "checkboxSourcearea" +
+            "checkbox-sourcearea" +
             ",image" +
             ",link" +
-            ",foreColor" +
-            ",backColor" +
+            ",fore-color" +
+            ",back-color" +
             ",resize" +
             ",draft" +
             ",undo" +
             ",indent" +
             ",outdent" +
-            ",unorderedList" +
-            ",orderedList" +
-            ",elementPath" +
-            ",pageBreak" +
+            ",unordered-list" +
+            ",ordered-list" +
+            ",element-path" +
+            ",page-break" +
             ",preview" +
             ",maximize" +
-            ",removeFormat" +
+            ",remove-format" +
             ",heading" +
-            ",justifyLeft" +
-            ",justifyCenter" +
-            ",justifyRight" +
+            ",justify-left" +
+            ",justify-center" +
+            ",justify-right" +
             ",table" +
             ",smiley" +
             ",flash" +
-            ",xiamiMusic" +
-            ",multipleUpload" +
+            ",xiami-music" +
+            ",multiple-upload" +
             ",video" +
-            ",dragUpload").split(",");
+            ",drag-upload").split(",");
 
         var fullPlugins = [];
 
@@ -94,7 +94,7 @@
                     html:"<div style='border:1px solid red'>模板2效果演示html</div>"
                 }
             ],
-            "fontSize":{
+            "font-size":{
                 matchElWidth:false,
                 menu:{
                     children:[
@@ -141,7 +141,7 @@
                     width:"125px"
                 }
             },
-            "multipleUpload":{
+            "multiple-upload":{
                 serverUrl:"http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
                 serverParams:{
                     waterMark:function () {
@@ -239,7 +239,7 @@
                 //direction:["y"]
             },
 
-            "dragUpload":{
+            "drag-upload":{
                 suffix:"png,jpg,jpeg,gif",
                 fileInput:"Filedata",
                 sizeLimit:1000,

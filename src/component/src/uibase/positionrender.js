@@ -27,7 +27,7 @@ KISSY.add("component/uibase/positionrender", function () {
                 return self.get("el") && self.get("el").offset().top;
             }
         },
-        Z_INDEX:{
+        zIndex:{
             value:Z_INDEX
         }
     };
@@ -39,7 +39,7 @@ KISSY.add("component/uibase/positionrender", function () {
             this.get("el").addClass("ks-ext-position");
         },
 
-        _uiSetZ_INDEX:function (x) {
+        _uiSetZIndex:function (x) {
             this.get("el").css("z-index", x);
         },
 

@@ -95,5 +95,5 @@ this.config=config||{};
     return LinkPlugin;
 }, {
     requires:['editor', '../bubble/',
-        './utils', '../dialogLoader/', '../button/']
+        './utils', '../dialog-loader/', '../button/']
 });

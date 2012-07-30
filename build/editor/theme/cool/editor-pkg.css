@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -295,12 +295,7 @@ google tip or bubble style for kissy editor
 @author yiminghe@gmail.com
 **/
 .ks-editor-bubble {
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
     border-radius: 2px;
     position: absolute;
     border: 1px solid;
@@ -330,6 +325,11 @@ LoVe F HAte
 **/
 
 .ks-editor-button {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
+    margin: 2px;
+    border-radius: 2px;
     padding: 3px 18px;
     border: 1px solid rgb(193, 200, 209);
     _padding-bottom: 2px;
@@ -354,11 +354,6 @@ LoVe F HAte
     _border-color: tomato;
     _filter: chroma(color = tomato);
     /*outline: none;*/
-}
-
-.ks-editor-button {
-    margin: 2px;
-    border-radius: 2px;
 }
 
 .ks-editor-tools .ks-editor-button-checked {
@@ -555,7 +550,7 @@ ks-editor-toolbar-padding {
     width: 0;
 }
 
-.ks-editor-toolbar-sourceArea {
+.ks-editor-toolbar-sourcearea {
     background-image: url("sourcearea.png"); /** sprite-ref: cool; */
 }
 
@@ -701,8 +696,6 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-input {
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
     border-radius: 2px;
     background: #FFFFFF repeat-x scroll 0 0;
     background-image: url("text-bg.png");
@@ -883,12 +876,14 @@ select style for kissy editor
 **/
 
 .ks-editor-menu-button, .ks-editor-big-select {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
     color: #000;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    border-radius: 2px;
     border-radius: 2px;
     text-decoration: none;
     white-space: nowrap;
@@ -1010,8 +1005,10 @@ select style for kissy editor
     border: 1px solid #808080;
 }.ks-editor-tabs {
     padding-left: 10px;
+    margin: 0;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
+    list-style: none;
 }
 
 .ks-editor-tabs li {
@@ -1029,6 +1026,7 @@ select style for kissy editor
     text-align: center;
     width: 120px;
     outline: none;
+    list-style: none;
 }
 
 .ks-editor-tabs li.ks-active {

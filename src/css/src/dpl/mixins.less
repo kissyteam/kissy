@@ -196,6 +196,11 @@
     filter: ~"alpha(opacity=@{opacity})";
 }
 
+// Reset filters for IE
+.reset-filter(){
+    filter: ~"progid:DXImageTransform.Microsoft.gradient(enabled = false)";
+}
+
 // BACKGROUNDS
 // --------------------------------------------------
 
@@ -274,17 +279,17 @@
         background-image: -o-linear-gradient(@angle, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
         background-image: linear-gradient(@angle, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
     }
-
-    // Reset filters for IE
-    .reset-filter(){
-        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-    }
-
 }
-
 
 // Grid System
 // -----------
+
+// Table columns
+.tableColumns(@columnSpan: 1) {
+    float: none; // undo default grid column styles
+    width: ((@gridColumnWidth) * @columnSpan) + (@gridGutterWidth * (@columnSpan - 1)) - 16; // 16 is total padding on left and right of table cells
+    margin-left: 0; // undo default grid column styles
+}
 
 // The Grid
 #grid {

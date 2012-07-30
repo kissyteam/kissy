@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:15
+build time: Jul 30 19:00
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -138,8 +138,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         createDom:function () {
             // set wai-aria role
             this.get("el")
-                .attr("role", "button")
-                .addClass("ks-inline-block");
+                .attr("role", "button");
         },
         _uiSetChecked:function (v) {
             var self = this,

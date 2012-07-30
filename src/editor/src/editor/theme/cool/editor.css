@@ -83,7 +83,7 @@ ks-editor-toolbar-padding {
     width: 0;
 }
 
-.ks-editor-toolbar-sourceArea {
+.ks-editor-toolbar-sourcearea {
     background-image: url("sourcearea.png"); /** sprite-ref: cool; */
 }
 
@@ -229,8 +229,6 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-input {
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
     border-radius: 2px;
     background: #FFFFFF repeat-x scroll 0 0;
     background-image: url("text-bg.png");

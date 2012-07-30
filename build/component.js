@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 11:20
+build time: Jul 30 19:00
 */
 /**
  * Setup component namespace.
@@ -214,10 +214,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }
         // does not autoRender for view
         delete cfg.autoRender;
+        cfg.ksComponentCss=getComponentCss(self);
         return new Render(cfg);
     }
 
-    function setViewCssClassByHierarchy(self, view) {
+    function getComponentCss(self) {
         var constructor = self.constructor,
             cls,
             re = [];
@@ -228,7 +229,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             }
             constructor = constructor.superclass && constructor.superclass.constructor;
         }
-        return view.__componentClasses = re.join(" ");
+        return re.join(" ");
     }
 
     function isMouseEventWithinElement(e, elem) {
@@ -291,7 +292,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 var self = this,
                     el,
                     view = self.get("view");
-                setViewCssClassByHierarchy(self, view);
                 view.create(undefined);
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
@@ -923,30 +923,32 @@ KISSY.add("component/delegateChildren", function (S) {
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target, e);
-        if (control) {
-            // Child control identified; forward the event.
-            switch (e.type) {
-                case "mousedown":
-                    control.handleMouseDown(e);
-                    break;
-                case "mouseup":
-                    control.handleMouseUp(e);
-                    break;
-                case "mouseover":
-                    control.handleMouseOver(e);
-                    break;
-                case "mouseout":
-                    control.handleMouseOut(e);
-                    break;
-                case "contextmenu":
-                    control.handleContextMenu(e);
-                    break;
-                case "dblclick":
-                    control.handleDblClick(e);
-                    break;
-                default:
-                    S.error(e.type + " unhandled!");
+        if (!this.get("disabled")) {
+            var control = this.getOwnerControl(e.target, e);
+            if (control) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case "mousedown":
+                        control.handleMouseDown(e);
+                        break;
+                    case "mouseup":
+                        control.handleMouseUp(e);
+                        break;
+                    case "mouseover":
+                        control.handleMouseOver(e);
+                        break;
+                    case "mouseout":
+                        control.handleMouseOut(e);
+                        break;
+                    case "contextmenu":
+                        control.handleContextMenu(e);
+                        break;
+                    case "dblclick":
+                        control.handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + " unhandled!");
+                }
             }
         }
     }
@@ -1119,7 +1121,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              */
             getComponentCssClassWithState:function (state) {
                 var self = this,
-                    componentCls = this.__componentClasses;
+                    componentCls = self.get("ksComponentCss");
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },
@@ -1230,6 +1232,12 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                  * see {@link Component.Controller#highlighted}
                  */
                 highlighted:{}
+            },
+            HTML_PARSER:{
+                disabled:function (el) {
+                    var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
+                    return self.get("el").hasClass(componentCls);
+                }
             }
         });
 }, {
@@ -3406,7 +3414,7 @@ KISSY.add("component/uibase/positionrender", function () {
                 return self.get("el") && self.get("el").offset().top;
             }
         },
-        Z_INDEX:{
+        zIndex:{
             value:Z_INDEX
         }
     };
@@ -3418,7 +3426,7 @@ KISSY.add("component/uibase/positionrender", function () {
             this.get("el").addClass("ks-ext-position");
         },
 
-        _uiSetZ_INDEX:function (x) {
+        _uiSetZIndex:function (x) {
             this.get("el").css("z-index", x);
         },
 

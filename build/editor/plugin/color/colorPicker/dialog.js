@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
  * color picker
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         ".ks-editor-color-advanced-picker-right a {" +
         "height:2px;" +
         "line-height:0;" +
-        "fontSize:0;" +
+        "font-size:0;" +
         "display:block;" +
         "}" +
         "" +
@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay
         "width:15px;" +
         "height:16px;" +
         "line-height:0;" +
-        "fontSize:0;" +
+        "font-size:0;" +
         "display:block;" +
         "}" +
         ".ks-editor-color-advanced-picker-left a:hover{" +

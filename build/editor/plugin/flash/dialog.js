@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
  * flash dialog
@@ -244,5 +244,5 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
     return FlashDialog;
 }, {
-    requires:['editor', '../flashCommon/utils', '../overlay/', '../menubutton/']
+    requires:['editor', '../flash-common/utils', '../overlay/', '../menubutton/']
 });

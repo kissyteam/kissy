@@ -85,5 +85,5 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         return menu;
     };
 }, {
-    requires:['editor', 'menu', '../focusFix/']
+    requires:['editor', 'menu', '../focus-fix/']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:14
+build time: Jul 30 19:00
 */
 /**
  * @fileOverview form data  serialization util
@@ -1900,6 +1900,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 if (arguments.length > 1) {
                     r = S.makeArray(arguments);
                 }
+                // 先存在内存里, onload 后再读出来处理
                 response = [r];
             };
 

@@ -11,5 +11,5 @@ KISSY.add("editor/plugin/indent/cmd", function (S, Editor, dentUtils) {
     };
 
 }, {
-    requires:['editor', '../dentUtils/cmd']
+    requires:['editor', '../dent-utils/cmd']
 });

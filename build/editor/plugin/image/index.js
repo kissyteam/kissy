@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
  * insert image for kissy editor
@@ -167,5 +167,5 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         '../button/',
         '../bubble/',
         '../contextmenu/',
-        '../dialogLoader/']
+        '../dialog-loader/']
 });

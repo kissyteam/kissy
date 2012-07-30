@@ -11,7 +11,5 @@ Includes:
 * common.css: common class utils, such as ks-clear, ks-inline-block
 * fly-swing.css: fly-swing grids system
 * grids.css: bootstrap grids system (fixed and fluid)
-# * responsive.css: responsive web design For Phone and tablet
 * base.css = reset.css + fly-swing.css + grids.css + common.css
-# * dpl-responsive.css = reset.css + fly-swing.css + grids.css + common.css + responsive.css
-
+* table.css: bootstrap tabular data style

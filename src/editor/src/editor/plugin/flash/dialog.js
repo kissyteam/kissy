@@ -239,5 +239,5 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
     return FlashDialog;
 }, {
-    requires:['editor', '../flashCommon/utils', '../overlay/', '../menubutton/']
+    requires:['editor', '../flash-common/utils', '../overlay/', '../menubutton/']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -1541,7 +1541,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             columns = _self.get('columns');
             S.each(columns, function (column) {
                 if (column.get('visible')) {
-                    totalWidth += column.get("el").outerWidth();
+                    totalWidth += column.get("el").outerWidth();//column.get('width');
                 }
             });
             return totalWidth;
@@ -2132,7 +2132,8 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
  */
 KISSY.add('grid/header', function (S, Component, Column) {
 
-    var CLS_SCROLL_WITH = 17;
+    var CLS_SCROLL_WITH = 17,
+		UA = S.UA;
 
     var headerRender = Component.Render.extend({
 
@@ -2263,7 +2264,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
 
                 S.each(columns, function (column) {
                     if (column.get('visible')) {
-                        totalWidth += column.get("el").outerWidth();
+                        totalWidth += column.get("el").outerWidth();//column.get('width')
                     }
                 });
                 return totalWidth;
@@ -2377,13 +2378,27 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 var _self = this,
                     columns = _self.getColumns(),
                     width = _self.get('width'),
+					totalWidth = width,
+					realWidth = 0,
+					appendWidth = 0,
+					lastShowColumn = null,
                     allowScroll = _self._isAllowScrollLeft();
-
+				
+				/**
+				* @private
+				*/
+				function setColoumnWidthSilent(column,colWidth){
+					var columnEl = column.get("el");
+					column.set("width",colWidth , {
+						silent:1
+					});
+					columnEl.width(colWidth);
+				}
                 //if there is not a width config of grid ,The forceFit action can't work
                 if (width) {
-
                     if (allowScroll) {
                         width -= CLS_SCROLL_WITH;
+						totalWidth = width;
                     }
 
                     var adjustCount = 0;
@@ -2397,23 +2412,28 @@ KISSY.add('grid/header', function (S, Component, Column) {
                         }
                     });
 
-                    var colWidth = width / adjustCount;
+                    var colWidth = Math.floor(width / adjustCount);
 
-                    S.each(columns, function (column) {
+                    S.each(columns, function (column,index) {
                         if (column.get('visible') && column.get('resizable')) {
-                            var columnEl = column.get("el");
-                            var borderWidth =
-                                parseInt(columnEl.css("border-left-width")) || 0 +
-                                    parseInt(columnEl.css("border-right-width")) || 0;
+                            
+							//chrome 下border-left-width取不到，所以暂时使用固定边框
+							//第一个边框无宽度，ie 下仍然存在Bug，所以做ie 的兼容
+                            var borderWidth = UA.ie ? 1 : (index == 0 ? 0 : 1);
+                               /* parseInt(columnEl.css("border-left-width")) || 0 +
+                                    parseInt(columnEl.css("border-right-width")) || 0;*/
                             // ！ note
                             //
                             // 会再调用 setTableWidth， 循环调用
-                            column.set("width", colWidth - borderWidth, {
-                                silent:1
-                            });
-                            columnEl.width(colWidth - borderWidth);
+                            setColoumnWidthSilent(column,colWidth - borderWidth);
+							realWidth += colWidth;
+							lastShowColumn = column;
                         }
                     });
+					if(lastShowColumn){
+						appendWidth = totalWidth - realWidth;
+						setColoumnWidthSilent(lastShowColumn,lastShowColumn.get('width') + appendWidth);
+					}
 
                     _self.fire('forceFitWidth');
                 }

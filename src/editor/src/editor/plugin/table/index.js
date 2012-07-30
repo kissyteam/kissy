@@ -564,5 +564,5 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
 
     return TablePlugin;
 }, {
-    requires:['editor', '../dialogLoader/', '../contextmenu/']
+    requires:['editor', '../dialog-loader/', '../contextmenu/']
 });

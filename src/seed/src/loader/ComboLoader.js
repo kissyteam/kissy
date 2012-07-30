@@ -271,7 +271,6 @@
                     i,
                     SS = self.SS,
                     Config = SS.Config,
-                    packageBase,
                     combos = {};
 
                 S.each(modNames, function (modName) {
@@ -281,15 +280,17 @@
                         type = mod.getType(),
                         mods,
                         packageName = packageInfo.getName();
-                    combos[packageBase] = combos[packageBase] || {};
-                    mods = combos[packageBase][type] = combos[packageBase][type] || [];
-                    mods.combine = 1;
-                    if (packageInfo.isCombine() === false) {
-                        mods.combine = 0;
+                    combos[packageName] = combos[packageName] || {};
+                    if (!(mods = combos[packageName][type])) {
+                        mods = combos[packageName][type] = combos[packageName][type] || [];
+                        mods.combine = 1;
+                        if (packageInfo.isCombine() === false) {
+                            mods.combine = 0;
+                        }
+                        mods.tag = packageInfo.getTag();
+                        mods.charset = packageInfo.getCharset();
+                        mods.packageBase = packageBase;
                     }
-                    mods.tag = packageInfo.getTag();
-                    mods.charset = mod.getCharset();
-                    mods.name = packageName;
                     mods.push(mod);
                 });
 
@@ -298,29 +299,30 @@
                         css:{}
                     },
                     t,
+                    packageName,
                     type,
                     comboPrefix = Config.comboPrefix,
                     comboSep = Config.comboSep,
                     maxUrlLength = Config.comboMaxUrlLength;
 
-                for (packageBase in combos) {
-                    if (combos.hasOwnProperty(packageBase)) {
-                        for (type in combos[packageBase]) {
-                            if (combos[packageBase].hasOwnProperty(type)) {
+                for (packageName in combos) {
+                    if (combos.hasOwnProperty(packageName)) {
+                        for (type in combos[packageName]) {
+                            if (combos[packageName].hasOwnProperty(type)) {
                                 t = [];
 
-                                var jss = combos[packageBase][type],
+                                var jss = combos[packageName][type],
                                     tag = jss.tag,
-                                    packageName = jss.name,
+                                    packageBase = jss.packageBase,
                                     prefix,
                                     path,
                                     l,
                                     packageNamePath = packageName + "/";
 
-                                res[type][packageBase] = [];
-                                res[type][packageBase].charset = jss.charset;
+                                res[type][packageName] = [];
+                                res[type][packageName].charset = jss.charset;
                                 // current package's mods
-                                res[type][packageBase].mods = [];
+                                res[type][packageName].mods = [];
                                 // add packageName to common prefix
                                 // combo grouped by package
                                 prefix = packageBase +
@@ -329,7 +331,7 @@
                                 l = prefix.length;
 
                                 function pushComboUrl() {
-                                    res[type][packageBase].push(utils.getMappedPath(
+                                    res[type][packageName].push(utils.getMappedPath(
                                         SS,
                                         prefix + t.join(comboSep) + (tag ? ("?t=" +
                                             encodeURIComponent(tag)) : "")));
@@ -338,9 +340,9 @@
                                 for (i = 0; i < jss.length; i++) {
                                     // remove packageName prefix from mod path
                                     path = jss[i].getPath();
-                                    res[type][packageBase].mods.push(jss[i]);
+                                    res[type][packageName].mods.push(jss[i]);
                                     if (!jss.combine) {
-                                        res[type][packageBase].push(jss[i].getFullPath());
+                                        res[type][packageName].push(jss[i].getFullPath());
                                         continue;
                                     }
                                     if (packageName) {

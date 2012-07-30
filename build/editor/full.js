@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 18:18
+build time: Jul 30 19:03
 */
 /**
  * Set up editor constructor
@@ -2536,75 +2536,75 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 KISSY.add("editor/core/meta", function () {
 
     var map = {
-            "backColor":['../color/btn', './cmd'],
-            "localStorage":["../flashBridge/"],
+            "back-color":['../color/btn', './cmd'],
+            "local-storage":["../flash-bridge/"],
             "bold":['../font/ui', './cmd'],
-            "draft":["../localStorage/", '../menubutton/'],
-            "flash":['../flashCommon/baseClass', '../flashCommon/utils'],
-            "fontFamily":['../font/ui', './cmd'],
-            "fontSize":['../font/ui', './cmd'],
-            "foreColor":['../color/btn', './cmd'],
+            "draft":["../local-storage/", '../menubutton/'],
+            "flash":['../flash-common/baseClass', '../flash-common/utils'],
+            "font-family":['../font/ui', './cmd'],
+            "font-size":['../font/ui', './cmd'],
+            "fore-color":['../color/btn', './cmd'],
             "heading":['./cmd'],
-            "image":['../button/', '../bubble/', '../contextmenu/', '../dialogLoader/'],
+            "image":['../button/', '../bubble/', '../contextmenu/', '../dialog-loader/'],
             "indent":['./cmd'],
-            "orderedList":['../listUtils/btn', './cmd'],
-            "unorderedList":['../listUtils/btn', './cmd'],
+            "ordered-list":['../list-utils/btn', './cmd'],
+            "unordered-list":['../list-utils/btn', './cmd'],
             "italic":['../font/ui', './cmd'],
-            "justifyCenter":['./cmd'],
-            "justifyLeft":['./cmd'],
-            "justifyRight":['./cmd'],
-            "link":['../bubble/', './utils', '../dialogLoader/'],
+            "justify-center":['./cmd'],
+            "justify-left":['./cmd'],
+            "justify-right":['./cmd'],
+            "link":['../bubble/', './utils', '../dialog-loader/'],
             "maximize":['./cmd'],
-            "multipleUpload":['../dialogLoader/'],
+            "multiple-upload":['../dialog-loader/'],
             "outdent":['./cmd'],
-            "overlay":['dd', '../focusFix/'],
-            "pageBreak":["../fakeObjects/"],
+            "overlay":['dd', '../focus-fix/'],
+            "pageBreak":["../fake-objects/"],
             "removeFormat":['./cmd', '../button/'],
             "resize":['dd'],
             "menubutton":['menubutton'],
             "smiley":['../overlay/'],
-            "sourceArea":['../button/'],
-            "strikeThrough":['../font/ui', './cmd'],
-            "table":['../dialogLoader/', '../contextmenu/'],
+            "sourcearea":['../button/'],
+            "strike-through":['../font/ui', './cmd'],
+            "table":['../dialog-loader/', '../contextmenu/'],
             "underline":['../font/ui', './cmd'],
             "undo":['./btn', './cmd'],
-            "contextmenu":['menu', '../focusFix/'],
-            "video":['../flashCommon/utils', '../flashCommon/baseClass'],
-            "xiamiMusic":['../flashCommon/baseClass', '../flashCommon/utils']
+            "contextmenu":['menu', '../focus-fix/'],
+            "video":['../flash-common/utils', '../flash-common/baseClass'],
+            "xiami-music":['../flash-common/baseClass', '../flash-common/utils']
         },
         m,
         m2,
         map2 = {
-            "backColor/cmd":['../color/cmd'],
+            "back-color/cmd":['../color/cmd'],
             "bold/cmd":['../font/cmd'],
-            "color/btn":['../button/', '../overlay/', '../dialogLoader/'],
-            "color/colorPicker/dialog":['../../overlay/'],
-            "dentUtils/cmd":['../listUtils/'],
-            "flash/dialog":['../flashCommon/utils', '../overlay/', '../menubutton/'],
-            "flashCommon/baseClass":['../contextmenu/', '../bubble/', '../dialogLoader/', './utils'],
+            "color/btn":['../button/', '../overlay/', '../dialog-loader/'],
+            "color/color-picker/dialog":['../../overlay/'],
+            "dent-utils/cmd":['../list-utils/'],
+            "flash/dialog":['../flash-common/utils', '../overlay/', '../menubutton/'],
+            "flash-common/baseClass":['../contextmenu/', '../bubble/', '../dialog-loader/', './utils'],
             "font/ui":['../button/', '../menubutton/'],
-            "fontFamily/cmd":['../font/cmd'],
-            "fontSize/cmd":['../font/cmd'],
-            "foreColor/cmd":['../color/cmd'],
+            "font-family/cmd":['../font/cmd'],
+            "font-size/cmd":['../font/cmd'],
+            "fore-color/cmd":['../color/cmd'],
             "image/dialog":['../overlay/', 'switchable', '../menubutton/'],
-            "indent/cmd":['../dentUtils/cmd'],
-            "orderedList/cmd":['../listUtils/cmd'],
-            "unorderedList/cmd":['../listUtils/cmd'],
+            "indent/cmd":['../dent-utils/cmd'],
+            "ordered-list/cmd":['../list-utils/cmd'],
+            "unordered-list/cmd":['../list-utils/cmd'],
             "italic/cmd":['../font/cmd'],
-            "justifyCenter/cmd":['../justifyUtils/cmd'],
-            "justifyLeft/cmd":['../justifyUtils/cmd'],
-            "justifyRight/cmd":['../justifyUtils/cmd'],
+            "justify-center/cmd":['../justify-utils/cmd'],
+            "justify-left/cmd":['../justify-utils/cmd'],
+            "justify-right/cmd":['../justify-utils/cmd'],
             "link/dialog":['../overlay/', './utils'],
-            "listUtils/btn":['../button/'],
-            "listUtils/cmd":['../listUtils/'],
-            "multipleUpload/dialog":['../progressbar/', '../overlay/', '../flashBridge/', '../localStorage/'],
-            "outdent/cmd":['../dentUtils/cmd'],
-            "strikeThrough/cmd":['../font/cmd'],
+            "list-utils/btn":['../button/'],
+            "list-utils/cmd":['../list-utils/'],
+            "multiple-upload/dialog":['../progressbar/', '../overlay/', '../flash-bridge/', '../local-storage/'],
+            "outdent/cmd":['../dent-utils/cmd'],
+            "strike-through/cmd":['../font/cmd'],
             "table/dialog":['../overlay/', '../menubutton/'],
             "underline/cmd":['../font/cmd'],
             "undo/btn":['../button/'],
             "video/dialog":['../flash/dialog', '../menubutton/'],
-            "xiamiMusic/dialog":['../flash/dialog', '../menubutton/']
+            "xiami-music/dialog":['../flash/dialog', '../menubutton/']
         }, newMap = {};
 
     for (m in map) {
@@ -9083,7 +9083,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
  * backColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
+KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
 
     var BACK_COLOR_STYLE = {
         element:'span',
@@ -9118,7 +9118,7 @@ KISSY.add("editor/plugin/backColor/cmd", function (S, cmd) {
  * backColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/backColor/index", function (S, Editor, Button, cmd) {
+KISSY.add("editor/plugin/back-color/index", function (S, Editor, Button, cmd) {
 
     function backColor(config) {
         this.config=config||{};
@@ -9458,7 +9458,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/checkboxSourcearea/index", function (S, Editor) {
+KISSY.add("editor/plugin/checkbox-sourcearea/index", function (S, Editor) {
     var Node = S.Node;
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
@@ -9677,7 +9677,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorPicker",
+                DialogLoader.useDialog(editor, "color/color-picker",
                     self.get("pluginConfig"),
                     self.get("cmdType"));
             });
@@ -9720,7 +9720,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     });
 
 }, {
-    requires:['editor', '../button/', '../overlay/', '../dialogLoader/']
+    requires:['editor', '../button/', '../overlay/', '../dialog-loader/']
 });/**
  * color command.
  * @author yiminghe@gmail.com
@@ -9836,7 +9836,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         return menu;
     };
 }, {
-    requires:['editor', 'menu', '../focusFix/']
+    requires:['editor', 'menu', '../focus-fix/']
 });
 /**
  * Add indent and outdent command identifier for KISSY Editor.Modified from CKEditor
@@ -9846,7 +9846,7 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
+KISSY.add("editor/plugin/dent-utils/cmd", function (S, Editor, ListUtils) {
 
     var listNodeNames = {ol:1, ul:1},
         Walker = Editor.Walker,
@@ -10117,12 +10117,12 @@ KISSY.add("editor/plugin/dentUtils/cmd", function (S, Editor, ListUtils) {
     };
 
 }, {
-    requires:['editor', '../listUtils/']
+    requires:['editor', '../list-utils/']
 });/**
  * load editor's dialog dynamically
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/dialogLoader/index", function (S, Overlay, Editor) {
+KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
     var globalMask,
         loadMask = {
             loading:function () {
@@ -10379,7 +10379,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 help = new Node(draftCfg['helpHtml'] || "");
             var arrowCss = "height:0;" +
                 "position:absolute;" +
-                "fontSize:0;" +
+                "font-size:0;" +
                 "width:0;" +
                 "border:8px #000 solid;" +
                 "border-color:#000 transparent transparent transparent;" +
@@ -10538,14 +10538,14 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     return DraftPlugin;
 
 }, {
-    "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
+    "requires":["editor", "../local-storage/", "overlay", '../menubutton/']
 });/**
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
  * @refer: http://www.html5rocks.com/tutorials/file/filesystem/
  *         http://yiminghe.iteye.com/blog/848613
  */
-KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
+KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
         Utils = Editor.Utils,
@@ -10726,7 +10726,7 @@ KISSY.add("editor/plugin/dragUpload/index", function (S, Editor) {
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
+KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     var Node = S.Node;
     var CLASS = "ks-editor-element-path";
 
@@ -10819,7 +10819,7 @@ KISSY.add("editor/plugin/elementPath/index", function (S, Editor) {
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
+KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
     var Node = S.Node,
         DOM = S.DOM,
         Utils = Editor.Utils,
@@ -11002,7 +11002,7 @@ KISSY.add("editor/plugin/fakeObjects/index", function (S, Editor) {
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashBridge/index", function (S, Editor, flashUtils) {
+KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
 
     var instances = {};
 
@@ -11220,12 +11220,12 @@ KISSY.add("editor/plugin/flashBridge/index", function (S, Editor, flashUtils) {
     return FlashBridge;
 
 }, {
-    requires:['editor', '../flashCommon/utils']
+    requires:['editor', '../flash-common/utils']
 });/**
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMenu, Bubble, DialogLoader, flashUtils) {
+KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMenu, Bubble, DialogLoader, flashUtils) {
 
     var Node = S.Node;
 
@@ -11392,12 +11392,12 @@ KISSY.add("editor/plugin/flashCommon/baseClass", function (S, Editor, ContextMen
     return Flash;
 
 }, {
-    requires:['editor', '../contextmenu/', '../bubble/', '../dialogLoader/', './utils']
+    requires:['editor', '../contextmenu/', '../bubble/', '../dialog-loader/', './utils']
 });/**
  * flash utilities
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flashCommon/utils", function (S) {
+KISSY.add("editor/plugin/flash-common/utils", function (S) {
     var DOM = S.DOM, Node = S.Node, UA = S.UA;
     var flashUtils = {
 
@@ -11691,12 +11691,12 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     return FlashPlugin;
 
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
+    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });/**
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/focusFix/index", function (S, Editor) {
+KISSY.add("editor/plugin/focus-fix/index", function (S, Editor) {
     var UA = S.UA,
         focusManager = Editor.focusManager;
 
@@ -11768,7 +11768,7 @@ KISSY.add("editor/plugin/focusFix/index", function (S, Editor) {
  * fontFamily command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
+KISSY.add("editor/plugin/font-family/cmd", function (S, Editor, Cmd) {
     var fontFamilyStyle = {
         element:'span',
         styles:{
@@ -11796,7 +11796,7 @@ KISSY.add("editor/plugin/fontFamily/cmd", function (S, Editor, Cmd) {
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
+KISSY.add("editor/plugin/font-family/index", function (S, Editor, ui, cmd) {
 
     function FontFamilyPlugin(config) {
         this.config = config || {};
@@ -11894,7 +11894,7 @@ KISSY.add("editor/plugin/fontFamily/index", function (S, Editor, ui, cmd) {
  * fontSize command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
+KISSY.add("editor/plugin/font-size/cmd", function (S, Editor, Cmd) {
     var fontSizeStyle = {
         element:'span',
         styles:{
@@ -11922,7 +11922,7 @@ KISSY.add("editor/plugin/fontSize/cmd", function (S, Editor, Cmd) {
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fontSize/index", function (S, Editor, ui, cmd) {
+KISSY.add("editor/plugin/font-size/index", function (S, Editor, ui, cmd) {
 
     function FontSizePlugin(config) {
         this.config = config || {};
@@ -12188,7 +12188,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
  * foreColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
+KISSY.add("editor/plugin/fore-color/cmd", function (S, cmd) {
 
     var COLOR_STYLES = {
         element:'span',
@@ -12223,7 +12223,7 @@ KISSY.add("editor/plugin/foreColor/cmd", function (S, cmd) {
  * foreColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/foreColor/index", function (S, Editor, Button, cmd) {
+KISSY.add("editor/plugin/fore-color/index", function (S, Editor, Button, cmd) {
 
     function ForeColorPlugin(config) {
         this.config = config || {};
@@ -12541,7 +12541,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         '../button/',
         '../bubble/',
         '../contextmenu/',
-        '../dialogLoader/']
+        '../dialog-loader/']
 });/**
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
@@ -12555,7 +12555,7 @@ KISSY.add("editor/plugin/indent/cmd", function (S, Editor, dentUtils) {
     };
 
 }, {
-    requires:['editor', '../dentUtils/cmd']
+    requires:['editor', '../dent-utils/cmd']
 });/**
  * Add indent button.
  * @author yiminghe@gmail.com
@@ -12650,7 +12650,7 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
  * Add justifyCenter command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
+KISSY.add("editor/plugin/justify-center/cmd", function (S, justifyUtils) {
 
     return {
         init:function (editor) {
@@ -12659,12 +12659,12 @@ KISSY.add("editor/plugin/justifyCenter/cmd", function (S, justifyUtils) {
     };
 
 }, {
-    requires:['../justifyUtils/cmd']
+    requires:['../justify-utils/cmd']
 });/**
  * justifyCenter button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCenterCmd) {
+KISSY.add("editor/plugin/justify-center/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyCenter");
@@ -12719,7 +12719,7 @@ KISSY.add("editor/plugin/justifyCenter/index", function (S, Editor, justifyCente
  * Add justifyCenter command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
+KISSY.add("editor/plugin/justify-left/cmd", function (S, justifyUtils) {
 
     return {
         init:function (editor) {
@@ -12728,12 +12728,12 @@ KISSY.add("editor/plugin/justifyLeft/cmd", function (S, justifyUtils) {
     };
 
 }, {
-    requires:['../justifyUtils/cmd']
+    requires:['../justify-utils/cmd']
 });/**
  * justifyLeft button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterCmd) {
+KISSY.add("editor/plugin/justify-left/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyLeft");
@@ -12787,7 +12787,7 @@ KISSY.add("editor/plugin/justifyLeft/index", function (S, Editor, justifyCenterC
  * Add justifyCenter command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
+KISSY.add("editor/plugin/justify-right/cmd", function (S, justifyUtils) {
 
     return {
         init:function (editor) {
@@ -12796,12 +12796,12 @@ KISSY.add("editor/plugin/justifyRight/cmd", function (S, justifyUtils) {
     };
 
 }, {
-    requires:['../justifyUtils/cmd']
+    requires:['../justify-utils/cmd']
 });/**
  * justifyRight button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenterCmd) {
+KISSY.add("editor/plugin/justify-right/index", function (S, Editor, justifyCenterCmd) {
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyRight");
@@ -12858,7 +12858,7 @@ KISSY.add("editor/plugin/justifyRight/index", function (S, Editor, justifyCenter
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justifyUtils/cmd", function (S, Editor) {
+KISSY.add("editor/plugin/justify-utils/cmd", function (S, Editor) {
     var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi,
         default_align = "left";
 
@@ -13022,7 +13022,7 @@ this.config=config||{};
     return LinkPlugin;
 }, {
     requires:['editor', '../bubble/',
-        './utils', '../dialogLoader/', '../button/']
+        './utils', '../dialog-loader/', '../button/']
 });/**
  * link utils
  * @author yiminghe@gmail.com
@@ -13117,7 +13117,7 @@ KISSY.add("editor/plugin/link/utils", function (S, Editor) {
  * Common btn for list.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
+KISSY.add("editor/plugin/list-utils/btn", function (S, Editor, Button) {
 
     function onClick() {
         var editor = this.get("editor");
@@ -13156,7 +13156,7 @@ KISSY.add("editor/plugin/listUtils/btn", function (S, Editor, Button) {
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefined) {
+KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefined) {
 
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
@@ -13530,12 +13530,12 @@ KISSY.add("editor/plugin/listUtils/cmd", function (S, Editor, ListUtils, undefin
     };
 
 }, {
-    requires:['editor', '../listUtils/']
+    requires:['editor', '../list-utils/']
 });/**
  * list Utils
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
+KISSY.add('editor/plugin/list-utils/index', function (S, Editor) {
     var listNodeNames = {ol:1, ul:1},
         Node = S.Node,
         DOM = S.DOM,
@@ -13724,7 +13724,7 @@ KISSY.add('editor/plugin/listUtils/index', function (S, Editor) {
  * localStorage support for ie<8
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, FlashBridge) {
+KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, FlashBridge) {
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行
@@ -13734,7 +13734,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var movie = Editor.Utils.debugUrl("plugin/localStorage/swfstore.swf?t=" + (+new Date()));
+    var movie = Editor.Utils.debugUrl("plugin/local-storage/swfstore.swf?t=" + (+new Date()));
 
     var store = new FlashBridge({
         movie:movie,
@@ -13815,7 +13815,7 @@ KISSY.add("editor/plugin/localStorage/index", function (S, Editor, Overlay, Flas
     //不能立即运行，ie6 可能会没有 domready 添加 flash 节点
     //导致：operation aborted
     attach:false,
-    "requires":["editor", "overlay", "../flashBridge/"]
+    "requires":["editor", "overlay", "../flash-bridge/"]
 });/**
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
@@ -14244,7 +14244,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
  * multipleUpload button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoader) {
+KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoader) {
 
     function multipleUpload(config) {
         this.config = config || {};
@@ -14257,7 +14257,7 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
                 tooltip:"批量插图",
                 listeners:{
                     click:function () {
-                        DialogLoader.useDialog(editor, "multipleUpload", self.config);
+                        DialogLoader.useDialog(editor, "multiple-upload", self.config);
 
                     }
                 },
@@ -14269,12 +14269,12 @@ KISSY.add("editor/plugin/multipleUpload/index", function (S, Editor, DialogLoade
     return multipleUpload;
 
 }, {
-    requires:['editor', '../dialogLoader/']
+    requires:['editor', '../dialog-loader/']
 });/**
  * orderedList command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
+KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
 
     var insertOrderedList = "insertOrderedList",
         ListCommand = listCmd.ListCommand,
@@ -14310,12 +14310,12 @@ KISSY.add("editor/plugin/orderedList/cmd", function (S, Editor, listCmd) {
     };
 
 }, {
-    requires:['editor', '../listUtils/cmd']
+    requires:['editor', '../list-utils/cmd']
 });/**
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/orderedList/index", function (S, Editor, ListButton, ListCmd) {
+KISSY.add("editor/plugin/ordered-list/index", function (S, Editor, ListButton, ListCmd) {
 
     function orderedList() {
 
@@ -14334,7 +14334,7 @@ KISSY.add("editor/plugin/orderedList/index", function (S, Editor, ListButton, Li
 
     return orderedList;
 }, {
-    requires:['editor', '../listUtils/btn', './cmd']
+    requires:['editor', '../list-utils/btn', './cmd']
 });/**
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
@@ -14362,7 +14362,7 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
     };
 
 }, {
-    requires:['editor', '../dentUtils/cmd']
+    requires:['editor', '../dent-utils/cmd']
 });/**
  * Add indent button.
  * @author yiminghe@gmail.com
@@ -14460,10 +14460,9 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
             draggable:{
-                value:true
-            },
-            constrain:{
-                value:true
+                value:{
+                    constrain:true
+                }
             },
             aria:{
                 value:true
@@ -14473,12 +14472,12 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', '../focusFix/', 'dd']
+    requires:["editor", 'overlay', '../focus-fix/', 'dd']
 });/**
  * pagebreak functionality
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
+KISSY.add("editor/plugin/page-break/index", function (S, Editor, fakeObjects) {
     var Node = S.Node,
         CLS = "ke_pagebreak",
         TYPE = "div",
@@ -14573,7 +14572,7 @@ KISSY.add("editor/plugin/pageBreak/index", function (S, Editor, fakeObjects) {
 
     return pageBreak;
 }, {
-    "requires":["editor", "../fakeObjects/"]
+    "requires":["editor", "../fake-objects/"]
 });/**
  * preview for kissy editor
  * @author yiminghe@gmail.com
@@ -14700,10 +14699,10 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
     });
    return ProgressBar;
 });/**
- * Add removeFormat command for KISSY Editor.
+ * Add remove-format command for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
+KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
     var KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         DOM = S.DOM,
@@ -14841,7 +14840,7 @@ KISSY.add("editor/plugin/removeFormat/cmd", function (S, Editor) {
  * removeFormat for selection.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
+KISSY.add("editor/plugin/remove-format/index", function (S, Editor, formatCmd) {
 
     function removeFormat() {
     }
@@ -14855,7 +14854,6 @@ KISSY.add("editor/plugin/removeFormat/index", function (S, Editor, formatCmd) {
                     click:function () {
                         editor.execCommand("removeFormat");
                     }
-
                 },
                 mode:Editor.WYSIWYG_MODE
             });
@@ -15055,17 +15053,17 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
+KISSY.add("editor/plugin/sourcearea/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
-    function sourceArea() {
+    function sourcearea() {
     }
 
-    S.augment(sourceArea, {
+    S.augment(sourcearea, {
         renderUI:function (editor) {
-            editor.addButton("sourceArea", {
+            editor.addButton("sourcearea", {
                 tooltip:"源码",
                 listeners:{
                     afterSyncUI:function () {
@@ -15093,15 +15091,15 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
         }
     });
 
-    return sourceArea;
+    return sourcearea;
 }, {
     requires:['editor', '../button/']
 });
 /**
- * strikeThrough command
+ * strike-through command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
+KISSY.add("editor/plugin/strike-through/cmd", function (S, Editor, Cmd) {
 
     var STRIKE_STYLE = new Editor.Style({
         element:'del',
@@ -15131,7 +15129,7 @@ KISSY.add("editor/plugin/strikeThrough/cmd", function (S, Editor, Cmd) {
  * strikeThrough button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/strikeThrough/index", function (S, Editor, ui, cmd) {
+KISSY.add("editor/plugin/strike-through/index", function (S, Editor, ui, cmd) {
 
     function StrikeThrough() {
     }
@@ -15715,7 +15713,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
 
     return TablePlugin;
 }, {
-    requires:['editor', '../dialogLoader/', '../contextmenu/']
+    requires:['editor', '../dialog-loader/', '../contextmenu/']
 });/**
  * underline command
  * @author yiminghe@gmail.com
@@ -16140,7 +16138,7 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
  * ol command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
+KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
 
     var insertUnorderedList = "insertUnorderedList",
         ListCommand = listCmd.ListCommand,
@@ -16176,12 +16174,12 @@ KISSY.add("editor/plugin/unorderedList/cmd", function (S, Editor, listCmd) {
     };
 
 }, {
-    requires:['editor', '../listUtils/cmd']
+    requires:['editor', '../list-utils/cmd']
 });/**
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, ListCmd) {
+KISSY.add("editor/plugin/unordered-list/index", function (S, Editor, ListButton, ListCmd) {
 
     function unorderedList() {
     }
@@ -16195,11 +16193,11 @@ KISSY.add("editor/plugin/unorderedList/index", function (S, Editor, ListButton, 
                 mode:Editor.WYSIWYG_MODE
             }, ListButton);
         }
-    })
+    });
 
     return unorderedList;
 }, {
-    requires:['editor', '../listUtils/btn', './cmd']
+    requires:['editor', '../list-utils/btn', './cmd']
 });/**
  * video button.
  * @author yiminghe@gmail.com
@@ -16323,14 +16321,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass', '../fakeObjects/']
+    requires:['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
 });/**
- * xiamiMusic button
+ * xiami-music button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
     var CLS_XIAMI = "ke_xiami",
-        TYPE_XIAMI = "xiamiMusic";
+        TYPE_XIAMI = "xiami-music";
 
     function XiamiMusic() {
         XiamiMusic.superclass.constructor.apply(this, arguments);
@@ -16452,7 +16450,7 @@ KISSY.add("editor/plugin/xiamiMusic/index", function (S, Editor, FlashBaseClass,
 
     return XiamiMusicPlugin;
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
+    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });/**
  * For package Editor full.
  * @author yiminghe@gmail.com

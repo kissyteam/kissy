@@ -1,7 +1,9 @@
 .ks-editor-tabs {
     padding-left: 10px;
+    margin: 0;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
+    list-style: none;
 }
 
 .ks-editor-tabs li {
@@ -19,6 +21,7 @@
     text-align: center;
     width: 120px;
     outline: none;
+    list-style: none;
 }
 
 .ks-editor-tabs li.ks-active {

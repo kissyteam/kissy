@@ -150,7 +150,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/colorPicker",
+                DialogLoader.useDialog(editor, "color/color-picker",
                     self.get("pluginConfig"),
                     self.get("cmdType"));
             });
@@ -193,5 +193,5 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     });
 
 }, {
-    requires:['editor', '../button/', '../overlay/', '../dialogLoader/']
+    requires:['editor', '../button/', '../overlay/', '../dialog-loader/']
 });

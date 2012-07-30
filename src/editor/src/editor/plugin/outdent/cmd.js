@@ -25,5 +25,5 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
     };
 
 }, {
-    requires:['editor', '../dentUtils/cmd']
+    requires:['editor', '../dent-utils/cmd']
 });

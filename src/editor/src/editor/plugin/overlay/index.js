@@ -60,5 +60,5 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', '../focusFix/', 'dd']
+    requires:["editor", 'overlay', '../focus-fix/', 'dd']
 });

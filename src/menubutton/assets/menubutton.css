@@ -14,7 +14,7 @@
 /* State: resting. */
 .ks-menu-button {
     /* Client apps may override the URL at which they serve the image. */
-    background: #ddd url(../../button/assets/button-bg.png) repeat-x top left;
+    background: #ddd url(../../button/demo/assets/button-bg.png) repeat-x top left;
     border: 1px;
     color: #000;
     cursor: pointer;
