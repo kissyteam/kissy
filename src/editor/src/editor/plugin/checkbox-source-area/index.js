@@ -1,13 +1,8 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.30rc
-MIT Licensed
-build time: Jul 30 19:14
-*/
 /**
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/checkbox-sourcearea/index", function (S, Editor) {
+KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     var Node = S.Node;
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,

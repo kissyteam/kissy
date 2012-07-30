@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:14
+build time: Jul 30 22:47
 */
 KISSY.add("editor/plugin/fake-objects/index",function(e,j){var h=e.Node,m=e.DOM,n=j.Utils.debugUrl("theme/spacer.gif"),l=e.require("htmlparser");e.augment(j,{createFakeElement:function(a,b,c,d,o,k){var f=a.attr("style")||"";a.attr("width")&&(f="width:"+a.attr("width")+"px;"+f);a.attr("height")&&(f="height:"+a.attr("height")+"px;"+f);var g=e.trim(a.attr("class")),a={"class":b+" "+g,src:n,_ke_realelement:encodeURIComponent(o||a._4e_outerHtml(void 0)),_ke_real_node_type:a[0].nodeType,style:f};k&&(delete k.width,
 delete k.height,e.mix(a,k,!1));c&&(a._ke_real_element_type=c);d&&(a._ke_resizable=d);return new h("<img/>",a,this.get("document")[0])},restoreRealElement:function(a){if(a.attr("_ke_real_node_type")!=m.ELEMENT_NODE)return null;var a=decodeURIComponent(a.attr("_ke_realelement")),b=new h("<div>",null,this.get("document")[0]);b.html(a);return b.first().remove()}});var p={tags:{$:function(a){var b=a.getAttribute("_ke_realelement"),c;b&&(c=(new l.Parser(decodeURIComponent(b))).parse());if(b=c&&c.childNodes[0]){if(c=
