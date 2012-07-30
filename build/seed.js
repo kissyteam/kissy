@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 21:03
+build time: Jul 30 21:14
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 30 21:03
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120730210329';
+        S.__BUILD_TIME = '20120730211441';
     })();
 
     return S;
@@ -3084,7 +3084,7 @@ build time: Jul 30 21:03
 
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self, name:'kissy'}));
+            (Env.defaultPackage = new Loader.Package({SS:self, name:''}));
 
         return packageDesc;
     }
@@ -4978,7 +4978,7 @@ build time: Jul 30 21:03
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120730210329'
+        tag:'20120730211441'
     }, getBaseInfo()));
 
     /**
