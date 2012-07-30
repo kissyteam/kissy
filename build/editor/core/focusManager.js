@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * 多实例的管理，主要是焦点控制，主要是为了

@@ -1,0 +1,95 @@
+/**
+ * Menu DPL For KISSY.
+ * @author yiminghe@gmail.com
+ */
+/**
+* Variables to customize the look and feel from Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+/**
+* Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+/**
+* Variables to customize the look and feel from Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+.ks-submenu-arrow {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  margin-top: 4px;
+  margin-right: 8px;
+  vertical-align: top;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  right: 0;
+  border-left: 4px solid black;
+  border-bottom: 4px solid transparent;
+  border-top: 4px solid transparent;
+}
+.ks-menuitem-hover .ks-submenu-arrow {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ks-popupmenu {
+  position: absolute;
+  z-index: 1000;
+}
+.ks-menu {
+  outline: none;
+  padding: 4px 0;
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+}
+.ks-menu .ks-menuseparator {
+  height: 1px;
+  margin: 8px 1px;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  border-bottom: 1px solid #ffffff;
+  *width: 100%;
+  *margin: -5px 0 5px;
+}
+.ks-menu .ks-menuitem {
+  position: relative;
+  display: block;
+  padding: 3px 15px;
+  clear: both;
+  font-weight: normal;
+  color: #333333;
+  white-space: nowrap;
+  cursor: default;
+}
+.ks-menu .ks-menuitem-hover {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #0088cc;
+}
+.ks-menu-disabled .ks-menuitem,
+.ks-menuitem-disabled .ks-menuitem {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+.ks-menuitem-disabled {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}

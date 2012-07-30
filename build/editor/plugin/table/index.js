@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * Add table plugin for KISSY.
@@ -569,5 +569,5 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
 
     return TablePlugin;
 }, {
-    requires:['editor', '../dialogLoader/', '../contextmenu/']
+    requires:['editor', '../dialog-loader/', '../contextmenu/']
 });

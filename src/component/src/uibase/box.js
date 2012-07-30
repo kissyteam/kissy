@@ -113,24 +113,6 @@ KISSY.add('component/uibase/box', function (S) {
         }
     };
 
-
-    Box.HTML_PARSER =
-    /**
-     * @private
-     */
-    {
-        el:function (srcNode) {
-            /**
-             * 如果需要特殊的对现有元素的装饰行为
-             */
-            var self = this;
-            if (self.decorateInternal) {
-                self.decorateInternal(S.one(srcNode));
-            }
-            return srcNode;
-        }
-    };
-
     Box.prototype =
     /**
      * @lends Component.UIBase.Box#

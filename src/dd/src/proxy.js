@@ -78,7 +78,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
                     tag = stamp(drag, 1, MARKER);
 
                 if (tag && self[DESTRUCTOR_ID][tag]) {
-                    return;
+                    return self;
                 }
 
                 function start() {
@@ -129,6 +129,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
                         drag.detach("dragend", end);
                     }
                 };
+                return self;
             },
             /**
              * make this draggable object unproxied
@@ -142,6 +143,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
                     destructors[tag].fn();
                     delete destructors[tag];
                 }
+                return self;
             },
 
             /**

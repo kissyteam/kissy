@@ -63,6 +63,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
     };
 
     BoxRender.HTML_PARSER = {
+        el:function (srcNode) {
+            return srcNode;
+        },
         content:function (el) {
             // 从 contentElCls 的标志中读取
             var contentElCls = this.get("contentElCls");

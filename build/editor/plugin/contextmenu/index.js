@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * contextmenu for kissy editor
@@ -90,5 +90,5 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         return menu;
     };
 }, {
-    requires:['editor', 'menu', '../focusFix/']
+    requires:['editor', 'menu', '../focus-fix/']
 });

@@ -4,7 +4,11 @@
  */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all, WIN = S.Env.host;
+    var $ = Node.all,
+        DESTRUCTOR_ID = "__constrain_destructors",
+        stamp = S.stamp,
+        MARKER = S.guid("__dd_constrain"),
+        WIN = S.Env.host;
 
     /**
      * @class Provide ability to constrain draggable to specified region
@@ -79,10 +83,16 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * @param {DD.Draggable} drag
              */
             attachDrag:function (drag) {
-                var self = this;
+                var self = this,
+                    tag = stamp(drag, 1, MARKER);
+
+                if (tag && self[DESTRUCTOR_ID][tag]) {
+                    return self;
+                }
                 drag.on("dragstart", onDragStart, self)
                     .on("dragend", onDragEnd, self)
                     .on("dragalign", onDragAlign, self);
+                return self;
             },
 
 
@@ -91,10 +101,24 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * @param {DD.Draggable} drag
              */
             detachDrag:function (drag) {
-                var self = this;
-                drag.detach("dragstart", onDragStart, self)
-                    .detach("dragend", onDragEnd, self)
-                    .detach("dragalign", onDragAlign, self);
+                var self = this,
+                    tag = stamp(drag, 1, MARKER),
+                    destructors = self[DESTRUCTOR_ID];
+                if (tag && destructors[tag]) {
+                    drag.detach("dragstart", onDragStart, self)
+                        .detach("dragend", onDragEnd, self)
+                        .detach("dragalign", onDragAlign, self);
+                    delete destructors[tag];
+                }
+                return self;
+            },
+
+            destroy:function () {
+                var self = this,
+                    destructors = S.merge(self[DESTRUCTOR_ID]);
+                S.each(destructors, function (drag) {
+                    self.detachDrag(drag);
+                });
             }
         }, {
             ATTRS:/**

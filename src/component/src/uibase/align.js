@@ -379,11 +379,19 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
             // 新区域位置发生了变化
             if (newElRegion.left != elRegion.left) {
-                self.set("x", newElRegion.left)
+                self.__set("x", null);
+                self.get("view").__set("x", null);
+                self.set("x", newElRegion.left);
             }
 
             if (newElRegion.top != elRegion.top) {
-                self.set("y", newElRegion.top)
+                // https://github.com/kissyteam/kissy/issues/190
+                // 相对于屏幕位置没变，而 left/top 变了
+                // 例如 <div 'relative'><el absolute></div>
+                // el.align(div)
+                self.__set("y", null);
+                self.get("view").__set("y", null);
+                self.set("y", newElRegion.top);
             }
 
             // 新区域高宽发生了变化

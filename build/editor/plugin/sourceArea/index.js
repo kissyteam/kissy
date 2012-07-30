@@ -1,23 +1,23 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
+KISSY.add("editor/plugin/sourcearea/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
-    function sourceArea() {
+    function sourcearea() {
     }
 
-    S.augment(sourceArea, {
+    S.augment(sourcearea, {
         renderUI:function (editor) {
-            editor.addButton("sourceArea", {
+            editor.addButton("sourcearea", {
                 tooltip:"源码",
                 listeners:{
                     afterSyncUI:function () {
@@ -45,7 +45,7 @@ KISSY.add("editor/plugin/sourceArea/index", function (S, Editor) {
         }
     });
 
-    return sourceArea;
+    return sourcearea;
 }, {
     requires:['editor', '../button/']
 });

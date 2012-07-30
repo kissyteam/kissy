@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
 select style for kissy editor
@@ -9,12 +9,14 @@ select style for kissy editor
 **/
 
 .ks-editor-menu-button, .ks-editor-big-select {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
     color: #000;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    border-radius: 2px;
     border-radius: 2px;
     text-decoration: none;
     white-space: nowrap;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * video button.
@@ -126,5 +126,5 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass', '../fakeObjects/']
+    requires:['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
 });

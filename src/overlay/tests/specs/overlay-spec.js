@@ -2,21 +2,21 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
-    var DOM = S.DOM,$ = Node.all;
+KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
+    var DOM = S.DOM, $ = Node.all;
 
-    beforeEach(function() {
+    beforeEach(function () {
         this.addMatchers({
-            toBeEqual: function(expected) {
+            toBeEqual:function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
             }
         });
     });
 
-    describe("overlay", function() {
+    describe("overlay", function () {
 
 
-        describe("从页面中取得已渲染元素", function() {
+        describe("从页面中取得已渲染元素", function () {
 
 
             var o = new Overlay({
@@ -32,19 +32,19 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
             o.render();
 
-            it("渲染后可以取到元素", function() {
+            it("渲染后可以取到元素", function () {
                 expect(o.get("el")[0].nodeType).toBe(1);
             });
 
-            it("渲染后元素会正确配置", function() {
+            it("渲染后元素会正确配置", function () {
                 expect(o.get("el").css("left")).toBe("-9999px");
                 expect(o.get("el").css("top")).toBe("-9999px");
                 expect(o.get("el").css("width")).toBe("400px");
             });
 
-            it("对齐居中有效", function() {
+            it("对齐居中有效", function () {
                 o.set("align", {
-                    points:['cc','cc']
+                    points:['cc', 'cc']
                 });
 
                 o.show();
@@ -59,14 +59,17 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
             });
 
-            it("show/hide 事件顺利触发", function() {
+            it("show/hide 事件顺利触发", function () {
 
                 var hideCall = jasmine.createSpy(),
                     showCall = jasmine.createSpy();
-                o.on("hide", function() {
+
+                o.show();
+
+                o.on("hide", function () {
                     hideCall();
                 });
-                o.on("show", function() {
+                o.on("show", function () {
                     showCall();
                 });
 
@@ -79,11 +82,11 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("应该能够设置坐标", function() {
+            it("应该能够设置坐标", function () {
 
                 // or o.move(100,150);
 
-                o.set("xy", [100,150]);
+                o.set("xy", [100, 150]);
 
                 //o.move(100, 150);
 
@@ -92,10 +95,14 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
             });
 
+            runs(function () {
+                o.destroy();
+            });
+
         });
 
 
-        describe("完全由 javascript 渲染弹层", function() {
+        describe("完全由 javascript 渲染弹层", function () {
 
 
             var o = new Overlay({
@@ -108,50 +115,35 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("渲染前取不到 el 元素", function() {
+            it("渲染前取不到 el 元素", function () {
                 expect(o.get("el")).toBeUndefined();
             });
 
-            runs(function() {
+            runs(function () {
                 o.render();
             });
 
-            it("渲染后可以取到元素", function() {
+            it("渲染后可以取到元素", function () {
                 expect(o.get("contentEl").html()).toBe("render by javascript");
             });
 
-            it("渲染后元素会正确配置", function() {
+            it("渲染后元素会正确配置", function () {
                 expect(o.get("el").css("left")).toBe("-9999px");
                 expect(o.get("el").css("top")).toBe("-9999px");
                 expect(o.get("el").css("width")).toBe("400px");
             });
 
-            it("对齐居中有效", function() {
-
-                o.set("align", {
-                    points:['cc','cc']
-                });
-                o.show();
-
-                expect(parseInt(o.get("el").css("left")))
-                    .toBeEqual(Math.ceil((DOM.viewportWidth()
-                    - o.get("el").outerWidth()) / 2));
-
-
-                expect(parseInt(o.get("el").css("top")))
-                    .toBeEqual(Math.ceil((DOM.viewportHeight()
-                    - o.get("el").outerHeight()) / 2));
-
-            });
-
-            it("show/hide 事件顺利触发", function() {
+            it("show/hide 事件顺利触发", function () {
 
                 var hideCall = jasmine.createSpy(),
                     showCall = jasmine.createSpy();
-                o.on("hide", function() {
+
+                o.show();
+
+                o.on("hide", function () {
                     hideCall();
                 });
-                o.on("show", function() {
+                o.on("show", function () {
                     showCall();
                 });
 
@@ -164,11 +156,11 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("应该能够设置坐标", function() {
+            it("应该能够设置坐标", function () {
 
                 // or o.move(100,150);
 
-                o.set("xy", [300,350]);
+                o.set("xy", [300, 350]);
 
                 //o.move(100, 150);
 
@@ -178,7 +170,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("应该能够调节大小", function() {
+            it("应该能够调节大小", function () {
                 // ie9 测试不了
                 if (UA.ie == 9 || UA.chrome) {
                     return;
@@ -188,24 +180,24 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                     hxy = h.offset();
 
                 jasmine.simulate(h[0], "mousedown", {
-                    clientX:hxy.left - 2 ,
+                    clientX:hxy.left - 2,
                     clientY:hxy.top - 2
                 });
 
                 waits(100);
-                runs(function() {
+                runs(function () {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX: hxy.left - 5,
+                        clientX:hxy.left - 5,
                         clientY:hxy.top - 5
                     });
 
                 });
                 waits(100);
-                runs(function() {
+                runs(function () {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX: hxy.left - 100,
+                        clientX:hxy.left - 100,
                         clientY:hxy.top - 100
                     });
 
@@ -213,23 +205,29 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
                 waits(100);
 
-                runs(function() {
+                runs(function () {
                     jasmine.simulate(document, "mouseup");
                 });
                 waits(100);
-                runs(function() {
+                runs(function () {
                     var dheight = o.get("el").outerHeight();
 
                     expect(dheight - height).toBeEqual(98);
+
+
                 });
 
             });
 
+            runs(function () {
+                o.destroy();
+            });
+
         });
 
-        describe("方位能够自由指定", function() {
+        describe("方位能够自由指定", function () {
 
-            it("render works", function() {
+            it("render works", function () {
                 var div = $("<div/>").appendTo("body");
                 var o = new Overlay({
                     width:400,
@@ -248,7 +246,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("no render works", function() {
+            it("no render works", function () {
                 var div = $("<div/>").appendTo("body");
                 var o = new Overlay({
                     width:400,
@@ -265,7 +263,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
             });
 
 
-            it("elBefore works", function() {
+            it("elBefore works", function () {
                 var div = $("<div/>").appendTo("body");
                 var o = new Overlay({
                     width:400,
@@ -284,6 +282,80 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                 expect(div.prev().equals(o.get("el").next())).toBe(false);
                 div.remove();
             });
+        });
+
+        describe("align works", function () {
+
+            it("对齐居中有效", function () {
+
+                var o = new Overlay({
+                    width:400,
+                    elCls:"popup",
+                    resize:{
+                        handlers:["t"]
+                    },
+                    content:"render by javascript"
+                });
+
+                o.set("align", {
+                    points:['cc', 'cc']
+                });
+                o.show();
+
+                expect(parseInt(o.get("el").css("left")))
+                    .toBeEqual(Math.ceil((DOM.viewportWidth()
+                    - o.get("el").outerWidth()) / 2));
+
+
+                expect(parseInt(o.get("el").css("top")))
+                    .toBeEqual(Math.ceil((DOM.viewportHeight()
+                    - o.get("el").outerHeight()) / 2));
+
+                o.destroy();
+
+            });
+
+            // https://github.com/kissyteam/kissy/issues/190
+            it("align node works", function () {
+
+
+
+                var node = $("<div style='position: absolute;left:0;top:0;width:600px;" +
+                    "height: 200px;overflow: auto;'>" +
+                    "<div style='height: 1000px'></div>" +
+                    "</div>").appendTo('body');
+
+                var o = new Overlay.Dialog({
+                    headerContent:"哈哈",
+                    bodyContent:"嘿嘿",
+                    render:node,
+                    width:300,
+                    height:18
+                });
+
+                o.center(node);
+                o.show();
+
+                var oel = o.get("el");
+
+                expect(o.get("y")).toBe(90);
+
+                expect(oel.css("top")).toBe("90px");
+
+                node[0].scrollTop = 20;
+
+                o.center(node);
+
+                expect(o.get("y")).toBe(90);
+
+                expect(oel.css("top")).toBe("110px");
+
+                node.remove();
+
+                o.destroy();
+
+            });
+
         });
 
 

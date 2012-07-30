@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * custom overlay  for kissy editor
@@ -53,10 +53,9 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
                 value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
             draggable:{
-                value:true
-            },
-            constrain:{
-                value:true
+                value:{
+                    constrain:true
+                }
             },
             aria:{
                 value:true
@@ -66,5 +65,5 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', '../focusFix/', 'dd']
+    requires:["editor", 'overlay', '../focus-fix/', 'dd']
 });

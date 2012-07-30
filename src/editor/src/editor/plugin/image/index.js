@@ -162,5 +162,5 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
         '../button/',
         '../bubble/',
         '../contextmenu/',
-        '../dialogLoader/']
+        '../dialog-loader/']
 });

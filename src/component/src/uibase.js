@@ -2,7 +2,7 @@
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
@@ -14,7 +14,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         Align:Align,
         Box:Box,
         Close:Close,
-        Constrain:Constrain,
         ContentBox:ContentBox,
         Drag:Drag,
         Loading:Loading,
@@ -34,7 +33,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         "./uibase/boxrender",
         "./uibase/close",
         "./uibase/closerender",
-        "./uibase/constrain",
         "./uibase/contentbox",
         "./uibase/contentboxrender",
         "./uibase/drag",

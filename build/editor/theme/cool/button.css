@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
 KISSY toggle button style for kissy editor
@@ -10,6 +10,11 @@ LoVe F HAte
 **/
 
 .ks-editor-button {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
+    margin: 2px;
+    border-radius: 2px;
     padding: 3px 18px;
     border: 1px solid rgb(193, 200, 209);
     _padding-bottom: 2px;
@@ -34,11 +39,6 @@ LoVe F HAte
     _border-color: tomato;
     _filter: chroma(color = tomato);
     /*outline: none;*/
-}
-
-.ks-editor-button {
-    margin: 2px;
-    border-radius: 2px;
 }
 
 .ks-editor-tools .ks-editor-button-checked {

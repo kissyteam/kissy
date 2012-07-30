@@ -135,6 +135,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                 }
                 destructors[tag].fn();
                 delete destructors[tag];
+                return this;
             },
 
             /**
@@ -143,9 +144,9 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
             destroy:function () {
                 var self = this,
                     destructors = self[DESTRUCTORS];
-                for (var d in destructors) {
-                    self.detachDrag(destructors[d].drag);
-                }
+                S.each(destructors, function (v) {
+                    self.detachDrag(v.drag);
+                });
             },
 
             /**
@@ -297,6 +298,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
                     }
                 }
 
+                return this;
             }
         });
 

@@ -8,8 +8,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         createDom:function () {
             // set wai-aria role
             this.get("el")
-                .attr("role", "button")
-                .addClass("ks-inline-block");
+                .attr("role", "button");
         },
         _uiSetChecked:function (v) {
             var self = this,

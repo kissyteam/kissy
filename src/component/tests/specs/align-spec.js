@@ -188,10 +188,17 @@ KISSY.use("component", function (S, Component) {
                         get:function (arg) {
                             if (arg == "el") {
                                 return target;
-                            } else {
+                            }
+                            else  if (arg == "view") {
+                               return {
+                                   __set:function(){}
+                               };
+                            }
+                            else {
                                 alert('error')
                             }
                         },
+                        __set:function(){},
                         set:function (arg, v) {
                             if (arg == "x") {
                                 target.offset({
@@ -207,7 +214,8 @@ KISSY.use("component", function (S, Component) {
 
                     var containerOffset = node.offset();
 
-                    alignPrototype.align.call(obj, lower, ["tl", "bl"], undefined, {
+                    alignPrototype.align.call(obj,
+                        lower, ["tl", "bl"], undefined, {
 
                     });
 
@@ -265,10 +273,17 @@ KISSY.use("component", function (S, Component) {
                         get:function (arg) {
                             if (arg == "el") {
                                 return target;
-                            } else {
+                            }
+                            else  if (arg == "view") {
+                                return {
+                                    __set:function(){}
+                                };
+                            }
+                            else {
                                 alert('error')
                             }
                         },
+                        __set:function(){},
                         set:function (arg, v) {
                             if (arg == "x") {
                                 target.offset({

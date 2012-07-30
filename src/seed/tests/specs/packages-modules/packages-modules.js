@@ -25,7 +25,41 @@ describe("modules and packages", function () {
 
         waitsFor(function () {
             return ret == 8;
-        },5000);
+        }, 5000);
+
+    });
+
+    it("package can has same path", function () {
+        var combine = KISSY.config("combine");
+        var ret = 0;
+        KISSY.config({
+            combine:true,
+            map:[
+            [/\?t=.+$/,""]
+            ],
+            packages:{
+                y:{
+                    base:"../specs/packages-modules"
+                },
+                z:{
+                    base:"../specs/packages-modules"
+                }
+            }
+        });
+
+        KISSY.use("y/y,z/z", function (S, y, z) {
+            expect(y).toBe(2);
+            expect(z).toBe(1);
+            ret = 1;
+        });
+
+        waitsFor(function () {
+            return ret;
+        });
+
+        runs(function () {
+            KISSY.config("combine", combine);
+        })
 
     });
 

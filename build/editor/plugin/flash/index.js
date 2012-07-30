@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * Add flash plugin.
@@ -98,5 +98,5 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     return FlashPlugin;
 
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
+    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });

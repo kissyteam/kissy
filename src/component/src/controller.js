@@ -83,10 +83,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }
         // does not autoRender for view
         delete cfg.autoRender;
+        cfg.ksComponentCss=getComponentCss(self);
         return new Render(cfg);
     }
 
-    function setViewCssClassByHierarchy(self, view) {
+    function getComponentCss(self) {
         var constructor = self.constructor,
             cls,
             re = [];
@@ -97,7 +98,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             }
             constructor = constructor.superclass && constructor.superclass.constructor;
         }
-        return view.__componentClasses = re.join(" ");
+        return re.join(" ");
     }
 
     function isMouseEventWithinElement(e, elem) {
@@ -160,7 +161,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 var self = this,
                     el,
                     view = self.get("view");
-                setViewCssClassByHierarchy(self, view);
                 view.create(undefined);
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {

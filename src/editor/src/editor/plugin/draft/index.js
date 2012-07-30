@@ -210,7 +210,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 help = new Node(draftCfg['helpHtml'] || "");
             var arrowCss = "height:0;" +
                 "position:absolute;" +
-                "fontSize:0;" +
+                "font-size:0;" +
                 "width:0;" +
                 "border:8px #000 solid;" +
                 "border-color:#000 transparent transparent transparent;" +
@@ -369,5 +369,5 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     return DraftPlugin;
 
 }, {
-    "requires":["editor", "../localStorage/", "overlay", '../menubutton/']
+    "requires":["editor", "../local-storage/", "overlay", '../menubutton/']
 });

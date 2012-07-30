@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor
@@ -100,5 +100,5 @@ this.config=config||{};
     return LinkPlugin;
 }, {
     requires:['editor', '../bubble/',
-        './utils', '../dialogLoader/', '../button/']
+        './utils', '../dialog-loader/', '../button/']
 });

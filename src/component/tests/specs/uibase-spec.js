@@ -229,7 +229,7 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content")).toBe("23");
 
-                    expect(el.html().toLowerCase().replace('"',""))
+                    expect(el.html().toLowerCase().replace(/"/g,""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -247,7 +247,7 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content")).toBe("4");
 
-                    expect(el.html().toLowerCase().replace('"',""))
+                    expect(el.html().toLowerCase().replace(/"/g,""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -265,7 +265,7 @@ KISSY.use("component", function (S, Component) {
 
                     expect(content.get("content").html()).toBe("4");
 
-                    expect(el.html().toLowerCase().replace('"',""))
+                    expect(el.html().toLowerCase().replace(/"/g,""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();

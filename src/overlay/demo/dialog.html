@@ -259,8 +259,9 @@
                         node:'#c1',
                         points:['cc', 'cc']
                     },
-                    constrain:'#c1',
-                    draggable:true,
+                    draggable:{
+                        constrain:'#c1'
+                    },
                     closable:false,
                     resize:{
                         minWidth:150,
@@ -293,13 +294,17 @@
 
 
                 Node.one('#btn7').on('click', function () {
-                    dialog.set('constrain', false);
+                    dialog.set('draggable', {
+                        constrain:false
+                    });
                     stat = false;
                     dialog.set('bodyContent', '我自由啦');
                 });
 
                 Node.one('#btn8').on('click', function () {
-                    dialog.set('constrain', "#c1");
+                    dialog.set('draggable',{
+                        'constrain':"#c1"
+                    });
                     dialog.set("align", {
                         node:'#c1',
                         points:['cc', 'cc']

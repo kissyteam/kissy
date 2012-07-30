@@ -93,5 +93,5 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     return FlashPlugin;
 
 }, {
-    requires:['editor', '../flashCommon/baseClass', '../flashCommon/utils', '../fakeObjects/']
+    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });

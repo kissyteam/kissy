@@ -1,12 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 .ks-editor-tabs {
     padding-left: 10px;
+    margin: 0;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
+    list-style: none;
 }
 
 .ks-editor-tabs li {
@@ -24,6 +26,7 @@ build time: Jul 26 02:09
     text-align: center;
     width: 120px;
     outline: none;
+    list-style: none;
 }
 
 .ks-editor-tabs li.ks-active {

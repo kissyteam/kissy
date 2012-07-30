@@ -4,7 +4,7 @@
  */
 KISSY.add("component/uibase/positionrender", function () {
 
-    var ZINDEX = 9999;
+    var Z_INDEX = 9999;
 
     function Position() {
     }
@@ -28,7 +28,7 @@ KISSY.add("component/uibase/positionrender", function () {
             }
         },
         zIndex:{
-            value:ZINDEX
+            value:Z_INDEX
         }
     };
 
@@ -44,15 +44,19 @@ KISSY.add("component/uibase/positionrender", function () {
         },
 
         _uiSetX:function (x) {
-            this.get("el").offset({
-                left:x
-            });
+            if (x != null) {
+                this.get("el").offset({
+                    left:x
+                });
+            }
         },
 
         _uiSetY:function (y) {
-            this.get("el").offset({
-                top:y
-            });
+            if (y != null) {
+                this.get("el").offset({
+                    top:y
+                });
+            }
         }
     };
 

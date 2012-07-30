@@ -25,7 +25,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              */
             getComponentCssClassWithState:function (state) {
                 var self = this,
-                    componentCls = this.__componentClasses;
+                    componentCls = self.get("ksComponentCss");
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },
@@ -136,6 +136,12 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                  * see {@link Component.Controller#highlighted}
                  */
                 highlighted:{}
+            },
+            HTML_PARSER:{
+                disabled:function (el) {
+                    var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
+                    return self.get("el").hasClass(componentCls);
+                }
             }
         });
 }, {

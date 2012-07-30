@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -259,12 +259,10 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
      * @extends Overlay
      * @extends Component.UIBase.StdMod
      * @extends Component.UIBase.Drag
-     * @extends Component.UIBase.Constrain
      */
     var Dialog = Overlay.extend([
         require("stdmod"),
         require("drag"),
-        require("constrain"),
         Aria
     ],
         /**
@@ -276,6 +274,18 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
              * @name Overlay.Dialog#show
              * @function
              */
+
+            /**
+             * @protected
+             */
+            renderUI:function () {
+                var self = this, draggable;
+                if (draggable = self.get("draggable")) {
+                    if (!draggable.handlers) {
+                        draggable.handlers = [self.get("header")];
+                    }
+                }
+            }
         },
 
         {
@@ -293,21 +303,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                     value:true
                 },
 
-                /**
-                 * @default Dialog's header element
-                 * see {@link DD.Draggable#handlers}
-                 */
-                handlers:{
-                    valueFn:function () {
-                        var self = this;
-                        return [
-                            // 运行时取得拖放头
-                            function () {
-                                return self.get("view").get("header");
-                            }
-                        ];
-                    }
-                },
                 xrender:{
                     value:DialogRender
                 }

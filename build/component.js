@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:06
+build time: Jul 30 19:10
 */
 /**
  * Setup component namespace.
@@ -214,10 +214,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }
         // does not autoRender for view
         delete cfg.autoRender;
+        cfg.ksComponentCss=getComponentCss(self);
         return new Render(cfg);
     }
 
-    function setViewCssClassByHierarchy(self, view) {
+    function getComponentCss(self) {
         var constructor = self.constructor,
             cls,
             re = [];
@@ -228,7 +229,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             }
             constructor = constructor.superclass && constructor.superclass.constructor;
         }
-        return view.__componentClasses = re.join(" ");
+        return re.join(" ");
     }
 
     function isMouseEventWithinElement(e, elem) {
@@ -291,7 +292,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 var self = this,
                     el,
                     view = self.get("view");
-                setViewCssClassByHierarchy(self, view);
                 view.create(undefined);
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
@@ -923,30 +923,32 @@ KISSY.add("component/delegateChildren", function (S) {
     }
 
     function handleChildMouseEvents(e) {
-        var control = this.getOwnerControl(e.target, e);
-        if (control) {
-            // Child control identified; forward the event.
-            switch (e.type) {
-                case "mousedown":
-                    control.handleMouseDown(e);
-                    break;
-                case "mouseup":
-                    control.handleMouseUp(e);
-                    break;
-                case "mouseover":
-                    control.handleMouseOver(e);
-                    break;
-                case "mouseout":
-                    control.handleMouseOut(e);
-                    break;
-                case "contextmenu":
-                    control.handleContextMenu(e);
-                    break;
-                case "dblclick":
-                    control.handleDblClick(e);
-                    break;
-                default:
-                    S.error(e.type + " unhandled!");
+        if (!this.get("disabled")) {
+            var control = this.getOwnerControl(e.target, e);
+            if (control) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case "mousedown":
+                        control.handleMouseDown(e);
+                        break;
+                    case "mouseup":
+                        control.handleMouseUp(e);
+                        break;
+                    case "mouseover":
+                        control.handleMouseOver(e);
+                        break;
+                    case "mouseout":
+                        control.handleMouseOut(e);
+                        break;
+                    case "contextmenu":
+                        control.handleContextMenu(e);
+                        break;
+                    case "dblclick":
+                        control.handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + " unhandled!");
+                }
             }
         }
     }
@@ -1119,7 +1121,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              */
             getComponentCssClassWithState:function (state) {
                 var self = this,
-                    componentCls = this.__componentClasses;
+                    componentCls = self.get("ksComponentCss");
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },
@@ -1230,6 +1232,12 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                  * see {@link Component.Controller#highlighted}
                  */
                 highlighted:{}
+            },
+            HTML_PARSER:{
+                disabled:function (el) {
+                    var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
+                    return self.get("el").hasClass(componentCls);
+                }
             }
         });
 }, {
@@ -1238,7 +1246,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
@@ -1250,7 +1258,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         Align:Align,
         Box:Box,
         Close:Close,
-        Constrain:Constrain,
         ContentBox:ContentBox,
         Drag:Drag,
         Loading:Loading,
@@ -1270,7 +1277,6 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
         "./uibase/boxrender",
         "./uibase/close",
         "./uibase/closerender",
-        "./uibase/constrain",
         "./uibase/contentbox",
         "./uibase/contentboxrender",
         "./uibase/drag",
@@ -1665,11 +1671,19 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
             // 新区域位置发生了变化
             if (newElRegion.left != elRegion.left) {
-                self.set("x", newElRegion.left)
+                self.__set("x", null);
+                self.get("view").__set("x", null);
+                self.set("x", newElRegion.left);
             }
 
             if (newElRegion.top != elRegion.top) {
-                self.set("y", newElRegion.top)
+                // https://github.com/kissyteam/kissy/issues/190
+                // 相对于屏幕位置没变，而 left/top 变了
+                // 例如 <div 'relative'><el absolute></div>
+                // el.align(div)
+                self.__set("y", null);
+                self.get("view").__set("y", null);
+                self.set("y", newElRegion.top);
             }
 
             // 新区域高宽发生了变化
@@ -1732,7 +1746,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      * UIBase for class-based component.
      */
     function UIBase(config) {
-        var self = this, id;
+        var self = this, id, srcNode;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
@@ -1747,6 +1761,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
 
+        // 特殊的 decorate 等属性从 html 收集完再进行
+        if (config &&
+            (srcNode = config[SRC_NODE]) &&
+            self.decorateInternal) {
+            self.decorateInternal(srcNode);
+        }
+
         var listener,
             n,
             plugins = self.get("plugins"),
@@ -1757,10 +1778,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            listener = listeners[n];
-            self.on(n, listener.fn || listener, listener.scope);
+            if (listeners.hasOwnProperty(n)) {
+                listener = listeners[n];
+                self.on(n, listener.fn || listener, listener.scope);
+            }
         }
-
 
         // 是否自动渲染
         config && config.autoRender && self.render();
@@ -1772,20 +1794,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      */
     function initHierarchy(host, config) {
 
-        var c = host.constructor;
+        var c = host.constructor, srcNode;
 
-        while (c) {
-
-            // 从 markup 生成相应的属性项
-            if (config &&
-                config[SRC_NODE] &&
-                c[HTML_PARSER]) {
-                if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
+        if (config && (srcNode = config[SRC_NODE])) {
+            config[SRC_NODE] = Node.one(srcNode);
+            while (c) {
+                // 从 markup 生成相应的属性项
+                if (c[HTML_PARSER]) {
                     applyParser.call(host, config, c[HTML_PARSER]);
                 }
+                c = c.superclass && c.superclass.constructor;
             }
-
-            c = c.superclass && c.superclass.constructor;
         }
 
         callMethodByHierarchy(host, "initializer", "constructor");
@@ -2438,24 +2457,6 @@ KISSY.add('component/uibase/box', function (S) {
         }
     };
 
-
-    Box.HTML_PARSER =
-    /**
-     * @private
-     */
-    {
-        el:function (srcNode) {
-            /**
-             * 如果需要特殊的对现有元素的装饰行为
-             */
-            var self = this;
-            if (self.decorateInternal) {
-                self.decorateInternal(S.one(srcNode));
-            }
-            return srcNode;
-        }
-    };
-
     Box.prototype =
     /**
      * @lends Component.UIBase.Box#
@@ -2557,6 +2558,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
     };
 
     BoxRender.HTML_PARSER = {
+        el:function (srcNode) {
+            return srcNode;
+        },
         content:function (el) {
             // 从 contentElCls 的标志中读取
             var contentElCls = this.get("contentElCls");
@@ -2749,7 +2753,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ks-ext-';
 
-    function getCloseBtn() {
+    function getCloseRenderBtn() {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
@@ -2761,10 +2765,10 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
             "<" + "/a>");
     }
 
-    function Close() {
+    function CloseRender() {
     }
 
-    Close.ATTRS = {
+    CloseRender.ATTRS = {
         closable:{
             value:true
         },
@@ -2772,19 +2776,19 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    Close.HTML_PARSER = {
+    CloseRender.HTML_PARSER = {
         closeBtn:function (el) {
             return el.one("." + CLS_PREFIX + 'close');
         }
     };
 
-    Close.prototype = {
+    CloseRender.prototype = {
         _uiSetClosable:function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.__set("closeBtn", btn = getCloseBtn());
+                    self.__set("closeBtn", btn = getCloseRenderBtn());
                 }
                 btn.appendTo(self.get("el"), undefined);
             } else {
@@ -2795,127 +2799,10 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    return Close;
+    return CloseRender;
 
 }, {
     requires:["node"]
-});/**
- * @fileOverview constrain extension for kissy
- * @author yiminghe@gmail.com, qiaohua@taobao.com
- */
-KISSY.add("component/uibase/constrain", function (S, DOM, Node) {
-
-    /**
-     * @name Constrain
-     * @class
-     * Constrain extension class.
-     * Constrain component to specified region
-     * @memberOf Component.UIBase
-     */
-    function Constrain() {
-
-    }
-
-    Constrain.ATTRS =
-    /**
-     * @lends Component.UIBase.Constrain.prototype
-     */
-    {
-        /**
-         * Config constrain region.
-         * True: viewport
-         * Node: specified element.
-         * false: no constrain region.
-         * @type NodeList|Boolean
-         */
-        constrain:{
-            //不限制
-            //true:viewport限制
-            //node:限制在节点范围
-            value:false
-        }
-    };
-
-    /**
-     * 获取受限区域的宽高, 位置
-     * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
-     */
-    function _getConstrainRegion(constrain) {
-        var ret = null;
-        if (!constrain) {
-            return ret;
-        }
-        var el = this.get("el");
-        if (constrain !== true) {
-            constrain = Node.one(constrain);
-            ret = constrain.offset();
-            S.mix(ret, {
-                maxLeft:ret.left + constrain.outerWidth() - el.outerWidth(),
-                maxTop:ret.top + constrain.outerHeight() - el.outerHeight()
-            });
-        }
-        // 没有指定 constrain, 表示受限于可视区域
-        else {
-            ret = {
-                left:DOM.scrollLeft(),
-                top:DOM.scrollTop()
-            };
-            S.mix(ret, {
-                maxLeft:ret.left + DOM.viewportWidth() - el.outerWidth(),
-                maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
-            });
-        }
-
-        return ret;
-    }
-
-    Constrain.prototype = {
-
-        __renderUI:function () {
-            var self = this,
-                attrs = self.getAttrs(),
-                xAttr = attrs["x"],
-                yAttr = attrs["y"],
-                oriXSetter = xAttr["setter"],
-                oriYSetter = yAttr["setter"];
-            xAttr.setter = function (v) {
-                var r = oriXSetter && oriXSetter.call(self, v);
-                if (r === undefined) {
-                    r = v;
-                }
-                if (!self.get("constrain")) {
-                    return r;
-                }
-                var _ConstrainExtRegion = _getConstrainRegion.call(
-                    self, self.get("constrain"));
-                return Math.min(Math.max(r,
-                    _ConstrainExtRegion.left),
-                    _ConstrainExtRegion.maxLeft);
-            };
-            yAttr.setter = function (v) {
-                var r = oriYSetter && oriYSetter.call(self, v);
-                if (r === undefined) {
-                    r = v;
-                }
-                if (!self.get("constrain")) {
-                    return r;
-                }
-                var _ConstrainExtRegion = _getConstrainRegion.call(
-                    self, self.get("constrain"));
-                return Math.min(Math.max(r,
-                    _ConstrainExtRegion.top),
-                    _ConstrainExtRegion.maxTop);
-            };
-            self.addAttr("x", xAttr);
-            self.addAttr("y", yAttr);
-        }
-    };
-
-
-    return Constrain;
-
-}, {
-    requires:["dom", "node"]
 });/**
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
@@ -3011,61 +2898,60 @@ KISSY.add("component/uibase/drag", function (S) {
      */
     {
         /**
-         * Current draggable element's handlers.
-         * See {@link DD.Draggable#handlers}
-         */
-        handlers:{
-            value:[]
-        },
-        /**
          * Whether current element is draggable.
          * @type Boolean
          */
-        draggable:{value:true}
+        draggable:{
+            setter:function (v) {
+                if (v === true) {
+                    return {};
+                }
+            },
+            value:{}
+        }
     };
-
-    function dragExtAction(ev) {
-        this.set("xy", [ev.left, ev.top]);
-    }
 
     Drag.prototype = {
 
-        _uiSetHandlers:function (v) {
-            var d;
-            if (v && v.length > 0 && (d = this.__drag)) {
-                d.set("handlers", v);
-            }
-        },
-
-        __bindUI:function () {
-            var DD = S.require("dd") || {},
-                Draggable = DD.Draggable,
-                d,
-                self = this,
-                dragCfg = self.get("draggable"),
+        _uiSetDraggable:function (dragCfg) {
+            var self = this,
+                handlers,
+                DD = S.require("dd"),
+                Draggable,
+                p,
+                d = self.__drag,
+                __constrain = self.__constrain,
                 el = self.get("el");
-            if (dragCfg && Draggable) {
-                if (dragCfg === true) {
-                    dragCfg = {};
-                }
+
+            if (dragCfg && !d && DD) {
+
+                Draggable = DD.Draggable;
+
                 d = self.__drag = new Draggable({
                     node:el,
-                    move:dragCfg.proxy
+                    move:1
                 });
 
                 if (dragCfg.proxy) {
                     dragCfg.proxy.moveOnEnd = false;
-                    d.on("dragend", function () {
-                        var proxyOffset = p.get("proxyNode").offset();
-                        el.css("visibility", "");
-                        self.set("x", proxyOffset.left);
-                        self.set("y", proxyOffset.top);
-                    });
-                    var p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+
+                    p = self.__proxy = new DD.Proxy(dragCfg.proxy);
                     p.attachDrag(d);
-                } else {
-                    d.on("drag", dragExtAction, self);
                 }
+
+                __constrain = self.__constrain = new DD.Constrain().attachDrag(d);
+
+                d.on("dragend", function () {
+                    var proxyOffset;
+                    if (p) {
+                        proxyOffset = p.get("proxyNode").offset();
+                        el.css("visibility", "");
+                    } else {
+                        proxyOffset = el.offset();
+                    }
+                    self.set("x", proxyOffset.left);
+                    self.set("y", proxyOffset.top);
+                });
 
                 if (dragCfg.scroll) {
                     var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
@@ -3073,24 +2959,36 @@ KISSY.add("component/uibase/drag", function (S) {
                 }
 
             }
-        },
 
-        _uiSetDraggable:function (v) {
-            var d = this.__drag;
-            d && d.set("disabled", !v);
+            if (d) {
+                d.set("disabled", !dragCfg);
+            }
+
+            if (dragCfg && d) {
+                handlers = dragCfg.handlers;
+                if ("constrain" in dragCfg) {
+                    __constrain.set("constrain", dragCfg.constrain);
+                }
+                if (handlers && handlers.length > 0) {
+                    d.set("handlers", handlers);
+                }
+            }
         },
 
         __destructor:function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
+                __constrain = self.__constrain,
                 d = self.__drag;
-            d && d.destroy();
             s && s.destroy();
             p && p.destroy();
+            __constrain && __constrain.destroy();
+            d && d.destroy();
         }
 
     };
+
     return Drag;
 
 });/**
@@ -3493,7 +3391,7 @@ KISSY.add("component/uibase/position", function (S) {
  */
 KISSY.add("component/uibase/positionrender", function () {
 
-    var ZINDEX = 9999;
+    var Z_INDEX = 9999;
 
     function Position() {
     }
@@ -3517,7 +3415,7 @@ KISSY.add("component/uibase/positionrender", function () {
             }
         },
         zIndex:{
-            value:ZINDEX
+            value:Z_INDEX
         }
     };
 
@@ -3533,15 +3431,19 @@ KISSY.add("component/uibase/positionrender", function () {
         },
 
         _uiSetX:function (x) {
-            this.get("el").offset({
-                left:x
-            });
+            if (x != null) {
+                this.get("el").offset({
+                    left:x
+                });
+            }
         },
 
         _uiSetY:function (y) {
-            this.get("el").offset({
-                top:y
-            });
+            if (y != null) {
+                this.get("el").offset({
+                    top:y
+                });
+            }
         }
     };
 
@@ -3728,10 +3630,10 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     var CLS_PREFIX = "ks-stdmod-";
 
-    function StdMod() {
+    function StdModRender() {
     }
 
-    StdMod.ATTRS = {
+    StdModRender.ATTRS = {
         header:{
         },
         body:{
@@ -3752,7 +3654,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    StdMod.HTML_PARSER = {
+    StdModRender.HTML_PARSER = {
         header:function (el) {
             return el.one("." + CLS_PREFIX + "header");
         },
@@ -3764,7 +3666,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    function renderUI(self, part) {
+    function createUI(self, part) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
@@ -3779,7 +3681,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     }
 
 
-    function _setStdModContent(self, part, v) {
+    function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
         if (S.isString(v)) {
             part.html(v);
@@ -3789,12 +3691,12 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     }
 
-    StdMod.prototype = {
+    StdModRender.prototype = {
 
         __createDom:function () {
-            renderUI(this, "header");
-            renderUI(this, "body");
-            renderUI(this, "footer");
+            createUI(this, "header");
+            createUI(this, "body");
+            createUI(this, "footer");
         },
 
         _uiSetBodyStyle:function (v) {
@@ -3809,19 +3711,19 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         },
 
         _uiSetBodyContent:function (v) {
-            _setStdModContent(this, "body", v);
+            _setStdModRenderContent(this, "body", v);
         },
 
         _uiSetHeaderContent:function (v) {
-            _setStdModContent(this, "header", v);
+            _setStdModRenderContent(this, "header", v);
         },
 
         _uiSetFooterContent:function (v) {
-            _setStdModContent(this, "footer", v);
+            _setStdModRenderContent(this, "footer", v);
         }
     };
 
-    return StdMod;
+    return StdModRender;
 
 }, {
     requires:['node']

@@ -121,5 +121,5 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flashCommon/utils', '../flashCommon/baseClass', '../fakeObjects/']
+    requires:['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
 });

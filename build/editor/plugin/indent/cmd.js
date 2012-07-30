@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 26 02:09
+build time: Jul 30 19:14
 */
 /**
  * Add indent and outdent command identifier for KISSY Editor.
@@ -16,5 +16,5 @@ KISSY.add("editor/plugin/indent/cmd", function (S, Editor, dentUtils) {
     };
 
 }, {
-    requires:['editor', '../dentUtils/cmd']
+    requires:['editor', '../dent-utils/cmd']
 });

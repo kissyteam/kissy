@@ -20,7 +20,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      * UIBase for class-based component.
      */
     function UIBase(config) {
-        var self = this, id;
+        var self = this, id, srcNode;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
@@ -35,6 +35,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
 
+        // 特殊的 decorate 等属性从 html 收集完再进行
+        if (config &&
+            (srcNode = config[SRC_NODE]) &&
+            self.decorateInternal) {
+            self.decorateInternal(srcNode);
+        }
+
         var listener,
             n,
             plugins = self.get("plugins"),
@@ -45,10 +52,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            listener = listeners[n];
-            self.on(n, listener.fn || listener, listener.scope);
+            if (listeners.hasOwnProperty(n)) {
+                listener = listeners[n];
+                self.on(n, listener.fn || listener, listener.scope);
+            }
         }
-
 
         // 是否自动渲染
         config && config.autoRender && self.render();
@@ -60,20 +68,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      */
     function initHierarchy(host, config) {
 
-        var c = host.constructor;
+        var c = host.constructor, srcNode;
 
-        while (c) {
-
-            // 从 markup 生成相应的属性项
-            if (config &&
-                config[SRC_NODE] &&
-                c[HTML_PARSER]) {
-                if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
+        if (config && (srcNode = config[SRC_NODE])) {
+            config[SRC_NODE] = Node.one(srcNode);
+            while (c) {
+                // 从 markup 生成相应的属性项
+                if (c[HTML_PARSER]) {
                     applyParser.call(host, config, c[HTML_PARSER]);
                 }
+                c = c.superclass && c.superclass.constructor;
             }
-
-            c = c.superclass && c.superclass.constructor;
         }
 
         callMethodByHierarchy(host, "initializer", "constructor");
