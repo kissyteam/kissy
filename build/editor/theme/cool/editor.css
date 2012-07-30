@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 22:47
+build time: Jul 30 23:49
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -557,7 +557,7 @@ ks-editor-toolbar-padding {
     width: 0;
 }
 
-.ks-editor-toolbar-sourcearea {
+.ks-editor-toolbar-sourceArea {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -81px;
