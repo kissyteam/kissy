@@ -6,7 +6,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ks-ext-';
 
-    function getCloseBtn() {
+    function getCloseRenderBtn() {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
@@ -18,10 +18,10 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
             "<" + "/a>");
     }
 
-    function Close() {
+    function CloseRender() {
     }
 
-    Close.ATTRS = {
+    CloseRender.ATTRS = {
         closable:{
             value:true
         },
@@ -29,19 +29,19 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    Close.HTML_PARSER = {
+    CloseRender.HTML_PARSER = {
         closeBtn:function (el) {
             return el.one("." + CLS_PREFIX + 'close');
         }
     };
 
-    Close.prototype = {
+    CloseRender.prototype = {
         _uiSetClosable:function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.__set("closeBtn", btn = getCloseBtn());
+                    self.__set("closeBtn", btn = getCloseRenderBtn());
                 }
                 btn.appendTo(self.get("el"), undefined);
             } else {
@@ -52,7 +52,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    return Close;
+    return CloseRender;
 
 }, {
     requires:["node"]

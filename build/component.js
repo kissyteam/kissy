@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 27 16:08
+build time: Jul 30 11:20
 */
 /**
  * Setup component namespace.
@@ -1738,7 +1738,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      * UIBase for class-based component.
      */
     function UIBase(config) {
-        var self = this, id;
+        var self = this, id, srcNode;
 
         // 读取用户设置的属性值并设置到自身
         Base.apply(self, arguments);
@@ -1753,6 +1753,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
 
+        // 特殊的 decorate 等属性从 html 收集完再进行
+        if (config &&
+            (srcNode = config[SRC_NODE]) &&
+            self.decorateInternal) {
+            self.decorateInternal(srcNode);
+        }
+
         var listener,
             n,
             plugins = self.get("plugins"),
@@ -1763,10 +1770,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            listener = listeners[n];
-            self.on(n, listener.fn || listener, listener.scope);
+            if (listeners.hasOwnProperty(n)) {
+                listener = listeners[n];
+                self.on(n, listener.fn || listener, listener.scope);
+            }
         }
-
 
         // 是否自动渲染
         config && config.autoRender && self.render();
@@ -1778,20 +1786,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      */
     function initHierarchy(host, config) {
 
-        var c = host.constructor;
+        var c = host.constructor, srcNode;
 
-        while (c) {
-
-            // 从 markup 生成相应的属性项
-            if (config &&
-                config[SRC_NODE] &&
-                c[HTML_PARSER]) {
-                if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
+        if (config && (srcNode = config[SRC_NODE])) {
+            config[SRC_NODE] = Node.one(srcNode);
+            while (c) {
+                // 从 markup 生成相应的属性项
+                if (c[HTML_PARSER]) {
                     applyParser.call(host, config, c[HTML_PARSER]);
                 }
+                c = c.superclass && c.superclass.constructor;
             }
-
-            c = c.superclass && c.superclass.constructor;
         }
 
         callMethodByHierarchy(host, "initializer", "constructor");
@@ -2444,24 +2449,6 @@ KISSY.add('component/uibase/box', function (S) {
         }
     };
 
-
-    Box.HTML_PARSER =
-    /**
-     * @private
-     */
-    {
-        el:function (srcNode) {
-            /**
-             * 如果需要特殊的对现有元素的装饰行为
-             */
-            var self = this;
-            if (self.decorateInternal) {
-                self.decorateInternal(S.one(srcNode));
-            }
-            return srcNode;
-        }
-    };
-
     Box.prototype =
     /**
      * @lends Component.UIBase.Box#
@@ -2563,6 +2550,9 @@ KISSY.add('component/uibase/boxrender', function (S) {
     };
 
     BoxRender.HTML_PARSER = {
+        el:function (srcNode) {
+            return srcNode;
+        },
         content:function (el) {
             // 从 contentElCls 的标志中读取
             var contentElCls = this.get("contentElCls");
@@ -2755,7 +2745,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ks-ext-';
 
-    function getCloseBtn() {
+    function getCloseRenderBtn() {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
@@ -2767,10 +2757,10 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
             "<" + "/a>");
     }
 
-    function Close() {
+    function CloseRender() {
     }
 
-    Close.ATTRS = {
+    CloseRender.ATTRS = {
         closable:{
             value:true
         },
@@ -2778,19 +2768,19 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    Close.HTML_PARSER = {
+    CloseRender.HTML_PARSER = {
         closeBtn:function (el) {
             return el.one("." + CLS_PREFIX + 'close');
         }
     };
 
-    Close.prototype = {
+    CloseRender.prototype = {
         _uiSetClosable:function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.__set("closeBtn", btn = getCloseBtn());
+                    self.__set("closeBtn", btn = getCloseRenderBtn());
                 }
                 btn.appendTo(self.get("el"), undefined);
             } else {
@@ -2801,7 +2791,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
         }
     };
 
-    return Close;
+    return CloseRender;
 
 }, {
     requires:["node"]
@@ -3632,10 +3622,10 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     var CLS_PREFIX = "ks-stdmod-";
 
-    function StdMod() {
+    function StdModRender() {
     }
 
-    StdMod.ATTRS = {
+    StdModRender.ATTRS = {
         header:{
         },
         body:{
@@ -3656,7 +3646,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    StdMod.HTML_PARSER = {
+    StdModRender.HTML_PARSER = {
         header:function (el) {
             return el.one("." + CLS_PREFIX + "header");
         },
@@ -3668,7 +3658,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    function renderUI(self, part) {
+    function createUI(self, part) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
@@ -3683,7 +3673,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     }
 
 
-    function _setStdModContent(self, part, v) {
+    function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
         if (S.isString(v)) {
             part.html(v);
@@ -3693,12 +3683,12 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     }
 
-    StdMod.prototype = {
+    StdModRender.prototype = {
 
         __createDom:function () {
-            renderUI(this, "header");
-            renderUI(this, "body");
-            renderUI(this, "footer");
+            createUI(this, "header");
+            createUI(this, "body");
+            createUI(this, "footer");
         },
 
         _uiSetBodyStyle:function (v) {
@@ -3713,19 +3703,19 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         },
 
         _uiSetBodyContent:function (v) {
-            _setStdModContent(this, "body", v);
+            _setStdModRenderContent(this, "body", v);
         },
 
         _uiSetHeaderContent:function (v) {
-            _setStdModContent(this, "header", v);
+            _setStdModRenderContent(this, "header", v);
         },
 
         _uiSetFooterContent:function (v) {
-            _setStdModContent(this, "footer", v);
+            _setStdModRenderContent(this, "footer", v);
         }
     };
 
-    return StdMod;
+    return StdModRender;
 
 }, {
     requires:['node']

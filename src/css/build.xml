@@ -11,7 +11,7 @@
         <mkdir dir="${component.src.dir.tmp}"/>
 
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${src.dir}" includes="*.css" excludes="old/**/*"></fileset>
+            <fileset dir="${src.dir}" includes="**/*.css" excludes="old/**/*"></fileset>
         </copy>
 
         <concat destfile="${component.src.dir.tmp}/dpl/base.css" encoding="${charset}" outputencoding="${charset}">

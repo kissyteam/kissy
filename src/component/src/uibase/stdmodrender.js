@@ -7,10 +7,10 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     var CLS_PREFIX = "ks-stdmod-";
 
-    function StdMod() {
+    function StdModRender() {
     }
 
-    StdMod.ATTRS = {
+    StdModRender.ATTRS = {
         header:{
         },
         body:{
@@ -31,7 +31,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    StdMod.HTML_PARSER = {
+    StdModRender.HTML_PARSER = {
         header:function (el) {
             return el.one("." + CLS_PREFIX + "header");
         },
@@ -43,7 +43,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     };
 
-    function renderUI(self, part) {
+    function createUI(self, part) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
@@ -58,7 +58,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     }
 
 
-    function _setStdModContent(self, part, v) {
+    function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
         if (S.isString(v)) {
             part.html(v);
@@ -68,12 +68,12 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         }
     }
 
-    StdMod.prototype = {
+    StdModRender.prototype = {
 
         __createDom:function () {
-            renderUI(this, "header");
-            renderUI(this, "body");
-            renderUI(this, "footer");
+            createUI(this, "header");
+            createUI(this, "body");
+            createUI(this, "footer");
         },
 
         _uiSetBodyStyle:function (v) {
@@ -88,19 +88,19 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
         },
 
         _uiSetBodyContent:function (v) {
-            _setStdModContent(this, "body", v);
+            _setStdModRenderContent(this, "body", v);
         },
 
         _uiSetHeaderContent:function (v) {
-            _setStdModContent(this, "header", v);
+            _setStdModRenderContent(this, "header", v);
         },
 
         _uiSetFooterContent:function (v) {
-            _setStdModContent(this, "footer", v);
+            _setStdModRenderContent(this, "footer", v);
         }
     };
 
-    return StdMod;
+    return StdModRender;
 
 }, {
     requires:['node']
