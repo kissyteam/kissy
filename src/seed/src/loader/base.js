@@ -239,7 +239,11 @@
 
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self, name:''}));
+            (Env.defaultPackage = new Loader.Package({
+                SS:self,
+                // need packageName as key
+                name:''
+            }));
 
         return packageDesc;
     }
