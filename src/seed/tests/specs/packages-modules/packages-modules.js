@@ -1,4 +1,12 @@
 describe("modules and packages", function () {
+    var S=KISSY;
+    it("can get base correctly",function(){
+
+        expect(KISSY.config("base"))
+            .toBe(new S.Uri(location.href)
+            .resolve("../../../../build/").toString())
+
+    });
 
     it("does not depend on order", function () {
 

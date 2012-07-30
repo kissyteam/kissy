@@ -112,6 +112,11 @@
             baseInfo = {};
         }
 
+        // taobao combo syntax
+        // /??seed.js,dom.js
+        // /?%3fseed.js%2cdom.js
+        src = src.replace(/%3f/gi, "?").replace(/%2c/gi, ",");
+
         comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
         comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
 

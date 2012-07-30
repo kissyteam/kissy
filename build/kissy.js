@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 21:13
+build time: Jul 30 21:54
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 30 21:13
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120730211326';
+        S.__BUILD_TIME = '20120730215442';
     })();
 
     return S;
@@ -3084,7 +3084,11 @@ build time: Jul 30 21:13
 
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self, name:''}));
+            (Env.defaultPackage = new Loader.Package({
+                SS:self,
+                // need packageName as key
+                name:''
+            }));
 
         return packageDesc;
     }
@@ -4948,6 +4952,11 @@ build time: Jul 30 21:13
             baseInfo = {};
         }
 
+        // taobao combo syntax
+        // /??seed.js,dom.js
+        // /?%3fseed.js%2cdom.js
+        src = src.replace(/%3f/gi, "?").replace(/%2c/gi, ",");
+
         comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
         comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
 
@@ -4978,7 +4987,7 @@ build time: Jul 30 21:13
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120730211326'
+        tag:'20120730215442'
     }, getBaseInfo()));
 
     /**
