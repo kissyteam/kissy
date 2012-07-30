@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 22:53
+build time: Jul 30 22:57
 */
 KISSY.add("editor/plugin/multiple-upload/dialog",function(j,m,v,B,C,s,g){function q(a,e){this.editor=a;this.progressBars={};this.config=e;m.Utils.lazyRun(this,"_prepareShow","_realShow")}function x(a,e){var b=a.parentNode,d=e.nextSibling;b.insertBefore(e,a.nextSibling);b.insertBefore(a,d)}var w=j.UA,i=j.DOM,h=j.all,o=j.JSON,D=B.Dialog,E=m.Utils.debugUrl("plugin/uploader/uploader.longzang.swf");j.augment(q,{addRes:m.Utils.addRes,destroy:m.Utils.destroyRes,_prepareShow:function(){var a=this,e=a.editor,
 b=a.config;a.addRes(function(){var b=a.progressBars,e;for(e in b)b.hasOwnProperty(e)&&b[e].destroy()});a.dialog=new D({headerContent:"批量上传",mask:!1,draggable:{constrain:!1},autoRender:!0,focus4e:!1,width:"600px"});var d=a.dialog;d.on("beforeVisibleChange",function(a){if(!a.newVal)return d.set("xy",[-9999,-9999]),!1});a.addRes(d);var f=d.get("body"),c=h("<div class='ks-editor-upload-btn-wrap'><span style='margin:0 15px 0 0px;color:#969696;display:inline-block;vertical-align:middle;width:450px;'></span></div>").appendTo(f,
