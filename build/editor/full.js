@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:03
+build time: Jul 30 22:53
 */
 /**
  * Set up editor constructor
@@ -9458,7 +9458,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/checkbox-sourcearea/index", function (S, Editor) {
+KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     var Node = S.Node;
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
@@ -15053,17 +15053,17 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
  * source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/sourcearea/index", function (S, Editor) {
+KISSY.add("editor/plugin/source-area/index", function (S, Editor) {
 
     var SOURCE_MODE = Editor.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.WYSIWYG_MODE;
 
-    function sourcearea() {
+    function sourceArea() {
     }
 
-    S.augment(sourcearea, {
+    S.augment(sourceArea, {
         renderUI:function (editor) {
-            editor.addButton("sourcearea", {
+            editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
                     afterSyncUI:function () {
@@ -15091,7 +15091,7 @@ KISSY.add("editor/plugin/sourcearea/index", function (S, Editor) {
         }
     });
 
-    return sourcearea;
+    return sourceArea;
 }, {
     requires:['editor', '../button/']
 });
