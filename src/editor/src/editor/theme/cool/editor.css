@@ -83,7 +83,7 @@ ks-editor-toolbar-padding {
     width: 0;
 }
 
-.ks-editor-toolbar-sourcearea {
+.ks-editor-toolbar-sourceArea {
     background-image: url("sourcearea.png"); /** sprite-ref: cool; */
 }
 
