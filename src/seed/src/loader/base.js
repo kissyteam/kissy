@@ -68,9 +68,9 @@
                 return self.base || self.SS.Config.base;
             },
 
-            getBaseUri:function(){
+            getBaseUri:function () {
                 var self = this;
-                return self.baseUri||self.SS.Config.baseUri;
+                return self.baseUri || self.SS.Config.baseUri;
             },
 
             /**
@@ -239,7 +239,11 @@
 
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({SS:self}));
+            (Env.defaultPackage = new Loader.Package({
+                SS:self,
+                // need packageName as key
+                name:''
+            }));
 
         return packageDesc;
     }

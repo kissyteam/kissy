@@ -76,9 +76,8 @@ describe("KISSY ComboLoader", function () {
         r = l.calculate(["a", "h"]);
         S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
-        expect(c.js[S.Config.base][0] == (S.Config.base +
-            "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js")).
-            toBe(true);
+        expect(c.js[''][0]).toBe(S.Config.base +
+                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
     });
 
     it("should trunk url automatically", function () {
@@ -106,7 +105,7 @@ describe("KISSY ComboLoader", function () {
         r = l.calculate(ret);
         S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
-        var cjs = c.js[S.Config.base];
+        var cjs = c.js[''];
         expect(cjs.length).toBe(3);
         S.each(cjs, function (j) {
             expect(j.length < S.Config.comboMaxUrlLength).toBe(true);
@@ -167,7 +166,7 @@ describe("KISSY ComboLoader", function () {
         var urls = S.getLoader().getComboUrls(mods);
         var host = location.hostname;
 
-        expect(urls['js']['http://' + host + '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'][0])
+        expect(urls['js']['tests'][0])
             .toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/combo/" +
             "tests/??a.js,b.js,c.js");
 
@@ -274,7 +273,7 @@ describe("KISSY ComboLoader", function () {
             utils.createModulesInfo(S, allModNames);
             var comboUrls = loader.getComboUrls(allModNames);
 
-            var key = "http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/";
+            var key = "timestamp";
 
             var jss = comboUrls.js[key];
 
