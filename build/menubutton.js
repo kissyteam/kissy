@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 22:21
+build time: Jul 31 22:49
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -60,7 +60,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             self.bindMenu();
             // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
-                menu.set("width", $(menu.get("align").node).innerWidth());
+                menu.set("width", $(menu.get("align").node || el).innerWidth());
             }
             menu.show();
             reposition.call(self);
@@ -369,9 +369,9 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
 
         DROP_TMPL =
             '<div class="ks-menu-button-dropdown">' +
-                '<div class=' +
-                '"ks-menu-button-dropdown-inner">' +
-                '<' + '/div>' +
+//                '<div class=' +
+//                '"ks-menu-button-dropdown-inner">' +
+//                '<' + '/div>' +
                 '<' + '/div>',
         COLLAPSE_CLS = "menu-button-open";
 

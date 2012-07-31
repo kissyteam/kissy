@@ -55,7 +55,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             self.bindMenu();
             // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
-                menu.set("width", $(menu.get("align").node).innerWidth());
+                menu.set("width", $(menu.get("align").node || el).innerWidth());
             }
             menu.show();
             reposition.call(self);

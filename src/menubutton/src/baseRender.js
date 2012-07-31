@@ -8,9 +8,9 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
 
         DROP_TMPL =
             '<div class="ks-menu-button-dropdown">' +
-                '<div class=' +
-                '"ks-menu-button-dropdown-inner">' +
-                '<' + '/div>' +
+//                '<div class=' +
+//                '"ks-menu-button-dropdown-inner">' +
+//                '<' + '/div>' +
                 '<' + '/div>',
         COLLAPSE_CLS = "menu-button-open";
 
