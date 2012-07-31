@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>simple-select</title>
-<link href="../../../build/css/dpl/base.css" rel="stylesheet"/>
+<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
 <link href="../assets/pix.css" rel="stylesheet"/>
 <style>
     h1 {
@@ -21,11 +21,6 @@
     #wrap {
         width: 990px;
         margin: 0 auto;
-    }
-
-    .pix-inline-block {
-        display: inline-block;
-        *display: inline;
     }
 </style>
 </head>
@@ -53,11 +48,7 @@
 
     </div>
 
-    <script src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy.js"></script>
-
-    <script>
-        KISSY.Config.tag = Math.random();
-    </script>
+    <script src="../../../../build/kissy.js"></script>
 
     <script>
         KISSY.ready(function (S) {
@@ -70,11 +61,13 @@
                 var select = MenuButton.Select.decorate('#decorateSelect', {
                     defaultCaption:"请选择",
                     prefixCls:"pix-",
-                    menuAlign:{
-                        points:['tl', 'tl'],
-                        offset:[0, -1]
-                    },
-                    menuCfg:{
+                    width:280,
+                    menu:{
+                        xclass:'popupmenu',
+                        align:{
+                            points:['tl', 'tl'],
+                            offset:[0, -1]
+                        },
                         width:278,
                         elStyle:{
                             "max-height":"200px",
@@ -86,12 +79,6 @@
                 select.on("click", function (e) {
                     S.log(e.target.get("value"));
                 });
-
-                var menu = select.get("menu");
-
-                menu.on("hide", function () {
-                    menu.set("y", -9999);
-                })
             });
         });
     </script>

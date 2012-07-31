@@ -3,15 +3,14 @@
 <head>
 <meta charset="utf-8"/>
 <title>cascade-select</title>
-<link href="../../../build/css/dpl/base.css" rel="stylesheet"/>
-<link href="../../button/demo/assets/custombutton.css" rel="stylesheet"/>
+<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
 <link href="../assets/menubutton.css" rel="stylesheet"/>
-<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
-<link href="../../menu/demo/assets/menu.css" rel="stylesheet"/>
-<link href="../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
-<link href="../../menu/demo/assets/submenu.css" rel="stylesheet"/>
-<link href="../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
-<script src="../../../build/kissy.js"></script>
+<link href="../../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/submenu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
 <style>
     .ks-menu {
         background: white;
@@ -53,6 +52,7 @@
     <h1>层联 select demo</h1>
     <div id="selectContainer" style="width: 300px;margin: 50px auto;"></div>
 
+    <script src="../../../../build/kissy.js"></script>
     <script>
         KISSY.ready(function (S) {
             KISSY.use("menubutton", function (S, MenuButton) {
@@ -61,6 +61,7 @@
                     "河南":["焦作", "洛阳"],
                     "浙江":["杭州", "温州"]
                 };
+
                 var s1 = new MenuButton.Select({
                     render:"#selectContainer",
                     prefixCls:"c2c-",
@@ -74,11 +75,13 @@
                 });
 
                 for (var d in data) {
-                    s1.addItem(new MenuButton.Option({value:d,
+                    s1.addItem(new MenuButton.Option({
+                        value:d,
                         prefixCls:"c2c-",
-                        content:d}));
+                        content:d
+                    }));
                 }
-                s1.set("selectedIndex", 0);
+                s1.set("value", "上海");
                 s1.render();
 
                 var s2 = new MenuButton.Select({
@@ -105,9 +108,10 @@
                         s2.addItem(new MenuButton.Option({
                             value:v_,
                             prefixCls:"c2c-",
-                            content:v_}));
+                            content:v_
+                        }));
                     });
-                    s2.set("selectedIndex", 0);
+                    s2.set("value", vs[0]);
                 }
 
                 s1.on("click", function (e) {

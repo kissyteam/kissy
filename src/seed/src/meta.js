@@ -44,7 +44,7 @@
                     requires:["base", "ajax"]
                 },
                 "component":{
-                    requires:["node"]
+                    requires:["node","base"]
                 },
 
                 /****************************

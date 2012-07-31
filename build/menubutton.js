@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 10:47
+build time: Jul 31 17:29
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -26,10 +26,16 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     function reposition() {
         var self = this,
+            alignCfg,
+            alignNode,
+            align,
             menu = getMenu(self);
         if (menu && menu.get("visible")) {
-            var align = S.clone(menu.get("align"));
-            align.node = self.get("el");
+            alignCfg = menu.get("align");
+            alignNode = alignCfg.node;
+            delete alignCfg.node;
+            align = S.clone(alignCfg);
+            align.node = alignNode || self.get("el");
             S.mix(align, ALIGN, false);
             menu.set("align", align);
         }
@@ -257,12 +263,15 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
                 var self = this,
+                // decorate menu 配置了参数
+                    menuCfg = self.get("menu"),
+                    menu,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
-                var menu = new UI(S.mix({
+                menu = new UI(S.mix({
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
-                }));
+                }, menuCfg));
                 self.__set("menu", menu);
             },
 

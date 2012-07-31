@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Jul 31 17:51
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -776,7 +776,8 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         var el = self.get("el"),
             checkEl = el.one("." + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + CHECK_CLS + "'/>").prependTo(el);
+            checkEl = new Node("<div class='" + CHECK_CLS + "'/>")
+                .prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();
         }

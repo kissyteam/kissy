@@ -2,132 +2,82 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY MenuButton</title>
-<link href="../../build/css/dpl/base.css" rel="stylesheet"/>
-<link href="../button/demo/assets/custombutton.css" rel="stylesheet"/>
-<link href="assets/menubutton.css" rel="stylesheet"/>
-<link href="../overlay/assets/cool.css" rel="stylesheet"/>
-<link href="../menu/demo/assets/menu.css" rel="stylesheet"/>
-<link href="../menu/demo/assets/menuitem.css" rel="stylesheet"/>
-<link href="../menu/demo/assets/submenu.css" rel="stylesheet"/>
-<link href="../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
-<style>
-    .ks-menu {
-        background: white;
-        border: 1px solid red;
-    }
-
-    li {
-        padding: 5px;
-        border: 1px solid white;
-    }
-
-</style>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
-
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
-
-    #wrap {
-        width: 990px;
-        margin: 0 auto;
-    }
-</style>
+<title>KISSY Buttons</title>
+<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../menu/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="wrap">
-    <h1 id="describe">菜单按钮演示</h1>
-    <div style="height:200px;overflow: auto;border:1px solid red;">
-        <h2>设计说明</h2>
-        <ol>
-            <li>支持键盘，鼠标互操作</li>
-            <li>符合 wai-aria 规范</li>
-            <li>构建组件层次</li>
-        </ol>
 
-        <h2>使用说明</h2>
-        <ol>
-            <li>
-                tab 移动焦点到按钮：按钮周边粉框
-            </li>
-            <li>
-                按钮获得焦点时点击上或下键，弹出菜单
-                <ol>
-                    <li>或点击按钮弹出菜单</li>
-                </ol>
-            </li>
-
-
-            <li>
-                菜单弹出后，上下键选择菜单项
-                <ol>
-                    <li>或通过鼠标掠过</li>
-                </ol>
-            </li>
-
-            <li>
-                带有子菜单的菜单项通过右键激活子菜单，左键收缩子菜单
-                <ol>
-                    <li>或通过鼠标掠过，自动弹出子菜单</li>
-                </ol>
-            </li>
-
-            <li>
-                菜单项弹出后，按下 enter 或 space 则选中当前高亮菜单项
-                <ol>
-                    <li>或通过鼠标点击选中任意菜单项</li>
-                </ol>
-            </li>
-
-            <li>
-                esc 隐藏下拉菜单（焦点仍然在按钮上）
-                <ol>
-                    <li>或通过鼠标点击文档空白区域（按钮失去焦点）</li>
-                </ol>
-            </li>
-        </ol>
-    </div>
-
-    <h2>simple menubutton</h2>
-
-    <a href="demo/simple-menubutton.html" target="_blank">demo</a>
-
-    <h2>simple splitbutton</h2>
-
-    <a href="../button/demo/split-button.html" target="_blank">demo</a>
-
-
-    <h2>decorate menubutton</h2>
-
-    <a href="demo/decorate-menubutton.html" target="_blank">demo</a>
-
-    <h2>checkable menubutton</h2>
-
-    <a href="demo/checkable-menu.html" target="_blank">demo</a>
-
-    <h2>simple select</h2>
-
-    <a href="demo/simple-select.html" target="_blank">demo</a>
-
-    <h2>cascaded select</h2>
-
-    <a href="demo/cascade-select.html" target="_blank">demo</a>
-
-    <h2>large select</h2>
-
-    <a href="demo/large.html" target="_blank">demo</a>
-
-    <h2>统一 api</h2>
-
-    <a href="demo/emulate.html" target="_blank">demo</a>
+<div class="container">
+    <h1>KISSY MenuButton</h1>
 </div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"dpl",
+                    href:'demo/dpl/demo.html',
+                    xclass:'menuitem'
+                },
+                {
+                    content:'other',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'simple menubutton',
+                                href:'demo/other/simple-menubutton.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'split select',
+                                href:'demo/other/split-select.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'pix select',
+                                href:'demo/other/pix-select.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'性能演示',
+                                href:'demo/other/large.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'从已有节点生成',
+                                href:'demo/other/decorate-menubutton.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'checkable menu',
+                                href:'demo/other/checkable-menu.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'联动 select',
+                                href:'demo/other/checkable-menu.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
 </body>
 </html>
