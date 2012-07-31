@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Jul 31 23:22
 */
 /**
  * Setup component namespace.
@@ -925,7 +925,7 @@ KISSY.add("component/delegateChildren", function (S) {
     function handleChildMouseEvents(e) {
         if (!this.get("disabled")) {
             var control = this.getOwnerControl(e.target, e);
-            if (control) {
+            if (control && !control.get("disabled")) {
                 // Child control identified; forward the event.
                 switch (e.type) {
                     case "mousedown":
