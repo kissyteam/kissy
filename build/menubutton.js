@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 17:29
+build time: Jul 31 22:21
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -58,9 +58,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             // 先 render，监听 width 变化事件
             menu.render();
             self.bindMenu();
-            // 根据 el 自动调整大小
+            // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
-                menu.set("width", el.innerWidth());
+                menu.set("width", $(menu.get("align").node).innerWidth());
             }
             menu.show();
             reposition.call(self);
