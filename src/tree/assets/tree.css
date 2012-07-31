@@ -1,118 +1,121 @@
 .ks-treeitem-row {
-  white-space: nowrap;
-  font: icon;
-  line-height: 16px;
-  height: 16px;
+    white-space: nowrap;
+    font: icon;
+    line-height: 16px;
+    height: 16px;
 }
 
 .ks-treeitem-row span {
-  overflow: hidden;
-  text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ks-tree-children {
-  background-repeat: repeat-y;
-  background-image: url("I.png") !important;
-  background-position-y: 1px !important;	/* IE only */
-  font: icon;
+    background-repeat: repeat-y;
+    background-image: url("I.png") !important;
+    background-position-y: 1px !important; /* IE only */
+    font: icon;
 }
 
 .ks-tree-children-nolines {
-  font: icon;
+    font: icon;
 }
 
 .ks-tree-icon {
-  background-image: url("tree.png");
+    background-image: url("tree.png");
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
 }
 
 .ks-tree-expand-icon {
-  vertical-align: middle;
-  height: 16px;
-  width: 16px;
-  cursor: default;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    cursor: default;
 }
 
 .ks-tree-expand-icon-plus {
-  width: 19px;
-  background-position: 0 0;
+    width: 19px;
+    background-position: 0 0;
 }
 
 .ks-tree-expand-icon-minus {
-  width: 19px;
-  background-position: -24px 0;
+    width: 19px;
+    background-position: -24px 0;
 }
 
 .ks-tree-expand-icon-tplus {
-  width: 19px;
-  background-position: -48px 0;
+    width: 19px;
+    background-position: -48px 0;
 }
 
 .ks-tree-expand-icon-tminus {
-  width: 19px;
-  background-position: -72px 0;
+    width: 19px;
+    background-position: -72px 0;
 }
 
 .ks-tree-expand-icon-lplus {
-  width: 19px;
-  background-position: -96px 0;
+    width: 19px;
+    background-position: -96px 0;
 }
 
 .ks-tree-expand-icon-lminus {
-  width: 19px;
-  background-position: -120px 0;
+    width: 19px;
+    background-position: -120px 0;
 }
 
 .ks-tree-expand-icon-t {
-  width: 19px;
-  background-position: -144px 0;
+    width: 19px;
+    background-position: -144px 0;
 }
 
 .ks-tree-expand-icon-l {
-  width: 19px;
-  background-position: -168px 0;
+    width: 19px;
+    background-position: -168px 0;
 }
 
 .ks-tree-expand-icon-blank {
-  width: 19px;
-  background-position: -168px -24px;
+    width: 19px;
+    background-position: -168px -24px;
 }
 
 .ks-tree-collapsed-folder-icon {
-  vertical-align: middle;
-  height: 16px;
-  width: 16px;
-  background-position: -0px -24px;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    background-position: -0px -24px;
 }
 
 .ks-tree-expanded-folder-icon {
-  vertical-align: middle;
-  height: 16px;
-  width: 16px;
-  background-position: -24px -24px;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    background-position: -24px -24px;
 }
 
 .ks-tree-file-icon {
-  vertical-align: middle;
-  height: 16px;
-  width: 16px;
-  background-position: -48px -24px;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    background-position: -48px -24px;
 }
 
 .ks-treeitem-content {
-  margin-left: 3px;
-  padding: 1px 2px 1px 2px;
-  text-decoration: none;
-  color: WindowText;
-  cursor: default;
+    margin-left: 3px;
+    padding: 1px 2px 1px 2px;
+    text-decoration: none;
+    color: WindowText;
+    cursor: default;
 }
 
 .ks-treeitem-content:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .ks-tree-children {
-     padding-left: 19px;
- }
+    padding-left: 19px;
+}
 
 .ks-tree-lchildren {
     padding-left: 19px;
@@ -133,7 +136,7 @@
 }
 
 .ks-tree-hide-root {
-  display: none;
+    display: none;
 }
 
 .ks-treeitem-checked0 {

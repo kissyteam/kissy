@@ -13,6 +13,9 @@
 
 /* State: resting. */
 .ks-menu-button {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
     /* Client apps may override the URL at which they serve the image. */
     background: #ddd url(../../button/demo/assets/button-bg.png) repeat-x top left;
     border: 1px;
@@ -65,6 +68,9 @@
 
 /* Caption style. */
 .ks-menu-button-caption {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
     padding: 0 4px 0 0;
     vertical-align: top;
     margin-right: 20px;
@@ -79,7 +85,7 @@
     vertical-align: top;
     position: absolute;
     right: 3px;
-    top:2px;
+    top: 2px;
 }
 
 /* Pill (collapsed border) styles. */

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Jul 31 10:47
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -356,12 +356,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
  */
 KISSY.add("menubutton/baseRender", function (S, Button) {
 
-    var CAPTION_TMPL = '<div class="ks-inline-block ' +
-            'ks-menu-button-caption"><' + '/div>',
+    var CAPTION_TMPL = '<div class="ks-menu-button-caption"><' + '/div>',
 
         DROP_TMPL =
-            '<div class="ks-inline-block ' +
-                'ks-menu-button-dropdown">' +
+            '<div class="ks-menu-button-dropdown">' +
                 '<div class=' +
                 '"ks-menu-button-dropdown-inner">' +
                 '<' + '/div>' +
