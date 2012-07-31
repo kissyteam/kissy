@@ -44,7 +44,7 @@
                     requires:["base", "ajax"]
                 },
                 "component":{
-                    requires:["node","base"]
+                    requires:["node", "base"]
                 },
 
                 /****************************
@@ -111,7 +111,10 @@
                     requires:["dom", "json"]
                 },
                 "imagezoom":{
-                    requires:["node", "component"]
+                    requires:["overlay"]
+                },
+                "split-button":{
+                    requires:['button', 'menubutton']
                 },
                 "editor":{
                     requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
