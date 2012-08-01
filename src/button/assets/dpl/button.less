@@ -29,34 +29,9 @@
     outline: none;
 }
 
-// Hover state
-.ks-button-hover {
-    color: @grayDark;
-    background-color: darken(@white, 10%);
-    background-position: 0 -15px;
-/*
-    transition is only when going to hover, otherwise the background
-    behind the gradient (there for IE<=9 fallback) gets mismatched
-    */
-    .transition(background-position .1s linear); // 加上这个才能动画？？
-}
-
-// Active state
-.ks-button-active,
-.ks-button-checked {
-    background-image: none;
-    @shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1 px 2 px rgba(0, 0, 0, .05);
-    .box-shadow(@shadow);
-    background-color: darken(@white, 10%);
-    outline: 0;
-}
-
 // Disabled state
 .ks-button-disabled {
     cursor: default;
-    outline-width: 0;
-    background-image: none;
-    background-color: darken(@white, 10%);
     .opacity(65);
     .box-shadow(none);
 }
