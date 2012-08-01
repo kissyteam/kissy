@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 1 22:21
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -25,7 +25,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function timedChunk(items, process, context, callback) {
 
-        var stopper = {}, timer,todo;
+        var stopper = {}, timer, todo;
 
         function start() {
 
@@ -185,7 +185,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             containerWidth = container.width(),
             curColHeights = self.get("curColHeights");
         // 当前列数
-        curColHeights.length = Math.max(parseInt(containerWidth / self.get("colWidth")),
+        curColHeights.length = Math.max(Math.floor(containerWidth / self.get("colWidth")),
             self.get("minColCount"));
         // 当前容器宽度
         self._containerRegion = {
@@ -201,10 +201,13 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         var effect = self.get("effect"),
             item = $(itemRaw),
             align = self.get("align"),
+            margin,
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
+            colWidth = self.get("colWidth"),
             curColCount = curColHeights.length,
             col = 0,
+            colProp,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
 
@@ -228,19 +231,26 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         }
 
         // 元素保持间隔不变，居中
-        var margin = align === 'left' ? 0 :
-                Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0),
-            colProp;
+        margin = align === 'left' ? 0 :
+            Math.max(containerRegion.width -
+                curColCount * self.get("colWidth"), 0);
 
         if (align === 'center') {
             margin /= 2;
         }
 
+        if (align === 'justify' && curColCount > 1) {
+            margin = col > 0 ? Math.max(
+                (containerRegion.width - colWidth) / (curColCount - 1) - colWidth,
+                0) * col : 0;
+        }
+
         colProp = {
             // 元素间固定间隔好点
-            left:col * self.get("colWidth") + margin,
+            left:col * colWidth + margin,
             top:curColHeights[col]
         };
+
 
         /*
          不在容器里，就加上
@@ -273,7 +283,15 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         colItems[col] = colItems[col] || [];
         colItems[col].push(item);
         item.attr("data-waterfall-col", col);
-
+        var className = item[0].className
+            .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
+        className += " ks-waterfall-col-" + col;
+        if (col == 0) {
+            className += " ks-waterfall-col-first";
+        } else if (col == curColHeights.length - 1) {
+            className += " ks-waterfall-col-last";
+        }
+        item[0].className = className;
         return item;
     }
 
