@@ -170,9 +170,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
         }, {
             ATTRS:/** @lends Menu.prototype*/
             {
-                visibleMode:{
-                    value:"display"
-                },
                 /**
                  * Current highlighted child menu item.
                  * @type Menu.Item

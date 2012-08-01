@@ -74,14 +74,6 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 handleMouseEvents:{
                     value:false
                 },
-
-                /**
-                 * see {@link Component.UIBase.Box#visibleMode}.
-                 * @default "visibility"
-                 */
-                visibleMode:{
-                    value:"visibility"
-                },
                 xrender:{
                     value:OverlayRender
                 }

@@ -297,7 +297,13 @@
     .core (@gridColumnWidth, @gridGutterWidth) {
 
         .spanX (@index) when (@index > 0) {
-            (~".span@{index}") { .span(@index); }
+            (~".span@{index}") {
+                _float: left;
+                // ie6 bug...
+                _display: inline;
+                _margin-left: @gridGutterWidth;
+                .span(@index);
+            }
             .spanX(@index - 1);
         }
 
@@ -323,19 +329,6 @@
             .ks-clear_();
         }
 
-        .spanFloatX (@index) when(@index>0){
-            (~".span@{index}") {
-                _float: left;
-                // ie6 bug...
-                _display: inline;
-                _margin-left: @gridGutterWidth;
-            }
-            .spanFloatX(@index - 1);
-        }
-
-        .spanFloatX (0) {
-        }
-
         [class*="span"] {
             float: left;
             margin-left: @gridGutterWidth;
@@ -343,9 +336,6 @@
 
         // generate .spanX and .offsetX
         .spanX (@gridColumns);
-
-        // consider ie6
-        .spanFloatX (@gridColumns);
 
         .offsetX (@gridColumns);
 
@@ -355,7 +345,13 @@
 
         .spanX (@index) when (@index > 0) {
             (~"> .span@{index}") { .span(@index); }
-            (~" .span@{index}") { .spanIE6(@index); }
+            (~" .span@{index}") {
+                .spanIE6(@index);
+                _float: left;
+                // ie6 bug...
+                _display: inline;
+                _margin-left: @fluidGridGutterWidth;
+            }
             .spanX(@index - 1);
         }
 
@@ -375,19 +371,6 @@
 
             .ks-clear_();
 
-            .spanFloatX (@index) when(@index>0){
-                (~".span@{index}") {
-                    _float: left;
-                    // ie6 bug...
-                    _display: inline;
-                    _margin-left: @fluidGridGutterWidth;
-                }
-                .spanFloatX(@index - 1);
-            }
-
-            .spanFloatX (0) {
-            }
-
             > [class*="span"] {
                   float: left;
                   margin-left: @fluidGridGutterWidth;
@@ -399,8 +382,6 @@
 
             // generate .spanX
             .spanX (@gridColumns);
-
-            .spanFloatX (@gridColumns);
 
             .span-first {
                 _margin-left: 0;

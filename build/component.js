@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 23:22
+build time: Aug 1 17:19
 */
 /**
  * Setup component namespace.
@@ -3416,6 +3416,13 @@ KISSY.add("component/uibase/positionrender", function () {
         },
         zIndex:{
             value:Z_INDEX
+        },
+        /**
+         * see {@link Component.UIBase.Box#visibleMode}.
+         * @default "visibility"
+         */
+        visibleMode:{
+            value:"visibility"
         }
     };
 
