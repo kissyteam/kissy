@@ -38,8 +38,6 @@
   position: relative;
   float: left;
   margin-left: -1px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
   border-radius: 0;
 }
 .ks-button-group .ks-button:first-child {

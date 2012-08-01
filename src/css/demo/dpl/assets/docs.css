@@ -17,3 +17,7 @@ code {
     background-color: #F7F7F9;
     border: 1px solid #E1E1E8;
 }
+
+.the-icons {
+    list-style: none;
+}

@@ -52,8 +52,6 @@ table {
   border-left: 0;
   border-collapse: separate;
   *border-collapse: collapsed;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
   border-radius: 4px;
 }
 .table-bordered th,
@@ -67,26 +65,18 @@ table {
 }
 .table-bordered thead:first-child tr:first-child th:first-child,
 .table-bordered tbody:first-child tr:first-child td:first-child {
-  -webkit-border-radius: 4px 0 0 0;
-  -moz-border-radius: 4px 0 0 0;
   border-radius: 4px 0 0 0;
 }
 .table-bordered thead:first-child tr:first-child th:last-child,
 .table-bordered tbody:first-child tr:first-child td:last-child {
-  -webkit-border-radius: 0 4px 0 0;
-  -moz-border-radius: 0 4px 0 0;
   border-radius: 0 4px 0 0;
 }
 .table-bordered thead:last-child tr:last-child th:first-child,
 .table-bordered tbody:last-child tr:last-child td:first-child {
-  -webkit-border-radius: 0 0 0 4px;
-  -moz-border-radius: 0 0 0 4px;
   border-radius: 0 0 0 4px;
 }
 .table-bordered thead:last-child tr:last-child th:last-child,
 .table-bordered tbody:last-child tr:last-child td:last-child {
-  -webkit-border-radius: 0 0 4px 0;
-  -moz-border-radius: 0 0 4px 0;
   border-radius: 0 0 4px 0;
 }
 .table-striped tbody tr:nth-child(odd) td,
