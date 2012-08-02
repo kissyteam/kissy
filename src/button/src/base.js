@@ -89,15 +89,6 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                     view:1
                 },
 
-                /**
-                 * Add collapse-right/left css class to root element.
-                 * enum { "left","right" }
-                 * @type String
-                 */
-                collapseSide:{
-                    view:1
-                },
-
                 xrender:{
                     value:ButtonRender
                 }

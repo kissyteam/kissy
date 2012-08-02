@@ -21,23 +21,12 @@ KISSY.add("button/buttonRender", function (S, Component) {
         },
         _uiSetDescribedby:function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
-        },
-
-        _uiSetCollapseSide:function (side) {
-            var self = this,
-                cls = self.getCssClassWithPrefix("button-collapse-"),
-                el = self.get("el");
-            el.removeClass(cls + "left " + cls + "right");
-            if (side) {
-                el.addClass(cls + side);
-            }
         }
     }, {
         ATTRS:{
             describedby:{},
             tooltip:{},
-            checked:{},
-            collapseSide:{}
+            checked:{}
         }
     });
 }, {
