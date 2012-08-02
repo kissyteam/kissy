@@ -19,7 +19,7 @@
     <div class="page-header">
         <h1>渐进增强的按钮</h1>
     </div>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="table">
         <thead>
         <tr>
             <th>按钮</th>
@@ -80,7 +80,7 @@
         </tbody>
     </table>
 
-    <div class="row">
+    <div class="row" id="common">
         <div class="span8">
             <h3>按钮的行为</h3>
             <p>
@@ -124,7 +124,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="row" id="checkable">
         <span class="span8">
             <h3>Button Groups</h3>
 
@@ -146,9 +146,16 @@
 <script src='../../../../build/kissy.js'></script>
 <script>
     KISSY.use("button", function (S, Button) {
-        S.all(".ks-button").each(function (n) {
+        S.all("#table .ks-button,#common .ks-button").each(function (n) {
             new Button({
                 srcNode:n
+            }).render();
+        });
+
+        S.all("#checkable .ks-button").each(function (n) {
+            new Button({
+                srcNode:n,
+                checkable:true
             }).render();
         });
     });

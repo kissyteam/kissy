@@ -30,6 +30,7 @@
   *display: inline;
   *zoom: 1;
   margin-top: 7px;
+  margin-left: 5px;
 }
 .ks-button-primary .ks-menu-button-dropdown,
 .ks-button-warning .ks-menu-button-dropdown,
@@ -41,7 +42,8 @@
   opacity: 0.75;
   filter: alpha(opacity=75);
 }
-.ks-button-hover .ks-menu-button-dropdown {
+.ks-button-hover .ks-menu-button-dropdown,
+.ks-menu-button-open .ks-menu-button-dropdown {
   opacity: 1;
   filter: alpha(opacity=100);
 }
