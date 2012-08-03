@@ -1,0 +1,29 @@
+.ke-tabs {
+    padding-left: 10px;
+    margin-top: 10px;
+    border-bottom: 1px solid #CED5E0;
+}
+
+.ke-tabs li {
+    background-color: #F2F2F2;
+    border-color: #CED5E0;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    cursor: pointer;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    text-align: center;
+    width: 120px;
+}
+
+li.ke-tab-selected {
+    background-color: #FCFCFC;
+    border-color: #CED5E0 #CED5E0 #FCFCFC;
+    cursor: default;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+}

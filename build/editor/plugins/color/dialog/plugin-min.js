@@ -1,0 +1,1 @@
+KISSY.Editor.add("color/dialog",function(b){var a=KISSY.Editor;a.use("colorsupport/dialog/colorpicker",function(){var c=new a.ColorSupport.ColorPicker;b.addDialog("color/dialog",c)})},{attach:false});

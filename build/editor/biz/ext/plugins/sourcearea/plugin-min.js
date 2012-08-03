@@ -1,0 +1,1 @@
+KISSY.Editor.add("checkbox-sourcearea",function(a){var b=KISSY.Editor;KISSY.UA.gecko<1.92||b.use("checkbox-sourcearea/support",function(){var c=new b.CheckboxSourceArea(a);a.on("destroy",function(){c.destroy()})})},{attach:false});

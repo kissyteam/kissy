@@ -1,0 +1,103 @@
+/**
+ overlay style for kissy editor
+ @author yiminghe@gmail.com
+**/
+.ke-mask {
+    background-color: #000000;
+    left: 0;
+    top: 0;
+    border: none;
+    position: absolute;
+}
+
+.ke-loading {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    border: 1px solid #3A5774;
+    padding: 4px;
+    background: #000000 url('loading_mask.gif') center center no-repeat;
+}
+
+.ke-dialog {
+    position: absolute;
+    background: none repeat scroll 0 0 #C1D9FF;
+    border: 1px solid #3A5774;
+    color: #000000;
+    padding: 4px;
+    font-size: 13px;
+    -moz-box-shadow: 2px 2px 0.5em #888888;
+    -webkit-box-shadow: 2px 2px 0.5em #888888;
+    box-shadow: 2px 2px 0.5em #888888;
+}
+
+.ke-dialog-iframe {
+    position: absolute;
+    border: none;
+}
+
+.ke-hd-x {
+    height: 15px;
+    width: 15px;
+    right: 10px;
+    top: 12px;
+    vertical-align: middle;
+    position: absolute;
+    outline: none;
+    text-decoration: none;
+}
+
+.ke-hd-x .ke-close {
+    display: block;
+    background: url("toolbar-sprite.png") no-repeat scroll -784px 0 #E0EDFE;
+    height: 15px;
+    text-indent: -9999px;
+    width: 15px;
+}
+
+a.ke-hd-x:hover .ke-close {
+    background-position: -768px 0;
+}
+
+.ke-hd {
+    background: none repeat scroll 0 0 #E0EDFE;
+    color: #000000;
+    font-size: 120%;
+    font-weight: bold;
+    padding: 8px 15px 8px 8px;
+}
+
+.ke-bd, .ke-ft {
+    background-color: #FFFFFF;
+    padding: 8px;
+}
+
+.ke-ft {
+    text-align: right;
+}
+
+.ke-bd td {
+    padding: 2px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.ke-focus {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    outline: none;
+}

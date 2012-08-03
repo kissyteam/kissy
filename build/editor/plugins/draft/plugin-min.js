@@ -1,0 +1,1 @@
+KISSY.Editor.add("draft",function(b){var a=KISSY.Editor;b.addPlugin("draft",function(){var c=this;a.use("draft/support",function(){a.storeReady(function(){var d=new a.Draft(b);c.destroy=function(){d.destroy()}})})})},{attach:false});

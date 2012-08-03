@@ -1,0 +1,40 @@
+/**
+menu style for kissy editor ,include contextmenu and select menu
+@author yiminghe@gmail.com
+**/
+.ke-menu {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #CCCCCC #666666 #666666 #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font: 13px Arial, sans-serif;
+    margin: 0;
+    outline: medium none;
+    padding: 4px 0;
+    position: absolute;
+    overflow: hidden;
+    -moz-box-shadow: 3px 3px 3px #808080;
+    -webkit-box-shadow: 3px 3px 3px #808080;
+    box-shadow: 3px 3px 3px #808080;
+}
+
+.ke-menu a, .ke-menu-title {
+    display: block;
+    color: #000000;
+    margin: 0;
+    border-width: 0;
+    padding: 4px 7em 4px 28px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.ke-menu-title {
+    background-color: #dcdcdc;
+    padding: 3px;
+}
+
+.ke-menu a:hover, .ke-menu-selected {
+    background-color: #D6E9F8;
+    text-decoration: none;
+}

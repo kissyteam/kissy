@@ -1,0 +1,236 @@
+/**
+kissy editor cool theme
+@author :yiminghe@gmail.com
+**/
+/*
+编辑器容器
+*/
+.ke-editor-wrap {
+    background: white;
+    border: 1px solid rgb(206, 213, 224);
+    font-size: 13px;
+    line-height: 1.2;
+    _font-size: 12px;
+}
+
+/*
+textarea,iframe包装
+*/
+.ke-textarea-wrap {
+    overflow: hidden;
+}
+
+.ke-textarea-wrap textarea {
+    border-width: 0;
+}
+
+/*
+工具栏
+*/
+.ke-editor-tools {
+    background-color: rgb(245, 247, 250);
+    background: -webkit-gradient(linear, left top, left bottom, from(#f8fafd), to(#f2f5f8));
+    background: -moz-linear-gradient(center top, #f8fafd, #f2f5f8) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f8fafd', endColorstr = '#f2f5f8');
+    border-bottom: 1px solid rgb(206, 213, 224);
+    zoom: 1;
+}
+
+/*
+状态栏
+*/
+.ke-editor-status {
+    background-color: rgb(235, 238, 242);
+    background: -webkit-gradient(linear, left top, left bottom, from(#e7e9ed), to(#f1f4f7));
+    background: -moz-linear-gradient(center top, #e7e9ed, #f1f4f7) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e7e9ed', endColorstr = '#f1f4f7');
+    border-top: 1px solid rgb(206, 213, 224);
+    height: 22px;
+    padding: 2px 0;
+    position: relative;
+}
+
+/*
+工具按钮 
+*/
+.ke-toolbar-item {
+    background: no-repeat scroll left top transparent;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -999999px;
+    vertical-align: middle;
+    width: 16px;
+    margin: 2px 4px; /*扩大可点击区域，不能在a加padding，ie问题*/
+}
+
+.ke-toolbar-separator {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    border-left: 1px solid rgb(215, 215, 215);
+    border-right: 1px solid #ffffff;
+    font-size: 120%;
+    margin: 0 2px;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: middle;
+    width: 0;
+}
+
+.ke-toolbar-source {
+    background-image: url("sourcearea.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-preview {
+    background-image: url("preview.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-bold {
+    background-image: url("bold.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-italic {
+    background-image: url("italic.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-underline {
+    background-image: url("underline.png");/** sprite-ref: mysprite; */
+    height:11px;
+    margin-top:5px;
+    margin-bottom:4px;
+    width:10px;
+    margin-left:7px;
+    margin-right:7px;
+}
+
+.ke-toolbar-strikeThrough {
+    background-image: url("strike.png");/** sprite-ref: mysprite; */
+    height:11px;
+    margin-top:4px;
+    margin-bottom:5px;
+}
+
+.ke-toolbar-ol {
+    background-image: url("ol.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-ul {
+    background-image: url("ul.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-outdent {
+    background-image: url("outdent.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-indent {
+    background-image: url("indent.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-alignleft {
+    background-image: url("align-left.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-aligncenter {
+    background-image: url("align-center.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-alignright {
+    background-image: url("align-right.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-image {
+    background-image: url("image.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-mul-image {
+    background-image: url("mul-image.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-bgcolor {
+    background-image: url("bgcolor.png");/** sprite-ref: mysprite; */
+    width: 24px;
+    height:15px;
+    margin-top:3px;
+}
+
+.ke-toolbar-color {
+    background-image: url("color.png");/** sprite-ref: mysprite; */
+    width: 24px;
+    height:14px;
+    margin-top:3px;
+     margin-bottom:3px;
+}
+
+.ke-toolbar-undo {
+    background-image: url("undo.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-redo {
+    background-image: url("redo.png");/** sprite-ref: mysprite; */
+    height:15px;
+    margin:3px 4px;
+}
+
+.ke-toolbar-table {
+    background-image: url("table.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-template {
+    background-image: url("templates.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-maximize {
+    background-image: url("maximize.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-flash {
+    background-image: url("flash.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-link {
+    background-image: url("link.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-music {
+    background-image: url("music.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-video {
+    background-image: url("video.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-smiley {
+    background-image: url("smiley.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-removeformat {
+    background-image: url("removeformat.png");/** sprite-ref: mysprite; */
+}
+
+.ke-toolbar-pagebreak {
+    background-image: url("pagebreak.png");/** sprite-ref: mysprite; */
+    height:12px;
+    margin-top:4px;
+    margin-bottom:4px;
+}
+
+
+.ke-toolbar-restore {
+    background-image: url("restore.png");/** sprite-ref: mysprite; */
+}
+
+.ke-input {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #FFFFFF repeat-x scroll 0 0;
+    background-image: url("text-bg.png");
+    border: 1px solid #B5B8C8;
+    height: 24px;
+    line-height: 22px;
+}
+
+.ke-input-tip {
+    color: #969696;
+}

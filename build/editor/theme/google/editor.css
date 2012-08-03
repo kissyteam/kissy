@@ -1,0 +1,183 @@
+/**
+kissy editor google theme
+@author :yiminghe@gmail.com
+**/
+/*
+编辑器容器
+*/
+.ke-editor-wrap {
+    background: white;
+    border: 1px solid #DFDFDF; /*line-height: 1 !important;*/
+    font-size: 13px;
+    line-height: 1.2;
+    _font-size: 12px;
+}
+
+/*
+textarea,iframe包装
+*/
+.ke-textarea-wrap {
+    overflow: hidden;
+}
+
+.ke-textarea-wrap textarea {
+    border-width: 0;
+}
+
+/*
+工具栏
+*/
+.ke-editor-tools {
+    background: url("editor-bg.png") repeat-x scroll 0 -192px #E5E5E5;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+/*
+状态栏
+*/
+.ke-editor-status {
+    background-color: #E5E5E5;
+    border-top: 1px solid #DFDFDF;
+    height: 22px;
+    padding: 2px 0;
+    position: relative;
+}
+
+/*
+工具按钮 
+*/
+.ke-toolbar-item {
+    background: url("toolbar-sprite.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -999999px;
+    vertical-align: middle;
+    width: 16px;
+    margin: 3px 4px; /*扩大可点击区域，不能在a加padding，ie问题*/
+}
+
+.ke-toolbar-separator {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    border-left: 1px solid rgb(215, 215, 215);
+    border-right: 1px solid #ffffff;
+    font-size: 120%;
+    margin: 0 2px;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: middle;
+    width: 0;
+}
+
+.ke-toolbar-source {
+    background-position: -1013px 50%;
+}
+
+.ke-toolbar-preview {
+    background-position: -896px 50%;
+}
+
+.ke-toolbar-bold {
+    background-position: -32px 50%;
+}
+
+.ke-toolbar-italic {
+    background-position: -48px 50%;
+}
+
+.ke-toolbar-underline {
+    background-position: -64px 50%;
+}
+
+.ke-toolbar-strikeThrough {
+    background-position: -624px 50%;
+}
+
+.ke-toolbar-ol {
+    background-position: -176px 50%;
+}
+
+.ke-toolbar-ul {
+    background-position: -160px 50%;
+}
+
+.ke-toolbar-outdent {
+    background-position: -144px 50%;
+}
+
+.ke-toolbar-indent {
+    background-position: -128px 50%;
+}
+
+.ke-toolbar-alignleft {
+    background-position: -192px 50%;
+}
+
+.ke-toolbar-aligncenter {
+    background-position: -208px 50%;
+}
+
+.ke-toolbar-alignright {
+    background-position: -224px 50%;
+}
+
+.ke-toolbar-image {
+    background-position: -979px 50%;
+}
+
+.ke-toolbar-bgcolor {
+    background-position: -96px 50%;
+}
+
+.ke-toolbar-color {
+    background-position: -80px 50%;
+}
+
+.ke-toolbar-undo {
+    background-position: 0 50%;
+}
+
+.ke-toolbar-redo {
+    background-position: -17px 50%;
+}
+
+.ke-toolbar-table {
+    background-position: -544px 50%;
+}
+
+.ke-toolbar-template {
+    background-position: -945px 50%;
+}
+
+.ke-toolbar-maximize {
+    background-position: -997px 50%;
+}
+
+.ke-toolbar-flash,.ke-toolbar-video {
+    background-position: -736px 50%;
+}
+
+.ke-toolbar-link {
+    background-position: -560px 50%;
+}
+
+.ke-toolbar-music {
+    background-position: -576px 50%;
+}
+
+.ke-toolbar-smiley {
+    background-position: -963px 50%;
+}
+
+.ke-toolbar-removeformat {
+    background-position: -255px 50%;
+}
+
+.ke-toolbar-pagebreak {
+    background-position: -656px 50%;
+}
+.ke-input-tip {
+    color: #969696;
+}

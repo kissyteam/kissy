@@ -1,0 +1,13 @@
+/**
+    resize handler style for kissy editor
+    @author yiminghe@gmail.com
+**/
+.ke-resizer {
+    background: url("resizer.png") no-repeat right bottom;
+    height: 20px;
+    width: 10px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    cursor: se-resize;
+}

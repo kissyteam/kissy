@@ -1,0 +1,57 @@
+/**
+menu style for kissy editor ,include contextmenu and select menu
+@author yiminghe@gmail.com
+**/
+.ke-menu {
+    background: none repeat scroll 0 0 #fcfcfc;
+    border-color: rgb(206, 213, 224);
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font: 13px Arial, sans-serif;
+    margin: 0;
+    outline: medium none; /*padding: 4px 0;*/
+    position: absolute;
+    overflow: hidden;
+    zoom: 1;
+    -moz-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    -webkit-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    /*
+    有了阴影，就hover失效？
+    filter: progid:DXImageTransform.Microsoft.Shadow(color = '#e4e4e4', Direction = 135, Strength = 3);
+    */
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+}
+
+.ke-menu a, .ke-menu-title {
+    display: block;
+    color: rgb(102, 102, 102);
+    margin: 0;
+    border-width: 0;
+    padding: 4px 7em 4px 28px;
+    white-space: nowrap;
+    zoom: 1;
+    text-decoration: none;
+    color: black;
+}
+
+.ke-menu-title {
+    background-color: #dcdcdc;
+    padding: 3px;
+    display: none;
+    color: black;
+}
+
+.ke-menu a:hover, .ke-menu-selected {
+    background: #D6E9F8;
+    text-decoration: none;
+    color: black;
+}
+
+.ke-menu a.ke-menuitem-disable {
+    color: gray;
+}
+
+.ke-menu a.ke-menuitem-disable:hover {
+    background: #fcfcfc;
+}

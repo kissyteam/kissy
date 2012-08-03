@@ -1,0 +1,70 @@
+.ks-dialog, .ks-overlay {
+    position: absolute;
+    /*防止移位带来的闪烁*/
+    left: -9999px;
+    top: -9999px;
+}
+
+.ks-dialog .ks-contentbox,.ks-popup .ks-contentbox{
+    background-color: #FBFBFB;
+    border: 1px solid #ACB4BE;
+}
+
+.ks-dialog .ks-stdmod-header {
+    background: repeat-x scroll 0 0 #D6DBE2;
+    background-image:url("overlay-hd.png");/** sprite-ref: mysprite; sprite-alignment: repeat; */
+    border-bottom: 1px solid #ACB4BE;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 0 0 18px;
+}
+
+.ks-ext-close {
+    height: 18px;
+    width: 18px;
+    border: 1px solid transparent;
+    right: 6px;
+    top: 6px;
+    vertical-align: middle;
+    position: absolute;
+    text-decoration: none;
+    outline: none;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.ks-ext-close .ks-ext-close-x {
+    display: block;
+    background: no-repeat;
+    background-image: url("close.png");/** sprite-ref: mysprite; */
+    height: 13px;
+    text-indent: -9999px;
+    width: 13px;
+    margin: 2.5px;
+}
+
+.ks-ext-close:hover {
+    border: 1px solid #CED5E0;
+    background: white;
+}
+
+.ks-ext-mask {
+    background-color: #000;
+    opacity: 0.3;
+    filter: alpha(opacity = 15);
+}
+
+.ks-ext-loading {
+    opacity: 0.3;
+    filter: alpha(opacity = 15);
+    background: #000  center center no-repeat scroll;
+    background-image:url("loading_mask.gif");
+}
+
+.ke-global-loading .ks-ext-loading {
+    background-attachment: fixed;
+}

@@ -1,0 +1,1 @@
+KISSY.Editor.add("zindex",function(){var a=KISSY.Editor;if(!a.zIndexManager){a.zIndexManager={BUBBLE_VIEW:1100,POPUP_MENU:1200,DD_PG:99999,STORE_FLASH_SHOW:99999,MAXIMIZE:900,OVERLAY:9999,LOADING:11E3,LOADING_CANCEL:12E3,SELECT:1200};a.baseZIndex=function(b){return(a.Config.baseZIndex||1E4)+b};a.baseZIndex=a.baseZIndex;a.zIndexManager=a.zIndexManager}});

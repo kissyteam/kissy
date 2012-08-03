@@ -1,0 +1,134 @@
+/**
+triple state button style for kissy editor
+LoVe F HAte
+@author yiminghe@gmail.com
+**/
+
+/**
+link
+**/
+.ke-triplebutton {
+    color: black;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    margin: 2px 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    /*透明边框 ie6 不支持 ,_hack*/
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    vertical-align: middle;
+    white-space: nowrap;
+    /*outline: none;*/
+    cursor: pointer;
+    *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
+}
+
+.ke-triplebutton-on {
+    border-color: #729BD1;
+    background-color: #DDE1EB;
+}
+
+.ke-triplebutton-disabled {
+    opacity: 0.3;
+    /*ie7不支持透明属性*/
+    /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
+    filter: chroma(color = tomato) alpha(opacity = 30);
+    cursor: default;
+}
+
+/*ie9 标准模式 filter 形成黑框*/
+.ke-ie9 .ke-triplebutton-disabled {
+    filter:none;
+}
+
+
+/**
+focus
+**/
+.ke-triplebutton:focus {
+}
+
+/**
+hover
+**/
+.ke-triplebutton:hover {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.ke-triplebutton-off:hover {
+    border-color: rgb(206, 213, 224);
+}
+
+
+
+.ke-triplebutton-on:hover {
+    border-color:#a1badf;
+}
+
+
+/**
+active
+**/
+.ke-triplebutton-active {
+    border-color:#a1badf !important;
+    background-color: #DDE1EB;
+}
+.ke-triplebutton:active {
+    color: black;
+}
+
+
+.ke-button {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    -webkit-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    border: 1px solid rgb(193, 200, 209);
+    background: #e8ebee repeat-x left top;
+    background-image: url("ke-button-bg.png");/** sprite-ref: mysprite; sprite-alignment: repeat;*/
+    -background-image:none;
+    padding: 3px 18px;
+    _padding-bottom: 2px;
+    *padding-bottom: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    /*outline: none;*/
+    color: black;
+    *zoom:expression(function(self){self.style.zoom=1;self.href='javascript:void(0)';}(this));
+}
+
+.ke-button:hover ,.ke-button-hover{
+    border-color: rgb(232, 204, 160);
+    background: #f5e7ce repeat-x left top;
+    background-image: url("ke-button-bg-active.png");/** sprite-ref: mysprite; sprite-alignment: repeat;*/
+    -background-image:none;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+.ke-triplebutton-disabled:hover {
+    opacity: 0.3;
+    cursor: default;
+}
+.ke-triplebutton-disabled.ke-button:hover {
+    background-image: url("ke-button-bg.png");/** sprite-ref: mysprite; */
+    -background-image:none;
+    border-color:rgb(193, 200, 209);
+}
+/*ie6 没有多类选择器，只生效最后一个class*/
+.ke-ie6 .ke-button:hover{
+    /*background-image: url("ke-button-bg-active.png");没用了，行内css expression已经设了*/
+    border-color: rgb(232, 204, 160);
+}

@@ -1,0 +1,891 @@
+/**
+ke-post ，编辑器内容外部包装容器
+from : resource://gre/res/html.css
+@author :yiminghe@gmail.com
+<div class='ke-post'>
+编辑器生成内容
+</div>
+**/
+/** sprite: mysprite; sprite-image: url('./mysprite.png'); sprite-layout: vertical */
+/*
+清除编辑器内容里面的浮动
+ */
+.ks-clear:after, .ke-post:after {
+    content: '\20';
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.ke-post, .ks-clear {
+    *zoom: 1;
+}
+
+.ke-hidden {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+}
+
+.ke-post h1,
+.ke-post h2,
+.ke-post h3,
+.ke-post h4,
+.ke-post h5,
+.ke-post h6,
+.ke-post hr,
+.ke-post p,
+.ke-post blockquote, /* structural elements  */
+.ke-post dl,
+.ke-post dt,
+.ke-post dd,
+.ke-post ul,
+.ke-post ol,
+.ke-post li, /* list elements */
+.ke-post pre, /* text formatting elements */
+.ke-post form,
+.ke-post fieldset,
+.ke-post legend,
+.ke-post button,
+.ke-post input,
+.ke-post textarea, /* form elements*/
+.ke-post th,
+.ke-post td /* table elements  */
+{
+    margin: 0;
+    padding: 0;
+}
+
+.ke-post address,
+.ke-post caption,
+.ke-post cite,
+.ke-post code,
+.ke-post dfn,
+.ke-post em,
+.ke-post strong,
+.ke-post h1,
+.ke-post h2,
+.ke-post h3,
+.ke-post h4,
+.ke-post h5,
+.ke-post h6,
+.ke-post th,
+.ke-post var {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+.ke-post,
+.ke-post button,
+.ke-post input,
+.ke-post select,
+/* for ie */
+.ke-post textarea {
+    font: 14px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+
+.ke-post h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: .67em 0;
+}
+
+.ke-post h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: .83em 0;
+}
+
+.ke-post h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+    margin: 1em 0;
+}
+
+.ke-post h4 {
+    font-weight: bold;
+    margin: 1.33em 0;
+}
+
+.ke-post h5 {
+    font-size: 0.83em;
+    font-weight: bold;
+    margin: 1.67em 0;
+}
+
+.ke-post h6 {
+    font-size: 0.67em;
+    font-weight: bold;
+    margin: 2.33em 0;
+}
+
+.ke-post blockquote {
+    display: block;
+    margin: 1em 40px;
+}
+
+.ke-post address {
+    display: block;
+    font-style: italic;
+}
+
+.ke-post i, .ke-post cite, .ke-post em, .ke-post var, .ke-post dfn {
+    font-style: italic;
+    font-weight: inherit;
+    /*防止reset css破坏层叠继承性*/
+    *font-weight:expression(function (el) { el.runtimeStyle.fontWeight = el.parentNode.currentStyle.fontWeight;}(this));
+}
+
+.ke-post strong {
+    font-style: inherit;
+    *font-style:expression(function (el) { el.runtimeStyle.fontStyle = el.parentNode.currentStyle.fontStyle;}(this));
+    font-weight: bold;
+}
+
+.ke-post u, .ke-post ins {
+    text-decoration: underline;
+}
+
+.ke-post s, .ke-post strike, .ke-post del {
+    text-decoration: line-through;
+}
+
+/* <hr> noshade and color attributes are handled completely
+by the nsHTMLHRElement attribute mapping code
+*/
+.ke-post hr {
+    display: block;
+    height: 2px;
+    border: 1px inset;
+    margin: 0.5em auto 0.5em auto;
+    color: gray;
+}
+
+.ke-post code, .ke-post kbd, .ke-post pre, .ke-post samp {
+    font-family: courier new, courier, monospace;
+}
+
+.ke-post small {
+    font-size: 12px;
+}
+
+.ke-post sup {
+    vertical-align: text-top;
+}
+
+.ke-post sub {
+    vertical-align: text-bottom;
+}
+
+.ke-post legend {
+    color: #000;
+}
+
+/* for ie6 */
+.ke-post fieldset, .ke-post img {
+    border: 0;
+}
+
+/*
+    很多人发帖爱用多图上下拼成一个图
+    但是严格标准模式会使得上下图有空隙（基线对齐）
+    设置 vertial-align top 可以居中对齐，则上下两图可以黏在一起了
+    (设置middle , ie6 有问题)
+    上下想有空隙的话可以用间隔选项设置
+
+.ke-post img {
+    vertical-align:top;
+}
+*/
+
+/*
+switch to default
+*/
+.ke-post table.k-e-collapse-table {
+    display: table;
+    border-collapse: collapse;
+    border-color: black;
+}
+
+.ke-post table {
+    /*prevent inherit for nested table*/
+    border-collapse:separate;
+    border-spacing:2px;
+}
+
+/* giving blockquotes and lists room to breath */
+.ke-post blockquote, .ke-post ul, .ke-post ol, .ke-post dl {
+    margin: 1em;
+}
+
+/* bringing lists on to the page with breathing room */
+.ke-post ul, .ke-post ol, .ke-post dl {
+    margin-left: 2em;
+}
+
+.ke-post ol li {
+/* giving OL's LIs generated numbers */
+    list-style: decimal outside;
+}
+
+.ke-post ul  li {
+/* giving UL's LIs generated disc markers */
+    list-style: disc outside;
+}
+
+.ke-post ul  li {
+/* giving UL's LIs generated disc markers */
+    list-style: disc outside;
+}
+
+.ke-post ul li ul li {
+    list-style: circle;
+}
+
+.ke-post ul li ul li ul li {
+    list-style: square;
+}
+
+.ke-post dl dd {
+/* providing spacing for definition terms */
+    margin-left: 1em;
+}
+
+.ke-post table.k-e-collapse-table >tbody>tr>th,
+.ke-post table.k-e-collapse-table >tbody>tr>td {
+/* padding to make the table readable */
+/*padding: .5em;*/
+    border-color: black;
+}
+
+.ke-post th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.ke-post caption {
+/* coordinated margin to match cell's padding */
+    margin-bottom: .5em;
+/* prevent ie6,7 newline */
+    white-space: nowrap;
+}
+
+.ke-post fieldset, .ke-post table, .ke-post  pre {
+/* so things don't run into each other */
+/*margin-bottom: 1em;*/
+}
+
+.ke-post ul, .ke-post ol {
+    margin-left: 0;
+    padding-left: 40px;
+}
+
+/*firefox 破碎图片手动定义才出现*/
+.ke-post img:-moz-broken {
+    -moz-force-broken-image-icon: 1;
+    height: 24px;
+    width: 24px;
+}/**
+google tip or bubble style for kissy editor
+@author yiminghe@gmail.com
+**/
+.ke-bubbleview-bubble {
+    background-color: #E0ECFF;
+    border: 1px solid #99C0FF;
+    cursor: default;
+    font: 12px sans-serif;
+    margin: 2px;
+    padding: 4px;
+    position: absolute;
+}
+
+.ke-bubbleview-link, .ke-bubbleview-url {
+    color: #000099;
+    cursor: pointer;
+    text-decoration: underline;
+}
+/**
+triple state button style for kissy editor
+LoVe F HAte
+@author yiminghe@gmail.com
+**/
+
+/**
+link
+**/
+.ke-triplebutton {
+    color: black;
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline; /*vertical-align: baseline;*/
+    margin: 0 2px;
+    color: black;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px; /* height: 18px;*/
+    text-decoration: none; /*border: 1px solid #A3D7FF;*/
+    border: 1px solid transparent; /* margin: 2px;*/
+    _border: none;
+    vertical-align: middle;
+    white-space: nowrap; /*outline: none;*/
+    outline:none;
+}
+
+.ke-triplebutton-on {
+    background-color: #A3D7FF;
+}
+
+.ke-triplebutton-disabled {
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+    cursor: default;
+}
+
+/**
+focus
+**/
+.ke-triplebutton:focus {
+}
+
+/**
+hover
+**/
+.ke-triplebutton:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.ke-triplebutton-off:hover {
+    background-color: #a3d7ff;
+    opacity: 0.7;
+    filter: alpha(opacity = 70);
+}
+
+.ke-triplebutton-on:hover {
+    background-color: #86caff;
+}
+
+.ke-triplebutton-disabled:hover {
+    background-color: transparent;
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+}
+
+/**
+active
+**/
+.ke-triplebutton:active {
+    color: black;
+}
+
+.ke-button {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    -webkit-box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    border: 1px solid rgb(193, 200, 209);
+    background-color: rgb(232, 235, 238);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(250, 250, 250)), to(rgb(232, 235, 238)));
+    background: -moz-linear-gradient(center top, rgb(250, 250, 250), rgb(232, 235, 238)) repeat scroll 0 0 transparent;
+    /*filter: progid:DXImageTransform.Microsoft.Shadow(color = '#e4e4e4', Direction = 135, Strength = 3) progid:DXImageTransform.Microsoft.gradient(startColorstr = '#fafafa', endColorstr = '#e8ebee');
+*/
+    padding: 3px 18px;
+    _padding-bottom: 2px;
+    *padding-bottom: 2px;
+}
+
+.ke-button:hover {
+    border-color: rgb(232, 204, 160);
+    background: #fff6e4;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 246, 228)), to(rgb(245, 231, 206)));
+    background: -moz-linear-gradient(center top, rgb(255, 246, 228), rgb(245, 231, 206)) repeat scroll 0 0 transparent;
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#fff6e4', endColorstr = '#f5e7ce');
+*/
+}
+.ke-draft {
+    position: absolute;
+    right: 15px;
+    height: 22px;
+    bottom: 4px;
+    width: 650px;
+    _bottom: 0;
+    text-align: right;
+}
+
+.ke-draft .ke-select {
+    background-color: #ffffff;
+    text-align: left;
+}
+
+.ke-draft .ke-triplebutton {
+    background-color: #ffffff;
+    padding: 2px 5px;
+    border: 1px solid #C1C8D1;
+}
+
+.ke-draft-title, .ke-draft-time {
+    vertical-align: middle;
+}
+
+.ke-draft-time {
+    margin: 0 10px;
+}/**
+kissy editor google theme
+@author :yiminghe@gmail.com
+**/
+/*
+编辑器容器
+*/
+.ke-editor-wrap {
+    background: white;
+    border: 1px solid #DFDFDF; /*line-height: 1 !important;*/
+    font-size: 13px;
+    line-height: 1.2;
+    _font-size: 12px;
+}
+
+/*
+textarea,iframe包装
+*/
+.ke-textarea-wrap {
+    overflow: hidden;
+}
+
+.ke-textarea-wrap textarea {
+    border-width: 0;
+}
+
+/*
+工具栏
+*/
+.ke-editor-tools {
+    background: url("editor-bg.png") repeat-x scroll 0 -192px #E5E5E5;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+/*
+状态栏
+*/
+.ke-editor-status {
+    background-color: #E5E5E5;
+    border-top: 1px solid #DFDFDF;
+    height: 22px;
+    padding: 2px 0;
+    position: relative;
+}
+
+/*
+工具按钮 
+*/
+.ke-toolbar-item {
+    background: url("toolbar-sprite.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -999999px;
+    vertical-align: middle;
+    width: 16px;
+    margin: 3px 4px; /*扩大可点击区域，不能在a加padding，ie问题*/
+}
+
+.ke-toolbar-separator {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    border-left: 1px solid rgb(215, 215, 215);
+    border-right: 1px solid #ffffff;
+    font-size: 120%;
+    margin: 0 2px;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: middle;
+    width: 0;
+}
+
+.ke-toolbar-source {
+    background-position: -1013px 50%;
+}
+
+.ke-toolbar-preview {
+    background-position: -896px 50%;
+}
+
+.ke-toolbar-bold {
+    background-position: -32px 50%;
+}
+
+.ke-toolbar-italic {
+    background-position: -48px 50%;
+}
+
+.ke-toolbar-underline {
+    background-position: -64px 50%;
+}
+
+.ke-toolbar-strikeThrough {
+    background-position: -624px 50%;
+}
+
+.ke-toolbar-ol {
+    background-position: -176px 50%;
+}
+
+.ke-toolbar-ul {
+    background-position: -160px 50%;
+}
+
+.ke-toolbar-outdent {
+    background-position: -144px 50%;
+}
+
+.ke-toolbar-indent {
+    background-position: -128px 50%;
+}
+
+.ke-toolbar-alignleft {
+    background-position: -192px 50%;
+}
+
+.ke-toolbar-aligncenter {
+    background-position: -208px 50%;
+}
+
+.ke-toolbar-alignright {
+    background-position: -224px 50%;
+}
+
+.ke-toolbar-image {
+    background-position: -979px 50%;
+}
+
+.ke-toolbar-bgcolor {
+    background-position: -96px 50%;
+}
+
+.ke-toolbar-color {
+    background-position: -80px 50%;
+}
+
+.ke-toolbar-undo {
+    background-position: 0 50%;
+}
+
+.ke-toolbar-redo {
+    background-position: -17px 50%;
+}
+
+.ke-toolbar-table {
+    background-position: -544px 50%;
+}
+
+.ke-toolbar-template {
+    background-position: -945px 50%;
+}
+
+.ke-toolbar-maximize {
+    background-position: -997px 50%;
+}
+
+.ke-toolbar-flash,.ke-toolbar-video {
+    background-position: -736px 50%;
+}
+
+.ke-toolbar-link {
+    background-position: -560px 50%;
+}
+
+.ke-toolbar-music {
+    background-position: -576px 50%;
+}
+
+.ke-toolbar-smiley {
+    background-position: -963px 50%;
+}
+
+.ke-toolbar-removeformat {
+    background-position: -255px 50%;
+}
+
+.ke-toolbar-pagebreak {
+    background-position: -656px 50%;
+}
+.ke-input-tip {
+    color: #969696;
+}
+/**
+menu style for kissy editor ,include contextmenu and select menu
+@author yiminghe@gmail.com
+**/
+.ke-menu {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #CCCCCC #666666 #666666 #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font: 13px Arial, sans-serif;
+    margin: 0;
+    outline: medium none;
+    padding: 4px 0;
+    position: absolute;
+    overflow: hidden;
+    -moz-box-shadow: 3px 3px 3px #808080;
+    -webkit-box-shadow: 3px 3px 3px #808080;
+    box-shadow: 3px 3px 3px #808080;
+}
+
+.ke-menu a, .ke-menu-title {
+    display: block;
+    color: #000000;
+    margin: 0;
+    border-width: 0;
+    padding: 4px 7em 4px 28px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.ke-menu-title {
+    background-color: #dcdcdc;
+    padding: 3px;
+}
+
+.ke-menu a:hover, .ke-menu-selected {
+    background-color: #D6E9F8;
+    text-decoration: none;
+}
+/**
+ overlay style for kissy editor
+ @author yiminghe@gmail.com
+**/
+.ke-mask {
+    background-color: #000000;
+    left: 0;
+    top: 0;
+    border: none;
+    position: absolute;
+}
+
+.ke-loading {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    border: 1px solid #3A5774;
+    padding: 4px;
+    background: #000000 url('loading_mask.gif') center center no-repeat;
+}
+
+.ke-dialog {
+    position: absolute;
+    background: none repeat scroll 0 0 #C1D9FF;
+    border: 1px solid #3A5774;
+    color: #000000;
+    padding: 4px;
+    font-size: 13px;
+    -moz-box-shadow: 2px 2px 0.5em #888888;
+    -webkit-box-shadow: 2px 2px 0.5em #888888;
+    box-shadow: 2px 2px 0.5em #888888;
+}
+
+.ke-dialog-iframe {
+    position: absolute;
+    border: none;
+}
+
+.ke-hd-x {
+    height: 15px;
+    width: 15px;
+    right: 10px;
+    top: 12px;
+    vertical-align: middle;
+    position: absolute;
+    outline: none;
+    text-decoration: none;
+}
+
+.ke-hd-x .ke-close {
+    display: block;
+    background: url("toolbar-sprite.png") no-repeat scroll -784px 0 #E0EDFE;
+    height: 15px;
+    text-indent: -9999px;
+    width: 15px;
+}
+
+a.ke-hd-x:hover .ke-close {
+    background-position: -768px 0;
+}
+
+.ke-hd {
+    background: none repeat scroll 0 0 #E0EDFE;
+    color: #000000;
+    font-size: 120%;
+    font-weight: bold;
+    padding: 8px 15px 8px 8px;
+}
+
+.ke-bd, .ke-ft {
+    background-color: #FFFFFF;
+    padding: 8px;
+}
+
+.ke-ft {
+    text-align: right;
+}
+
+.ke-bd td {
+    padding: 2px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.ke-focus {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    outline: none;
+}
+/**
+    resize handler style for kissy editor
+    @author yiminghe@gmail.com
+**/
+.ke-resizer {
+    background: url("resizer.png") no-repeat right bottom;
+    height: 20px;
+    width: 10px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    cursor: se-resize;
+}
+/**
+select style for kissy editor
+@author yiminghe@gmail.com
+**/
+
+/**
+select style for kissy editor
+@author yiminghe@gmail.com
+**/
+.ke-select-text,
+.ke-select-drop-wrap,
+.ke-select-drop,
+.ke-select-wrap,
+.ke-select {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+}
+
+.ke-select-wrap {
+    margin: 0 2px;
+    cursor: pointer;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+.ke-select {
+    border: 1px solid #BFCBDF;
+    height: 20px;
+    margin: 2px 0;
+    color: #000;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+    color: black;
+}
+
+.ke-select:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.ke-select:active {
+    color: #000;
+}
+
+.ke-select-drop {
+    background: url("toolbar-sprite.png") no-repeat scroll -388px 50% transparent;
+    width: 7px;
+    height: 16px;
+    vertical-align: text-top;
+}
+
+.ke-select-active {
+    background-color: #DDE1EB;
+}
+
+.ke-select-disabled,
+.ke-select-disabled .ke-select:hover,
+.ke-select-disabled .ke-select {
+    cursor: default;
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+    color: gray;
+}
+
+.ke-menu .ke-select-menu-item {
+    padding-left: 12px;
+    padding-right: 20px;
+    zoom: 1;
+}
+
+.ke-combox .ke-select-text {
+    background: #FFFFFF repeat-x scroll 0 0;
+}
+
+.ke-select-text {
+    padding-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+}
+
+.ie8 .ke-combox .ke-select-text {
+    top: -1px;
+}
+
+.ie7 .ke-combox .ke-select-text {
+    top: -3px;
+}
+
+.ie6 .ke-combox .ke-select-text {
+    top: -2px;
+}
+
+.ke-select-drop-wrap {
+    padding-right: 4px;
+}
+
+.ke-combox .ke-select-drop-wrap {
+    padding-left: 6px;
+    padding-right: 6px;
+    border-left: 1px solid rgb(193, 200, 209);
+    background: #e8ebee repeat-x left top;
+    height: 20px;
+    line-height: 20px;
+}
+
+.ie6 .ke-combox .ke-select-drop-wrap {
+    padding-bottom: 1px;
+    vertical-align: middle;
+}
+
+.ke-combox .ke-select-text {
+    background: #FFFFFF repeat-x scroll 0 0;
+}
+
