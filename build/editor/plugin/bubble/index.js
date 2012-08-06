@@ -1,16 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 23:50
+build time: Aug 6 16:53
 */
 /**
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
-    var Event = S.Event,
-        undefined = {}['a'],
-        DOM = S.DOM,
+    var undefined = {}['a'],
         BUBBLE_CFG = {
             zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
             elCls:"ks-editor-bubble",
@@ -70,19 +68,19 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         var editor = bubble.get("editor"),
-            editorWin = editor.get("window")[0],
+            editorWin = editor.get("window"),
             iframeXY = editor.get("iframe").offset(),
             top = iframeXY.top,
             left = iframeXY.left,
-            right = left + DOM.width(editorWin),
-            bottom = top + DOM.height(editorWin);
+            right = left + editorWin.width(),
+            bottom = top + editorWin.height();
 
         // ie 中途设置 domain 后，不能获取 window 的相关属性
         // 例如 window.frameEl
         // 所以不能直接用 el.offset(undefined,window);
         var elXY = el.offset();
 
-        elXY=Editor.Utils.getXY(elXY,editor);
+        elXY = Editor.Utils.getXY(elXY, editor);
 
         var elTop = elXY.top,
             elLeft = elXY.left,
@@ -157,12 +155,14 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         // !TODO 耦合---
         function onHide() {
             bubble.hide();
-            var editorWin = editor.get("window")[0];
-            Event.remove(editorWin, "scroll", onScroll);
+            var editorWin = editor.get("window");
+            // 刚开始就配置 mode 为 sourcecode
+            if (editorWin) {
+                editorWin.detach("scroll", onScroll);
+            }
         }
 
         editor.on("sourceMode", onHide);
-
 
         function showImmediately() {
 
@@ -194,8 +194,8 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
 
         function onShow() {
-            var editorWin = editor.get("window")[0];
-            Event.on(editorWin, "scroll", onScroll);
+            var editorWin = editor.get("window");
+            editorWin.on("scroll", onScroll);
             showImmediately();
         }
     };

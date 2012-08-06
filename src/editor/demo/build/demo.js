@@ -1,7 +1,7 @@
 (function () {
     KISSY.use(window.EDITOR_MOD || "editor", function (S, Editor) {
 
-        var cfg = {
+        var cfg = S.mix({
             // 是否初始聚焦
             focused:true,
             autoRender:true,
@@ -15,7 +15,7 @@
             srcNode:'#container',
             width:'100%',
             height:"400px"
-        };
+        },window.EDITOR_CFG);
 
         var plugins = ("source-area" +
             ",separator" +

@@ -215,9 +215,12 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     self._setData(textarea.val());
                     self.fire("wysiwygMode");
                 } else {
-                    textarea.val(self._getData(1, WYSIWYG_MODE));
+                    // 刚开始就配置 mode 为 sourcecode
+                    if (iframe) {
+                        textarea.val(self._getData(1, WYSIWYG_MODE));
+                        iframe.hide();
+                    }
                     textarea.show();
-                    iframe.hide();
                     self.fire("sourceMode");
                 }
             },
@@ -409,9 +412,13 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Make current editor has focus
              */
             focus:function () {
-                var self = this,
-                    doc = self.get("document")[0],
-                    win = self.get("window")[0];
+                var self = this, win = self.get("window");
+                // 刚开始就配置 mode 为 sourcecode
+                if (!win) {
+                    return;
+                }
+                var doc = self.get("document")[0];
+                win = win[0];
                 // firefox7 need this
                 if (!UA['ie']) {
                     // note : 2011-11-17 report by 石霸
