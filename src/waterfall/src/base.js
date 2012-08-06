@@ -92,7 +92,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Horizontal alignment of waterfall items with container.
-         * Enum: 'left','center','right'.
+         * Enum: 'left','center','right','justify'.
          * @type String
          * @since 1.3
          */

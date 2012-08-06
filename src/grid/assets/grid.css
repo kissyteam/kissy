@@ -457,11 +457,6 @@
     background-image: -moz-linear-gradient(center top , #E7F0FC, #C7DDF9);
 	background-image:linear-gradient(top, #E7F0FC,#C7DDF9);
     border: 1px solid #A9CBF5;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -o-border-radius:3px;
-    -ms-border-radius:3px;
-    -khtml-border-radius:3px;
     border-radius:3px;
     cursor: pointer;
 	overflow:hidden;

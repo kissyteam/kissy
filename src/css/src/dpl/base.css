@@ -426,24 +426,12 @@ legend {
   /* 3 */
 
 }
-/*
- * 1. Corrects font size not being inherited in all browsers.
- * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome.
- * 3. Improves appearance and consistency in all browsers.
- */
 button,
 input,
 select,
 textarea {
   margin: 0;
-  /* 2 */
-
-  vertical-align: baseline;
-  /* 3 */
-
-  *vertical-align: middle;
-  /* 3 */
-
+  vertical-align: middle;
 }
 /*
  * 1. Removes default vertical scrollbar in IE6/7/8/9.

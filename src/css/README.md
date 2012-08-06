@@ -12,4 +12,4 @@ Includes:
 * fly-swing.css: fly-swing grids system
 * grids.css: bootstrap grids system (fixed and fluid)
 * base.css = reset.css + fly-swing.css + grids.css + common.css
-* table.css: bootstrap tabular data style
+* tables.css: bootstrap tabular data style

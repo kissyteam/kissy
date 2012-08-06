@@ -91,8 +91,9 @@
 .ks-cal-call .ks-cal-bd .ks-whd {width:auto;height:19px;overflow:hidden;margin-top:4px;border-bottom:1px dashed #c9c9c9;padding-bottom:2px;}
 .ks-cal-call .ks-cal-bd .ks-whd span {float:left;width:25px;text-align:center;line-height:19px;margin-right:1px;display:inline;}
 
-.ks-cal-call .ks-cal-bd .ks-dbd a{-webkit-border-radius: 2px;
--moz-border-radius: 2px;margin-bottom: 1px;margin-right:1px;display:inline;}
+.ks-cal-call .ks-cal-bd .ks-dbd a{
+    border-radius: 2px;
+margin-bottom: 1px;margin-right:1px;display:inline;}
 .ks-cal-call .ks-cal-bd .ks-dbd {width:182px;height:auto;background-color:white;margin-top:4px;}
 .ks-cal-call .ks-cal-bd .ks-dbd a,
 .ks-cal-call .ks-cal-bd .ks-dbd a:link,
@@ -143,7 +144,7 @@
 .ks-cal-time span.on {padding:0 1px;background-color:#333;color:white}
 
 /*-- 时间不限--*/
-.ks-cal-notLimited{display:block;border:1px solid #88b1ea;background-color:#f3f9ff;text-align:center;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;cursor:pointer;color:#5e97d0;width:180px;margin-top:4px;}
+.ks-cal-notLimited{display:block;border:1px solid #88b1ea;background-color:#f3f9ff;text-align:center;border-radius: 2px;cursor:pointer;color:#5e97d0;width:180px;margin-top:4px;}
 
 .ks-cal-notLimited:hover{text-decoration:none;}
 
