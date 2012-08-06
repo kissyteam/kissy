@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:03
+build time: Aug 6 22:45
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -346,7 +346,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
          */
         renderUI:function () {
             var _self = this;
-            S.each(['header', 'body', 'tbar', 'bbar'], function (c) {
+            S.each(['tbar','header', 'body','bbar'], function (c) {
                 if (c = _self.get(c)) {
                     c.render();
                 }
@@ -1247,7 +1247,790 @@ KISSY.add('grid/column', function (S, Component, Template) {
     requires:['component', 'template']
 });
 	
-/**
+KISSY.add('grid/editing',function(S,Component,EditorPanel){
+	
+	var DOM = S.DOM,
+		Event = S.Event,
+		doc = document;
+	/**
+	* @name Grid.Plugins.Editing
+    * @constructor
+	*/
+	var editing = function(config){
+		editing.superclass.constructor.call(this, config);
+	}
+	
+	S.extend(editing,S.Base);
+	
+	editing.ATTRS = 
+	 /**
+	 * @lends Grid.Plugins.Editing.prototype
+	 */
+	{
+		/**
+		* @private
+		*/
+		currentEditorPanel : {
+			value : null
+		},
+		/**
+		* @private
+		*/
+		currentCell : {
+		
+		},
+		/**
+		* @private
+		*/
+		editorPanels : {
+			value : []
+		},
+		/**
+		* @private
+		*/
+		grid : {
+		
+		},
+		/**
+		* The event which triggers editing. Maybe one of:
+		* <ul>
+		* <li>cellclick</li>
+		* <li>celldblclick</li>
+		* <li>cellfocus</li>
+		* <li>rowfocus</li>
+		* </ul>
+		* @type {String}
+		* @default 'cellclick'
+		*/
+		triggerEvent : {
+			value : 'cellclick'
+		}
+	};
+	
+	S.augment(editing,
+	/**
+	 * @lends Grid.Plugins.Editing.prototype
+	 */
+	{
+		/**
+		* @private
+		*/
+		renderUI : function(grid){
+			var _self = this,
+				columns = grid.get('columns'),
+				editors = [];
+			_self.set('grid',grid);	
+			_self._initEditors(columns);
+		},
+		/**
+		* @private
+		*/
+		bindUI : function(grid){
+			var _self = this,
+				triggerEvent = _self.get('triggerEvent'),
+				editorPanels = _self.get('editorPanels');
+			S.each(editorPanels,function(editorPanel){
+				_self._initPanelEvent(editorPanel);
+			});
+			
+			grid.on(triggerEvent,function(e){
+				_self.showEitor(e.field,e.record,e.cell,e.row);
+			});
+			Event.on(doc,'click',function(e){
+				var dom = e.target,
+					curPanel = _self.get('currentEditorPanel'),
+					curCell = _self.get('currentCell');
+				if(curPanel && curCell){
+					if(!(curPanel.containsElement(dom) || curCell == dom || S.one(curCell).contains(dom)) && curPanel.get('visible')){
+						curPanel.hide();
+						_self.set('currentEditorPanel',null);
+						_self.set('currentCell',null);
+					}
+				}
+			});
+			
+		},
+		/**
+		* @private
+		*/
+		cancelEdit : function(){},
+		/**
+		* When user trigger the event so as 'cellclick',show the editor
+		*/
+		showEitor : function(field,record,cell,row){
+			var _self = this,
+				editorPanel = _self._findEditorPanel(field),
+				alignNode = _self._getAlignNode(cell,row);
+			if(editorPanel){
+				_self.set('currentEditorPanel',editorPanel);
+				_self.set('currentCell',cell);
+				editorPanel.set('record',record);
+				editorPanel.set('align',{
+					node : alignNode,
+					points : ['tl','tl']
+				});
+				_self._beforeShowEditor(editorPanel,cell);
+				editorPanel.show();
+				editorPanel.focus();
+				
+			}
+		},
+		/**
+		* before editor panel showing,subclass can do some action
+		* @protect 
+		*/
+		_beforeShowEditor : function(editorPanel){
+			
+		},
+		/**
+		* @protect 
+		*/
+		_findEditorPanel : function(field){
+			var _self = this,
+				editorPanels = _self.get('editorPanels');
+			//Ĭ��ȡ��һ��༭���б༭״̬�¾�ʹ��Ψһ�ı༭������
+			return editorPanels[0];
+		},
+		/**
+		* @protect 
+		*/
+		_getAlignNode : function(cell,row){
+			return row;
+		},
+		/**
+		* @protect 
+		*/
+		_initEditors : function(columns){
+			
+		},
+		/**
+		* @protect
+		*/
+		_initPanelEvent : function(editorPanel){
+
+		},
+		destroy : function(){
+			var _self = this,
+				editorPanels = _self.get('editorPanels');
+			S.each(editorPanels,function(editorPanel){
+				editorPanel.destroy();
+			});
+		}
+	});
+	
+	/**
+	* The plugin of grid which is used to edit the grid cell.
+	* @name Grid.Plugins.CellEditing
+    * @constructor
+	*/
+	var cellEditing = function(config){
+		cellEditing.superclass.constructor.call(this, config);
+	}
+	
+	S.extend(cellEditing,editing);
+	
+	S.augment(cellEditing,{
+	
+		/**
+		* before editor panel showing,subclass can do some action
+		* @protect 
+		*/
+		_beforeShowEditor : function(editorPanel,cell){
+			var editor = editorPanel.get('children')[0];
+				
+			editor.set('width',DOM.width(cell));
+		},
+		/**
+		* @protect 
+		*/
+		_getAlignNode : function(cell,row){
+			return cell;
+		},
+		/**
+		* @protect 
+		*/
+		_findEditorPanel : function(field){
+			var _self = this,
+				editorPanels = _self.get('editorPanels'),
+				result = null;
+			S.each(editorPanels,function(editorPanel){
+				var editor = editorPanel.get('children')[0];
+				if(editor.get('field') === field){
+					result = editorPanel;
+					return false;
+				}
+			});
+			
+			return result;
+		},
+		/**
+		* @protect 
+		*/
+		_initEditors : function(columns){
+			var _self = this,
+				editorPanels = _self.get('editorPanels');
+			S.each(columns,function(column){
+				var editor = column.get('editor');
+				if(editor){
+					if(!(editor instanceof Component.Controller)){
+						editor.field = column.get('dataIndex');
+					}
+					var panel = new EditorPanel({
+						children : [editor]
+					});
+					panel.render();
+					editorPanels.push(panel);
+				}
+			});
+		},
+		/**
+		* @protect
+		*/
+		_initPanelEvent : function(editorPanel){
+			var _self = this,
+				grid = _self.get('grid'),
+				store = grid.get('store');
+			editorPanel.on('changed',function(e){
+				var editor = e.target,
+					record = editor.get('record'),
+					field = editor.get('field'),
+					val = editor.getValue();
+				store.setValue(record,field,val);
+			});
+		}
+	});
+	
+	/**
+	* The plugin of grid which is used to edit the grid row.
+	* @name Grid.Plugins.CellEditing
+    * @constructor
+	*/
+	var rowEditing = function(config){
+		rowEditing.superclass.constructor.call(this, config);
+	}
+	
+	S.extend(rowEditing,editing);
+	
+	S.augment(rowEditing,{
+		/**
+		* before editor panel showing,subclass can do some action
+		* @protect 
+		*/
+		_beforeShowEditor : function(editorPanel,cell){
+			var editors = editorPanel.get('children');
+				
+			S.each(editors,function(editor){
+				editor.set('width',DOM.width(cell));
+			});
+			
+		},
+		/**
+		* @protect 
+		*/
+		_initEditors : function(columns){
+			var _self = this,
+				editorPanels = _self.get('editorPanels'),
+				editorPanel = null,
+				editors = [];
+			//�б༭ģʽ�£����еı༭����ͬһ������
+			S.each(columns,function(column){
+				var editor = column.get('editor');
+				if(editor){
+					if(!(editor instanceof Component.Controller)){
+						editor.field = column.get('dataIndex');
+					}
+					editors.push(panel);
+				}else{//����������ʾ�ı�
+					
+				}
+			});
+			
+		}
+	});
+	
+	editing.CellEditing = cellEditing;
+	editing.RowEditing = rowEditing;
+	return editing;
+	
+},{
+    requires:['component','grid/editorpanel']
+});/**
+ * @fileOverview This class specifies the definition for a cell editor of a grid.
+ * @author dxq613@gmail.com
+ */
+KISSY.add('grid/editor', function (S, Component) {
+	
+	var CLS_EDITOR = 'ks-grid-editor',
+		CLS_EDITOR_ERROR = CLS_EDITOR + '-error',
+		CLS_EDITOR_CONTROL = CLS_EDITOR + '-control';
+	
+	/**
+	* the render of grid's editor
+	* @private
+	*/
+	var editorRender = Component.Render.extend({
+		/**
+		* @private
+		*/
+		createDom : function(){
+			var _self = this,
+				el = _self.get('el'),
+				tpl = _self.get('tpl');
+			new S.Node(tpl).appendTo(el);
+		}
+	});
+	
+	/**
+     * This is a base class of grid's editor,which can be used in column's configuration.
+     * @name Grid.Eidtor
+     * @constructor
+     * @extends Component.Controller
+     */
+	var editor = Component.Controller.extend({
+		
+		/**
+		* @private
+		*/
+		bindUI : function(){
+			var _self = this,
+				binder = _self.get('binder'),
+				control = _self.getEditControl(),
+				events = _self.get('events'),
+				triggerEvent = _self.get('triggerEvent');
+			if(binder){
+				binder.call(this);
+			}
+			
+			S.each(events, function (event) {
+				_self.publish(event, {
+					bubbles:1
+				});
+			});
+			
+			control.on(triggerEvent,function(e){
+				var text = _self._getControlText(),
+					record = _self.get('record'),
+					valid = _self.validEditor(text,record);
+				if(valid){
+					_self.fire('changed',{target : _self,text : text,value : _self.getValue(text)});
+				}
+			});
+		},
+		/**
+		* @protect
+		* True to indicate that this editor contains the element
+		*/
+		containsElement : function(element){
+			var _self = this,
+				el = _self.get('el');
+			return el.contains(element) || el[0] == element;	
+		},
+		/**
+		* reset the editor
+		*/
+		clearValue : function(){
+			this.setValue('');
+		},
+		/**
+		* make this editor's control focused
+		*/
+		focus : function(){
+			var _self = this,
+				control = _self.getEditControl();
+			if(control && control[0] && control[0].focus){
+				control[0].focus();
+			}
+		},
+		/**
+		* Get the element that the value in it.so as input,selet,textarea and so on.
+		* This element must have the method of 'val',so as Node,which can get or set value.
+		* When you Inheritance this class,you can ovrride this method.
+		*/
+		getEditControl : function(){
+			var _self = this,
+				el = _self.get('el');
+			return el.one('.' + CLS_EDITOR_CONTROL);
+		},
+		/**
+		* Get the user's input,and format it.
+		* When you Inheritance this class,you can ovrride this method.
+		*/
+		getValue : function(text){
+			var _self = this,
+				formatter = _self.get('formatter');
+			text = text || _self._getControlText();
+			return formatter(text);
+		},
+		/**
+		* Verify user input is correct 
+		* @return {Boolean}
+		*/
+		hasError : function(){
+			return this.get('el').hasClass(CLS_EDITOR_ERROR);
+		},
+		/**
+		* Set the cell's value.
+		* When you Inheritance this class,you can ovrride this method.
+		*/
+		setValue : function(v){
+			var _self = this,
+				control = _self.getEditControl();
+			control.val(v);
+		},
+		//the text of user's input
+		_getControlText : function(){
+			var _self = this,
+				control = _self.getEditControl();
+			return control.val();
+		},
+		//get the error of user's input
+		_getError : function(text,record){
+			var _self = this,
+				//
+				basicValidator = _self.get('basicValidtor'),
+				validator = _self.get('validator');
+			record =record || _self.get('record');
+			return basicValidator(text) || validator(text,record);
+		},
+		/**
+		* Verify user input is correct,and show error if there are any error.
+		* @return {Boolean}
+		*/
+		validEditor : function(text,record){
+			var _self = this,
+				errorMsg = '';
+			text = text || _self._getControlText();
+			errorMsg = _self._getError(text,record);
+			if(errorMsg){
+				_self.fire('error',{target : _self,msg : errorMsg,text : text});
+				_self.get('el').addClass(CLS_EDITOR_ERROR);
+			}else{
+				_self.get('el').removeClass(CLS_EDITOR_ERROR);
+			}
+			return !errorMsg;
+		},
+		//set the value of this component
+		_uiSetValue : function(v){
+			var _self = this;
+			v = v ? v.toString() : '';
+			_self.setValue(v);
+			_self.validEditor();
+		},
+		_uiSetRecord : function(v){
+			if(!v){
+				return;
+			}
+			var _self = this,
+				field = _self.get('field');
+			if(field){
+				_self.set('value',v[field]);
+			}
+		}
+	},{
+		ATTRS : 
+		/** * @lends Grid.Editor.prototype*/
+		{
+			/**
+			* This is a default funciton which is used to verify user's input.
+			* For example when the editor's type is 'number',You don't have to test the user input type is 'number'.
+			* If there is any error,the return value is a message which is not an empty string.
+			* This property is usually ovrrided by its subclass.
+			* @type {Function}
+			*/ 
+			basicValidtor :{
+				value : function(v){
+					return '';
+				}
+			},
+			/**
+			* When you use custom editor,you can config the tpl and binder that bind event to the custom dom.
+			* @type {Function}
+			* @default null;
+			*/
+			binder : {
+				
+			},
+			/**
+			* The initial set of data to apply to the tpl to update the content area of the Component.
+			* @type {Object}
+			* @default {}
+			*/
+			data : {
+				value : {}
+			},
+			/**
+			* Verify if users can edit the cell, if can't edit, do not show.
+			* @param {Object} v The data value of the underlying field.
+			* @param {Object} record The record that user is editting.
+			* @return {Boolean}
+			*/
+			editFunciton : {
+				value : function(v,record){
+					return false;
+				}
+			},
+			/**
+			 * the collection of editor's events
+			 * @type Array
+			 */
+			events : {
+				value : [
+					/**
+                     * @event changed
+                     * Fires when this editor's value changed
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+					 * @param {String} text the user's input text
+					 * @param {Object} value format the user's input text to value
+                     */
+					'changed',
+					/**
+                     * @event changed
+                     * Fires when this editor's value changed
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+					 * @param {String} msg the error msg of the user's input
+					 * @param {String} text the user's input text
+                     */
+					'error'
+				]
+			}, 
+			/**
+			* The field of the record,which is being editting.
+			* @type {String}
+			*/
+			field : {
+				
+			},
+			/**
+			* @private 
+			* @override
+			*/	
+			focusable:{
+				view : true,
+				value : false
+			},
+			/**
+			* User input is usually text, so need to convert format.This is a function you can format user's input.
+			* @type {Funciton}
+			* @default funciton(v){return v;}
+			*/
+			formatter : {
+				value : function(v){
+					return v;
+				}
+			},
+			/**
+			* The record which user is editting
+			* @type {Object}
+			* @default null
+			*/
+			record : {
+				value : null
+			},
+			/**
+			* The built-in validation rules,followed by kissy's validation framework.
+			* @type {Object}
+			* @default null
+			*/
+			rules : {
+				
+			},
+			/**
+			* The event which triggers editing,this event default is binded to the input of this editor. Maybe :
+			* <ul>
+			* 	<li>change</li>
+			* 	<li>blur</li>
+			* </ul>
+			*/
+			triggerEvent : {
+				value : 'change'
+			},
+			/**
+			 * An template used to create the internal structure inside this Component's encapsulating Element.
+			 * User can use the syntax of KISSY's template component.
+			 * Only in the configuration of the editor.
+			 * @type {String}
+			 * <pre>
+			 *    '&lt;input type="text" class="ks-grid-editor-control" /&gt;'
+			 * </pre>
+			 */
+			tpl:{
+				view:true,
+				value:'<input type="text" class="' + CLS_EDITOR_CONTROL + '"/>'
+			},
+			/**
+			* This is a funciton which is used to verify user's input.
+			* @type {Function}
+			* @default 
+			*	<pre>function(v){ return '';}</pre>
+			*/
+			validator : {
+				value : function(v){ return '';}
+			},
+			/**
+			* The data value of the underlying field.
+			* When the editor showed,the value of the cell was be set in this component.
+			* After user's editting,the value of this component was be set to the cell.
+			* @type {Object}
+			*/
+			value : {
+				//get the value of this component
+				getter : function(){ 
+					return this.getValue();
+				}
+			},
+			/**
+			 * @private
+			 */
+			xrender:{
+				value:editorRender
+			}
+		}
+	}, {
+            xclass:'grid-editor',
+            priority:1
+    });
+	
+	return editor;
+},{
+    requires:['component']
+});/**
+ * @fileOverview This class specifies the definition for a container of grid editor.
+ * @author dxq613@gmail.com
+ */
+KISSY.add('grid/editorpanel', function (S, Component) {
+
+	var CLS_EDITOR_CONTAINER = 'ks-grid-editor-container';
+	
+	var editorPanelRender = Component.Render.extend([
+		Component.UIBase.Position.Render,
+		Component.UIBase.Align.Render
+	],{
+	
+		/**
+		* @private
+		*/
+		renderUI:function () {
+			var _self = this,
+				el = _self.get('el'),
+				tpl = _self.get('tpl');
+			new S.Node(tpl).appendTo(el);
+		},
+		/**
+         * @see {Component.Render#getContentElement}
+         */
+        getContentElement:function () {
+			return this.get('el').one('.' + CLS_EDITOR_CONTAINER);	
+		}
+	},{
+		ATTRS : {
+			visibleMode : {
+				value : 'visibility'
+			}
+		}
+	});
+	/**
+     * This is a base class of editor container.
+	 * In general, this class will not be instanced directly.
+	 * @private
+     * @name Grid.EditorPanel
+     * @constructor
+     * @extends Component.Controller
+	 * @extends Component.UIBase.Align
+     */
+	var editorPanel = Component.Controller.extend([
+			Component.UIBase.Position,
+			Component.UIBase.Align
+		],{
+		
+		/**
+		* identify all children contains this element
+		* @param {HTMLElement|Node} element one Node or dom element
+		* @return whether the element is in the editor's of this panel
+		*/
+		containsElement : function(element){
+			var _self = this,
+				children = _self.get('children'),
+				result = false;
+			S.each(children,function(editor){
+				if(editor.containsElement(element)){
+					result = true;
+					return false;
+				}
+			});
+			
+			return result;
+		},
+		/**
+		* make the first editor focused
+		*/
+		focus : function(){
+			var _self = this,
+				children = _self.get('children'),
+				firstEditor = children[0];
+			if(firstEditor){
+				firstEditor.focus();
+			}
+		},
+		//set the editing record
+		_uiSetRecord : function(v){
+			var _self = this,
+				children = _self.get('children');
+			S.each(children,function(editor){
+				var field = editor.get('field');
+				if(field){
+					editor.set('record',v);
+				}
+			});
+		}
+	},
+	{
+		ATTRS : {
+			/**
+			* @private 
+			* @override
+			*/	
+			focusable:{
+				view : true,
+				value : false
+			},
+			/**
+			* The editing record
+			*/
+			record : {
+				
+			},
+			/**
+			 * An template used to create the internal structure inside this Component's encapsulating Element.
+			 * User can use the syntax of KISSY's template component.
+			 * Only in the configuration of the editor container.
+			 * @type {String}
+			 * <pre>
+			 *    
+			 * </pre>
+			 */
+			tpl : {
+				view : true,
+				value : '<div class="' + CLS_EDITOR_CONTAINER + '"></div>'
+			},
+			/**
+			 * @private
+			 */
+			xrender:{
+				value : editorPanelRender
+			}
+		}
+	}, 
+	{
+            xclass:'grid-editor-panel',
+            priority:1
+    });
+	
+	return editorPanel;
+},{
+    requires:['component']
+});/**
  * @fileOverview grid component for kissy
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
