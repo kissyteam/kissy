@@ -111,8 +111,13 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		showEitor : function(field,record,cell,row){
 			var _self = this,
 				editorPanel = _self._findEditorPanel(field),
-				alignNode = _self._getAlignNode(cell,row);
+				alignNode = _self._getAlignNode(cell,row),
+				curEditorPanel = _self.get('currentEditorPanel');
 			if(editorPanel){
+				if(curEditorPanel && curEditorPanel != editorPanel){
+					
+					curEditorPanel.hide();
+				}
 				_self.set('currentEditorPanel',editorPanel);
 				_self.set('currentCell',cell);
 				editorPanel.set('record',record);

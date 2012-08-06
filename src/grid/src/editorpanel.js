@@ -132,5 +132,5 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 	
 	return editorPanel;
 },{
-    requires:['component']
+    requires:['component','grid/editor']
 });

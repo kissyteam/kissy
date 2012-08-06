@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 6 22:45
+build time: Aug 6 23:37
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -1360,8 +1360,13 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		showEitor : function(field,record,cell,row){
 			var _self = this,
 				editorPanel = _self._findEditorPanel(field),
-				alignNode = _self._getAlignNode(cell,row);
+				alignNode = _self._getAlignNode(cell,row),
+				curEditorPanel = _self.get('currentEditorPanel');
 			if(editorPanel){
+				if(curEditorPanel && curEditorPanel != editorPanel){
+					
+					curEditorPanel.hide();
+				}
 				_self.set('currentEditorPanel',editorPanel);
 				_self.set('currentCell',cell);
 				editorPanel.set('record',record);
@@ -2029,17 +2034,18 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 	
 	return editorPanel;
 },{
-    requires:['component']
+    requires:['component','grid/editor']
 });/**
  * @fileOverview grid component for kissy
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Util) {
+KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Editing,Util) {
 	Grid.Bar = Bar;
 	Grid.Store = Store;
 	Grid.PagingBar = PagingBar;
 	Grid.PagingBar.Number = NumberPagingBar;
 	Grid.Plugins = Plugins;
+	Grid.Plugins.CellEditing = Editing.CellEditing;
 	Grid.Util = Util;
 
     return Grid;
@@ -2051,6 +2057,7 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,U
 		"grid/pagingbar",
 		"grid/numberpagingbar",
 		"grid/plugins",
+		"grid/editing",
 		"grid/util"
 	]
 });/**
