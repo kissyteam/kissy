@@ -45,7 +45,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
          */
         renderUI:function () {
             var _self = this;
-            S.each(['header', 'body', 'tbar', 'bbar'], function (c) {
+            S.each(['tbar','header', 'body','bbar'], function (c) {
                 if (c = _self.get(c)) {
                     c.render();
                 }
