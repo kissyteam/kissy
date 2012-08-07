@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:10
+build time: Aug 7 11:43
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -94,15 +94,6 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                     view:1
                 },
 
-                /**
-                 * Add collapse-right/left css class to root element.
-                 * enum { "left","right" }
-                 * @type String
-                 */
-                collapseSide:{
-                    view:1
-                },
-
                 xrender:{
                     value:ButtonRender
                 }
@@ -151,23 +142,12 @@ KISSY.add("button/buttonRender", function (S, Component) {
         },
         _uiSetDescribedby:function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
-        },
-
-        _uiSetCollapseSide:function (side) {
-            var self = this,
-                cls = self.getCssClassWithPrefix("button-collapse-"),
-                el = self.get("el");
-            el.removeClass(cls + "left " + cls + "right");
-            if (side) {
-                el.addClass(cls + side);
-            }
         }
     }, {
         ATTRS:{
             describedby:{},
             tooltip:{},
-            checked:{},
-            collapseSide:{}
+            checked:{}
         }
     });
 }, {

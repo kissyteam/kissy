@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 23:49
+build time: Aug 7 11:46
 */
 KISSY.add("editor/plugin/draft/index",function(e,j,g,r,s){function f(a,b,c){for(a+="";a.length<b;)a=c+a;return a}function k(a){e.isNumber(a)&&(a=new Date(a));return a instanceof Date?[a.getFullYear(),"-",f(a.getMonth()+1,2,"0"),"-",f(a.getDate(),2,"0")," ",f(a.getHours(),2,"0"),":",f(a.getMinutes(),2,"0"),":",f(a.getSeconds(),2,"0")].join(""):a}function l(a,b){this.editor=a;this.config=b;this._init()}function m(a,b){var c=new l(a,b);a.on("destroy",function(){c.destroy()})}function n(a){this.config=
 a||{}}var h=e.Node,o=e.Event,p=e.JSON,i=j.Utils.addRes,t=j.Utils.destroyRes;e.augment(l,{_getSaveKey:function(){var a=this.config;return a.draft&&a.draft.saveKey||"ks-editor-draft-save20110503"},_getDrafts:function(){if(!this.drafts){var a=g.getItem(this._getSaveKey()),b=[];a&&(b=g==window.localStorage?p.parse(decodeURIComponent(a)):a);this.drafts=b}return this.drafts},_init:function(){var a=this,b=a.editor,c=b.get("statusBarEl"),d=this.config;d.draft=d.draft||{};a.draftInterval=d.draft.interval=

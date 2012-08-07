@@ -10,7 +10,7 @@ KISSY.add("component/delegateChildren", function (S) {
     function handleChildMouseEvents(e) {
         if (!this.get("disabled")) {
             var control = this.getOwnerControl(e.target, e);
-            if (control) {
+            if (control && !control.get("disabled")) {
                 // Child control identified; forward the event.
                 switch (e.type) {
                     case "mousedown":

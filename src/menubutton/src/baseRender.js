@@ -4,15 +4,13 @@
  */
 KISSY.add("menubutton/baseRender", function (S, Button) {
 
-    var CAPTION_TMPL = '<div class="ks-inline-block ' +
-            'ks-menu-button-caption"><' + '/div>',
+    var CAPTION_TMPL = '<div class="ks-menu-button-caption"><' + '/div>',
 
         DROP_TMPL =
-            '<div class="ks-inline-block ' +
-                'ks-menu-button-dropdown">' +
-                '<div class=' +
-                '"ks-menu-button-dropdown-inner">' +
-                '<' + '/div>' +
+            '<div class="ks-menu-button-dropdown">' +
+//                '<div class=' +
+//                '"ks-menu-button-dropdown-inner">' +
+//                '<' + '/div>' +
                 '<' + '/div>',
         COLLAPSE_CLS = "menu-button-open";
 

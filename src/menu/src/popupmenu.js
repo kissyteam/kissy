@@ -68,9 +68,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 focusable:{
                     value:false
                 },
-                visibleMode:{
-                    value:"visibility"
-                },
                 /**
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.

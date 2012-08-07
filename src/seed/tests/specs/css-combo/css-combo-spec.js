@@ -12,7 +12,6 @@ describe("css-combo", function () {
                 "</div>").appendTo("body");
 
             KISSY.config({
-                combine:true,
 
                 map:[
                     [/\?t=.+$/, ""]
@@ -44,6 +43,10 @@ describe("css-combo", function () {
 
             waitsFor(function () {
                 return ret;
+            });
+
+            runs(function(){
+                S.config("map").length=0;
             });
         });
 

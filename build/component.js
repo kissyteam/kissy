@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:10
+build time: Aug 7 11:43
 */
 /**
  * Setup component namespace.
@@ -925,7 +925,7 @@ KISSY.add("component/delegateChildren", function (S) {
     function handleChildMouseEvents(e) {
         if (!this.get("disabled")) {
             var control = this.getOwnerControl(e.target, e);
-            if (control) {
+            if (control && !control.get("disabled")) {
                 // Child control identified; forward the event.
                 switch (e.type) {
                     case "mousedown":
@@ -3416,6 +3416,13 @@ KISSY.add("component/uibase/positionrender", function () {
         },
         zIndex:{
             value:Z_INDEX
+        },
+        /**
+         * see {@link Component.UIBase.Box#visibleMode}.
+         * @default "visibility"
+         */
+        visibleMode:{
+            value:"visibility"
         }
     };
 

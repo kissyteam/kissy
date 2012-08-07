@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 23:49
+build time: Aug 7 11:46
 */
 KISSY.add("editor/core/meta",function(){var d={"back-color":["../color/btn","./cmd"],"local-storage":["../flash-bridge/"],bold:["../font/ui","./cmd"],draft:["../local-storage/","../menubutton/"],flash:["../flash-common/baseClass","../flash-common/utils"],"font-family":["../font/ui","./cmd"],"font-size":["../font/ui","./cmd"],"fore-color":["../color/btn","./cmd"],heading:["./cmd"],image:["../button/","../bubble/","../contextmenu/","../dialog-loader/"],indent:["./cmd"],"ordered-list":["../list-utils/btn",
 "./cmd"],"unordered-list":["../list-utils/btn","./cmd"],italic:["../font/ui","./cmd"],"justify-center":["./cmd"],"justify-left":["./cmd"],"justify-right":["./cmd"],link:["../bubble/","./utils","../dialog-loader/"],maximize:["./cmd"],"multiple-upload":["../dialog-loader/"],outdent:["./cmd"],overlay:["dd","../focus-fix/"],pageBreak:["../fake-objects/"],removeFormat:["./cmd","../button/"],resize:["dd"],menubutton:["menubutton"],smiley:["../overlay/"],sourcearea:["../button/"],"strike-through":["../font/ui",

@@ -3,75 +3,78 @@
 <head>
 <meta charset="utf-8"/>
 <title>KISSY Menu Demo</title>
-<link href="../../build/css/dpl/base.css" rel="stylesheet"/>
-<link href="assets/menu.css" rel="stylesheet"/>
-<link href="assets/menuitem.css" rel="stylesheet"/>
-<link href="assets/submenu.css" rel="stylesheet"/>
-<style>
-    .ks-menuitem-delete {
-        color: #000000;
-        left: auto;
-        padding-right: 6px;
-        position: absolute;
-        right: 0;
-        text-align: right;
-        border: 1px solid red;
-        margin-right: 5px;
-        padding: 0 5px;
-    }
-
-    .ks-menu-disabled .ks-menuitem-delete {
-        color: #ccc;
-        border: #ccc;
-    }
-</style>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
-
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
-
-    #wrap {
-        width: 990px;
-        margin: 0 auto;
-    }
-</style>
+<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="wrap">
+<div class="container">
     <h1>KISSY Menu</h1>
-    <a target="_blank" href="./demo/simple.html">simple demo</a>
-    <br>
-    <a target="_blank" href="./demo/simple_json.html">simple demo using json</a>
-    <br>
-    <a target="_blank" href="./demo/filtermenu.html">filtermenu demo</a>
-    <br>
-    <a target="_blank" href="./demo/contextmenu.html">contextmenu demo</a>
-    <br>
-    <a target="_blank" href="./demo/topmenu.html">topmenu demo</a>
-    <br>
-    <a target="_blank" href="./demo/mouse-menubutton.html">another menubutton demo</a>
-    <br>
-    <a target="_blank" href="./demo/large.html">large data test</a>
-    <h2>known issue</h2>
-    <ol>
-        <li>
-            <del>点击文档不能关闭子菜单</del>
-        </li>
-        <li>
-            <del>鼠标脱离菜单，菜单自动隐藏（需配置）</del>
-        </li>
-        <li>
-            同级 menuitem 太多 ie 性能不行
-        </li>
-    </ol>
 </div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu",function(S,Menu){
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+              "click":function(e){
+                  var h;
+                  if(h=e.target.get("href")){
+                      window.open(h);
+                  }
+              }
+            },
+            children:[{
+                content:"dpl",
+                href:'demo/dpl/demo.html',
+                xclass:'menuitem'
+            },{
+                content:'other',
+                xclass:'submenu',
+                menu:{
+                    xclass:'popupmenu',
+                    children:[{
+                        content:'右键菜单',
+                        href:'demo/other/contextmenu.html',
+                        xclass:'menuitem'
+                    },{
+                        content:'从已有节点产生',
+                        href:'demo/other/decorate.html',
+                        xclass:'menuitem'
+                    },{
+                        content:'过滤菜单',
+                        href:'demo/other/filtermenu.html',
+                        xclass:'menuitem'
+                    },
+                        {
+                            content:'大数据量测试',
+                            href:'demo/other/large.html',
+                            xclass:'menuitem'
+                        },
+                        {
+                            content:'单菜单项',
+                            href:'demo/other/mouse-menubutton.html',
+                            xclass:'menuitem'
+                        },
+                        {
+                            content:'json 方式',
+                            href:'demo/other/simple_json.html',
+                            xclass:'menuitem'
+                        },
+                        {
+                            content:'简单方式',
+                            href:'demo/other/simple.html',
+                            xclass:'menuitem'
+                        },
+                        {
+                            content:'导航菜单',
+                            href:'demo/other/taolive/demo.html',
+                            xclass:'menuitem'
+                        }]
+                }
+            }]
+        }).render();
+    });
+</script>
 </body>
 </html>

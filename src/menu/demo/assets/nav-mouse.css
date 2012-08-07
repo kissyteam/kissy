@@ -1,5 +1,5 @@
 .nav-menu {
-
+    outline: none;
 }
 
 .nav-menu a {
@@ -58,7 +58,7 @@
     position: relative;
     z-index: 10000;
 }
-.nav-menu .nav-submenu .nav-submenu-arrow {
+.nav-menu .nav-submenu .ks-submenu-arrow {
     position: absolute;
     top: 46%;
     top: 40%\9;
@@ -76,9 +76,10 @@
     -moz-transition: -moz-transform 0.2s ease-in;
     -o-transition: -o-transform 0.2s ease-in;
     transition: transform 0.2s ease-in;
+    padding: 0;
 }
 
-.nav-menu .nav-submenu-hover .nav-submenu-arrow {
+.nav-menu .nav-submenu-hover .ks-submenu-arrow {
     -moz-transform: rotate(180deg);
     -moz-transform-origin: 50% 30%;
     -webkit-transform: rotate(180deg);

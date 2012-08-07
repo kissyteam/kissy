@@ -1,6 +1,6 @@
 describe("KISSY ComboLoader", function () {
     var S = KISSY,
-        host=location.hostname,
+        host = location.hostname,
         ComboLoader = S.Loader.Combo;
 
 
@@ -8,11 +8,12 @@ describe("KISSY ComboLoader", function () {
 
         var p = S.config("packages");
         for (var i in p) {
-            delete p[i];
+            if (p.hasOwnProperty(i)) {
+                delete p[i];
+            }
         }
 
         S.config({
-            combine:true,
             map:[
                 [/\?t=.*/, ""]
             ]
@@ -57,7 +58,9 @@ describe("KISSY ComboLoader", function () {
         expect(S.Env._comboLoader.loading).toBe(0);
 
         S.Env.mods = {};
+
         var l = new ComboLoader(S);
+
         l.add({
             a:{
                 requires:["b", "c"]
@@ -72,12 +75,13 @@ describe("KISSY ComboLoader", function () {
                 requires:["a", "m"]
             }
         });
+
         var r;
         r = l.calculate(["a", "h"]);
         S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
         expect(c.js[''][0]).toBe(S.Config.base +
-                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
+            "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
     });
 
     it("should trunk url automatically", function () {
@@ -85,7 +89,9 @@ describe("KISSY ComboLoader", function () {
         expect(S.Env._comboLoader.loading).toBe(0);
 
         S.Env.mods = {};
+
         var x = {}, k = 3000;
+
         for (var i = 0; i < 100; i++) {
             var r2 = [];
             for (var j = 0; j < 5; j++) {
@@ -95,8 +101,11 @@ describe("KISSY ComboLoader", function () {
                 requires:r2
             }
         }
+
         var l = new ComboLoader(S);
+
         l.add(x);
+
         var ret = [];
         for (i = 0; i < 100; i++) {
             ret.push("y" + i);
@@ -134,7 +143,9 @@ describe("KISSY ComboLoader", function () {
 
         var p = S.config("packages");
         for (var i in p) {
-            delete p[i];
+            if (p.hasOwnProperty(i)) {
+                delete p[i];
+            }
         }
 
         expect(S.Env._comboLoader.loading).toBe(0);
@@ -185,7 +196,9 @@ describe("KISSY ComboLoader", function () {
 
         var p = S.config("packages");
         for (var i in p) {
-            delete p[i];
+            if (p.hasOwnProperty(i)) {
+                delete p[i];
+            }
         }
 
         expect(S.Env._comboLoader.loading).toBe(0);
@@ -242,12 +255,10 @@ describe("KISSY ComboLoader", function () {
 
     it("works for not combo for specified packages", function () {
         window.TIMESTAMP_X = 0;
-        var combine = S.config("combine");
 
         S.config({
             base:'',
             tag:'',
-            combine:true,
             debug:true,
             packages:{
                 'timestamp':{
@@ -277,9 +288,9 @@ describe("KISSY ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/y.js");
-            expect(jss[1]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/x.js");
-            expect(jss[2]).toBe("http://"+host+"/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/z.js");
+            expect(jss[0]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/z.js");
 
         });
     });
@@ -288,7 +299,9 @@ describe("KISSY ComboLoader", function () {
     it("should load mod not config", function () {
         var p = S.config("packages");
         for (var i in p) {
-            delete p[i];
+            if (p.hasOwnProperty(i)) {
+                delete p[i];
+            }
         }
 
         S.Env.mods = {};
@@ -306,7 +319,7 @@ describe("KISSY ComboLoader", function () {
 
         var ret = 0;
 
-        S.use('tests4/a', function (S, a) {
+        S.use('tests4/a', function () {
             ret = 9;
         });
 
@@ -347,13 +360,12 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("clean", function () {
-        S.config({
-            combine:false
-        });
         S.config("map").length = 0;
         var p = S.config("packages");
         for (var i in p) {
-            delete p[i];
+            if (p.hasOwnProperty(i)) {
+                delete p[i];
+            }
         }
     });
 });

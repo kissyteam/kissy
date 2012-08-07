@@ -8,12 +8,19 @@
 </head>
 <body>
 <div class="container">
-    <h1 id="describe">普通菜单</h1>
+    <h1>普通菜单</h1>
 
     <div id="menuitem_container" style="width:200px;position:relative;height:150px;">
 
     </div>
     <label>禁用：<input type="checkbox" id='dis'/></label>
+
+    <br/>
+    <h1>多选菜单</h1>
+
+    <div id="menuitem_container2" style="width:200px;position:relative;height:150px;">
+
+    </div>
 
 </div>
 <script src="../../../../build/kissy.js"></script>
@@ -88,6 +95,40 @@
         });
 
         dis[0].checked = false;
+
+
+        new Menu({
+            render:"#menuitem_container2",
+            children:[
+                {
+                    xclass:'menuitem',
+                    checkable:true,
+                    content:"checkable menuitem"
+                },
+                {
+                    xclass:'menuseparator'
+                },
+                {
+                    xclass:'submenu',
+                    content:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                xclass:'menuitem',
+                                checkable:true,
+                                content:"checkable menuitem1"
+                            },
+                            {
+                                xclass:'menuitem',
+                                checkable:true,
+                                content:"checkable menuitem2"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
     });
 </script>
 </body>

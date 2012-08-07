@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>large-select</title>
+<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/submenu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+
+    .c2c-menuitem-delete {
+        padding-left: 20px;
+        cursor: pointer;
+    }
+</style>
+<style>
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div id="wrap">
+
+    <h1 id="describe">菜单按钮性能演示</h1>
+
+    <div id="holder">
+
+    </div>
+
+    <script src="../../../../build/kissy.js"></script>
+    <!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+    <script>
+        KISSY.ready(function (S) {
+            var $ = S.all;
+            var holder = $("#holder");
+            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+                var start = S.now();
+
+                for (var i = 0; i < 50; i++) {
+                    (function (i) {
+
+                        var menuConfig = {
+                            align:{
+                                offset:[0, -1]
+                            },
+                            width:82,
+                            height:150,
+                            elStyle:{
+                                overflow:"auto",
+                                overflowX:"hidden"
+                            }
+                        };
+
+                        function constructMenu(menuConfig) {
+                            return S.mix({
+                                xclass:'popupmenu',
+                                children:[]
+                            }, menuConfig);
+                        }
+
+                        var b = new MenuButton.Select({
+                            defaultCaption:"请选择",
+                            prefixCls:"c2c-",
+                            render:holder,                          
+                            menu:(function () {
+                                var m = constructMenu(menuConfig);
+                                for (var j = 0; j < 10; j++) {
+                                    m.children.push({
+                                        xclass:'option',
+                                        content:"item-" + i + "-" + j,
+                                        value:i + "-" + j
+                                    });
+                                }
+                                return m;
+                            })()
+                        }).render();
+                    })(i);
+                }
+
+                alert(S.now() - start);
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

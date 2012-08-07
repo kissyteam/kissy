@@ -14,7 +14,6 @@
         IE = utils.IE,
         win = S.Env.host,
         LOADING = data.LOADING,
-        LOADED = data.LOADED,
         ERROR = data.ERROR,
         ALL_REQUIRES = "__allRequires",
         CURRENT_MODULE = "__currentModule",
@@ -124,7 +123,7 @@
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
+                S.error("find cyclic dependency by mod " + myName + " between mods: " + error);
             }
         }
 

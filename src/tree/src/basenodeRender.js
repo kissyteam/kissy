@@ -18,7 +18,6 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
         COMMON_ICON_CLS = "ks-tree-icon",
         ROW_CLS = "ks-treeitem-row",
         COMMON_EXPAND_ICON_CLS = "ks-tree-expand-icon",
-        INLINE_BLOCK_CLS = "ks-inline-block",
         COMMON_EXPAND_EL_CLS = "ks-tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
@@ -28,35 +27,29 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
         EXPAND_ICON_EL_FILE_CLS = [
             COMMON_ICON_CLS,
             COMMON_EXPAND_ICON_CLS,
-            INLINE_BLOCK_CLS,
             COMMON_EXPAND_EL_CLS
         ].join(" "),
         EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [
             COMMON_ICON_CLS,
             COMMON_EXPAND_ICON_CLS,
-            INLINE_BLOCK_CLS,
             COMMON_EXPAND_EL_CLS + "minus"
         ].join(" "),
         EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [
             COMMON_ICON_CLS,
             COMMON_EXPAND_ICON_CLS,
-            INLINE_BLOCK_CLS,
             COMMON_EXPAND_EL_CLS + "plus"
         ].join(" "),
         ICON_EL_FILE_CLS = [
             COMMON_ICON_CLS,
-            "ks-tree-file-icon",
-            INLINE_BLOCK_CLS
+            "ks-tree-file-icon"
         ].join(" "),
         ICON_EL_FOLDER_EXPAND_CLS = [
             COMMON_ICON_CLS,
-            "ks-tree-expanded-folder-icon",
-            INLINE_BLOCK_CLS
+            "ks-tree-expanded-folder-icon"
         ].join(" "),
         ICON_EL_FOLDER_COLLAPSE_CLS = [
             COMMON_ICON_CLS,
-            "ks-tree-collapsed-folder-icon",
-            INLINE_BLOCK_CLS
+            "ks-tree-collapsed-folder-icon"
         ].join(" "),
     // 实际使用，结束
 

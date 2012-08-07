@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:10
+build time: Aug 7 11:44
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -1174,8 +1174,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     /**
      * 1. keeps IE from blowing up on images as drag handlers.
      *    IE 在 img 上拖动时默认不能拖动（不触发 mousemove，mouseup 事件，mouseup 后接着触发 mousemove 。。。）
-     * 2. 防止 html5 draggable 元素的拖放默认行为
-     * 3. 防止默认的选择文本行为
+     * 2. 防止 html5 draggable 元素的拖放默认行为 (选中文字拖放)
+     * 3. 防止默认的选择文本行为(??场景？)
      * @param e
      */
     function fixDragStart(e) {
@@ -1293,6 +1293,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 }
 
                 // 防止 firefox/chrome 选中 text
+                // 非 ie，阻止了 html dd 的默认行为
                 if (self.get("halt")) {
                     ev.halt();
                 } else {

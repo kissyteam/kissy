@@ -1,18 +1,31 @@
 // Buttons
 
+@import "../../../css/src/dpl/variables.less";
+
 .buttonBackground(@startColor, @endColor) {
 // gradientBar will set the background to a pleasing blend of these, to support IE<=9
     .gradientBar(@startColor, @endColor);
     .reset-filter();
 
 // in these cases the gradient won't cover the background, so we override
-    &:hover, &:active, &.active, &.disabled, &[disabled] {
+// :active ie 不支持
+    &.ks-button-hover {
+        background-position: 0 -15px;
+    /*
+    transition is only when going to hover, otherwise the background
+    behind the gradient (there for IE<=9 fallback) gets mismatched
+    */
+        .transition(background-position .1s linear); // 加上这个才能动画？？
         background-color: @endColor;
     }
 
 // IE 7 + 8 can't handle box-shadow to show active, so we darken a bit ourselves
-    &:active,
-    &.active {
+    &.ks-button-active,
+    &.ks-button-checked,
+    // TODO menu-button 耦合
+    &.ks-menu-button-open {
+        @shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+        .box-shadow(@shadow);
         background-color: darken(@endColor, 10%) e("\9");
     }
 }

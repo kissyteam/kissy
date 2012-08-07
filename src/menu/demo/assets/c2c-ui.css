@@ -1,4 +1,7 @@
 .c2c-button {
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
     margin: 2px;
     border: 0;
     padding: 0;

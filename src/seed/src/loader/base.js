@@ -208,8 +208,12 @@
 
     function defaultComponentJsName(m) {
         var name = m.name,
-            extname = Path.extname(name) || ".js",
+            extname = (Path.extname(name) || "").toLowerCase(),
             min = "-min";
+
+        if (extname != ".css") {
+            extname = ".js";
+        }
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 

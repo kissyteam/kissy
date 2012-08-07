@@ -21,10 +21,16 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     function reposition() {
         var self = this,
+            alignCfg,
+            alignNode,
+            align,
             menu = getMenu(self);
         if (menu && menu.get("visible")) {
-            var align = S.clone(menu.get("align"));
-            align.node = self.get("el");
+            alignCfg = menu.get("align");
+            alignNode = alignCfg.node;
+            delete alignCfg.node;
+            align = S.clone(alignCfg);
+            align.node = alignNode || self.get("el");
             S.mix(align, ALIGN, false);
             menu.set("align", align);
         }
@@ -47,9 +53,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             // 先 render，监听 width 变化事件
             menu.render();
             self.bindMenu();
-            // 根据 el 自动调整大小
+            // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
-                menu.set("width", el.innerWidth());
+                menu.set("width", $(menu.get("align").node || el).innerWidth());
             }
             menu.show();
             reposition.call(self);
@@ -252,12 +258,15 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
                 var self = this,
+                // decorate menu 配置了参数
+                    menuCfg = self.get("menu"),
+                    menu,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
-                var menu = new UI(S.mix({
+                menu = new UI(S.mix({
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
-                }));
+                }, menuCfg));
                 self.__set("menu", menu);
             },
 

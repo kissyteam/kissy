@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:14
+build time: Aug 7 11:47
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -219,14 +219,6 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                  */
                 handleMouseEvents:{
                     value:false
-                },
-
-                /**
-                 * see {@link Component.UIBase.Box#visibleMode}.
-                 * @default "visibility"
-                 */
-                visibleMode:{
-                    value:"visibility"
                 },
                 xrender:{
                     value:OverlayRender

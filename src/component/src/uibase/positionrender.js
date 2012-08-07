@@ -29,6 +29,13 @@ KISSY.add("component/uibase/positionrender", function () {
         },
         zIndex:{
             value:Z_INDEX
+        },
+        /**
+         * see {@link Component.UIBase.Box#visibleMode}.
+         * @default "visibility"
+         */
+        visibleMode:{
+            value:"visibility"
         }
     };
 

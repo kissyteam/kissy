@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Demo - DPL MenuButton</title>
+<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../css/src/dpl/table.css" rel="stylesheet"/>
+<link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+<link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
+<link href="../../assets/dpl.css" rel="stylesheet"/>
+<link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+<style>
+    .para {
+        margin: 1em 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>下拉按钮
+            <small>构建支持下拉菜单的按钮组</small>
+        </h1>
+    </div>
+
+    <div id="common">
+
+
+        <h2>下拉按钮</h2>
+        <div class="row">
+            <div class="span8">
+                <h3>概述和示例</h3>
+                <p>使用按钮代替下拉菜单，设置class <code>.ks-menu-button</code> 和合适的标签。</p>
+                <div class="para">
+
+                    <div class="ks-menu-button ks-button">
+                        <div class="ks-menu-button-caption">Action</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+
+                    <div class="ks-menu-button ks-button ks-button-primary">
+                        <div class="ks-menu-button-caption">Action</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+
+                    <div class="ks-menu-button ks-button ks-button-danger">
+                        <div class="ks-menu-button-caption">Danger</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="para">
+
+                    <div class="ks-menu-button ks-button ks-button-warning">
+                        <div class="ks-menu-button-caption">Warning</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+                    <div class="ks-menu-button ks-button ks-button-success">
+                        <div class="ks-menu-button-caption">Success</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+                    <div class="ks-menu-button ks-button ks-button-info">
+                        <div class="ks-menu-button-caption">Info</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+                    <div class="ks-menu-button ks-button ks-button-inverse">
+                        <div class="ks-menu-button-caption">Inverse</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span16">
+                <h3>示例</h3>
+                <p>类似于按钮组，我们使用通用的按钮标签和一些重新定义了的样式来支持kissy的DPL插件.</p>
+<pre class="prettyprint linenums">
+&lt;div class="ks-menu-button ks-button"&gt;
+    &lt;div class="ks-menu-button-caption"&gt;Action&lt;/div&gt;
+  &lt;div class="ks-popupmenu"&gt;
+    &lt;div class="ks-menuitem"&gt;Action&lt;/div&gt;
+    &lt;div class="ks-menuitem"&gt;Another action&lt;/div&gt;
+    &lt;div class="ks-menuitem"&gt;Something else here&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span8">
+                <h3>可以适用于各种尺寸的按钮</h3>
+                <p>下拉按钮适用于多种尺寸大小. 你可以定义 <code>.ks-button-large</code>, <code>.ks-button-small</code>, 或者 <code>.ks-button-mini</code>三种类型。</p>
+                <div class="para">
+                    <div class="ks-menu-button ks-button ks-button-large">
+                        <div class="ks-menu-button-caption">Large button</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+
+                    <div class="ks-menu-button ks-button ks-button-small">
+                        <div class="ks-menu-button-caption">Small button</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+                    <div class="ks-menu-button ks-button ks-button-mini" data-toggle="dropdown">
+                        <div class="ks-menu-button-caption">Mini button</div>
+                        <div class="ks-popupmenu">
+                            <div class="ks-menuitem">Action</div>
+                            <div class="ks-menuitem">Another action</div>
+                            <div class="ks-menuitem">Something else here</div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /ks-button-toolbar -->
+            </div>
+            <!--/span-->
+
+        </div>
+        <!--/row-->
+    </div>
+</div>
+
+<script src='../../../../build/kissy.js'></script>
+
+<script>
+    KISSY.use('button,menubutton', function (S, Button, MenuButton) {
+        var $ = S.all;
+        $("#common .ks-menu-button").each(function (n) {
+            new MenuButton({
+                srcNode:n,
+                menu:{
+                    align:{
+                        offset:[0, -1]
+                    }
+                },
+                matchElWidth:false
+            }).render();
+        });
+    });
+</script>
+</body>
+</html>

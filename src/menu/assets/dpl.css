@@ -39,6 +39,8 @@
 .ks-popupmenu {
   position: absolute;
   z-index: 1000;
+  left: -9999px;
+  top: -9999px;
 }
 .ks-menu {
   outline: none;
@@ -48,8 +50,6 @@
   border-color: rgba(0, 0, 0, 0.2);
   border-style: solid;
   border-width: 1px;
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -72,7 +72,7 @@
 .ks-menu .ks-menuitem {
   position: relative;
   display: block;
-  padding: 3px 15px;
+  padding: 3px 25px;
   clear: both;
   font-weight: normal;
   color: #333333;
@@ -92,4 +92,17 @@
 .ks-menuitem-disabled {
   opacity: 0.3;
   filter: alpha(opacity=30);
+}
+.ks-menuitem-checkbox,
+.ks-menuitem-icon {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 6px;
+  line-height: 14px;
+  vertical-align: text-top;
+}
+.ks-menuitem-checked .ks-menuitem-checkbox,
+.ks-menuitem-checked.ks-menuitem-icon {
+  background: url("http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png") no-repeat -288px 0;
 }

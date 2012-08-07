@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY split-button</title>
+<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../menu/assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <h1>KISSY split-button</h1>
+</div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"dpl",
+                    href:'demo/dpl/demo.html',
+                    xclass:'menuitem'
+                }
+            ]
+        }).render();
+    });
+</script>
+</body>
+</html>

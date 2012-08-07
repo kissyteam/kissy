@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Jul 30 19:14
+build time: Aug 7 11:47
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -175,9 +175,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
         }, {
             ATTRS:/** @lends Menu.prototype*/
             {
-                visibleMode:{
-                    value:"display"
-                },
                 /**
                  * Current highlighted child menu item.
                  * @type Menu.Item
@@ -705,10 +702,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     value:false
                 },
 
-                visibleMode:{
-                    value:"display"
-                },
-
                 handleMouseEvents:{
                     value:false
                 },
@@ -776,7 +769,8 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         var el = self.get("el"),
             checkEl = el.one("." + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + CHECK_CLS + "'/>").prependTo(el);
+            checkEl = new Node("<div class='" + CHECK_CLS + "'/>")
+                .prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();
         }
@@ -912,9 +906,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  */
                 focusable:{
                     value:false
-                },
-                visibleMode:{
-                    value:"visibility"
                 },
                 /**
                  * Whether the popup menu hides when mouseleave.

@@ -111,10 +111,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     value:false
                 },
 
-                visibleMode:{
-                    value:"display"
-                },
-
                 handleMouseEvents:{
                     value:false
                 },

@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>simple-select</title>
+<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/submenu.css" rel="stylesheet"/>
+<link href="../../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+
+    .c2c-menuitem-delete {
+        padding-left: 20px;
+        cursor: pointer;
+    }
+
+        /*.ks-option-even {*/
+        /*background:#d3d3d3;*/
+        /*}*/
+</style>
+<style>
+    h1 {
+        font-size: 2em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px;
+        text-align: center;
+    }
+
+    #wrap {
+        width: 990px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div id="wrap">
+
+    <h1 id="describe">菜单按钮演示</h1>
+    <div style="height:200px;overflow: auto;border:1px solid red;">
+        <h2>设计说明</h2>
+        <ol>
+            <li>支持键盘，鼠标互操作</li>
+            <li>符合 wai-aria 规范</li>
+            <li>构建组件层次</li>
+        </ol>
+
+        <h2>使用说明</h2>
+        <ol>
+            <li>
+                tab 移动焦点到按钮：按钮周边粉框
+            </li>
+            <li>
+                按钮获得焦点时点击上或下键，弹出菜单
+                <ol>
+                    <li>或点击按钮弹出菜单</li>
+                </ol>
+            </li>
+
+
+            <li>
+                菜单弹出后，上下键选择菜单项
+                <ol>
+                    <li>或通过鼠标掠过</li>
+                </ol>
+            </li>
+
+            <li>
+                带有子菜单的菜单项通过右键激活子菜单，左键收缩子菜单
+                <ol>
+                    <li>或通过鼠标掠过，自动弹出子菜单</li>
+                </ol>
+            </li>
+
+            <li>
+                菜单项弹出后，按下 enter 或 space 则选中当前高亮菜单项
+                <ol>
+                    <li>或通过鼠标点击选中任意菜单项</li>
+                </ol>
+            </li>
+
+            <li>
+                esc 隐藏下拉菜单（焦点仍然在按钮上）
+                <ol>
+                    <li>或通过鼠标点击文档空白区域（按钮失去焦点）</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+    <h2>
+        直接从 select 生成
+    </h2>
+    <label>
+        <select id="nativeSelect">
+            <option value="1">native-1</option>
+            <option value="2">native-2</option>
+        </select>
+    </label>
+
+    <hr style="margin: 20px 0"/>
+
+    <div id="parentSelect">
+        <label>
+            <select name="decorateSelect" id="decorateSelect">
+            </select>
+        </label>
+
+        <button id="delAll">删除全部</button>
+
+    </div>
+
+    <h2>下拉菜单</h2>
+
+    <div id="selectDel">
+
+    </div>
+
+
+    <script src="../../../../build/kissy.js"></script>
+    <!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+    <script>
+        KISSY.ready(function (S) {
+            var $ = S.all;
+            var s = S.one("#decorateSelect");
+            for (var i = 0; i < 20; i++) {
+                s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
+            }
+            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+                var select = MenuButton.Select.decorate('#decorateSelect', {
+                    defaultCaption:"请选择",
+                    prefixCls:"c2c-",
+                    elCls:"custom-xx",
+                    menuCfg:{
+                        align:{
+                            offset:[0, -1]
+                        },
+                        height:150,
+                        elStyle:{
+                            overflow:"auto",
+                            overflowX:"hidden"
+                        }
+                    }
+                });
+
+                select.set("value",15);
+
+                select.on("click", function (e) {
+                    S.log(e.target.get("value"));
+                });
+
+                $("#delAll").on("click", function () {
+                    select.removeItems(true);
+                    S.log(select.get("value")||"empty");
+                });
+
+                var newSelect = new MenuButton.Select({
+                    render:"#selectDel",
+                    prefixCls:"c2c-",
+                    menu:{
+                        align:{
+                            offset:[0, -1]
+                        },
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                xclass:'option',
+                                textContent:'xuan-wo',
+                                content:"漩涡"
+                            }
+                        ]
+                    },
+                    defaultCaption:"常用项"
+                });
+
+                newSelect.render();
+
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
