@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 7 18:59
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -310,14 +310,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     self._savedInputValue = textContent;
                     /**
                      * @name ComboBox#click
-                     * @description fired when user select from suggestion list
+                     * @description fired when user select from suggestion list (bubbled from menuItem)
                      * @event
                      * @param e
                      * @param e.target Selected menuItem
                      */
-                    self.fire("click", {
-                        target:item
-                    });
                 }
             },
 
