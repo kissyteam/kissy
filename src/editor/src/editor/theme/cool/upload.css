@@ -27,3 +27,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.ks-editor-img-setting {
+    position: relative;
+}

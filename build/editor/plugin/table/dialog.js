@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 11:46
+build time: Aug 7 22:26
 */
 /**
  * table dialog
@@ -16,8 +16,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
         collapseTableClass = "k-e-collapse-table",
         Dialog = Overlay4E.Dialog,
         IN_SIZE = 6,
-        alignStyle = 'margin-left:2px;',
-        MIDDLE = "vertical-align:middle;",
+        alignStyle = 'margin:0 5px 0 0;',
         TABLE_HTML = "<div style='padding:20px 20px 10px 20px;'>" +
             "<table class='ks-editor-table-config' style='width:100%'>" +
             "<tr>" +
@@ -28,7 +27,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             " data-warning='行数请输入正整数' " +
             " value='2' " +
             " class='ks-editor-table-rows ks-editor-table-create-only ks-editor-input' " +
-            "style='" + alignStyle + MIDDLE + "'" +
+            "style='" + alignStyle + "'" +
             " size='" +
             IN_SIZE +
             "'" +
@@ -37,15 +36,16 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "</td>" +
             "<td>" +
             "<label>宽&nbsp;&nbsp;&nbsp;度： " +
+            "</label> " +
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='宽度请输入正整数' " +
             "value='200' " +
             "style='" +
-            alignStyle + MIDDLE + "' " +
+            alignStyle + "' " +
             "class='ks-editor-table-width ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
-            "</label> " +
+
             "<select class='ks-editor-table-width-unit' title='宽度单位'>" +
             "<option value='px'>像素</option>" +
             "<option value='%'>百分比</option>" +
@@ -59,23 +59,25 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='列数请输入正整数' " +
             "class='ks-editor-table-cols ks-editor-table-create-only ks-editor-input' " +
-            "style='" + alignStyle + MIDDLE + "'" +
+            "style='" + alignStyle + "'" +
             "value='3' " +
             "size='" +
             IN_SIZE + "'/>" +
             "</label>" +
             "</td>" +
             "<td>" +
-            "<label>高&nbsp;&nbsp;&nbsp;度： " +
+            "<label>" +
+            "高&nbsp;&nbsp;&nbsp;度： " +
+            "</label>" +
             "<input " +
             " data-verify='^((?!0$)\\d+)?$' " +
             " data-warning='高度请输入正整数' " +
             "value='' " +
             "style='" +
-            alignStyle + MIDDLE + "'" +
+            alignStyle + "'" +
             "class='ks-editor-table-height ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
-            "</label> &nbsp;像素" +
+            " &nbsp;像素" +
             "</td>" +
             "</tr>" +
             "<tr>" +
@@ -104,7 +106,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             " data-warning='边框请输入非负整数' " +
             "value='1' " +
             "style='" +
-            alignStyle + MIDDLE + "'" +
+            alignStyle + "'" +
             "class='ks-editor-table-border ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             "</label> &nbsp;像素" +
@@ -125,7 +127,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             " data-warning='边框请输入非负整数' " +
             "value='0' " +
             "style='" +
-            alignStyle + MIDDLE + "'" +
+            alignStyle + "'" +
             "class='ks-editor-table-cellpadding ks-editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             " &nbsp;像素</label>" +
@@ -138,7 +140,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "<input " +
             "class='ks-editor-table-caption ks-editor-input' " +
             "style='width:380px;" +
-            alignStyle + MIDDLE + "'>" +
+            alignStyle + "'>" +
             "</label>" +
             "</td>" +
             "</tr>" +

@@ -82,8 +82,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
         return str;
     }
 
-    var MIDDLE = "vertical-align:middle;",
-        MARGIN_DEFAULT = 0,
+    var MARGIN_DEFAULT = 0,
         bodyHtml = "<div style='padding:20px 0;'>" +
             "<form action='#' class='ks-editor-xiami-form' style='margin:0 20px;'>" +
             "<p class='ks-editor-xiami-title'>" +
@@ -91,7 +90,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             "</p>" +
             "<p class='ks-editor-xiami-url-wrap'>" +
             "<input class='ks-editor-xiami-url ks-editor-input' " +
-            "style='width:370px;" + (UA['ie'] == 6 ? "" : MIDDLE)
+            "style='width:370px;"
             + "'" +
             "/> &nbsp; " +
             " <a " +
@@ -116,7 +115,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
             "class='ks-editor-xiami-margin ks-editor-input' style='width:60px;" +
-            MIDDLE + "' value='"
+            "' value='"
             + MARGIN_DEFAULT + "'/> 像素" +
             "</label>" +
             "</p>" +

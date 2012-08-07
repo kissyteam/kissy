@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>sub reset</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+<div style="margin: 100px;">
+
+    <p> html represent
+        <sub style="display: none">hypertext</sub> markup language </p>
+
+</div>
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    var ret = [];
+    ret.push(KISSY.one("p").height());
+    KISSY.one("sub").show();
+    ret.push(KISSY.one("p").height());
+    alert(ret.join(":"));
+</script>
+</body>
+</html>

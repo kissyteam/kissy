@@ -311,11 +311,11 @@ a.go-top:active{text-decoration:none;}
                                             <li class="li">                                                
                                                 Editor.Utils.
                                                 <b class="name"><a href="../symbols/Editor.Utils.html#.getXY">getXY</a></b>
-                                                <span class="param">(x, y, srcDoc, destDoc)</span>
+                                                <span class="param">(offset, editor)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">srcDoc 中的位置在 destDoc 的对应位置</span>                                                
+                                                <span class="desc">editor 元素在主窗口的位置</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -543,7 +543,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line333">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line326">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -582,7 +582,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line113">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line106">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -658,7 +658,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line131">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line124">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -780,7 +780,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line342">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line335">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -819,7 +819,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line363">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line356">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -870,15 +870,15 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">
                                                 <span>Editor.Utils.</span>
                                                 <b class="name">getXY</b>
-                                                <span class="param">(x, y, srcDoc, destDoc)</span>
+                                                <span class="param">(offset, editor)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line70">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line65">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                srcDoc 中的位置在 destDoc 的对应位置
+                                                editor 元素在主窗口的位置
                                                 
                                                 
                                             </div>
@@ -892,38 +892,20 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">x</b>
+                                                            <b class="name">offset</b>
                                                             
                                                             
                                                             
-                                                            <span class="desc">{number}</span>
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">y</b>
+                                                            <b class="name">editor</b>
                                                             
                                                             
                                                             
-                                                            <span class="desc">{number}</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">srcDoc</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc">{Document}</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">destDoc</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc">{Document}</span>
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -936,18 +918,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Returns</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                        <li class="li">
-                                                            
-                                                            <span>在最终文档中的位置</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -968,7 +938,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line255">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line248">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1035,7 +1005,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line306">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line299">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1090,7 +1060,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line160">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line153">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1218,7 +1188,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line144">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line137">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1285,7 +1255,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line280">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line273">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1349,7 +1319,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line264">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line257">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1416,7 +1386,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line230">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line223">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1480,7 +1450,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line294">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line287">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1535,7 +1505,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line197">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line190">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1590,7 +1560,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line153">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line146">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1657,7 +1627,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line188">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line181">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1721,7 +1691,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line93">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line86">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1788,7 +1758,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line212">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line205">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1852,7 +1822,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line169">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_editor_src_editor_core_utils.js.html#line162">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1966,6 +1936,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Button.html">Button</a></li>
             
             
+            <li><a href="../symbols/Color.html">Color</a></li>
+            
+            
             <li><a href="../symbols/ComboBox.html">ComboBox</a></li>
             
             
@@ -2000,9 +1973,6 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Component.UIBase.Close.html">Component.UIBase.Close</a></li>
-            
-            
-            <li><a href="../symbols/Component.UIBase.Constrain.html">Component.UIBase.Constrain</a></li>
             
             
             <li><a href="../symbols/Component.UIBase.ContentBox.html">Component.UIBase.ContentBox</a></li>
@@ -2104,7 +2074,16 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/KISSY.Loader.Package.html">KISSY.Loader.Package</a></li>
             
             
+            <li><a href="../symbols/KISSY.Path.html">KISSY.Path</a></li>
+            
+            
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Uri.html">KISSY.Uri</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Uri.Query.html">KISSY.Uri.Query</a></li>
             
             
             <li><a href="../symbols/Menu.html">Menu</a></li>
@@ -2120,6 +2099,9 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Menu.Separator.html">Menu.Separator</a></li>
+            
+            
+            <li><a href="../symbols/Menu.SubMenu.html">Menu.SubMenu</a></li>
             
             
             <li><a href="../symbols/MenuButton.html">MenuButton</a></li>
@@ -2159,6 +2141,18 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Resizable.html">Resizable</a></li>
+            
+            
+            <li><a href="../symbols/Separator.html">Separator</a></li>
+            
+            
+            <li><a href="../symbols/StyleSheet.html">StyleSheet</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.html">Toolbar</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.Separator.html">Toolbar.Separator</a></li>
             
             
             <li><a href="../symbols/Tree.html">Tree</a></li>

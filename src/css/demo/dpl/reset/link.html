@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>link</title>
+</head>
+<body>
+<div style="margin: 100px;">
+
+    <a id="t">test</a>
+
+</div>
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        $("#t").attr("href", "#" + S.guid("ha"+ S.now()));
+    });
+</script>
+</body>
+</html>

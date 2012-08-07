@@ -6,6 +6,11 @@
     outline: none;
 }
 
+.ks-editor-dialog label,
+.ks-editor-dialog input{
+    vertical-align: middle;
+}
+
 .ks-editor-dialog .ks-contentbox, .ks-editor-popup .ks-contentbox {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;

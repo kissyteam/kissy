@@ -1,0 +1,27 @@
+/**
+* Grid System From Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+
+@import "variables.less";
+@import "mixins.less";
+
+// Fixed
+#grid > .core(@gridColumnWidth, @gridGutterWidth);
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    .ks-clear_();
+    #grid > .core > .span(@gridColumns);
+}
+
+// Fluid
+#grid > .fluid(@fluidGridColumnWidth, @fluidGridGutterWidth);
+
+.container-fluid {
+    padding-left: @gridGutterWidth;
+    padding-right: @gridGutterWidth;
+    .ks-clear_();
+}

@@ -1,0 +1,554 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Form Demo</title>
+<link rel="stylesheet" href="../../src/dpl/base.css">
+<link rel="stylesheet" href="../../../button/assets/dpl.css">
+<link rel="stylesheet" href="../../../toolbar/assets/dpl.css">
+<link rel="stylesheet" href="../../src/dpl/tables.css">
+<link rel="stylesheet" href="../../src/dpl/forms.css">
+<link rel="stylesheet" href="./assets/docs.css">
+</head>
+<body>
+<div class="container"><!-- Masthead
+      ================================================== -->
+<header id="overview">
+    <h1>表单</h1>
+    <p class="lead">DPL基于Bootstrap的组件，提供各种布局的表单。</p>
+    <div class="subnav" id="subnav">
+    </div>
+</header>
+<!-- Forms
+================================================== -->
+<section id="layout">
+    <div class="page-header">
+        <h1>布局</h1>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <h2>灵活的HTML和CSS</h2>
+            <p>DPL可以使你的表单元素和控件看上去非常好，没有任何多余的HTML，我们会提供你需要的多种模式。</p>
+            <p>使用简洁和可扩展的样式实现了复杂的布局，是你可以方便的实现样式和绑定事件，你可以按照下面的内容一步步的去做。</p>
+        </div>
+        <div class="span8">
+            <h2>四种表单布局</h2>
+            <p>DPL 支持4种典型的表单布局:</p>
+            <ul>
+                <li>垂直表单 (默认)</li>
+                <li>内联表单(Inline)</li>
+                <li>搜索</li>
+                <li>横向表单(Horizontal)</li>
+            </ul>
+            <p>不同布局类型的表单需要修改一些标签，但是控件的行为是一致的。</p>
+        </div>
+        <div class="span8">
+            <h2>控件的状态和其他</h2>
+            <p>DPL 中包含你所希望的所有表单控件的样式，同时包含一系列的自定义组件，例如在input前面或者后面附加内容；支持复选框列表。</p>
+            <p>表单控件有各种状态：错误、警告和成功，除此之外还有当禁用控件时的不可用状态。</p>
+        </div>
+    </div>
+
+    <h2>四种类型的表单</h2>
+    <p>DPL提供了简单的标签和样式来实现常见的四种表单。</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>样式</th>
+            <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>垂直表单 (默认)</th>
+            <td><code>.form-vertical</code></td>
+            <td>左对齐的栈式表单控件布局</td>
+        </tr>
+        <tr>
+            <th>内联表单</th>
+            <td><code>.form-inline</code></td>
+            <td>居左的label和内联的元素组成的简洁的表单</td>
+        </tr>
+        <tr>
+            <th>搜索表单</th>
+            <td><code>.form-search</code></td>
+            <td>精致的圆形边框搜索表单</td>
+        </tr>
+        <tr>
+            <th>水平表单</th>
+            <td><code>.form-horizontal</code></td>
+            <td>居左但内容右对齐的label和控件在一行</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<section id="basic">
+    <h2>表单示例</h2>
+    <div class="row">
+        <div class="span6">
+            <h3>基础表单</h3>
+            <p>仅使用表单元素，没有额外的标签</p>
+        </div>
+        <div class="span18">
+            <form class="form-vertical well">
+                <label>Label name</label>
+                <input type="text" class="span6" placeholder="Type something…">
+                <span class="help-inline">Associated help text!</span>
+                <p class="help-block">Example block-level help text here.</p>
+                <label class="checkbox">
+                    <input type="checkbox"> Check me out
+                </label>
+                <div class="ks-button">Submit</div>
+            </form>
+<pre class="prettyprint linenums">&lt;form class="form-vertical"&gt;
+  &lt;label&gt;Label name&lt;/label&gt;
+  &lt;input type="text" class="span6" placeholder="Type something…"&gt;
+  &lt;span class="help-inline"&gt;Associated help text!&lt;/span&gt;
+  &lt;label class="checkbox"&gt;
+    &lt;input type="checkbox"&gt; Check me out
+  &lt;/label&gt;
+  &lt;div class="ks-button"&gt;Submit&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+        </div>
+    </div>
+    <!-- /row -->
+    <div class="row">
+        <div class="span6">
+            <h3>搜索表单</h3>
+            <p>使用默认的WebKit样式，只是添加样式<code>.form-search</code>在搜索域上添加圆角。</p>
+        </div>
+        <div class="span18">
+            <form class="well form-search">
+                <input type="text" class="input-medium search-query">
+                <div class="ks-button">搜索</div>
+            </form>
+<pre class="prettyprint linenums">&lt;form class="well form-search"&gt;
+  &lt;input type="text" class="input-medium search-query"&gt;
+  &lt;div class="ks-button"&gt;搜索&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+        </div>
+    </div>
+    <!-- /row -->
+    <div class="row">
+        <div class="span6">
+            <h3>内联表单</h3>
+            <p>对于 <code>.form-inline</code> 和 <code>.form-horizontal</code>样式, 我们使用”inline-block“方式.</p>
+        </div>
+        <div class="span18">
+            <form class="well form-inline">
+                <input type="text" class="input-small" placeholder="Email">
+                <input type="password" class="input-small" placeholder="Password">
+                <label class="checkbox">
+                    <input type="checkbox"> Remember me
+                </label>
+                <div class="ks-button">Sign in</div>
+            </form>
+<pre class="prettyprint linenums">&lt;form class="form-inline"&gt;
+  &lt;input type="text" class="input-small" placeholder="Email"&gt;
+  &lt;input type="password" class="input-small" placeholder="Password"&gt;
+  &lt;label class="checkbox"&gt;
+    &lt;input type="checkbox"&gt; Remember me
+  &lt;/label&gt;
+  &lt;div class="ks-button"&gt;Sign in&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+        </div>
+    </div>
+    <!-- /row -->
+</section>
+<section id="horizontal">
+    <h2>水平表单</h2>
+    <div class="row">
+        <div class="span16">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>DPL 支持的表单控件</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="input01">文本输入框</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" id="input01" style="width:200px">
+                            <p class="help-block">HTML5 支持的 input 都是这种样式。</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="optionsCheckbox">复选框</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <input type="checkbox" id="optionsCheckbox" value="option1">复选框的文本描述
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="select01">选择框</label>
+                        <div class="controls">
+                            <select id="select01" style="width:200px">
+                                <option>something</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="multiSelect">多选框</label>
+                        <div class="controls">
+                            <select multiple="multiple" id="multiSelect" style="width:200px">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="fileInput">文件上传</label>
+                        <div class="controls">
+                            <input class="input-file" id="fileInput" type="file" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea">文本域</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="textarea" rows="3" style="width:200px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="ks-button ks-button-primary">保存</div>
+                        <div class="ks-button">取消</div>
+                    </div>
+                </fieldset>
+            </form>
+            <h3>示例</h3>
+            <p>使用上面的表单布局，这里一个标签跟一些控件组成控件组。控件组 <code>.control-group</code>, <code>.control-label</code>, 和 <code>.controls</code> 样式是下面的表单需要的。</p>
+<pre class="prettyprint linenums">&lt;form class="form-horizontal"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Legend text&lt;/legend&gt;
+    &lt;div class="control-group"&gt;
+      &lt;label class="control-label" for="input01"&gt;Text input&lt;/label&gt;
+      &lt;div class="controls"&gt;
+        &lt;input type="text" class="input-xlarge" id="input01"&gt;
+        &lt;p class="help-block"&gt;Supporting help text&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+</pre>
+        </div>
+        <div class="span8">
+            <h3>包含的表单元素</h3>
+            <p>左边的是我们支持的表单默认元素，如下面列表所示：</p>
+            <ul>
+                <li>文本输入框(text, password, email等)</li>
+                <li>复选框</li>
+                <li>单选框</li>
+                <li>选择框</li>
+                <li>多选框</li>
+                <li>文件上传</li>
+                <li>文本域</li>
+            </ul>
+            <hr>
+
+        </div>
+    </div>
+</section>
+<section id="control">
+    <div class="row">
+        <div class="span16">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>表单控件状态</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">获取焦点</label>
+                        <div class="controls">
+                            <input class="input-xlarge focused" id="focusedInput" type="text" value="This is focused…">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">不能编辑</label>
+                        <div class="controls">
+                            <span class="input-xlarge uneditable-input">Some value here</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="disabledInput">禁用输入框</label>
+                        <div class="controls">
+                            <input class="input-xlarge disabled" id="disabledInput" type="text" placeholder="Disabled input here…" disabled="">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="optionsCheckbox2">禁用复选框</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <input type="checkbox" id="optionsCheckbox2" value="option1" disabled="">
+                                这是一个禁用的复选框
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group warning">
+                        <label class="control-label" for="inputWarning">带有警告的的文本框</label>
+                        <div class="controls">
+                            <input type="text" id="inputWarning">
+                            <span class="help-inline">有错误发生</span>
+                        </div>
+                    </div>
+                    <div class="control-group error">
+                        <label class="control-label" for="inputError">带有错误的文本框</label>
+                        <div class="controls">
+                            <input type="text" id="inputError">
+                            <span class="help-inline">请更正错误</span>
+                        </div>
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="inputSuccess">带有成功的文本框</label>
+                        <div class="controls">
+                            <input type="text" id="inputSuccess">
+                            <span class="help-inline">Woohoo!</span>
+                        </div>
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError">成功的选择框</label>
+                        <div class="controls">
+                            <select id="selectError">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span class="help-inline">Woohoo!</span>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="ks-button ks-button-primary">保存</div>
+                        <div class="ks-button">取消</div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="span8">
+            <h3>重新设置浏览器控件的样式</h3>
+            <p>DPL 突出了浏览器支持的 <code>focused</code> 和 <code>disabled</code> 状态。我们移除了当<code>:focus</code>时Webkit默认的<code>outline</code> 使用 <code>box-shadow</code>来替代。</p>
+            <hr>
+            <h3>表单验证</h3>
+            <p>DPL同时包含各种验证状态样式：错误、警告和成功。可以在<code>.control-group</code>元素上应用这些样式。</p>
+<pre class="prettyprint linenums">&lt;fieldset
+  class="control-group error"&gt;
+  …
+&lt;/fieldset&gt;
+</pre>
+        </div>
+    </div>
+</section>
+<section id="extend">
+    <div class="row">
+        <div class="span16">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>扩展表单元素</legend>
+                    <div class="control-group">
+                        <label class="control-label">表单栅格</label>
+                        <div class="controls docs-input-sizes">
+                            <input class="span2" type="text" placeholder=".span2">
+                            <input class="span4" type="text" placeholder=".span4">
+                            <input class="span6" type="text" placeholder=".span6">
+                            <select class="span2">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="span4">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="span6">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <p class="help-block">使用栅格系统的<code>.span*</code> 样式来设定表单元素的大小。</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">各种尺寸</label>
+                        <div class="controls docs-input-sizes">
+                            <input class="input-mini" type="text" placeholder=".input-mini">
+                            <input class="input-small" type="text" placeholder=".input-small">
+                            <input class="input-medium" type="text" placeholder=".input-medium">
+                            <p class="help-block">你可能不使用栅格系统，你可以采用在各种控件上应用固有的样式。<code>.input-mini</code>、<code>.input-small</code>和<code>.input-medium</code>等样式</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="prependedInput">前置文本</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">@</span><input class="span4" id="prependedInput" size="16" type="text">
+                            </div>
+                            <p class="help-block">这是帮助文本</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="appendedInput">附加文本</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="span4" id="appendedInput" size="16" type="text"><span class="add-on">.00</span>
+                            </div>
+                            <span class="help-inline">这是帮助文本</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">前置和后置</label>
+                        <div class="controls">
+                            <div class="input-prepend input-append">
+                                <span class="add-on">$</span><input class="span4" size="16" type="text"><span class="add-on">.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">后置按钮</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="span4" size="16" type="text"><div class="ks-button">Go!</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">双后置按钮</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="span4" size="16" type="text"><div class="ks-button">Go!</div><div class="ks-button">Go2!</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">内联的复选框</label>
+                        <div class="controls">
+                            <label class="checkbox control-inline">
+                                <input type="checkbox" value="option1"> 1
+                            </label>
+                            <label class="checkbox control-inline">
+                                <input type="checkbox" value="option2"> 2
+                            </label>
+                            <label class="checkbox control-inline">
+                                <input type="checkbox" value="option3"> 3
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">复选框列表</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <input type="checkbox" name="optionsCheckboxList1" value="option1">
+                                Option one is this and that—be sure to include why it's great
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="optionsCheckboxList2" value="option2">
+                                Option two can also be checked and included in form results
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="optionsCheckboxList3" value="option3">
+                                Option three can—yes, you guessed it—also be checked and included in form results
+                            </label>
+                            <p class="help-block"><strong>提示：</strong> Labels 包含的选项可以提供更大的点击区域，提升表单的可用性。</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">单选按钮列表</label>
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                Option one is this and that—be sure to include why it's great
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                Option two can is something else and selecting it will deselect option one
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="ks-button ks-button-primary">保存</div>
+                        <div class="ks-button">取消</div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="span8">
+            <h3>前置 &amp; 后置输入框</h3>
+            <p>输入框组—包含前置后者后置文本—给输入框提供了上下文，更方便用户输入。一个很好的例子是在一个需要输入邮箱名的输入框中附加”@“。</p>
+            <hr>
+            <h3>复选列表和单选类表</h3>
+            <p>可以非常简单的使用<code>&lt;label class="checkbox"&gt;</code> 包围着<code>&lt;input type="checkbox"&gt;</code>元素形成一个选项。</p>
+            <p>同时支持内联的复选框和单选框，仅仅附加<code>.control-inline</code> 样式在应用了<code>.checkbox</code> 和 <code>.radio</code>的元素上。</p>
+            <hr>
+            <h4>内联表单上使用 前置和后置文本</h4>
+            <p>在内联表单上使用前置后置文本时，要将 <code>.add-on</code>和 <code>input</code>放在同一行上，不要有空格。</p>
+            <hr>
+            <h4>表单帮助文本</h4>
+            <p>可以为表单元素添加帮助文本,在表单元素后面使用<code>&lt;span class="help-inline"&gt;</code>或者<code>&lt;p class="help-block"&gt;</code>包含帮助信息</p>
+        </div>
+    </div>
+    <!-- /row -->
+</section>
+
+</div>
+<script src="../../../../build/kissy.js"></script>
+<script>
+    KISSY.use("toolbar,button", function (S, Toolbar, Button) {
+        S.all(".ks-button").each(function (n) {
+            new Button({
+                srcNode:n
+            }).render();
+        });
+
+        new Toolbar({
+            render:'#subnav',
+            listeners:{
+                click:function (e) {
+                    location.href = e.target.get("href");
+                }
+            },
+            children:[
+                {
+                    xclass:'button',
+                    href:'#layout',
+                    content:'表单布局'
+                },
+                {
+                    xclass:'button',
+                    href:'#basic',
+                    content:'基本表单'
+                },
+                {
+                    xclass:'button',
+                    href:'#horizontal',
+                    content:'水平表单'
+                },
+                {
+                    xclass:'button',
+                    href:'#control',
+                    content:'表单控件状态'
+                },
+                {
+                    xclass:'button',
+                    href:'#extend',
+                    content:'表单扩展'
+                }
+            ]
+        }).render();
+    });
+</script>
+</body>
+</html>

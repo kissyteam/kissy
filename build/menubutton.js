@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 11:47
+build time: Aug 7 22:26
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -368,10 +368,12 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
     var CAPTION_TMPL = '<div class="ks-menu-button-caption"><' + '/div>',
 
         DROP_TMPL =
+            // 背景
             '<div class="ks-menu-button-dropdown">' +
-//                '<div class=' +
-//                '"ks-menu-button-dropdown-inner">' +
-//                '<' + '/div>' +
+                // 箭头
+                '<div class=' +
+                '"ks-menu-button-dropdown-inner">' +
+                '<' + '/div>' +
                 '<' + '/div>',
         COLLAPSE_CLS = "menu-button-open";
 

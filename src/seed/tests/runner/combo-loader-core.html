@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Seed Test Runner</title>
+<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+<script src="../../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../../build/seed.js" charset="utf-8"></script>
+<script>
+    KISSY.config("combine", true);
+</script>
+</head>
+<body>
+<h1>KISSY Combo Core Test Cases</h1>
+
+
+<script>
+    describe("use core should works as simple loader", function () {
+        var S = KISSY;
+
+        S.config("map", [
+            [/\?t=.+$/, ""]
+        ]);
+
+        it("core is an alias", function () {
+
+            var ret = 0;
+
+            KISSY.use("dom,event", function () {
+                ret = 1;
+            });
+
+            waitsFor(function () {
+                return ret;
+            });
+
+            runs(function () {
+                expect(S.DOM).not.toBeFalsy();
+                expect(S.Event).not.toBeFalsy();
+            });
+
+
+        });
+
+    });
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function () {
+        jasmine.kissyNext(this.results().failedCount);
+    });
+</script>
+</body>
+</html>

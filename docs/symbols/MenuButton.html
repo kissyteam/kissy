@@ -191,7 +191,7 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menubutton'.</p>
+                                    <p class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menu-button'.</p>
                                     
 
                                     
@@ -272,6 +272,17 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
+                                                <b class="name"><a href="../symbols/MenuButton.html#collapseOnClick">collapseOnClick</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">Whether hide drop down menu when click drop down menu item.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
                                                 <b class="name"><a href="../symbols/MenuButton.html#matchElWidth">matchElWidth</a></b>
                                                 <span class="type">{}</span>
                                                 
@@ -296,7 +307,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="list summary-list">
-                                        <li class="li">Fields borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#checkable">checkable</a>, <a href="../symbols/Button.html#checked">checked</a>, <a href="../symbols/Button.html#collapseSide">collapseSide</a>, <a href="../symbols/Button.html#describedby">describedby</a>, <a href="../symbols/Button.html#tooltip">tooltip</a>, <a href="../symbols/Button.html#value">value</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a>, <a href="../symbols/Component.Controller.html#view">view</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#created">created</a>, <a href="../symbols/Component.UIBase.html#listeners">listeners</a>, <a href="../symbols/Component.UIBase.html#plugins">plugins</a>, <a href="../symbols/Component.UIBase.html#rendered">rendered</a>, <a href="../symbols/Component.UIBase.html#xclass">xclass</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#content">content</a>, <a href="../symbols/Component.UIBase.Box.html#el">el</a>, <a href="../symbols/Component.UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/Component.UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/Component.UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/Component.UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/Component.UIBase.Box.html#height">height</a>, <a href="../symbols/Component.UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/Component.UIBase.Box.html#visible">visible</a>, <a href="../symbols/Component.UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/Component.UIBase.Box.html#width">width</a></li>
+                                        <li class="li">Fields borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#checkable">checkable</a>, <a href="../symbols/Button.html#checked">checked</a>, <a href="../symbols/Button.html#describedby">describedby</a>, <a href="../symbols/Button.html#tooltip">tooltip</a>, <a href="../symbols/Button.html#value">value</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#active">active</a>, <a href="../symbols/Component.Controller.html#activeable">activeable</a>, <a href="../symbols/Component.Controller.html#allowTextSelection">allowTextSelection</a>, <a href="../symbols/Component.Controller.html#children">children</a>, <a href="../symbols/Component.Controller.html#disabled">disabled</a>, <a href="../symbols/Component.Controller.html#focusable">focusable</a>, <a href="../symbols/Component.Controller.html#focused">focused</a>, <a href="../symbols/Component.Controller.html#handleMouseEvents">handleMouseEvents</a>, <a href="../symbols/Component.Controller.html#highlighted">highlighted</a>, <a href="../symbols/Component.Controller.html#parent">parent</a>, <a href="../symbols/Component.Controller.html#prefixCls">prefixCls</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#created">created</a>, <a href="../symbols/Component.UIBase.html#listeners">listeners</a>, <a href="../symbols/Component.UIBase.html#plugins">plugins</a>, <a href="../symbols/Component.UIBase.html#rendered">rendered</a>, <a href="../symbols/Component.UIBase.html#xclass">xclass</a></li><li class="li">Fields borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#content">content</a>, <a href="../symbols/Component.UIBase.Box.html#el">el</a>, <a href="../symbols/Component.UIBase.Box.html#elAttrs">elAttrs</a>, <a href="../symbols/Component.UIBase.Box.html#elBefore">elBefore</a>, <a href="../symbols/Component.UIBase.Box.html#elCls">elCls</a>, <a href="../symbols/Component.UIBase.Box.html#elStyle">elStyle</a>, <a href="../symbols/Component.UIBase.Box.html#height">height</a>, <a href="../symbols/Component.UIBase.Box.html#srcNode">srcNode</a>, <a href="../symbols/Component.UIBase.Box.html#visible">visible</a>, <a href="../symbols/Component.UIBase.Box.html#visibleMode">visibleMode</a>, <a href="../symbols/Component.UIBase.Box.html#width">width</a></li>
                                         </ul>
                                         
                                     </div>
@@ -378,16 +389,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/MenuButton.html#handleMenuClick">handleMenuClick</a></b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">Handle click on drop down menu.</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
                                                 <b class="name"><a href="../symbols/MenuButton.html#performActionInternal">performActionInternal</a></b>
                                                 <span class="param">()</span>
                                                 
@@ -420,7 +421,7 @@ a.go-top:active{text-decoration:none;}
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#render">render</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#bindUI">bindUI</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Button.html">Button</a>: <a href="../symbols/Button.html#render">render</a></li><li>Methods borrowed from class <a href="../symbols/Component.Controller.html">Component.Controller</a>: <a href="../symbols/Component.Controller.html#addChild">addChild</a>, <a href="../symbols/Component.Controller.html#createDom">createDom</a>, <a href="../symbols/Component.Controller.html#getChildAt">getChildAt</a>, <a href="../symbols/Component.Controller.html#getCssClassWithPrefix">getCssClassWithPrefix</a>, <a href="../symbols/Component.Controller.html#handleContextMenu">handleContextMenu</a>, <a href="../symbols/Component.Controller.html#handleDblClick">handleDblClick</a>, <a href="../symbols/Component.Controller.html#handleFocus">handleFocus</a>, <a href="../symbols/Component.Controller.html#handleKeydown">handleKeydown</a>, <a href="../symbols/Component.Controller.html#handleMouseDown">handleMouseDown</a>, <a href="../symbols/Component.Controller.html#handleMouseEnter">handleMouseEnter</a>, <a href="../symbols/Component.Controller.html#handleMouseLeave">handleMouseLeave</a>, <a href="../symbols/Component.Controller.html#handleMouseUp">handleMouseUp</a>, <a href="../symbols/Component.Controller.html#initializer">initializer</a>, <a href="../symbols/Component.Controller.html#removeChild">removeChild</a>, <a href="../symbols/Component.Controller.html#removeChildren">removeChildren</a>, <a href="../symbols/Component.Controller.html#renderUI">renderUI</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.html">Component.UIBase</a>: <a href="../symbols/Component.UIBase.html#bindUI">bindUI</a>, <a href="../symbols/Component.UIBase.html#create">create</a>, <a href="../symbols/Component.UIBase.html#destroy">destroy</a>, <a href="../symbols/Component.UIBase.html#syncUI">syncUI</a></li><li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li><li>Methods borrowed from class <a href="../symbols/Component.UIBase.Box.html">Component.UIBase.Box</a>: <a href="../symbols/Component.UIBase.Box.html#hide">hide</a>, <a href="../symbols/Component.UIBase.Box.html#show">show</a></li>
                                         </ul>
                                         
                                     </div>
@@ -451,7 +452,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menubutton'.</div>
+                                            <div class="desc">A menu button component, consist of a button and a drop down popup menu.xclass: 'menu-button'.</div>
                                             
                                             <dl>                                                
                                                 
@@ -547,17 +548,17 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                     
                                         <li class="li">
-                                            <a name="matchElWidth"> </a>
+                                            <a name="collapseOnClick"> </a>
                                             <div class="title">                                                
                                                 
-                                                <b class="name">matchElWidth</b>
+                                                <b class="name">collapseOnClick</b>
                                                 
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    Whether drop down menu is same width with button.Default: true.
+                                                    Whether hide drop down menu when click drop down menu item.eg: u do not want to set true when menu has checked menuitem.
                                                     
                                                     
                                                 </span>
@@ -572,6 +573,46 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Default Value</dt>
+                                                <dd>
+                                                    false
+                                                </dd>
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="matchElWidth"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">matchElWidth</b>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    Whether drop down menu is same width with button.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Default Value</dt>
+                                                <dd>
+                                                    true.
+                                                </dd>
                                                 
                                             </dl>
                                         </li>
@@ -630,7 +671,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line203">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line200">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -694,7 +735,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line94">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line100">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -733,7 +774,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line260">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line257">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -797,7 +838,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line242">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line239">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -852,7 +893,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line191">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line188">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -907,7 +948,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line136">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line133">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -966,61 +1007,6 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="handleMenuClick"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">handleMenuClick</b>
-                                                <span class="param">(e)</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line119">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                Handle click on drop down menu. Fire click event on menubutton.Protected, should only be overridden by subclasses.
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">e</b>
-                                                            
-                                                            
-                                                            <span class="type">{<a href="../symbols/Event.Object.html">Event.Object</a>}</span> 
-                                                            <span class="desc">Click event object.</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
                                             <a name="performActionInternal"> </a>
                                             <div class="title">
                                                 
@@ -1029,7 +1015,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line178">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line175">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1068,7 +1054,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line213">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line210">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1132,7 +1118,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line227">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_menubutton_src_base.js.html#line224">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1234,6 +1220,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Button.html">Button</a></li>
             
             
+            <li><a href="../symbols/Color.html">Color</a></li>
+            
+            
             <li><a href="../symbols/ComboBox.html">ComboBox</a></li>
             
             
@@ -1268,9 +1257,6 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Component.UIBase.Close.html">Component.UIBase.Close</a></li>
-            
-            
-            <li><a href="../symbols/Component.UIBase.Constrain.html">Component.UIBase.Constrain</a></li>
             
             
             <li><a href="../symbols/Component.UIBase.ContentBox.html">Component.UIBase.ContentBox</a></li>
@@ -1372,7 +1358,16 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/KISSY.Loader.Package.html">KISSY.Loader.Package</a></li>
             
             
+            <li><a href="../symbols/KISSY.Path.html">KISSY.Path</a></li>
+            
+            
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Uri.html">KISSY.Uri</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Uri.Query.html">KISSY.Uri.Query</a></li>
             
             
             <li><a href="../symbols/Menu.html">Menu</a></li>
@@ -1388,6 +1383,9 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Menu.Separator.html">Menu.Separator</a></li>
+            
+            
+            <li><a href="../symbols/Menu.SubMenu.html">Menu.SubMenu</a></li>
             
             
             <li><a href="../symbols/MenuButton.html">MenuButton</a></li>
@@ -1427,6 +1425,18 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/Resizable.html">Resizable</a></li>
+            
+            
+            <li><a href="../symbols/Separator.html">Separator</a></li>
+            
+            
+            <li><a href="../symbols/StyleSheet.html">StyleSheet</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.html">Toolbar</a></li>
+            
+            
+            <li><a href="../symbols/Toolbar.Separator.html">Toolbar.Separator</a></li>
             
             
             <li><a href="../symbols/Tree.html">Tree</a></li>

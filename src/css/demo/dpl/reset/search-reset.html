@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>search reset</title>
+<link rel="stylesheet" href="../../../src/dpl/reset.css">
+</head>
+<body>
+
+<div id="holder">
+
+    <input type="search" style="height: 25px"/>
+
+</div>
+
+<script src="../../../../../build/kissy.js"></script>
+<script>
+
+    KISSY.ready(function (S) {
+        var $ = S.all, ret = [];
+
+        S.one("#holder").children().each(function (h) {
+            var name = h.nodeName();
+            ret.push("**********************************");
+            ret.push(name + " font-size : " + h.css("font-size"));
+            ret.push(name + " offsetWidth : " + h[0].offsetWidth);
+            ret.push(name + " offsetHeight : " + h[0].offsetHeight);
+            ret.push(name + " margin-left : " + h.css("margin-left"));
+            ret.push(name + " margin-right : " + h.css("margin-right"));
+            ret.push(name + " margin-top : " + h.css("margin-top"));
+            ret.push(name + " margin-bottom : " + h.css("margin-bottom"));
+            ret.push(name + " padding-left : " + h.css("padding-left"));
+            ret.push(name + " padding-right : " + h.css("padding-right"));
+            ret.push(name + " padding-top : " + h.css("padding-top"));
+            ret.push(name + " padding-bottom : " + h.css("padding-bottom"));
+        });
+
+        alert(ret.join("\n"));
+    });
+
+</script>
+</body>
+</html>

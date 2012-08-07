@@ -30,13 +30,53 @@
             <!--kissy loader end-->
             <path location="${src.dir}/web.js"/>
             <path location="${src.dir}/meta.js"/>
+            <path location="${src.dir}/dependency.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>
 
-    <target name="build" depends="concat,common.build">
+    <target name="extract-dependency">
+        <java classname="com.taobao.f2e.ExtractDependency">
+            <arg value="-baseUrls"/>
+            <arg value="${kissy.src.dir}"/>
+
+            <arg value="-encodings"/>
+            <arg value="${charset}"/>
+
+            <arg value="-includeReg"/>
+            <!--换行被转成空格 xml spec http://stackoverflow.com/questions/2004386/how-to-save-newlines-in-xml-attribute-->
+            <arg value="(
+            ajax|anim|base|button|calendar|combobox|component|
+            cookie|datalazyload|dd|dom|event|flash|htmlparser|imagezoom|
+            input-selection|json|menu|menubutton|mvc|node|overlay|
+            resizable|separator|sizzle|
+            split-button|stylesheet|suggest|switchable|
+            template|toolbar|tree|ua|validation|waterfall|editor
+            )(?:/.*)"/>
+
+            <arg value="-excludeReg"/>
+            <!--换行被转成空格 xml spec http://stackoverflow.com/questions/2004386/how-to-save-newlines-in-xml-attribute-->
+            <arg value="(
+            editor/plugin/.*
+            )(?:/.*)"/>
+
+            <arg value="-nameMap"/>
+            <arg value="([\w-]+)(?:/.*)?||$1"/>
+
+            <arg value="-outputEncoding"/>
+            <arg value="utf-8"/>
+            <arg value="-output"/>
+            <arg value="${kissy.src.dir}/seed/src/dependency.js"/>
+            <classpath>
+                <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="build" depends="extract-dependency,concat,common.build">
 
     </target>
 </project>

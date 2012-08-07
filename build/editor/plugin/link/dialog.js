@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 11:46
+build time: Aug 7 22:26
 */
 /**
  * link dialog
@@ -11,7 +11,6 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
 
     var Dialog = Overlay4E.Dialog,
         _ke_saved_href = Utils._ke_saved_href,
-        MIDDLE = "vertical-align:middle;",
         bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
             "<label>" +
@@ -21,7 +20,6 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             " data-warning='请输入合适的网址格式' " +
             "class='ks-editor-link-url ks-editor-input' " +
             "style='width:390px;" +
-            MIDDLE +
             "'" +
             " />" +
             "</label>" +
@@ -31,7 +29,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "<label>" +
             "链接名称： " +
             "<input class='ks-editor-link-title ks-editor-input' style='width:100px;" +
-            MIDDLE + "'>" +
+            "'>" +
             "</label> " +
             "<label>" +
             "<input " +

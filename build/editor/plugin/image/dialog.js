@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 11:46
+build time: Aug 7 22:26
 */
 /**
  * image dialog (support upload and remote)
@@ -81,23 +81,26 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<td>" +
             "<label>" +
             "宽度： " +
+            "</label>" +
             "<input " +
             " data-verify='^(" + AUTOMATIC_TIP + "|((?!0$)\\d+))?$' " +
             " data-warning='宽度请输入正整数' " +
             "class='ks-editor-img-width ks-editor-input' " +
             "style='vertical-align:middle;width:60px' " +
-            "/> 像素 </label>" +
+            "/> 像素 " +
+
             "</td>" +
             "<td>" +
             "<label>" +
             "高度： " +
+            "<label>" +
             "<input " +
             " data-verify='^(" + AUTOMATIC_TIP + "|((?!0$)\\d+))?$' " +
             " data-warning='高度请输入正整数' " +
             "class='ks-editor-img-height ks-editor-input' " +
             "style='vertical-align:middle;width:60px' " +
             "/> 像素 </label>" +
-            "<label>" +
+
             "<input " +
             "type='checkbox' " +
             "class='ks-editor-img-ratio' " +
@@ -112,35 +115,38 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             "<tr>" +
             "<td>" +
             "<label>" +
-            "对齐：" +
+            "对齐： " +
+            "</label>" +
             "<select class='ks-editor-img-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
             "</select>" +
-            "</label>" +
+
             "</td>" +
             "<td><label>" +
             "间距： " +
+            "</label>" +
             "<input " +
             "" +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
             "class='ks-editor-img-margin ks-editor-input' style='width:60px'/> 像素" +
-            "</label>" +
+
             "</td>" +
             "</tr>" +
             "<tr>" +
             "<td colspan='2' style='padding-top: 6px'>" +
             "<label>" +
             "链接网址： " +
+            "</label>" +
             "<input " +
             "class='ks-editor-img-link ks-editor-input' " +
             "style='width:235px;vertical-align:middle;' " +
             " data-verify='^(?:(?:\\s*)|(?:https?://[^\\s]+)|(?:#.+))$' " +
             " data-warning='请输入合适的网址格式' " +
             "/>" +
-            "</label>" +
+
             "<label>" +
             "<input " +
             "class='ks-editor-img-link-blank' " +

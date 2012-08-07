@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>audio</title>
+<script>
+    document.createElement("audio");
+</script>
+</head>
+<body>
+<div style="border:1px solid red;">
+    <audio id="t"></audio>
+</div>
+
+<div style="border:1px solid green;">
+    <audio controls=""></audio> haha
+</div>
+<script src="../../../../../build/kissy.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        alert("audio width :" + $("#t").width() + "\n" +
+                "audio height :" + $("#t").height());
+    });
+</script>
+</body>
+</html>

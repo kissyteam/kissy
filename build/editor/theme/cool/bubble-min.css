@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 11:46
+build time: Aug 7 22:26
 */
 .ks-editor-bubble{box-shadow:0 1px 3px rgba(0,0,0,.2);border-radius:2px;position:absolute;border:1px solid;background-color:white;color:#666;padding:12px 20px;z-index:550;cursor:default;font-size:13px;border-color:#BBB #BBB #a8a8a8}.ks-editor-bubble-link,.ks-editor-bubble-url{cursor:pointer;text-decoration:none;color:#15C}.ks-editor-bubble-link:hover,.ks-editor-bubble-url:hover{color:#15C;text-decoration:underline}
