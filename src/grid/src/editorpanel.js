@@ -6,7 +6,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 
 	var CLS_EDITOR_CONTAINER = 'ks-grid-editor-container';
 	
-	var editorPanelRender = Component.Render.extend([
+	var GridEditorPanelRender = Component.Render.extend([
 		Component.UIBase.Position.Render,
 		Component.UIBase.Align.Render
 	],{
@@ -26,23 +26,17 @@ KISSY.add('grid/editorpanel', function (S, Component) {
         getContentElement:function () {
 			return this.get('el').one('.' + CLS_EDITOR_CONTAINER);	
 		}
-	},{
-		ATTRS : {
-			visibleMode : {
-				value : 'visibility'
-			}
-		}
 	});
 	/**
      * This is a base class of editor container.
 	 * In general, this class will not be instanced directly.
 	 * @private
-     * @name Grid.EditorPanel
+     * @name Grid.GridEditorPanel
      * @constructor
      * @extends Component.Controller
 	 * @extends Component.UIBase.Align
      */
-	var editorPanel = Component.Controller.extend([
+	var GridEditorPanel = Component.Controller.extend([
 			Component.UIBase.Position,
 			Component.UIBase.Align
 		],{
@@ -95,7 +89,6 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			* @override
 			*/	
 			focusable:{
-				view : true,
 				value : false
 			},
 			/**
@@ -106,7 +99,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			},
 			/**
 			 * An template used to create the internal structure inside this Component's encapsulating Element.
-			 * User can use the syntax of KISSY's template component.
+			 * User can use the syntax of KISSY 's template component.
 			 * Only in the configuration of the editor container.
 			 * @type {String}
 			 * <pre>
@@ -121,7 +114,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			 * @private
 			 */
 			xrender:{
-				value : editorPanelRender
+				value : GridEditorPanelRender
 			}
 		}
 	}, 
@@ -130,7 +123,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
             priority:1
     });
 	
-	return editorPanel;
+	return GridEditorPanel;
 },{
     requires:['component','grid/editor']
 });

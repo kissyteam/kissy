@@ -7,13 +7,13 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 	* @name Grid.Plugins.Editing
     * @constructor
 	*/
-	var editing = function(config){
-		editing.superclass.constructor.call(this, config);
+	function Editing(config){
+		Editing.superclass.constructor.call(this, config);
 	}
 	
-	S.extend(editing,S.Base);
+	S.extend(Editing,S.Base);
 	
-	editing.ATTRS = 
+	Editing.ATTRS = 
 	 /**
 	 * @lends Grid.Plugins.Editing.prototype
 	 */
@@ -58,7 +58,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		}
 	};
 	
-	S.augment(editing,
+	S.augment(Editing,
 	/**
 	 * @lends Grid.Plugins.Editing.prototype
 	 */
@@ -68,8 +68,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		*/
 		renderUI : function(grid){
 			var _self = this,
-				columns = grid.get('columns'),
-				editors = [];
+				columns = grid.get('columns');
 			_self.set('grid',grid);	
 			_self._initEditors(columns);
 		},
@@ -85,7 +84,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 			});
 			
 			grid.on(triggerEvent,function(e){
-				_self.showEitor(e.field,e.record,e.cell,e.row);
+				_self.showEditor(e.field,e.record,e.cell,e.row);
 			});
 			Event.on(doc,'click',function(e){
 				var dom = e.target,
@@ -108,7 +107,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		/**
 		* When user trigger the event so as 'cellclick',show the editor
 		*/
-		showEitor : function(field,record,cell,row){
+		showEditor : function(field,record,cell,row){
 			var _self = this,
 				editorPanel = _self._findEditorPanel(field),
 				alignNode = _self._getAlignNode(cell,row),
@@ -144,7 +143,6 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		_findEditorPanel : function(field){
 			var _self = this,
 				editorPanels = _self.get('editorPanels');
-			//默认取第一个编辑器，行编辑状态下就使用唯一的编辑器容器
 			return editorPanels[0];
 		},
 		/**
@@ -179,13 +177,13 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 	* @name Grid.Plugins.CellEditing
     * @constructor
 	*/
-	var cellEditing = function(config){
-		cellEditing.superclass.constructor.call(this, config);
+	function CellEditing(config){
+		CellEditing.superclass.constructor.call(this, config);
 	}
 	
-	S.extend(cellEditing,editing);
+	S.extend(CellEditing,Editing);
 	
-	S.augment(cellEditing,{
+	S.augment(CellEditing,{
 	
 		/**
 		* before editor panel showing,subclass can do some action
@@ -261,13 +259,13 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 	* @name Grid.Plugins.CellEditing
     * @constructor
 	*/
-	var rowEditing = function(config){
-		rowEditing.superclass.constructor.call(this, config);
+	function RowEditing(config){
+		RowEditing.superclass.constructor.call(this, config);
 	}
 	
-	S.extend(rowEditing,editing);
+	S.extend(RowEditing,Editing);
 	
-	S.augment(rowEditing,{
+	S.augment(RowEditing,{
 		/**
 		* before editor panel showing,subclass can do some action
 		* @protect 
@@ -286,9 +284,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		_initEditors : function(columns){
 			var _self = this,
 				editorPanels = _self.get('editorPanels'),
-				editorPanel = null,
 				editors = [];
-			//行编辑模式下，所有的编辑器共用同一个容器
 			S.each(columns,function(column){
 				var editor = column.get('editor');
 				if(editor){
@@ -296,17 +292,16 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 						editor.field = column.get('dataIndex');
 					}
 					editors.push(panel);
-				}else{//如果不存在则显示文本
-					
+				}else{
 				}
 			});
 			
 		}
 	});
 	
-	editing.CellEditing = cellEditing;
-	editing.RowEditing = rowEditing;
-	return editing;
+	Editing.CellEditing = CellEditing;
+	Editing.RowEditing = RowEditing;
+	return Editing;
 	
 },{
     requires:['component','grid/editorpanel']
