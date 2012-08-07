@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 22:44
+build time: Aug 7 11:38
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Jul 31 22:44
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120731224455';
+        S.__BUILD_TIME = '20120807113803';
     })();
 
     return S;
@@ -3053,8 +3053,12 @@ build time: Jul 31 22:44
 
     function defaultComponentJsName(m) {
         var name = m.name,
-            extname = Path.extname(name) || ".js",
+            extname = (Path.extname(name) || "").toLowerCase(),
             min = "-min";
+
+        if (extname != ".css") {
+            extname = ".js";
+        }
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 
@@ -4245,7 +4249,7 @@ build time: Jul 31 22:44
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
+                S.error("find cyclic dependency by mod " + myName + " between mods: " + error);
             }
         }
 
@@ -4987,7 +4991,7 @@ build time: Jul 31 22:44
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120731224455'
+        tag:'20120807113803'
     }, getBaseInfo()));
 
     /**

@@ -1,13 +1,7 @@
 describe("KISSY.config('modules', {x:{requires:[]}}) ", function () {
-    var S = KISSY,
-        ComboLoader = S.Loader.Combo;
+    var S = KISSY;
 
-    it("should unalias", function () {
-        var combine = KISSY.config("combine");
-
-        KISSY.config("combine", false);
-
-        expect(KISSY.config("combine")).toBe(false);
+    it("should solve index", function () {
 
         KISSY.config("modules", {
             "add_require/x/":{
@@ -22,11 +16,6 @@ describe("KISSY.config('modules', {x:{requires:[]}}) ", function () {
         expect(KISSY.Env.mods["add_require/x/index"].requires)
             .toEqual(['add_require/y/']);
 
-
-        KISSY.config("combine", true);
-
-        expect(KISSY.config("combine")).toBe(true);
-
         KISSY.add({
             "add_require/a/":{
                 requires:['add_require/b/']
@@ -39,9 +28,6 @@ describe("KISSY.config('modules', {x:{requires:[]}}) ", function () {
         expect(KISSY.Env.mods["add_require/b/index"]).toBeUndefined();
         expect(KISSY.Env.mods["add_require/a/index"].requires)
             .toEqual(['add_require/b/']);
-
-
-        KISSY.config("combine", combine);
 
     });
 

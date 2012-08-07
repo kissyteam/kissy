@@ -12,11 +12,18 @@
 <script src="../../../../build/event.js" charset="utf-8"></script>
 <script src="../../../../build/anim.js" charset="utf-8"></script>
 <script src="../../../../build/node.js" charset="utf-8"></script>
+<script>
+    KISSY.use("node");
+    KISSY.config("combine",true);
+</script>
 </head>
 <body>
-<h1>KISSY Css Combo Test Cases</h1>
+<h1>KISSY Combo Test Cases</h1>
 
 <script src="../specs/css-combo/css-combo-spec.js"></script>
+<script src="../specs/suffix/suffix-combo-spec.js"></script>
+<script src="../specs/packages-modules/packages-modules.js"></script>
+<script src="../specs/add_require/add-require-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute(function () {

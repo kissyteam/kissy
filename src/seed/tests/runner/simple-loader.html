@@ -6,14 +6,23 @@
 <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
 <script src="../../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../build/??seed.js,dom.js" charset="utf-8"></script>
+<script src="../../../../build/seed.js" charset="utf-8"></script>
 </head>
 <body>
 <h1>KISSY Seed Test Cases</h1>
-<h2>packages-modules</h2>
 
-<script src="../specs/packages-modules/packages-modules.js"></script>
+<div id='special'>
+    33px
+</div>
+<div id='special2'>
+    44px
+</div>
 
+<script src="../specs/loader-spec.js"></script>
+<script src="../specs/timestamp/timestamp-spec.js"></script>
+<script src="../specs/package-raw/package-raw-spec.js"></script>
+<script src="../specs/package_path_longest_match/package-longest-match-spec.js"></script>
+<script src="../specs/suffix/suffix-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute(function () {

@@ -116,17 +116,21 @@
 
             });
             var oldError = S.error, err = [];
+
             S.error = function (args) {
                 err.push(args);
                 oldError(args);
             };
+
             KISSY.use("cyclic/a");
 
             waitsFor(function () {
                 if (err.length == 1) {
-                    return err[0] == 'find cyclic dependency by mod cyclic/b between mods : {"cyclic/c":1,"cyclic/a":1,"cyclic/b":1}';
+                    return err[0] == 'find cyclic dependency by mod cyclic/b between mods: '+
+                        (window.JSON?'{"cyclic/c":1,"cyclic/a":1,"cyclic/b":1}':'');
                 }
             }, 10000);
+
             runs(function () {
                 S.error = oldError;
                 KISSY.Config.base = old;

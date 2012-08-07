@@ -124,7 +124,7 @@
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
+                S.error("find cyclic dependency by mod " + myName + " between mods: " + error);
             }
         }
 

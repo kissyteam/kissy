@@ -1,16 +1,19 @@
 describe("modules and packages", function () {
-    var S=KISSY;
-    it("can get base correctly",function(){
 
+    var S = KISSY;
+
+    it("can get base correctly", function () {
         expect(KISSY.config("base"))
             .toBe(new S.Uri(location.href)
-            .resolve("../../../../build/").toString())
-
+            .resolve("../../../../build/").toString());
     });
 
     it("does not depend on order", function () {
 
         KISSY.config({
+            map:[
+                [/\?t=.+$/, ""]
+            ],
             "modules":{
                 "x/x":{
                     requires:['x/y']
@@ -35,15 +38,18 @@ describe("modules and packages", function () {
             return ret == 8;
         }, 5000);
 
+        runs(function(){
+            S.config("map").length=0;
+        });
+
     });
 
     it("package can has same path", function () {
         var combine = KISSY.config("combine");
         var ret = 0;
         KISSY.config({
-            combine:true,
             map:[
-            [/\?t=.+$/,""]
+                [/\?t=.+$/, ""]
             ],
             packages:{
                 y:{
@@ -66,7 +72,7 @@ describe("modules and packages", function () {
         });
 
         runs(function () {
-            KISSY.config("combine", combine);
+            S.config("map").length=0;
         })
 
     });
