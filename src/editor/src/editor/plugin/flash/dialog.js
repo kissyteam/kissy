@@ -7,7 +7,6 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         TYPE_FLASH = 'flash',
         Dialog = Overlay4E.Dialog,
         TIP = "请输入如 http://www.xxx.com/xxx.swf",
-        MIDDLE = "vertical-align:middle",
         bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
             "<label>网址： " +
@@ -15,7 +14,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             " data-verify='^https?://[^\\s]+$' " +
             " data-warning='网址格式为：http://' " +
             "class='ks-editor-flash-url ks-editor-input' style='width:300px;" +
-            MIDDLE + "' />" +
+             "' />" +
             "</label>" +
             "</p>" +
             "<table style='margin:10px 0 5px  40px;width:300px;'>" +
@@ -26,20 +25,24 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='宽度请输入正整数' " +
             "class='ks-editor-flash-width ks-editor-input' style='width:60px;" +
-            "margin-left:2px;" +
-            MIDDLE + "' /> 像素 </label>" +
+            "' /> 像素 </label>" +
             "</td>" +
             "<td>" +
-            "<label>高度：<input " +
+            "<label>高度： " +
+            "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='高度请输入正整数' " +
             "class='ks-editor-flash-height ks-editor-input' " +
             "style='width:60px;" +
-            MIDDLE + "' /> 像素 </label></td>" +
+            "' /> 像素 " +
+            "</label>" +
+            "</td>" +
             "</tr>" +
             "<tr>" +
             "<td>" +
-            "<label>对齐： " +
+            "<label>" +
+            "对齐： " +
+            "</label>" +
             "<select class='ks-editor-flash-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
@@ -47,15 +50,15 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "</select>" +
             "</td>" +
             "<td>" +
-            "<label>间距：" +
+            "<label>间距： " +
+            "</label>" +
             "<input " +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' "
             + "class='ks-editor-flash-margin ks-editor-input' " +
             "style='width:60px;" +
-            MIDDLE + "' value='"
+            "' value='"
             + 5 + "'/> 像素" +
-            "</label>" +
             "</td></tr>" +
             "</table>" +
             "</div>",

@@ -1,8 +1,13 @@
+﻿/*
+Copyright 2012, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Aug 7 22:12
+*/
 /**
  * color picker
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/colorPicker/dialog", function (S, Editor, Overlay4E) {
+KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overlay4E) {
     var map = S.map,
         DOM = S.DOM;
 

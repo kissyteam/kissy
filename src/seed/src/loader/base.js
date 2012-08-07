@@ -261,3 +261,6 @@
         "ATTACHED":4
     };
 })(KISSY);
+/**
+ * TODO: implement conditional loader
+ */

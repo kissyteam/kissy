@@ -6,7 +6,6 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video",
         DTIP = "自动",
-        MIDDLE = "vertical-align:middle;",
         MARGIN_DEFAULT = 0,
         bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
@@ -15,7 +14,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "" +
             "<input " +
             "class='ks-editor-video-url ks-editor-input' style='width:410px;" +
-            MIDDLE + "'/>" +
+            "'/>" +
             "</label>" +
             "</p>" +
             "<table " +
@@ -27,8 +26,8 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             " data-verify='^(" + DTIP + "|((?!0$)\\d+))?$' " +
             " data-warning='宽度请输入正整数' " +
             "class='ks-editor-video-width ks-editor-input' " +
-            "style='width:60px;margin-left:2px;" +
-            MIDDLE + "' " +
+            "style='width:60px;" +
+            "' " +
             "/> 像素" +
             "</label>" +
             "</td>" +
@@ -39,7 +38,6 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             " data-verify='^(" + DTIP + "|((?!0$)\\d+))?$' " +
             " data-warning='高度请输入正整数' " +
             "class='ks-editor-video-height ks-editor-input' style='width:60px;" +
-            MIDDLE +
             "'/> 像素" +
             "</label>" +
             "</td></tr>" +
@@ -59,7 +57,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
             "class='ks-editor-video-margin ks-editor-input' style='width:60px;" +
-            MIDDLE + "' value='"
+            "' value='"
             + MARGIN_DEFAULT + "'/> 像素" +
             "</label>" +
             "</td></tr>" +

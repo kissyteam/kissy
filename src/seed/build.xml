@@ -30,6 +30,7 @@
             <!--kissy loader end-->
             <path location="${src.dir}/web.js"/>
             <path location="${src.dir}/meta.js"/>
+            <path location="${src.dir}/dependency.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>

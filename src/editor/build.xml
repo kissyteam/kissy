@@ -80,6 +80,29 @@
 
     </target>
 
-    <target name="build" depends="editor,common.build">
+
+    <target name="extract-dependency">
+        <java classname="com.taobao.f2e.ExtractDependency">
+            <arg value="-baseUrls"/>
+            <arg value="${src.dir}"/>
+
+            <arg value="-encodings"/>
+            <arg value="${charset}"/>
+
+            <arg value="-includeReg"/>
+            <arg value="editor/plugin(?:/.*)"/>
+
+            <arg value="-outputEncoding"/>
+            <arg value="utf-8"/>
+            <arg value="-output"/>
+            <arg value="${src.dir}/editor/core/dependency.js"/>
+            <classpath>
+                <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="build" depends="extract-dependency,editor,common.build">
     </target>
 </project>

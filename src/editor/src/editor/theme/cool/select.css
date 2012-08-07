@@ -6,7 +6,7 @@ select style for kissy editor
 .ks-editor-menu-button, .ks-editor-big-select {
     display: inline-block;
     *display: inline;
-    *zoom:1;
+    *zoom: 1;
     border: 1px solid rgb(193, 200, 209);
     height: 20px;
     margin: 2px 0;
@@ -16,6 +16,8 @@ select style for kissy editor
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
+    position: relative;
+    vertical-align: middle;
     /*outline: none;*/
 }
 
@@ -42,7 +44,9 @@ select style for kissy editor
     height: 3px;
     vertical-align: middle;
     font-size: 0;
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
     margin-top: 10px;
     margin-right: 5px;
 }
@@ -50,11 +54,6 @@ select style for kissy editor
 .ks-editor-big-select .ks-menu-button-dropdown {
     margin-top: 0;
     margin-right: 0;
-}
-
-.ks-ie7 .ks-menu-button-dropdown,
-.ks-ie6 .ks-menu-button-dropdown {
-    margin-top: -10px;
 }
 
 .ks-editor-menu-button-disabled,
@@ -91,13 +90,7 @@ select style for kissy editor
     height: 24px;
     width: 14px;
     padding-top: 1px;
-    float: right;
     border-left: 1px solid #C1C8D1;
-}
-
-.ks-ie7 .ks-editor-big-select .ks-menu-button-dropdown,
-.ks-ie6 .ks-editor-big-select .ks-menu-button-dropdown{
-    margin-top: -23px;
 }
 
 .ks-editor-big-select {
@@ -107,10 +100,4 @@ select style for kissy editor
 
 .ks-editor-big-select .ks-menu-button-caption {
     padding-left: 5px;
-}
-
-.ks-ie7 .ks-editor-big-select .ks-menu-button-caption,
-.ks-ie6 .ks-editor-big-select .ks-menu-button-caption{
-    padding-left: 5px;
-    padding-top: 5px;
 }

@@ -33,6 +33,16 @@
         </subant>
     </target>
 
+
+    <!--
+        抽取依赖
+    -->
+    <target name="extract-dependency">
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="./build-xml/extract-dependency/" includes="**/build.xml"/>
+        </subant>
+    </target>
+
     <!--
       全部构建
     -->

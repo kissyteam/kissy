@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 11:38
+build time: Aug 7 20:51
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Aug 7 11:38
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120807113803';
+        S.__BUILD_TIME = '20120807205109';
     })();
 
     return S;
@@ -3105,7 +3105,10 @@ build time: Aug 7 11:38
         "ERROR":3,
         "ATTACHED":4
     };
-})(KISSY);/**
+})(KISSY);
+/**
+ * TODO: implement conditional loader
+ *//**
  * @fileOverview simple event target for loader
  * @author yiminghe@gmail.com
  */
@@ -4139,7 +4142,6 @@ build time: Aug 7 11:38
         IE = utils.IE,
         win = S.Env.host,
         LOADING = data.LOADING,
-        LOADED = data.LOADED,
         ERROR = data.ERROR,
         ALL_REQUIRES = "__allRequires",
         CURRENT_MODULE = "__currentModule",
@@ -4991,7 +4993,7 @@ build time: Aug 7 11:38
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120807113803'
+        tag:'20120807205109'
     }, getBaseInfo()));
 
     /**
@@ -5234,134 +5236,49 @@ build time: Aug 7 11:38
 
 })(KISSY, undefined);
 /**
- * @fileOverview module meta info for auto combo
+ * Default KISSY Gallery and core alias.
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Loader) {
-        var Uri = S.Uri;
-        S.config({
-            packages:{
-                gallery:{
-                    path:S.Config.baseUri.resolve("../").toString()
-                }
-            },
-            modules:{
-                /****************************
-                 * Core
-                 ****************************/
-                "dom":{
-                    requires:["ua"]
-                },
-                "event":{
-                    requires:["dom"]
-                },
-                "ajax":{
-                    requires:["dom", "event", "json"]
-                },
-                "anim":{
-                    requires:["dom", "event"]
-                },
-                "base":{
-                    requires:["event"]
-                },
-                "node":{
-                    requires:["dom", "event", "anim"]
-                },
-                core:{
-                    alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
-                },
-
-                /******************************
-                 *  Infrastructure
-                 ******************************/
-                "mvc":{
-                    requires:["base", "ajax"]
-                },
-                "component":{
-                    requires:["node", "base"]
-                },
-
-                /****************************
-                 *  Component
-                 ****************************/
-                "color":{
-                    requires:['base']
-                },
-                "stylesheet":{
-                    requires:['dom']
-                },
-                "input-selection":{
-                    requires:['dom']
-                },
-                "combobox":{
-                    requires:['input-selection', 'menu']
-                },
-                "button":{
-                    requires:["component"]
-                },
-                "overlay":{
-                    requires:["component"]
-                },
-                "resizable":{
-                    requires:["base", "node"]
-                },
-                "separator":{
-                    requires:["component"]
-                },
-                "menu":{
-                    requires:["component", "separator"]
-                },
-                "toolbar":{
-                    requires:["component", "separator"]
-                },
-                "menubutton":{
-                    requires:["menu", "button"]
-                },
-                "validation":{
-                    requires:["node", "ajax"]
-                },
-                "waterfall":{
-                    requires:["node", "base", "ajax"]
-                },
-                "tree":{
-                    requires:["component"]
-                },
-                "suggest":{
-                    requires:["dom", "event"]
-                },
-                "switchable":{
-                    requires:["dom", "event", "anim", "json"]
-                },
-                "calendar":{
-                    requires:["node"]
-                },
-                "datalazyload":{
-                    requires:["dom", "event"]
-                },
-                "dd":{
-                    requires:["node", "base"]
-                },
-                "flash":{
-                    requires:["dom", "json"]
-                },
-                "imagezoom":{
-                    requires:["overlay"]
-                },
-                "split-button":{
-                    requires:['button', 'menubutton']
-                },
-                "editor":{
-                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
-                },
-                "editor/full":{
-                    requires:['htmlparser', 'overlay', 'menu', 'menubutton', 'button']
-                }
+    S.config({
+        packages:{
+            gallery:{
+                base:S.Config.baseUri.resolve("../").toString()
             }
-        });
-    }
+        },
+        modules:{
+            core:{
+                alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
+            }
+        }
+    });
 })(KISSY);
-/**
- * TODO: implement conditional loader
- * TODO: should be auto generated by module compiler
- **/
+/*Generated by KISSY Module Compiler*/
+if(KISSY.Loader){
+KISSY.config('modules', {
+'flash': {requires: ['ua', 'dom', 'json']},
+'anim': {requires: ['dom', 'event', 'ua']},
+'combobox': {requires: ['component', 'node', 'input-selection', 'menu', 'ajax']},
+'toolbar': {requires: ['component', 'separator']},
+'dom': {requires: ['ua']},
+'menubutton': {requires: ['menu', 'node', 'button', 'component']},
+'waterfall': {requires: ['node', 'base']},
+'dd': {requires: ['ua', 'dom', 'event', 'node', 'base']},
+'switchable': {requires: ['dom', 'anim', 'event', 'json']},
+'tree': {requires: ['node', 'event', 'component']},
+'component': {requires: ['ua', 'node', 'event', 'dom', 'base']},
+'json': {requires: ['ua']},
+'button': {requires: ['component', 'event']},
+'event': {requires: ['ua', 'dom']},
+'ajax': {requires: ['event', 'dom', 'json']},
+'calendar': {requires: ['node', 'ua', 'event']},
+'validation': {requires: ['dom', 'event', 'node']},
+'imagezoom': {requires: ['node', 'overlay']},
+'menu': {requires: ['event', 'component', 'separator', 'node', 'ua']},
+'node': {requires: ['dom', 'event', 'anim']},
+'editor': {requires: ['htmlparser', 'component', 'core']},
+'mvc': {requires: ['base', 'node', 'template', 'event', 'ajax', 'json']},
+'overlay': {requires: ['anim', 'dom', 'node', 'event', 'ua', 'component']},
+'separator': {requires: ['component']}
+});
+}

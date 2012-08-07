@@ -3,7 +3,7 @@
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexManger, meta, clipboard, enterKey, htmlDataProcessor, selectionFix) {
+KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexManger, clipboard, enterKey, htmlDataProcessor, selectionFix) {
     var TRUE = true,
 
         undefined = undefined,
@@ -1174,7 +1174,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
         'editor/core/focusManager',
         'editor/core/styles',
         'editor/core/zIndexManager',
-        'editor/core/meta',
         'editor/core/clipboard',
         'editor/core/enterKey',
         'editor/core/htmlDataProcessor',
