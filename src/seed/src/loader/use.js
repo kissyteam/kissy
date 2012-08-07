@@ -14,7 +14,6 @@
         IE = utils.IE,
         win = S.Env.host,
         LOADING = data.LOADING,
-        LOADED = data.LOADED,
         ERROR = data.ERROR,
         ALL_REQUIRES = "__allRequires",
         CURRENT_MODULE = "__currentModule",
