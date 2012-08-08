@@ -87,7 +87,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Add existing node list.
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
              * @param {Number} [index] Insert position.
              * @return {NodeList}
              */
@@ -194,7 +194,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * Get node list from selector or construct new node list from html string.
              * Can also called from KISSY.all
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
              * @returns {NodeList}
              */
             all:function (selector, context) {

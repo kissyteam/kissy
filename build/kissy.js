@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 20:51
+build time: Aug 8 15:30
 */
 /*
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
@@ -496,7 +496,7 @@ build time: Aug 7 20:51
          * The build time of the library
          * @type {String}
          */
-        S.__BUILD_TIME = '20120807205109';
+        S.__BUILD_TIME = '20120808153047';
     })();
 
     return S;
@@ -4993,7 +4993,7 @@ build time: Aug 7 20:51
         // 2k
         comboMaxUrlLength:2048,
         charset:'utf-8',
-        tag:'20120807205109'
+        tag:'20120808153047'
     }, getBaseInfo()));
 
     /**
@@ -5573,7 +5573,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 8 15:30
 */
 /**
  * @fileOverview dom-attr
@@ -5583,10 +5583,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
     var doc = S.Env.host.document,
         docElement = doc.documentElement,
-        oldIE = !docElement.hasAttribute,
+        IE_VERSION = UA.ie && (doc.documentMode || UA.ie),
         TEXT = docElement.textContent === undefined ?
             'innerText' : 'textContent',
         EMPTY = '',
+        HREF = 'href',
         nodeName = DOM.nodeName,
         rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
         rfocusable = /^(?:button|input|object|select|textarea)$/i,
@@ -5729,7 +5730,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
             }};
 
-    if (oldIE) {
+    if (IE_VERSION && IE_VERSION < 8) {
 
         // get attribute value from attribute node for ie
         attrNodeHook = {
@@ -5775,7 +5776,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
         // fix ie bugs
         // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
         // 注意 colSpan rowSpan 已经由 propFix 转为大写
-        S.each([ "href", "src", "width", "height", "colSpan", "rowSpan" ], function (name) {
+        S.each([ HREF, "src", "width", "height", "colSpan", "rowSpan" ], function (name) {
             attrHooks[ name ] = {
                 get:function (elem) {
                     var ret = elem.getAttribute(name, 2);
@@ -5786,6 +5787,38 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
         // button 元素的 value 属性和其内容冲突
         // <button value='xx'>zzz</button>
         valHooks.button = attrHooks.value = attrNodeHook;
+    }
+
+    if (IE_VERSION && IE_VERSION < 9) {
+        // https://github.com/kissyteam/kissy/issues/198
+        // http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/aa6bf9a5-0c0b-4a02-a115-c5b85783ca8c
+// http://gabriel.nagmay.com/2008/11/javascript-href-bug-in-ie/
+        // https://groups.google.com/group/jquery-dev/browse_thread/thread/22029e221fe635c6?pli=1
+        var hrefFix = attrHooks[HREF] = attrHooks[HREF] || {};
+        hrefFix.set = function (el, val, name) {
+            var childNodes = el.childNodes,
+                b,
+                len = childNodes.length,
+                allText = len > 0;
+
+            for (len = len - 1; len >= 0; len--) {
+                if (childNodes[len].nodeType != DOM.TEXT_NODE) {
+                    allText = 0;
+                }
+            }
+
+            if (allText) {
+                b = el.ownerDocument.createElement("b");
+                b.style.display = "none";
+                el.appendChild(b);
+            }
+
+            el.setAttribute(name, EMPTY + val);
+
+            if (b) {
+                el.removeChild(b);
+            }
+        };
     }
 
     // Radios and checkboxes getter/setter
@@ -5825,7 +5858,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * Get the value of a property for the first element in the set of matched elements.
              * or
              * Set one or more properties for the set of matched elements.
-             * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
              * @param {String|Object} name
              * The name of the property to set.
              * or
@@ -5838,9 +5871,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(elems, k, name[k]);
-                    }
+                    S.each(name, function (v, k) {
+                        DOM.prop(elems, k, v);
+                    });
                     return undefined;
                 }
 
@@ -5866,7 +5899,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Whether one of the matched elements has specified property name
-             * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
+             * @param {HTMLElement[]|String|HTMLElement} selector 元素
              * @param {String} name The name of property to test
              * @return {Boolean}
              */
@@ -5883,7 +5916,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Remove a property for the set of matched elements.
-             * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
              * @param {String} name The name of the property to remove.
              */
             removeProp:function (selector, name) {
@@ -6027,7 +6060,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Remove an attribute from each element in the set of matched elements.
-             * @param {Array<HTMLElement>|String} selector matched elements
+             * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name An attribute to remove
              */
             removeAttr:function (selector, name) {
@@ -6050,11 +6083,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             /**
              * Whether one of the matched elements has specified attribute
              * @function
-             * @param {Array<HTMLElement>|String} selector matched elements
+             * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name The attribute to be tested
              * @returns {Boolean}
              */
-            hasAttr:oldIE ?
+            hasAttr:!docElement.hasAttribute ?
                 function (selector, name) {
                     name = name.toLowerCase();
                     var elems = DOM.query(selector);
@@ -6087,9 +6120,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * Get the current value of the first element in the set of matched elements.
              * or
              * Set the value of each element in the set of matched elements.
-             * @param {Array<HTMLElement>|String} selector matched elements
-             * @param {String|Array<String>} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
-             * @returns {undefined|String|Array<String>|Number}
+             * @param {HTMLElement[]|String} selector matched elements
+             * @param {String|String[]} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
+             * @returns {undefined|String|String[]|Number}
              */
             val:function (selector, value) {
                 var hook, ret;
