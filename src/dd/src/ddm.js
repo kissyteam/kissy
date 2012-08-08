@@ -35,7 +35,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     {
         /**
          * cursor style when dragging,if shimmed the shim will get the cursor.
-         * @type String
+         * @type {String}
          */
         dragCursor:{
             value:'move'
@@ -43,7 +43,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /***
          * the number of pixels to move to start a drag operation,default is 3.
-         * @type Number
+         * @type {Number}
          */
         clickPixelThresh:{
             value:PIXEL_THRESH
@@ -51,25 +51,25 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /**
          * the number of milliseconds to start a drag operation after mousedown,default is 1000
-         * @type Number
+         * @type {Number}
          */
         bufferTime:{ value:BUFFER_TIME },
 
         /**
          * currently active draggable object
-         * @type DD.Draggable
+         * @type {DD.Draggable}
          */
         activeDrag:{},
 
         /**
          * currently active droppable object
-         * @type DD.Droppable
+         * @type {DD.Droppable}
          */
         activeDrop:{},
 
         /**
          * a array of drop targets
-         * @type DD.Droppable[]
+         * @type {DD.Droppable[]}
          */
         drops:{
             value:[]
@@ -77,7 +77,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /**
          * a array of the valid drop targets for this interaction
-         * @type DD.Droppable[]
+         * @type {DD.Droppable[]}
          */
         validDrops:{
             value:[]

@@ -57,7 +57,7 @@
         // principal of least authority
         /**
          * @description defer object's promise
-         * @type KISSY.Promise
+         * @type {KISSY.Promise}
          * @memberOf KISSY.Defer#
          * @name promise
          */

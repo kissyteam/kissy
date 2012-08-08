@@ -45,7 +45,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
         /**
          * adjust velocity, larger faster
          * @default [10,10]
-         * @type Number[]
+         * @type {Number[]}
          */
         rate:{
             value:RATE
@@ -53,7 +53,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
         /**
          * the margin to make node scroll, easier to scroll for node if larger.
          * @default  [20,20]
-         * @type number[]
+         * @type {number[]}
          */
         diff:{
             value:DIFF

@@ -26,7 +26,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
     {
         /**
          * Used as parameter name to send combobox input's value to server
-         * @type String
+         * @type {String}
          */
         paramName:{
             value:'q'
@@ -34,24 +34,24 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
         /**
          * whether send empty to server when input val is empty.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         allowEmpty:{},
         /**
          * Whether server response data is cached.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         cache:{},
         /**
          * Serve as a parse function to parse server
          * response to return a valid array of data for comboBox.
-         * @type Function
+         * @type {Function}
          */
         parse:{},
         /**
          * IO configuration.same as {@link} IO
-         * @type Object
+         * @type {Object}
          */
         xhrCfg:{
             value:{}

@@ -61,43 +61,43 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
         /**
          * the container of widget
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.container = DOM.get(container);
 
         /**
          * 配置参数
-         * @type Object
+         * @type {Object}
          */
         self.config = config;
 
         /**
          * triggers
-         * @type Array of HTMLElement
+         * @type {HTMLElement[]}
          */
         //self.triggers
 
         /**
          * panels
-         * @type Array of HTMLElement
+         * @type {HTMLElement}
          */
         //self.panels
 
         /**
          * length = panels.length / steps
-         * @type number
+         * @type {Number}
          */
         //self.length
 
         /**
          * the parentNode of panels
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         //self.content
 
         /**
          * 当前正在动画/切换的位置
-         * @type Number
+         * @type {Number}
          */
         self.activeIndex = config.activeIndex;
 

@@ -175,7 +175,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 /**
                  * Default caption to be shown when no option is selected.
-                 * @type String
+                 * @type {String}
                  */
                 defaultCaption:{
                     value:""

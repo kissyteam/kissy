@@ -118,7 +118,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is selectable or not.
                  * Set to true for option.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selectable:{
                     view:1
@@ -127,7 +127,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is checkable or not.
                  * Set to true for checkbox option.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checkable:{
                     view:1
@@ -140,7 +140,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
                 /**
                  * Whether the menu item is checked.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checked:{
                     view:1
@@ -148,7 +148,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
                 /**
                  * Whether the menu item is selected.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selected:{
                     view:1

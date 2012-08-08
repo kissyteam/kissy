@@ -32,17 +32,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             {
                 /**
                  * textarea
-                 * @type Node
+                 * @type {Node}
                  */
                 textarea:{},
                 /**
                  * iframe
-                 * @type Node
+                 * @type {Node}
                  */
                 iframe:{},
                 /**
                  * iframe 's contentWindow.
-                 * @type Node
+                 * @type {Node}
                  */
                 window:{
                     // ie6 一旦中途设置了 domain
@@ -52,17 +52,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 },
                 /**
                  * iframe 's document
-                 * @type Node
+                 * @type {Node}
                  */
                 document:{},
                 /**
                  * toolbar element
-                 * @type Node
+                 * @type {Node}
                  */
                 toolBarEl:{},
                 /**
                  * status bar element
-                 * @type Node
+                 * @type {Node}
                  */
                 statusBarEl:{},
                 handleMouseEvents:{
@@ -82,7 +82,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 },
                 /**
                  * Current editor's content
-                 * @type String
+                 * @type {String}
                  */
                 data:{
                     getter:function () {
@@ -94,7 +94,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 },
                 /**
                  *  Current editor's format content
-                 * @type String
+                 * @type {String}
                  */
                 formatData:{
                     getter:function () {
@@ -107,7 +107,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
                 /**
                  * Custom style for editor.
-                 * @type String
+                 * @type {String}
                  */
                 customStyle:{
                     value:""
@@ -115,7 +115,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
                 /**
                  * Custom css link url for editor.
-                 * @type String[]
+                 * @type {String[]}
                  */
                 customLink:{
                     value:[]

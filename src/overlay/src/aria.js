@@ -15,7 +15,7 @@ KISSY.add("overlay/aria", function (S, Event) {
          * Whether support aria.
          * Focus on show and trap focus in overlay when visible.
          * @default false.
-         * @type Boolean
+         * @type {Boolean}
          */
         aria:{
             view:1

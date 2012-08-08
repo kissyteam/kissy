@@ -209,7 +209,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              */
             removeItem:function (c, destroy) {
                 /**
-                 * @type Controller
+                 * @type {Controller}
                  */
                 var menu = getMenu(this);
                 if (menu) {
@@ -288,7 +288,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             {
                 /**
                  * Current active menu item.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 activeItem:{
                     view:1
@@ -323,7 +323,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
                 /**
                  * Drop down menu associated with this menubutton.
-                 * @type Menu
+                 * @type {Menu}
                  */
                 menu:{
                     value:{
@@ -337,7 +337,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
                 /**
                  * Whether drop menu is shown.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 collapsed:{
                     view:1

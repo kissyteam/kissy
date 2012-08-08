@@ -154,7 +154,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             {
                 /**
                  * Trigger elements to show popup.
-                 * @type NodeList
+                 * @type {NodeList}
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {
@@ -167,7 +167,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 /**
                  * How to activate trigger element, "click" or "mouse",
                  * @default "click".
-                 * @type String
+                 * @type {String}
                  */
                 triggerType:{
                     // 触发类型
@@ -177,7 +177,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 /**
                  * When trigger type is mouse, the delayed time to show popup.
                  * @default 0.1, in seconds.
-                 * @type Number
+                 * @type {Number}
                  */
                 mouseDelay:{
                     // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
@@ -186,7 +186,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 /**
                  * When trigger type is click, whether support toggle.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 toggle:{
                     // triggerType 为 click 时, Popup 是否有toggle功能

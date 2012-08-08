@@ -175,7 +175,7 @@
 <span id='line168' class='line'>168</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line169' class='line'>169</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line170' class='line'>170</span>                  * KISSY Node to be resizable.
-<span id='line171' class='line'>171</span>                  * @type Node
+<span id='line171' class='line'>171</span>                  * @type {Node}
 <span id='line172' class='line'>172</span>                  */</span><span class="WHIT">
 <span id='line173' class='line'>173</span> </span><span class="WHIT">                </span><span class="NAME">node</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line174' class='line'>174</span> </span><span class="WHIT">                    </span><span class="NAME">setter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -184,28 +184,28 @@
 <span id='line177' class='line'>177</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line178' class='line'>178</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line179' class='line'>179</span>                  * Minimum width can current node resize to.
-<span id='line180' class='line'>180</span>                  * @type Number
+<span id='line180' class='line'>180</span>                  * @type {Number}
 <span id='line181' class='line'>181</span>                  */</span><span class="WHIT">
 <span id='line182' class='line'>182</span> </span><span class="WHIT">                </span><span class="NAME">minWidth</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line183' class='line'>183</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NUMB">0</span><span class="WHIT">
 <span id='line184' class='line'>184</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line185' class='line'>185</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line186' class='line'>186</span>                  * Minimum height can current node resize to.
-<span id='line187' class='line'>187</span>                  * @type Number
+<span id='line187' class='line'>187</span>                  * @type {Number}
 <span id='line188' class='line'>188</span>                  */</span><span class="WHIT">
 <span id='line189' class='line'>189</span> </span><span class="WHIT">                </span><span class="NAME">minHeight</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line190' class='line'>190</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NUMB">0</span><span class="WHIT">
 <span id='line191' class='line'>191</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line192' class='line'>192</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line193' class='line'>193</span>                  * Maximum width can current node resize to.
-<span id='line194' class='line'>194</span>                  * @type Number
+<span id='line194' class='line'>194</span>                  * @type {Number}
 <span id='line195' class='line'>195</span>                  */</span><span class="WHIT">
 <span id='line196' class='line'>196</span> </span><span class="WHIT">                </span><span class="NAME">maxWidth</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line197' class='line'>197</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">Number.MAX_VALUE</span><span class="WHIT">
 <span id='line198' class='line'>198</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line199' class='line'>199</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line200' class='line'>200</span>                  * Maximum height can current node resize to.
-<span id='line201' class='line'>201</span>                  * @type Number
+<span id='line201' class='line'>201</span>                  * @type {Number}
 <span id='line202' class='line'>202</span>                  */</span><span class="WHIT">
 <span id='line203' class='line'>203</span> </span><span class="WHIT">                </span><span class="NAME">maxHeight</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line204' class='line'>204</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">Number.MAX_VALUE</span><span class="WHIT">
@@ -221,7 +221,7 @@
 <span id='line214' class='line'>214</span>                  * "tl": top-left.
 <span id='line215' class='line'>215</span>                  * "bl": bottom-left.
 <span id='line216' class='line'>216</span>                  * "br": bottom-right.
-<span id='line217' class='line'>217</span>                  * @type String[]
+<span id='line217' class='line'>217</span>                  * @type {String[]}
 <span id='line218' class='line'>218</span>                  */</span><span class="WHIT">
 <span id='line219' class='line'>219</span> </span><span class="WHIT">                </span><span class="NAME">handlers</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line220' class='line'>220</span> </span><span class="WHIT">                    </span><span class="COMM">// t,tr,r,br,b,bl,l,tl</span><span class="WHIT">

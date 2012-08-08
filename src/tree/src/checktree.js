@@ -33,7 +33,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
             {
                 /**
                  * Readonly. Render class.
-                 * @type function
+                 * @type {Function}
                  */
                 xrender:{
                     value:CheckTreeRender

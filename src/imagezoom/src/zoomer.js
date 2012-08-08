@@ -62,7 +62,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
 
         /**
          * 大图高宽
-         * @type {number}
+         * @type {Number}
          */
         bigImageWidth:{},
 

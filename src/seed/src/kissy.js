@@ -184,13 +184,14 @@
              * all the supplied objects. The properties from later objects
              * will overwrite those in earlier objects. Passing in a
              * single object will create a shallow copy of it.
-             * @param {...} m1 objects need to be merged
+             * @param {...Object} var_args objects need to be merged
              * @return {Object} the new merged object
              */
-            merge:function (m1) {
-                var o = {}, i, l = arguments.length;
+            merge:function (var_args) {
+                var_args = arguments;
+                var o = {}, i, l = var_args.length;
                 for (i = 0; i < l; i++) {
-                    S.mix(o, arguments[i]);
+                    S.mix(o, var_args[i]);
                 }
                 return o;
             },

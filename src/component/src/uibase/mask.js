@@ -21,7 +21,7 @@ KISSY.add("component/uibase/mask", function () {
     {
         /**
          * Whether show mask layer when component shows
-         * @type Boolean
+         * @type {Boolean}
          */
         mask:{
             value:false

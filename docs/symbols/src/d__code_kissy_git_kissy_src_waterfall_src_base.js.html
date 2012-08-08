@@ -80,7 +80,7 @@
 <span id='line73' class='line'> 73</span> </span><span class="WHIT">    </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line74' class='line'> 74</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line75' class='line'> 75</span>          * Container which contains waterfall elements.
-<span id='line76' class='line'> 76</span>          * @type Node
+<span id='line76' class='line'> 76</span>          * @type {Node}
 <span id='line77' class='line'> 77</span>          */</span><span class="WHIT">
 <span id='line78' class='line'> 78</span> </span><span class="WHIT">        </span><span class="NAME">container</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line79' class='line'> 79</span> </span><span class="WHIT">            </span><span class="NAME">setter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -91,7 +91,7 @@
 <span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line85' class='line'> 85</span>          * Array of height of current waterfall cols.
 <span id='line86' class='line'> 86</span>          * @protected
-<span id='line87' class='line'> 87</span>          * @type Number[]
+<span id='line87' class='line'> 87</span>          * @type {Number[]}
 <span id='line88' class='line'> 88</span>          */</span><span class="WHIT">
 <span id='line89' class='line'> 89</span> </span><span class="WHIT">        </span><span class="NAME">curColHeights</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line90' class='line'> 90</span> </span><span class="WHIT">            </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT">
@@ -100,7 +100,7 @@
 <span id='line93' class='line'> 93</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line94' class='line'> 94</span>          * Horizontal alignment of waterfall items with container.
 <span id='line95' class='line'> 95</span>          * Enum: 'left','center','right','justify'.
-<span id='line96' class='line'> 96</span>          * @type String
+<span id='line96' class='line'> 96</span>          * @type {String}
 <span id='line97' class='line'> 97</span>          * @since 1.3
 <span id='line98' class='line'> 98</span>          */</span><span class="WHIT">
 <span id='line99' class='line'> 99</span> </span><span class="WHIT">        </span><span class="NAME">align</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
@@ -111,7 +111,7 @@
 <span id='line104' class='line'>104</span>          * Minimum col count of waterfall items.
 <span id='line105' class='line'>105</span>          * Event window resize to 0.
 <span id='line106' class='line'>106</span>          * @default 1.
-<span id='line107' class='line'>107</span>          * @type Number
+<span id='line107' class='line'>107</span>          * @type {Number}
 <span id='line108' class='line'>108</span>          */</span><span class="WHIT">
 <span id='line109' class='line'>109</span> </span><span class="WHIT">        </span><span class="NAME">minColCount</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line110' class='line'>110</span> </span><span class="WHIT">            </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
@@ -120,7 +120,7 @@
 <span id='line113' class='line'>113</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line114' class='line'>114</span>          * Effect config object when waterfall item is added to container.
 <span id='line115' class='line'>115</span>          * @default { effect:"fadeIn",duration:1 }
-<span id='line116' class='line'>116</span>          * @type Object
+<span id='line116' class='line'>116</span>          * @type {Object}
 <span id='line117' class='line'>117</span>          * @example
 <span id='line118' class='line'>118</span>          * &lt;code>
 <span id='line119' class='line'>119</span>          *      {
@@ -138,7 +138,7 @@
 <span id='line131' class='line'>131</span> 
 <span id='line132' class='line'>132</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line133' class='line'>133</span>          * Column's width.
-<span id='line134' class='line'>134</span>          * @type Number
+<span id='line134' class='line'>134</span>          * @type {Number}
 <span id='line135' class='line'>135</span>          */</span><span class="WHIT">
 <span id='line136' class='line'>136</span> </span><span class="WHIT">        </span><span class="NAME">colWidth</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line137' class='line'>137</span> 
@@ -158,7 +158,7 @@
 <span id='line151' class='line'>151</span> </span><span class="WHIT">        </span><span class="COMM">/**
 <span id='line152' class='line'>152</span>          * Effect config object when waterfall item is adjusted on window resize.
 <span id='line153' class='line'>153</span>          * @default { easing:"",duration:1 }
-<span id='line154' class='line'>154</span>          * @type Object
+<span id='line154' class='line'>154</span>          * @type {Object}
 <span id='line155' class='line'>155</span>          * @example
 <span id='line156' class='line'>156</span>          * &lt;code>
 <span id='line157' class='line'>157</span>          *      {

@@ -151,7 +151,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
 
                 /**
                  * The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
-                 * @type String
+                 * @type {String}
                  * @default {String} empty string
                  */
                 dataIndex:{
@@ -160,7 +160,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  *
-                 * @type Boolean
+                 * @type {Boolean}
                  * @defalut true
                  */
                 draggable:{
@@ -169,7 +169,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * An optional xtype or config object for a Field to use for editing. Only applicable if the grid is using an Editing plugin.
-                 * @type Object
+                 * @type {Object}
                  */
                 editor:{
 
@@ -182,7 +182,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The unique id of this component instance.
-                 * @type String
+                 * @type {String}
                  * @default null
                  */
                 id:{
@@ -205,8 +205,8 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     value:true
                 },
                 /* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort.
-                 * @type Boolean
-                 * @Default true.
+                 * @type {Boolean}
+                 * @default true.
                  */
                 sortable:{
                     view:true,
@@ -214,8 +214,8 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The sort state of this column. the state have three value : null, 'ASC','DESC'
-                 * @type String
-                 * @Default null
+                 * @type {String}
+                 * @default null
                  */
                 sortState:{
                     view:true,
@@ -224,7 +224,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The header text to be used as innerHTML (html tags are accepted) to display in the Grid.
                  * Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
-                 * @type String
+                 * @type {String}
                  * @default {String} &#160;
                  */
                 title:{
@@ -234,7 +234,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The width of this component in pixels.
                  * @override
-                 * @type Number
+                 * @type {Number}
                  * @default {Number} 80
                  */
                 width:{
@@ -244,7 +244,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * An template used to create the internal structure inside this Component's encapsulating Element.
                  * User can use the syntax of KISSY 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  */
                 tpl:{
                     view:true,
@@ -258,7 +258,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * An template used to create the internal structure inside the table which shows data of store.
                  * User can use the syntax of Kissy 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  */
                 cellTpl:{
                     value:''
@@ -266,7 +266,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * the collection of column's events
                  * @protected
-                 * @type Array
+                 * @type {Array}
                  */
                 events:{
                     value:[

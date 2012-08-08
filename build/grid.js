@@ -1,23 +1,23 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 12:20
+build time: Aug 9 00:43
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add("grid/bar", function (S,ToolBar,BarRender,BarItem) {
+KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
 
 	/**
 	 * This class specifies the definition for a toolbar. 
      * Bar class is a collection of buttons,links and other command control.
      * @name Bar
      * @constructor
-     * @extends ToolBar
+     * @extends Toolbar
      * @memberOf Grid
      */
-	var Bar = ToolBar.extend(
+	var Bar = Toolbar.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	
@@ -1038,7 +1038,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
 
                 /**
                  * The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
-                 * @type String
+                 * @type {String}
                  * @default {String} empty string
                  */
                 dataIndex:{
@@ -1047,7 +1047,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  *
-                 * @type Boolean
+                 * @type {Boolean}
                  * @defalut true
                  */
                 draggable:{
@@ -1056,7 +1056,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * An optional xtype or config object for a Field to use for editing. Only applicable if the grid is using an Editing plugin.
-                 * @type Object
+                 * @type {Object}
                  */
                 editor:{
 
@@ -1069,7 +1069,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The unique id of this component instance.
-                 * @type String
+                 * @type {String}
                  * @default null
                  */
                 id:{
@@ -1092,8 +1092,8 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     value:true
                 },
                 /* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort.
-                 * @type Boolean
-                 * @Default true.
+                 * @type {Boolean}
+                 * @default true.
                  */
                 sortable:{
                     view:true,
@@ -1101,8 +1101,8 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The sort state of this column. the state have three value : null, 'ASC','DESC'
-                 * @type String
-                 * @Default null
+                 * @type {String}
+                 * @default null
                  */
                 sortState:{
                     view:true,
@@ -1111,7 +1111,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The header text to be used as innerHTML (html tags are accepted) to display in the Grid.
                  * Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
-                 * @type String
+                 * @type {String}
                  * @default {String} &#160;
                  */
                 title:{
@@ -1121,7 +1121,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The width of this component in pixels.
                  * @override
-                 * @type Number
+                 * @type {Number}
                  * @default {Number} 80
                  */
                 width:{
@@ -1131,7 +1131,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * An template used to create the internal structure inside this Component's encapsulating Element.
                  * User can use the syntax of KISSY 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  */
                 tpl:{
                     view:true,
@@ -1145,7 +1145,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * An template used to create the internal structure inside the table which shows data of store.
                  * User can use the syntax of Kissy 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  */
                 cellTpl:{
                     value:''
@@ -1153,7 +1153,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * the collection of column's events
                  * @protected
-                 * @type Array
+                 * @type {Array}
                  */
                 events:{
                     value:[
@@ -1769,7 +1769,7 @@ KISSY.add('grid/editor', function (S, Component) {
             },
             /**
              * the collection of editor's events
-             * @type Array
+             * @type {Array}
              */
             events:{
                 value:[
@@ -1809,7 +1809,7 @@ KISSY.add('grid/editor', function (S, Component) {
             },
             /**
              * User input is usually text, so need to convert format.This is a function you can format user's input.
-             * @type {function}
+             * @type {Function}
              * @default function(v){return v;}
              */
             formatter:{
@@ -2742,7 +2742,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * An template used to create the internal structure inside this Component's encapsulating Element.
                  * User can use the syntax of KISSY 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  * <pre>
                  *    '&lt;table cellspacing="0" cellpadding="0" class="grid-table" &gt;'+
                  *        '&lt;tbody&gt;&lt;/tbody&gt;'+
@@ -2760,7 +2760,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template of first row of this component ,which to fixed the width of every column.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 headerRowTpl:{
@@ -2770,7 +2770,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template used to create the row which encapsulates cells.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 rowTpl:{
@@ -2780,7 +2780,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template used to create the cell.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default
                  * <pre>
                  *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
@@ -3255,7 +3255,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 /**
                  *  A string column id or the numeric index of the column
                  * that should be initially activated within the container's layout on render.
-                 * @type String|Number
+                 * @type {String|Number}
                  * @default null
                  */
                 activeItem:{
@@ -3304,7 +3304,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 },
                 /**
                  * the collection of header's events
-                 * @type Array
+                 * @type {Array}
                  */
                 events:{
                     value:[
@@ -4181,7 +4181,7 @@ KISSY.add('grid/store',function(S){
 			/**
 			* 加载数据时，返回数据的根目录
 			* @field
-			* @type String
+			* @type {String}
 			* @default  "rows"
 			* @example 
 			* '{"rows":[{"name":"abc"},{"name":"bcd"}],"results":100}'
@@ -4190,7 +4190,7 @@ KISSY.add('grid/store',function(S){
 			/**
 			* 加载数据时，符合条件的数据总数，用于分页
 			* @field
-			* @type String
+			* @type {String}
 			* @default  "results"
 			* @example
 			*
@@ -4200,21 +4200,21 @@ KISSY.add('grid/store',function(S){
 			/**
 			* 加载数据时，返回的格式,目前只支持"json、jsonp"格式<br>
 			* @field
-			* @type String
+			* @type {String}
 			* @default "json"
 			*/
 			dataType: 'json', 
 			/**
 			* 创建对象时是否自动加载
 			* @field
-			* @type Boolean
+			* @type {Boolean}
 			* @default false
 			*/
 			autoLoad: false,
 			/**
 			* 排序信息
 			* @field 
-			* @type Object
+			* @type {Object}
 			* @default { field: '', direction: 'ASC' }
 			* @example 
 			* var store = new Store({
@@ -4230,7 +4230,7 @@ KISSY.add('grid/store',function(S){
 			* method : 加载数据的方式"get","post"，默认值为"post"<br>
 			* memoryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
-			* @type Object
+			* @type {Object}
 			* @default { method: 'post',url:'',memoryData : null }
 			* @example 
 			* var store = new Store({
@@ -4242,7 +4242,7 @@ KISSY.add('grid/store',function(S){
 			/**
 			* 自定义参数，用于加载数据时发送到后台
 			* @field
-			* @type Object
+			* @type {Object}
 			* @example
 			* var store = new Store({
 			*		url :'data',
@@ -4254,14 +4254,14 @@ KISSY.add('grid/store',function(S){
 			/**
 			* 是否后端排序，如果为后端排序，每次排序发送新请求，否则，直接前端排序
 			* @field
-			* @type Boolean
+			* @type {Boolean}
 			* @default false
 			*/
 			remoteSort: false,
 			/**
 			* 对象的匹配函数，验证两个对象是否相当
 			* @field
-			* @type Function
+			* @type {Function}
 			* @default function(obj1,obj2){return obj1==obj2};
 			* 
 			*/
@@ -5129,7 +5129,7 @@ KISSY.add('grid/util', function (S) {
             msgCls:'x-mask-loading',
             /**
              * 加载控件是否禁用
-             * @type Boolean
+             * @type {Boolean}
              * @field
              * @default false
              */

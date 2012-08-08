@@ -22,49 +22,49 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * component's html content.
          * Note: content and srcNode can not be set both!
-         * @type String|NodeList
+         * @type {String|NodeList}
          */
         content:{
             view:1
         },
         /**
          * component's width
-         * @type Number|String
+         * @type {Number|String}
          */
         width:{
             view:1
         },
         /**
          * component's height
-         * @type Number|String
+         * @type {Number|String}
          */
         height:{
             view:1
         },
         /**
          * css class of component's root element
-         * @type String
+         * @type {String}
          */
         elCls:{
             view:1
         },
         /**
          * name-value pair css style of component's root element
-         * @type Object
+         * @type {Object}
          */
         elStyle:{
             view:1
         },
         /**
          * name-value pair attribute of component's root element
-         * @type Object
+         * @type {Object}
          */
         elAttrs:{
             view:1
         },
         /**
          * archor element where component insert before
-         * @type NodeList
+         * @type {NodeList}
          */
         elBefore:{
             // better named to renderBefore, too late !
@@ -72,7 +72,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * readonly. root element of current component
-         * @type NodeList
+         * @type {NodeList}
          */
         el:{
             view:1
@@ -80,7 +80,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * archor element where component append to
-         * @type NodeList
+         * @type {NodeList}
          */
         render:{
             view:1
@@ -88,7 +88,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * component's visibleMode,use css "display" or "visibility" to show this component
-         * @type String
+         * @type {String}
          */
         visibleMode:{
             view:1
@@ -96,7 +96,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * whether this component is visible
-         * @type Boolean
+         * @type {Boolean}
          * @default true
          */
         visible:{
@@ -106,7 +106,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type NodeList
+         * @type {NodeList}
          */
         srcNode:{
             view:1

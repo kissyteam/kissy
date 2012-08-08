@@ -22,7 +22,7 @@ KISSY.add("component/uibase/contentbox", function () {
 
         /**
          * readonly! content box's element of component
-         * @type NodeList
+         * @type {NodeList}
          */
         contentEl:{
             view:1

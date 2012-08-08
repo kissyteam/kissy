@@ -36,7 +36,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * protect the default value.
      *
      * @name Base.ATTRS
-     * @type Object
+     * @type {Object}
      */
 
 

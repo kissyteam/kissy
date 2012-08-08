@@ -285,7 +285,7 @@
             {
                 /**
                  * scheme such as "http:". aka protocol without colon
-                 * @type String
+                 * @type {String}
                  */
                 scheme:"",
                 /**

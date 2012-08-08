@@ -24,7 +24,7 @@ KISSY.add("color", function (S, Base) {
     {
         /**
          * Red.
-         * @type Number
+         * @type {Number}
          */
         r:{
             getter:function (v) {
@@ -36,7 +36,7 @@ KISSY.add("color", function (S, Base) {
         },
         /**
          * Green.
-         * @type Number
+         * @type {Number}
          */
         g:{
             getter:function (v) {
@@ -48,7 +48,7 @@ KISSY.add("color", function (S, Base) {
         },
         /**
          * Blue.
-         * @type Number
+         * @type {Number}
          */
         b:{
             getter:function (v) {
@@ -61,7 +61,7 @@ KISSY.add("color", function (S, Base) {
         /**
          * Alpha.
          * @default 1
-         * @type Number
+         * @type {Number}
          */
         a:{
             getter:function (v) {

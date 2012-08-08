@@ -134,7 +134,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                  * CheckNode.PARTIAL_CHECK: checked partly.
                  * CheckNode.CHECK: checked completely.
                  * CheckNode.EMPTY: not checked.
-                 * @type Number
+                 * @type {Number}
                  */
                 checkState:{
                     view:1

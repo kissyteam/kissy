@@ -314,7 +314,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     {
         /**
          * Route and action config.
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          *   {

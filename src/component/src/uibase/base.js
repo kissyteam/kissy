@@ -402,14 +402,14 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             {
                 /**
                  * Whether this component is rendered.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 rendered:{
                     value:false
                 },
                 /**
                  * Whether this component 's dom structure is created.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 created:{
                     value:false
@@ -441,7 +441,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
                 /**
                  * Plugins
-                 * @type Function[]|Object[]
+                 * @type {Function[]|Object[]}
                  */
                 plugins:{
                     value:[]
@@ -450,7 +450,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * Get xclass of current component instance.
                  * Readonly and only for json config.
-                 * @type String
+                 * @type {String}
                  */
                 xclass:{
                     valueFn:function () {

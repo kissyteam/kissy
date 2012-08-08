@@ -693,7 +693,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * An template used to create the internal structure inside this Component's encapsulating Element.
                  * User can use the syntax of KISSY 's template component.
                  * Only in the configuration of the column can set this property.
-                 * @type String
+                 * @type {String}
                  * <pre>
                  *    '&lt;table cellspacing="0" cellpadding="0" class="grid-table" &gt;'+
                  *        '&lt;tbody&gt;&lt;/tbody&gt;'+
@@ -711,7 +711,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template of first row of this component ,which to fixed the width of every column.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 headerRowTpl:{
@@ -721,7 +721,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template used to create the row which encapsulates cells.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 rowTpl:{
@@ -731,7 +731,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * An template used to create the cell.
                  * User can use the syntax of KISSY 's template component.
-                 * @type String
+                 * @type {String}
                  * @default
                  * <pre>
                  *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+

@@ -147,7 +147,7 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 /**
                  * a selector query to get the children of container to make droppable elements from.
                  * usually as for tag.cls.
-                 * @type String
+                 * @type {String}
                  */
                 selector:{
                 },

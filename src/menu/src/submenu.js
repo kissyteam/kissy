@@ -259,7 +259,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
                  * @default 0.15
-                 * @type {number}
+                 * @type {Number}
                  */
                 menuDelay:{
                     value:MENU_DELAY

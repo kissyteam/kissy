@@ -55,7 +55,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                 /**
                  * whether this component can be closed.
                  * @default true
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 closable:{
                     value:true

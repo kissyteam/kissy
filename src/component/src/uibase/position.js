@@ -21,21 +21,21 @@ KISSY.add("component/uibase/position", function (S) {
     {
         /**
          * Horizontal axis
-         * @type Number
+         * @type {Number}
          */
         x:{
             view:1
         },
         /**
          * Vertical axis
-         * @type Number
+         * @type {Number}
          */
         y:{
             view:1
         },
         /**
          * Horizontal and vertical axis.
-         * @type Number[]
+         * @type {Number[]}
          */
         xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
@@ -61,7 +61,7 @@ KISSY.add("component/uibase/position", function (S) {
         },
         /**
          * z-index value.
-         * @type Number
+         * @type {Number}
          */
         zIndex:{
             view:1

@@ -77,7 +77,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         /**
          * Preload distance below viewport.
          * @default 0.
-         * @type Number
+         * @type {Number}
          */
         diff:{
             value:0

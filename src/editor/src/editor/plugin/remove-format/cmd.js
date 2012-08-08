@@ -10,7 +10,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.
          * Note that only inline elements are allowed.
-         * @type String
+         * @type {String}
          * @default 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
          * @example
          */
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
         /**
          * A comma separated list of elements attributes to be removed
          * when executing the "remove format" command.
-         * @type String
+         * @type {String}
          * @default 'class,style,lang,width,height,align,hspace,valign'
          * @example
          */

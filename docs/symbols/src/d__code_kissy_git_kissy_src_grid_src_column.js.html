@@ -1,0 +1,370 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview This class specifies the definition for a column of a grid.
+<span id='line3' class='line'>  3</span>  * @author dxq613@gmail.com, yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">'grid/column'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Component</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> 
+<span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">CLS_HD_TITLE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'grid-hd-title'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line8' class='line'>  8</span> </span><span class="WHIT">        </span><span class="NAME">SORT_PREFIX</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'sort-'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="NAME">SORT_ASC</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'ASC'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">        </span><span class="NAME">SORT_DESC</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'DESC'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">        </span><span class="NAME">CLS_HD_TRIGGER</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'grid-hd-menu-trigger'</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> 
+<span id='line13' class='line'> 13</span> 
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line15' class='line'> 15</span>      * render of column
+<span id='line16' class='line'> 16</span>      */</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">columnRender</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Render.extend</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line18' class='line'> 18</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line19' class='line'> 19</span>          * @override
+<span id='line20' class='line'> 20</span>          */</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">        </span><span class="NAME">renderUI</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line22' class='line'> 22</span> </span><span class="WHIT">            </span><span class="NAME">this._setContent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line23' class='line'> 23</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> 
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">        </span><span class="COMM">//get the template of column</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">        </span><span class="NAME">_getTpl</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">                </span><span class="NAME">attrs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.getAttrVals</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">                </span><span class="NAME">tpl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'tpl'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Template</span><span class="PUNC">(</span><span class="NAME">tpl</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">render</span><span class="PUNC">(</span><span class="NAME">attrs</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> 
+<span id='line32' class='line'> 32</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">        </span><span class="COMM">//use template to fill the column</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">        </span><span class="NAME">_setContent</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">                </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'el'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> </span><span class="WHIT">                </span><span class="NAME">tpl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self._getTpl</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">            </span><span class="NAME">el.empty</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">S.Node</span><span class="PUNC">(</span><span class="NAME">tpl</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">appendTo</span><span class="PUNC">(</span><span class="NAME">el</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">        </span><span class="COMM">//set the title of column</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">        </span><span class="NAME">_uiSetTitle</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">title</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'rendered'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">            </span><span class="NAME">this._setContent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">        </span><span class="COMM">//set the draggable of column</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">        </span><span class="NAME">_uiSetDraggable</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line50' class='line'> 50</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'rendered'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line51' class='line'> 51</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">            </span><span class="NAME">this._setContent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> </span><span class="WHIT">        </span><span class="COMM">//set the sortableof column</span><span class="WHIT">
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">        </span><span class="NAME">_uiSetSortable</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> 
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'rendered'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">            </span><span class="NAME">this._setContent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">        </span><span class="COMM">//set the sortable of column</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> </span><span class="WHIT">        </span><span class="NAME">_uiSetTpl</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">'rendered'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">            </span><span class="NAME">this._setContent</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">        </span><span class="COMM">//set the sort state of column</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">_uiSetSortState</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">                </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'el'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">                </span><span class="NAME">method</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">'addClass'</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'removeClass'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">                </span><span class="NAME">ascCls</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SORT_PREFIX</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'asc'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">                </span><span class="NAME">desCls</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SORT_PREFIX</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'desc'</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">            </span><span class="NAME">el.removeClass</span><span class="PUNC">(</span><span class="NAME">ascCls</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">' '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">desCls</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'ASC'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">                </span><span class="NAME">el.addClass</span><span class="PUNC">(</span><span class="NAME">ascCls</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'DESC'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line81' class='line'> 81</span> </span><span class="WHIT">                </span><span class="NAME">el.addClass</span><span class="PUNC">(</span><span class="NAME">desCls</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line82' class='line'> 82</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line83' class='line'> 83</span> 
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line85' class='line'> 85</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line86' class='line'> 86</span> </span><span class="WHIT">        </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line87' class='line'> 87</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line88' class='line'> 88</span>              * The tag name of the rendered column
+<span id='line89' class='line'> 89</span>              * @private
+<span id='line90' class='line'> 90</span>              */</span><span class="WHIT">
+<span id='line91' class='line'> 91</span> </span><span class="WHIT">            </span><span class="NAME">elTagName</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">'th'</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">            </span><span class="NAME">tpl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> 
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line100' class='line'>100</span>      * This class specifies the definition for a column inside a {@link Grid}.
+<span id='line101' class='line'>101</span>      * It encompasses both the grid header configuration as well as displaying data within the grid itself.
+<span id='line102' class='line'>102</span>      * If the columns configuration is specified, this column will become a column group and can contain other columns inside.
+<span id='line103' class='line'>103</span>      * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
+<span id='line104' class='line'>104</span>      * @name Grid.Column
+<span id='line105' class='line'>105</span>      * @constructor
+<span id='line106' class='line'>106</span>      * @extends Component.Controller
+<span id='line107' class='line'>107</span>      */</span><span class="WHIT">
+<span id='line108' class='line'>108</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">column</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Component.Controller.extend</span><span class="PUNC">(</span><span class="WHIT">
+<span id='line109' class='line'>109</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line110' class='line'>110</span>          * @lends Grid.Column.prototype
+<span id='line111' class='line'>111</span>          */</span><span class="WHIT">
+<span id='line112' class='line'>112</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">    </span><span class="COMM">//toggle sort state of this column ,if no sort state set 'ASC',else toggle 'ASC' and 'DESC'</span><span class="WHIT">
+<span id='line113' class='line'>113</span> </span><span class="WHIT">            </span><span class="NAME">_toggleSortState</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line114' class='line'>114</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line115' class='line'>115</span> </span><span class="WHIT">                    </span><span class="NAME">sortState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'sortState'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line116' class='line'>116</span> </span><span class="WHIT">                    </span><span class="NAME">v</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">sortState</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">sortState</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">SORT_ASC</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">SORT_DESC</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">SORT_ASC</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">SORT_ASC</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line117' class='line'>117</span> </span><span class="WHIT">                </span><span class="NAME">_self.set</span><span class="PUNC">(</span><span class="STRN">'sortState'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line118' class='line'>118</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line119' class='line'>119</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line120' class='line'>120</span>              * @see {Component.Controller#bindUI}
+<span id='line121' class='line'>121</span>              */</span><span class="WHIT">
+<span id='line122' class='line'>122</span> </span><span class="WHIT">            </span><span class="NAME">bindUI</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line123' class='line'>123</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line124' class='line'>124</span> </span><span class="WHIT">                    </span><span class="NAME">events</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'events'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line125' class='line'>125</span> </span><span class="WHIT">                </span><span class="NAME">S.each</span><span class="PUNC">(</span><span class="NAME">events</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line126' class='line'>126</span> </span><span class="WHIT">                    </span><span class="NAME">_self.publish</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line127' class='line'>127</span> </span><span class="WHIT">                        </span><span class="NAME">bubbles</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line128' class='line'>128</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line129' class='line'>129</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line130' class='line'>130</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line131' class='line'>131</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line132' class='line'>132</span>              * {Component.Controller#performActionInternal}
+<span id='line133' class='line'>133</span>              * @private
+<span id='line134' class='line'>134</span>              */</span><span class="WHIT">
+<span id='line135' class='line'>135</span> </span><span class="WHIT">            </span><span class="NAME">performActionInternal</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ev</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line136' class='line'>136</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line137' class='line'>137</span> </span><span class="WHIT">                    </span><span class="NAME">sender</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.one</span><span class="PUNC">(</span><span class="NAME">ev.target</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line138' class='line'>138</span> </span><span class="WHIT">                    </span><span class="NAME">prefix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'prefixCls'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line139' class='line'>139</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">sender.hasClass</span><span class="PUNC">(</span><span class="NAME">prefix</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">CLS_HD_TRIGGER</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line140' class='line'>140</span> 
+<span id='line141' class='line'>141</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line142' class='line'>142</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_self.get</span><span class="PUNC">(</span><span class="STRN">'sortable'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line143' class='line'>143</span> </span><span class="WHIT">                        </span><span class="NAME">_self._toggleSortState</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line144' class='line'>144</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line145' class='line'>145</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line146' class='line'>146</span> </span><span class="WHIT">                </span><span class="NAME">_self.fire</span><span class="PUNC">(</span><span class="STRN">'click'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line147' class='line'>147</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line148' class='line'>148</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line149' class='line'>149</span> </span><span class="WHIT">            </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="COMM">/*** @lends Grid.Column.prototype*/</span><span class="WHIT">
+<span id='line150' class='line'>150</span> </span><span class="WHIT">            </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line151' class='line'>151</span> 
+<span id='line152' class='line'>152</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line153' class='line'>153</span>                  * The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.&lt;b>Required&lt;/b>
+<span id='line154' class='line'>154</span>                  * @type {String}
+<span id='line155' class='line'>155</span>                  * @default {String} empty string
+<span id='line156' class='line'>156</span>                  */</span><span class="WHIT">
+<span id='line157' class='line'>157</span> </span><span class="WHIT">                </span><span class="NAME">dataIndex</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line158' class='line'>158</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line159' class='line'>159</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">''</span><span class="WHIT">
+<span id='line160' class='line'>160</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line161' class='line'>161</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line162' class='line'>162</span>                  *
+<span id='line163' class='line'>163</span>                  * @type {Boolean}
+<span id='line164' class='line'>164</span>                  * @defalut true
+<span id='line165' class='line'>165</span>                  */</span><span class="WHIT">
+<span id='line166' class='line'>166</span> </span><span class="WHIT">                </span><span class="NAME">draggable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line167' class='line'>167</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line168' class='line'>168</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line169' class='line'>169</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line170' class='line'>170</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line171' class='line'>171</span>                  * An optional xtype or config object for a Field to use for editing. Only applicable if the grid is using an Editing plugin.
+<span id='line172' class='line'>172</span>                  * @type {Object}
+<span id='line173' class='line'>173</span>                  */</span><span class="WHIT">
+<span id='line174' class='line'>174</span> </span><span class="WHIT">                </span><span class="NAME">editor</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line175' class='line'>175</span> 
+<span id='line176' class='line'>176</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line177' class='line'>177</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line178' class='line'>178</span>                  * @protected
+<span id='line179' class='line'>179</span>                  */</span><span class="WHIT">
+<span id='line180' class='line'>180</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line181' class='line'>181</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line182' class='line'>182</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line183' class='line'>183</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line184' class='line'>184</span>                  * The unique id of this component instance.
+<span id='line185' class='line'>185</span>                  * @type {String}
+<span id='line186' class='line'>186</span>                  * @default null
+<span id='line187' class='line'>187</span>                  */</span><span class="WHIT">
+<span id='line188' class='line'>188</span> </span><span class="WHIT">                </span><span class="NAME">id</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line189' class='line'>189</span> 
+<span id='line190' class='line'>190</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line191' class='line'>191</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line192' class='line'>192</span>                  * A renderer is an 'interceptor' method which can be used transform data (value, appearance, etc.) before it is rendered. the function prototype is "function(value,obj,index){return value;}"
+<span id='line193' class='line'>193</span>                  * @type {Function}
+<span id='line194' class='line'>194</span>                  * @default
+<span id='line195' class='line'>195</span>                  */</span><span class="WHIT">
+<span id='line196' class='line'>196</span> </span><span class="WHIT">                </span><span class="NAME">renderer</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line197' class='line'>197</span> 
+<span id='line198' class='line'>198</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line199' class='line'>199</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line200' class='line'>200</span>                  * False to prevent the column from being resizable.
+<span id='line201' class='line'>201</span>                  * @type {Function}
+<span id='line202' class='line'>202</span>                  * @default true
+<span id='line203' class='line'>203</span>                  */</span><span class="WHIT">
+<span id='line204' class='line'>204</span> </span><span class="WHIT">                </span><span class="NAME">resizable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line205' class='line'>205</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line206' class='line'>206</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line207' class='line'>207</span> </span><span class="WHIT">                </span><span class="COMM">/* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort.
+<span id='line208' class='line'>208</span>                  * @type {Boolean}
+<span id='line209' class='line'>209</span>                  * @default true.
+<span id='line210' class='line'>210</span>                  */</span><span class="WHIT">
+<span id='line211' class='line'>211</span> </span><span class="WHIT">                </span><span class="NAME">sortable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line212' class='line'>212</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line213' class='line'>213</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line214' class='line'>214</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line215' class='line'>215</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line216' class='line'>216</span>                  * The sort state of this column. the state have three value : null, 'ASC','DESC'
+<span id='line217' class='line'>217</span>                  * @type {String}
+<span id='line218' class='line'>218</span>                  * @default null
+<span id='line219' class='line'>219</span>                  */</span><span class="WHIT">
+<span id='line220' class='line'>220</span> </span><span class="WHIT">                </span><span class="NAME">sortState</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line221' class='line'>221</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line222' class='line'>222</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">null</span><span class="WHIT">
+<span id='line223' class='line'>223</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line224' class='line'>224</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line225' class='line'>225</span>                  * The header text to be used as innerHTML (html tags are accepted) to display in the Grid.
+<span id='line226' class='line'>226</span>                  * Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
+<span id='line227' class='line'>227</span>                  * @type {String}
+<span id='line228' class='line'>228</span>                  * @default {String} &#160;
+<span id='line229' class='line'>229</span>                  */</span><span class="WHIT">
+<span id='line230' class='line'>230</span> </span><span class="WHIT">                </span><span class="NAME">title</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line231' class='line'>231</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line232' class='line'>232</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">'&#160;'</span><span class="WHIT">
+<span id='line233' class='line'>233</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line234' class='line'>234</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line235' class='line'>235</span>                  * The width of this component in pixels.
+<span id='line236' class='line'>236</span>                  * @override
+<span id='line237' class='line'>237</span>                  * @type {Number}
+<span id='line238' class='line'>238</span>                  * @default {Number} 80
+<span id='line239' class='line'>239</span>                  */</span><span class="WHIT">
+<span id='line240' class='line'>240</span> </span><span class="WHIT">                </span><span class="NAME">width</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line241' class='line'>241</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NUMB">100</span><span class="WHIT">
+<span id='line242' class='line'>242</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line243' class='line'>243</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line244' class='line'>244</span>                  * An template used to create the internal structure inside this Component's encapsulating Element.
+<span id='line245' class='line'>245</span>                  * User can use the syntax of KISSY 's template component.
+<span id='line246' class='line'>246</span>                  * Only in the configuration of the column can set this property.
+<span id='line247' class='line'>247</span>                  * @type {String}
+<span id='line248' class='line'>248</span>                  */</span><span class="WHIT">
+<span id='line249' class='line'>249</span> </span><span class="WHIT">                </span><span class="NAME">tpl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line250' class='line'>250</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line251' class='line'>251</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">'&lt;div class="ks-grid-hd-inner">'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span id='line252' class='line'>252</span> </span><span class="WHIT">                        </span><span class="STRN">'&lt;span class="ks-'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">CLS_HD_TITLE</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'">{{title}}&lt;/span>'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span id='line253' class='line'>253</span> </span><span class="WHIT">                        </span><span class="STRN">'{{#if sortable}}&lt;span class="ks-grid-sort-icon">&nbsp;&lt;/span>{{/if}}'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span id='line254' class='line'>254</span> </span><span class="WHIT">                        </span><span class="STRN">'&lt;span class="ks-grid-hd-menu-trigger">&lt;/span>'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span id='line255' class='line'>255</span> </span><span class="WHIT">                        </span><span class="STRN">'&lt;/div>'</span><span class="WHIT">
+<span id='line256' class='line'>256</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line257' class='line'>257</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line258' class='line'>258</span>                  * An template used to create the internal structure inside the table which shows data of store.
+<span id='line259' class='line'>259</span>                  * User can use the syntax of Kissy 's template component.
+<span id='line260' class='line'>260</span>                  * Only in the configuration of the column can set this property.
+<span id='line261' class='line'>261</span>                  * @type {String}
+<span id='line262' class='line'>262</span>                  */</span><span class="WHIT">
+<span id='line263' class='line'>263</span> </span><span class="WHIT">                </span><span class="NAME">cellTpl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line264' class='line'>264</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">''</span><span class="WHIT">
+<span id='line265' class='line'>265</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line266' class='line'>266</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line267' class='line'>267</span>                  * the collection of column's events
+<span id='line268' class='line'>268</span>                  * @protected
+<span id='line269' class='line'>269</span>                  * @type {Array}
+<span id='line270' class='line'>270</span>                  */</span><span class="WHIT">
+<span id='line271' class='line'>271</span> </span><span class="WHIT">                </span><span class="NAME">events</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line272' class='line'>272</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="WHIT">
+<span id='line273' class='line'>273</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line274' class='line'>274</span>                      * @event afterWithChange
+<span id='line275' class='line'>275</span>                      * Fires when this column's width changed
+<span id='line276' class='line'>276</span>                      * @param {event} e the event object
+<span id='line277' class='line'>277</span>                      * @param {Grid.Column} target
+<span id='line278' class='line'>278</span>                      */</span><span class="WHIT">
+<span id='line279' class='line'>279</span> </span><span class="WHIT">                        </span><span class="STRN">'afterWidthChange'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line280' class='line'>280</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line281' class='line'>281</span>                      * @event afterSortStateChange
+<span id='line282' class='line'>282</span>                      * Fires when this column's sort changed
+<span id='line283' class='line'>283</span>                      * @param {event} e the event object
+<span id='line284' class='line'>284</span>                      * @param {Grid.Column} e.target
+<span id='line285' class='line'>285</span>                      */</span><span class="WHIT">
+<span id='line286' class='line'>286</span> </span><span class="WHIT">                        </span><span class="STRN">'afterSortStateChange'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line287' class='line'>287</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line288' class='line'>288</span>                      * @event afterVisibleChange
+<span id='line289' class='line'>289</span>                      * Fires when this column's hide or show
+<span id='line290' class='line'>290</span>                      * @param {event} e the event object
+<span id='line291' class='line'>291</span>                      * @param {Grid.Column} e.target
+<span id='line292' class='line'>292</span>                      */</span><span class="WHIT">
+<span id='line293' class='line'>293</span> </span><span class="WHIT">                        </span><span class="STRN">'afterVisibleChange'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line294' class='line'>294</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line295' class='line'>295</span>                      * @event click
+<span id='line296' class='line'>296</span>                      * Fires when use clicks the column
+<span id='line297' class='line'>297</span>                      * @param {event} e the event object
+<span id='line298' class='line'>298</span>                      * @param {Grid.Column} e.target
+<span id='line299' class='line'>299</span>                      */</span><span class="WHIT">
+<span id='line300' class='line'>300</span> </span><span class="WHIT">                        </span><span class="STRN">'click'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line301' class='line'>301</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line302' class='line'>302</span>                      * @event resize
+<span id='line303' class='line'>303</span>                      * Fires after the component is resized.
+<span id='line304' class='line'>304</span>                      * @param {Grid.Column} target
+<span id='line305' class='line'>305</span>                      * @param {Number} adjWidth The box-adjusted width that was set
+<span id='line306' class='line'>306</span>                      * @param {Number} adjHeight The box-adjusted height that was set
+<span id='line307' class='line'>307</span>                      */</span><span class="WHIT">
+<span id='line308' class='line'>308</span> </span><span class="WHIT">                        </span><span class="STRN">'resize'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line309' class='line'>309</span> </span><span class="WHIT">                    </span><span class="COMM">/**
+<span id='line310' class='line'>310</span>                      * @event move
+<span id='line311' class='line'>311</span>                      * Fires after the component is moved.
+<span id='line312' class='line'>312</span>                      * @param {event} e the event object
+<span id='line313' class='line'>313</span>                      * @param {Grid.Column} e.target
+<span id='line314' class='line'>314</span>                      * @param {Number} x The new x position
+<span id='line315' class='line'>315</span>                      * @param {Number} y The new y position
+<span id='line316' class='line'>316</span>                      */</span><span class="WHIT">
+<span id='line317' class='line'>317</span> </span><span class="WHIT">                        </span><span class="STRN">'move'</span><span class="WHIT">
+<span id='line318' class='line'>318</span> </span><span class="WHIT">                    </span><span class="PUNC">]</span><span class="WHIT">
+<span id='line319' class='line'>319</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line320' class='line'>320</span> </span><span class="WHIT">                </span><span class="COMM">/**
+<span id='line321' class='line'>321</span>                  * @private
+<span id='line322' class='line'>322</span>                  */</span><span class="WHIT">
+<span id='line323' class='line'>323</span> </span><span class="WHIT">                </span><span class="NAME">xrender</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line324' class='line'>324</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">columnRender</span><span class="WHIT">
+<span id='line325' class='line'>325</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line326' class='line'>326</span> 
+<span id='line327' class='line'>327</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line328' class='line'>328</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line329' class='line'>329</span> </span><span class="WHIT">            </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'grid-hd'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line330' class='line'>330</span> </span><span class="WHIT">            </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line331' class='line'>331</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line332' class='line'>332</span> 
+<span id='line333' class='line'>333</span> </span><span class="WHIT">    </span><span class="NAME">column.Empty</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">column.extend</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line334' class='line'>334</span> 
+<span id='line335' class='line'>335</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line336' class='line'>336</span> </span><span class="WHIT">        </span><span class="NAME">ATTRS</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line337' class='line'>337</span> </span><span class="WHIT">            </span><span class="NAME">type</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line338' class='line'>338</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">'empty'</span><span class="WHIT">
+<span id='line339' class='line'>339</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line340' class='line'>340</span> </span><span class="WHIT">            </span><span class="NAME">sortable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line341' class='line'>341</span> </span><span class="WHIT">                </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line342' class='line'>342</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">false</span><span class="WHIT">
+<span id='line343' class='line'>343</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line344' class='line'>344</span> </span><span class="WHIT">            </span><span class="NAME">width</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line345' class='line'>345</span> </span><span class="WHIT">                </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line346' class='line'>346</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">null</span><span class="WHIT">
+<span id='line347' class='line'>347</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line348' class='line'>348</span> </span><span class="WHIT">            </span><span class="NAME">tpl</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line349' class='line'>349</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">''</span><span class="WHIT">
+<span id='line350' class='line'>350</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line351' class='line'>351</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line352' class='line'>352</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line353' class='line'>353</span> </span><span class="WHIT">        </span><span class="NAME">xclass</span><span class="PUNC">:</span><span class="STRN">'grid-hd-empty'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line354' class='line'>354</span> </span><span class="WHIT">        </span><span class="NAME">priority</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
+<span id='line355' class='line'>355</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line356' class='line'>356</span> 
+<span id='line357' class='line'>357</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">column</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line358' class='line'>358</span> 
+<span id='line359' class='line'>359</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line360' class='line'>360</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'component'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'template'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line361' class='line'>361</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line362' class='line'>362</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span id='line363' class='line'>363</span> </span></pre></body></html>

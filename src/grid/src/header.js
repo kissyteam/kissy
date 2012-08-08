@@ -350,7 +350,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 /**
                  *  A string column id or the numeric index of the column
                  * that should be initially activated within the container's layout on render.
-                 * @type String|Number
+                 * @type {String|Number}
                  * @default null
                  */
                 activeItem:{
@@ -399,7 +399,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 },
                 /**
                  * the collection of header's events
-                 * @type Array
+                 * @type {Array}
                  */
                 events:{
                     value:[

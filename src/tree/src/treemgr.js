@@ -15,7 +15,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         /**
          * Whether show root node.
          * @defaulttrue.
-         * @type Boolean
+         * @type {Boolean}
          */
         showRootNode:{
             value:true,
@@ -23,7 +23,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         },
         /**
          * Current selected tree node.
-         * @type Tree.Node
+         * @type {Tree.Node}
          */
         selectedItem:{},
 

@@ -542,7 +542,7 @@
 <span id='line535' class='line'>535</span>                  * Containers may set this attribute to disable mouse event handling
 <span id='line536' class='line'>536</span>                  * in their child component.
 <span id='line537' class='line'>537</span>                  * @default true.
-<span id='line538' class='line'>538</span>                  * @type Boolean
+<span id='line538' class='line'>538</span>                  * @type {Boolean}
 <span id='line539' class='line'>539</span>                  */</span><span class="WHIT">
 <span id='line540' class='line'>540</span> </span><span class="WHIT">                </span><span class="NAME">handleMouseEvents</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line541' class='line'>541</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
@@ -551,7 +551,7 @@
 <span id='line544' class='line'>544</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line545' class='line'>545</span>                  * Whether this component can get focus.
 <span id='line546' class='line'>546</span>                  * @default true.
-<span id='line547' class='line'>547</span>                  * @type Boolean
+<span id='line547' class='line'>547</span>                  * @type {Boolean}
 <span id='line548' class='line'>548</span>                  */</span><span class="WHIT">
 <span id='line549' class='line'>549</span> </span><span class="WHIT">                </span><span class="NAME">focusable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line550' class='line'>550</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
@@ -562,7 +562,7 @@
 <span id='line555' class='line'>555</span>                  * 1. Whether allow select this component's text.&lt;br/>
 <span id='line556' class='line'>556</span>                  * 2. Whether not to lose last component's focus if click current one (set false).
 <span id='line557' class='line'>557</span>                  * @default false
-<span id='line558' class='line'>558</span>                  * @type Boolean
+<span id='line558' class='line'>558</span>                  * @type {Boolean}
 <span id='line559' class='line'>559</span>                  */</span><span class="WHIT">
 <span id='line560' class='line'>560</span> </span><span class="WHIT">                </span><span class="NAME">allowTextSelection</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line561' class='line'>561</span> </span><span class="WHIT">                    </span><span class="COMM">// 和 focusable 分离</span><span class="WHIT">
@@ -573,7 +573,7 @@
 <span id='line566' class='line'>566</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line567' class='line'>567</span>                  * Whether this component can be activated.
 <span id='line568' class='line'>568</span>                  * @default true.
-<span id='line569' class='line'>569</span>                  * @type Boolean
+<span id='line569' class='line'>569</span>                  * @type {Boolean}
 <span id='line570' class='line'>570</span>                  */</span><span class="WHIT">
 <span id='line571' class='line'>571</span> </span><span class="WHIT">                </span><span class="NAME">activeable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line572' class='line'>572</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
@@ -581,7 +581,7 @@
 <span id='line574' class='line'>574</span> 
 <span id='line575' class='line'>575</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line576' class='line'>576</span>                  * Whether this component has focus.
-<span id='line577' class='line'>577</span>                  * @type Boolean
+<span id='line577' class='line'>577</span>                  * @type {Boolean}
 <span id='line578' class='line'>578</span>                  */</span><span class="WHIT">
 <span id='line579' class='line'>579</span> </span><span class="WHIT">                </span><span class="NAME">focused</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line580' class='line'>580</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
@@ -589,7 +589,7 @@
 <span id='line582' class='line'>582</span> 
 <span id='line583' class='line'>583</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line584' class='line'>584</span>                  * Whether this component is activated.
-<span id='line585' class='line'>585</span>                  * @type Boolean
+<span id='line585' class='line'>585</span>                  * @type {Boolean}
 <span id='line586' class='line'>586</span>                  */</span><span class="WHIT">
 <span id='line587' class='line'>587</span> </span><span class="WHIT">                </span><span class="NAME">active</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line588' class='line'>588</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
@@ -597,7 +597,7 @@
 <span id='line590' class='line'>590</span> 
 <span id='line591' class='line'>591</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line592' class='line'>592</span>                  * Whether this component is highlighted.
-<span id='line593' class='line'>593</span>                  * @type Boolean
+<span id='line593' class='line'>593</span>                  * @type {Boolean}
 <span id='line594' class='line'>594</span>                  */</span><span class="WHIT">
 <span id='line595' class='line'>595</span> </span><span class="WHIT">                </span><span class="NAME">highlighted</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line596' class='line'>596</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">
@@ -605,7 +605,7 @@
 <span id='line598' class='line'>598</span> 
 <span id='line599' class='line'>599</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line600' class='line'>600</span>                  * Array of child components
-<span id='line601' class='line'>601</span>                  * @type Component.Controller[]
+<span id='line601' class='line'>601</span>                  * @type {Component.Controller[]}
 <span id='line602' class='line'>602</span>                  */</span><span class="WHIT">
 <span id='line603' class='line'>603</span> </span><span class="WHIT">                </span><span class="NAME">children</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line604' class='line'>604</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT">
@@ -613,7 +613,7 @@
 <span id='line606' class='line'>606</span> 
 <span id='line607' class='line'>607</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line608' class='line'>608</span>                  * This component's prefix css class.
-<span id='line609' class='line'>609</span>                  * @type String
+<span id='line609' class='line'>609</span>                  * @type {String}
 <span id='line610' class='line'>610</span>                  */</span><span class="WHIT">
 <span id='line611' class='line'>611</span> </span><span class="WHIT">                </span><span class="NAME">prefixCls</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line612' class='line'>612</span> </span><span class="WHIT">                    </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">'ks-'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">// box srcNode need</span><span class="WHIT">
@@ -622,7 +622,7 @@
 <span id='line615' class='line'>615</span> 
 <span id='line616' class='line'>616</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line617' class='line'>617</span>                  * This component's parent component.
-<span id='line618' class='line'>618</span>                  * @type Component.Controller
+<span id='line618' class='line'>618</span>                  * @type {Component.Controller}
 <span id='line619' class='line'>619</span>                  */</span><span class="WHIT">
 <span id='line620' class='line'>620</span> </span><span class="WHIT">                </span><span class="NAME">parent</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line621' class='line'>621</span> </span><span class="WHIT">                    </span><span class="NAME">setter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">p</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -633,7 +633,7 @@
 <span id='line626' class='line'>626</span> 
 <span id='line627' class='line'>627</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line628' class='line'>628</span>                  * Whether this component is disabled.
-<span id='line629' class='line'>629</span>                  * @type Boolean
+<span id='line629' class='line'>629</span>                  * @type {Boolean}
 <span id='line630' class='line'>630</span>                  */</span><span class="WHIT">
 <span id='line631' class='line'>631</span> </span><span class="WHIT">                </span><span class="NAME">disabled</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
 <span id='line632' class='line'>632</span> </span><span class="WHIT">                    </span><span class="NAME">view</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT">

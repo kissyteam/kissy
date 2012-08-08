@@ -213,7 +213,7 @@ KISSY.add('grid/editor', function (S, Component) {
             },
             /**
              * the collection of editor's events
-             * @type Array
+             * @type {Array}
              */
             events:{
                 value:[
@@ -253,7 +253,7 @@ KISSY.add('grid/editor', function (S, Component) {
             },
             /**
              * User input is usually text, so need to convert format.This is a function you can format user's input.
-             * @type {function}
+             * @type {Function}
              * @default function(v){return v;}
              */
             formatter:{

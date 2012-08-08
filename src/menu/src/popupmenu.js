@@ -63,7 +63,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 /**
                  * Whether the popup menu is focusable.
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focusable:{
                     value:false
@@ -72,7 +72,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 autoHideOnMouseLeave:{},
                 xrender:{

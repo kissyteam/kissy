@@ -60,7 +60,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 /**
                  * whether this component can be closed.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 closable:{
                     value:false
@@ -69,7 +69,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 /**
                  * whether this component can be responsive to mouse.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 handleMouseEvents:{
                     value:false

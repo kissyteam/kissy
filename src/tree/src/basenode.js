@@ -273,7 +273,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * Whether to force current tree node as a leaf.
                  * @defaultfalse.
                  * It will change as children are added.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 isLeaf:{
                     view:1
@@ -297,7 +297,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is selected.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selected:{
                     view:1
@@ -305,7 +305,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is expanded.
-                 * @type Boolean.
+                 * @type {Boolean.}
                  * @default false.
                  */
                 expanded:{
@@ -314,7 +314,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is collapsed.
-                 * @type Boolean.
+                 * @type {Boolean.}
                  * @default true.
                  */
                 collapsed:{
@@ -328,7 +328,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Html title for current tree node.
-                 * @type String
+                 * @type {String}
                  */
                 tooltip:{
                     view:1
@@ -336,7 +336,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Tree instance current tree node belongs to.
-                 * @type Tree
+                 * @type {Tree}
                  */
                 tree:{
                     getter:function () {
@@ -350,7 +350,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * depth of node.
-                 * @type Number
+                 * @type {Number}
                  */
                 depth:{
                     view:1

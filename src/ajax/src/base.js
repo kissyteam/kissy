@@ -422,7 +422,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
-             * @type Boolean
+             * @type {Boolean}
              * @field
              */
             isLocal:isLocal,

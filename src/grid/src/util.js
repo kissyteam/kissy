@@ -251,7 +251,7 @@ KISSY.add('grid/util', function (S) {
             msgCls:'x-mask-loading',
             /**
              * 加载控件是否禁用
-             * @type Boolean
+             * @type {Boolean}
              * @field
              * @default false
              */

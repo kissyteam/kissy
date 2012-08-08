@@ -227,7 +227,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Align configuration.
-         * @type Object
+         * @type {Object}
          * @field
          * @example
          * <code>

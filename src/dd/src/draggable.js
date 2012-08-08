@@ -216,7 +216,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * the dragged node. maybe a proxy node.
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         node:{
             setter:function (v) {
@@ -228,7 +228,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * the number of pixels to move to start a drag operation,default is 3.
-         * @type Number
+         * @type {Number}
          */
         clickPixelThresh:{
             valueFn:function () {
@@ -238,7 +238,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * the number of milliseconds to start a drag operation after mousedown,default is 1000
-         * @type Number
+         * @type {Number}
          */
         bufferTime:{
             valueFn:function () {
@@ -248,14 +248,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * the draggable element
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         dragNode:{},
 
         /**
          * use protective shim to cross iframe.
          * @default true
-         * @type Boolean
+         * @type {Boolean}
          */
         shim:{
             value:true
@@ -263,7 +263,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * valid handlers to initiate a drag operation
-         * @type HTMLElement[]|Function[]|String[]
+         * @type {HTMLElement[]|Function[]|String[]}
          */
         handlers:{
             value:[],
@@ -288,13 +288,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * the handler which fired the drag event.
-         * @type NodeList
+         * @type {NodeList}
          */
         activeHandler:{},
 
         /**
          * indicate whether this draggable object is being dragged
-         * @type Boolean
+         * @type {Boolean}
          */
         dragging:{
             value:false,
@@ -312,7 +312,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
          * In strict mode, a Drop is targeted by the "entire" drag node being over the Target
          * </pre>
-         * @type String
+         * @type {String}
          */
         mode:{
             value:'point'
@@ -321,7 +321,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * set to disable this draggable so that it can not be dragged.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         disabled:{
             value:false
@@ -330,7 +330,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * whether the drag node moves with cursor, can be used to resize element.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         move:{
             value:false
@@ -339,7 +339,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * whether a drag operation can only be trigged by primary(left) mouse button.
          * Setting false will allow for all mousedown events to trigger drag.
-         * @type Boolean
+         * @type {Boolean}
          */
         primaryButtonOnly:{
             value:true
@@ -348,7 +348,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * whether halt mousedown event.
          * @default true
-         * @type Boolean
+         * @type {Boolean}
          */
         halt:{
             value:true
@@ -356,7 +356,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
         /**
          * groups this draggable object belongs to
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          * {
@@ -434,7 +434,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             /**
              * 开始拖时鼠标所在位置，例如
              *  {x:100,y:200}
-             * @type Object
+             * @type {Object}
              * @private
              */
             startMousePos:NULL,
@@ -442,7 +442,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             /**
              * 开始拖时节点所在位置，例如
              *  {x:100,y:200}
-             * @type Object
+             * @type {Object}
              * @private
              */
             startNodePos:NULL,

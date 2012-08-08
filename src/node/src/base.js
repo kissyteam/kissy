@@ -61,7 +61,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
             /**
              * length of nodelist
-             * @type Number
+             * @type {Number}
              */
             length:0,
 

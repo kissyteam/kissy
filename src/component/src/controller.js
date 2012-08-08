@@ -535,7 +535,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Containers may set this attribute to disable mouse event handling
                  * in their child component.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 handleMouseEvents:{
                     value:true
@@ -544,7 +544,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component can get focus.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focusable:{
                     value:true,
@@ -555,7 +555,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 allowTextSelection:{
                     // 和 focusable 分离
@@ -566,7 +566,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component can be activated.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 activeable:{
                     value:true
@@ -574,7 +574,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component has focus.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focused:{
                     view:1
@@ -582,7 +582,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is activated.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 active:{
                     view:1
@@ -590,7 +590,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is highlighted.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 highlighted:{
                     view:1
@@ -598,7 +598,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Array of child components
-                 * @type Component.Controller[]
+                 * @type {Component.Controller[]}
                  */
                 children:{
                     value:[]
@@ -606,7 +606,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's prefix css class.
-                 * @type String
+                 * @type {String}
                  */
                 prefixCls:{
                     value:'ks-', // box srcNode need
@@ -615,7 +615,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's parent component.
-                 * @type Component.Controller
+                 * @type {Component.Controller}
                  */
                 parent:{
                     setter:function (p) {
@@ -626,7 +626,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is disabled.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 disabled:{
                     view:1

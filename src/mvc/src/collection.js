@@ -36,14 +36,14 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     {
         /**
          * Model constructor with in current collection.
-         * @type MVC.Model
+         * @type {MVC.Model}
          */
         model:{
             value:Model
         },
         /**
          * Model list.
-         * @type MVC.Model[]
+         * @type {MVC.Model[]}
          */
         models:{
             /*
@@ -60,7 +60,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         },
         /**
          * Get url for sending data to server.
-         * @type String|Function
+         * @type {String|Function}
          */
         url:{
             value:""
@@ -68,13 +68,13 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         /**
          * Comparator function for index getter when adding model.
          * default to append to last of current model list.
-         * @type Function
+         * @type {Function}
          */
         comparator:{},
         /**
          * Sync function to sync data with server.
          * Default to call {@link MVC.sync}
-         * @type Function
+         * @type {Function}
          */
         sync:{
             value:function () {
@@ -84,7 +84,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         /**
          * Get structured data from raw data returned from server.
          * default to return raw data from server.
-         * @type Function
+         * @type {Function}
          */
         parse:{
             value:function (resp) {

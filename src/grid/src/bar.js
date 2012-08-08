@@ -2,17 +2,17 @@
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
-KISSY.add("grid/bar", function (S,ToolBar,BarRender,BarItem) {
+KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
 
 	/**
 	 * This class specifies the definition for a toolbar. 
      * Bar class is a collection of buttons,links and other command control.
      * @name Bar
      * @constructor
-     * @extends ToolBar
+     * @extends Toolbar
      * @memberOf Grid
      */
-	var Bar = ToolBar.extend(
+	var Bar = Toolbar.extend(
 	 /**
 	 * @lends Grid.Bar.prototype
 	 */	

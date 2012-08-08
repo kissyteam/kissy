@@ -13,7 +13,7 @@ KISSY.add("kison/Lexer", function (S, Base) {
     Lexer.ATTRS = {
         /**
          * Input languages
-         * @type String
+         * @type {String}
          */
         input:{
             value:""
@@ -21,7 +21,7 @@ KISSY.add("kison/Lexer", function (S, Base) {
 
         /**
          * lex rules.
-         * @type Object[]
+         * @type {Object[]}
          * @example
          * [
          *  {

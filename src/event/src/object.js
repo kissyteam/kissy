@@ -50,17 +50,17 @@ KISSY.add('event/object', function (S, undefined) {
 
             /**
              * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
-             * @type Boolean
+             * @type {Boolean}
              */
             isDefaultPrevented:FALSE,
             /**
              * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
-             * @type Boolean
+             * @type {Boolean}
              */
             isPropagationStopped:FALSE,
             /**
              * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
-             * @type Boolean
+             * @type {Boolean}
              */
             isImmediatePropagationStopped:FALSE,
 

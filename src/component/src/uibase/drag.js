@@ -22,7 +22,7 @@ KISSY.add("component/uibase/drag", function (S) {
     {
         /**
          * Whether current element is draggable.
-         * @type Boolean
+         * @type {Boolean}
          */
         draggable:{
             setter:function (v) {

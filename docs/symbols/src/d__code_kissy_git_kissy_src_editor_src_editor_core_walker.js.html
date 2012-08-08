@@ -179,7 +179,7 @@
 <span id='line172' class='line'>172</span>          * it's to be considered into the walk or not. If not provided, all
 <span id='line173' class='line'>173</span>          * matched nodes are considered good.
 <span id='line174' class='line'>174</span>          * If the function returns "FALSE" the node is ignored.
-<span id='line175' class='line'>175</span>          * @type Function
+<span id='line175' class='line'>175</span>          * @type {Function}
 <span id='line176' class='line'>176</span>          * @memberOf Editor.Walker#
 <span id='line177' class='line'>177</span>          */</span><span class="WHIT">
 <span id='line178' class='line'>178</span> </span><span class="WHIT">        </span><span class="NAME">this.evaluator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">NULL</span><span class="PUNC">;</span><span class="COMM">// 当前 range 范围内深度遍历的元素调用</span><span class="WHIT">
@@ -190,7 +190,7 @@
 <span id='line183' class='line'>183</span>          * entering and exiting nodes, as well as for the matched nodes.
 <span id='line184' class='line'>184</span>          * If this function returns "FALSE", the walking ends and no more
 <span id='line185' class='line'>185</span>          * nodes are evaluated.
-<span id='line186' class='line'>186</span>          * @type Function
+<span id='line186' class='line'>186</span>          * @type {Function}
 <span id='line187' class='line'>187</span>          * @memberOf Editor.Walker#
 <span id='line188' class='line'>188</span>          */</span><span class="WHIT">
 <span id='line189' class='line'>189</span> </span><span class="WHIT">        </span><span class="NAME">this.guard</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">NULL</span><span class="PUNC">;</span><span class="COMM">// 人为缩小当前 range 范围</span><span class="WHIT">
