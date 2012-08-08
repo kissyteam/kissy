@@ -5,6 +5,7 @@
 
 @import "../../css/src/dpl/variables.less";
 @import "../../css/src/dpl/mixins.less";
+@import "../../css/src/dpl/icons-mixin.less";
 @import "./dpl/variable.less";
 
 .ks-submenu-arrow {
@@ -98,15 +99,9 @@
     .opacity(30);
 }
 
-.ks-menuitem-checkbox, .ks-menuitem-icon {
-    width: 14px;
-    height: 14px;
+.ks-menuitem-checked .ks-menuitem-checkbox {
     position: absolute;
     left:6px;
-    line-height: 14px;
-    vertical-align: text-top;
-}
-
-.ks-menuitem-checked .ks-menuitem-checkbox, .ks-menuitem-checked.ks-menuitem-icon {
-    background: url(@iconSpritePath) no-repeat -288px 0;
+    .icon-base_();
+    .icon-ok_();
 }

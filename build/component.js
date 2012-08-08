@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 17:19
+build time: Aug 8 21:26
 */
 /**
  * Setup component namespace.
@@ -2933,7 +2933,7 @@ KISSY.add("component/uibase/drag", function (S) {
                 });
 
                 if (dragCfg.proxy) {
-                    dragCfg.proxy.moveOnEnd = false;
+                    dragCfg.proxy.moveOnEnd = true;
 
                     p = self.__proxy = new DD.Proxy(dragCfg.proxy);
                     p.attachDrag(d);
@@ -2943,14 +2943,13 @@ KISSY.add("component/uibase/drag", function (S) {
 
                 d.on("dragend", function () {
                     var proxyOffset;
-                    if (p) {
-                        proxyOffset = p.get("proxyNode").offset();
-                        el.css("visibility", "");
-                    } else {
-                        proxyOffset = el.offset();
-                    }
+                    proxyOffset = el.offset();
                     self.set("x", proxyOffset.left);
                     self.set("y", proxyOffset.top);
+                    // 存在代理时
+                    if (p) {
+                        el.css("visibility", "visible");
+                    }
                 });
 
                 if (dragCfg.scroll) {
@@ -3202,12 +3201,13 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         maskShared:{
             value:true
         }
-    }
+    };
 
     Mask.prototype = {
 
         _maskExtShow:function () {
             var self = this,
+                zIndex,
                 maskCls = getMaskCls(self),
                 maskDesc = maskMap[maskCls],
                 maskShared = self.get("maskShared"),
@@ -3228,7 +3228,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 }
                 self.__set("maskNode", mask);
             }
-            mask.css("z-index", self.get("zIndex") - 1);
+            if (zIndex = self.get("zIndex")) {
+                mask.css("z-index", zIndex - 1);
+            }
             if (maskShared) {
                 maskDesc.num++;
             }
@@ -3391,8 +3393,6 @@ KISSY.add("component/uibase/position", function (S) {
  */
 KISSY.add("component/uibase/positionrender", function () {
 
-    var Z_INDEX = 9999;
-
     function Position() {
     }
 
@@ -3415,7 +3415,6 @@ KISSY.add("component/uibase/positionrender", function () {
             }
         },
         zIndex:{
-            value:Z_INDEX
         },
         /**
          * see {@link Component.UIBase.Box#visibleMode}.

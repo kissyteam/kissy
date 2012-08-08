@@ -176,7 +176,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 currentTrigger:{},
                 /**
                  * When trigger type is mouse, the delayed time to show popup.
-                 * @default0.1, in seconds.
+                 * @default 0.1, in seconds.
                  * @type Number
                  */
                 mouseDelay:{

@@ -2,10 +2,66 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<script>
-    window.location = "demo/demo.html";
-</script>
+<title>KISSY Overlay Demo</title>
+<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../src/menu/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
+    <h1>KISSY Overlay</h1>
+</div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"dpl",
+                    href:'demo/dpl/demo.html',
+                    xclass:'menuitem'
+                },
+                {
+                    content:'other',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'overlay and popup',
+                                href:'demo/other/popup_overlay.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'dialog',
+                                href:'demo/other/dialog.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'mask 动画示例',
+                                href:'demo/other/mask/mask_anim.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'target 动画示例',
+                                href:'demo/other/effect/targetDialog.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
 </body>
 </html>

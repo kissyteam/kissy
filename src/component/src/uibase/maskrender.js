@@ -69,12 +69,13 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         maskShared:{
             value:true
         }
-    }
+    };
 
     Mask.prototype = {
 
         _maskExtShow:function () {
             var self = this,
+                zIndex,
                 maskCls = getMaskCls(self),
                 maskDesc = maskMap[maskCls],
                 maskShared = self.get("maskShared"),
@@ -95,7 +96,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 }
                 self.__set("maskNode", mask);
             }
-            mask.css("z-index", self.get("zIndex") - 1);
+            if (zIndex = self.get("zIndex")) {
+                mask.css("z-index", zIndex - 1);
+            }
             if (maskShared) {
                 maskDesc.num++;
             }
