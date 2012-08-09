@@ -228,6 +228,9 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 				if(editor){
 					if(!(editor instanceof Component.Controller)){
 						editor.field = column.get('dataIndex');
+						if(editor.type){
+							editor.xclass = 'grid-' + editor.type + '-editor';
+						}
 					}
 					var panel = new EditorPanel({
 						children : [editor]
