@@ -167,9 +167,6 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             self.dUrl = el.one(".ks-editor-flash-url");
             self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-flash-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

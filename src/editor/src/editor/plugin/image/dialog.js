@@ -226,9 +226,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgRatio = content.one(".ks-editor-img-ratio");
             self.imgAlign = MenuButton.Select.decorate(content.one(".ks-editor-img-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

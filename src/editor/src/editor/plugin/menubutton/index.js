@@ -25,9 +25,6 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
         }
 
         var s = new SelectType(S.mix({
-            elAttrs:{
-                hideFocus:'hideFocus'
-            },
             render:self.get("toolBarEl"),
             prefixCls:prefixCls,
             autoRender:true

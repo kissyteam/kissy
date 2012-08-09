@@ -72,6 +72,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   border: 1px solid #cccccc;
+  *border: 0;
   border-bottom-color: #b3b3b3;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1 px 2 px rgba(0, 0, 0, 0.05);
@@ -95,7 +96,8 @@
   *zoom: 1;
   outline: none;
 }
-.ks-button.ks-button-hover {
+.ks-button.ks-button-hover,
+.ks-button:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -115,6 +117,7 @@
   background-color: #e6e6e6;
 }
 .ks-button.ks-button-active,
+.ks-button:active,
 .ks-button.ks-button-checked,
 .ks-button.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -135,8 +138,10 @@
   cursor: default;
   opacity: 0.65;
   filter: alpha(opacity=65);
+  *zoom: 1;
   opacity: 0.65;
   filter: alpha(opacity=65);
+  *zoom: 1;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -167,6 +172,12 @@
   color: #ffffff;
 }
 .ks-button-primary.ks-button-active,
+.ks-button-primary:active,
+.ks-button-warning:active,
+.ks-button-danger:active,
+.ks-button-success:active,
+.ks-button-info:active,
+.ks-button-inverse:active,
 .ks-button-warning.ks-button-active,
 .ks-button-danger.ks-button-active,
 .ks-button-success.ks-button-active,
@@ -218,7 +229,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-primary.ks-button-hover {
+.ks-button-primary.ks-button-hover,
+.ks-button-primary:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -238,6 +250,7 @@
   background-color: #0055cc;
 }
 .ks-button-primary.ks-button-active,
+.ks-button-primary:active,
 .ks-button-primary.ks-button-checked,
 .ks-button-primary.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -292,7 +305,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-warning.ks-button-hover {
+.ks-button-warning.ks-button-hover,
+.ks-button-warning:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -312,6 +326,7 @@
   background-color: #f89406;
 }
 .ks-button-warning.ks-button-active,
+.ks-button-warning:active,
 .ks-button-warning.ks-button-checked,
 .ks-button-warning.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -366,7 +381,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-danger.ks-button-hover {
+.ks-button-danger.ks-button-hover,
+.ks-button-danger:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -386,6 +402,7 @@
   background-color: #bd362f;
 }
 .ks-button-danger.ks-button-active,
+.ks-button-danger:active,
 .ks-button-danger.ks-button-checked,
 .ks-button-danger.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -440,7 +457,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-success.ks-button-hover {
+.ks-button-success.ks-button-hover,
+.ks-button-success:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -460,6 +478,7 @@
   background-color: #51a351;
 }
 .ks-button-success.ks-button-active,
+.ks-button-success:active,
 .ks-button-success.ks-button-checked,
 .ks-button-success.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -514,7 +533,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-info.ks-button-hover {
+.ks-button-info.ks-button-hover,
+.ks-button-info:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -534,6 +554,7 @@
   background-color: #2f96b4;
 }
 .ks-button-info.ks-button-active,
+.ks-button-info:active,
 .ks-button-info.ks-button-checked,
 .ks-button-info.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -588,7 +609,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-.ks-button-inverse.ks-button-hover {
+.ks-button-inverse.ks-button-hover,
+.ks-button-inverse:hover {
   background-position: 0 -15px;
   /*
     transition is only when going to hover, otherwise the background
@@ -608,6 +630,7 @@
   background-color: #222222;
 }
 .ks-button-inverse.ks-button-active,
+.ks-button-inverse:active,
 .ks-button-inverse.ks-button-checked,
 .ks-button-inverse.ks-menu-button-open {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -699,6 +722,9 @@
   border-bottom-right-radius: 6px;
 }
 .ks-button-group .ks-button-hover,
+.ks-button-group .ks-button:hover,
+.ks-button-group .ks-button:focus,
+.ks-button-group .ks-button:active,
 .ks-button-group .ks-button-focused,
 .ks-button-group .ks-button-active {
   z-index: 2;

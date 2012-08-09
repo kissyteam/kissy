@@ -29,7 +29,7 @@
 
         var sb = new Menu.PopupMenu({
             // boolean，是否鼠标脱离菜单后自动隐藏
-            //autoHideOnMouseLeave:true,
+            // autoHideOnMouseLeave:true,
             width:160
         });
 
@@ -38,25 +38,20 @@
         }));
 
         sb.addChild(new Menu.Item({
-            content:"submenuitem2"
+            content:"submenuitem2",
+            disabled:true
         }));
 
         sb.addChild(new Menu.Separator());
 
 
         var sb2 = new Menu.PopupMenu({
-
             // boolean，是否鼠标脱离菜单后自动隐藏
-            //autoHideOnMouseLeave:true,
+            // autoHideOnMouseLeave:true,
             children:[
                 new Menu.Item({
-
                     content:"submenuitem141"})
-            ],
-            // bug elStyle 无效
-            elStyle:{
-                color:"red"
-            }
+            ]
         });
 
         sb2.addChild(new Menu.Item({
@@ -95,7 +90,6 @@
         });
 
         dis[0].checked = false;
-
 
         new Menu({
             render:"#menuitem_container2",
