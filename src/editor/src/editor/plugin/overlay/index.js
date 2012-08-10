@@ -36,11 +36,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
         }
     }, {
         ATTRS:{
-            elAttrs:{
-                value:{
-                    hideFocus:'hideFocus'
-                }
-            },
             prefixCls:{
                 value:"ks-editor-"
             },

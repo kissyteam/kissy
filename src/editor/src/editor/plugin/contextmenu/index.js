@@ -14,9 +14,6 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
-        cfg.elAttrs = {
-            hideFocus:'hideFocus'
-        };
 
         if (cfg.children) {
             S.each(cfg.children, function (c) {

@@ -13,9 +13,6 @@
 *
 * @author yiminghe@gmail.com
 */
-.x {
-  x: y;
-}
 .ks-overlay {
   position: absolute;
   left: -9999px;
@@ -37,6 +34,7 @@
   text-shadow: 0 1px 0 white;
   opacity: 0.2;
   filter: alpha(opacity=20);
+  *zoom: 1;
   position: absolute;
   right: 15px;
   top: 9px;
@@ -47,6 +45,7 @@
 .ks-ext-close:hover {
   opacity: 1;
   filter: alpha(opacity=100);
+  *zoom: 1;
 }
 .ks-ext-close-x {
   display: none;

@@ -2,57 +2,82 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>ComboBox 测试</title>
-
+<title>KISSY Combobox Demo</title>
+<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="assets/dpl.css" rel="stylesheet"/>
+<link href="../menu/assets/dpl.css" rel="stylesheet"/>
 </head>
-<body style="width: 800px;margin: 10px auto;">
-<div>
-    <h1>
-        ComboBox For KISSY
-    </h1>
-
-    <p>
-        简单静态使用:
-        <br>
-        <a href="./demo/static-basic.html" target="_blank"> demo </a>
-    </p>
-
-    <p>
-        简单动态使用:
-        <br>
-        <a href="./demo/xhr-basic.html" target="_blank"> demo </a>
-    </p>
-
-    <p>
-        简单 combobox：
-        <br>
-        <a href="./demo/combobox.html" target="_blank"> demo </a>
-    </p>
-
-    <p>
-        taobao 首页模式：
-        <br>
-        <a href="./demo/fp.html" target="_blank"> demo </a>
-    </p>
-
-    <p>
-        gmail 模式：
-        <br>
-        <a href="./demo/gmail.html" target="_blank"> demo </a>
-    </p>
-
-
-    <p>
-        gmail 光标跟随模式：
-        <br>
-        <a href="./demo/at.html" target="_blank"> demo </a>
-    </p>
-
-    <p>
-        weibo 光标跟随模式：
-        <br>
-        <a href="./demo/at-weibo.html" target="_blank"> demo </a>
-    </p>
+<body>
+<div class="container">
+    <h1>KISSY Combobox</h1>
 </div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width:200,
+            render:'.container',
+            listeners:{
+                "click":function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children:[
+                {
+                    content:"dpl",
+                    href:'demo/dpl/demo.html',
+                    xclass:'menuitem'
+                },
+                {
+                    content:'other',
+                    xclass:'submenu',
+                    menu:{
+                        xclass:'popupmenu',
+                        children:[
+                            {
+                                content:'简单静态使用',
+                                href:'demo/other/static-basic.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'简单动态使用',
+                                href:'demo/other/xhr-basic.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'简单 combobox',
+                                href:'demo/other/combobox.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'taobao 首页模式',
+                                href:'demo/other/fp.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'gmail 模式',
+                                href:'demo/other/gmail.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'gmail 光标跟随模式',
+                                href:'demo/other/at.html',
+                                xclass:'menuitem'
+                            },
+                            {
+                                content:'weibo 光标跟随模式',
+                                href:'demo/other/at-weibo.html',
+                                xclass:'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
 </body>
 </html>

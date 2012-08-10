@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 10:47
+build time: Aug 10 00:30
 */
 KISSY.add("tree/base",function(f,d,c,e,a){return c.extend([d.DelegateChildren,a],{expandAll:function(){return c.prototype.expandAll.apply(this,arguments)}},{ATTRS:{xrender:{value:e}}},{xclass:"tree",priority:30})},{requires:["component","./basenode","./treeRender","./treemgr"]});
 KISSY.add("tree/basenode",function(f,d,c,e){function a(i){var a=i.get("parent"),a=(a=a&&a.get("children"))&&a[a.length-1];return!a||a==i}function b(a){var h=a.get("isLeaf");return!(!1===h||void 0===h&&a.get("children").length)}function g(a){var h=a.get("children");return!a.get("expanded")||!h.length?a:g(h[h.length-1])}function k(i){i.get&&i.get("view")&&i.get("view").refreshCss(a(i),b(i))}function n(a){var h=a.get("children"),b=a.get("children").length;k(a);f.each(h,function(a,i){if(a.get){k(a);var h=
@@ -24,4 +24,4 @@ KISSY.add("tree/checktree",function(f,d,c,e,a){var b=c.extend([d.DelegateChildre
 KISSY.add("tree",function(f,d,c,e,a){d.Node=c;d.CheckNode=e;d.CheckTree=a;return d},{requires:["tree/base","tree/basenode","tree/checknode","tree/checktree"]});KISSY.add("tree/treeRender",function(f,d,c){return d.extend([c])},{requires:["./basenodeRender","./treemgrRender"]});
 KISSY.add("tree/treemgr",function(f,d){function c(){}function e(a){var a=a.get("el"),b=a.attr("id");b||a.attr("id",b=f.guid("tree-node"));return b}c.ATTRS={showRootNode:{value:!0,view:1},selectedItem:{},focusable:{value:!0}};f.augment(c,{__isTree:1,__getAllNodes:function(){this._allNodes||(this._allNodes={});return this._allNodes},_register:function(a){this.__getAllNodes()[e(a)]=a},_unRegister:function(a){delete this.__getAllNodes()[e(a)]},handleKeyEventInternal:function(a){var b=this.get("selectedItem");
 return a.keyCode==d.KeyCodes.ENTER?b.performActionInternal(a):b._keyNav(a)},getOwnerControl:function(a){for(var b,c=this.__getAllNodes(),d=this.get("el")[0];a&&a!==d;){if(b=c[a.id])return b;a=a.parentNode}return this},_uiSetSelectedItem:function(a,b){b.prevVal&&b.prevVal.set("selected",!1);a.set("selected",!0)},_uiSetFocused:function(a){a&&!this.get("selectedItem")&&this.select()}});return c},{requires:["event"]});
-KISSY.add("tree/treemgrRender",function(f){function d(){}d.ATTRS={showRootNode:{}};f.augment(d,{__renderUI:function(){this.get("el").attr("role","tree")[0].hideFocus=!0;this.get("rowEl").addClass("ks-tree-row")},_uiSetShowRootNode:function(c){this.get("rowEl")[c?"show":"hide"]()}});return d});
+KISSY.add("tree/treemgrRender",function(f){function d(){}d.ATTRS={showRootNode:{}};f.augment(d,{__renderUI:function(){this.get("el").attr("role","tree");this.get("rowEl").addClass("ks-tree-row")},_uiSetShowRootNode:function(c){this.get("rowEl")[c?"show":"hide"]()}});return d});

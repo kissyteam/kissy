@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 8 21:26
+build time: Aug 10 00:30
 */
 /**
  * Setup component namespace.
@@ -214,7 +214,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }
         // does not autoRender for view
         delete cfg.autoRender;
-        cfg.ksComponentCss=getComponentCss(self);
+        cfg.ksComponentCss = getComponentCss(self);
         return new Render(cfg);
     }
 
@@ -322,6 +322,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     el = self.getKeyEventTarget();
                 if (focusable) {
                     el.attr("tabIndex", 0)
+                        // remove smart outline in ie
+                        // set outline in style for other standard browser
+                        .attr("hideFocus", true)
                         .on("focus", wrapBehavior(self, "handleFocus"))
                         .on("blur", wrapBehavior(self, "handleBlur"))
                         .on("keydown", wrapBehavior(self, "handleKeydown"));
@@ -666,7 +669,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Containers may set this attribute to disable mouse event handling
                  * in their child component.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 handleMouseEvents:{
                     value:true
@@ -675,7 +678,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component can get focus.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focusable:{
                     value:true,
@@ -686,7 +689,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 allowTextSelection:{
                     // 和 focusable 分离
@@ -697,7 +700,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component can be activated.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 activeable:{
                     value:true
@@ -705,7 +708,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component has focus.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focused:{
                     view:1
@@ -713,7 +716,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is activated.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 active:{
                     view:1
@@ -721,7 +724,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is highlighted.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 highlighted:{
                     view:1
@@ -729,7 +732,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Array of child components
-                 * @type Component.Controller[]
+                 * @type {Component.Controller[]}
                  */
                 children:{
                     value:[]
@@ -737,7 +740,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's prefix css class.
-                 * @type String
+                 * @type {String}
                  */
                 prefixCls:{
                     value:'ks-', // box srcNode need
@@ -746,7 +749,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's parent component.
-                 * @type Component.Controller
+                 * @type {Component.Controller}
                  */
                 parent:{
                     setter:function (p) {
@@ -757,7 +760,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component is disabled.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 disabled:{
                     view:1
@@ -1519,7 +1522,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Align configuration.
-         * @type Object
+         * @type {Object}
          * @field
          * @example
          * <code>
@@ -2128,14 +2131,14 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             {
                 /**
                  * Whether this component is rendered.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 rendered:{
                     value:false
                 },
                 /**
                  * Whether this component 's dom structure is created.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 created:{
                     value:false
@@ -2167,7 +2170,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
                 /**
                  * Plugins
-                 * @type Function[]|Object[]
+                 * @type {Function[]|Object[]}
                  */
                 plugins:{
                     value:[]
@@ -2176,7 +2179,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * Get xclass of current component instance.
                  * Readonly and only for json config.
-                 * @type String
+                 * @type {String}
                  */
                 xclass:{
                     valueFn:function () {
@@ -2366,49 +2369,49 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * component's html content.
          * Note: content and srcNode can not be set both!
-         * @type String|NodeList
+         * @type {String|NodeList}
          */
         content:{
             view:1
         },
         /**
          * component's width
-         * @type Number|String
+         * @type {Number|String}
          */
         width:{
             view:1
         },
         /**
          * component's height
-         * @type Number|String
+         * @type {Number|String}
          */
         height:{
             view:1
         },
         /**
          * css class of component's root element
-         * @type String
+         * @type {String}
          */
         elCls:{
             view:1
         },
         /**
          * name-value pair css style of component's root element
-         * @type Object
+         * @type {Object}
          */
         elStyle:{
             view:1
         },
         /**
          * name-value pair attribute of component's root element
-         * @type Object
+         * @type {Object}
          */
         elAttrs:{
             view:1
         },
         /**
          * archor element where component insert before
-         * @type NodeList
+         * @type {NodeList}
          */
         elBefore:{
             // better named to renderBefore, too late !
@@ -2416,7 +2419,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * readonly. root element of current component
-         * @type NodeList
+         * @type {NodeList}
          */
         el:{
             view:1
@@ -2424,7 +2427,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * archor element where component append to
-         * @type NodeList
+         * @type {NodeList}
          */
         render:{
             view:1
@@ -2432,7 +2435,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * component's visibleMode,use css "display" or "visibility" to show this component
-         * @type String
+         * @type {String}
          */
         visibleMode:{
             view:1
@@ -2440,7 +2443,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * whether this component is visible
-         * @type Boolean
+         * @type {Boolean}
          * @default true
          */
         visible:{
@@ -2450,7 +2453,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type NodeList
+         * @type {NodeList}
          */
         srcNode:{
             view:1
@@ -2699,7 +2702,7 @@ KISSY.add("component/uibase/close", function () {
         /**
          * Whether close button is visible.
          * @default true.
-         * @type Boolean
+         * @type {Boolean}
          */
         closable:{
             view:1
@@ -2715,7 +2718,7 @@ KISSY.add("component/uibase/close", function () {
         /**
          * Whether to destroy or hide current element when click close button.
          * @default "hide". Can set "destroy" to destroy it when click close button.
-         * @type String
+         * @type {String}
          */
         closeAction:{
             value:HIDE
@@ -2827,7 +2830,7 @@ KISSY.add("component/uibase/contentbox", function () {
 
         /**
          * readonly! content box's element of component
-         * @type NodeList
+         * @type {NodeList}
          */
         contentEl:{
             view:1
@@ -2899,7 +2902,7 @@ KISSY.add("component/uibase/drag", function (S) {
     {
         /**
          * Whether current element is draggable.
-         * @type Boolean
+         * @type {Boolean}
          */
         draggable:{
             setter:function (v) {
@@ -3092,7 +3095,7 @@ KISSY.add("component/uibase/mask", function () {
     {
         /**
          * Whether show mask layer when component shows
-         * @type Boolean
+         * @type {Boolean}
          */
         mask:{
             value:false
@@ -3303,21 +3306,21 @@ KISSY.add("component/uibase/position", function (S) {
     {
         /**
          * Horizontal axis
-         * @type Number
+         * @type {Number}
          */
         x:{
             view:1
         },
         /**
          * Vertical axis
-         * @type Number
+         * @type {Number}
          */
         y:{
             view:1
         },
         /**
          * Horizontal and vertical axis.
-         * @type Number[]
+         * @type {Number[]}
          */
         xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
@@ -3343,7 +3346,7 @@ KISSY.add("component/uibase/position", function (S) {
         },
         /**
          * z-index value.
-         * @type Number
+         * @type {Number}
          */
         zIndex:{
             view:1
@@ -3488,7 +3491,7 @@ KISSY.add("component/uibase/resize", function (S) {
          *    handlers:["b","t","r","l","tr","tl","br","bl"]
          *  }
          * </code>
-         * @type Object
+         * @type {Object}
          */
         resize:{
             value:{
@@ -3562,63 +3565,63 @@ KISSY.add("component/uibase/stdmod", function () {
     {
         /**
          * Header element of dialog. Readonly
-         * @type Node
+         * @type {Node}
          */
         header:{
             view:1
         },
         /**
          * Body element of dialog. Readonly
-         * @type Node
+         * @type {Node}
          */
         body:{
             view:1
         },
         /**
          * Footer element of dialog. Readonly
-         * @type Node
+         * @type {Node}
          */
         footer:{
             view:1
         },
         /**
          * Key-value map of body element's style.
-         * @type Object
+         * @type {Object}
          */
         bodyStyle:{
             view:1
         },
         /**
          * Key-value map of footer element's style.
-         * @type Object
+         * @type {Object}
          */
         footerStyle:{
             view:1
         },
         /**
          * Key-value map of header element's style.
-         * @type Object
+         * @type {Object}
          */
         headerStyle:{
             view:1
         },
         /**
          * Html content of header element.
-         * @type NodeList|String
+         * @type {NodeList|String}
          */
         headerContent:{
             view:1
         },
         /**
          * Html content of body element.
-         * @type NodeList|String
+         * @type {NodeList|String}
          */
         bodyContent:{
             view:1
         },
         /**
          * Html content of footer element.
-         * @type NodeList|String
+         * @type {NodeList|String}
          */
         footerContent:{
             view:1

@@ -83,7 +83,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         }
         // does not autoRender for view
         delete cfg.autoRender;
-        cfg.ksComponentCss=getComponentCss(self);
+        cfg.ksComponentCss = getComponentCss(self);
         return new Render(cfg);
     }
 
@@ -191,6 +191,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     el = self.getKeyEventTarget();
                 if (focusable) {
                     el.attr("tabIndex", 0)
+                        // remove smart outline in ie
+                        // set outline in style for other standard browser
+                        .attr("hideFocus", true)
                         .on("focus", wrapBehavior(self, "handleFocus"))
                         .on("blur", wrapBehavior(self, "handleBlur"))
                         .on("keydown", wrapBehavior(self, "handleKeydown"));

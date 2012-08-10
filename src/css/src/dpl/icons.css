@@ -18,9 +18,6 @@
 *
 * @author yiminghe@gmail.com
 */
-.x {
-  x: y;
-}
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;

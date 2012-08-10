@@ -22,9 +22,6 @@
 *
 * @author yiminghe@gmail.com
 */
-.x {
-  x: y;
-}
 /**
 * Variables to customize the look and feel from Bootstrap.
 *
@@ -40,8 +37,10 @@
   vertical-align: top;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
   right: 0;
   border-left: 4px solid black;
   border-bottom: 4px solid transparent;
@@ -50,8 +49,10 @@
 .ks-menuitem-hover .ks-submenu-arrow {
   opacity: 1;
   filter: alpha(opacity=100);
+  *zoom: 1;
   opacity: 1;
   filter: alpha(opacity=100);
+  *zoom: 1;
 }
 .ks-popupmenu {
   position: absolute;
@@ -86,8 +87,6 @@
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
-  *width: 100%;
-  *margin: -5px 0 5px;
 }
 .ks-menu .ks-menuitem {
   position: relative;
@@ -108,14 +107,18 @@
 .ks-menuitem-disabled .ks-menuitem {
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
 }
-.ks-menuitem-disabled {
+.ks-menu .ks-menuitem-disabled {
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
 }
 .ks-menuitem-checked .ks-menuitem-checkbox {
   position: absolute;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 18:59
+build time: Aug 9 23:30
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -330,7 +330,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Input element of current combobox.
-                 * @type NodeList
+                 * @type {NodeList}
                  */
                 input:{
                     view:1
@@ -347,7 +347,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether show combobox trigger.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 hasTrigger:{
                     view:1
@@ -355,7 +355,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * ComboBox dropDown menuList
-                 * @type Menu.PopupMenu
+                 * @type {Menu.PopupMenu}
                  */
                 menu:{
                     value:{
@@ -370,7 +370,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether combobox menu is hidden.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 collapsed:{
                     view:1
@@ -378,7 +378,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * dataSource for comboBox.
-                 * @type ComboBox.LocalDataSource|ComboBox.RemoteDataSource|Object
+                 * @type {ComboBox.LocalDataSource|ComboBox.RemoteDataSource|Object}
                  */
                 dataSource:{
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
@@ -389,7 +389,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * maxItemCount max count of data to be shown
-                 * @type Number
+                 * @type {Number}
                  */
                 maxItemCount:{
                     value:99999
@@ -415,7 +415,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether allow multiple input,separated by separator
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 multiple:{
                 },
@@ -423,7 +423,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Separator chars used to separator multiple inputs.
                  * @default ;,
-                 * @type String
+                 * @type {String}
                  */
                 separator:{
                     value:",;"
@@ -432,7 +432,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Separator type.
                  * After value( 'suffix' ) or before value( 'prefix' ).
-                 * @type String
+                 * @type {String}
                  */
                 separatorType:{
                     value:SUFFIX
@@ -441,7 +441,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether whitespace is part of toke value.
                  * Default true
-                 * @type Boolean
+                 * @type {Boolean}
                  * @private
                  */
                 whitespace:{
@@ -453,7 +453,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether update input's value at keydown or up when combobox menu shows.
                  * Default true
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 updateInputOnDownUp:{
                     value:true
@@ -462,7 +462,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * If separator wrapped by literal chars,separator become normal chars.
                  * @default "
-                 * @type String
+                 * @type {String}
                  */
                 literal:{
                     value:"\""
@@ -471,7 +471,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether align menu with individual token after separated by separator.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 alignWithCursor:{
                 },
@@ -479,7 +479,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether or not the first row should be highlighted by default.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 autoHighlightFirst:{
                 },
@@ -869,7 +869,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
     {
         /**
          * array of static data for comboBox
-         * @type Object[]
+         * @type {Object[]}
          */
         data:{
             value:[]
@@ -877,7 +877,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         /**
          * parse data function.
          * @default index of match.
-         * @type Function
+         * @type {Function}
          */
         parse:{
             value:parser
@@ -938,7 +938,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
     {
         /**
          * Used as parameter name to send combobox input's value to server
-         * @type String
+         * @type {String}
          */
         paramName:{
             value:'q'
@@ -946,24 +946,24 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
         /**
          * whether send empty to server when input val is empty.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         allowEmpty:{},
         /**
          * Whether server response data is cached.
          * @default false
-         * @type Boolean
+         * @type {Boolean}
          */
         cache:{},
         /**
          * Serve as a parse function to parse server
          * response to return a valid array of data for comboBox.
-         * @type Function
+         * @type {Function}
          */
         parse:{},
         /**
          * IO configuration.same as {@link} IO
-         * @type Object
+         * @type {Object}
          */
         xhrCfg:{
             value:{}
