@@ -468,7 +468,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * Sorts an array of DOM elements, in place, with the duplicates removed.
              * Note that this only works on arrays of DOM elements, not strings or numbers.
              * @param {HTMLElement[]} The Array of DOM elements.
-             * @function
+             * @method
              * @return {HTMLElement[]}
              */
             unique:unique,

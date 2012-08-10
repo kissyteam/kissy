@@ -30,7 +30,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseenter event object.
              * @protected
-             * @override
+             *
              */
             handleMouseEnter:function (e) {
                 // 父亲不允许自己处理
@@ -45,7 +45,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseleave event object.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function (e) {
                 // 父亲不允许自己处理
@@ -61,7 +61,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * If checkable, then toggle it.
              * Finally fire click on its parent menu.
              * @protected
-             * @override
+             *
              */
             performActionInternal:function () {
                 var self = this;

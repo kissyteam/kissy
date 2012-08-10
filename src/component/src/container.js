@@ -23,7 +23,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
             /**
              * Generate child component from root element.
              * @protected
-             * @function
+             * @method
              * @name decorateInternal
              * @memberOf Component.Container#
              * @param {NodeList} element Root element of current component.
@@ -33,7 +33,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * Get child component which contains current event target node.             *
              * @protected
              * @name getOwnerControl
-             * @function
+             * @method
              * @memberOf Component.Container#
              * @param {HTMLElement} target Current event target node.
              */

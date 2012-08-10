@@ -86,7 +86,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 		ATTRS : {
 			/**
 			* @private 
-			* @override
+			*
 			*/	
 			focusable:{
 				value : false

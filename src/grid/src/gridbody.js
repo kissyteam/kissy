@@ -618,7 +618,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             /**
              * when setting the component width,the table's width also changed
              * @private
-             * @override
+             *
              */
             _uiSetWidth:function () {
                 var _self = this;

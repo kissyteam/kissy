@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview simple loader from KISSY<=1.2
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -9,7 +10,7 @@
     }
 
     var Loader = S.Loader,
-        Path= S.Path,
+        Path = S.Path,
         utils = Loader.Utils;
 
 
@@ -32,10 +33,11 @@
              * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
              * @param {Object} [config] special config for this add
              * @param {String[]} [config.requires] array of mod's name that current module requires
-             * @example
-             * <code>
-             * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-             * </code>
+             * @member KISSY.Loader
+             *
+             * for example:
+             *      @example
+             *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
              */
             add:function (name, fn, config) {
                 var self = this,
@@ -193,43 +195,43 @@
 
 })(KISSY);
 
-/**
- * 2012-02-21 yiminghe@gmail.com refactor:
- *
- * 拆分 ComboLoader 与 Loader
- *
- * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
- *
- * adopt requirejs :
- *
- * 1. packages(cfg) , cfg :{
- *    name : 包名，用于指定业务模块前缀
- *    path: 前缀包名对应的路径
- *    charset: 该包下所有文件的编码
- *
- * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
- *    moduleName add 时可以不写
- *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
- *
- * 3. S.use(["dom"],function(S,DOM){
- *    });
- *    依赖注入，发生于 add 和 use 时期
- *
- * 4. add,use 不支持 css loader ,getScript 仍然保留支持
- *
- * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
- *
- * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
- *
- * 2011-03-01 yiminghe@gmail.com note:
- *
- * compatibility
- *
- * 1. 保持兼容性，不得已而为之
- *      支持 { host : }
- *      如果 requires 都已经 attached，支持 add 后立即 attach
- *      支持 { attach : false } 显示控制 add 时是否 attach
- *      支持 { global : Editor } 指明模块来源
- *
- * 2011-05-04 初步拆分文件，tmd 乱了
+/*
+ 2012-02-21 yiminghe@gmail.com refactor:
+
+ 拆分 ComboLoader 与 Loader
+
+ 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
+
+ adopt requirejs :
+
+ 1. packages(cfg) , cfg :{
+ name : 包名，用于指定业务模块前缀
+ path: 前缀包名对应的路径
+ charset: 该包下所有文件的编码
+
+ 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
+ moduleName add 时可以不写
+ depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+
+ 3. S.use(["dom"],function(S,DOM){
+ });
+ 依赖注入，发生于 add 和 use 时期
+
+ 4. add,use 不支持 css loader ,getScript 仍然保留支持
+
+ 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
+
+ demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+
+ 2011-03-01 yiminghe@gmail.com note:
+
+ compatibility
+
+ 1. 保持兼容性，不得已而为之
+ 支持 { host : }
+ 如果 requires 都已经 attached，支持 add 后立即 attach
+ 支持 { attach : false } 显示控制 add 时是否 attach
+ 支持 { global : Editor } 指明模块来源
+
+ 2011-05-04 初步拆分文件，tmd 乱了
  */

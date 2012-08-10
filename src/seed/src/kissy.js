@@ -1,23 +1,28 @@
-/*
+/**
+ * @ignore
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
     /**
-     * @namespace The KISSY global namespace object. you can use
+     * The KISSY global namespace object. you can use
      * <code>
      *     KISSY.each/mix
      * </code>
      * to do basic operation.
+     *
      * or
+     *
+     *
      * <code>
      *      KISSY.use("overlay,node",function(S,Overlay,Node){
      *          //
      *      })
      * </code>
      * to do complex task with modules.
-     * @name KISSY
+     * @static
      */
+    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -37,8 +42,7 @@
         meta = {
             /**
              * Copies all the properties of s to r.
-             * @name KISSY.mix
-             * @function
+             * @method
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
              * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
@@ -48,13 +52,13 @@
              * @param {String[]} [wl] array of white-list properties
              * @param [deep=false] {Boolean} whether recursive mix if encounter object.
              * @return {Object} the augmented object
-             * @example
-             * <code>
-             * var t={};
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
-             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
-             * </code>
+             *
+             * for example:
+             *     @example
+             *     var t={};
+             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
+             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
+             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              */
             mix:function (r, s, ov, wl, deep) {
                 if (typeof ov === 'object') {
@@ -164,17 +168,16 @@
     S = host[S] = meta.mix(seed, meta);
 
     S.mix(KISSY,
-        /**
-         * @lends KISSY
-         */
         {
             /**
+             * Config function.
              * @private
              */
             configs:(S.configs || {}),
 
             /**
              * The version of the library.
+             * NOTICE: '@VERSION@' will replace with current version when compressing.
              * @type {String}
              */
             version:'@VERSION@',
@@ -282,12 +285,7 @@
                 return r;
             },
 
-            /****************************************************************************************
-
-             *                            The KISSY System Framework                                *
-
-             ****************************************************************************************/
-
+            // The KISSY System Framework
 
             /**
              * Returns the namespace specified and creates it if it doesn't exist. Be careful
@@ -317,30 +315,28 @@
 
             /**
              * set KISSY configuration
-             * @param {Object|String}   c Config object or config key.
-             * @param {String} c.base   KISSY 's base path.
-             *                          Default: get from kissy(-min).js or seed(-min).js
-             * @param {String} c.tag    KISSY 's timestamp for native module.
-             *                          Default: KISSY 's build time.
-             * @param {Boolean} c.debug     whether to enable debug mod.
-             * @param {Boolean} c.combine   whether to enable combo.
-             * @param {Object} c.packages Packages definition with package name as the key.
-             * @param {String} c.packages.base    Package base path.
-             * @param {String} c.packages.tag     Timestamp for this package's module file.
-             * @param {String} c.packages.debug     Whether force debug mode for current package.
-             * @param {String} c.packages.combine     Whether allow combine for current package modules.
-             * @param {Array[]} c.map file map      File url map configs.
-             * @param {Array[]} c.map.0     A single map rule.
-             * @param {RegExp} c.map.0.0    A regular expression to match url.
-             * @param {String|Function} c.map.0.1   Replacement for String.replace.
-             * @param [v] config value.
-             * @example
-             * // use gallery from cdn
-             * <code>
-             * KISSY.config({
-             *      combine:true,
-             *      base:'',
-             *      packages:{
+             * @param {Object|String}   configName Config object or config key.
+             * @param {String} configName.base   KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
+             * @param {String} configName.tag    KISSY 's timestamp for native module. Default: KISSY 's build time.
+             * @param {Boolean} configName.debug     whether to enable debug mod.
+             * @param {Boolean} configName.combine   whether to enable combo.
+             * @param {Object} configName.packages Packages definition with package name as the key.
+             * @param {String} configName.packages.base    Package base path.
+             * @param {String} configName.packages.tag     Timestamp for this package's module file.
+             * @param {String} configName.packages.debug     Whether force debug mode for current package.
+             * @param {String} configName.packages.combine     Whether allow combine for current package modules.
+             * @param {Array[]} configName.map file map      File url map configs.
+             * @param {Array[]} configName.map.0     A single map rule.
+             * @param {RegExp} configName.map.0.0    A regular expression to match url.
+             * @param {String|Function} configName.map.0.1   Replacement for String.replace.
+             * @param [configValue] config value.
+             *
+             * for example:
+             *     @example
+             *     KISSY.config({
+             *      combine: true,
+             *      base: '',
+             *      packages: {
              *          "gallery":{
              *              base:"http://a.tbcdn.cn/s/kissy/gallery/"
              *          }
@@ -350,19 +346,9 @@
              *              requires:["gallery/x/z"]
              *          }
              *      }
-             * });
-             * </code>
-             * // use map to reduce connection count
-             * <code>
-             * S.config("map",[
-             *  [
-             *   /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
-             *   "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"
-             *  ]
-             * ]);
-             * </code>
+             *     });
              */
-            config:function (c, v) {
+            config: function (configName, configValue) {
                 var cfg,
                     r,
                     self = this,
@@ -371,13 +357,13 @@
                     p,
                     Config = S.Config,
                     configs = S.configs;
-                if (S.isObject(c)) {
-                    for (p in c) {
-                        if (c.hasOwnProperty(p)) {
+                if (S.isObject(configName)) {
+                    for (p in configName) {
+                        if (configName.hasOwnProperty(p)) {
                             runs.push({
                                 name:p,
                                 order:configs[p] && configs[p].order || 0,
-                                value:c[p]
+                                value:configName[p]
                             });
                         }
                     }
@@ -388,27 +374,27 @@
 
                     S.each(runs, function (r) {
                         fn = configs[p = r.name];
-                        v = r.value;
+                        configValue = r.value;
                         if (fn) {
-                            fn.call(self, v);
+                            fn.call(self, configValue);
                         } else {
-                            Config[p] = v;
+                            Config[p] = configValue;
                         }
                     });
 
                 } else {
-                    cfg = configs[c];
-                    if (v === undefined) {
+                    cfg = configs[configName];
+                    if (configValue === undefined) {
                         if (cfg) {
                             r = cfg.call(self);
                         } else {
-                            r = Config[c];
+                            r = Config[configName];
                         }
                     } else {
                         if (cfg) {
-                            r = cfg.call(self, v);
+                            r = cfg.call(self, configValue);
                         } else {
-                            Config[c] = v;
+                            Config[configName] = configValue;
                         }
                     }
                 }
@@ -477,19 +463,33 @@
             }
         });
 
-    /**
-     * Initializes
-     */
+
+    // Initializes
     (function () {
         var c;
-        S.Env = S.Env || {};
-        c = S.Config = S.Config || {};
-        // NOTICE: '@DEBUG@' will replace with '' when compressing.
-        // So, if loading source file, debug is on by default.
-        // If loading min version, debug is turned off automatically.
-        c.debug = '@DEBUG@';
         /**
-         * The build time of the library
+         * KISSY Environment.
+         * @private
+         * @type {Object}
+         */
+        S.Env = S.Env || {};
+        /**
+         * KISSY Config.
+         * If load kissy.js, Config.debug defaults to true.
+         * Else If load kissy-min.js, Config.debug defaults to false.
+         * @private
+         * @property {Object} Config
+         * @property {Boolean} Config.debug
+         * @member KISSY
+         */
+        c = S.Config = S.Config || {};
+
+        c.debug = '@DEBUG@';
+
+        /**
+         * The build time of the library.
+         * NOTICE: '@TIMESTAMP@' will replace with current timestamp when compressing.
+         * @private
          * @type {String}
          */
         S.__BUILD_TIME = '@TIMESTAMP@';

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Default KISSY Gallery and core alias.
  * @author yiminghe@gmail.com
  */

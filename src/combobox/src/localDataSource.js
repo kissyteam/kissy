@@ -61,7 +61,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         {
         /**
          * Data source interface. How to get data for comboBox
-         * @function
+         * @method
          * @name ComboBox.LocalDataSource#fetchData
          * @param {String} inputVal current active input's value
          * @param {Function} callback callback to notify comboBox when data is ready

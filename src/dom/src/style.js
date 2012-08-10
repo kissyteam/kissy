@@ -371,21 +371,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
             /**
              * Get the current computed width for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @returns {Number}
              */
             innerWidth:0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @returns {Number}
              */
             innerHeight:0,
             /**
              *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
              * @returns {Number}
@@ -393,7 +393,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             outerWidth:0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
              * @returns {Number}
@@ -403,7 +403,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Get the current computed width for the first element in the set of matched elements.
              * or
              * Set the CSS width of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
@@ -414,7 +414,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Get the current computed height for the first element in the set of matched elements.
              * or
              * Set the CSS height of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).

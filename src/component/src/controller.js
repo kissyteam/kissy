@@ -43,6 +43,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     /**
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
+     * @ignore
      */
     function constructView(self) {
         // 逐层找默认渲染器
@@ -122,29 +123,26 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     }
 
     /**
-     * @memberOf Component
-     * @name Controller
-     * @extends Component.UIBase
-     * @extends Component.UIBase.Box
-     * @class
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
+     * @extends Component.UIBase
+     * @mixins Component.UIBase.Box
+     * @class Component.Controller
      */
     var Controller = UIBase.extend([UIBase.Box],
-        /** @lends Component.Controller# */
         {
 
             /**
              * Get full class name for current component
              * @param classes {String} class names without prefixCls. Separated by space.
-             * @function
+             * @method
+             * @protected
              * @return {String} class name with prefixCls
              */
             getCssClassWithPrefix:Manager.getCssClassWithPrefix,
 
             /**
-             * From UIBase, Initialize this component.
-             * @override
+             * From UIBase, Initialize this component.             *
              * @protected
              */
             initializer:function () {
@@ -155,7 +153,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * From UIBase. Constructor(or get) view object to create ui elements.
              * @protected
-             * @override
+             *
              */
             createDom:function () {
                 var self = this,
@@ -171,7 +169,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * From UIBase. Call view object to render ui elements.
              * @protected
-             * @override
+             *
              */
             renderUI:function () {
                 var self = this, i, children, child;
@@ -244,7 +242,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             /**
              * 子组件将要渲染到的节点，在 render 类上覆盖对应方法
-             * @private
+             * @ignore
              */
             getContentElement:function () {
                 return this.get('view').getContentElement();
@@ -252,7 +250,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             /**
              * 焦点所在元素即键盘事件处理元素，在 render 类上覆盖对应方法
-             * @private
+             * @ignore
              */
             getKeyEventTarget:function () {
                 return this.get('view').getKeyEventTarget();
@@ -528,10 +526,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             }
         },
         {
-            ATTRS:/**
-             * @lends Component.Controller#
-             */
-            {
+            ATTRS:{
 
                 /**
                  * Enables or disables mouse event handling for the component.
@@ -539,6 +534,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * in their child component.
                  * @default true.
                  * @type {Boolean}
+                 * @protected
                  */
                 handleMouseEvents:{
                     value:true
@@ -547,6 +543,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component can get focus.
                  * @default true.
+                 * @protected
                  * @type {Boolean}
                  */
                 focusable:{
@@ -557,8 +554,16 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
-                 * @default false
+                 *
+                 * Defaults to: false.
                  * @type {Boolean}
+                 * @property allowTextSelection
+                 * @protected
+                 */
+
+
+                /**
+                 * @ignore
                  */
                 allowTextSelection:{
                     // 和 focusable 分离
@@ -570,6 +575,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Whether this component can be activated.
                  * @default true.
                  * @type {Boolean}
+                 * @protected
                  */
                 activeable:{
                     value:true
@@ -635,6 +641,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     view:1
                 },
 
+                /**
+                 * Render class.
+                 * @protected
+                 * @type {Component.Render}
+                 */
                 xrender:{
                     value:Render
                 }
@@ -647,47 +658,47 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 }, {
     requires:['event', './base', './uibase', './manager', './render']
 });
-/**
- * 事件冒泡机制
- *  - child 组件的冒泡源配置为其所属的 parent
- *  - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡
- *
- * view 和 controller 的平行关系
- *  - controller 初始化 -> initializer -> new view()
- *  - controller createDom -> createDom -> view.createDom()
- *  - controller renderUI -> renderUI -> view.render()
- *
- *
- * 控制层元属性配置中 view 的作用
- *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
- *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
- *
- *
- * observer synchronization, model 分成两类
- *  - view 负责监听 view 类 model 变化更新界面
- *  - control 负责监听 control 类变化改变逻辑
- *
- *
- *
- * problem: Observer behavior is hard to understand and debug
- * because it's implicit behavior.
- *
- * Keeping screen state and session state synchronized is an important task
- * Data Binding.
- *
- * In general data binding gets tricky
- * because if you have to avoid cycles where a change to the control,
- * changes the record set, which updates the control,
- * which updates the record set....
- * The flow of usage helps avoid these -
- * we load from the session state to the screen when the screen is opened,
- * after that any changes to the screen state propagate back to the session state.
- * It's unusual for the session state to be updated directly once the screen is up.
- * As a result data binding might not be entirely bi-directional -
- * just confined to initial upload and
- * then propagating changes from the controls to the session state.
- *
- *  Refer
- *    - http://martinfowler.com/eaaDev/uiArchs.html
- *
- **/
+/*
+ 事件冒泡机制
+ - child 组件的冒泡源配置为其所属的 parent
+ - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡
+
+ view 和 controller 的平行关系
+ - controller 初始化 -> initializer -> new view()
+ - controller createDom -> createDom -> view.createDom()
+ - controller renderUI -> renderUI -> view.render()
+
+
+ 控制层元属性配置中 view 的作用
+ - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
+ - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
+
+
+ observer synchronization, model 分成两类
+ - view 负责监听 view 类 model 变化更新界面
+ - control 负责监听 control 类变化改变逻辑
+
+
+
+ problem: Observer behavior is hard to understand and debug
+ because it's implicit behavior.
+
+ Keeping screen state and session state synchronized is an important task
+ Data Binding.
+
+ In general data binding gets tricky
+ because if you have to avoid cycles where a change to the control,
+ changes the record set, which updates the control,
+ which updates the record set....
+ The flow of usage helps avoid these -
+ we load from the session state to the screen when the screen is opened,
+ after that any changes to the screen state propagate back to the session state.
+ It's unusual for the session state to be updated directly once the screen is up.
+ As a result data binding might not be entirely bi-directional -
+ just confined to initial upload and
+ then propagating changes from the controls to the session state.
+
+ Refer
+ - http://martinfowler.com/eaaDev/uiArchs.html
+
+ */

@@ -124,7 +124,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
 
         /**
          * 子类覆盖，如何从flash url得到合适的应用表示地址
-         * @override
+         *
          * @param r flash 元素
          */
         _getFlashUrl:function (r) {
@@ -132,7 +132,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
         },
         /**
          * 更新泡泡弹出的界面，子类覆盖
-         * @override
+         *
          * @param tipUrlElEl
          * @param selectedFlash
          */

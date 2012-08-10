@@ -16,7 +16,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
      */
     var columnRender = Component.Render.extend({
         /**
-         * @override
+         *
          */
         renderUI:function () {
             this._setContent();
@@ -233,7 +233,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The width of this component in pixels.
-                 * @override
+                 *
                  * @type {Number}
                  * @default {Number} 80
                  */

@@ -62,7 +62,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
              * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
 

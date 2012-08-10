@@ -199,25 +199,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docWidth:0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docHeight:0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportHeight:0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportWidth:0,
             /**
@@ -226,7 +226,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollTop:0,
             /**
@@ -235,7 +235,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollLeft:0
         });

@@ -20,7 +20,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		/**
 		* get the initial items of paging bar
 		* @protected
-		* @override
+		*
 		*/
 		_getItems : function(){
 			var _self = this,
@@ -53,7 +53,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		/**
 		* bind buttons event
 		* @protected
-		* @override
+		*
 		*/
 		_bindButtonEvent : function(){
 			var _self = this,
@@ -158,7 +158,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		ATTRS:{
 			/**
 			* the text for skip page button
-			* @override
+			*
 			* @default {String} "确定"
 			*/
 			skipText : {
@@ -191,7 +191,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			},
 			/**
 			* the template of current page info
-			* @override
+			*
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
 			curPageTpl : {

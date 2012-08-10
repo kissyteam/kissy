@@ -274,13 +274,13 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param {Object} attrConfig The config supports the following properties
              * @param [attrConfig.value] simple object or system native object
              * @param [attrConfig.valueFn] a function which can return current attribute's default value
-             * @param {Function(*)} [attrConfig.setter] call when set attribute's value
+             * @param {Function} [attrConfig.setter] call when set attribute's value
              *                                          pass current attribute's value as parameter
              *                                          if return value is not undefined,set returned value as real value
-             * @param {Function(*)} [attrConfig.getter] call when get attribute's value
+             * @param {Function} [attrConfig.getter] call when get attribute's value
              *                                          pass current attribute's value as parameter
              *                                          return getter's returned value to invoker
-             * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
+             * @param {Function} [attrConfig.validator]  call before set attribute's value
              *                                              if return false,cancel this set action
              * @param {Boolean} [override] whether override existing attribute config ,default true
              */

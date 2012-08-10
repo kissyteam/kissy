@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
@@ -10,16 +11,15 @@
     var Path = S.Path;
 
     /**
-     * @class KISSY Loader constructor
+     * @class KISSY.Loader
+     * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
-     * @memberOf KISSY
      */
     function Loader(SS) {
         this.SS = SS;
         /**
-         * @name KISSY.Loader#afterModAttached
-         * @description fired after a module is attached
-         * @event
+         * @event afterModAttached
+         * fired after a module is attached
          * @param e
          * @param {KISSY.Loader.Module} e.mod current module object
          */
@@ -28,19 +28,14 @@
     KISSY.Loader = Loader;
 
     /**
-     * @name Package
-     * @class KISSY Package constructor
+     * @class KISSY.Loader.Package
      * This class should not be instantiated manually.
-     * @memberOf KISSY.Loader
      */
     function Package(cfg) {
         S.mix(this, cfg);
     }
 
     S.augment(Package,
-        /**
-         * @lends KISSY.Loader.Package#
-         */
         {
             /**
              * Tag for package.
@@ -104,18 +99,14 @@
     Loader.Package = Package;
 
     /**
-     * @class KISSY Module constructor
+     * @class KISSY.Loader.Module
      * This class should not be instantiated manually.
-     * @memberOf KISSY.Loader
      */
     function Module(cfg) {
         S.mix(this, cfg);
     }
 
     S.augment(Module,
-        /**
-         * @lends KISSY.Loader.Module#
-         */
         {
             /**
              * Set the value of current module
@@ -125,6 +116,10 @@
                 this.value = v;
             },
 
+            /**
+             * Get the type if current Module
+             * @return {String} css or js
+             */
             getType:function () {
                 var self = this, v;
                 if ((v = self.type) === undefined) {
@@ -154,6 +149,10 @@
                 return self.fullpath;
             },
 
+            /**
+             * Get the path (without package base)
+             * @return {String}
+             */
             getPath:function () {
                 var self = this;
                 return self.path ||
@@ -206,6 +205,7 @@
 
     Loader.Module = Module;
 
+
     function defaultComponentJsName(m) {
         var name = m.name,
             extname = (Path.extname(name) || "").toLowerCase(),
@@ -252,15 +252,23 @@
         return packageDesc;
     }
 
-    // 模块(mod)状态
+    /**
+     * Loader Status Enum
+     * @enum {Number} KISSY.Loader.STATUS
+     */
     Loader.STATUS = {
+        /** init */
         "INIT":0,
+        /** loading */
         "LOADING":1,
+        /** loaded */
         "LOADED":2,
+        /** error */
         "ERROR":3,
+        /** attached */
         "ATTACHED":4
     };
 })(KISSY);
-/**
- * TODO: implement conditional loader
+/*
+ TODO: implement conditional loader
  */

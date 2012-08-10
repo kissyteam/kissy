@@ -618,7 +618,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
     /**
      * Load lazyload textarea and imgs manually.
      * @name loadCustomLazyData
-     * @function
+     * @method
      * @memberOf DataLazyload
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"

@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview   lang
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @description this code can run in any ecmascript compliant environment
+ */
+(function (S, undefined) {
+
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
+
+    var TRUE = true,
+        FALSE = false,
+        OP = Object.prototype,
+        toString = OP.toString,
+        AP = Array.prototype,
+        indexOf = AP.indexOf,
+        lastIndexOf = AP.lastIndexOf,
+        filter = AP.filter,
+        every = AP.every,
+        some = AP.some,
+    //reduce = AP.reduce,
+        trim = String.prototype.trim,
+        map = AP.map,
+        EMPTY = '',
+        HEX_BASE = 16,
+        CLONE_MARKER = '__~ks_cloned',
+        COMPARE_MARKER = '__~ks_compared',
+        STAMP_MARKER = '__~ks_stamped',
+    // IE doesn't include non-breaking-space (0xa0) in their \s character
+    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+    // include it in the regexp to enforce consistent cross-browser behavior.
+        RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent,
+        SEP = '&amp;',
+        EQ = '=',
+    // [[Class]] -&gt; type pairs
+        class2type = {},
+    // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+        htmlEntities = {
+            '&amp;amp;':'&amp;',
+            '&amp;gt;':'&gt;',
+            '&amp;lt;':'&lt;',
+            '&amp;#x60;':'`',
+            '&amp;#x2F;':'/',
+            '&amp;quot;':'&quot;',
+            '&amp;#x27;':&quot;'&quot;
+        },
+        reverseEntities = {},
+        escapeReg,
+        unEscapeReg,
+    // - # $ ^ * ( ) + [ ] { } | \ , . ?
+        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+    (function () {
+        for (var k in htmlEntities) {
+            if (htmlEntities.hasOwnProperty(k)) {
+                reverseEntities[htmlEntities[k]] = k;
+            }
+        }
+    })();
+
+    function getEscapeReg() {
+        if (escapeReg) {
+            return escapeReg
+        }
+        var str = EMPTY;
+        S.each(htmlEntities, function (entity) {
+            str += entity + '|';
+        });
+        str = str.slice(0, -1);
+        return escapeReg = new RegExp(str, &quot;g&quot;);
+    }
+
+    function getUnEscapeReg() {
+        if (unEscapeReg) {
+            return unEscapeReg
+        }
+        var str = EMPTY;
+        S.each(reverseEntities, function (entity) {
+            str += entity + '|';
+        });
+        str += '&amp;#(\\d{1,5});';
+        return unEscapeReg = new RegExp(str, &quot;g&quot;);
+    }
+
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return true.
+        return val == null || (t !== 'object' &amp;&amp; t !== 'function');
+    }
+
+
+    S.mix(S,
+<span id=''>        /**
+</span>         * @class
+         * @override KISSY
+         */
+        {
+
+<span id='KISSY-method-stamp'>            /**
+</span>             * stamp a object by guid
+             * @param {Object} o object needed to be stamped
+             * @param {Boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {String} [marker] the marker will be set on Object
+             * @return {String} guid associated with this object
+             */
+            stamp:function (o, readOnly, marker) {
+                if (!o) {
+                    return o
+                }
+                marker = marker || STAMP_MARKER;
+                var guid = o[marker];
+                if (guid) {
+                    return guid;
+                } else if (!readOnly) {
+                    try {
+                        guid = o[marker] = S.guid(marker);
+                    }
+                    catch (e) {
+                        guid = undefined;
+                    }
+                }
+                return guid;
+            },
+
+<span id='KISSY-method-noop'>            /**
+</span>             * empty function
+             */
+            noop:function () {
+            },
+
+<span id='KISSY-method-type'>            /**
+</span>             * Determine the internal JavaScript [[Class]] of an object.
+             */
+            type:function (o) {
+                return o == null ?
+                    String(o) :
+                    class2type[toString.call(o)] || 'object';
+            },
+
+<span id='KISSY-method-isNull'>            /**
+</span>             * whether o === null
+             * @param o
+             */
+            isNull:function (o) {
+                return o === null;
+            },
+
+<span id='KISSY-method-isUndefined'>            /**
+</span>             * whether o === undefined
+             * @param o
+             */
+            isUndefined:function (o) {
+                return o === undefined;
+            },
+
+<span id='KISSY-method-isEmptyObject'>            /**
+</span>             * Checks to see if an object is empty.
+             */
+            isEmptyObject:function (o) {
+                for (var p in o) {
+                    if (p !== undefined) {
+                        return FALSE;
+                    }
+                }
+                return TRUE;
+            },
+
+<span id='KISSY-method-isPlainObject'>            /**
+</span>             * Checks to see if an object is a plain object (created using &quot;{}&quot;
+             * or &quot;new Object()&quot; or &quot;new FunctionClass()&quot;).
+             */
+            isPlainObject:function (o) {
+                /*
+                 note by yiminghe
+                 isPlainObject(node=document.getElementById(&quot;xx&quot;)) -&gt; false
+                 toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+                 'isPrototypeOf' in node : ie678 === false ,other === true
+                 refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+                 */
+                return o &amp;&amp; toString.call(o) === '[object Object]' &amp;&amp; 'isPrototypeOf' in o;
+            },
+
+
+<span id='KISSY-method-equals'>            /**
+</span>             * Checks to see whether two object are equals.
+             * @param a 比较目标1
+             * @param b 比较目标2
+             * @returns {Boolean} a.equals(b)
+             */
+            equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+                // inspired by jasmine
+                mismatchKeys = mismatchKeys || [];
+                mismatchValues = mismatchValues || [];
+
+                if (a === b) {
+                    return TRUE;
+                }
+                if (a === undefined || a === null || b === undefined || b === null) {
+                    // need type coercion
+                    return a == null &amp;&amp; b == null;
+                }
+                if (a instanceof Date &amp;&amp; b instanceof Date) {
+                    return a.getTime() == b.getTime();
+                }
+                if (S.isString(a) &amp;&amp; S.isString(b)) {
+                    return (a == b);
+                }
+                if (S.isNumber(a) &amp;&amp; S.isNumber(b)) {
+                    return (a == b);
+                }
+                if (typeof a === &quot;object&quot; &amp;&amp; typeof b === &quot;object&quot;) {
+                    return compareObjects(a, b, mismatchKeys, mismatchValues);
+                }
+                // Straight check
+                return (a === b);
+            },
+
+<span id='KISSY-method-clone'>            /**
+</span>             * Creates a deep copy of a plain object or array. Others are returned untouched.
+             * @param input
+             * @param {Function} [filter] filter function
+             * @returns {Object} the new cloned object
+             * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+             */
+            clone: function (input, filter) {
+                // 稍微改改就和规范一样了 :)
+                // Let memory be an association list of pairs of objects,
+                // initially empty. This is used to handle duplicate references.
+                // In each pair of objects, one is called the source object
+                // and the other the destination object.
+                var memory = {},
+                    ret = cloneInternal(input, filter, memory);
+                S.each(memory, function (v) {
+                    // 清理在源对象上做的标记
+                    v = v.input;
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            S.log(&quot;delete CLONE_MARKER error : &quot;);
+                            v[CLONE_MARKER] = undefined;
+                        }
+                    }
+                });
+                memory = null;
+                return ret;
+            },
+
+<span id='KISSY-method-trim'>            /**
+</span>             * Removes the whitespace from the beginning and end of a string.
+             * @method
+             */
+            trim:trim ?
+                function (str) {
+                    return str == null ? EMPTY : trim.call(str);
+                } :
+                function (str) {
+                    return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                },
+
+<span id='KISSY-method-substitute'>            /**
+</span>             * Substitutes keywords in a string using an object/array.
+             * Removes undefined keywords and ignores escaped keywords.
+             * @param {String} str template string
+             * @param {Object} o json data
+             * @param {RegExp} [regexp] to match a piece of template string
+             */
+            substitute:function (str, o, regexp) {
+                if (!S.isString(str)
+                    || !S.isPlainObject(o)) {
+                    return str;
+                }
+
+                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+                    if (match.charAt(0) === '\\') {
+                        return match.slice(1);
+                    }
+                    return (o[name] === undefined) ? EMPTY : o[name];
+                });
+            },
+
+<span id='KISSY-method-each'>            /**
+</span>             * Executes the supplied function on each item in the array.
+             * @param object {Object} the object to iterate
+             * @param fn {Function} the function to execute on each item. The function
+             *        receives three arguments: the value, the index, the full array.
+             * @param {Object} [context]
+             */
+            each:function (object, fn, context) {
+                if (object) {
+                    var key,
+                        val,
+                        i = 0,
+                        length = object &amp;&amp; object.length,
+                        isObj = length === undefined || S.type(object) === 'function';
+
+                    context = context || null;
+
+                    if (isObj) {
+                        for (key in object) {
+                            // can not use hasOwnProperty
+                            if (fn.call(context, object[key], key, object) === FALSE) {
+                                break;
+                            }
+                        }
+                    } else {
+                        for (val = object[0];
+                             i &lt; length &amp;&amp; fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
+                        }
+                    }
+                }
+                return object;
+            },
+
+<span id='KISSY-method-indexOf'>            /**
+</span>             * Search for a specified value within an array.
+             * @param item individual item to be searched
+             * @method
+             * @param {Array} arr the array of items where item will be search
+             * @returns {number} item's index in array
+             */
+            indexOf:indexOf ?
+                function (item, arr) {
+                    return indexOf.call(arr, item);
+                } :
+                function (item, arr) {
+                    for (var i = 0, len = arr.length; i &lt; len; ++i) {
+                        if (arr[i] === item) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                },
+
+<span id='KISSY-method-lastIndexOf'>            /**
+</span>             * Returns the index of the last item in the array
+             * that contains the specified value, -1 if the
+             * value isn't found.
+             * @method
+             * @param item individual item to be searched
+             * @param {Array} arr the array of items where item will be search
+             * @returns {number} item's last index in array
+             */
+            lastIndexOf:(lastIndexOf) ?
+                function (item, arr) {
+                    return lastIndexOf.call(arr, item);
+                } :
+                function (item, arr) {
+                    for (var i = arr.length - 1; i &gt;= 0; i--) {
+                        if (arr[i] === item) {
+                            break;
+                        }
+                    }
+                    return i;
+                },
+
+<span id='KISSY-method-unique'>            /**
+</span>             * Returns a copy of the array with the duplicate entries removed
+             * @param a {Array} the array to find the subset of unique for
+             * @param [override] {Boolean} if override is true, S.unique([a, b, a]) =&gt; [b, a].
+             * if override is false, S.unique([a, b, a]) =&gt; [a, b]
+             * @return {Array} a copy of the array with duplicate entries removed
+             */
+            unique:function (a, override) {
+                var b = a.slice();
+                if (override) {
+                    b.reverse();
+                }
+                var i = 0,
+                    n,
+                    item;
+
+                while (i &lt; b.length) {
+                    item = b[i];
+                    while ((n = S.lastIndexOf(item, b)) !== i) {
+                        b.splice(n, 1);
+                    }
+                    i += 1;
+                }
+
+                if (override) {
+                    b.reverse();
+                }
+                return b;
+            },
+
+<span id='KISSY-method-inArray'>            /**
+</span>             * Search for a specified value index within an array.
+             * @param item individual item to be searched
+             * @param {Array} arr the array of items where item will be search
+             * @returns {Boolean} the item exists in arr
+             */
+            inArray:function (item, arr) {
+                return S.indexOf(item, arr) &gt; -1;
+            },
+
+<span id='KISSY-method-filter'>            /**
+</span>             * Executes the supplied function on each item in the array.
+             * Returns a new array containing the items that the supplied
+             * function returned true for.
+             * @method
+             * @param arr {Array} the array to iterate
+             * @param fn {Function} the function to execute on each item
+             * @param [context] {Object} optional context object
+             * @return {Array} The items on which the supplied function returned true.
+             * If no items matched an empty array is returned.
+             */
+            filter:filter ?
+                function (arr, fn, context) {
+                    return filter.call(arr, fn, context || this);
+                } :
+                function (arr, fn, context) {
+                    var ret = [];
+                    S.each(arr, function (item, i, arr) {
+                        if (fn.call(context || this, item, i, arr)) {
+                            ret.push(item);
+                        }
+                    });
+                    return ret;
+                },
+
+
+<span id='KISSY-method-map'>            /**
+</span>             * Executes the supplied function on each item in the array.
+             * Returns a new array containing the items that the supplied
+             * function returned for.
+             * @method
+             * @param arr {Array} the array to iterate
+             * @param fn {Function} the function to execute on each item
+             * @param [context] {Object} optional context object
+             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+             * @return {Array} The items on which the supplied function
+             *         returned
+             */
+            map:map ?
+                function (arr, fn, context) {
+                    return map.call(arr, fn, context || this);
+                } :
+                function (arr, fn, context) {
+                    var len = arr.length,
+                        res = new Array(len);
+                    for (var i = 0; i &lt; len; i++) {
+                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                        if (el
+                            ||
+                            //ie&lt;9 in invalid when typeof arr == string
+                            i in arr) {
+                            res[i] = fn.call(context || this, el, i, arr);
+                        }
+                    }
+                    return res;
+                },
+
+
+<span id='KISSY-method-reduce'>            /**
+</span>             * Executes the supplied function on each item in the array.
+             * Returns a value which is accumulation of the value that the supplied
+             * function returned.
+             *
+             * @param arr {Array} the array to iterate
+             * @param callback {Function} the function to execute on each item
+             * @param initialValue {number} optional context object
+             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+             * @return {Array} The items on which the supplied function returned
+             */
+            reduce:/*
+             NaN ?
+             reduce ? function(arr, callback, initialValue) {
+             return arr.reduce(callback, initialValue);
+             } : */function (arr, callback, initialValue) {
+                var len = arr.length;
+                if (typeof callback !== &quot;function&quot;) {
+                    throw new TypeError(&quot;callback is not function!&quot;);
+                }
+
+                // no value to return if no initial value and an empty array
+                if (len === 0 &amp;&amp; arguments.length == 2) {
+                    throw new TypeError(&quot;arguments invalid&quot;);
+                }
+
+                var k = 0;
+                var accumulator;
+                if (arguments.length &gt;= 3) {
+                    accumulator = arguments[2];
+                }
+                else {
+                    do {
+                        if (k in arr) {
+                            accumulator = arr[k++];
+                            break;
+                        }
+
+                        // if array contains no values, no initial value to return
+                        k += 1;
+                        if (k &gt;= len) {
+                            throw new TypeError();
+                        }
+                    }
+                    while (TRUE);
+                }
+
+                while (k &lt; len) {
+                    if (k in arr) {
+                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                    }
+                    k++;
+                }
+
+                return accumulator;
+            },
+
+<span id='KISSY-method-every'>            /**
+</span>             * Tests whether all elements in the array pass the test implemented by the provided function.
+             * @method
+             * @param arr {Array} the array to iterate
+             * @param callback {Function} the function to execute on each item
+             * @param [context] {Object} optional context object
+             * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
+             */
+            every:every ?
+                function (arr, fn, context) {
+                    return every.call(arr, fn, context || this);
+                } :
+                function (arr, fn, context) {
+                    var len = arr &amp;&amp; arr.length || 0;
+                    for (var i = 0; i &lt; len; i++) {
+                        if (i in arr &amp;&amp; !fn.call(context, arr[i], i, arr)) {
+                            return FALSE;
+                        }
+                    }
+                    return TRUE;
+                },
+
+<span id='KISSY-method-some'>            /**
+</span>             * Tests whether some element in the array passes the test implemented by the provided function.
+             * @method
+             * @param arr {Array} the array to iterate
+             * @param callback {Function} the function to execute on each item
+             * @param [context] {Object} optional context object
+             * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
+             */
+            some:some ?
+                function (arr, fn, context) {
+                    return some.call(arr, fn, context || this);
+                } :
+                function (arr, fn, context) {
+                    var len = arr &amp;&amp; arr.length || 0;
+                    for (var i = 0; i &lt; len; i++) {
+                        if (i in arr &amp;&amp; fn.call(context, arr[i], i, arr)) {
+                            return TRUE;
+                        }
+                    }
+                    return FALSE;
+                },
+
+<span id='KISSY-method-bind'>            /**
+</span>             * Creates a new function that, when called, itself calls this function in the context of the provided this value,
+             * with a given sequence of arguments preceding any provided when the new function was called.
+             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+             * @param {Function} fn internal called function
+             * @param {Object} obj context in which fn runs
+             * @param {...*} arg1 extra arguments
+             * @returns {Function} new function with context and arguments
+             */
+            bind:function (fn, obj, arg1) {
+                var slice = [].slice,
+                    args = slice.call(arguments, 2),
+                    fNOP = function () {
+                    },
+                    bound = function () {
+                        return fn.apply(this instanceof fNOP ? this : obj,
+                            args.concat(slice.call(arguments)));
+                    };
+                fNOP.prototype = fn.prototype;
+                bound.prototype = new fNOP();
+                return bound;
+            },
+
+<span id='KISSY-method-now'>            /**
+</span>             * Gets current date in milliseconds.
+             * @method
+             * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+             * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+             * http://kangax.github.com/es5-compat-table/
+             */
+            now:Date.now || function () {
+                return +new Date();
+            },
+<span id='KISSY-method-fromUnicode'>            /**
+</span>             * frequently used in taobao cookie about nick
+             */
+            fromUnicode:function (str) {
+                return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
+                    return  String.fromCharCode(parseInt(u, HEX_BASE));
+                });
+            },
+
+
+            ucfirst:function (s) {
+                s += &quot;&quot;;
+                return s.charAt(0).toUpperCase() + s.substring(1);
+            },
+
+<span id='KISSY-method-escapeHTML'>            /**
+</span>             * get escaped string from html
+             * @see   http://yiminghe.javaeye.com/blog/788929
+             *        http://wonko.com/post/html-escaping
+             * @param str {string} text2html show
+             */
+            escapeHTML:function (str) {
+                return str.replace(getEscapeReg(), function (m) {
+                    return reverseEntities[m];
+                });
+            },
+
+<span id='KISSY-method-escapeRegExp'>            /**
+</span>             * get escaped regexp string for construct regexp
+             * @param str
+             */
+            escapeRegExp:function (str) {
+                return str.replace(escapeRegExp, '\\$&amp;');
+            },
+
+<span id='KISSY-method-unEscapeHTML'>            /**
+</span>             * un-escape html to string
+             * @param str {string} html2text
+             */
+            unEscapeHTML:function (str) {
+                return str.replace(getUnEscapeReg(), function (m, n) {
+                    return htmlEntities[m] || String.fromCharCode(+n);
+                });
+            },
+<span id='KISSY-method-makeArray'>            /**
+</span>             * Converts object to a true array.
+             * @param o {object|Array} array like object or array
+             * @return {Array} native Array
+             */
+            makeArray:function (o) {
+                if (o == null) {
+                    return [];
+                }
+                if (S.isArray(o)) {
+                    return o;
+                }
+
+                // The strings and functions also have 'length'
+                if (typeof o.length !== 'number'
+                    // form.elements in ie78 has nodeName &quot;form&quot;
+                    // then caution select
+                    // || o.nodeName
+                    // window
+                    || o.alert
+                    || S.isString(o)
+                    || S.isFunction(o)) {
+                    return [o];
+                }
+                var ret = [];
+                for (var i = 0, l = o.length; i &lt; l; i++) {
+                    ret[i] = o[i];
+                }
+                return ret;
+            },
+<span id='KISSY-method-param'>            /**
+</span>             * Creates a serialized string of an array or object.
+             *
+             * for example:
+             *     @example
+             *     {foo: 1, bar: 2}    // -&gt; 'foo=1&amp;bar=2'
+             *     {foo: 1, bar: [2, 3]}    // -&gt; 'foo=1&amp;bar=2&amp;bar=3'
+             *     {foo: '', bar: 2}    // -&gt; 'foo=&amp;bar=2'
+             *     {foo: undefined, bar: 2}    // -&gt; 'foo=undefined&amp;bar=2'
+             *     {foo: true, bar: 2}    // -&gt; 'foo=true&amp;bar=2'
+             *
+             * @param {Object} o json data
+             * @param {String} [sep='&amp;'] separator between each pair of data
+             * @param {String} [eq='='] separator between key and value of data
+             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @return {String}
+             */
+            param:function (o, sep, eq, arr) {
+                if (!S.isPlainObject(o)) {
+                    return EMPTY;
+                }
+                sep = sep || SEP;
+                eq = eq || EQ;
+                if (S.isUndefined(arr)) {
+                    arr = TRUE;
+                }
+                var buf = [], key, i, v, len, val;
+                for (key in o) {
+                    if (o.hasOwnProperty(key)) {
+                        val = o[key];
+                        key = encode(key);
+
+                        // val is valid non-array value
+                        if (isValidParamValue(val)) {
+                            buf.push(key);
+                            if (val !== undefined) {
+                                buf.push(eq, encode(val + EMPTY));
+                            }
+                            buf.push(sep);
+                        }
+                        // val is not empty array
+                        else if (S.isArray(val) &amp;&amp; val.length) {
+                            for (i = 0, len = val.length; i &lt; len; ++i) {
+                                v = val[i];
+                                if (isValidParamValue(v)) {
+                                    buf.push(key, (arr ? encode(&quot;[]&quot;) : EMPTY));
+                                    if (v !== undefined) {
+                                        buf.push(eq, encode(v + EMPTY));
+                                    }
+                                    buf.push(sep);
+                                }
+                            }
+                        }
+                        // ignore other cases, including empty array, Function, RegExp, Date etc.
+                    }
+                }
+                buf.pop();
+                return buf.join(EMPTY);
+            },
+
+<span id='KISSY-method-unparam'>            /**
+</span>             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+             *
+             * for example:
+             *      @example
+             *      'section=blog&amp;id=45'        // -&gt; {section: 'blog', id: '45'}
+             *      'section=blog&amp;tag=js&amp;tag=doc' // -&gt; {section: 'blog', tag: ['js', 'doc']}
+             *      'tag=ruby%20on%20rails'        // -&gt; {tag: 'ruby on rails'}
+             *      'id=45&amp;raw'        // -&gt; {id: '45', raw: ''}
+             * @param {String} str param string
+             * @param {String} [sep='&amp;'] separator between each pair of data
+             * @param {String} [eq='='] separator between key and value of data
+             * @returns {Object} json data
+             */
+            unparam:function (str, sep, eq) {
+                if (!S.isString(str) || !(str = S.trim(str))) {
+                    return {};
+                }
+                sep = sep || SEP;
+                eq = eq || EQ;
+                var ret = {},
+                    pairs = str.split(sep),
+                    pair, key, val,
+                    i = 0, len = pairs.length;
+
+                for (; i &lt; len; ++i) {
+                    pair = pairs[i].split(eq);
+                    key = decode(pair[0]);
+                    if (pair.length == 1) {
+                        val = undefined;
+                    } else {
+                        try {
+                            val = decode(pair[1] || EMPTY);
+                        } catch (e) {
+                            S.log(e + &quot;decodeURIComponent error : &quot; + pair[1], &quot;error&quot;);
+                            val = pair[1] || EMPTY;
+                        }
+                        if (S.endsWith(key, &quot;[]&quot;)) {
+                            key = key.substring(0, key.length - 2);
+                        }
+                    }
+                    if (hasOwnProperty(ret, key)) {
+                        if (S.isArray(ret[key])) {
+                            ret[key].push(val);
+                        } else {
+                            ret[key] = [ret[key], val];
+                        }
+                    } else {
+                        ret[key] = val;
+                    }
+                }
+                return ret;
+            },
+<span id='KISSY-method-later'>            /**
+</span>             * Executes the supplied function in the context of the supplied
+             * object 'when' milliseconds later. Executes the function a
+             * single time unless periodic is set to true.
+             * @param fn {Function|String} the function to execute or the name of the method in
+             *        the 'o' object to execute.
+             * @param when {Number} the number of milliseconds to wait until the fn is executed.
+             * @param {Boolean} [periodic] if true, executes continuously at supplied interval
+             *        until canceled.
+             * @param {Object} [context] the context object.
+             * @param [data] that is provided to the function. This accepts either a single
+             *        item or an array. If an array is provided, the function is executed with
+             *        one parameter for each array item. If you need to pass a single array
+             *        parameter, it needs to be wrapped in an array [myarray].
+             * @return {Object} a timer object. Call the cancel() method on this object to stop
+             *         the timer.
+             */
+            later:function (fn, when, periodic, context, data) {
+                when = when || 0;
+                var m = fn,
+                    d = S.makeArray(data),
+                    f,
+                    r;
+
+                if (S.isString(fn)) {
+                    m = context[fn];
+                }
+
+                if (!m) {
+                    S.error('method undefined');
+                }
+
+                f = function () {
+                    m.apply(context, d);
+                };
+
+                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+                return {
+                    id:r,
+                    interval:periodic,
+                    cancel:function () {
+                        if (this.interval) {
+                            clearInterval(r);
+                        } else {
+                            clearTimeout(r);
+                        }
+                    }
+                };
+            },
+
+<span id='KISSY-method-startsWith'>            /**
+</span>             * test whether a string start with a specified substring
+             * @param {String} str the whole string
+             * @param {String} prefix a specified substring
+             * @returns {Boolean} whether str start with prefix
+             */
+            startsWith:function (str, prefix) {
+                return str.lastIndexOf(prefix, 0) === 0;
+            },
+
+<span id='KISSY-method-endsWith'>            /**
+</span>             * test whether a string end with a specified substring
+             * @param {String} str the whole string
+             * @param {String} suffix a specified substring
+             * @returns {Boolean} whether str end with suffix
+             */
+            endsWith:function (str, suffix) {
+                var ind = str.length - suffix.length;
+                return ind &gt;= 0 &amp;&amp; str.indexOf(suffix, ind) == ind;
+            },
+
+<span id='KISSY-method-throttle'>            /**
+</span>             * Throttles a call to a method based on the time between calls.
+             * @param {Function} fn The function call to throttle.
+             * @param {Object} [context] context fn to run
+             * @param {Number} [ms] The number of milliseconds to throttle the method call.
+             * Passing a -1 will disable the throttle. Defaults to 150.
+             * @return {Function} Returns a wrapped function that calls fn throttled.
+             */
+            throttle:function (fn, ms, context) {
+                ms = ms || 150;
+
+                if (ms === -1) {
+                    return (function () {
+                        fn.apply(context || this, arguments);
+                    });
+                }
+
+                var last = S.now();
+
+                return (function () {
+                    var now = S.now();
+                    if (now - last &gt; ms) {
+                        last = now;
+                        fn.apply(context || this, arguments);
+                    }
+                });
+            },
+
+<span id='KISSY-method-buffer'>            /**
+</span>             * buffers a call between a fixed time
+             * @param {Function} fn
+             * @param {Number} ms
+             * @param {Object} [context]
+             * @return {Function} Returns a wrapped function that calls fn buffered.
+             */
+            buffer:function (fn, ms, context) {
+                ms = ms || 150;
+
+                if (ms === -1) {
+                    return function () {
+                        fn.apply(context || this, arguments);
+                    };
+                }
+                var bufferTimer = null;
+
+                function f() {
+                    f.stop();
+                    bufferTimer = S.later(fn, ms, FALSE, context || this, arguments);
+                }
+
+                f.stop = function () {
+                    if (bufferTimer) {
+                        bufferTimer.cancel();
+                        bufferTimer = 0;
+                    }
+                };
+
+                return f;
+            }
+
+        });
+
+    // for idea ..... auto-hint
+    S.mix(S,
+<span id=''>        /**
+</span>         * @class
+         * @override KISSY
+         */
+        {
+<span id='KISSY-method-isBoolean'>        /**
+</span>         * test whether o is boolean
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isBoolean:isValidParamValue,
+<span id='KISSY-method-isNumber'>        /**
+</span>         * test whether o is number
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isNumber:isValidParamValue,
+<span id='KISSY-method-isString'>        /**
+</span>         * test whether o is String
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isString:isValidParamValue,
+<span id='KISSY-method-isFunction'>        /**
+</span>         * test whether o is function
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isFunction:isValidParamValue,
+<span id='KISSY-method-isArray'>        /**
+</span>         * test whether o is Array
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isArray:isValidParamValue,
+<span id='KISSY-method-isDate'>        /**
+</span>         * test whether o is Date
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isDate:isValidParamValue,
+<span id='KISSY-method-isRegExp'>        /**
+</span>         * test whether o is RegExp
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isRegExp:isValidParamValue,
+<span id='KISSY-method-isObject'>        /**
+</span>         * test whether o is Object
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isObject:isValidParamValue
+    });
+
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
+        function (name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+            // add isBoolean/isNumber/...
+            S['is' + name] = function (o) {
+                return S.type(o) == lc;
+            }
+        });
+
+    function cloneInternal(input, f, memory) {
+        var destination = input,
+            isArray,
+            isPlainObject,
+            k,
+            stamp;
+        if (!input) {
+            return destination;
+        }
+
+        // If input is the source object of a pair of objects in memory,
+        // then return the destination object in that pair of objects .
+        // and abort these steps.
+        if (input[CLONE_MARKER]) {
+            // 对应的克隆后对象
+            return memory[input[CLONE_MARKER]].destination;
+        } else if (typeof input === &quot;object&quot;) {
+            // 引用类型要先记录
+            var constructor = input.constructor;
+            if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
+                destination = new constructor(input.valueOf());
+            }
+            // ImageData , File, Blob , FileList .. etc
+            else if (isArray = S.isArray(input)) {
+                destination = f ? S.filter(input, f) : input.concat();
+            } else if (isPlainObject = S.isPlainObject(input)) {
+                destination = {};
+            }
+            // Add a mapping from input (the source object)
+            // to output (the destination object) to memory.
+            // 做标记
+            input[CLONE_MARKER] = (stamp = S.guid());
+            // 存储源对象以及克隆后的对象
+            memory[stamp] = {destination:destination, input:input};
+        }
+        // If input is an Array object or an Object object,
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
+        // with the value of the property as the &quot;input&quot; argument and memory as the &quot;memory&quot; argument.
+        // The order of the properties in the input and output objects must be the same.
+
+        // clone it
+        if (isArray) {
+            for (var i = 0; i &lt; destination.length; i++) {
+                destination[i] = cloneInternal(destination[i], f, memory);
+            }
+        } else if (isPlainObject) {
+            for (k in input) {
+                if (input.hasOwnProperty(k)) {
+                    if (k !== CLONE_MARKER &amp;&amp;
+                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                        destination[k] = cloneInternal(input[k], f, memory);
+                    }
+                }
+            }
+        }
+
+        return destination;
+    }
+
+    function compareObjects(a, b, mismatchKeys, mismatchValues) {
+        // 两个比较过了，无需再比较，防止循环比较
+        if (a[COMPARE_MARKER] === b &amp;&amp; b[COMPARE_MARKER] === a) {
+            return TRUE;
+        }
+        a[COMPARE_MARKER] = b;
+        b[COMPARE_MARKER] = a;
+        var hasKey = function (obj, keyName) {
+            return (obj !== null &amp;&amp; obj !== undefined) &amp;&amp; obj[keyName] !== undefined;
+        };
+        for (var property in b) {
+            if (b.hasOwnProperty(property)) {
+                if (!hasKey(a, property) &amp;&amp; hasKey(b, property)) {
+                    mismatchKeys.push(&quot;expected has key '&quot; + property + &quot;', but missing from actual.&quot;);
+                }
+            }
+        }
+        for (property in a) {
+            if (a.hasOwnProperty(property)) {
+                if (!hasKey(b, property) &amp;&amp; hasKey(a, property)) {
+                    mismatchKeys.push(&quot;expected missing key '&quot; + property + &quot;', but present in actual.&quot;);
+                }
+            }
+        }
+        for (property in b) {
+            if (b.hasOwnProperty(property)) {
+                if (property == COMPARE_MARKER) {
+                    continue;
+                }
+                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                    mismatchValues.push(&quot;'&quot; + property + &quot;' was '&quot; + (b[property] ? (b[property].toString()) : b[property])
+                        + &quot;' in expected, but was '&quot; +
+                        (a[property] ? (a[property].toString()) : a[property]) + &quot;' in actual.&quot;);
+                }
+            }
+        }
+        if (S.isArray(a) &amp;&amp; S.isArray(b) &amp;&amp; a.length != b.length) {
+            mismatchValues.push(&quot;arrays were not the same length&quot;);
+        }
+        delete a[COMPARE_MARKER];
+        delete b[COMPARE_MARKER];
+        return (mismatchKeys.length === 0 &amp;&amp; mismatchValues.length === 0);
+    }
+
+})(KISSY);
+</pre>
+</body>
+</html>

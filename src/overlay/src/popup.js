@@ -20,7 +20,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             /**
              * see {@link Component.UIBase.Box#show}
              * @name Overlay.Popup#show
-             * @function
+             * @method
              */
 
 

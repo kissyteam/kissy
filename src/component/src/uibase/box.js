@@ -5,11 +5,9 @@
 KISSY.add('component/uibase/box', function (S) {
 
     /**
-     * @name Box
-     * @memberOf Component.UIBase
-     * @class
      * Box extension class.
      * Represent a dom element.
+     * @class Component.UIBase.Box
      */
     function Box() {
     }
@@ -114,11 +112,9 @@ KISSY.add('component/uibase/box', function (S) {
     };
 
     Box.prototype =
-    /**
-     * @lends Component.UIBase.Box#
-     */
     {
         /**
+         * bind ui for box
          * @private
          */
         __bindUI:function () {

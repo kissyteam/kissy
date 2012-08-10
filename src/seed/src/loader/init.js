@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -13,29 +14,26 @@
         ComboLoader = S.Loader.Combo;
 
     S.mix(S,
-        /**
-         * @lends KISSY
-         */
         {
             /**
              * Registers a module with the KISSY global.
-             * @param {String} [name] module name.
-             * it must be set if combine is true in {@link KISSY.config}
+             * @param {String} name module name.
+             * it must be set if combine is true in {@link KISSY#config}
              * @param {Function} fn module definition function that is used to return
              * this module value
              * @param {KISSY} fn.S KISSY global instance
-             * @param fn.x... this module's required modules' value
              * @param {Object} [cfg] module optional config data
              * @param {String[]} cfg.requires this module's required module name list
-             * @example
-             * // dom module's definition
-             * <code>
-             * KISSY.add("dom",function(S,UA){
-             *  return { css:function(el,name,val){} };
-             * },{
-             *  requires:["ua"]
-             * });
-             * </code>
+             * @member KISSY
+             *
+             * for example:
+             *      @example
+             *      // dom module's definition
+             *      KISSY.add("dom",function(S,UA){
+             *          return { css:function(el,name,val){} };
+             *      },{
+             *          requires:["ua"]
+             *      });
              */
             add:function (name, fn, cfg) {
                 this.getLoader().add(name, fn, cfg);
@@ -47,15 +45,19 @@
              * when KISSY has the required functionality.
              * @param {KISSY} callback.S KISSY instance
              * @param callback.x... used module values
-             * @example
-             * // loads and attached overlay,dd and its dependencies
-             * KISSY.use("overlay,dd",function(S,Overlay){});
+             * @member KISSY
+             *
+             * for example:
+             *      @example
+             *      // loads and attached overlay,dd and its dependencies
+             *      KISSY.use("overlay,dd",function(S,Overlay){});
              */
             use:function (names, callback) {
                 this.getLoader().use(names, callback);
             },
             /**
              * get KISSY 's loader instance
+             * @member KISSY
              * @returns {KISSY.Loader}
              */
             getLoader:function () {
@@ -69,7 +71,7 @@
             /**
              * get module value defined by define function
              * @param {string} moduleName
-             * @private
+             * @member KISSY
              */
             require:function (moduleName) {
                 var self = this,
@@ -86,13 +88,13 @@
     /**
      * get base from seed/kissy.js
      * @return base for kissy
-     * @private
-     * @example
-     * <pre>
-     *   http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
-     *   note about custom combo rules, such as yui3:
-     *   combo-prefix="combo?" combo-sep="&"
-     * <pre>
+     * @ignore
+     *
+     * for example:
+     *      @example
+     *      http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
+     *      note about custom combo rules, such as yui3:
+     *      combo-prefix="combo?" combo-sep="&"
      */
     function getBaseInfo() {
         // get base from current script file path
@@ -150,9 +152,7 @@
         tag:'@TIMESTAMP@'
     }, getBaseInfo()));
 
-    /**
-     * Initializes loader.
-     */
+    // Initializes loader.
     (function () {
         var env = S.Env;
         env.mods = env.mods || {}; // all added mods

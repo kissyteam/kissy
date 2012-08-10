@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview   lang
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
@@ -91,9 +92,11 @@
         return val == null || (t !== 'object' && t !== 'function');
     }
 
+
     S.mix(S,
         /**
-         * @lends KISSY
+         * @class
+         * @override KISSY
          */
         {
 
@@ -102,7 +105,7 @@
              * @param {Object} o object needed to be stamped
              * @param {Boolean} [readOnly] while set marker on o if marker does not exist
              * @param {String} [marker] the marker will be set on Object
-             * @return guid associated with this object
+             * @return {String} guid associated with this object
              */
             stamp:function (o, readOnly, marker) {
                 if (!o) {
@@ -171,12 +174,12 @@
              * or "new Object()" or "new FunctionClass()").
              */
             isPlainObject:function (o) {
-                /**
-                 * note by yiminghe
-                 * isPlainObject(node=document.getElementById("xx")) -> false
-                 * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 * 'isPrototypeOf' in node : ie678 === false ,other === true
-                 * refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+                /*
+                 note by yiminghe
+                 isPlainObject(node=document.getElementById("xx")) -> false
+                 toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+                 'isPrototypeOf' in node : ie678 === false ,other === true
+                 refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
                  */
                 return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
             },
@@ -220,10 +223,10 @@
              * Creates a deep copy of a plain object or array. Others are returned untouched.
              * @param input
              * @param {Function} [filter] filter function
-             * @returns the new cloned object
+             * @returns {Object} the new cloned object
              * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
-            clone:function (input, filter) {
+            clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
                 // Let memory be an association list of pairs of objects,
                 // initially empty. This is used to handle duplicate references.
@@ -249,7 +252,7 @@
 
             /**
              * Removes the whitespace from the beginning and end of a string.
-             * @function
+             * @method
              */
             trim:trim ?
                 function (str) {
@@ -316,7 +319,7 @@
             /**
              * Search for a specified value within an array.
              * @param item individual item to be searched
-             * @function
+             * @method
              * @param {Array} arr the array of items where item will be search
              * @returns {number} item's index in array
              */
@@ -337,7 +340,7 @@
              * Returns the index of the last item in the array
              * that contains the specified value, -1 if the
              * value isn't found.
-             * @function
+             * @method
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
              * @returns {number} item's last index in array
@@ -358,9 +361,8 @@
             /**
              * Returns a copy of the array with the duplicate entries removed
              * @param a {Array} the array to find the subset of unique for
-             * @param [override] {Boolean}
-             *        if override is true, S.unique([a, b, a]) => [b, a]
-             *        if override is false, S.unique([a, b, a]) => [a, b]
+             * @param [override] {Boolean} if override is true, S.unique([a, b, a]) => [b, a].
+             * if override is false, S.unique([a, b, a]) => [a, b]
              * @return {Array} a copy of the array with duplicate entries removed
              */
             unique:function (a, override) {
@@ -400,13 +402,12 @@
              * Executes the supplied function on each item in the array.
              * Returns a new array containing the items that the supplied
              * function returned true for.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @return {Array} The items on which the supplied function
-             *         returned true. If no items matched an empty array is
-             *         returned.
+             * @return {Array} The items on which the supplied function returned true.
+             * If no items matched an empty array is returned.
              */
             filter:filter ?
                 function (arr, fn, context) {
@@ -427,7 +428,7 @@
              * Executes the supplied function on each item in the array.
              * Returns a new array containing the items that the supplied
              * function returned for.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
@@ -514,7 +515,7 @@
 
             /**
              * Tests whether all elements in the array pass the test implemented by the provided function.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
@@ -536,7 +537,7 @@
 
             /**
              * Tests whether some element in the array passes the test implemented by the provided function.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
@@ -562,7 +563,7 @@
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
              * @param {Function} fn internal called function
              * @param {Object} obj context in which fn runs
-             * @param {...} arg1 extra arguments
+             * @param {...*} arg1 extra arguments
              * @returns {Function} new function with context and arguments
              */
             bind:function (fn, obj, arg1) {
@@ -581,7 +582,7 @@
 
             /**
              * Gets current date in milliseconds.
-             * @function
+             * @method
              * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
@@ -665,14 +666,15 @@
             },
             /**
              * Creates a serialized string of an array or object.
-             * @example
-             * <code>
-             * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             * </code>
+             *
+             * for example:
+             *     @example
+             *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+             *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+             *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+             *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+             *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+             *
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
@@ -724,13 +726,13 @@
 
             /**
              * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             * @example
-             * <code>
-             * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             * 'id=45&raw'        // -> {id: '45', raw: ''}
-             * </code>
+             *
+             * for example:
+             *      @example
+             *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+             *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+             *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+             *      'id=45&raw'        // -> {id: '45', raw: ''}
              * @param {String} str param string
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
@@ -849,11 +851,11 @@
 
             /**
              * Throttles a call to a method based on the time between calls.
-             * @param {function} fn The function call to throttle.
-             * @param {object} [context] context fn to run
+             * @param {Function} fn The function call to throttle.
+             * @param {Object} [context] context fn to run
              * @param {Number} [ms] The number of milliseconds to throttle the method call.
-             *              Passing a -1 will disable the throttle. Defaults to 150.
-             * @return {function} Returns a wrapped function that calls fn throttled.
+             * Passing a -1 will disable the throttle. Defaults to 150.
+             * @return {Function} Returns a wrapped function that calls fn throttled.
              */
             throttle:function (fn, ms, context) {
                 ms = ms || 150;
@@ -877,10 +879,10 @@
 
             /**
              * buffers a call between a fixed time
-             * @param {function} fn
-             * @param {object} [context]
+             * @param {Function} fn
              * @param {Number} ms
-             * @return {function} Returns a wrapped function that calls fn buffered.
+             * @param {Object} [context]
+             * @return {Function} Returns a wrapped function that calls fn buffered.
              */
             buffer:function (fn, ms, context) {
                 ms = ms || 150;
@@ -912,66 +914,67 @@
     // for idea ..... auto-hint
     S.mix(S,
         /**
-         * @lends KISSY
+         * @class
+         * @override KISSY
          */
         {
-            /**
-             * test whether o is boolean
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isBoolean:isValidParamValue,
-            /**
-             * test whether o is number
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isNumber:isValidParamValue,
-            /**
-             * test whether o is String
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isString:isValidParamValue,
-            /**
-             * test whether o is function
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isFunction:isValidParamValue,
-            /**
-             * test whether o is Array
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isArray:isValidParamValue,
-            /**
-             * test whether o is Date
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isDate:isValidParamValue,
-            /**
-             * test whether o is RegExp
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isRegExp:isValidParamValue,
-            /**
-             * test whether o is Object
-             * @function
-             * @param  o
-             * @returns {Boolean}
-             */
-            isObject:isValidParamValue
-        });
+        /**
+         * test whether o is boolean
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isBoolean:isValidParamValue,
+        /**
+         * test whether o is number
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isNumber:isValidParamValue,
+        /**
+         * test whether o is String
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isString:isValidParamValue,
+        /**
+         * test whether o is function
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isFunction:isValidParamValue,
+        /**
+         * test whether o is Array
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isArray:isValidParamValue,
+        /**
+         * test whether o is Date
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isDate:isValidParamValue,
+        /**
+         * test whether o is RegExp
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isRegExp:isValidParamValue,
+        /**
+         * test whether o is Object
+         * @method
+         * @param  o
+         * @returns {Boolean}
+         */
+        isObject:isValidParamValue
+    });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function (name, lc) {

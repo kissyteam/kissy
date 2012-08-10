@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
@@ -8,7 +9,7 @@
      * two effects:
      * 1. call fulfilled with immediate value
      * 2. push fulfilled in right promise
-     * @private
+     * @ignore
      * @param fulfilled
      * @param rejected
      */
@@ -44,9 +45,8 @@
     }
 
     /**
-     * @class Defer constructor For KISSY,implement Promise specification.
-     * @memberOf KISSY
-     * @name Defer
+     * @class KISSY.Defer
+     * Defer constructor For KISSY,implement Promise specification.
      */
     function Defer(promise) {
         var self = this;
@@ -56,18 +56,13 @@
         // http://en.wikipedia.org/wiki/Object-capability_model
         // principal of least authority
         /**
-         * @description defer object's promise
+         * defer object's promise
          * @type {KISSY.Promise}
-         * @memberOf KISSY.Defer#
-         * @name promise
          */
         self.promise = promise || new Promise();
     }
 
     Defer.prototype =
-    /**
-     * @lends KISSY.Defer.prototype
-     */
     {
         constructor:Defer,
         /**
@@ -107,13 +102,11 @@
     }
 
     /**
-     * @class
+     * @class KISSY.Promise
      * Promise constructor.
      * This class should not be instantiated manually.
      * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
      * @param [v] promise 's resolved value
-     * @memberOf KISSY
-     * @name Promise
      */
     function Promise(v) {
         var self = this;
@@ -126,17 +119,14 @@
     }
 
     Promise.prototype =
-    /**
-     * @lends KISSY.Promise.prototype
-     */
     {
         constructor:Promise,
         /**
          * register callbacks when this promise object is resolved
-         * @param {Function(*)} fulfilled called when resolved successfully,pass a resolved value to this function and
-         *                      return a value (could be promise object) for the new promise's resolved value.
-         * @param {Function(*)} [rejected] called when error occurs,pass error reason to this function and
-         *                      return a new reason for the new promise's error reason
+         * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise's resolved value.
+         * @param {Function} [rejected] called when error occurs,pass error reason to this function and
+         * return a new reason for the new promise's error reason
          * @returns {KISSY.Promise} a new promise object
          */
         then:function (fulfilled, rejected) {
@@ -144,7 +134,7 @@
         },
         /**
          * call rejected callback when this promise object is rejected
-         * @param {Function(*)} rejected called with rejected reason
+         * @param {Function} rejected called with rejected reason
          * @returns {KISSY.Promise} a new promise object
          */
         fail:function (rejected) {
@@ -167,6 +157,7 @@
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
          * then that promise needs to be resolved as well.
+         * @member KISSY.Promise
          */
         isResolved:function () {
             return isResolved(this);
@@ -196,6 +187,7 @@
     /**
      * wrap for promiseWhen
      * @param value
+     * @ignore
      * @param fulfilled
      * @param [rejected]
      */
@@ -288,52 +280,61 @@
 
     S.mix(Promise,
         /**
-         * @lends KISSY.Promise
+         * @class KISSY.PromiseMix
+         * @override KISSY.Promise
          */
         {
             /**
              * register callbacks when obj as a promise is resolved
              * or call fulfilled callback directly when obj is not a promise object
              * @param {KISSY.Promise|*} obj a promise object or value of any type
-             * @param {Function(*)} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             *                      return a value (could be promise object) for the new promise's resolved value.
-             * @param {Function(*)} [rejected] called when error occurs in obj,pass error reason to this function and
-             *                      return a new reason for the new promise's error reason
+             * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
+             * return a value (could be promise object) for the new promise's resolved value.
+             * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
+             * return a new reason for the new promise's error reason
              * @returns {KISSY.Promise} a new promise object
-             * @example
-             * <code>
-             * function check(p){
-             *   S.Promise.when(p,function(v){
-             *     alert(v===1);
-             *   });
-             * }
              *
-             * var defer=S.Defer();
-             * defer.resolve(1);
+             * for example:
+             *      @example
+             *      function check(p){
+             *          S.Promise.when(p,function(v){
+             *              alert(v===1);
+             *          });
+             *      }
              *
-             * check(1); // => alert(true)
+             *      var defer=S.Defer();
+             *      defer.resolve(1);
              *
-             * check(defer.promise); //=> alert(true);
-             * </code>
-             * @function
+             *      check(1); // => alert(true)
+             *
+             *      check(defer.promise); //=> alert(true);
+             *
+             * @static
+             * @method
              */
             when:when,
             /**
              * whether the given object is a promise
-             * @function
+             * @method
+             * @static
              * @param obj the tested object
+             * @return {Boolean}
              */
             isPromise:isPromise,
             /**
              * whether the given object is a resolved promise
-             * @function
+             * @method
+             * @static
              * @param obj the tested object
+             * @return {Boolean}
              */
             isResolved:isResolved,
             /**
              * whether the given object is a rejected promise
-             * @function
+             * @method
+             * @static
              * @param obj the tested object
+             * @return {Boolean}
              */
             isRejected:isRejected,
             /**
@@ -341,6 +342,8 @@
              * which is resolved when all promises is resolved
              * and rejected when any one of promises is rejected
              * @param {KISSY.Promise[]} promises list of promises
+             * @static
+             * @return {KISSY.Promise}
              */
             all:function (promises) {
                 var count = promises.length;
@@ -370,12 +373,12 @@
 
 })(KISSY);
 
-/**
- * refer:
- *  - http://wiki.commonjs.org/wiki/Promises
- *  - http://en.wikipedia.org/wiki/Futures_and_promises#Read-only_views
- *  - http://en.wikipedia.org/wiki/Object-capability_model
- *  - https://github.com/kriskowal/q
- *  - http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/
- *  - http://dojotoolkit.org/documentation/tutorials/1.6/deferreds/
- **/
+/*
+ refer:
+ - http://wiki.commonjs.org/wiki/Promises
+ - http://en.wikipedia.org/wiki/Futures_and_promises#Read-only_views
+ - http://en.wikipedia.org/wiki/Object-capability_model
+ - https://github.com/kriskowal/q
+ - http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/
+ - http://dojotoolkit.org/documentation/tutorials/1.6/deferreds/
+ */

@@ -26,7 +26,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
         {
             /**
              * From Bar, Initialize this paging bar items.
-             * @override
+             *
              * @protected
              */
             initializer:function () {
@@ -43,7 +43,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             /**
              * bind page change and store events
-             * @override
+             *
              * @protected
              */
             bindUI:function () {

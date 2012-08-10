@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview simple event target for loader
  * @author yiminghe@gmail.com
  */
@@ -23,11 +24,12 @@
         return holder[name];
     }
 
-    S.Loader.Target =
     /**
-     * @lends KISSY.Loader#
+     * @class KISSY.Loader.Target
+     * Event Target For KISSY Loader.
+     * @singleton
      */
-    {
+    KISSY.Loader.Target = {
         /**
          * register callback for specified eventName from loader
          * @param {String} eventName event name from kissy loader
@@ -65,6 +67,9 @@
         },
 
         /**
+         * Fire specified event.
+         * @param eventName
+         * @param obj
          * @private
          */
         fire:function (eventName, obj) {

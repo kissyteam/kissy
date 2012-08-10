@@ -505,7 +505,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Whether one of the matched elements has specified attribute
-             * @function
+             * @method
              * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name The attribute to be tested
              * @returns {Boolean}

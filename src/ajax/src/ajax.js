@@ -32,7 +32,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
             XhrObject:XhrObject,
             /**
              * form serialization
-             * @function
+             * @method
              * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
              * @returns {String} serialized string represent form elements
              */
@@ -40,7 +40,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
 
             /**
              * perform a get request
-             * @function
+             * @method
              * @param {String} url request destination
              * @param {Object} [data] name-value object associated with this request
              * @param {Function()} callback <br/>

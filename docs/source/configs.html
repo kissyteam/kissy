@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview Declare config info for KISSY.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    if (typeof require !== 'undefined') {
+        return;
+    }
+    var Loader = S.Loader,
+        utils = Loader.Utils,
+        configs = S.configs;
+    /*
+     modify current module path
+     &lt;code&gt;
+     [
+     [/(.+-)min(.js(\?t=\d+)?)$/,&quot;$1$2&quot;],
+     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
+     return m1+m2;
+     }]
+     ]
+     &lt;/code&gt;
+     */
+    configs.map = function (rules) {
+        var self = this;
+        return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+    };
+
+    /*
+     包声明
+     biz -&gt; .
+     表示遇到 biz/x
+     在当前网页路径找 biz/x.js
+     @private
+     */
+    configs.packages = function (cfgs) {
+        var self = this,
+            name,
+            base,
+            Env = self.Env,
+            ps = Env.packages = Env.packages || {};
+        if (cfgs) {
+            S.each(cfgs, function (cfg, key) {
+                // 兼容数组方式
+                name = cfg.name || key;
+                // 兼容 path
+                base = cfg.base || cfg.path;
+
+                // must be folder
+                if (!S.endsWith(base, &quot;/&quot;)) {
+                    base += &quot;/&quot;;
+                }
+
+                // 注意正则化
+                cfg.name = name;
+                var baseUri = utils.resolveByPage(base);
+                cfg.base = baseUri.toString();
+                cfg.baseUri = baseUri;
+                cfg.SS = S;
+                delete cfg.path;
+
+                ps[ name ] = new Loader.Package(cfg);
+            });
+        }
+    };
+
+    /*
+     只用来指定模块依赖信息.
+     &lt;code&gt;
+
+     KISSY.config({
+     base:'',
+     // dom-min.js
+     debug:'',
+     combine:true,
+     tag:'',
+     packages:{
+     &quot;biz1&quot;: {
+     // path change to base
+     base: &quot;haha&quot;,
+     // x.js
+     debug:'',
+     tag:'',
+     combine:false,
+     }
+     },
+     modules:{
+     &quot;biz1/main&quot; : {
+     requires: [ &quot;biz1/part1&quot; , &quot;biz1/part2&quot; ]
+     }
+     }
+     });
+     */
+    configs.modules = function (modules) {
+        var self = this;
+        if (modules) {
+            S.each(modules, function (modCfg, modName) {
+                utils.createModuleInfo(self, modName, modCfg);
+                S.mix(self.Env.mods[modName], modCfg);
+            });
+        }
+    };
+
+    configs.modules.order = 10;
+
+    /*
+     KISSY 's base path.
+     */
+    configs.base = function (base) {
+        var self = this, baseUri, Config = self.Config;
+        if (!base) {
+            return Config.base;
+        }
+        baseUri = utils.resolveByPage(base);
+        Config.base = baseUri.toString();
+        Config.baseUri = baseUri;
+    };
+})(KISSY);</pre>
+</body>
+</html>

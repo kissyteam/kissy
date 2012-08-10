@@ -184,7 +184,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} fn The callback to execute in response to the event
          * @param {Object} [scope] this object in callback
@@ -192,7 +192,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         on:attach("add"),
         /**
          * Detach one or more listeners the from the specified event
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
          * @param {Object} [scope] The custom object passed to subscribe.

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview getScript support for css and js callback after load
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
@@ -22,7 +23,7 @@
          * @param url css file url
          * @param success callback
          * @param charset
-         * @private
+         * @member KISSY
          */
         getStyle:function (url, success, charset) {
 
@@ -70,17 +71,18 @@
         /**
          * Load a JavaScript/Css file from the server using a GET HTTP request,
          * then execute it.
-         * @example
-         * <code>
-         *  getScript(url, success, charset);
-         *  or
-         *  getScript(url, {
-         *      charset: string
-         *      success: fn,
-         *      error: fn,
-         *      timeout: number
-         *  });
-         * </code>
+         *
+         * for example:
+         *      @example
+         *      getScript(url, success, charset);
+         *      // or
+         *      getScript(url, {
+         *          charset: string
+         *          success: fn,
+         *          error: fn,
+         *          timeout: number
+         *      });
+         *
          * @param {String} url resource's url
          * @param {Function|Object} [success] success callback or config
          * @param {Function} [success.success] success callback
@@ -89,7 +91,7 @@
          * @param {String} [success.charset] charset of current resource
          * @param {String} [charset] charset of current resource
          * @returns {HTMLElement} script/style node
-         * @memberOf KISSY
+         * @member KISSY
          */
         getScript:function (url, success, charset) {
 
@@ -181,12 +183,12 @@
     });
 
 })(KISSY);
-/**
- * yiminghe@gmail.com refactor@2012-03-29
- *  - 考虑连续重复请求单个 script 的情况，内部排队
- *
- * yiminghe@gmail.com 2012-03-13
- *  - getScript
- *      - 404 in ie<9 trigger success , others trigger error
- *      - syntax error in all trigger success
- **/
+/*
+ yiminghe@gmail.com refactor@2012-03-29
+ - 考虑连续重复请求单个 script 的情况，内部排队
+
+ yiminghe@gmail.com 2012-03-13
+ - getScript
+ - 404 in ie<9 trigger success , others trigger error
+ - syntax error in all trigger success
+ */

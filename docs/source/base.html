@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview setup data structure for kissy loader
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    if (typeof require !== 'undefined') {
+        return;
+    }
+
+    var Path = S.Path;
+
+<span id='KISSY-Loader'>    /**
+</span>     * @class KISSY.Loader
+     * @mixins KISSY.Loader.Target
+     * This class should not be instantiated manually.
+     */
+    function Loader(SS) {
+        this.SS = SS;
+<span id='KISSY-Loader-event-afterModAttached'>        /**
+</span>         * @event afterModAttached
+         * fired after a module is attached
+         * @param e
+         * @param {KISSY.Loader.Module} e.mod current module object
+         */
+    }
+
+    KISSY.Loader = Loader;
+
+<span id='KISSY-Loader-Package'>    /**
+</span>     * @class KISSY.Loader.Package
+     * This class should not be instantiated manually.
+     */
+    function Package(cfg) {
+        S.mix(this, cfg);
+    }
+
+    S.augment(Package,
+        {
+<span id='KISSY-Loader-Package-method-getTag'>            /**
+</span>             * Tag for package.
+             * @return {String}
+             */
+            getTag:function () {
+                var self = this;
+                return self.tag || self.SS.Config.tag;
+            },
+
+<span id='KISSY-Loader-Package-method-getName'>            /**
+</span>             * Get package name.
+             * @return {String}
+             */
+            getName:function () {
+                return this.name;
+            },
+
+<span id='KISSY-Loader-Package-method-getBase'>            /**
+</span>             * Get package base.
+             * @return {String}
+             */
+            getBase:function () {
+                var self = this;
+                return self.base || self.SS.Config.base;
+            },
+
+            getBaseUri:function () {
+                var self = this;
+                return self.baseUri || self.SS.Config.baseUri;
+            },
+
+<span id='KISSY-Loader-Package-method-isDebug'>            /**
+</span>             * Whether is debug for this package.
+             * @return {Boolean}
+             */
+            isDebug:function () {
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
+            },
+
+<span id='KISSY-Loader-Package-method-getCharset'>            /**
+</span>             * Get charset for package.
+             * @return {String}
+             */
+            getCharset:function () {
+                var self = this;
+                return self.charset || self.SS.Config.charset;
+            },
+
+<span id='KISSY-Loader-Package-method-isCombine'>            /**
+</span>             * Whether modules are combined for this package.
+             * @return {Boolean}
+             */
+            isCombine:function () {
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
+            }
+        });
+
+    Loader.Package = Package;
+
+<span id='KISSY-Loader-Module'>    /**
+</span>     * @class KISSY.Loader.Module
+     * This class should not be instantiated manually.
+     */
+    function Module(cfg) {
+        S.mix(this, cfg);
+    }
+
+    S.augment(Module,
+        {
+<span id='KISSY-Loader-Module-method-setValue'>            /**
+</span>             * Set the value of current module
+             * @param v value to be set
+             */
+            setValue:function (v) {
+                this.value = v;
+            },
+
+<span id='KISSY-Loader-Module-method-getType'>            /**
+</span>             * Get the type if current Module
+             * @return {String} css or js
+             */
+            getType:function () {
+                var self = this, v;
+                if ((v = self.type) === undefined) {
+                    if (Path.extname(self.name).toLowerCase() == &quot;.css&quot;) {
+                        v = &quot;css&quot;;
+                    } else {
+                        v = &quot;js&quot;;
+                    }
+                    self.type = v;
+                }
+                return v;
+            },
+
+<span id='KISSY-Loader-Module-method-getFullPath'>            /**
+</span>             * Get the fullpath of current module if load dynamically
+             */
+            getFullPath:function () {
+                var self = this, t, fullpathUri, packageBaseUri;
+                if (!self.fullpath) {
+                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    if (t = self.getTag()) {
+                        fullpathUri.query.set(&quot;t&quot;, t);
+                    }
+                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
+                }
+                return self.fullpath;
+            },
+
+<span id='KISSY-Loader-Module-method-getPath'>            /**
+</span>             * Get the path (without package base)
+             * @return {String}
+             */
+            getPath:function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
+            },
+
+<span id='KISSY-Loader-Module-method-getValue'>            /**
+</span>             * Get the value of current module
+             */
+            getValue:function () {
+                return this.value;
+            },
+
+<span id='KISSY-Loader-Module-method-getName'>            /**
+</span>             * Get the name of current module
+             * @returns {String}
+             */
+            getName:function () {
+                return this.name;
+            },
+
+<span id='KISSY-Loader-Module-method-getPackageInfo'>            /**
+</span>             * Get the packageInfo of current module
+             * @return {Object}
+             */
+            getPackageInfo:function () {
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, self));
+            },
+
+<span id='KISSY-Loader-Module-method-getTag'>            /**
+</span>             * Get the tag of current module
+             * @return {String}
+             */
+            getTag:function () {
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
+            },
+
+<span id='KISSY-Loader-Module-method-getCharset'>            /**
+</span>             * Get the charset of current module
+             * @return {String}
+             */
+            getCharset:function () {
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
+            }
+        });
+
+    Loader.Module = Module;
+
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            extname = (Path.extname(name) || &quot;&quot;).toLowerCase(),
+            min = &quot;-min&quot;;
+
+        if (extname != &quot;.css&quot;) {
+            extname = &quot;.js&quot;;
+        }
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (m.getPackageInfo().isDebug()) {
+            min = &quot;&quot;;
+        }
+        return name + min + extname;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = &quot;&quot;,
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                // longest match
+                if (S.startsWith(modName, p) &amp;&amp;
+                    p.length &gt; pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({
+                SS:self,
+                // need packageName as key
+                name:''
+            }));
+
+        return packageDesc;
+    }
+
+<span id='KISSY-Loader-STATUS'>    /**
+</span>     * Loader Status Enum
+     * @enum {Number} KISSY.Loader.STATUS
+     */
+    Loader.STATUS = {
+<span id='KISSY-Loader-STATUS-property-INIT'>        /** init */
+</span>        &quot;INIT&quot;:0,
+<span id='KISSY-Loader-STATUS-property-LOADING'>        /** loading */
+</span>        &quot;LOADING&quot;:1,
+<span id='KISSY-Loader-STATUS-property-LOADED'>        /** loaded */
+</span>        &quot;LOADED&quot;:2,
+<span id='KISSY-Loader-STATUS-property-ERROR'>        /** error */
+</span>        &quot;ERROR&quot;:3,
+<span id='KISSY-Loader-STATUS-property-ATTACHED'>        /** attached */
+</span>        &quot;ATTACHED&quot;:4
+    };
+})(KISSY);
+/*
+ TODO: implement conditional loader
+ */</pre>
+</body>
+</html>

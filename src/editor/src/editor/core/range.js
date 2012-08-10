@@ -1160,7 +1160,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Enlarge the range as mush as possible
              * @param {Number} unit
-             * @function
+             * @method
              * @example
              * <code>
              *      &lt;div&gt;&lt;span&gt;&lt;span&gt;^1&lt;/span&gt;2^&lt;/span&gt;x&lt;/div&gt;

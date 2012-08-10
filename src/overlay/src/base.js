@@ -9,10 +9,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
     }
 
     /**
-     * @class
      * KISSY Overlay Component.
      * xclass: 'overlay'.
-     * @name Overlay
+     * @class Overlay
      * @extends Component.Controller
      * @extends Component.UIBase.ContentBox
      * @extends Component.UIBase.Position
@@ -38,7 +37,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
         {
             /**
              * see {@link Component.UIBase.Box#show}
-             * @function
+             * @method
              * @name Overlay#show
              */
         }, {

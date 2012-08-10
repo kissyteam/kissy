@@ -44,7 +44,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * see {@link Attribute#set}
      * @name set
      * @memberOf Base#
-     * @function
+     * @method
      */
 
 

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Uri class for KISSY.
  * @author yiminghe@gmail.com
  */
@@ -80,10 +81,9 @@
     }
 
     /**
-     * @class
+     * @class KISSY.Uri.Query
      * Query data structure.
      * @param {String} [query] encoded query string(without question mask).
-     * @memberOf KISSY.Uri
      */
     function Query(query) {
         this._query = query || "";
@@ -91,15 +91,12 @@
 
 
     Query.prototype =
-    /**
-     * @lends KISSY.Uri.Query#
-     */
     {
         constructor:Query,
 
         /**
          * Cloned new instance.
-         * @return {Query}
+         * @return {KISSY.Uri.Query}
          */
         clone:function () {
             return new Query(this.toString());
@@ -264,11 +261,10 @@
 
 
     /**
-     * @class
+     * @class KISSY.Uri
      * Uri class for KISSY.
      * Most of its interfaces are same with window.location.
      * @param {String|KISSY.Uri} [uriStr] Encoded uri string.
-     * @memberOf KISSY
      */
     function Uri(uriStr) {
 
@@ -279,9 +275,6 @@
         var m, self = this;
 
         S.mix(self,
-            /**
-             * @lends KISSY.Uri#
-             */
             {
                 /**
                  * scheme such as "http:". aka protocol without colon
@@ -336,9 +329,6 @@
     }
 
     Uri.prototype =
-    /**
-     * @lends KISSY.Uri#
-     */
     {
 
         constructor:Uri,
@@ -361,16 +351,17 @@
          * The reference resolution algorithm.rfc 5.2
          * return a resolved uri corresponding to current uri
          * @param {KISSY.Uri|String} relativeUri
-         * @example
-         * <code>
-         *   this: "http://y/yy/z.com?t=1#v=2"
-         *   "https:/y/" => "https:/y/"
-         *   "//foo" => "http://foo"
-         *   "foo" => "http://y/yy/foo"
-         *   "/foo" => "http://y/foo"
-         *   "?foo" => "http://y/yy/z.com?foo"
-         *   "#foo" => http://y/yy/z.com?t=1#foo"
-         * </code>
+         *
+         * for example:
+         *      @example
+         *      this: "http://y/yy/z.com?t=1#v=2"
+         *      "https:/y/" => "https:/y/"
+         *      "//foo" => "http://foo"
+         *      "foo" => "http://y/yy/foo"
+         *      "/foo" => "http://y/foo"
+         *      "?foo" => "http://y/yy/z.com?foo"
+         *      "#foo" => http://y/yy/z.com?t=1#foo"
+         *
          * @return {KISSY.Uri}
          */
         resolve:function (relativeUri) {
@@ -574,14 +565,14 @@
         },
 
         /**
-         * serialize to string.
-         * rfc 5.3 Component Recomposition.
-         * but kissy does not differentiate between undefined and empty.
+         * Serialize to string.
+         * See rfc 5.3 Component Recomposition.
+         * But kissy does not differentiate between undefined and empty.
          * @param {boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
          */
-        toString:function (serializeArray) {
+        toString: function (serializeArray) {
 
             var out = [], self = this,
                 scheme,
@@ -639,8 +630,8 @@
     S.Uri = Uri;
 
 })(KISSY);
-/**
- * Refer
- *  - http://www.ietf.org/rfc/rfc3986.txt
- *  - http://en.wikipedia.org/wiki/URI_scheme
+/*
+ Refer
+ - http://www.ietf.org/rfc/rfc3986.txt
+ - http://en.wikipedia.org/wiki/URI_scheme
  */

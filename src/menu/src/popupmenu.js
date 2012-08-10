@@ -32,7 +32,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function () {
                 var self = this;
@@ -47,7 +47,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleBlur:function () {
                 var self = this;

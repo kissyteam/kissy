@@ -146,7 +146,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     /**
      * @name IO
      * @namespace Provides utility that brokers HTTP requests through a simplified interface
-     * @function
+     * @method
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>
      *  all values are optional.<br/>

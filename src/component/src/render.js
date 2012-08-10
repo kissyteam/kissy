@@ -6,16 +6,11 @@
 KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
-     * @memberOf Component
-     * @name Render
      * @extends Component.UIBase
-     * @class
+     * @class Component.Render
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([UIBase.Box.Render],
-        /**
-         * @lends Component.Render#
-         */
         {
 
             /**
@@ -33,7 +28,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * Get full class name (with prefix) for current component
              * @param classes {String} class names without prefixCls. Separated by space.
-             * @function
+             * @method
              * @return {String} class name with prefixCls
              * @private
              */

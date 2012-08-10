@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview web.js
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
@@ -34,7 +35,8 @@
 
     S.mix(S,
         /**
-         * @lends KISSY
+         * @class
+         * @override KISSY
          */
         {
 
@@ -132,6 +134,7 @@
 
     /**
      * Binds ready events.
+     * @ignore
      */
     function _bindReady() {
         var doScroll = docElem.doScroll,
@@ -211,12 +214,11 @@
         S.Config.debug = true;
     }
 
-    /**
-     * bind on start
-     * in case when you bind but the DOMContentLoaded has triggered
-     * then you has to wait onload
-     * worst case no callback at all
-     */
+
+//     bind on start
+//     in case when you bind but the DOMContentLoaded has triggered
+//     then you has to wait onload
+//     worst case no callback at all
     _bindReady();
 
     if (navigator && navigator.userAgent.match(/MSIE/)) {

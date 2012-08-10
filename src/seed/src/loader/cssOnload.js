@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview script/css load across browser
  * @author yiminghe@gmail.com
  */
@@ -10,15 +11,10 @@
     var CSS_POLL_INTERVAL = 30,
         win = S.Env.host,
         utils = S.Loader.Utils,
-        /**
-         * central poll for link node
-         */
-            timer = 0,
-
+    // central poll for link node
+        timer = 0,
         monitors = {
-            /**
-             * node.id:{callback:callback,node:node}
-             */
+            // node.id:{callback:callback,node:node}
         };
 
     function startCssTimer() {
@@ -79,16 +75,17 @@
 
     S.mix(utils, {
         /**
-         * monitor css onload across browsers
-         * 暂时不考虑如何判断失败，如 404 等
-         * @see <pre>
-         *  - firefox 不可行（结论4错误）：
+         * monitor css onload across browsers.issue about 404 failure.
+         *
+         *  - firefox not ok（4 is wrong）：
          *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
-         *  - 全浏览器兼容
+         *  - all is ok
          *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-         *  - 其他
+         *  - others
          *    - http://www.zachleat.com/web/load-css-dynamically/
-         *  </pre>
+         *
+         *  @member KISSY.Loader.Utils
+         *  @method
          */
         styleOnLoad:win.attachEvent || utils.isPresto ?
             // ie/opera

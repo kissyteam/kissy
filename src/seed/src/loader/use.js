@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview use and attach mod
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -22,14 +23,16 @@
     S.augment(Loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
-         * @example
-         * <code>
-         * S.use('mod-name', callback, config);
-         * S.use('mod1,mod2', callback, config);
-         * </code>
+         * @member KISSY.Loader
+         *
+         * for example:
+         *      @example
+         *      S.use('mod-name', callback, config);
+         *      S.use('mod1,mod2', callback, config);
+         *
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
-         *                   with KISSY as first argument and mod's value as the following arguments
+         * with KISSY as first argument and mod's value as the following arguments
          */
         use:function (modNames, callback) {
             var self = this,
@@ -80,9 +83,7 @@
     }
 
 
-    /**
-     * Attach a module and all required modules.
-     */
+    // Attach a module and all required modules.
     function attachModRecursive(self, mod, callback) {
         var SS = self.SS,
             r,
@@ -97,10 +98,8 @@
         // 事先配置的 require ，同 newRequires 有区别
         var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
-        /**
-         * check cyclic dependency between mods
-         * @private
-         */
+
+        // check cyclic dependency between mods
         function cyclicCheck() {
             // one mod 's all requires mods to run its callback
             var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
@@ -201,9 +200,7 @@
     }
 
 
-    /**
-     * Load a single module.
-     */
+    // Load a single module.
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
             modName = mod.getName(),

@@ -1,5 +1,6 @@
 /**
- * @fileOverview utils for kissy loader
+ * @ignore
+ * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -14,7 +15,12 @@
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
-        utils = {},
+        /**
+         * @class KISSY.Loader.Utils
+         * Utils for KISSY Loader
+         * @static
+         */
+            Utils = {},
         host = S.Env.host,
         isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
@@ -42,27 +48,41 @@
         return s;
     }
 
-    S.mix(utils, {
+    S.mix(Utils, {
 
+        /**
+         * get document head
+         * @return {HTMLElement}
+         */
         docHead:function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
 
+        /**
+         * isWebkit
+         */
         isWebKit:isWebKit,
 
-        // like Gecko ...
+        /**
+         * isGecko
+         */
         isGecko:!isWebKit && !!ua.match(/Gecko/),
 
+        /**
+         * isPresto
+         */
         isPresto:!!ua.match(/Presto/),
 
+        /**
+         * IE
+         */
         IE:!!ua.match(/MSIE/),
 
         /**
-         * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
-         * @param moduleName 当前模块
-         * @param depName 依赖模块
-         * @return {string|Array} 依赖模块的绝对路径
-         * @description similar to path.resolve in nodejs
+         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
+         * @param moduleName current module 's name
+         * @param depName dep module 's name
+         * @return {string|Array}
          */
         normalDepModuleName:function (moduleName, depName) {
             var i = 0;
@@ -73,7 +93,7 @@
 
             if (S.isArray(depName)) {
                 for (; i < depName.length; i++) {
-                    depName[i] = utils.normalDepModuleName(moduleName, depName[i]);
+                    depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
                 }
                 return depName;
             }
@@ -86,24 +106,41 @@
             return Path.normalize(depName);
         },
 
-        //去除后缀名
+        /**
+         * remove ext name
+         * @param path
+         * @return {String}
+         */
         removeExtname:function (path) {
             return path.replace(/(-min)?\.js$/i, "");
         },
 
         /**
-         * 相对地址则转换成相对当前页面的绝对地址
+         * resolve according to current page location.
+         * @return {String}
          */
         resolveByPage:function (path) {
             return simulatedLocation.resolve(path);
         },
 
+        /**
+         * create modules info
+         * @param self
+         * @param modNames
+         */
         createModulesInfo:function (self, modNames) {
             S.each(modNames, function (m) {
-                utils.createModuleInfo(self, m);
+                Utils.createModuleInfo(self, m);
             });
         },
 
+        /**
+         * create single module info
+         * @param self
+         * @param modName
+         * @param cfg
+         * @return {KISSY.Loader.Module}
+         */
         createModuleInfo:function (self, modName, cfg) {
             modName = indexMapStr(modName);
 
@@ -123,14 +160,32 @@
             return mod;
         },
 
+        /**
+         * Whether modNames is attached.
+         * @param self
+         * @param modNames
+         * @return {Boolean}
+         */
         isAttached:function (self, modNames) {
             return isStatus(self, modNames, data.ATTACHED);
         },
 
+        /**
+         * Whether modNames is loaded.
+         * @param self
+         * @param modNames
+         * @return {Boolean}
+         */
         isLoaded:function (self, modNames) {
             return isStatus(self, modNames, data.LOADED);
         },
 
+        /**
+         * Get module values
+         * @param self
+         * @param modNames
+         * @return {Array}
+         */
         getModules:function (self, modNames) {
             var mods = [self], mod;
 
@@ -144,6 +199,11 @@
             return mods;
         },
 
+        /**
+         * Attach specified mod.
+         * @param self
+         * @param mod
+         */
         attachMod:function (self, mod) {
             if (mod.status != data.LOADED) {
                 return;
@@ -154,12 +214,12 @@
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            requires = mod.requires = Utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, utils.getModules(self, requires));
+                    value = fn.apply(mod, Utils.getModules(self, requires));
                 } else {
                     value = fn;
                 }
@@ -173,6 +233,11 @@
             });
         },
 
+        /**
+         * Get mod names as array.
+         * @param modNames
+         * @return {String[]}
+         */
         getModNamesAsArray:function (modNames) {
             if (S.isString(modNames)) {
                 modNames = modNames.replace(/\s+/g, "").split(',');
@@ -186,12 +251,20 @@
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
          * @param {KISSY} self Global KISSY instance
-         * @param {String|String[]} modNames Array of module names or module names string separated by comma
+         * @param {String|String[]} modNames Array of module names
+         * or module names string separated by comma
+         * @return {String[]}
          */
         normalizeModNames:function (self, modNames, refModName) {
-            return utils.unalias(self, utils.normalizeModNamesWithAlias(self, modNames, refModName));
+            return Utils.unalias(self, Utils.normalizeModNamesWithAlias(self, modNames, refModName));
         },
 
+        /**
+         * unalias module name.
+         * @param self
+         * @param names
+         * @return {Array}
+         */
         unalias:function (self, names) {
             var ret = [].concat(names),
                 i,
@@ -211,6 +284,13 @@
             return ret;
         },
 
+        /**
+         * normalize module names
+         * @param self
+         * @param modNames
+         * @param refModName
+         * @return {Array}
+         */
         normalizeModNamesWithAlias:function (self, modNames, refModName) {
             var ret = [], i, l;
             if (modNames) {
@@ -221,12 +301,18 @@
             }
             // 3. relative to absolute (optional)
             if (refModName) {
-                ret = utils.normalDepModuleName(refModName, ret);
+                ret = Utils.normalDepModuleName(refModName, ret);
             }
             return ret;
         },
 
-        // 注册模块，将模块和定义 factory 关联起来
+        /**
+         * register module with factory
+         * @param self
+         * @param name
+         * @param fn
+         * @param config
+         */
         registerModule:function (self, name, fn, config) {
             var mods = self.Env.mods,
                 mod = mods[name];
@@ -237,7 +323,7 @@
             }
 
             // 没有 use，静态载入的 add 可能执行
-            utils.createModuleInfo(self, name);
+            Utils.createModuleInfo(self, name);
 
             mod = mods[name];
 
@@ -252,6 +338,12 @@
             S.log(name + " is loaded");
         },
 
+        /**
+         * Get mapped path.
+         * @param self
+         * @param path
+         * @return {String}
+         */
         getMappedPath:function (self, path) {
             var __mappedRules = self.Config.mappedRules || [],
                 i,
@@ -280,6 +372,6 @@
         return true;
     }
 
-    Loader.Utils = utils;
+    Loader.Utils = Utils;
 
 })(KISSY);
