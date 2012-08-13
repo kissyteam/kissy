@@ -1,12 +1,29 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview KISSY Scalable Event Framework
  * @author yiminghe@gmail.com
  */
 KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event,
-        /**
-         * @override KISSY.Event
+<span id='KISSY-Event-EventMod'>        /**
+</span>         * @override KISSY.Event
          * @class KISSY.Event.EventMod
          * @singleton
          */
@@ -14,20 +31,20 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
             KeyCodes:KeyCodes,
             Target:Target,
             Object:Object,
-            /**
-             * Same with {@link KISSY.Event#add}
+<span id='KISSY-Event-method-on'>            /**
+</span>             * Same with {@link KISSY.Event#add}
              * @method
              * @member KISSY.Event
              */
             on:Event.add,
-            /**
-             * Same with {@link KISSY.Event#remove}
+<span id='KISSY-Event-method-detach'>            /**
+</span>             * Same with {@link KISSY.Event#remove}
              * @method
              * @member KISSY.Event
              */
             detach:Event.remove,
-            /**
-             * Delegate event.
+<span id='KISSY-Event-method-delegate'>            /**
+</span>             * Delegate event.
              * @param targets KISSY selector             *
              * @param {String|Function} selector filter selector string or function to find right element
              * @param {String} [eventType] The type of event to delegate.
@@ -43,8 +60,8 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
                     selector:selector
                 });
             },
-            /**
-             * undelegate event.
+<span id='KISSY-Event-method-undelegate'>            /**
+</span>             * undelegate event.
              * @param targets KISSY selector
              * @param {String} [eventType] The type of event to undelegate.
              * use space to separate multiple event types.
@@ -94,4 +111,6 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
    2012-02-12 yiminghe@gmail.com note:
     - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
     - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
- */
+ */</pre>
+</body>
+</html>

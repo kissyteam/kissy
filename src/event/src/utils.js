@@ -1,13 +1,14 @@
 /**
+ * @ignore
  * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/utils", function (S, DOM) {
+KISSY.add('event/utils', function (S, DOM) {
 
-    /**
-     * whether two event listens are the same
-     * @param h1 已有的 handler 描述
-     * @param h2 用户提供的 handler 描述
+    /*
+      whether two event listens are the same
+      @param h1 已有的 handler 描述
+      @param h2 用户提供的 handler 描述
      */
     function isIdenticalHandler(h1, h2, el) {
         var scope1 = h1.scope || el,
@@ -39,7 +40,7 @@ KISSY.add("event/utils", function (S, DOM) {
 
     function batchForType(fn, targets, types) {
         // on(target, 'click focus', fn)
-        if (types && types.indexOf(" ") > 0) {
+        if (types && types.indexOf(' ') > 0) {
             var args = S.makeArray(arguments);
             S.each(types.split(/\s+/), function (type) {
                 var args2 = [].concat(args);
@@ -85,8 +86,8 @@ KISSY.add("event/utils", function (S, DOM) {
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
-        Event_Triggered:"",
-        TRIGGERED_NONE:"trigger-none-" + S.now(),
+        Event_Triggered:'',
+        TRIGGERED_NONE:'trigger-none-' + S.now(),
         EVENT_GUID:'ksEventTargetId' + S.now(),
         splitAndRun:splitAndRun,
         batchForType:batchForType,
@@ -95,23 +96,23 @@ KISSY.add("event/utils", function (S, DOM) {
         simpleAdd:simpleAdd,
         simpleRemove:simpleRemove,
         getTypedGroups:function (type) {
-            if (type.indexOf(".") < 0) {
-                return [type, ""];
+            if (type.indexOf('.') < 0) {
+                return [type, ''];
             }
             var m = type.match(/([^.]+)?(\..+)?$/),
                 t = m[1],
                 ret = [t],
                 gs = m[2];
             if (gs) {
-                gs = gs.split(".").sort();
-                ret.push(gs.join("."));
+                gs = gs.split('.').sort();
+                ret.push(gs.join('.'));
             } else {
-                ret.push("");
+                ret.push('');
             }
             return ret;
         },
         getGroupsRe:function (groups) {
-            return new RegExp(groups.split(".").join(".*\\.") + "(?:\\.|$)");
+            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
     };
 

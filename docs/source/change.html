@@ -1,12 +1,29 @@
-/**
- * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview  change bubble and checkbox/radio fix patch for ie&lt;9
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/change', function (S, UA, Event, DOM, special) {
     var mode = S.Env.host.document['documentMode'];
 
-    if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
+    if (UA['ie'] &amp;&amp; (UA['ie'] &lt; 9 || (mode &amp;&amp; mode &lt; 9))) {
 
         var R_FORM_EL = /^(?:textarea|input|select)$/i;
 
@@ -23,11 +40,11 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
             setup:function () {
                 var el = this;
                 if (isFormElement(el)) {
-                    // checkbox/radio only fires change when blur in ie<9
+                    // checkbox/radio only fires change when blur in ie&lt;9
                     // so use another technique from jquery
                     if (isCheckBoxOrRadio(el)) {
-                        // change in ie<9
-                        // change = propertychange -> click
+                        // change in ie&lt;9
+                        // change = propertychange -&gt; click
                         Event.on(el, 'propertychange', propertyChange);
                         Event.on(el, 'click', onClick);
                     } else {
@@ -36,7 +53,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     // if bind on parentNode ,lazy bind change event to its form elements
-                    // note event order : beforeactivate -> change
+                    // note event order : beforeactivate -&gt; change
                     // note 2: checkbox/radio is exceptional
                     Event.on(el, 'beforeactivate', beforeActivate);
                 }
@@ -78,7 +95,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
 
         function beforeActivate(e) {
             var t = e.target;
-            if (isFormElement(t) && !t.__changeHandler) {
+            if (isFormElement(t) &amp;&amp; !t.__changeHandler) {
                 t.__changeHandler = 1;
                 // lazy bind change , always as last handler among user's handlers
                 Event.on(t, 'change', {fn:changeHandler, last:1});
@@ -107,4 +124,6 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
     }
 }, {
     requires:['ua', './base', 'dom', './special']
-});
+});</pre>
+</body>
+</html>

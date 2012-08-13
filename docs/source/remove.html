@@ -1,5 +1,22 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
@@ -8,8 +25,8 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
         simpleRemove = Utils.simpleRemove;
 
     S.mix(Event,
-        /**
-         * @override KISSY.Event
+<span id='KISSY-Event-RemoveMod'>        /**
+</span>         * @override KISSY.Event
          * @class KISSY.Event.RemoveMod
          * @singleton
          */
@@ -17,7 +34,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             // single target, single type, fixed native
             __remove:function (isNativeTarget, target, type, fn, scope) {
 
-                if (!target || (isNativeTarget && !isValidTarget(target))) {
+                if (!target || (isNativeTarget &amp;&amp; !isValidTarget(target))) {
                     return;
                 }
 
@@ -36,27 +53,27 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     selector = fn.selector;
                     fn = fn.fn;
                     if (selector) {
-                        if (s && s['delegateFix']) {
+                        if (s &amp;&amp; s['delegateFix']) {
                             type = s['delegateFix'];
                         }
                     }
                 }
 
                 if (!selector) {
-                    if (s && s['onFix']) {
+                    if (s &amp;&amp; s['onFix']) {
                         type = s['onFix'];
                     }
                 }
 
                 var eventDesc = _data._data(target),
-                    events = eventDesc && eventDesc.events,
+                    events = eventDesc &amp;&amp; eventDesc.events,
                     handlers,
                     handler,
                     len,
                     i,
                     j,
                     t,
-                    special = (isNativeTarget && EVENT_SPECIAL[type]) || { };
+                    special = (isNativeTarget &amp;&amp; EVENT_SPECIAL[type]) || { };
 
                 if (!events) {
                     return;
@@ -83,16 +100,16 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 if ((handlers = events[type])) {
                     len = handlers.length;
                     // 移除 fn
-                    if ((fn || hasSelector || groupsRe ) && len) {
+                    if ((fn || hasSelector || groupsRe ) &amp;&amp; len) {
                         scope = scope || target;
 
-                        for (i = 0, j = 0, t = []; i < len; ++i) {
+                        for (i = 0, j = 0, t = []; i &lt; len; ++i) {
                             handler = handlers[i];
                             var handlerScope = handler.scope || target;
                             if (
                                 (scope != handlerScope) ||
                                     // 指定了函数，函数不相等，保留
-                                    (fn && fn != handler.fn) ||
+                                    (fn &amp;&amp; fn != handler.fn) ||
                                     // 1.没指定函数
                                     // 1.1 没有指定选择器,删掉 else2
                                     // 1.2 指定选择器,字符串为空
@@ -108,24 +125,24 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                                     // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
                                     // 2.4 指定选择器,字符串不为空,字符串不相等,保留
                                     (
-                                        hasSelector &&
+                                        hasSelector &amp;&amp;
                                             (
-                                                (selector && selector != handler.selector) ||
-                                                    (!selector && !handler.selector)
+                                                (selector &amp;&amp; selector != handler.selector) ||
+                                                    (!selector &amp;&amp; !handler.selector)
                                                 )
                                         ) ||
 
                                     // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
-                                    (groupsRe && !handler.groups.match(groupsRe))
+                                    (groupsRe &amp;&amp; !handler.groups.match(groupsRe))
 
                                 ) {
                                 t[j++] = handler;
                             }
                             else {
-                                if (handler.selector && handlers.delegateCount) {
+                                if (handler.selector &amp;&amp; handlers.delegateCount) {
                                     handlers.delegateCount--;
                                 }
-                                if (handler.last && handlers.lastCount) {
+                                if (handler.last &amp;&amp; handlers.lastCount) {
                                     handlers.lastCount--;
                                 }
                                 if (special.remove) {
@@ -145,7 +162,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     if (!len) {
                         // remove(el, type) or fn 已移除光
                         // dom node need to detach handler from dom node
-                        if (isNativeTarget &&
+                        if (isNativeTarget &amp;&amp;
                             (!special['tearDown'] ||
                                 special['tearDown'].call(target) === false)) {
                             simpleRemove(target, type, eventDesc.handler);
@@ -164,8 +181,8 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 }
             },
 
-            /**
-             * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+<span id='KISSY-Event-method-remove'>            /**
+</span>             * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
              * @param targets KISSY selector
              * @member KISSY.Event
              * @param {String} [type] The type of event to remove.
@@ -183,7 +200,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 targets = DOM.query(targets);
 
-                for (var i = targets.length - 1; i >= 0; i--) {
+                for (var i = targets.length - 1; i &gt;= 0; i--) {
                     Event.__remove(true, targets[i], type, fn, scope);
                 }
 
@@ -193,4 +210,6 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
         });
 }, {
     requires:['./base', 'dom', './utils', './data', './special']
-});
+});</pre>
+</body>
+</html>

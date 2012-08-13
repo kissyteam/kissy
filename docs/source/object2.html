@@ -1,5 +1,22 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview EventObject
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
@@ -15,8 +32,8 @@ KISSY.add('event/object', function (S, undefined) {
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
             'target toElement view wheelDelta which axis').split(' ');
 
-    /**
-     * @class KISSY.Event.Object
+<span id='KISSY-Event-Object'>    /**
+</span>     * @class KISSY.Event.Object
      *
      * KISSY 's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
@@ -31,7 +48,7 @@ KISSY.add('event/object', function (S, undefined) {
             self.type = domEvent.type;
             // incase dom event has been mark as default prevented by lower dom node
             self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
-                domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
+                domEvent['getPreventDefault'] &amp;&amp; domEvent['getPreventDefault']() ) ? TRUE : FALSE;
             self._fix();
         }
         else { // custom
@@ -45,18 +62,18 @@ KISSY.add('event/object', function (S, undefined) {
 
     EventObject.prototype = {
         constructor: EventObject,
-        /**
-         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+<span id='KISSY-Event-Object-property-isDefaultPrevented'>        /**
+</span>         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
          * @type {Boolean}
          */
         isDefaultPrevented: FALSE,
-        /**
-         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+<span id='KISSY-Event-Object-property-isPropagationStopped'>        /**
+</span>         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
          * @type {Boolean}
          */
         isPropagationStopped: FALSE,
-        /**
-         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+<span id='KISSY-Event-Object-property-isImmediatePropagationStopped'>        /**
+</span>         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
          * @type {Boolean}
          */
         isImmediatePropagationStopped: FALSE,
@@ -85,15 +102,15 @@ KISSY.add('event/object', function (S, undefined) {
             }
 
             // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
+            if (!self.relatedTarget &amp;&amp; self.fromElement) {
                 self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
             }
 
             // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
+            if (self.pageX === undefined &amp;&amp; self.clientX !== undefined) {
                 var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+                self.pageX = self.clientX + (docEl &amp;&amp; docEl.scrollLeft || bd &amp;&amp; bd.scrollLeft || 0) - (docEl &amp;&amp; docEl.clientLeft || bd &amp;&amp; bd.clientLeft || 0);
+                self.pageY = self.clientY + (docEl &amp;&amp; docEl.scrollTop || bd &amp;&amp; bd.scrollTop || 0) - (docEl &amp;&amp; docEl.clientTop || bd &amp;&amp; bd.clientTop || 0);
             }
 
             // add which for key events
@@ -108,13 +125,13 @@ KISSY.add('event/object', function (S, undefined) {
 
             // add which for click: 1 === left; 2 === middle; 3 === right
             // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+            if (!self.which &amp;&amp; self.button !== undefined) {
+                self.which = (self.button &amp; 1 ? 1 : (self.button &amp; 2 ? 3 : ( self.button &amp; 4 ? 2 : 0)));
             }
         },
 
-        /**
-         * Prevents the event's default behavior
+<span id='KISSY-Event-Object-method-preventDefault'>        /**
+</span>         * Prevents the event's default behavior
          */
         preventDefault: function () {
             var e = this.originalEvent;
@@ -131,8 +148,8 @@ KISSY.add('event/object', function (S, undefined) {
             this.isDefaultPrevented = TRUE;
         },
 
-        /**
-         * Stops the propagation to the next bubble target
+<span id='KISSY-Event-Object-method-stopPropagation'>        /**
+</span>         * Stops the propagation to the next bubble target
          */
         stopPropagation: function () {
             var e = this.originalEvent;
@@ -150,8 +167,8 @@ KISSY.add('event/object', function (S, undefined) {
         },
 
 
-        /**
-         * Stops the propagation to the next bubble target and
+<span id='KISSY-Event-Object-method-stopImmediatePropagation'>        /**
+</span>         * Stops the propagation to the next bubble target and
          * prevents any additional listeners from being exectued
          * on the current target.
          */
@@ -163,8 +180,8 @@ KISSY.add('event/object', function (S, undefined) {
             self.stopPropagation();
         },
 
-        /**
-         * Stops the event propagation and prevents the default
+<span id='KISSY-Event-Object-method-halt'>        /**
+</span>         * Stops the event propagation and prevents the default
          * event behavior.
          * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
          */
@@ -192,3 +209,6 @@ KISSY.add('event/object', function (S, undefined) {
   TODO:
     - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
+</pre>
+</body>
+</html>

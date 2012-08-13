@@ -1,5 +1,22 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
@@ -8,7 +25,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
     function getEvents(target) {
         // 获取事件描述
         var eventDesc = _data._data(target);
-        return eventDesc && eventDesc.events;
+        return eventDesc &amp;&amp; eventDesc.events;
     }
 
     function getHandlers(target, type) {
@@ -42,14 +59,14 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             handler;
 
         // collect delegated handlers and corresponding element
-        if (delegateCount &&
+        if (delegateCount &amp;&amp;
             // by jq
             // Avoid disabled elements in IE (#6911)
             // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
             !target.disabled) {
             while (target != currentTarget) {
                 currentTargetHandlers = [];
-                for (i = 0; i < delegateCount; i++) {
+                for (i = 0; i &lt; delegateCount; i++) {
                     handler = handlers[i];
                     if (DOM.test(target, handler.selector)) {
                         currentTargetHandlers.push(handler);
@@ -78,21 +95,21 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             t,
             _ks_groups = event._ks_groups;
         for (i = 0, len = allHandlers.length;
-             !event.isPropagationStopped && i < len;
+             !event.isPropagationStopped &amp;&amp; i &lt; len;
              ++i) {
 
             handlerObj = allHandlers[i];
             currentTargetHandlers = handlerObj.currentTargetHandlers;
             currentTarget0 = handlerObj.currentTarget;
             event.currentTarget = currentTarget0;
-            for (j = 0; !event.isImmediatePropagationStopped &&
-                j < currentTargetHandlers.length;
+            for (j = 0; !event.isImmediatePropagationStopped &amp;&amp;
+                j &lt; currentTargetHandlers.length;
                  j++) {
 
                 currentTargetHandler = currentTargetHandlers[j];
 
                 // handler's group does not match specified groups (at fire step)
-                if (_ks_groups &&
+                if (_ks_groups &amp;&amp;
                     (!currentTargetHandler.groups ||
                         !(currentTargetHandler.groups.match(_ks_groups)))) {
                     continue;
@@ -104,10 +121,10 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if ((s = special[event.type]) && s.handle) {
+                if ((s = special[event.type]) &amp;&amp; s.handle) {
                     t = s.handle(event, currentTargetHandler, data);
                     // can handle
-                    if (t.length > 0) {
+                    if (t.length &gt; 0) {
                         ret = t[0];
                     }
                 } else {
@@ -135,4 +152,6 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
     }
 }, {
     requires:['dom', './data', './special']
-});
+});</pre>
+</body>
+</html>

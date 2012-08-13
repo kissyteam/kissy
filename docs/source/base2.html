@@ -17,277 +17,251 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview setup data structure for kissy loader
- * @author yiminghe@gmail.com
+ * @fileOverview scalable event framework for kissy (refer DOM3 Events)
+ * how to fire event just like browser?
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S) {
-    if (typeof require !== 'undefined') {
-        return;
-    }
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
-    var Path = S.Path;
+    var isValidTarget = Utils.isValidTarget,
+        splitAndRun = Utils.splitAndRun,
+        getNodeName = DOM.nodeName,
+        trim = S.trim,
+        TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
-<span id='KISSY-Loader'>    /**
-</span>     * @class KISSY.Loader
-     * @mixins KISSY.Loader.Target
-     * This class should not be instantiated manually.
+<span id='KISSY-Event'>    /**
+</span>     * The event utility provides functions to add and remove event listeners.
+     * @class KISSY.Event
+     * @singleton
      */
-    function Loader(SS) {
-        this.SS = SS;
-<span id='KISSY-Loader-event-afterModAttached'>        /**
-</span>         * @event afterModAttached
-         * fired after a module is attached
-         * @param e
-         * @param {KISSY.Loader.Module} e.mod current module object
+    var Event =
+    {
+<span id='KISSY-Event-method-_clone'>        /**
+</span>         * copy event from src to dest
+         * @param {HTMLElement} src srcElement
+         * @param {HTMLElement} dest destElement
+         * @private
          */
-    }
+        _clone: function (src, dest) {
 
-    KISSY.Loader = Loader;
-
-<span id='KISSY-Loader-Package'>    /**
-</span>     * @class KISSY.Loader.Package
-     * This class should not be instantiated manually.
-     */
-    function Package(cfg) {
-        S.mix(this, cfg);
-    }
-
-    S.augment(Package,
-        {
-<span id='KISSY-Loader-Package-method-getTag'>            /**
-</span>             * Tag for package.
-             * @return {String}
-             */
-            getTag: function () {
-                var self = this;
-                return self.tag || self.SS.Config.tag;
-            },
-
-<span id='KISSY-Loader-Package-method-getName'>            /**
-</span>             * Get package name.
-             * @return {String}
-             */
-            getName: function () {
-                return this.name;
-            },
-
-<span id='KISSY-Loader-Package-method-getBase'>            /**
-</span>             * Get package base.
-             * @return {String}
-             */
-            getBase: function () {
-                var self = this;
-                return self.base || self.SS.Config.base;
-            },
-
-            getBaseUri: function () {
-                var self = this;
-                return self.baseUri || self.SS.Config.baseUri;
-            },
-
-<span id='KISSY-Loader-Package-method-isDebug'>            /**
-</span>             * Whether is debug for this package.
-             * @return {Boolean}
-             */
-            isDebug: function () {
-                var self = this, debug = self.debug;
-                return debug === undefined ? self.SS.Config.debug : debug;
-            },
-
-<span id='KISSY-Loader-Package-method-getCharset'>            /**
-</span>             * Get charset for package.
-             * @return {String}
-             */
-            getCharset: function () {
-                var self = this;
-                return self.charset || self.SS.Config.charset;
-            },
-
-<span id='KISSY-Loader-Package-method-isCombine'>            /**
-</span>             * Whether modules are combined for this package.
-             * @return {Boolean}
-             */
-            isCombine: function () {
-                var self = this, combine = self.combine;
-                return combine === undefined ? self.SS.Config.combine : combine;
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+                !_data._hasData(src)) {
+                return;
             }
-        });
+            var eventDesc = _data._data(src),
+                events = eventDesc.events;
+            S.each(events, function (handlers, type) {
+                S.each(handlers, function (handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    Event.on(dest, type, {
+                        data: handler.data,
+                        fn: handler.fn,
+                        groups: handler.groups,
+                        last: handler.last,
+                        originalType: handler.originalType,
+                        scope: handler.scope,
+                        selector: handler.selector
+                    });
+                });
+            });
+        },
 
-    Loader.Package = Package;
-
-<span id='KISSY-Loader-Module'>    /**
-</span>     * @class KISSY.Loader.Module
-     * This class should not be instantiated manually.
-     */
-    function Module(cfg) {
-        S.mix(this, cfg);
-    }
-
-    S.augment(Module,
-        {
-<span id='KISSY-Loader-Module-method-setValue'>            /**
-</span>             * Set the value of current module
-             * @param v value to be set
-             */
-            setValue: function (v) {
-                this.value = v;
-            },
-
-<span id='KISSY-Loader-Module-method-getType'>            /**
-</span>             * Get the type if current Module
-             * @return {String} css or js
-             */
-            getType: function () {
-                var self = this, v;
-                if ((v = self.type) === undefined) {
-                    if (Path.extname(self.name).toLowerCase() == '.css') {
-                        v = 'css';
-                    } else {
-                        v = 'js';
-                    }
-                    self.type = v;
+<span id='KISSY-Event-method-fire'>        /**
+</span>         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @param targets html nodes
+         * @param {String|KISSY.Event.Object} eventType event type
+         * @param [eventData] additional event data
+         * @param {Boolean} [onlyHandlers] only fire handlers
+         * @return {Boolean} The return value of fire/dispatchEvent indicates
+         * whether any of the listeners which handled the event called preventDefault.
+         * If preventDefault was called the value is false, else the value is true.
+         */
+        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+            var ret = true, r;
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+            if (S.isString(eventType)) {
+                eventType = trim(eventType);
+                if (eventType.indexOf(' ') &gt; -1) {
+                    splitAndRun(eventType, function (t) {
+                        r = Event.fire(targets, t, eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
+                        }
+                    });
+                    return ret;
                 }
-                return v;
-            },
-
-<span id='KISSY-Loader-Module-method-getFullPath'>            /**
-</span>             * Get the fullpath of current module if load dynamically
-             */
-            getFullPath: function () {
-                var self = this, t, fullpathUri, packageBaseUri;
-                if (!self.fullpath) {
-                    packageBaseUri = self.getPackageInfo().getBaseUri();
-                    fullpathUri = packageBaseUri.resolve(self.getPath());
-                    if (t = self.getTag()) {
-                        fullpathUri.query.set('t', t);
-                    }
-                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
-                }
-                return self.fullpath;
-            },
-
-<span id='KISSY-Loader-Module-method-getPath'>            /**
-</span>             * Get the path (without package base)
-             * @return {String}
-             */
-            getPath: function () {
-                var self = this;
-                return self.path ||
-                    (self.path = defaultComponentJsName(self))
-            },
-
-<span id='KISSY-Loader-Module-method-getValue'>            /**
-</span>             * Get the value of current module
-             */
-            getValue: function () {
-                return this.value;
-            },
-
-<span id='KISSY-Loader-Module-method-getName'>            /**
-</span>             * Get the name of current module
-             * @return {String}
-             */
-            getName: function () {
-                return this.name;
-            },
-
-<span id='KISSY-Loader-Module-method-getPackageInfo'>            /**
-</span>             * Get the packageInfo of current module
-             * @return {Object}
-             */
-            getPackageInfo: function () {
-                var self = this;
-                return self.packageInfo ||
-                    (self.packageInfo = getPackageInfo(self.SS, self));
-            },
-
-<span id='KISSY-Loader-Module-method-getTag'>            /**
-</span>             * Get the tag of current module
-             * @return {String}
-             */
-            getTag: function () {
-                var self = this;
-                return self.tag || self.getPackageInfo().getTag();
-            },
-
-<span id='KISSY-Loader-Module-method-getCharset'>            /**
-</span>             * Get the charset of current module
-             * @return {String}
-             */
-            getCharset: function () {
-                var self = this;
-                return self.charset || self.getPackageInfo().getCharset();
+                // protect event type
+                eventData.type = eventType;
+            } else if (eventType instanceof EventObject) {
+                eventData = eventType;
+                eventType = eventData.type;
             }
-        });
 
-    Loader.Module = Module;
+            var typedGroups = Utils.getTypedGroups(eventType),
+                _ks_groups = typedGroups[1];
 
+            if (_ks_groups) {
+                _ks_groups = Utils.getGroupsRe(_ks_groups);
+            }
 
-    function defaultComponentJsName(m) {
-        var name = m.name,
-            extname = (Path.extname(name) || '').toLowerCase(),
-            min = '-min';
+            eventType = typedGroups[0];
 
-        if (extname != '.css') {
-            extname = '.js';
-        }
+            S.mix(eventData, {
+                type: eventType,
+                _ks_groups: _ks_groups
+            });
 
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
-        if (m.getPackageInfo().isDebug()) {
-            min = '';
-        }
-        return name + min + extname;
-    }
-
-    function getPackageInfo(self, mod) {
-        var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
-            pName = '',
-            p,
-            packageDesc;
-
-        for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &amp;&amp;
-                    p.length &gt; pName.length) {
-                    pName = p;
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i &gt;= 0; i--) {
+                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
+                if (ret !== false) {
+                    ret = r;
                 }
             }
+            return ret;
+        },
+
+<span id='KISSY-Event-method-fireHandler'>        /**
+</span>         * same with fire but:
+         * does not cause default behavior to occur.
+         * does not bubble up the DOM hierarchy.
+         * @param targets
+         * @param {KISSY.Event.Object | String} eventType
+         * @param [eventData]
+         */
+        fireHandler: function (targets, eventType, eventData) {
+            return Event.fire(targets, eventType, eventData, 1);
         }
-
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({
-                SS: self,
-                // need packageName as key
-                name: ''
-            }));
-
-        return packageDesc;
-    }
-
-<span id='KISSY-Loader-STATUS'>    /**
-</span>     * Loader Status Enum
-     * @enum {Number} KISSY.Loader.STATUS
-     */
-    Loader.STATUS = {
-<span id='KISSY-Loader-STATUS-property-INIT'>        /** init */
-</span>        'INIT': 0,
-<span id='KISSY-Loader-STATUS-property-LOADING'>        /** loading */
-</span>        'LOADING': 1,
-<span id='KISSY-Loader-STATUS-property-LOADED'>        /** loaded */
-</span>        'LOADED': 2,
-<span id='KISSY-Loader-STATUS-property-ERROR'>        /** error */
-</span>        'ERROR': 3,
-<span id='KISSY-Loader-STATUS-property-ATTACHED'>        /** attached */
-</span>        'ATTACHED': 4
     };
-})(KISSY);
+
+    /*
+     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     @return {Boolean} The return value of dispatchEvent indicates
+     whether any of the listeners which handled the event called preventDefault.
+     If preventDefault was called the value is false, else the value is true.
+     */
+    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
+        if (!isValidTarget(target)) {
+            return false;
+        }
+        var s = special[eventType];
+        // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
+        if (s &amp;&amp; s['onFix']) {
+            eventType = s['onFix'];
+        }
+
+        var event,
+            ret = true;
+        if (eventData instanceof EventObject) {
+            event = eventData;
+        } else {
+            event = new EventObject(target, undefined, eventType);
+            S.mix(event, eventData);
+        }
+<span id='global-property-_ks_fired'>        /**
+</span>         * identify event as fired manually
+         * @ignore
+         */
+        event._ks_fired = 1;
+        /*
+         The target of the event is the EventTarget on which dispatchEvent is called.
+         */
+        // TODO: protect target , but incompatible
+        // event.target=target;
+        // protect type
+        event.type = eventType;
+
+        // onlyHandlers is equal to event.halt()
+        // but we can not call event.halt()
+        // because handle will check event.isPropagationStopped
+
+        var cur = target,
+            t,
+            win = DOM._getWin(cur.ownerDocument || cur),
+            ontype = 'on' + eventType;
+
+        //bubble up dom tree
+        do {
+            event.currentTarget = cur;
+            t = handle(cur, event);
+            if (ret !== false) {
+                ret = t;
+            }
+            // Trigger an inline bound script
+            if (cur[ ontype ] &amp;&amp; cur[ ontype ].call(cur) === false) {
+                event.preventDefault();
+            }
+            // Bubble up to document, then to window
+            cur = cur.parentNode ||
+                cur.ownerDocument ||
+                (cur === target.ownerDocument) &amp;&amp; win;
+        } while (!onlyHandlers &amp;&amp; cur &amp;&amp; !event.isPropagationStopped);
+
+        if (!onlyHandlers &amp;&amp; !event.isDefaultPrevented) {
+            if (!(eventType === 'click' &amp;&amp;
+                getNodeName(target) == 'a')) {
+                var old;
+                try {
+                    // execute default action on dom node
+                    // so exclude window
+                    // exclude focus/blue on hidden element
+                    if (ontype &amp;&amp;
+                        target[ eventType ] &amp;&amp;
+                        (
+                            (eventType !== 'focus' &amp;&amp; eventType !== 'blur') ||
+                                target.offsetWidth !== 0
+                            ) &amp;&amp;
+                        !S.isWindow(target)) {
+                        // Don't re-trigger an onFOO event when we call its FOO() method
+                        old = target[ ontype ];
+
+                        if (old) {
+                            target[ ontype ] = null;
+                        }
+
+                        // 记录当前 trigger 触发
+                        Utils.Event_Triggered = eventType;
+
+                        // 只触发默认事件，而不要执行绑定的用户回调
+                        // 同步触发
+                        target[ eventType ]();
+                    }
+                } catch (ieError) {
+                    S.log('trigger action error : ');
+                    S.log(ieError);
+                }
+
+                if (old) {
+                    target[ ontype ] = old;
+                }
+
+                Utils.Event_Triggered = TRIGGERED_NONE;
+            }
+        }
+        return ret;
+    }
+
+    return Event;
+}, {
+    requires: ['dom', './object', './utils', './handle', './data', './special']
+});
+
 /*
- TODO: implement conditional loader
- */</pre>
+ yiminghe@gmail.com : 2011-12-15
+ - 重构，粒度更细，新的架构
+
+ 2011-11-24
+ - 自定义事件和 dom 事件操作彻底分离
+ - TODO: group event from DOM3 Event
+
+ 2011-06-07
+ - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ - 重构
+ - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ - 减少闭包使用，prevent ie 内存泄露？
+ - 增加 fire ，模拟冒泡处理 dom 事件
+ */
+</pre>
 </body>
 </html>

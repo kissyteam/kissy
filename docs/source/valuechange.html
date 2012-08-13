@@ -1,13 +1,30 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview inspired by yui3
- * Synthetic event that fires when the <code>value</code> property of an input
+ * Synthetic event that fires when the &lt;code&gt;value&lt;/code&gt; property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.
  *
- * Unlike the <code>onchange</code> event, this event fires when the value
+ * Unlike the &lt;code&gt;onchange&lt;/code&gt; event, this event fires when the value
  * actually changes and not when the element loses focus. This event also
- * reports IME and multi-stroke input more reliably than <code>oninput</code> or
+ * reports IME and multi-stroke input more reliably than &lt;code&gt;oninput&lt;/code&gt; or
  * the various key events across browsers.
  *
  * @author yiminghe@gmail.com
@@ -109,7 +126,9 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
   2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
    当 input 没焦点立即点击语音
-    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+    -&gt; mousedown -&gt; blur -&gt; focus -&gt; blur -&gt; webkitspeechchange -&gt; focus
    第二次：
-    -> mousedown -> blur -> webkitspeechchange -> focus
- */
+    -&gt; mousedown -&gt; blur -&gt; webkitspeechchange -&gt; focus
+ */</pre>
+</body>
+</html>
