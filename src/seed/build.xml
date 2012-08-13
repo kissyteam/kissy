@@ -19,18 +19,18 @@
             <path location="${src.dir}/loader/base.js"/>
             <path location="${src.dir}/loader/target.js"/>
             <path location="${src.dir}/loader/utils.js"/>
-            <path location="${src.dir}/loader/cssOnload.js"/>
-            <path location="${src.dir}/loader/getScript.js"/>
+            <path location="${src.dir}/loader/css-onload.js"/>
+            <path location="${src.dir}/loader/get-script.js"/>
             <path location="${src.dir}/loader/configs.js"/>
             <path location="${src.dir}/loader/loader.js"/>
             <path location="${src.dir}/loader/use.js"/>
-            <path location="${src.dir}/loader/ComboLoader.js"/>
+            <path location="${src.dir}/loader/combo-loader.js"/>
             <path location="${src.dir}/loader/init.js"/>
 
             <!--kissy loader end-->
             <path location="${src.dir}/web.js"/>
             <path location="${src.dir}/meta.js"/>
-            <path location="${src.dir}/dependency.js"/>
+            <path location="${src.dir}/deps.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
@@ -68,7 +68,7 @@
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
             <arg value="-output"/>
-            <arg value="${kissy.src.dir}/seed/src/dependency.js"/>
+            <arg value="${kissy.src.dir}/seed/src/deps.js"/>
             <classpath>
                 <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>

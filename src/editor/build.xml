@@ -95,7 +95,7 @@
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
             <arg value="-output"/>
-            <arg value="${src.dir}/editor/core/dependency.js"/>
+            <arg value="${src.dir}/editor/core/deps.js"/>
             <classpath>
                 <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>
