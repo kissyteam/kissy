@@ -575,7 +575,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * @param {Object} px Object to be mixed into new class 's prototype.
              * @param {Object} sx Object to be mixed into new class.
              * @static
-             * @returns {Component.UIBase} A new class which extends UIBase .
+             * @return {Component.UIBase} A new class which extends UIBase .
              */
             extend:function extend(extensions, px, sx) {
                 var args = S.makeArray(arguments),

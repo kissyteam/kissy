@@ -58,7 +58,7 @@
             /**
              * get KISSY 's loader instance
              * @member KISSY
-             * @returns {KISSY.Loader}
+             * @return {KISSY.Loader}
              */
             getLoader: function () {
                 var self = this, env = self.Env;

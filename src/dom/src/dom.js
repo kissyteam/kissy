@@ -1,14 +1,11 @@
 /**
+ * @ignore
  * @fileOverview dom
  * @author yiminghe@gmail.com
  */
-KISSY.add("dom", function (S, DOM) {
+KISSY.add('dom', function (S, DOM) {
 
-    /**
-     * @namespace Provides DOM helper methods
-     * @name DOM
-     */
-    S.mix(S,{
+   S.mix(S,{
         DOM:DOM,
         get:DOM.get,
         query:DOM.query
@@ -16,14 +13,14 @@ KISSY.add("dom", function (S, DOM) {
 
     return DOM;
 }, {
-    requires:["dom/attr",
-        "dom/class",
-        "dom/create",
-        "dom/data",
-        "dom/insertion",
-        "dom/offset",
-        "dom/style",
-        "dom/selector",
-        "dom/style-ie",
-        "dom/traversal"]
+    requires:['dom/attr',
+        'dom/class',
+        'dom/create',
+        'dom/data',
+        'dom/insertion',
+        'dom/offset',
+        'dom/style',
+        'dom/selector',
+        'dom/style-ie',
+        'dom/traversal']
 });

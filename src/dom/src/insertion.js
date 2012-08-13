@@ -1,22 +1,23 @@
 /**
+ * @ignore
  * @fileOverview dom-insertion
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
-        rformEls = /^(?:button|input|object|select|textarea)$/i,
+        R_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
         NEXT_SIBLING = 'nextSibling';
 
-    /**
+    /*
      ie 6,7 lose checked status when append to dom
-     var c=S.all("<input />");
-     c.attr("type","radio");
-     c.attr("checked",true);
-     S.all("#t").append(c);
+     var c=S.all('<input />');
+     c.attr('type','radio');
+     c.attr('checked',true);
+     S.all('#t').append(c);
      alert(c[0].checked);
      */
     function fixChecked(ret) {
@@ -24,10 +25,10 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             var el = ret[i];
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
-            } else if (getNodeName(el) == "input") {
+            } else if (getNodeName(el) == 'input') {
                 fixCheckedInternal(el);
             } else if (el.nodeType == DOM.ELEMENT_NODE) {
-                var cs = el.getElementsByTagName("input");
+                var cs = el.getElementsByTagName('input');
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
                 }
@@ -36,16 +37,16 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     }
 
     function fixCheckedInternal(el) {
-        if (el.type === "checkbox" || el.type === "radio") {
+        if (el.type === 'checkbox' || el.type === 'radio') {
             // after insert , in ie6/7 checked is decided by defaultChecked !
             el.defaultChecked = el.checked;
         }
     }
 
-    var rscriptType = /\/(java|ecma)script/i;
+    var R_SCRIPT_TYPE = /\/(java|ecma)script/i;
 
     function isJs(el) {
-        return !el.type || rscriptType.test(el.type);
+        return !el.type || R_SCRIPT_TYPE.test(el.type);
     }
 
     // extract script nodes and execute alone later
@@ -56,7 +57,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             nodeName = getNodeName(el);
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
-            } else if (nodeName === "script" && isJs(el)) {
+            } else if (nodeName === 'script' && isJs(el)) {
                 // remove script to make sure ie9 does not invoke when append
                 if (el.parentNode) {
                     el.parentNode.removeChild(el)
@@ -67,11 +68,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             } else {
                 if (el.nodeType == DOM.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
-                    !rformEls.test(nodeName)) {
+                    !R_FORM_EL.test(nodeName)) {
                     var tmp = [],
                         s,
                         j,
-                        ss = el.getElementsByTagName("script");
+                        ss = el.getElementsByTagName('script');
                     for (j = 0; j < ss.length; j++) {
                         s = ss[j];
                         if (isJs(s)) {
@@ -91,7 +92,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         if (el.src) {
             S.getScript(el.src);
         } else {
-            var code = S.trim(el.text || el.textContent || el.innerHTML || "");
+            var code = S.trim(el.text || el.textContent || el.innerHTML || '');
             if (code) {
                 S.globalEval(code);
             }
@@ -146,7 +147,9 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     // loadScripts default to false to prevent xss
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -155,7 +158,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
              */
-            insertBefore:function (newNodes, refNodes, loadScripts) {
+            insertBefore: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
                     if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode);
@@ -168,7 +171,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
              */
-            insertAfter:function (newNodes, refNodes, loadScripts) {
+            insertAfter: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
                     if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
@@ -181,7 +184,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
              */
-            appendTo:function (newNodes, parents, loadScripts) {
+            appendTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.appendChild(newNode);
                 }, loadScripts);
@@ -192,7 +195,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
              */
-            prependTo:function (newNodes, parents, loadScripts) {
+            prependTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 }, loadScripts);
@@ -203,7 +206,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrapAll:function (wrappedNodes, wrapperNode) {
+            wrapAll: function (wrappedNodes, wrapperNode) {
                 // deep clone
                 wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
                 wrappedNodes = DOM.query(wrappedNodes);
@@ -222,7 +225,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrap:function (wrappedNodes, wrapperNode) {
+            wrap: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
@@ -235,7 +238,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrapInner:function (wrappedNodes, wrapperNode) {
+            wrapInner: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
@@ -253,7 +256,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * leaving the matched elements in their place.
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              */
-            unwrap:function (wrappedNodes) {
+            unwrap: function (wrappedNodes) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 S.each(wrappedNodes, function (w) {
                     var p = w.parentNode;
@@ -266,7 +269,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
              * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
              */
-            replaceWith:function (selector, newNodes) {
+            replaceWith: function (selector, newNodes) {
                 var nodes = DOM.query(selector);
                 newNodes = DOM.query(newNodes);
                 DOM.remove(newNodes, true);
@@ -274,26 +277,25 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 DOM.remove(nodes);
             }
         });
-    var alias = {
-        "prepend":"prependTo",
-        "append":"appendTo",
-        "before":"insertBefore",
-        "after":"insertAfter"
-    };
-    for (var a in alias) {
-        DOM[a] = DOM[alias[a]];
-    }
+    S.each({
+        'prepend': 'prependTo',
+        'append': 'appendTo',
+        'before': 'insertBefore',
+        'after': 'insertAfter'
+    }, function (value, key) {
+        DOM[key] = DOM[value];
+    });
     return DOM;
 }, {
-    requires:["ua", "./create"]
+    requires: ['ua', './create']
 });
 
-/**
- * 2012-04-05 yiminghe@gmail.com
- *  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
- *
- * 2011-05-25
- *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
- *      DOM.append(".multi1",".multi2");
- *
+/*
+ 2012-04-05 yiminghe@gmail.com
+ - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
+
+ 2011-05-25
+ - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ DOM.append('.multi1','.multi2');
+
  */

@@ -1,7 +1,7 @@
 /**
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  *               how to fire event just like browser?
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
@@ -52,7 +52,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @param {String|Event.Object} eventType event type
          * @param [eventData] additional event data
          * @param {Boolean} [onlyHandlers] only fire handlers
-         * @returns {Boolean} The return value of fire/dispatchEvent indicates
+         * @return {Boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
          */

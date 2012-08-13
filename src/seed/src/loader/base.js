@@ -168,7 +168,7 @@
 
             /**
              * Get the name of current module
-             * @returns {String}
+             * @return {String}
              */
             getName: function () {
                 return this.name;

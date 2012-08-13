@@ -45,7 +45,7 @@
     /**
      * Path Utils For KISSY.
      * @class KISSY.Path
-     * @static
+     * @singleton
      */
     var Path = {
 

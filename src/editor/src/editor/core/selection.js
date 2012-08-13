@@ -78,7 +78,7 @@ KISSY.add("editor/core/selection", function (S) {
 
         /**
          * Gets the native selection object from the browser.
-         * @returns {Object} The native selection object.
+         * @return {Object} The native selection object.
          * @example
          * var selection = editor.getSelection().<b>getNative()</b>;
          */
@@ -104,7 +104,7 @@ KISSY.add("editor/core/selection", function (S) {
          *        <li> SELECTION_ELEMENT (3): A element
          *            selection.</li>
          * </ul>
-         * @returns {number} One of the following constant values:
+         * @return {number} One of the following constant values:
          *         SELECTION_NONE,  SELECTION_TEXT or
          *         SELECTION_ELEMENT.
          * @example
@@ -331,7 +331,7 @@ KISSY.add("editor/core/selection", function (S) {
 
         /**
          * Gets the DOM element in which the selection starts.
-         * @returns The element at the beginning of the
+         * @return The element at the beginning of the
          *        selection.
          * @example
          * var element = editor.getSelection().<b>getStartElement()</b>;
@@ -415,7 +415,7 @@ KISSY.add("editor/core/selection", function (S) {
 
         /**
          * Gets the current selected element.
-         * @returns The selected element. Null if no
+         * @return The selected element. Null if no
          *        selection is available or the selection type is not
          *       SELECTION_ELEMENT.
          * @example

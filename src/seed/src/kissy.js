@@ -20,7 +20,8 @@
      *      });
      *
      * to do complex task with modules.
-     * @static
+     * @singleton
+     * @class
      */
     var KISSY = S;
 
@@ -442,7 +443,7 @@
             /**
              * Get all the property names of o as array
              * @param {Object} o
-             * @returns {Array}
+             * @return {Array}
              */
             keys: function (o) {
                 var result = [];

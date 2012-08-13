@@ -340,7 +340,7 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param [value] attribute's value
              * @param {Object} [opts] some options
              * @param {Boolean} [opts.silent] whether fire change event
-             * @returns {Boolean} whether pass validator
+             * @return {Boolean} whether pass validator
              */
             set:function (name, value, opts) {
                 var self = this;

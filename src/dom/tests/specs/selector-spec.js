@@ -1,6 +1,6 @@
 /**
  * simple selector test
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.use("dom", function (S, DOM) {
     var $ = jQuery;

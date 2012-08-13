@@ -67,7 +67,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * and the {@link Event.Object} created will be mixed with eventData
          * @param {String} type The type of the event
          * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
-         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         * @return {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
         fire:function (type, eventData) {
             var self = this,

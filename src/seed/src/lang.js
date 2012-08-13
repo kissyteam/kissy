@@ -94,10 +94,6 @@
 
 
     S.mix(S,
-        /**
-         * @class
-         * @override KISSY
-         */
         {
 
             /**
@@ -106,6 +102,7 @@
              * @param {Boolean} [readOnly] while set marker on o if marker does not exist
              * @param {String} [marker] the marker will be set on Object
              * @return {String} guid associated with this object
+             * @member KISSY
              */
             stamp: function (o, readOnly, marker) {
                 if (!o) {
@@ -128,12 +125,14 @@
 
             /**
              * empty function
+             * @member KISSY
              */
             noop: function () {
             },
 
             /**
              * Determine the internal JavaScript [[Class]] of an object.
+             * @member KISSY
              */
             type: function (o) {
                 return o == null ?
@@ -144,6 +143,7 @@
             /**
              * whether o === null
              * @param o
+             * @member KISSY
              */
             isNull: function (o) {
                 return o === null;
@@ -152,6 +152,7 @@
             /**
              * whether o === undefined
              * @param o
+             * @member KISSY
              */
             isUndefined: function (o) {
                 return o === undefined;
@@ -159,6 +160,7 @@
 
             /**
              * Checks to see if an object is empty.
+             * @member KISSY
              */
             isEmptyObject: function (o) {
                 for (var p in o) {
@@ -172,6 +174,7 @@
             /**
              * Checks to see if an object is a plain object (created using '{}'
              * or 'new Object()' or 'new FunctionClass()').
+             * @member KISSY
              */
             isPlainObject: function (o) {
                 /*
@@ -189,7 +192,8 @@
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
-             * @returns {Boolean} a.equals(b)
+             * @return {Boolean} a.equals(b)
+             * @member KISSY
              */
             equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
                 // inspired by jasmine
@@ -222,8 +226,9 @@
             /**
              * Creates a deep copy of a plain object or array. Others are returned untouched.
              * @param input
+             * @member KISSY
              * @param {Function} [filter] filter function
-             * @returns {Object} the new cloned object
+             * @return {Object} the new cloned object
              * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
             clone: function (input, filter) {
@@ -253,6 +258,7 @@
             /**
              * Removes the whitespace from the beginning and end of a string.
              * @method
+             * @member KISSY
              */
             trim: trim ?
                 function (str) {
@@ -267,6 +273,7 @@
              * Removes undefined keywords and ignores escaped keywords.
              * @param {String} str template string
              * @param {Object} o json data
+             * @member KISSY
              * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute: function (str, o, regexp) {
@@ -289,6 +296,7 @@
              * @param fn {Function} the function to execute on each item. The function
              *        receives three arguments: the value, the index, the full array.
              * @param {Object} [context]
+             * @member KISSY
              */
             each: function (object, fn, context) {
                 if (object) {
@@ -320,8 +328,9 @@
              * Search for a specified value within an array.
              * @param item individual item to be searched
              * @method
+             * @member KISSY
              * @param {Array} arr the array of items where item will be search
-             * @returns {number} item's index in array
+             * @return {number} item's index in array
              */
             indexOf: indexOf ?
                 function (item, arr) {
@@ -343,7 +352,8 @@
              * @method
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {number} item's last index in array
+             * @return {number} item's last index in array
+             * @member KISSY
              */
             lastIndexOf: (lastIndexOf) ?
                 function (item, arr) {
@@ -364,6 +374,7 @@
              * @param [override] {Boolean} if override is true, S.unique([a, b, a]) => [b, a].
              * if override is false, S.unique([a, b, a]) => [a, b]
              * @return {Array} a copy of the array with duplicate entries removed
+             * @member KISSY
              */
             unique: function (a, override) {
                 var b = a.slice();
@@ -392,7 +403,8 @@
              * Search for a specified value index within an array.
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {Boolean} the item exists in arr
+             * @return {Boolean} the item exists in arr
+             * @member KISSY
              */
             inArray: function (item, arr) {
                 return S.indexOf(item, arr) > -1;
@@ -402,12 +414,14 @@
              * Executes the supplied function on each item in the array.
              * Returns a new array containing the items that the supplied
              * function returned true for.
+             * @member KISSY
              * @method
              * @param arr {Array} the array to iterate
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
              * @return {Array} The items on which the supplied function returned true.
              * If no items matched an empty array is returned.
+             * @member KISSY
              */
             filter: filter ?
                 function (arr, fn, context) {
@@ -433,8 +447,8 @@
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-             * @return {Array} The items on which the supplied function
-             *         returned
+             * @return {Array} The items on which the supplied function returned
+             * @member KISSY
              */
             map: map ?
                 function (arr, fn, context) {
@@ -466,6 +480,7 @@
              * @param initialValue {number} optional context object
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
              * @return {Array} The items on which the supplied function returned
+             * @member KISSY
              */
             reduce: /*
              NaN ?
@@ -519,7 +534,8 @@
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
+             * @member KISSY
+             * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
              */
             every: every ?
                 function (arr, fn, context) {
@@ -541,7 +557,8 @@
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
+             * @member KISSY
+             * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
              */
             some: some ?
                 function (arr, fn, context) {
@@ -564,7 +581,8 @@
              * @param {Function} fn internal called function
              * @param {Object} obj context in which fn runs
              * @param {...*} arg1 extra arguments
-             * @returns {Function} new function with context and arguments
+             * @member KISSY
+             * @return {Function} new function with context and arguments
              */
             bind: function (fn, obj, arg1) {
                 var slice = [].slice,
@@ -586,12 +604,16 @@
              * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
+             * @member KISSY
+             * @return {Number} current time
              */
             now: Date.now || function () {
                 return +new Date();
             },
             /**
              * frequently used in taobao cookie about nick
+             * @member KISSY
+             * @return {String} un-unicode string.
              */
             fromUnicode: function (str) {
                 return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
@@ -599,7 +621,11 @@
                 });
             },
 
-
+            /** uppercase first character.
+             * @member KISSY
+             * @param s
+             * @return {String}
+             */
             ucfirst: function (s) {
                 s += '';
                 return s.charAt(0).toUpperCase() + s.substring(1);
@@ -610,6 +636,8 @@
              * @see   http://yiminghe.javaeye.com/blog/788929
              *        http://wonko.com/post/html-escaping
              * @param str {string} text2html show
+             * @member KISSY
+             * @return {String} escaped html
              */
             escapeHTML: function (str) {
                 return str.replace(getEscapeReg(), function (m) {
@@ -620,6 +648,8 @@
             /**
              * get escaped regexp string for construct regexp
              * @param str
+             * @member KISSY
+             * @return {String} escaped regexp
              */
             escapeRegExp: function (str) {
                 return str.replace(escapeRegExp, '\\$&');
@@ -628,6 +658,8 @@
             /**
              * un-escape html to string
              * @param str {string} html2text
+             * @member KISSY
+             * @return {String} un-escaped html
              */
             unEscapeHTML: function (str) {
                 return str.replace(getUnEscapeReg(), function (m, n) {
@@ -638,6 +670,7 @@
              * Converts object to a true array.
              * @param o {object|Array} array like object or array
              * @return {Array} native Array
+             * @member KISSY
              */
             makeArray: function (o) {
                 if (o == null) {
@@ -680,6 +713,7 @@
              * @param {String} [eq='='] separator between key and value of data
              * @param {Boolean} [arr=true] whether add '[]' to array key of data
              * @return {String}
+             * @member KISSY
              */
             param: function (o, sep, eq, arr) {
                 if (!S.isPlainObject(o)) {
@@ -736,7 +770,8 @@
              * @param {String} str param string
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @returns {Object} json data
+             * @return {Object} json data
+             * @member KISSY
              */
             unparam: function (str, sep, eq) {
                 if (!S.isString(str) || !(str = S.trim(str))) {
@@ -781,18 +816,26 @@
              * Executes the supplied function in the context of the supplied
              * object 'when' milliseconds later. Executes the function a
              * single time unless periodic is set to true.
+             *
              * @param fn {Function|String} the function to execute or the name of the method in
-             *        the 'o' object to execute.
+             * the 'o' object to execute.
+             *
              * @param when {Number} the number of milliseconds to wait until the fn is executed.
+             *
              * @param {Boolean} [periodic] if true, executes continuously at supplied interval
-             *        until canceled.
+             * until canceled.
+             *
              * @param {Object} [context] the context object.
+             *
              * @param [data] that is provided to the function. This accepts either a single
-             *        item or an array. If an array is provided, the function is executed with
-             *        one parameter for each array item. If you need to pass a single array
-             *        parameter, it needs to be wrapped in an array [myarray].
+             * item or an array. If an array is provided, the function is executed with
+             * one parameter for each array item. If you need to pass a single array
+             * parameter, it needs to be wrapped in an array [myarray].
+             *
              * @return {Object} a timer object. Call the cancel() method on this object to stop
-             *         the timer.
+             * the timer.
+             *
+             * @member KISSY
              */
             later: function (fn, when, periodic, context, data) {
                 when = when || 0;
@@ -832,7 +875,8 @@
              * test whether a string start with a specified substring
              * @param {String} str the whole string
              * @param {String} prefix a specified substring
-             * @returns {Boolean} whether str start with prefix
+             * @return {Boolean} whether str start with prefix
+             * @member KISSY
              */
             startsWith: function (str, prefix) {
                 return str.lastIndexOf(prefix, 0) === 0;
@@ -842,7 +886,8 @@
              * test whether a string end with a specified substring
              * @param {String} str the whole string
              * @param {String} suffix a specified substring
-             * @returns {Boolean} whether str end with suffix
+             * @return {Boolean} whether str end with suffix
+             * @member KISSY
              */
             endsWith: function (str, suffix) {
                 var ind = str.length - suffix.length;
@@ -856,6 +901,7 @@
              * @param {Number} [ms] The number of milliseconds to throttle the method call.
              * Passing a -1 will disable the throttle. Defaults to 150.
              * @return {Function} Returns a wrapped function that calls fn throttled.
+             * @member KISSY
              */
             throttle: function (fn, ms, context) {
                 ms = ms || 150;
@@ -883,6 +929,7 @@
              * @param {Number} ms
              * @param {Object} [context]
              * @return {Function} Returns a wrapped function that calls fn buffered.
+             * @member KISSY
              */
             buffer: function (fn, ms, context) {
                 ms = ms || 150;
@@ -913,65 +960,69 @@
 
     // for idea ..... auto-hint
     S.mix(S,
-        /**
-         * @class
-         * @override KISSY
-         */
         {
             /**
              * test whether o is boolean
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isBoolean: isValidParamValue,
             /**
              * test whether o is number
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isNumber: isValidParamValue,
             /**
              * test whether o is String
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isString: isValidParamValue,
             /**
              * test whether o is function
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isFunction: isValidParamValue,
             /**
              * test whether o is Array
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isArray: isValidParamValue,
             /**
              * test whether o is Date
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isDate: isValidParamValue,
             /**
              * test whether o is RegExp
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isRegExp: isValidParamValue,
             /**
              * test whether o is Object
              * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
             isObject: isValidParamValue
         });

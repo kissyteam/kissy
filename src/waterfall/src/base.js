@@ -316,7 +316,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         {
             /**
              * Whether is adjusting waterfall items.
-             * @returns Boolean
+             * @return Boolean
              */
             isAdjusting:function () {
                 return !!this._adjuster;
@@ -325,7 +325,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             /**
              * Whether is adding waterfall item.
              * @since 1.3
-             * @returns Boolean
+             * @return Boolean
              */
             isAdding:function () {
                 return !!this._adder;

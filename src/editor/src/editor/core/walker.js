@@ -209,7 +209,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Retrieves the next node (at right).
-             * @returns {Boolean} The next node or NULL if no more
+             * @return {Boolean} The next node or NULL if no more
              *        nodes are available.
              */
             next:function () {
@@ -218,7 +218,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Retrieves the previous node (at left).
-             * @returns {Boolean} The previous node or NULL if no more
+             * @return {Boolean} The previous node or NULL if no more
              *        nodes are available.
              */
             previous:function () {
@@ -227,7 +227,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Check all nodes at right, executing the evaluation function.
-             * @returns {Boolean} "FALSE" if the evaluator function returned
+             * @return {Boolean} "FALSE" if the evaluator function returned
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkForward:function () {
@@ -237,7 +237,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Check all nodes at left, executing the evaluation function.
              * 是不是 (不能后退了)
-             * @returns {Boolean} "FALSE" if the evaluator function returned
+             * @return {Boolean} "FALSE" if the evaluator function returned
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkBackward:function () {
@@ -248,7 +248,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Executes a full walk forward (to the right), until no more nodes
              * are available, returning the last valid node.
-             * @returns {Boolean} The last node at the right or NULL
+             * @return {Boolean} The last node at the right or NULL
              *        if no valid nodes are available.
              */
             lastForward:function () {
@@ -258,7 +258,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Executes a full walk backwards (to the left), until no more nodes
              * are available, returning the last valid node.
-             * @returns {Boolean} The last node at the left or NULL
+             * @return {Boolean} The last node at the left or NULL
              *        if no valid nodes are available.
              */
             lastBackward:function () {

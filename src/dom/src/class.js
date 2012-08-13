@@ -1,6 +1,7 @@
 /**
+ * @ignore
  * @fileOverview dom-class
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/class', function (S, DOM, undefined) {
 
@@ -15,12 +16,14 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
     S.mix(DOM,
 
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
             /**
              * Determine whether any of the matched elements are assigned the given classes.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to search for.
              * multiple class names is separated by space
              * @return {Boolean}
@@ -47,7 +50,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Adds the specified class(es) to each of the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              */
@@ -72,7 +75,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be removed from the class attribute of each matched element.
              * multiple class names is separated by space
              */
@@ -102,7 +105,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
             /**
              * Replace a class with another class for matched elements.
              * If no oldClassName is present, the newClassName is simply added.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
              * multiple class names is separated by space
              * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
@@ -117,7 +120,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * Add or remove one or more classes from each element in the set of
              * matched elements, depending on either the class's presence or the
              * value of the switch argument.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              * @param [state] {Boolean} optional boolean to indicate whether class
@@ -173,11 +176,11 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base"]
+    requires:['dom/base']
 });
 
-/**
- * NOTES:
- *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
- *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
+/*
+  NOTES:
+    - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
+    - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */

@@ -195,7 +195,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * Can also called from KISSY.all
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
              * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @returns {NodeList}
+             * @return {NodeList}
              */
             all:function (selector, context) {
                 // are we dealing with html string ?

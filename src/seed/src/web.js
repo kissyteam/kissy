@@ -1,7 +1,7 @@
 /**
  * @ignore
  * @fileOverview web.js
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
 (function (S, undefined) {
@@ -34,15 +34,12 @@
         RE_NOT_WHITE = /\S/;
 
     S.mix(S,
-        /**
-         * @class
-         * @override KISSY
-         */
         {
 
 
             /**
              * A crude way of determining if an object is a window
+             * @member KISSY
              */
             isWindow: function (o) {
                 return S.type(o) === 'object'
@@ -55,6 +52,7 @@
             /**
              * get xml representation of data
              * @param {String} data
+             * @member KISSY
              */
             parseXML: function (data) {
                 // already a xml
@@ -84,6 +82,7 @@
 
             /**
              * Evalulates a script in a global context.
+             * @member KISSY
              */
             globalEval: function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
@@ -103,6 +102,7 @@
              *      KISSY.ready(function(S){});
              *
              * @return {KISSY}
+             * @member KISSY
              */
             ready: function (fn) {
 
@@ -115,6 +115,7 @@
              * Executes the supplied callback when the item with the supplied id is found.
              * @param id <String> The id of the element, or an array of ids to look for.
              * @param fn <Function> What to execute when the element is found.
+             * @member KISSY
              */
             available: function (id, fn) {
                 id = (id + EMPTY).match(RE_IDSTR)[1];

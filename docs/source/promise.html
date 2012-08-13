@@ -86,7 +86,7 @@
 </span>         * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
-         * @returns defer object's promise
+         * @return defer object's promise
          */
         resolve: function (value) {
             var promise = this.promise,
@@ -107,7 +107,7 @@
 <span id='KISSY-Defer-method-reject'>        /**
 </span>         * reject defer object's promise
          * @param reason
-         * @returns defer object's promise
+         * @return defer object's promise
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
@@ -144,7 +144,7 @@
          * return a value (could be promise object) for the new promise's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
          * return a new reason for the new promise's error reason
-         * @returns {KISSY.Promise} a new promise object
+         * @return {KISSY.Promise} a new promise object
          */
         then: function (fulfilled, rejected) {
             return when(this, fulfilled, rejected);
@@ -152,7 +152,7 @@
 <span id='KISSY-Promise-method-fail'>        /**
 </span>         * call rejected callback when this promise object is rejected
          * @param {Function} rejected called with rejected reason
-         * @returns {KISSY.Promise} a new promise object
+         * @return {KISSY.Promise} a new promise object
          */
         fail: function (rejected) {
             return when(this, 0, rejected);
@@ -161,7 +161,7 @@
 </span>         * call callback when this promise object is rejected or resolved
          * @param {Function} callback the second parameter is
          * true when resolved and false when rejected
-         * @@returns {KISSY.Promise} a new promise object
+         * @@return {KISSY.Promise} a new promise object
          */
         fin: function (callback) {
             return when(this, function (value) {
@@ -309,7 +309,7 @@
              * return a value (could be promise object) for the new promise's resolved value.
              * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
              * return a new reason for the new promise's error reason
-             * @returns {KISSY.Promise} a new promise object
+             * @return {KISSY.Promise} a new promise object
              *
              * for example:
              *      @example

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -8,22 +9,66 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var NODE_TYPE =
     /**
-     * @lends DOM
+     * @override KISSY.DOM
+     * @member KISSY
+     * @enum
      */
     {
-        ELEMENT_NODE:1,
-        "ATTRIBUTE_NODE":2,
-        TEXT_NODE:3,
-        "CDATA_SECTION_NODE":4,
-        "ENTITY_REFERENCE_NODE":5,
-        "ENTITY_NODE":6,
-        "PROCESSING_INSTRUCTION_NODE":7,
-        COMMENT_NODE:8,
-        DOCUMENT_NODE:9,
-        "DOCUMENT_TYPE_NODE":10,
-        DOCUMENT_FRAGMENT_NODE:11,
-        "NOTATION_NODE":12
+        /**
+         * element type
+         */
+        ELEMENT_NODE: 1,
+        /**
+         * attribute node type
+         */
+        'ATTRIBUTE_NODE': 2,
+        /**
+         * text node type
+         */
+        TEXT_NODE: 3,
+        /**
+         * cdata node type
+         */
+        'CDATA_SECTION_NODE': 4,
+        /**
+         * entity reference node type
+         */
+        'ENTITY_REFERENCE_NODE': 5,
+        /**
+         * entity node type
+         */
+        'ENTITY_NODE': 6,
+        /**
+         * processing instruction node type
+         */
+        'PROCESSING_INSTRUCTION_NODE': 7,
+        /**
+         * comment node type
+         */
+        COMMENT_NODE: 8,
+        /**
+         * document node type
+         */
+        DOCUMENT_NODE: 9,
+        /**
+         * document type
+         */
+        'DOCUMENT_TYPE_NODE': 10,
+        /**
+         * document fragment type
+         */
+        DOCUMENT_FRAGMENT_NODE: 11,
+        /**
+         * notation type
+         */
+        'NOTATION_NODE': 12
     };
+    /**
+     * KISSY DOM Utils.
+     * Provides DOM helper methods.
+     * @class KISSY.DOM
+     * @singleton
+     */
     var DOM = {
 
         /**
@@ -31,7 +76,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @param {window} [win] Test window. Default current window.
          * @return {Boolean}
          */
-        isCustomDomain:function (win) {
+        isCustomDomain: function (win) {
             win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
@@ -45,28 +90,29 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @param {window} [win] Window new iframe will be inserted into.
          * @return {String} Src for iframe.
          */
-        getEmptyIframeSrc:function (win) {
+        getEmptyIframeSrc: function (win) {
             win = win || WINDOW;
             if (UA['ie'] && DOM.isCustomDomain(win)) {
-                return  'javascript:void(function(){' + encodeURIComponent("" +
-                    "document.open();" +
-                    "document.domain='" +
-                    win.document.domain
-                    + "';" +
-                    "document.close();") + "}())";
+                return  'javascript:void(function(){' + encodeURIComponent(
+                    'document.open();' +
+                        "document.domain='" +
+                        win.document.domain
+                        + "';" +
+                        'document.close();') + '}())';
             }
             return undefined;
         },
 
-        NodeTypes:NODE_TYPE,
+        NodeTypes: NODE_TYPE,
 
         /**
          * Return corresponding window if elem is document or window or undefined.
          * Else return false.
-         * @param {undefined|window|document} elem
+         * @private
+         * @param {undefined|window|HTMLDocument} elem
          * @return {window|Boolean}
          */
-        _getWin:function (elem) {
+        _getWin: function (elem) {
             if (elem == null) {
                 return WINDOW;
             }
@@ -77,7 +123,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         },
 
         // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-        _isNodeList:function (o) {
+        _isNodeList: function (o) {
             // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
             // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
             // 注3：通过 namedItem 来判断不可靠
@@ -88,10 +134,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
         /**
          * Get node 's nodeName in lowercase.
-         * @param {HTMLElement[]|String|HTMLElement|Node} selector Matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
          * @return {String} el 's nodeName in lowercase
          */
-        nodeName:function (selector) {
+        nodeName: function (selector) {
             var el = DOM.get(selector),
                 nodeName = el.nodeName.toLowerCase();
             // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
@@ -110,10 +156,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     return DOM;
 
 }, {
-    requires:['ua']
+    requires: ['ua']
 });
 
-/**
- * 2011-08
- *  - 添加键盘枚举值，方便依赖程序清晰
+/*
+  2011-08
+   - 添加键盘枚举值，方便依赖程序清晰
  */

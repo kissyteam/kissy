@@ -18,7 +18,7 @@
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
-         * @static
+         * @singleton
          */
             Utils = {},
         host = S.Env.host,

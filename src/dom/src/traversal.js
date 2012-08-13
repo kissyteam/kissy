@@ -1,6 +1,7 @@
 /**
+ * @ignore
  * @fileOverview dom-traversal
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
@@ -36,7 +37,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -45,10 +48,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * beginning at the first element of matched elements and progressing up through the DOM tree.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
-             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
-             * @returns {HTMLElement}
+             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+             * @return {HTMLElement}
              */
-            closest:function (selector, filter, context, allowTextNode) {
+            closest: function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
                     return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
                 }, context, true, allowTextNode);
@@ -58,10 +61,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
-             * @returns {HTMLElement}
+             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+             * @return {HTMLElement}
              */
-            parent:function (selector, filter, context) {
+            parent: function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
                     return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
                 }, context, undefined);
@@ -72,9 +75,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            first:function (selector, filter, allowTextNode) {
+            first: function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.firstChild, filter, 'nextSibling',
                     undefined, undefined, true, allowTextNode);
@@ -85,9 +88,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            last:function (selector, filter, allowTextNode) {
+            last: function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.lastChild, filter, 'previousSibling',
                     undefined, undefined, true, allowTextNode);
@@ -98,9 +101,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            next:function (selector, filter, allowTextNode) {
+            next: function (selector, filter, allowTextNode) {
                 return nth(selector, filter, 'nextSibling', undefined,
                     undefined, undefined, allowTextNode);
             },
@@ -110,9 +113,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            prev:function (selector, filter, allowTextNode) {
+            prev: function (selector, filter, allowTextNode) {
                 return nth(selector, filter, 'previousSibling',
                     undefined, undefined, undefined, allowTextNode);
             },
@@ -121,9 +124,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement[]}
+             * @return {HTMLElement[]}
              */
-            siblings:function (selector, filter, allowTextNode) {
+            siblings: function (selector, filter, allowTextNode) {
                 return getSiblings(selector, filter, true, allowTextNode);
             },
 
@@ -131,9 +134,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement[]}
+             * @return {HTMLElement[]}
              */
-            children:function (selector, filter) {
+            children: function (selector, filter) {
                 return getSiblings(selector, filter, undefined);
             },
 
@@ -142,19 +145,19 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {Node[]}
+             * @return {HTMLElement[]}
              */
-            contents:function (selector, filter) {
+            contents: function (selector, filter) {
                 return getSiblings(selector, filter, undefined, 1);
             },
 
             /**
              * Check to see if a DOM node is within another DOM node.
-             * @param {HTMLElement|String|Element} container The DOM element that may contain the other element.
-             * @param {HTMLElement|String|Element} contained The DOM element that may be contained by the other element.
-             * @returns {Boolean}
+             * @param {HTMLElement|String} container The DOM element that may contain the other element.
+             * @param {HTMLElement|String} contained The DOM element that may be contained by the other element.
+             * @return {Boolean}
              */
-            contains:function (container, contained) {
+            contains: function (container, contained) {
                 container = DOM.get(container);
                 contained = DOM.get(contained);
                 if (container && contained) {
@@ -165,11 +168,12 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
             /**
              * Check to see if a DOM node is equal with another DOM node.
-             * @param {HTMLElement|String|Element} n1
-             * @param {HTMLElement|String|Element} n2
-             * @returns {Boolean}
+             * @param {HTMLElement|String} n1
+             * @param {HTMLElement|String} n2
+             * @return {Boolean}
+             * @member KISSY.DOM
              */
-            equals:function (n1, n2) {
+            equals: function (n1, n2) {
                 n1 = DOM.query(n1);
                 n2 = DOM.query(n2);
                 if (n1.length != n2.length) {
@@ -290,21 +294,21 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:["./base"]
+    requires: ['./base']
 });
 
-/**
- * 2012-04-05 yiminghe@gmail.com
- * - 增加 contents 方法
- *
- *
- * 2011-08 yiminghe@gmail.com
- * - 添加 closest , first ,last 完全摆脱原生属性
- *
- * NOTES:
- * - jquery does not return null ,it only returns empty array , but kissy does.
- *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
- *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
- *
+/*
+ 2012-04-05 yiminghe@gmail.com
+ - 增加 contents 方法
+
+
+ 2011-08 yiminghe@gmail.com
+ - 添加 closest , first ,last 完全摆脱原生属性
+
+ NOTES:
+ - jquery does not return null ,it only returns empty array , but kissy does.
+
+ - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
+ 遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
+
  */
