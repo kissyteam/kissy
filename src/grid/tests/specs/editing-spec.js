@@ -16,7 +16,7 @@ KISSY.use('grid/editor,grid/editing,grid/base,grid/store',function(S,Editor,Edit
 				title : '表头3',
 				dataIndex : 'c',
 				editor : {
-					xclass : 'grid-editor'
+					type : 'number'
 				}
 		},{
 			id : 'colhide',
