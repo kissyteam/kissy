@@ -35,7 +35,7 @@
          * @param {String} eventName event name from kissy loader
          * @param {Function} callback function to be executed when event of eventName is fired
          */
-        on:function (eventName, callback) {
+        on: function (eventName, callback) {
             getEventHolder(this, eventName, 1).push(callback);
         },
 
@@ -46,7 +46,7 @@
          * @param {Function } [callback] function to be executed when event of eventName is fired.
          * if undefined remove all callbacks fro this event
          */
-        detach:function (eventName, callback) {
+        detach: function (eventName, callback) {
             var self = this, fns, index;
             if (!eventName) {
                 delete self[p];
@@ -72,7 +72,7 @@
          * @param obj
          * @private
          */
-        fire:function (eventName, obj) {
+        fire: function (eventName, obj) {
             var fns = getEventHolder(this, eventName);
             S.each(fns, function (f) {
                 f.call(null, obj);

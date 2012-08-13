@@ -34,7 +34,7 @@
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod's value as the following arguments
          */
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             var self = this,
                 SS = self.SS;
 
@@ -219,7 +219,7 @@
             S.getScript(url, {
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                success:function () {
+                success: function () {
                     if (isCss) {
                         // css 不会设置 LOADED! 必须外部设置
                         utils.registerModule(SS, modName, S.noop);
@@ -237,9 +237,9 @@
                     }
                     checkAndHandle();
                 },
-                error:checkAndHandle,
+                error: checkAndHandle,
                 // source:mod.name + "-init",
-                charset:charset
+                charset: charset
             });
         }
         // 已经在加载中，需要添加回调到 script onload 中
@@ -247,9 +247,9 @@
         // 交给 getScript 排队
         else if (mod.status == LOADING) {
             S.getScript(url, {
-                success:checkAndHandle,
+                success: checkAndHandle,
                 // source:mod.name + "-loading",
-                charset:charset
+                charset: charset
             });
         }
         // loaded/attached/error

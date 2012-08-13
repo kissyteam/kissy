@@ -30,7 +30,7 @@
 
     var host = this,
         MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR",
-        hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'hasOwnProperty',
             'isPrototypeOf',
@@ -60,7 +60,7 @@
              *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
              *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
              */
-            mix:function (r, s, ov, wl, deep) {
+            mix: function (r, s, ov, wl, deep) {
                 if (typeof ov === 'object') {
                     wl = ov['whitelist'];
                     deep = ov['deep'];
@@ -173,14 +173,14 @@
              * Config function.
              * @private
              */
-            configs:(S.configs || {}),
+            configs: (S.configs || {}),
 
             /**
              * The version of the library.
              * NOTICE: '@VERSION@' will replace with current version when compressing.
              * @type {String}
              */
-            version:'@VERSION@',
+            version: '@VERSION@',
 
             /**
              * Returns a new object containing all of the properties of
@@ -190,7 +190,7 @@
              * @param {...Object} var_args objects need to be merged
              * @return {Object} the new merged object
              */
-            merge:function (var_args) {
+            merge: function (var_args) {
                 var_args = arguments;
                 var o = {}, i, l = var_args.length;
                 for (i = 0; i < l; i++) {
@@ -207,7 +207,7 @@
              *          {String[]} [wl] array of white-list properties
              * @return  {Object} the augmented object
              */
-            augment:function (r, s1) {
+            augment: function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
                     i = 1,
@@ -241,7 +241,7 @@
              * @param {Object} [sx] static properties to add/override
              * @return r {Object}
              */
-            extend:function (r, s, px, sx) {
+            extend: function (r, s, px, sx) {
                 if (!s || !r) {
                     return r;
                 }
@@ -249,8 +249,8 @@
                 var create = Object.create ?
                         function (proto, c) {
                             return Object.create(proto, {
-                                constructor:{
-                                    value:c
+                                constructor: {
+                                    value: c
                                 }
                             });
                         } :
@@ -297,7 +297,7 @@
              * </code>
              * @return {Object}  A reference to the last namespace object created
              */
-            namespace:function () {
+            namespace: function () {
                 var args = S.makeArray(arguments),
                     l = args.length,
                     o = null, i, j, p,
@@ -361,9 +361,9 @@
                     for (p in configName) {
                         if (configName.hasOwnProperty(p)) {
                             runs.push({
-                                name:p,
-                                order:configs[p] && configs[p].order || 0,
-                                value:configName[p]
+                                name: p,
+                                order: configs[p] && configs[p].order || 0,
+                                value: configName[p]
                             });
                         }
                     }
@@ -408,7 +408,7 @@
              *        categories are "info", "warn", "error", "time" etc.
              * @param {String} [src] the source of the the message (opt)
              */
-            log:function (msg, cat, src) {
+            log: function (msg, cat, src) {
                 if (S.Config.debug && msg) {
                     if (src) {
                         msg = src + ': ' + msg;
@@ -422,7 +422,7 @@
             /**
              * Throws error message.
              */
-            error:function (msg) {
+            error: function (msg) {
                 if (S.Config.debug) {
                     throw msg;
                 }
@@ -433,7 +433,7 @@
              * @param {String} [pre] guid prefix
              * @return {String} the guid
              */
-            guid:function (pre) {
+            guid: function (pre) {
                 return (pre || EMPTY) + guid++;
             },
 
@@ -442,7 +442,7 @@
              * @param {Object} o
              * @returns {Array}
              */
-            keys:function (o) {
+            keys: function (o) {
                 var result = [];
 
                 for (var p in o) {

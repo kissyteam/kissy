@@ -19,13 +19,13 @@
         {
 
             //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-            __currentModule:null,
+            __currentModule: null,
 
             //ie6,7,8开始载入脚本的时间
-            __startLoadTime:0,
+            __startLoadTime: 0,
 
             //ie6,7,8开始载入脚本对应的模块名
-            __startLoadModuleName:null,
+            __startLoadModuleName: null,
 
             /**
              * Registers a module.
@@ -39,7 +39,7 @@
              *      @example
              *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
              */
-            add:function (name, fn, config) {
+            add: function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
@@ -49,7 +49,7 @@
                 // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
-                        modules:name
+                        modules: name
                     });
                 }
 
@@ -110,8 +110,8 @@
                     } else {
                         // 其他浏览器 onload 时，关联模块名与模块定义
                         self.__currentModule = {
-                            fn:fn,
-                            config:config
+                            fn: fn,
+                            config: config
                         };
                     }
                     return;

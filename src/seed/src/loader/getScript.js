@@ -25,7 +25,7 @@
          * @param charset
          * @member KISSY
          */
-        getStyle:function (url, success, charset) {
+        getStyle: function (url, success, charset) {
 
             var config = success;
 
@@ -93,7 +93,7 @@
          * @returns {HTMLElement} script/style node
          * @member KISSY
          */
-        getScript:function (url, success, charset) {
+        getScript: function (url, success, charset) {
 
             if (S.startsWith(Path.extname(url).toLowerCase(), ".css")) {
                 return S.getStyle(url, success, charset);

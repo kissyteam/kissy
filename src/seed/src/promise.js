@@ -64,14 +64,14 @@
 
     Defer.prototype =
     {
-        constructor:Defer,
+        constructor: Defer,
         /**
          * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
          * @returns defer object's promise
          */
-        resolve:function (value) {
+        resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise.__promise_pendings)) {
@@ -92,7 +92,7 @@
          * @param reason
          * @returns defer object's promise
          */
-        reject:function (reason) {
+        reject: function (reason) {
             return this.resolve(new Reject(reason));
         }
     };
@@ -120,7 +120,7 @@
 
     Promise.prototype =
     {
-        constructor:Promise,
+        constructor: Promise,
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
@@ -129,7 +129,7 @@
          * return a new reason for the new promise's error reason
          * @returns {KISSY.Promise} a new promise object
          */
-        then:function (fulfilled, rejected) {
+        then: function (fulfilled, rejected) {
             return when(this, fulfilled, rejected);
         },
         /**
@@ -137,7 +137,7 @@
          * @param {Function} rejected called with rejected reason
          * @returns {KISSY.Promise} a new promise object
          */
-        fail:function (rejected) {
+        fail: function (rejected) {
             return when(this, 0, rejected);
         },
         /**
@@ -146,7 +146,7 @@
          * true when resolved and false when rejected
          * @@returns {KISSY.Promise} a new promise object
          */
-        fin:function (callback) {
+        fin: function (callback) {
             return when(this, function (value) {
                 return callback(value, true);
             }, function (reason) {
@@ -159,13 +159,13 @@
          * then that promise needs to be resolved as well.
          * @member KISSY.Promise
          */
-        isResolved:function () {
+        isResolved: function () {
             return isResolved(this);
         },
         /**
          * whether the given object is a rejected promise
          */
-        isRejected:function () {
+        isRejected: function () {
             return isRejected(this);
         }
     };
@@ -312,7 +312,7 @@
              * @static
              * @method
              */
-            when:when,
+            when: when,
             /**
              * whether the given object is a promise
              * @method
@@ -320,7 +320,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isPromise:isPromise,
+            isPromise: isPromise,
             /**
              * whether the given object is a resolved promise
              * @method
@@ -328,7 +328,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isResolved:isResolved,
+            isResolved: isResolved,
             /**
              * whether the given object is a rejected promise
              * @method
@@ -336,7 +336,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isRejected:isRejected,
+            isRejected: isRejected,
             /**
              * return a new promise
              * which is resolved when all promises is resolved
@@ -345,7 +345,7 @@
              * @static
              * @return {KISSY.Promise}
              */
-            all:function (promises) {
+            all: function (promises) {
                 var count = promises.length;
                 if (!count) {
                     return promises;

@@ -37,9 +37,9 @@
      */
     function ComboLoader(SS) {
         S.mix(this, {
-            SS:SS,
-            queue:[],
-            loading:0
+            SS: SS,
+            queue: [],
+            loading: 0
         });
     }
 
@@ -59,8 +59,8 @@
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
-            modNames:modNames,
-            fn:fn
+            modNames: modNames,
+            fn: fn
         });
     }
 
@@ -286,7 +286,7 @@
          * @param modNames
          * @param callback
          */
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             var self = this,
                 fn = function () {
                     // KISSY.use in callback will be queued
@@ -310,13 +310,13 @@
          * @param fn
          * @param config
          */
-        add:function (name, fn, config) {
+        add: function (name, fn, config) {
             var self = this,
                 SS = self.SS;
             // 兼容
             if (S.isPlainObject(name)) {
                 return SS.config({
-                    modules:name
+                    modules: name
                 });
             }
             utils.registerModule(SS, name, fn, config);
@@ -328,7 +328,7 @@
          * @private
          * @return {Array}
          */
-        calculate:function (modNames) {
+        calculate: function (modNames) {
             var ret = {},
                 i,
                 m,
@@ -363,7 +363,7 @@
          * @private
          * @return {Object}
          */
-        getComboUrls:function (modNames) {
+        getComboUrls: function (modNames) {
             var self = this,
                 i,
                 SS = self.SS,
@@ -392,8 +392,8 @@
             });
 
             var res = {
-                    js:{},
-                    css:{}
+                    js: {},
+                    css: {}
                 },
                 t,
                 packageName,

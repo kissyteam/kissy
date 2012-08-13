@@ -35,7 +35,7 @@
              *          requires:["ua"]
              *      });
              */
-            add:function (name, fn, cfg) {
+            add: function (name, fn, cfg) {
                 this.getLoader().add(name, fn, cfg);
             },
             /**
@@ -52,7 +52,7 @@
              *      // loads and attached overlay,dd and its dependencies
              *      KISSY.use("overlay,dd",function(S,Overlay){});
              */
-            use:function (names, callback) {
+            use: function (names, callback) {
                 this.getLoader().use(names, callback);
             },
             /**
@@ -60,7 +60,7 @@
              * @member KISSY
              * @returns {KISSY.Loader}
              */
-            getLoader:function () {
+            getLoader: function () {
                 var self = this, env = self.Env;
                 if (self.Config.combine) {
                     return env._comboLoader;
@@ -73,7 +73,7 @@
              * @param {string} moduleName
              * @member KISSY
              */
-            require:function (moduleName) {
+            require: function (moduleName) {
                 var self = this,
                     mods = self.Env.mods,
                     mod = mods[moduleName];
@@ -140,16 +140,16 @@
             });
         }
         return S.mix({
-            base:base,
-            baseUri:new S.Uri(base)
+            base: base,
+            baseUri: new S.Uri(base)
         }, baseInfo);
     }
 
     S.config(S.mix({
         // 2k
-        comboMaxUrlLength:2048,
-        charset:'utf-8',
-        tag:'@TIMESTAMP@'
+        comboMaxUrlLength: 2048,
+        charset: 'utf-8',
+        tag: '@TIMESTAMP@'
     }, getBaseInfo()));
 
     // Initializes loader.

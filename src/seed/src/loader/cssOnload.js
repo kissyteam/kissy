@@ -87,7 +87,7 @@
          *  @member KISSY.Loader.Utils
          *  @method
          */
-        styleOnLoad:win.attachEvent || utils.isPresto ?
+        styleOnLoad: win.attachEvent || utils.isPresto ?
             // ie/opera
             // try in opera
             // alert(win.attachEvent);

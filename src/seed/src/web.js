@@ -44,7 +44,7 @@
             /**
              * A crude way of determining if an object is a window
              */
-            isWindow:function (o) {
+            isWindow: function (o) {
                 return S.type(o) === 'object'
                     && 'setInterval' in o
                     && 'document' in o
@@ -56,7 +56,7 @@
              * get xml representation of data
              * @param {String} data
              */
-            parseXML:function (data) {
+            parseXML: function (data) {
                 // already a xml
                 if (data.documentElement) {
                     return data;
@@ -85,7 +85,7 @@
             /**
              * Evalulates a script in a global context.
              */
-            globalEval:function (data) {
+            globalEval: function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                     ( win.execScript || function (data) {
@@ -102,7 +102,7 @@
              * </code>
              * @return {KISSY}
              */
-            ready:function (fn) {
+            ready: function (fn) {
 
                 readyPromise.then(fn);
 
@@ -114,7 +114,7 @@
              * @param id <String> The id of the element, or an array of ids to look for.
              * @param fn <Function> What to execute when the element is found.
              */
-            available:function (id, fn) {
+            available: function (id, fn) {
                 id = (id + EMPTY).match(RE_IDSTR)[1];
                 if (!id || !S.isFunction(fn)) {
                     return;

@@ -54,7 +54,7 @@
          *
          * @return {String} Resolved path.
          */
-        resolve:function () {
+        resolve: function () {
 
             var resolvedPath = "",
                 resolvedPathStr,
@@ -90,7 +90,7 @@
          *
          * @return {String}
          */
-        normalize:function (path) {
+        normalize: function (path) {
             var absolute = path.charAt(0) == "/",
                 trailingSlash = path.slice(-1) == "/";
 
@@ -114,7 +114,7 @@
          * join([path ...]) and normalize
          * @return {String}
          */
-        join:function () {
+        join: function () {
             var args = S.makeArray(arguments);
             return Path.normalize(S.filter(args,function (p) {
                 return p && (typeof p == "string");
@@ -133,7 +133,7 @@
          *
          * @return {String}
          */
-        relative:function (from, to) {
+        relative: function (from, to) {
             from = Path.normalize(from);
             to = Path.normalize(to);
 
@@ -173,7 +173,7 @@
          * @param {String} [ext] ext to be stripped from result returned.
          * @return {String}
          */
-        basename:function (path, ext) {
+        basename: function (path, ext) {
             var result = path.match(splitPathRe) || [];
             result = result[3] || "";
             if (ext && result && result.slice(-1 * ext.length) == ext) {
@@ -186,7 +186,7 @@
          * Get dirname of path
          * @return {String}
          */
-        dirname:function (path) {
+        dirname: function (path) {
             var result = path.match(splitPathRe) || [],
                 root = result[1] || "",
                 dir = result[2] || "";
@@ -209,7 +209,7 @@
          * @param {String} path
          * @return {String}
          */
-        extname:function (path) {
+        extname: function (path) {
             return (path.match(splitPathRe) || [])[4] || "";
         }
 

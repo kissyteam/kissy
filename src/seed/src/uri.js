@@ -65,13 +65,13 @@
         Path = S.Path,
 
         REG_INFO = {
-            scheme:1,
-            userInfo:2,
-            hostname:3,
-            port:4,
-            path:5,
-            query:6,
-            fragment:7
+            scheme: 1,
+            userInfo: 2,
+            hostname: 3,
+            port: 4,
+            path: 5,
+            query: 6,
+            fragment: 7
         };
 
     function parseQuery(self) {
@@ -92,13 +92,13 @@
 
     Query.prototype =
     {
-        constructor:Query,
+        constructor: Query,
 
         /**
          * Cloned new instance.
          * @return {KISSY.Uri.Query}
          */
-        clone:function () {
+        clone: function () {
             return new Query(this.toString());
         },
 
@@ -107,7 +107,7 @@
          * reset to a new query string
          * @param {String} query
          */
-        reset:function (query) {
+        reset: function (query) {
             var self = this;
             self._query = query || "";
             self._queryMap = 0;
@@ -117,7 +117,7 @@
          * Parameter count.
          * @return {Number}
          */
-        count:function () {
+        count: function () {
             var self = this, count = 0,
                 _queryMap = self._queryMap,
                 k;
@@ -138,7 +138,7 @@
          * Return parameter value corresponding to current key
          * @param {String} key
          */
-        get:function (key) {
+        get: function (key) {
             var self = this;
             parseQuery(self);
             if (key) {
@@ -152,7 +152,7 @@
          * Parameter names.
          * @return {String[]}
          */
-        keys:function () {
+        keys: function () {
             var self = this;
             parseQuery(self);
             return S.keys(self._queryMap);
@@ -163,7 +163,7 @@
          * @param {String} key
          * @param value
          */
-        set:function (key, value) {
+        set: function (key, value) {
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
@@ -184,7 +184,7 @@
          * Remove parameter with specified name.
          * @param {String} key
          */
-        remove:function (key) {
+        remove: function (key) {
             var self = this;
             parseQuery(self);
             if (key) {
@@ -201,7 +201,7 @@
          * @param {String} key
          * @param value
          */
-        add:function (key, value) {
+        add: function (key, value) {
             var self = this,
                 _queryMap,
                 currentValue;
@@ -231,7 +231,7 @@
          * @param {Boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          */
-        toString:function (serializeArray) {
+        toString: function (serializeArray) {
             var self = this;
             parseQuery(self);
             return S.param(self._queryMap, undefined, undefined, serializeArray);
@@ -280,36 +280,36 @@
                  * scheme such as "http:". aka protocol without colon
                  * @type {String}
                  */
-                scheme:"",
+                scheme: "",
                 /**
                  * User credentials such as "yiminghe:gmail"
                  * @type {String}
                  */
-                userInfo:"",
+                userInfo: "",
                 /**
                  * hostname such as "docs.kissyui.com". aka domain
                  * @type {String}
                  */
-                hostname:"",
+                hostname: "",
                 /**
                  * Port such as "8080"
                  * @type {String}
                  */
-                port:"",
+                port: "",
                 /**
                  * path such as "/index.htm". aka pathname
                  * @type {String}
                  */
-                path:"",
+                path: "",
                 /**
                  * Query object for search string. aka search
                  * @type {KISSY.Uri.Query}
                  */
-                query:"",
+                query: "",
                 /**
                  * fragment such as "#!/test/2". aka hash
                  */
-                fragment:""
+                fragment: ""
             });
 
         uriStr = uriStr || "";
@@ -331,13 +331,13 @@
     Uri.prototype =
     {
 
-        constructor:Uri,
+        constructor: Uri,
 
         /**
          * Return a cloned new instance.
          * @return {KISSY.Uri}
          */
-        clone:function () {
+        clone: function () {
             var uri = new Uri(), self = this;
             S.each(REG_INFO, function (index, key) {
                 uri[key] = self[key];
@@ -364,7 +364,7 @@
          *
          * @return {KISSY.Uri}
          */
-        resolve:function (relativeUri) {
+        resolve: function (relativeUri) {
 
             if (S.isString(relativeUri)) {
                 relativeUri = new Uri(relativeUri);
@@ -420,7 +420,7 @@
         /**
          * Get scheme part
          */
-        getScheme:function () {
+        getScheme: function () {
             return this.scheme;
         },
 
@@ -429,7 +429,7 @@
          * @param {String} scheme
          * @return this
          */
-        setScheme:function (scheme) {
+        setScheme: function (scheme) {
             this.scheme = scheme;
             return this;
         },
@@ -438,7 +438,7 @@
          * Return hostname
          * @return {String}
          */
-        getHostname:function () {
+        getHostname: function () {
             return this.hostname;
         },
 
@@ -447,7 +447,7 @@
          * @param {String} hostname
          * @return this
          */
-        setHostname:function (hostname) {
+        setHostname: function (hostname) {
             this.hostname = hostname;
             return this;
         },
@@ -457,7 +457,7 @@
          * @param {String} userInfo
          * @return this
          */
-        setUserInfo:function (userInfo) {
+        setUserInfo: function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -466,7 +466,7 @@
          * Get user info
          * @return {String}
          */
-        getUserInfo:function () {
+        getUserInfo: function () {
             return this.userInfo;
         },
 
@@ -475,7 +475,7 @@
          * @param {String} port
          * @return this
          */
-        setPort:function (port) {
+        setPort: function (port) {
             this.port = port;
             return this;
         },
@@ -484,7 +484,7 @@
          * Get port
          * @return {String}
          */
-        getPort:function () {
+        getPort: function () {
             return this.port;
         },
 
@@ -493,7 +493,7 @@
          * @param {string} path
          * @return this
          */
-        setPath:function (path) {
+        setPath: function (path) {
             this.path = path;
             return this;
         },
@@ -502,7 +502,7 @@
          * Get path
          * @return {String}
          */
-        getPath:function () {
+        getPath: function () {
             return this.path;
         },
 
@@ -511,7 +511,7 @@
          * @param {String|KISSY.Uri.Query} query
          * @return this
          */
-        setQuery:function (query) {
+        setQuery: function (query) {
             if (S.isString(query)) {
                 if (S.startsWith(query, "?")) {
                     query = query.slice(1);
@@ -526,7 +526,7 @@
          * Get query
          * @return {KISSY.Uri.Query}
          */
-        getQuery:function () {
+        getQuery: function () {
             return this.query;
         },
 
@@ -534,7 +534,7 @@
          * Get fragment
          * @return {String}
          */
-        getFragment:function () {
+        getFragment: function () {
             return this.fragment;
         },
 
@@ -543,7 +543,7 @@
          * @param {String} fragment
          * @return this
          */
-        setFragment:function (fragment) {
+        setFragment: function (fragment) {
             if (!S.startsWith(fragment, "#")) {
                 fragment = "#" + fragment;
             }
@@ -556,7 +556,7 @@
          * @param {KISSY.Uri} other
          * @return {Boolean}
          */
-        hasSameDomainAs:function (other) {
+        hasSameDomainAs: function (other) {
             var self = this;
             // port and hostname has to be same
             return equalsIgnoreCase(self.hostname, other['hostname']) &&

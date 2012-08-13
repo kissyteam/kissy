@@ -41,7 +41,7 @@
              * Tag for package.
              * @return {String}
              */
-            getTag:function () {
+            getTag: function () {
                 var self = this;
                 return self.tag || self.SS.Config.tag;
             },
@@ -50,7 +50,7 @@
              * Get package name.
              * @return {String}
              */
-            getName:function () {
+            getName: function () {
                 return this.name;
             },
 
@@ -58,12 +58,12 @@
              * Get package base.
              * @return {String}
              */
-            getBase:function () {
+            getBase: function () {
                 var self = this;
                 return self.base || self.SS.Config.base;
             },
 
-            getBaseUri:function () {
+            getBaseUri: function () {
                 var self = this;
                 return self.baseUri || self.SS.Config.baseUri;
             },
@@ -72,7 +72,7 @@
              * Whether is debug for this package.
              * @return {Boolean}
              */
-            isDebug:function () {
+            isDebug: function () {
                 var self = this, debug = self.debug;
                 return debug === undefined ? self.SS.Config.debug : debug;
             },
@@ -81,7 +81,7 @@
              * Get charset for package.
              * @return {String}
              */
-            getCharset:function () {
+            getCharset: function () {
                 var self = this;
                 return self.charset || self.SS.Config.charset;
             },
@@ -90,7 +90,7 @@
              * Whether modules are combined for this package.
              * @return {Boolean}
              */
-            isCombine:function () {
+            isCombine: function () {
                 var self = this, combine = self.combine;
                 return combine === undefined ? self.SS.Config.combine : combine;
             }
@@ -112,7 +112,7 @@
              * Set the value of current module
              * @param v value to be set
              */
-            setValue:function (v) {
+            setValue: function (v) {
                 this.value = v;
             },
 
@@ -120,7 +120,7 @@
              * Get the type if current Module
              * @return {String} css or js
              */
-            getType:function () {
+            getType: function () {
                 var self = this, v;
                 if ((v = self.type) === undefined) {
                     if (Path.extname(self.name).toLowerCase() == ".css") {
@@ -136,7 +136,7 @@
             /**
              * Get the fullpath of current module if load dynamically
              */
-            getFullPath:function () {
+            getFullPath: function () {
                 var self = this, t, fullpathUri, packageBaseUri;
                 if (!self.fullpath) {
                     packageBaseUri = self.getPackageInfo().getBaseUri();
@@ -153,7 +153,7 @@
              * Get the path (without package base)
              * @return {String}
              */
-            getPath:function () {
+            getPath: function () {
                 var self = this;
                 return self.path ||
                     (self.path = defaultComponentJsName(self))
@@ -162,7 +162,7 @@
             /**
              * Get the value of current module
              */
-            getValue:function () {
+            getValue: function () {
                 return this.value;
             },
 
@@ -170,7 +170,7 @@
              * Get the name of current module
              * @returns {String}
              */
-            getName:function () {
+            getName: function () {
                 return this.name;
             },
 
@@ -178,7 +178,7 @@
              * Get the packageInfo of current module
              * @return {Object}
              */
-            getPackageInfo:function () {
+            getPackageInfo: function () {
                 var self = this;
                 return self.packageInfo ||
                     (self.packageInfo = getPackageInfo(self.SS, self));
@@ -188,7 +188,7 @@
              * Get the tag of current module
              * @return {String}
              */
-            getTag:function () {
+            getTag: function () {
                 var self = this;
                 return self.tag || self.getPackageInfo().getTag();
             },
@@ -197,7 +197,7 @@
              * Get the charset of current module
              * @return {String}
              */
-            getCharset:function () {
+            getCharset: function () {
                 var self = this;
                 return self.charset || self.getPackageInfo().getCharset();
             }
@@ -244,9 +244,9 @@
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
             (Env.defaultPackage = new Loader.Package({
-                SS:self,
+                SS: self,
                 // need packageName as key
-                name:''
+                name: ''
             }));
 
         return packageDesc;
@@ -258,15 +258,15 @@
      */
     Loader.STATUS = {
         /** init */
-        "INIT":0,
+        "INIT": 0,
         /** loading */
-        "LOADING":1,
+        "LOADING": 1,
         /** loaded */
-        "LOADED":2,
+        "LOADED": 2,
         /** error */
-        "ERROR":3,
+        "ERROR": 3,
         /** attached */
-        "ATTACHED":4
+        "ATTACHED": 4
     };
 })(KISSY);
 /*
