@@ -296,13 +296,13 @@
              *
              * for example:
              *      @example
-             *      function check(p){
-             *          S.Promise.when(p,function(v){
-             *              alert(v===1);
+             *      function check(p) {
+             *          S.Promise.when(p, function(v){
+             *              alert(v === 1);
              *          });
              *      }
              *
-             *      var defer=S.Defer();
+             *      var defer = S.Defer();
              *      defer.resolve(1);
              *
              *      check(1); // => alert(true)

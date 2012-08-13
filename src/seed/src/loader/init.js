@@ -29,8 +29,8 @@
              * for example:
              *      @example
              *      // dom module's definition
-             *      KISSY.add('dom',function(S,UA){
-             *          return { css:function(el,name,val){} };
+             *      KISSY.add('dom', function(S, UA){
+             *          return {css: function(el, name, val){}};
              *      },{
              *          requires:['ua']
              *      });
@@ -50,7 +50,7 @@
              * for example:
              *      @example
              *      // loads and attached overlay,dd and its dependencies
-             *      KISSY.use('overlay,dd',function(S,Overlay){});
+             *      KISSY.use('overlay,dd', function(S, Overlay){});
              */
             use: function (names, callback) {
                 this.getLoader().use(names, callback);

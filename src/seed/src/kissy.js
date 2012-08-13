@@ -6,19 +6,19 @@
 (function (S, undefined) {
     /**
      * The KISSY global namespace object. you can use
-     * <code>
-     *     KISSY.each/mix
-     * </code>
-     * to do basic operation.
      *
-     * or
+     * for example:
+     *      @example
+     *      KISSY.each/mix
      *
+     * to do basic operation. or
      *
-     * <code>
-     *      KISSY.use('overlay,node',function(S,Overlay,Node){
+     * for example:
+     *      @example
+     *      KISSY.use('overlay,node', function(S, Overlay, Node){
      *          //
-     *      })
-     * </code>
+     *      });
+     *
      * to do complex task with modules.
      * @static
      */
@@ -55,10 +55,10 @@
              *
              * for example:
              *     @example
-             *     var t={};
-             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true}) => {x:{y:3,z:4,a:{}}} , a!==t
-             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},{deep:true,overwrite:false}) => {x:{y:2,z:4,a:{}}} , a!==t
-             *     S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
+             *     var t = {};
+             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
              */
             mix: function (r, s, ov, wl, deep) {
                 if (typeof ov === 'object') {
@@ -290,11 +290,13 @@
             /**
              * Returns the namespace specified and creates it if it doesn't exist. Be careful
              * when naming packages. Reserved words may work in some browsers and not others.
-             * <code>
-             * S.namespace('KISSY.app'); // returns KISSY.app
-             * S.namespace('app.Shop'); // returns KISSY.app.Shop
-             * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-             * </code>
+             *
+             * for example:
+             *      @example
+             *      S.namespace('KISSY.app'); // returns KISSY.app
+             *      S.namespace('app.Shop'); // returns KISSY.app.Shop
+             *      S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+             *
              * @return {Object}  A reference to the last namespace object created
              */
             namespace: function () {
@@ -337,13 +339,13 @@
              *      combine: true,
              *      base: '',
              *      packages: {
-             *          'gallery':{
-             *              base:'http://a.tbcdn.cn/s/kissy/gallery/'
+             *          'gallery': {
+             *              base: 'http://a.tbcdn.cn/s/kissy/gallery/'
              *          }
              *      },
-             *      modules:{
-             *          'gallery/x/y':{
-             *              requires:['gallery/x/z']
+             *      modules: {
+             *          'gallery/x/y': {
+             *              requires: ['gallery/x/z']
              *          }
              *      }
              *     });

@@ -35,7 +35,7 @@
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error(&quot;no rejected callback!&quot;);
+                S.error('no rejected callback!');
             }
             return rejected(promise.__promise_value);
         }
@@ -81,14 +81,14 @@
 
     Defer.prototype =
     {
-        constructor:Defer,
+        constructor: Defer,
 <span id='KISSY-Defer-method-resolve'>        /**
 </span>         * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
          * @returns defer object's promise
          */
-        resolve:function (value) {
+        resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise.__promise_pendings)) {
@@ -109,7 +109,7 @@
          * @param reason
          * @returns defer object's promise
          */
-        reject:function (reason) {
+        reject: function (reason) {
             return this.resolve(new Reject(reason));
         }
     };
@@ -137,7 +137,7 @@
 
     Promise.prototype =
     {
-        constructor:Promise,
+        constructor: Promise,
 <span id='KISSY-Promise-method-then'>        /**
 </span>         * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
@@ -146,7 +146,7 @@
          * return a new reason for the new promise's error reason
          * @returns {KISSY.Promise} a new promise object
          */
-        then:function (fulfilled, rejected) {
+        then: function (fulfilled, rejected) {
             return when(this, fulfilled, rejected);
         },
 <span id='KISSY-Promise-method-fail'>        /**
@@ -154,7 +154,7 @@
          * @param {Function} rejected called with rejected reason
          * @returns {KISSY.Promise} a new promise object
          */
-        fail:function (rejected) {
+        fail: function (rejected) {
             return when(this, 0, rejected);
         },
 <span id='KISSY-Promise-method-fin'>        /**
@@ -163,7 +163,7 @@
          * true when resolved and false when rejected
          * @@returns {KISSY.Promise} a new promise object
          */
-        fin:function (callback) {
+        fin: function (callback) {
             return when(this, function (value) {
                 return callback(value, true);
             }, function (reason) {
@@ -176,13 +176,13 @@
          * then that promise needs to be resolved as well.
          * @member KISSY.Promise
          */
-        isResolved:function () {
+        isResolved: function () {
             return isResolved(this);
         },
 <span id='KISSY-Promise-method-isRejected'>        /**
 </span>         * whether the given object is a rejected promise
          */
-        isRejected:function () {
+        isRejected: function () {
             return isRejected(this);
         }
     };
@@ -220,7 +220,7 @@
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, &quot;error&quot;);
+                S.log(e.stack || e, 'error');
                 return new Reject(e);
             }
         }
@@ -234,18 +234,18 @@
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, &quot;error&quot;);
+                S.log(e.stack || e, 'error');
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error(&quot;already done at fulfilled&quot;);
+                S.error('already done at fulfilled');
                 return;
             }
             if (value instanceof Promise) {
-                S.error(&quot;assert.not(value instanceof Promise) in when&quot;)
+                S.error('assert.not(value instanceof Promise) in when')
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -254,7 +254,7 @@
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error(&quot;already done at rejected&quot;);
+                    S.error('already done at rejected');
                     return;
                 }
                 done = 1;
@@ -313,13 +313,13 @@
              *
              * for example:
              *      @example
-             *      function check(p){
-             *          S.Promise.when(p,function(v){
-             *              alert(v===1);
+             *      function check(p) {
+             *          S.Promise.when(p, function(v){
+             *              alert(v === 1);
              *          });
              *      }
              *
-             *      var defer=S.Defer();
+             *      var defer = S.Defer();
              *      defer.resolve(1);
              *
              *      check(1); // =&gt; alert(true)
@@ -329,7 +329,7 @@
              * @static
              * @method
              */
-            when:when,
+            when: when,
 <span id='KISSY-Promise-static-method-isPromise'>            /**
 </span>             * whether the given object is a promise
              * @method
@@ -337,7 +337,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isPromise:isPromise,
+            isPromise: isPromise,
 <span id='KISSY-Promise-static-method-isResolved'>            /**
 </span>             * whether the given object is a resolved promise
              * @method
@@ -345,7 +345,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isResolved:isResolved,
+            isResolved: isResolved,
 <span id='KISSY-Promise-static-method-isRejected'>            /**
 </span>             * whether the given object is a rejected promise
              * @method
@@ -353,7 +353,7 @@
              * @param obj the tested object
              * @return {Boolean}
              */
-            isRejected:isRejected,
+            isRejected: isRejected,
 <span id='KISSY-Promise-static-method-all'>            /**
 </span>             * return a new promise
              * which is resolved when all promises is resolved
@@ -362,7 +362,7 @@
              * @static
              * @return {KISSY.Promise}
              */
-            all:function (promises) {
+            all: function (promises) {
                 var count = promises.length;
                 if (!count) {
                     return promises;

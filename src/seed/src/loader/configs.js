@@ -12,14 +12,14 @@
         configs = S.configs;
     /*
      modify current module path
-     <code>
+
      [
-     [/(.+-)min(.js(\?t=\d+)?)$/,'$1$2'],
-     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-     return m1+m2;
-     }]
+        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+            return m1+m2;
+        }]
      ]
-     </code>
+
      */
     configs.map = function (rules) {
         var self = this;
@@ -69,26 +69,26 @@
      <code>
 
      KISSY.config({
-     base:'',
-     // dom-min.js
-     debug:'',
-     combine:true,
-     tag:'',
-     packages:{
-     'biz1': {
-     // path change to base
-     base: 'haha',
-     // x.js
-     debug:'',
-     tag:'',
-     combine:false,
-     }
-     },
-     modules:{
-     'biz1/main' : {
-     requires: [ 'biz1/part1' , 'biz1/part2' ]
-     }
-     }
+         base: '',
+         // dom-min.js
+         debug: '',
+         combine: true,
+         tag: '',
+         packages: {
+             'biz1': {
+                 // path change to base
+                 base: 'haha',
+                 // x.js
+                 debug: '',
+                 tag: '',
+                 combine: false,
+             }
+         },
+         modules: {
+             'biz1/main': {
+                requires: ['biz1/part1', 'biz1/part2']
+             }
+         }
      });
      */
     configs.modules = function (modules) {

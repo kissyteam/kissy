@@ -33,8 +33,8 @@
         win = S.Env.host,
         LOADING = data.LOADING,
         ERROR = data.ERROR,
-        ALL_REQUIRES = &quot;__allRequires&quot;,
-        CURRENT_MODULE = &quot;__currentModule&quot;,
+        ALL_REQUIRES = '__allRequires',
+        CURRENT_MODULE = '__currentModule',
         ATTACHED = data.ATTACHED;
 
     S.augment(Loader, {
@@ -51,7 +51,7 @@
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod's value as the following arguments
          */
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             var self = this,
                 SS = self.SS;
 
@@ -133,13 +133,13 @@
             });
 
             if (__allRequires[myName]) {
-                S.log(__allRequires, &quot;error&quot;);
+                S.log(__allRequires, 'error');
                 var JSON = win.JSON,
-                    error = &quot;&quot;;
+                    error = '';
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error(&quot;find cyclic dependency by mod &quot; + myName + &quot; between mods: &quot; + error);
+                S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
             }
         }
 
@@ -223,7 +223,7 @@
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = mod.getType() == &quot;css&quot;;
+            isCss = mod.getType() == 'css';
 
         mod.status = mod.status || INIT;
 
@@ -236,7 +236,7 @@
             S.getScript(url, {
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                success:function () {
+                success: function () {
                     if (isCss) {
                         // css 不会设置 LOADED! 必须外部设置
                         utils.registerModule(SS, modName, S.noop);
@@ -245,7 +245,7 @@
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                         if (currentModule = self[CURRENT_MODULE]) {
-                            S.log(&quot;standard browser get mod name after load : &quot; + modName);
+                            S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(SS,
                                 modName, currentModule.fn,
                                 currentModule.config);
@@ -254,9 +254,9 @@
                     }
                     checkAndHandle();
                 },
-                error:checkAndHandle,
-                // source:mod.name + &quot;-init&quot;,
-                charset:charset
+                error: checkAndHandle,
+                // source:mod.name + '-init',
+                charset: charset
             });
         }
         // 已经在加载中，需要添加回调到 script onload 中
@@ -264,9 +264,9 @@
         // 交给 getScript 排队
         else if (mod.status == LOADING) {
             S.getScript(url, {
-                success:checkAndHandle,
-                // source:mod.name + &quot;-loading&quot;,
-                charset:charset
+                success: checkAndHandle,
+                // source:mod.name + '-loading',
+                charset: charset
             });
         }
         // loaded/attached/error

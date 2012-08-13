@@ -37,7 +37,7 @@
                 if (!(--count)) {
                     callback();
                 }
-            }, charset || &quot;utf-8&quot;);
+            }, charset || 'utf-8');
         });
     }
 
@@ -54,9 +54,9 @@
      */
     function ComboLoader(SS) {
         S.mix(this, {
-            SS:SS,
-            queue:[],
-            loading:0
+            SS: SS,
+            queue: [],
+            loading: 0
         });
     }
 
@@ -76,8 +76,8 @@
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
-            modNames:modNames,
-            fn:fn
+            modNames: modNames,
+            fn: fn
         });
     }
 
@@ -262,7 +262,7 @@
             if (S.Config.debug) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
                 if (allRequires[modName]) {
-                    S.error(&quot;detect circular dependency among : &quot;);
+                    S.error('detect circular dependency among : ');
                     S.error(allRequires);
                     return ret;
                 }
@@ -303,7 +303,7 @@
          * @param modNames
          * @param callback
          */
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             var self = this,
                 fn = function () {
                     // KISSY.use in callback will be queued
@@ -327,13 +327,13 @@
          * @param fn
          * @param config
          */
-        add:function (name, fn, config) {
+        add: function (name, fn, config) {
             var self = this,
                 SS = self.SS;
             // 兼容
             if (S.isPlainObject(name)) {
                 return SS.config({
-                    modules:name
+                    modules: name
                 });
             }
             utils.registerModule(SS, name, fn, config);
@@ -345,7 +345,7 @@
          * @private
          * @return {Array}
          */
-        calculate:function (modNames) {
+        calculate: function (modNames) {
             var ret = {},
                 i,
                 m,
@@ -380,7 +380,7 @@
          * @private
          * @return {Object}
          */
-        getComboUrls:function (modNames) {
+        getComboUrls: function (modNames) {
             var self = this,
                 i,
                 SS = self.SS,
@@ -409,8 +409,8 @@
             });
 
             var res = {
-                    js:{},
-                    css:{}
+                    js: {},
+                    css: {}
                 },
                 t,
                 packageName,
@@ -431,7 +431,7 @@
                                 prefix,
                                 path,
                                 l,
-                                packageNamePath = packageName + &quot;/&quot;;
+                                packageNamePath = packageName + '/';
 
                             res[type][packageName] = [];
                             res[type][packageName].charset = jss.charset;
@@ -440,15 +440,15 @@
                             // add packageName to common prefix
                             // combo grouped by package
                             prefix = packageBase +
-                                (packageName ? packageNamePath : &quot;&quot;) +
+                                (packageName ? packageNamePath : '') +
                                 comboPrefix;
                             l = prefix.length;
 
                             function pushComboUrl() {
                                 res[type][packageName].push(utils.getMappedPath(
                                     SS,
-                                    prefix + t.join(comboSep) + (tag ? (&quot;?t=&quot; +
-                                        encodeURIComponent(tag)) : &quot;&quot;)));
+                                    prefix + t.join(comboSep) + (tag ? ('?t=' +
+                                        encodeURIComponent(tag)) : '')));
                             }
 
                             for (i = 0; i &lt; jss.length; i++) {

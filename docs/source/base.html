@@ -58,7 +58,7 @@
 </span>             * Tag for package.
              * @return {String}
              */
-            getTag:function () {
+            getTag: function () {
                 var self = this;
                 return self.tag || self.SS.Config.tag;
             },
@@ -67,7 +67,7 @@
 </span>             * Get package name.
              * @return {String}
              */
-            getName:function () {
+            getName: function () {
                 return this.name;
             },
 
@@ -75,12 +75,12 @@
 </span>             * Get package base.
              * @return {String}
              */
-            getBase:function () {
+            getBase: function () {
                 var self = this;
                 return self.base || self.SS.Config.base;
             },
 
-            getBaseUri:function () {
+            getBaseUri: function () {
                 var self = this;
                 return self.baseUri || self.SS.Config.baseUri;
             },
@@ -89,7 +89,7 @@
 </span>             * Whether is debug for this package.
              * @return {Boolean}
              */
-            isDebug:function () {
+            isDebug: function () {
                 var self = this, debug = self.debug;
                 return debug === undefined ? self.SS.Config.debug : debug;
             },
@@ -98,7 +98,7 @@
 </span>             * Get charset for package.
              * @return {String}
              */
-            getCharset:function () {
+            getCharset: function () {
                 var self = this;
                 return self.charset || self.SS.Config.charset;
             },
@@ -107,7 +107,7 @@
 </span>             * Whether modules are combined for this package.
              * @return {Boolean}
              */
-            isCombine:function () {
+            isCombine: function () {
                 var self = this, combine = self.combine;
                 return combine === undefined ? self.SS.Config.combine : combine;
             }
@@ -129,7 +129,7 @@
 </span>             * Set the value of current module
              * @param v value to be set
              */
-            setValue:function (v) {
+            setValue: function (v) {
                 this.value = v;
             },
 
@@ -137,13 +137,13 @@
 </span>             * Get the type if current Module
              * @return {String} css or js
              */
-            getType:function () {
+            getType: function () {
                 var self = this, v;
                 if ((v = self.type) === undefined) {
-                    if (Path.extname(self.name).toLowerCase() == &quot;.css&quot;) {
-                        v = &quot;css&quot;;
+                    if (Path.extname(self.name).toLowerCase() == '.css') {
+                        v = 'css';
                     } else {
-                        v = &quot;js&quot;;
+                        v = 'js';
                     }
                     self.type = v;
                 }
@@ -153,13 +153,13 @@
 <span id='KISSY-Loader-Module-method-getFullPath'>            /**
 </span>             * Get the fullpath of current module if load dynamically
              */
-            getFullPath:function () {
+            getFullPath: function () {
                 var self = this, t, fullpathUri, packageBaseUri;
                 if (!self.fullpath) {
                     packageBaseUri = self.getPackageInfo().getBaseUri();
                     fullpathUri = packageBaseUri.resolve(self.getPath());
                     if (t = self.getTag()) {
-                        fullpathUri.query.set(&quot;t&quot;, t);
+                        fullpathUri.query.set('t', t);
                     }
                     self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
                 }
@@ -170,7 +170,7 @@
 </span>             * Get the path (without package base)
              * @return {String}
              */
-            getPath:function () {
+            getPath: function () {
                 var self = this;
                 return self.path ||
                     (self.path = defaultComponentJsName(self))
@@ -179,7 +179,7 @@
 <span id='KISSY-Loader-Module-method-getValue'>            /**
 </span>             * Get the value of current module
              */
-            getValue:function () {
+            getValue: function () {
                 return this.value;
             },
 
@@ -187,7 +187,7 @@
 </span>             * Get the name of current module
              * @returns {String}
              */
-            getName:function () {
+            getName: function () {
                 return this.name;
             },
 
@@ -195,7 +195,7 @@
 </span>             * Get the packageInfo of current module
              * @return {Object}
              */
-            getPackageInfo:function () {
+            getPackageInfo: function () {
                 var self = this;
                 return self.packageInfo ||
                     (self.packageInfo = getPackageInfo(self.SS, self));
@@ -205,7 +205,7 @@
 </span>             * Get the tag of current module
              * @return {String}
              */
-            getTag:function () {
+            getTag: function () {
                 var self = this;
                 return self.tag || self.getPackageInfo().getTag();
             },
@@ -214,7 +214,7 @@
 </span>             * Get the charset of current module
              * @return {String}
              */
-            getCharset:function () {
+            getCharset: function () {
                 var self = this;
                 return self.charset || self.getPackageInfo().getCharset();
             }
@@ -225,17 +225,17 @@
 
     function defaultComponentJsName(m) {
         var name = m.name,
-            extname = (Path.extname(name) || &quot;&quot;).toLowerCase(),
-            min = &quot;-min&quot;;
+            extname = (Path.extname(name) || '').toLowerCase(),
+            min = '-min';
 
-        if (extname != &quot;.css&quot;) {
-            extname = &quot;.js&quot;;
+        if (extname != '.css') {
+            extname = '.js';
         }
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 
         if (m.getPackageInfo().isDebug()) {
-            min = &quot;&quot;;
+            min = '';
         }
         return name + min + extname;
     }
@@ -244,7 +244,7 @@
         var modName = mod.name,
             Env = self.Env,
             packages = Env.packages || {},
-            pName = &quot;&quot;,
+            pName = '',
             p,
             packageDesc;
 
@@ -261,9 +261,9 @@
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
             (Env.defaultPackage = new Loader.Package({
-                SS:self,
+                SS: self,
                 // need packageName as key
-                name:''
+                name: ''
             }));
 
         return packageDesc;
@@ -275,15 +275,15 @@
      */
     Loader.STATUS = {
 <span id='KISSY-Loader-STATUS-property-INIT'>        /** init */
-</span>        &quot;INIT&quot;:0,
+</span>        'INIT': 0,
 <span id='KISSY-Loader-STATUS-property-LOADING'>        /** loading */
-</span>        &quot;LOADING&quot;:1,
+</span>        'LOADING': 1,
 <span id='KISSY-Loader-STATUS-property-LOADED'>        /** loaded */
-</span>        &quot;LOADED&quot;:2,
+</span>        'LOADED': 2,
 <span id='KISSY-Loader-STATUS-property-ERROR'>        /** error */
-</span>        &quot;ERROR&quot;:3,
+</span>        'ERROR': 3,
 <span id='KISSY-Loader-STATUS-property-ATTACHED'>        /** attached */
-</span>        &quot;ATTACHED&quot;:4
+</span>        'ATTACHED': 4
     };
 })(KISSY);
 /*

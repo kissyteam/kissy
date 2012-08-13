@@ -42,7 +42,7 @@
          * @param charset
          * @member KISSY
          */
-        getStyle:function (url, success, charset) {
+        getStyle: function (url, success, charset) {
 
             var config = success;
 
@@ -56,7 +56,7 @@
             callbacks.push(success);
 
             if (callbacks.length &gt; 1) {
-                // S.log(&quot; queue css : &quot; + callbacks.length);
+                // S.log(' queue css : ' + callbacks.length);
                 return callbacks.node;
             }
 
@@ -110,9 +110,9 @@
          * @returns {HTMLElement} script/style node
          * @member KISSY
          */
-        getScript:function (url, success, charset) {
+        getScript: function (url, success, charset) {
 
-            if (S.startsWith(Path.extname(url).toLowerCase(), &quot;.css&quot;)) {
+            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
                 return S.getStyle(url, success, charset);
             }
 
@@ -134,10 +134,10 @@
             callbacks.push([success, error]);
 
             if (callbacks.length &gt; 1) {
-                // S.log(&quot; queue js : &quot; + callbacks.length + &quot; : for :&quot; + url + &quot; by &quot; + (config.source || &quot;&quot;));
+                // S.log(' queue js : ' + callbacks.length + ' : for :' + url + ' by ' + (config.source || ''));
                 return callbacks.node;
             } else {
-                // S.log(&quot;init getScript : by &quot; + config.source);
+                // S.log('init getScript : by ' + config.source);
             }
 
             var head = utils.docHead(),
@@ -175,7 +175,7 @@
                 node.addEventListener('load', function () {
                     end(0);
                 }, false);
-                node.addEventListener(&quot;error&quot;, function () {
+                node.addEventListener('error', function () {
                     end(1);
                 }, false);
             } else {

@@ -57,13 +57,13 @@
         class2type = {},
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
-            '&amp;amp;':'&amp;',
-            '&amp;gt;':'&gt;',
-            '&amp;lt;':'&lt;',
-            '&amp;#x60;':'`',
-            '&amp;#x2F;':'/',
-            '&amp;quot;':'&quot;',
-            '&amp;#x27;':&quot;'&quot;
+            '&amp;amp;': '&amp;',
+            '&amp;gt;': '&gt;',
+            '&amp;lt;': '&lt;',
+            '&amp;#x60;': '`',
+            '&amp;#x2F;': '/',
+            '&amp;quot;': '&quot;',
+            '&amp;#x27;': &quot;'&quot;
         },
         reverseEntities = {},
         escapeReg,
@@ -87,7 +87,7 @@
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, &quot;g&quot;);
+        return escapeReg = new RegExp(str, 'g');
     }
 
     function getUnEscapeReg() {
@@ -99,7 +99,7 @@
             str += entity + '|';
         });
         str += '&amp;#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, &quot;g&quot;);
+        return unEscapeReg = new RegExp(str, 'g');
     }
 
 
@@ -124,7 +124,7 @@
              * @param {String} [marker] the marker will be set on Object
              * @return {String} guid associated with this object
              */
-            stamp:function (o, readOnly, marker) {
+            stamp: function (o, readOnly, marker) {
                 if (!o) {
                     return o
                 }
@@ -146,13 +146,13 @@
 <span id='KISSY-method-noop'>            /**
 </span>             * empty function
              */
-            noop:function () {
+            noop: function () {
             },
 
 <span id='KISSY-method-type'>            /**
 </span>             * Determine the internal JavaScript [[Class]] of an object.
              */
-            type:function (o) {
+            type: function (o) {
                 return o == null ?
                     String(o) :
                     class2type[toString.call(o)] || 'object';
@@ -162,7 +162,7 @@
 </span>             * whether o === null
              * @param o
              */
-            isNull:function (o) {
+            isNull: function (o) {
                 return o === null;
             },
 
@@ -170,14 +170,14 @@
 </span>             * whether o === undefined
              * @param o
              */
-            isUndefined:function (o) {
+            isUndefined: function (o) {
                 return o === undefined;
             },
 
 <span id='KISSY-method-isEmptyObject'>            /**
 </span>             * Checks to see if an object is empty.
              */
-            isEmptyObject:function (o) {
+            isEmptyObject: function (o) {
                 for (var p in o) {
                     if (p !== undefined) {
                         return FALSE;
@@ -187,13 +187,13 @@
             },
 
 <span id='KISSY-method-isPlainObject'>            /**
-</span>             * Checks to see if an object is a plain object (created using &quot;{}&quot;
-             * or &quot;new Object()&quot; or &quot;new FunctionClass()&quot;).
+</span>             * Checks to see if an object is a plain object (created using '{}'
+             * or 'new Object()' or 'new FunctionClass()').
              */
-            isPlainObject:function (o) {
+            isPlainObject: function (o) {
                 /*
                  note by yiminghe
-                 isPlainObject(node=document.getElementById(&quot;xx&quot;)) -&gt; false
+                 isPlainObject(node=document.getElementById('xx')) -&gt; false
                  toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
                  'isPrototypeOf' in node : ie678 === false ,other === true
                  refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
@@ -208,7 +208,7 @@
              * @param b 比较目标2
              * @returns {Boolean} a.equals(b)
              */
-            equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+            equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
                 // inspired by jasmine
                 mismatchKeys = mismatchKeys || [];
                 mismatchValues = mismatchValues || [];
@@ -229,7 +229,7 @@
                 if (S.isNumber(a) &amp;&amp; S.isNumber(b)) {
                     return (a == b);
                 }
-                if (typeof a === &quot;object&quot; &amp;&amp; typeof b === &quot;object&quot;) {
+                if (typeof a === 'object' &amp;&amp; typeof b === 'object') {
                     return compareObjects(a, b, mismatchKeys, mismatchValues);
                 }
                 // Straight check
@@ -258,7 +258,7 @@
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            S.log(&quot;delete CLONE_MARKER error : &quot;);
+                            S.log('delete CLONE_MARKER error : ');
                             v[CLONE_MARKER] = undefined;
                         }
                     }
@@ -271,7 +271,7 @@
 </span>             * Removes the whitespace from the beginning and end of a string.
              * @method
              */
-            trim:trim ?
+            trim: trim ?
                 function (str) {
                     return str == null ? EMPTY : trim.call(str);
                 } :
@@ -286,7 +286,7 @@
              * @param {Object} o json data
              * @param {RegExp} [regexp] to match a piece of template string
              */
-            substitute:function (str, o, regexp) {
+            substitute: function (str, o, regexp) {
                 if (!S.isString(str)
                     || !S.isPlainObject(o)) {
                     return str;
@@ -307,7 +307,7 @@
              *        receives three arguments: the value, the index, the full array.
              * @param {Object} [context]
              */
-            each:function (object, fn, context) {
+            each: function (object, fn, context) {
                 if (object) {
                     var key,
                         val,
@@ -340,7 +340,7 @@
              * @param {Array} arr the array of items where item will be search
              * @returns {number} item's index in array
              */
-            indexOf:indexOf ?
+            indexOf: indexOf ?
                 function (item, arr) {
                     return indexOf.call(arr, item);
                 } :
@@ -362,7 +362,7 @@
              * @param {Array} arr the array of items where item will be search
              * @returns {number} item's last index in array
              */
-            lastIndexOf:(lastIndexOf) ?
+            lastIndexOf: (lastIndexOf) ?
                 function (item, arr) {
                     return lastIndexOf.call(arr, item);
                 } :
@@ -382,7 +382,7 @@
              * if override is false, S.unique([a, b, a]) =&gt; [a, b]
              * @return {Array} a copy of the array with duplicate entries removed
              */
-            unique:function (a, override) {
+            unique: function (a, override) {
                 var b = a.slice();
                 if (override) {
                     b.reverse();
@@ -411,7 +411,7 @@
              * @param {Array} arr the array of items where item will be search
              * @returns {Boolean} the item exists in arr
              */
-            inArray:function (item, arr) {
+            inArray: function (item, arr) {
                 return S.indexOf(item, arr) &gt; -1;
             },
 
@@ -426,7 +426,7 @@
              * @return {Array} The items on which the supplied function returned true.
              * If no items matched an empty array is returned.
              */
-            filter:filter ?
+            filter: filter ?
                 function (arr, fn, context) {
                     return filter.call(arr, fn, context || this);
                 } :
@@ -453,7 +453,7 @@
              * @return {Array} The items on which the supplied function
              *         returned
              */
-            map:map ?
+            map: map ?
                 function (arr, fn, context) {
                     return map.call(arr, fn, context || this);
                 } :
@@ -484,19 +484,19 @@
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
              * @return {Array} The items on which the supplied function returned
              */
-            reduce:/*
+            reduce: /*
              NaN ?
              reduce ? function(arr, callback, initialValue) {
              return arr.reduce(callback, initialValue);
              } : */function (arr, callback, initialValue) {
                 var len = arr.length;
-                if (typeof callback !== &quot;function&quot;) {
-                    throw new TypeError(&quot;callback is not function!&quot;);
+                if (typeof callback !== 'function') {
+                    throw new TypeError('callback is not function!');
                 }
 
                 // no value to return if no initial value and an empty array
                 if (len === 0 &amp;&amp; arguments.length == 2) {
-                    throw new TypeError(&quot;arguments invalid&quot;);
+                    throw new TypeError('arguments invalid');
                 }
 
                 var k = 0;
@@ -538,7 +538,7 @@
              * @param [context] {Object} optional context object
              * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
              */
-            every:every ?
+            every: every ?
                 function (arr, fn, context) {
                     return every.call(arr, fn, context || this);
                 } :
@@ -560,7 +560,7 @@
              * @param [context] {Object} optional context object
              * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
              */
-            some:some ?
+            some: some ?
                 function (arr, fn, context) {
                     return some.call(arr, fn, context || this);
                 } :
@@ -583,7 +583,7 @@
              * @param {...*} arg1 extra arguments
              * @returns {Function} new function with context and arguments
              */
-            bind:function (fn, obj, arg1) {
+            bind: function (fn, obj, arg1) {
                 var slice = [].slice,
                     args = slice.call(arguments, 2),
                     fNOP = function () {
@@ -604,21 +604,21 @@
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
              */
-            now:Date.now || function () {
+            now: Date.now || function () {
                 return +new Date();
             },
 <span id='KISSY-method-fromUnicode'>            /**
 </span>             * frequently used in taobao cookie about nick
              */
-            fromUnicode:function (str) {
+            fromUnicode: function (str) {
                 return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
 
 
-            ucfirst:function (s) {
-                s += &quot;&quot;;
+            ucfirst: function (s) {
+                s += '';
                 return s.charAt(0).toUpperCase() + s.substring(1);
             },
 
@@ -628,7 +628,7 @@
              *        http://wonko.com/post/html-escaping
              * @param str {string} text2html show
              */
-            escapeHTML:function (str) {
+            escapeHTML: function (str) {
                 return str.replace(getEscapeReg(), function (m) {
                     return reverseEntities[m];
                 });
@@ -638,7 +638,7 @@
 </span>             * get escaped regexp string for construct regexp
              * @param str
              */
-            escapeRegExp:function (str) {
+            escapeRegExp: function (str) {
                 return str.replace(escapeRegExp, '\\$&amp;');
             },
 
@@ -646,7 +646,7 @@
 </span>             * un-escape html to string
              * @param str {string} html2text
              */
-            unEscapeHTML:function (str) {
+            unEscapeHTML: function (str) {
                 return str.replace(getUnEscapeReg(), function (m, n) {
                     return htmlEntities[m] || String.fromCharCode(+n);
                 });
@@ -656,7 +656,7 @@
              * @param o {object|Array} array like object or array
              * @return {Array} native Array
              */
-            makeArray:function (o) {
+            makeArray: function (o) {
                 if (o == null) {
                     return [];
                 }
@@ -666,7 +666,7 @@
 
                 // The strings and functions also have 'length'
                 if (typeof o.length !== 'number'
-                    // form.elements in ie78 has nodeName &quot;form&quot;
+                    // form.elements in ie78 has nodeName 'form'
                     // then caution select
                     // || o.nodeName
                     // window
@@ -698,7 +698,7 @@
              * @param {Boolean} [arr=true] whether add '[]' to array key of data
              * @return {String}
              */
-            param:function (o, sep, eq, arr) {
+            param: function (o, sep, eq, arr) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
@@ -726,7 +726,7 @@
                             for (i = 0, len = val.length; i &lt; len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode(&quot;[]&quot;) : EMPTY));
+                                    buf.push(key, (arr ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -755,7 +755,7 @@
              * @param {String} [eq='='] separator between key and value of data
              * @returns {Object} json data
              */
-            unparam:function (str, sep, eq) {
+            unparam: function (str, sep, eq) {
                 if (!S.isString(str) || !(str = S.trim(str))) {
                     return {};
                 }
@@ -775,10 +775,10 @@
                         try {
                             val = decode(pair[1] || EMPTY);
                         } catch (e) {
-                            S.log(e + &quot;decodeURIComponent error : &quot; + pair[1], &quot;error&quot;);
+                            S.log(e + 'decodeURIComponent error : ' + pair[1], 'error');
                             val = pair[1] || EMPTY;
                         }
-                        if (S.endsWith(key, &quot;[]&quot;)) {
+                        if (S.endsWith(key, '[]')) {
                             key = key.substring(0, key.length - 2);
                         }
                     }
@@ -811,7 +811,7 @@
              * @return {Object} a timer object. Call the cancel() method on this object to stop
              *         the timer.
              */
-            later:function (fn, when, periodic, context, data) {
+            later: function (fn, when, periodic, context, data) {
                 when = when || 0;
                 var m = fn,
                     d = S.makeArray(data),
@@ -833,9 +833,9 @@
                 r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
 
                 return {
-                    id:r,
-                    interval:periodic,
-                    cancel:function () {
+                    id: r,
+                    interval: periodic,
+                    cancel: function () {
                         if (this.interval) {
                             clearInterval(r);
                         } else {
@@ -851,7 +851,7 @@
              * @param {String} prefix a specified substring
              * @returns {Boolean} whether str start with prefix
              */
-            startsWith:function (str, prefix) {
+            startsWith: function (str, prefix) {
                 return str.lastIndexOf(prefix, 0) === 0;
             },
 
@@ -861,7 +861,7 @@
              * @param {String} suffix a specified substring
              * @returns {Boolean} whether str end with suffix
              */
-            endsWith:function (str, suffix) {
+            endsWith: function (str, suffix) {
                 var ind = str.length - suffix.length;
                 return ind &gt;= 0 &amp;&amp; str.indexOf(suffix, ind) == ind;
             },
@@ -874,7 +874,7 @@
              * Passing a -1 will disable the throttle. Defaults to 150.
              * @return {Function} Returns a wrapped function that calls fn throttled.
              */
-            throttle:function (fn, ms, context) {
+            throttle: function (fn, ms, context) {
                 ms = ms || 150;
 
                 if (ms === -1) {
@@ -901,7 +901,7 @@
              * @param {Object} [context]
              * @return {Function} Returns a wrapped function that calls fn buffered.
              */
-            buffer:function (fn, ms, context) {
+            buffer: function (fn, ms, context) {
                 ms = ms || 150;
 
                 if (ms === -1) {
@@ -935,63 +935,63 @@
          * @override KISSY
          */
         {
-<span id='KISSY-method-isBoolean'>        /**
-</span>         * test whether o is boolean
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isBoolean:isValidParamValue,
-<span id='KISSY-method-isNumber'>        /**
-</span>         * test whether o is number
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isNumber:isValidParamValue,
-<span id='KISSY-method-isString'>        /**
-</span>         * test whether o is String
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isString:isValidParamValue,
-<span id='KISSY-method-isFunction'>        /**
-</span>         * test whether o is function
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isFunction:isValidParamValue,
-<span id='KISSY-method-isArray'>        /**
-</span>         * test whether o is Array
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isArray:isValidParamValue,
-<span id='KISSY-method-isDate'>        /**
-</span>         * test whether o is Date
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isDate:isValidParamValue,
-<span id='KISSY-method-isRegExp'>        /**
-</span>         * test whether o is RegExp
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isRegExp:isValidParamValue,
-<span id='KISSY-method-isObject'>        /**
-</span>         * test whether o is Object
-         * @method
-         * @param  o
-         * @returns {Boolean}
-         */
-        isObject:isValidParamValue
-    });
+<span id='KISSY-method-isBoolean'>            /**
+</span>             * test whether o is boolean
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isBoolean: isValidParamValue,
+<span id='KISSY-method-isNumber'>            /**
+</span>             * test whether o is number
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isNumber: isValidParamValue,
+<span id='KISSY-method-isString'>            /**
+</span>             * test whether o is String
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isString: isValidParamValue,
+<span id='KISSY-method-isFunction'>            /**
+</span>             * test whether o is function
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isFunction: isValidParamValue,
+<span id='KISSY-method-isArray'>            /**
+</span>             * test whether o is Array
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isArray: isValidParamValue,
+<span id='KISSY-method-isDate'>            /**
+</span>             * test whether o is Date
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isDate: isValidParamValue,
+<span id='KISSY-method-isRegExp'>            /**
+</span>             * test whether o is RegExp
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isRegExp: isValidParamValue,
+<span id='KISSY-method-isObject'>            /**
+</span>             * test whether o is Object
+             * @method
+             * @param  o
+             * @returns {Boolean}
+             */
+            isObject: isValidParamValue
+        });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function (name, lc) {
@@ -1020,7 +1020,7 @@
         if (input[CLONE_MARKER]) {
             // 对应的克隆后对象
             return memory[input[CLONE_MARKER]].destination;
-        } else if (typeof input === &quot;object&quot;) {
+        } else if (typeof input === 'object') {
             // 引用类型要先记录
             var constructor = input.constructor;
             if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
@@ -1037,13 +1037,13 @@
             // 做标记
             input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination:destination, input:input};
+            memory[stamp] = {destination: destination, input: input};
         }
         // If input is an Array object or an Object object,
         // then, for each enumerable property in input,
         // add a new property to output having the same name,
         // and having a value created from invoking the internal structured cloning algorithm recursively
-        // with the value of the property as the &quot;input&quot; argument and memory as the &quot;memory&quot; argument.
+        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
         // The order of the properties in the input and output objects must be the same.
 
         // clone it
@@ -1102,7 +1102,7 @@
             }
         }
         if (S.isArray(a) &amp;&amp; S.isArray(b) &amp;&amp; a.length != b.length) {
-            mismatchValues.push(&quot;arrays were not the same length&quot;);
+            mismatchValues.push('arrays were not the same length');
         }
         delete a[COMPARE_MARKER];
         delete b[COMPARE_MARKER];

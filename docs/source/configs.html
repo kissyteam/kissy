@@ -29,14 +29,14 @@
         configs = S.configs;
     /*
      modify current module path
-     &lt;code&gt;
+
      [
-     [/(.+-)min(.js(\?t=\d+)?)$/,&quot;$1$2&quot;],
-     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-     return m1+m2;
-     }]
+        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+            return m1+m2;
+        }]
      ]
-     &lt;/code&gt;
+
      */
     configs.map = function (rules) {
         var self = this;
@@ -64,8 +64,8 @@
                 base = cfg.base || cfg.path;
 
                 // must be folder
-                if (!S.endsWith(base, &quot;/&quot;)) {
-                    base += &quot;/&quot;;
+                if (!S.endsWith(base, '/')) {
+                    base += '/';
                 }
 
                 // 注意正则化
@@ -86,26 +86,26 @@
      &lt;code&gt;
 
      KISSY.config({
-     base:'',
-     // dom-min.js
-     debug:'',
-     combine:true,
-     tag:'',
-     packages:{
-     &quot;biz1&quot;: {
-     // path change to base
-     base: &quot;haha&quot;,
-     // x.js
-     debug:'',
-     tag:'',
-     combine:false,
-     }
-     },
-     modules:{
-     &quot;biz1/main&quot; : {
-     requires: [ &quot;biz1/part1&quot; , &quot;biz1/part2&quot; ]
-     }
-     }
+         base: '',
+         // dom-min.js
+         debug: '',
+         combine: true,
+         tag: '',
+         packages: {
+             'biz1': {
+                 // path change to base
+                 base: 'haha',
+                 // x.js
+                 debug: '',
+                 tag: '',
+                 combine: false,
+             }
+         },
+         modules: {
+             'biz1/main': {
+                requires: ['biz1/part1', 'biz1/part2']
+             }
+         }
      });
      */
     configs.modules = function (modules) {

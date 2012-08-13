@@ -58,9 +58,9 @@
     }
 
     function indexMapStr(s) {
-        // &quot;x/&quot; &quot;x/y/z/&quot;
-        if (S.endsWith(Path.basename(s), &quot;/&quot;)) {
-            s += &quot;index&quot;;
+        // 'x/' 'x/y/z/'
+        if (S.endsWith(Path.basename(s), '/')) {
+            s += 'index';
         }
         return s;
     }
@@ -71,29 +71,29 @@
 </span>         * get document head
          * @return {HTMLElement}
          */
-        docHead:function () {
+        docHead: function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
 
 <span id='KISSY-Loader-Utils-property-isWebKit'>        /**
 </span>         * isWebkit
          */
-        isWebKit:isWebKit,
+        isWebKit: isWebKit,
 
 <span id='KISSY-Loader-Utils-property-isGecko'>        /**
 </span>         * isGecko
          */
-        isGecko:!isWebKit &amp;&amp; !!ua.match(/Gecko/),
+        isGecko: !isWebKit &amp;&amp; !!ua.match(/Gecko/),
 
 <span id='KISSY-Loader-Utils-property-isPresto'>        /**
 </span>         * isPresto
          */
-        isPresto:!!ua.match(/Presto/),
+        isPresto: !!ua.match(/Presto/),
 
 <span id='KISSY-Loader-Utils-property-IE'>        /**
 </span>         * IE
          */
-        IE:!!ua.match(/MSIE/),
+        IE: !!ua.match(/MSIE/),
 
 <span id='KISSY-Loader-Utils-method-normalDepModuleName'>        /**
 </span>         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
@@ -101,7 +101,7 @@
          * @param depName dep module 's name
          * @return {string|Array}
          */
-        normalDepModuleName:function (moduleName, depName) {
+        normalDepModuleName: function (moduleName, depName) {
             var i = 0;
 
             if (!depName) {
@@ -115,7 +115,7 @@
                 return depName;
             }
 
-            if (startsWith(depName, &quot;../&quot;) || startsWith(depName, &quot;./&quot;)) {
+            if (startsWith(depName, '../') || startsWith(depName, './')) {
                 // x/y/z -&gt; x/y/
                 return Path.resolve(Path.dirname(moduleName), depName);
             }
@@ -128,15 +128,15 @@
          * @param path
          * @return {String}
          */
-        removeExtname:function (path) {
-            return path.replace(/(-min)?\.js$/i, &quot;&quot;);
+        removeExtname: function (path) {
+            return path.replace(/(-min)?\.js$/i, '');
         },
 
 <span id='KISSY-Loader-Utils-method-resolveByPage'>        /**
 </span>         * resolve according to current page location.
          * @return {String}
          */
-        resolveByPage:function (path) {
+        resolveByPage: function (path) {
             return simulatedLocation.resolve(path);
         },
 
@@ -145,7 +145,7 @@
          * @param self
          * @param modNames
          */
-        createModulesInfo:function (self, modNames) {
+        createModulesInfo: function (self, modNames) {
             S.each(modNames, function (m) {
                 Utils.createModuleInfo(self, m);
             });
@@ -158,7 +158,7 @@
          * @param cfg
          * @return {KISSY.Loader.Module}
          */
-        createModuleInfo:function (self, modName, cfg) {
+        createModuleInfo: function (self, modName, cfg) {
             modName = indexMapStr(modName);
 
             var mods = self.Env.mods,
@@ -170,8 +170,8 @@
 
             // 防止 cfg 里有 tag，构建 fullpath 需要
             mods[modName] = mod = new Loader.Module(S.mix({
-                name:modName,
-                SS:self
+                name: modName,
+                SS: self
             }, cfg));
 
             return mod;
@@ -183,7 +183,7 @@
          * @param modNames
          * @return {Boolean}
          */
-        isAttached:function (self, modNames) {
+        isAttached: function (self, modNames) {
             return isStatus(self, modNames, data.ATTACHED);
         },
 
@@ -193,7 +193,7 @@
          * @param modNames
          * @return {Boolean}
          */
-        isLoaded:function (self, modNames) {
+        isLoaded: function (self, modNames) {
             return isStatus(self, modNames, data.LOADED);
         },
 
@@ -203,12 +203,12 @@
          * @param modNames
          * @return {Array}
          */
-        getModules:function (self, modNames) {
+        getModules: function (self, modNames) {
             var mods = [self], mod;
 
             S.each(modNames, function (modName) {
                 mod = self.Env.mods[modName];
-                if (!mod || mod.getType() != &quot;css&quot;) {
+                if (!mod || mod.getType() != 'css') {
                     mods.push(self.require(modName));
                 }
             });
@@ -221,7 +221,7 @@
          * @param self
          * @param mod
          */
-        attachMod:function (self, mod) {
+        attachMod: function (self, mod) {
             if (mod.status != data.LOADED) {
                 return;
             }
@@ -245,8 +245,8 @@
 
             mod.status = data.ATTACHED;
 
-            self.getLoader().fire(&quot;afterModAttached&quot;, {
-                mod:mod
+            self.getLoader().fire('afterModAttached', {
+                mod: mod
             });
         },
 
@@ -255,9 +255,9 @@
          * @param modNames
          * @return {String[]}
          */
-        getModNamesAsArray:function (modNames) {
+        getModNamesAsArray: function (modNames) {
             if (S.isString(modNames)) {
-                modNames = modNames.replace(/\s+/g, &quot;&quot;).split(',');
+                modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
         },
@@ -272,7 +272,7 @@
          * or module names string separated by comma
          * @return {String[]}
          */
-        normalizeModNames:function (self, modNames, refModName) {
+        normalizeModNames: function (self, modNames, refModName) {
             return Utils.unalias(self, Utils.normalizeModNamesWithAlias(self, modNames, refModName));
         },
 
@@ -282,7 +282,7 @@
          * @param names
          * @return {Array}
          */
-        unalias:function (self, names) {
+        unalias: function (self, names) {
             var ret = [].concat(names),
                 i,
                 m,
@@ -308,7 +308,7 @@
          * @param refModName
          * @return {Array}
          */
-        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+        normalizeModNamesWithAlias: function (self, modNames, refModName) {
             var ret = [], i, l;
             if (modNames) {
                 // 1. index map
@@ -330,12 +330,12 @@
          * @param fn
          * @param config
          */
-        registerModule:function (self, name, fn, config) {
+        registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,
                 mod = mods[name];
 
             if (mod &amp;&amp; mod.fn) {
-                S.log(name + &quot; is defined more than once&quot;);
+                S.log(name + ' is defined more than once');
                 return;
             }
 
@@ -346,13 +346,13 @@
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, { name:name, status:data.LOADED });
+            S.mix(mod, { name: name, status: data.LOADED });
 
             mod.fn = fn;
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + &quot; is loaded&quot;);
+            S.log(name + ' is loaded');
         },
 
 <span id='KISSY-Loader-Utils-method-getMappedPath'>        /**
@@ -361,7 +361,7 @@
          * @param path
          * @return {String}
          */
-        getMappedPath:function (self, path) {
+        getMappedPath: function (self, path) {
             var __mappedRules = self.Config.mappedRules || [],
                 i,
                 m,

@@ -36,13 +36,13 @@
         {
 
             //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-            __currentModule:null,
+            __currentModule: null,
 
             //ie6,7,8开始载入脚本的时间
-            __startLoadTime:0,
+            __startLoadTime: 0,
 
             //ie6,7,8开始载入脚本对应的模块名
-            __startLoadModuleName:null,
+            __startLoadModuleName: null,
 
 <span id='KISSY-Loader-method-add'>            /**
 </span>             * Registers a module.
@@ -56,7 +56,7 @@
              *      @example
              *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
              */
-            add:function (name, fn, config) {
+            add: function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
@@ -66,7 +66,7 @@
                 // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
-                        modules:name
+                        modules: name
                     });
                 }
 
@@ -111,7 +111,7 @@
                          insertion.
                          * In IE, if the script is not in the cache, when define() is called you
                          can iterate through the script tags and the currently executing one will
-                         have a script.readyState == &quot;interactive&quot;
+                         have a script.readyState == 'interactive'
                          See RequireJS source code if you need more hints.
                          Anyway, the bottom line from a spec perspective is that it is
                          implemented, it works, and it is possible. Hope that helps.
@@ -120,20 +120,20 @@
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
-                        S.log(&quot;old_ie get modName by interactive : &quot; + name);
+                        S.log('old_ie get modName by interactive : ' + name);
                         utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
                         // 其他浏览器 onload 时，关联模块名与模块定义
                         self.__currentModule = {
-                            fn:fn,
-                            config:config
+                            fn: fn,
+                            config: config
                         };
                     }
                     return;
                 }
-                S.log(&quot;invalid format for KISSY.add !&quot;, &quot;error&quot;);
+                S.log('invalid format for KISSY.add !', 'error');
             }
         });
 
@@ -142,14 +142,14 @@
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
         var SS = self.SS,
-            scripts = S.Env.host.document.getElementsByTagName(&quot;script&quot;),
+            scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
             script;
 
         for (i = 0; i &lt; scripts.length; i++) {
             script = scripts[i];
-            if (script.readyState == &quot;interactive&quot;) {
+            if (script.readyState == 'interactive') {
                 re = script;
                 break;
             }
@@ -158,8 +158,8 @@
             // sometimes when read module file from cache , interactive status is not triggered
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
-            S.log(&quot;can not find interactive script,time diff : &quot; + (+new Date() - self.__startLoadTime), &quot;error&quot;);
-            S.log(&quot;old_ie get mod name from cache : &quot; + self.__startLoadModuleName);
+            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
+            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
             return self.__startLoadModuleName;
         }
 
@@ -206,7 +206,7 @@
                 src.getPath()));
         }
 
-        S.log(&quot;interactive script does not have package config ：&quot; + src, &quot;error&quot;);
+        S.log('interactive script does not have package config ：' + src, 'error');
         return undefined;
     }
 
@@ -226,11 +226,11 @@
  path: 前缀包名对应的路径
  charset: 该包下所有文件的编码
 
- 2. add(moduleName,function(S,depModule){return function(){}},{requires:[&quot;depModuleName&quot;]});
+ 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
  moduleName add 时可以不写
  depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
 
- 3. S.use([&quot;dom&quot;],function(S,DOM){
+ 3. S.use(['dom'],function(S,DOM){
  });
  依赖注入，发生于 add 和 use 时期
 
