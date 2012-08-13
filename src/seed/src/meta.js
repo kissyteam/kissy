@@ -7,12 +7,12 @@
     S.config({
         packages: {
             gallery: {
-                base: S.Config.baseUri.resolve("../").toString()
+                base: S.Config.baseUri.resolve('../').toString()
             }
         },
         modules: {
             core: {
-                alias: ["dom", "event", "ajax", "anim", "base", "node", "json"]
+                alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json']
             }
         }
     });

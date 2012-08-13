@@ -20,7 +20,7 @@
                 if (!(--count)) {
                     callback();
                 }
-            }, charset || "utf-8");
+            }, charset || 'utf-8');
         });
     }
 
@@ -245,7 +245,7 @@
             if (S.Config.debug) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
                 if (allRequires[modName]) {
-                    S.error("detect circular dependency among : ");
+                    S.error('detect circular dependency among : ');
                     S.error(allRequires);
                     return ret;
                 }
@@ -414,7 +414,7 @@
                                 prefix,
                                 path,
                                 l,
-                                packageNamePath = packageName + "/";
+                                packageNamePath = packageName + '/';
 
                             res[type][packageName] = [];
                             res[type][packageName].charset = jss.charset;
@@ -423,15 +423,15 @@
                             // add packageName to common prefix
                             // combo grouped by package
                             prefix = packageBase +
-                                (packageName ? packageNamePath : "") +
+                                (packageName ? packageNamePath : '') +
                                 comboPrefix;
                             l = prefix.length;
 
                             function pushComboUrl() {
                                 res[type][packageName].push(utils.getMappedPath(
                                     SS,
-                                    prefix + t.join(comboSep) + (tag ? ("?t=" +
-                                        encodeURIComponent(tag)) : "")));
+                                    prefix + t.join(comboSep) + (tag ? ('?t=' +
+                                        encodeURIComponent(tag)) : '')));
                             }
 
                             for (i = 0; i < jss.length; i++) {

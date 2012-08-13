@@ -70,7 +70,7 @@
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, "g");
+        return escapeReg = new RegExp(str, 'g');
     }
 
     function getUnEscapeReg() {
@@ -82,7 +82,7 @@
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, "g");
+        return unEscapeReg = new RegExp(str, 'g');
     }
 
 
@@ -170,13 +170,13 @@
             },
 
             /**
-             * Checks to see if an object is a plain object (created using "{}"
-             * or "new Object()" or "new FunctionClass()").
+             * Checks to see if an object is a plain object (created using '{}'
+             * or 'new Object()' or 'new FunctionClass()').
              */
             isPlainObject: function (o) {
                 /*
                  note by yiminghe
-                 isPlainObject(node=document.getElementById("xx")) -> false
+                 isPlainObject(node=document.getElementById('xx')) -> false
                  toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
                  'isPrototypeOf' in node : ie678 === false ,other === true
                  refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
@@ -212,7 +212,7 @@
                 if (S.isNumber(a) && S.isNumber(b)) {
                     return (a == b);
                 }
-                if (typeof a === "object" && typeof b === "object") {
+                if (typeof a === 'object' && typeof b === 'object') {
                     return compareObjects(a, b, mismatchKeys, mismatchValues);
                 }
                 // Straight check
@@ -241,7 +241,7 @@
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            S.log("delete CLONE_MARKER error : ");
+                            S.log('delete CLONE_MARKER error : ');
                             v[CLONE_MARKER] = undefined;
                         }
                     }
@@ -473,13 +473,13 @@
              return arr.reduce(callback, initialValue);
              } : */function (arr, callback, initialValue) {
                 var len = arr.length;
-                if (typeof callback !== "function") {
-                    throw new TypeError("callback is not function!");
+                if (typeof callback !== 'function') {
+                    throw new TypeError('callback is not function!');
                 }
 
                 // no value to return if no initial value and an empty array
                 if (len === 0 && arguments.length == 2) {
-                    throw new TypeError("arguments invalid");
+                    throw new TypeError('arguments invalid');
                 }
 
                 var k = 0;
@@ -601,7 +601,7 @@
 
 
             ucfirst: function (s) {
-                s += "";
+                s += '';
                 return s.charAt(0).toUpperCase() + s.substring(1);
             },
 
@@ -649,7 +649,7 @@
 
                 // The strings and functions also have 'length'
                 if (typeof o.length !== 'number'
-                    // form.elements in ie78 has nodeName "form"
+                    // form.elements in ie78 has nodeName 'form'
                     // then caution select
                     // || o.nodeName
                     // window
@@ -709,7 +709,7 @@
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode("[]") : EMPTY));
+                                    buf.push(key, (arr ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -758,10 +758,10 @@
                         try {
                             val = decode(pair[1] || EMPTY);
                         } catch (e) {
-                            S.log(e + "decodeURIComponent error : " + pair[1], "error");
+                            S.log(e + 'decodeURIComponent error : ' + pair[1], 'error');
                             val = pair[1] || EMPTY;
                         }
-                        if (S.endsWith(key, "[]")) {
+                        if (S.endsWith(key, '[]')) {
                             key = key.substring(0, key.length - 2);
                         }
                     }
@@ -1003,7 +1003,7 @@
         if (input[CLONE_MARKER]) {
             // 对应的克隆后对象
             return memory[input[CLONE_MARKER]].destination;
-        } else if (typeof input === "object") {
+        } else if (typeof input === 'object') {
             // 引用类型要先记录
             var constructor = input.constructor;
             if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
@@ -1026,7 +1026,7 @@
         // then, for each enumerable property in input,
         // add a new property to output having the same name,
         // and having a value created from invoking the internal structured cloning algorithm recursively
-        // with the value of the property as the "input" argument and memory as the "memory" argument.
+        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
         // The order of the properties in the input and output objects must be the same.
 
         // clone it
@@ -1085,7 +1085,7 @@
             }
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
-            mismatchValues.push("arrays were not the same length");
+            mismatchValues.push('arrays were not the same length');
         }
         delete a[COMPARE_MARKER];
         delete b[COMPARE_MARKER];

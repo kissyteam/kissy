@@ -16,8 +16,8 @@
         win = S.Env.host,
         LOADING = data.LOADING,
         ERROR = data.ERROR,
-        ALL_REQUIRES = "__allRequires",
-        CURRENT_MODULE = "__currentModule",
+        ALL_REQUIRES = '__allRequires',
+        CURRENT_MODULE = '__currentModule',
         ATTACHED = data.ATTACHED;
 
     S.augment(Loader, {
@@ -116,13 +116,13 @@
             });
 
             if (__allRequires[myName]) {
-                S.log(__allRequires, "error");
+                S.log(__allRequires, 'error');
                 var JSON = win.JSON,
-                    error = "";
+                    error = '';
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error("find cyclic dependency by mod " + myName + " between mods: " + error);
+                S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
             }
         }
 
@@ -206,7 +206,7 @@
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = mod.getType() == "css";
+            isCss = mod.getType() == 'css';
 
         mod.status = mod.status || INIT;
 
@@ -228,7 +228,7 @@
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                         if (currentModule = self[CURRENT_MODULE]) {
-                            S.log("standard browser get mod name after load : " + modName);
+                            S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(SS,
                                 modName, currentModule.fn,
                                 currentModule.config);
@@ -238,7 +238,7 @@
                     checkAndHandle();
                 },
                 error: checkAndHandle,
-                // source:mod.name + "-init",
+                // source:mod.name + '-init',
                 charset: charset
             });
         }
@@ -248,7 +248,7 @@
         else if (mod.status == LOADING) {
             S.getScript(url, {
                 success: checkAndHandle,
-                // source:mod.name + "-loading",
+                // source:mod.name + '-loading',
                 charset: charset
             });
         }

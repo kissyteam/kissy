@@ -19,7 +19,7 @@
 
     function startCssTimer() {
         if (!timer) {
-            // S.log("start css polling");
+            // S.log('start css polling');
             cssPoll();
         }
     }
@@ -35,7 +35,7 @@
                 if (utils.isWebKit) {
                     // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
                     if (node['sheet']) {
-                        S.log("webkit loaded : " + url);
+                        S.log('webkit loaded : ' + url);
                         loaded = 1;
                     }
                 } else if (node['sheet']) {
@@ -67,7 +67,7 @@
         }
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            // S.log("end css polling");
+            // S.log('end css polling');
         } else {
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }

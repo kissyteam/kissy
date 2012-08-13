@@ -39,7 +39,7 @@
             callbacks.push(success);
 
             if (callbacks.length > 1) {
-                // S.log(" queue css : " + callbacks.length);
+                // S.log(' queue css : ' + callbacks.length);
                 return callbacks.node;
             }
 
@@ -95,7 +95,7 @@
          */
         getScript: function (url, success, charset) {
 
-            if (S.startsWith(Path.extname(url).toLowerCase(), ".css")) {
+            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
                 return S.getStyle(url, success, charset);
             }
 
@@ -117,10 +117,10 @@
             callbacks.push([success, error]);
 
             if (callbacks.length > 1) {
-                // S.log(" queue js : " + callbacks.length + " : for :" + url + " by " + (config.source || ""));
+                // S.log(' queue js : ' + callbacks.length + ' : for :' + url + ' by ' + (config.source || ''));
                 return callbacks.node;
             } else {
-                // S.log("init getScript : by " + config.source);
+                // S.log('init getScript : by ' + config.source);
             }
 
             var head = utils.docHead(),
@@ -158,7 +158,7 @@
                 node.addEventListener('load', function () {
                     end(0);
                 }, false);
-                node.addEventListener("error", function () {
+                node.addEventListener('error', function () {
                     end(1);
                 }, false);
             } else {

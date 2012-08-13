@@ -18,7 +18,7 @@
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error("no rejected callback!");
+                S.error('no rejected callback!');
             }
             return rejected(promise.__promise_value);
         }
@@ -203,7 +203,7 @@
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, "error");
+                S.log(e.stack || e, 'error');
                 return new Reject(e);
             }
         }
@@ -217,18 +217,18 @@
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, "error");
+                S.log(e.stack || e, 'error');
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error("already done at fulfilled");
+                S.error('already done at fulfilled');
                 return;
             }
             if (value instanceof Promise) {
-                S.error("assert.not(value instanceof Promise) in when")
+                S.error('assert.not(value instanceof Promise) in when')
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -237,7 +237,7 @@
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error("already done at rejected");
+                    S.error('already done at rejected');
                     return;
                 }
                 done = 1;

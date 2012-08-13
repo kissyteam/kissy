@@ -10,7 +10,7 @@
     }
 
     var time = S.now(),
-        p = "__events__" + time;
+        p = '__events__' + time;
 
     function getHolder(self) {
         return self[p] || (self[p] = {});

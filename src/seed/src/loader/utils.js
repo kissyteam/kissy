@@ -41,9 +41,9 @@
     }
 
     function indexMapStr(s) {
-        // "x/" "x/y/z/"
-        if (S.endsWith(Path.basename(s), "/")) {
-            s += "index";
+        // 'x/' 'x/y/z/'
+        if (S.endsWith(Path.basename(s), '/')) {
+            s += 'index';
         }
         return s;
     }
@@ -98,7 +98,7 @@
                 return depName;
             }
 
-            if (startsWith(depName, "../") || startsWith(depName, "./")) {
+            if (startsWith(depName, '../') || startsWith(depName, './')) {
                 // x/y/z -> x/y/
                 return Path.resolve(Path.dirname(moduleName), depName);
             }
@@ -112,7 +112,7 @@
          * @return {String}
          */
         removeExtname: function (path) {
-            return path.replace(/(-min)?\.js$/i, "");
+            return path.replace(/(-min)?\.js$/i, '');
         },
 
         /**
@@ -191,7 +191,7 @@
 
             S.each(modNames, function (modName) {
                 mod = self.Env.mods[modName];
-                if (!mod || mod.getType() != "css") {
+                if (!mod || mod.getType() != 'css') {
                     mods.push(self.require(modName));
                 }
             });
@@ -228,7 +228,7 @@
 
             mod.status = data.ATTACHED;
 
-            self.getLoader().fire("afterModAttached", {
+            self.getLoader().fire('afterModAttached', {
                 mod: mod
             });
         },
@@ -240,7 +240,7 @@
          */
         getModNamesAsArray: function (modNames) {
             if (S.isString(modNames)) {
-                modNames = modNames.replace(/\s+/g, "").split(',');
+                modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
         },
@@ -318,7 +318,7 @@
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + " is defined more than once");
+                S.log(name + ' is defined more than once');
                 return;
             }
 
@@ -335,7 +335,7 @@
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + " is loaded");
+            S.log(name + ' is loaded');
         },
 
         /**

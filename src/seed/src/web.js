@@ -65,19 +65,19 @@
                 try {
                     // Standard
                     if (win['DOMParser']) {
-                        xml = new DOMParser().parseFromString(data, "text/xml");
+                        xml = new DOMParser().parseFromString(data, 'text/xml');
                     } else { // IE
-                        xml = new ActiveXObject("Microsoft.XMLDOM");
-                        xml.async = "false";
+                        xml = new ActiveXObject('Microsoft.XMLDOM');
+                        xml.async = 'false';
                         xml.loadXML(data);
                     }
                 } catch (e) {
-                    S.log("parseXML error : ");
+                    S.log('parseXML error : ');
                     S.log(e);
                     xml = undefined;
                 }
-                if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
-                    S.error("Invalid XML: " + data);
+                if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
+                    S.error('Invalid XML: ' + data);
                 }
                 return xml;
             },
@@ -89,7 +89,7 @@
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                     ( win.execScript || function (data) {
-                        win[ "eval" ].call(win, data);
+                        win[ 'eval' ].call(win, data);
                     } )(data);
                 }
             },
@@ -185,7 +185,7 @@
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log("get frameElement error : ");
+                S.log('get frameElement error : ');
                 S.log(e);
                 notframe = false;
             }
@@ -198,7 +198,7 @@
                         doScroll('left');
                         fire();
                     } catch (ex) {
-                        //S.log("detect document ready : " + ex);
+                        //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }
@@ -223,7 +223,7 @@
 
     if (navigator && navigator.userAgent.match(/MSIE/)) {
         try {
-            doc.execCommand("BackgroundImageCache", false, true);
+            doc.execCommand('BackgroundImageCache', false, true);
         } catch (e) {
         }
     }

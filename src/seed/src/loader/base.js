@@ -123,10 +123,10 @@
             getType: function () {
                 var self = this, v;
                 if ((v = self.type) === undefined) {
-                    if (Path.extname(self.name).toLowerCase() == ".css") {
-                        v = "css";
+                    if (Path.extname(self.name).toLowerCase() == '.css') {
+                        v = 'css';
                     } else {
-                        v = "js";
+                        v = 'js';
                     }
                     self.type = v;
                 }
@@ -142,7 +142,7 @@
                     packageBaseUri = self.getPackageInfo().getBaseUri();
                     fullpathUri = packageBaseUri.resolve(self.getPath());
                     if (t = self.getTag()) {
-                        fullpathUri.query.set("t", t);
+                        fullpathUri.query.set('t', t);
                     }
                     self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
                 }
@@ -208,17 +208,17 @@
 
     function defaultComponentJsName(m) {
         var name = m.name,
-            extname = (Path.extname(name) || "").toLowerCase(),
-            min = "-min";
+            extname = (Path.extname(name) || '').toLowerCase(),
+            min = '-min';
 
-        if (extname != ".css") {
-            extname = ".js";
+        if (extname != '.css') {
+            extname = '.js';
         }
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 
         if (m.getPackageInfo().isDebug()) {
-            min = "";
+            min = '';
         }
         return name + min + extname;
     }
@@ -227,7 +227,7 @@
         var modName = mod.name,
             Env = self.Env,
             packages = Env.packages || {},
-            pName = "",
+            pName = '',
             p,
             packageDesc;
 
@@ -258,15 +258,15 @@
      */
     Loader.STATUS = {
         /** init */
-        "INIT": 0,
+        'INIT': 0,
         /** loading */
-        "LOADING": 1,
+        'LOADING': 1,
         /** loaded */
-        "LOADED": 2,
+        'LOADED': 2,
         /** error */
-        "ERROR": 3,
+        'ERROR': 3,
         /** attached */
-        "ATTACHED": 4
+        'ATTACHED': 4
     };
 })(KISSY);
 /*

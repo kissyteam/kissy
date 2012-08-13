@@ -15,7 +15,7 @@
      *
      *
      * <code>
-     *      KISSY.use("overlay,node",function(S,Overlay,Node){
+     *      KISSY.use('overlay,node',function(S,Overlay,Node){
      *          //
      *      })
      * </code>
@@ -29,7 +29,7 @@
     }
 
     var host = this,
-        MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR",
+        MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'hasOwnProperty',
@@ -337,13 +337,13 @@
              *      combine: true,
              *      base: '',
              *      packages: {
-             *          "gallery":{
-             *              base:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *          'gallery':{
+             *              base:'http://a.tbcdn.cn/s/kissy/gallery/'
              *          }
              *      },
              *      modules:{
-             *          "gallery/x/y":{
-             *              requires:["gallery/x/z"]
+             *          'gallery/x/y':{
+             *              requires:['gallery/x/z']
              *          }
              *      }
              *     });
@@ -405,7 +405,7 @@
              * Prints debug info.
              * @param msg {String} the message to log.
              * @param {String} [cat] the log category for the message. Default
-             *        categories are "info", "warn", "error", "time" etc.
+             *        categories are 'info', 'warn', 'error', 'time' etc.
              * @param {String} [src] the source of the the message (opt)
              */
             log: function (msg, cat, src) {

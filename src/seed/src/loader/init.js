@@ -29,10 +29,10 @@
              * for example:
              *      @example
              *      // dom module's definition
-             *      KISSY.add("dom",function(S,UA){
+             *      KISSY.add('dom',function(S,UA){
              *          return { css:function(el,name,val){} };
              *      },{
-             *          requires:["ua"]
+             *          requires:['ua']
              *      });
              */
             add: function (name, fn, cfg) {
@@ -50,7 +50,7 @@
              * for example:
              *      @example
              *      // loads and attached overlay,dd and its dependencies
-             *      KISSY.use("overlay,dd",function(S,Overlay){});
+             *      KISSY.use('overlay,dd',function(S,Overlay){});
              */
             use: function (names, callback) {
                 this.getLoader().use(names, callback);
@@ -82,7 +82,7 @@
         });
 
     function returnJson(s) {
-        return (new Function("return " + s))();
+        return (new Function('return ' + s))();
     }
 
     /**
@@ -94,7 +94,7 @@
      *      @example
      *      http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
      *      note about custom combo rules, such as yui3:
-     *      combo-prefix="combo?" combo-sep="&"
+     *      combo-prefix='combo?' combo-sep='&'
      */
     function getBaseInfo() {
         // get base from current script file path
@@ -106,7 +106,7 @@
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.resolveByPage(script.src).toString(),
-            baseInfo = script.getAttribute("data-config");
+            baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
@@ -117,7 +117,7 @@
         // taobao combo syntax
         // /??seed.js,dom.js
         // /?%3fseed.js%2cdom.js
-        src = src.replace(/%3f/gi, "?").replace(/%2c/gi, ",");
+        src = src.replace(/%3f/gi, '?').replace(/%2c/gi, ',');
 
         comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
         comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';

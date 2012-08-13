@@ -14,7 +14,7 @@
      modify current module path
      <code>
      [
-     [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
+     [/(.+-)min(.js(\?t=\d+)?)$/,'$1$2'],
      [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
      return m1+m2;
      }]
@@ -47,8 +47,8 @@
                 base = cfg.base || cfg.path;
 
                 // must be folder
-                if (!S.endsWith(base, "/")) {
-                    base += "/";
+                if (!S.endsWith(base, '/')) {
+                    base += '/';
                 }
 
                 // 注意正则化
@@ -75,9 +75,9 @@
      combine:true,
      tag:'',
      packages:{
-     "biz1": {
+     'biz1': {
      // path change to base
-     base: "haha",
+     base: 'haha',
      // x.js
      debug:'',
      tag:'',
@@ -85,8 +85,8 @@
      }
      },
      modules:{
-     "biz1/main" : {
-     requires: [ "biz1/part1" , "biz1/part2" ]
+     'biz1/main' : {
+     requires: [ 'biz1/part1' , 'biz1/part2' ]
      }
      }
      });

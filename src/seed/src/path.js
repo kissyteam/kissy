@@ -21,9 +21,9 @@
         var up = 0;
         for (var i = parts.length - 1; i >= 0; i--) {
             var last = parts[i];
-            if (last == ".") {
+            if (last == '.') {
                 parts.splice(i, 1);
-            } else if (last === "..") {
+            } else if (last === '..') {
                 parts.splice(i, 1);
                 up++;
             } else if (up) {
@@ -35,7 +35,7 @@
         // if allow above root, has to add ..
         if (allowAboveRoot) {
             for (; up--; up) {
-                parts.unshift("..");
+                parts.unshift('..');
             }
         }
 
@@ -56,7 +56,7 @@
          */
         resolve: function () {
 
-            var resolvedPath = "",
+            var resolvedPath = '',
                 resolvedPathStr,
                 i,
                 args = S.makeArray(arguments),
@@ -65,18 +65,18 @@
 
             for (i = args.length - 1; i >= 0 && !absolute; i--) {
                 path = args[i];
-                if (typeof path != "string" || !path) {
+                if (typeof path != 'string' || !path) {
                     continue;
                 }
-                resolvedPath = path + "/" + resolvedPath;
-                absolute = path.charAt(0) == "/";
+                resolvedPath = path + '/' + resolvedPath;
+                absolute = path.charAt(0) == '/';
             }
 
-            resolvedPathStr = normalizeArray(S.filter(resolvedPath.split("/"), function (p) {
+            resolvedPathStr = normalizeArray(S.filter(resolvedPath.split('/'), function (p) {
                 return !!p;
-            }), !absolute).join("/");
+            }), !absolute).join('/');
 
-            return ((absolute ? "/" : "") + resolvedPathStr) || ".";
+            return ((absolute ? '/' : '') + resolvedPathStr) || '.';
         },
 
         /**
@@ -85,29 +85,29 @@
          *
          * for example:
          *      @example
-         *      "x/y/../z" => "x/z"
-         *      "x/y/z/../" => "x/y/"
+         *      'x/y/../z' => 'x/z'
+         *      'x/y/z/../' => 'x/y/'
          *
          * @return {String}
          */
         normalize: function (path) {
-            var absolute = path.charAt(0) == "/",
-                trailingSlash = path.slice(-1) == "/";
+            var absolute = path.charAt(0) == '/',
+                trailingSlash = path.slice(-1) == '/';
 
-            path = normalizeArray(S.filter(path.split("/"), function (p) {
+            path = normalizeArray(S.filter(path.split('/'), function (p) {
                 return !!p;
-            }), !absolute).join("/");
+            }), !absolute).join('/');
 
             if (!path && !absolute) {
-                path = ".";
+                path = '.';
             }
 
             if (path && trailingSlash) {
-                path += "/";
+                path += '/';
             }
 
 
-            return (absolute ? "/" : "") + path;
+            return (absolute ? '/' : '') + path;
         },
 
         /**
@@ -117,8 +117,8 @@
         join: function () {
             var args = S.makeArray(arguments);
             return Path.normalize(S.filter(args,function (p) {
-                return p && (typeof p == "string");
-            }).join("/"));
+                return p && (typeof p == 'string');
+            }).join('/'));
         },
 
         /**
@@ -128,8 +128,8 @@
          *
          * for example:
          *      @example
-         *      relative("x/","x/y/z") => "y/z"
-         *      relative("x/t/z","x/") => "../../"
+         *      relative('x/','x/y/z') => 'y/z'
+         *      relative('x/t/z','x/') => '../../'
          *
          * @return {String}
          */
@@ -137,13 +137,13 @@
             from = Path.normalize(from);
             to = Path.normalize(to);
 
-            var fromParts = S.filter(from.split("/"), function (p) {
+            var fromParts = S.filter(from.split('/'), function (p) {
                     return !!p;
                 }),
                 path = [],
                 sameIndex,
                 sameIndex2,
-                toParts = S.filter(to.split("/"), function (p) {
+                toParts = S.filter(to.split('/'), function (p) {
                     return !!p;
                 }), commonLength = Math.min(fromParts.length, toParts.length);
 
@@ -156,13 +156,13 @@
             sameIndex2 = sameIndex;
 
             while (sameIndex < fromParts.length) {
-                path.push("..");
+                path.push('..');
                 sameIndex++;
             }
 
             path = path.concat(toParts.slice(sameIndex2));
 
-            path = path.join("/");
+            path = path.join('/');
 
             return path;
         },
@@ -175,7 +175,7 @@
          */
         basename: function (path, ext) {
             var result = path.match(splitPathRe) || [];
-            result = result[3] || "";
+            result = result[3] || '';
             if (ext && result && result.slice(-1 * ext.length) == ext) {
                 result = result.slice(0, -1 * ext.length);
             }
@@ -188,8 +188,8 @@
          */
         dirname: function (path) {
             var result = path.match(splitPathRe) || [],
-                root = result[1] || "",
-                dir = result[2] || "";
+                root = result[1] || '',
+                dir = result[2] || '';
 
             if (!root && !dir) {
                 // No dirname
@@ -210,7 +210,7 @@
          * @return {String}
          */
         extname: function (path) {
-            return (path.match(splitPathRe) || [])[4] || "";
+            return (path.match(splitPathRe) || [])[4] || '';
         }
 
     };
