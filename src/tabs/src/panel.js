@@ -2,18 +2,29 @@
  * @fileOverview single tab panel.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/panel", function (S, Component) {
+KISSY.add("tabs/panel", function (S, Component, PanelRender) {
 
     return Component.Controller.extend({
 
-    },{
-        ATTRS:{
-
+    }, {
+        ATTRS: {
+            selected: {
+                view: 1
+            },
+            focusable: {
+                value: false
+            },
+            allowTextSelection: {
+                value: true
+            },
+            xrender: {
+                value: PanelRender
+            }
         }
-    },{
-        xclass:'tabs-panel'
+    }, {
+        xclass: 'tabs-panel'
     })
 
 }, {
-    requires: ['component']
+    requires: ['component', './panel-render']
 });
