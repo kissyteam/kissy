@@ -296,7 +296,11 @@
             if (modNames) {
                 // 1. index map
                 for (i = 0, l = modNames.length; i < l; i++) {
-                    ret.push(indexMap(modNames[i]));
+                    // conditional loader
+                    // requires:[window.localStorage?"local-storage":""]
+                    if (modNames[i]) {
+                        ret.push(indexMap(modNames[i]));
+                    }
                 }
             }
             // 3. relative to absolute (optional)

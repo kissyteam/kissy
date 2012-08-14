@@ -5,7 +5,7 @@
 KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
 
     S.mix(Switchable.Config, {
-        mouseAsTouch:false
+        mouseAsTouch: false
     });
 
     var PIXEL_THRESH = 3;
@@ -29,9 +29,9 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
 
 
 
-        name:'touch',
+        name: 'touch',
 
-        init:function (self) {
+        init: function (self) {
 
             // TODO 单步不支持 touch
             if (self._realStep) {
@@ -207,20 +207,11 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                     }
                 }
 
-                Event.on(content, 'touchstart', function (e) {
-                    start();
-                    startX = e.pageX;
-                    startY = e.pageY;
-                });
 
-                Event.on(content, 'touchmove', move);
-
-                Event.on(content, 'touchend', end);
-
-                if (mouseAsTouch && !('ontouchstart' in S.Env.host.document.documentElement)) {
+                if (mouseAsTouch) {
                     S.use("dd", function (S, DD) {
                         var contentDD = new DD.Draggable({
-                            node:content
+                            node: content
                         });
                         contentDD.on("dragstart", function () {
                             start();
@@ -231,11 +222,19 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         contentDD.on("dragend", end);
                         self.__touchDD = contentDD;
                     });
+                } else {
+                    Event.on(content, 'touchstart', function (e) {
+                        start();
+                        startX = e.pageX;
+                        startY = e.pageY;
+                    });
+                    Event.on(content, 'touchmove', move);
+                    Event.on(content, 'touchend', end);
                 }
             }
         },
 
-        destroy:function (self) {
+        destroy: function (self) {
             var d;
             if (d = self.__touchDD) {
                 d.destroy();
@@ -243,7 +242,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
         }
     });
 }, {
-    requires:['dom', 'event', './base']
+    requires: ['dom', 'event', './base']
 });
 
 /**

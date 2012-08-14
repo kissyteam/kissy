@@ -37,50 +37,50 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
          * cursor style when dragging,if shimmed the shim will get the cursor.
          * @type {String}
          */
-        dragCursor:{
-            value:'move'
+        dragCursor: {
+            value: 'move'
         },
 
         /***
          * the number of pixels to move to start a drag operation,default is 3.
          * @type {Number}
          */
-        clickPixelThresh:{
-            value:PIXEL_THRESH
+        clickPixelThresh: {
+            value: PIXEL_THRESH
         },
 
         /**
          * the number of milliseconds to start a drag operation after mousedown,default is 1000
          * @type {Number}
          */
-        bufferTime:{ value:BUFFER_TIME },
+        bufferTime: { value: BUFFER_TIME },
 
         /**
          * currently active draggable object
          * @type {DD.Draggable}
          */
-        activeDrag:{},
+        activeDrag: {},
 
         /**
          * currently active droppable object
          * @type {DD.Droppable}
          */
-        activeDrop:{},
+        activeDrop: {},
 
         /**
          * a array of drop targets
          * @type {DD.Droppable[]}
          */
-        drops:{
-            value:[]
+        drops: {
+            value: []
         },
 
         /**
          * a array of the valid drop targets for this interaction
          * @type {DD.Droppable[]}
          */
-        validDrops:{
-            value:[]
+        validDrops: {
+            value: []
         }
     };
 
@@ -225,8 +225,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         if ((activeDrag = self.get("activeDrag")) &&
             activeDrag.get("shim")) {
             self._shim.css({
-                width:DOM.docWidth(),
-                height:DOM.docHeight()
+                width: DOM.docWidth(),
+                height: DOM.docHeight()
             });
         }
     }, MOVE_DELAY);
@@ -242,8 +242,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             cur = self.get('dragCursor');
         }
         self._shim.css({
-            cursor:cur,
-            display:"block"
+            cursor: cur,
+            display: "block"
         });
         if (ie6) {
             adjustShimSize.call(self);
@@ -254,8 +254,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * 开始时注册全局监听事件
      */
     function registerEvent(self) {
-        Event.on(doc, 'mouseup', self._end, self);
-        Event.on(doc, 'mousemove', _showShimMove, self);
+        Event.on(doc, DRAG_END_EVENT, self._end, self);
+        Event.on(doc, DRAG_MOVE_EVENT, _showShimMove, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
             doc.body.setCapture();
@@ -266,8 +266,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * 结束时需要取消掉，防止平时无谓的监听
      */
     function unRegisterEvent(self) {
-        Event.remove(doc, 'mousemove', _showShimMove, self);
-        Event.remove(doc, 'mouseup', self._end, self);
+        Event.remove(doc, DRAG_MOVE_EVENT, _showShimMove, self);
+        Event.remove(doc, DRAG_END_EVENT, self._end, self);
         if (UA.ie === 6) {
             doc.body.releaseCapture();
         }
@@ -301,13 +301,13 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         /**
          * 可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
          */
-        __activeToDrag:0,
+        __activeToDrag: 0,
 
-        _regDrop:function (d) {
+        _regDrop: function (d) {
             this.get("drops").push(d);
         },
 
-        _unRegDrop:function (d) {
+        _unRegDrop: function (d) {
             var self = this,
                 index = S.indexOf(d, self.get("drops"));
             if (index != -1) {
@@ -319,7 +319,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
          * 注册可能将要拖放的节点
          * @param drag
          */
-        _regToDrag:function (drag) {
+        _regToDrag: function (drag) {
             var self = this;
             // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
             self.__activeToDrag = drag;
@@ -332,7 +332,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
          * 当前拖动对象通知全局：我要开始啦
          * 全局设置当前拖动对象，
          */
-        _start:function () {
+        _start: function () {
             var self = this,
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
@@ -347,14 +347,14 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             _activeDrops(self);
         },
 
-        _addValidDrop:function (drop) {
+        _addValidDrop: function (drop) {
             this.get("validDrops").push(drop);
         },
 
         /**
          * 全局通知当前拖动对象：结束拖动了！
          */
-        _end:function () {
+        _end: function () {
             var self = this,
                 activeDrag = self.get("activeDrag"),
                 activeDrop = self.get("activeDrop");
@@ -387,10 +387,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             S.log(node[0]);
         }
         return {
-            left:offset.left,
-            right:offset.left + (node.__dd_cached_width || node.outerWidth()),
-            top:offset.top,
-            bottom:offset.top + (node.__dd_cached_height || node.outerHeight())
+            left: offset.left,
+            right: offset.left + (node.__dd_cached_width || node.outerWidth()),
+            top: offset.top,
+            bottom: offset.top + (node.__dd_cached_height || node.outerHeight())
         };
     }
 
@@ -414,10 +414,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             b = Math.min(r1['bottom'], r2.bottom),
             l = Math.max(r1.left, r2.left);
         return {
-            left:l,
-            right:r,
-            top:t,
-            bottom:b
+            left: l,
+            right: r,
+            top: t,
+            bottom: b
         };
     }
 
@@ -437,11 +437,38 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.region = region;
     ddm.area = area;
     ddm.cacheWH = cacheWH;
+    ddm.PREFIX_CLS = 'ks-dd-';
 
-    ddm.PREFIX_CLS='ks-dd-';
+    var TARGET = 'target',
+        BUTTON = 'button',
+        touchSupport = "ontouchstart" in doc,
+        CURRENT_TARGET = 'currentTarget',
+        DRAG_START_EVENT = ddm.DRAG_START_EVENT = touchSupport ? "touchstart" : "mousedown",
+        DRAG_MOVE_EVENT = ddm.DRAG_MOVE_EVENT = touchSupport ? "touchmove" : "mousemove",
+        DRAG_END_EVENT = ddm.DRAG_END_EVENT = touchSupport ? "touchend" : "mouseup";
+
+    var normalTouch = function (e, touch) {
+        e[TARGET] = e[TARGET] || touch[TARGET];
+        e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
+        e[BUTTON] = e[BUTTON] || 0;
+    };
+
+    ddm._normalHandlePreDragStart = function (handle) {
+        return function (e) {
+            var originalEvent = e.originalEvent, touches;
+            if (touches = originalEvent['touches']) {
+                if (touches.length != 1) {
+                    return;
+                }
+                normalTouch(e, touches[0]);
+            }
+            handle.call(this, e);
+        };
+    };
+
     return ddm;
 }, {
-    requires:["ua", "dom", "event", "node", "base"]
+    requires: ["ua", "dom", "event", "node", "base"]
 });
 
 /**
