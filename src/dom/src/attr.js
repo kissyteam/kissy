@@ -6,6 +6,7 @@
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType=DOM.NodeType,
         docElement = doc.documentElement,
         IE_VERSION = UA.ie && (doc.documentMode || UA.ie),
         TEXT = docElement.textContent === undefined ?
@@ -226,7 +227,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 allText = len > 0;
 
             for (len = len - 1; len >= 0; len--) {
-                if (childNodes[len].nodeType != DOM.TEXT_NODE) {
+                if (childNodes[len].nodeType != NodeType.TEXT_NODE) {
                     allText = 0;
                 }
             }
@@ -449,7 +450,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
 
                 if (val === undefined) {
-                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                    if (el && el.nodeType === NodeType.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
                         if (nodeName(el) == 'form') {
                             attrNormalizer = attrNodeHook;
@@ -468,7 +469,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 } else {
                     for (var i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                        if (el && el.nodeType === NodeType.ELEMENT_NODE) {
                             if (nodeName(el) == 'form') {
                                 attrNormalizer = attrNodeHook;
                             }
@@ -495,7 +496,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 var els = DOM.query(selector), el, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
-                    if (el.nodeType == DOM.ELEMENT_NODE) {
+                    if (el.nodeType == NodeType.ELEMENT_NODE) {
                         var propName;
                         el.removeAttribute(name);
                         // Set corresponding property to false for boolean attributes
@@ -624,10 +625,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var el = DOM.get(selector);
 
                     // only gets value on supported nodes
-                    if (el.nodeType == DOM.ELEMENT_NODE) {
+                    if (el.nodeType == NodeType.ELEMENT_NODE) {
                         return el[TEXT] || EMPTY;
                     }
-                    else if (el.nodeType == DOM.TEXT_NODE) {
+                    else if (el.nodeType == NodeType.TEXT_NODE) {
                         return el.nodeValue;
                     }
                     return undefined;
@@ -637,10 +638,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (el.nodeType == DOM.ELEMENT_NODE) {
+                        if (el.nodeType == NodeType.ELEMENT_NODE) {
                             el[TEXT] = val;
                         }
-                        else if (el.nodeType == DOM.TEXT_NODE) {
+                        else if (el.nodeType == NodeType.TEXT_NODE) {
                             el.nodeValue = val;
                         }
                     }

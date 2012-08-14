@@ -22,6 +22,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         DOM = S.DOM,
 
+        NodeType = DOM.NodeType,
+
         Node = S.Node,
 
         Event = S.Event,
@@ -78,8 +80,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
          * @lends Editor
          */
         {
-            SOURCE_MODE:0,
-            WYSIWYG_MODE:1
+            SOURCE_MODE: 0,
+            WYSIWYG_MODE: 1
         });
 
     var WYSIWYG_MODE = Editor.WYSIWYG_MODE;
@@ -90,7 +92,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
          * @lends Editor#
          */
         {
-            createDom:function () {
+            createDom: function () {
                 var self = this,
                     wrap,
                     textarea = self.get("textarea"),
@@ -109,10 +111,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl:editorEl.one(KE_TOOLBAR_CLASS),
-                    statusBarEl:editorEl.one(KE_STATUSBAR_CLASS)
+                    toolBarEl: editorEl.one(KE_TOOLBAR_CLASS),
+                    statusBarEl: editorEl.one(KE_STATUSBAR_CLASS)
                 }, {
-                    silent:1
+                    silent: 1
                 });
 
                 // 标准浏览器编辑器内焦点不失去,firefox?
@@ -131,7 +133,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 focusManager.register(self);
             },
             // 在插件运行前,运行核心兼容
-            renderUI:function () {
+            renderUI: function () {
                 var self = this;
                 clipboard.init(self);
                 enterKey.init(self);
@@ -139,7 +141,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 selectionFix.init(self);
             },
 
-            bindUI:function () {
+            bindUI: function () {
                 var self = this,
                     form,
                     prefixCls = self.get("prefixCls"),
@@ -181,7 +183,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
              * width 依然在 el 上设置
              */
-            _uiSetHeight:function (v) {
+            _uiSetHeight: function (v) {
                 var self = this,
                     textareaEl = self.get("textarea"),
                     toolBarEl = self.get("toolBarEl"),
@@ -194,7 +196,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 textareaEl.css(HEIGHT, v);
             },
 
-            _uiSetMode:function (v) {
+            _uiSetMode: function (v) {
                 var self = this,
                     save,
                     rendered = self.get("rendered"),
@@ -226,7 +228,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             },
 
             // 覆盖 controller
-            _uiSetFocused:function (v) {
+            _uiSetFocused: function (v) {
                 var self = this;
                 // docReady 后才能调用
                 if (v && self.__docReady) {
@@ -234,7 +236,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
-            destructor:function () {
+            destructor: function () {
                 var self = this,
                     doc = self.get("document")[0],
                     win = self.get("window");
@@ -258,7 +260,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Retrieve control by id.
              */
-            getControl:function (id) {
+            getControl: function (id) {
                 return this.__controls[id];
             },
 
@@ -266,7 +268,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Retrieve all controls.
              * @return {*}
              */
-            getControls:function () {
+            getControls: function () {
                 return this.__controls;
             },
 
@@ -274,7 +276,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Register a control to editor by id.
              * @private
              */
-            addControl:function (id, control) {
+            addControl: function (id, control) {
                 this.__controls[id] = control;
             },
 
@@ -283,15 +285,15 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * @param {String} name Dialog name
              * @param args Arguments passed to show
              */
-            showDialog:function (name, args) {
+            showDialog: function (name, args) {
                 name += "/dialog";
                 var self = this,
                     d = self.__controls[name];
                 d.show(args);
                 self.fire("dialogShow", {
-                    dialog:d.dialog,
-                    "pluginDialog":d,
-                    "dialogName":name
+                    dialog: d.dialog,
+                    "pluginDialog": d,
+                    "dialogName": name
                 });
             },
 
@@ -300,7 +302,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * @param name {string} Command name.
              * @param obj {Object} Command object.
              */
-            addCommand:function (name, obj) {
+            addCommand: function (name, obj) {
                 this.__commands[name] = obj;
             },
 
@@ -308,7 +310,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Whether current editor has specified command instance.
              * @param name {string}
              */
-            hasCommand:function (name) {
+            hasCommand: function (name) {
                 return this.__commands[name];
             },
 
@@ -317,7 +319,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
              * @param name {string} Command name.
              */
-            execCommand:function (name) {
+            execCommand: function (name) {
                 var self = this,
                     cmd = self.__commands[name],
                     args = S.makeArray(arguments);
@@ -335,11 +337,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * @param {String} name Command name.
              * @return {*}
              */
-            queryCommandValue:function (name) {
+            queryCommandValue: function (name) {
                 return this.execCommand(Utils.getQueryCmd(name));
             },
 
-            _getData:function (format, mode) {
+            _getData: function (format, mode) {
                 var self = this,
                     htmlDataProcessor = self.htmlDataProcessor,
                     html;
@@ -367,7 +369,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 return html;
             },
 
-            _setData:function (data) {
+            _setData: function (data) {
                 var self = this,
                     htmlDataProcessor,
                     afterData = data;
@@ -387,7 +389,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Synchronize textarea value with editor data.
              */
-            sync:function () {
+            sync: function () {
                 var self = this;
                 self.get("textarea").val(self.get("data"));
             },
@@ -395,7 +397,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Get full html content of editor 's iframe.
              */
-            getDocHtml:function () {
+            getDocHtml: function () {
                 var self = this;
                 return prepareIFrameHtml(0, self.get('customStyle'),
                     self.get('customLink'), self.get("formatData"));
@@ -404,14 +406,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Get selection instance of current editor.
              */
-            getSelection:function () {
+            getSelection: function () {
                 return Editor.Selection.getSelection(this.get("document")[0]);
             },
 
             /**
              * Make current editor has focus
              */
-            focus:function () {
+            focus: function () {
                 var self = this, win = self.get("window");
                 // 刚开始就配置 mode 为 sourcecode
                 if (!win) {
@@ -441,7 +443,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Make current editor lose focus
              */
-            blur:function () {
+            blur: function () {
                 var self = this,
                     win = self.get("window")[0];
                 win.blur();
@@ -452,7 +454,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Add style text to current editor
              * @param cssText {string}
              */
-            addCustomStyle:function (cssText, id) {
+            addCustomStyle: function (cssText, id) {
                 var self = this,
                     customStyle = self.get("customStyle") || "";
                 customStyle += "\n" + cssText;
@@ -464,7 +466,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Remove style text with specified id from current editor
              * @param id
              */
-            removeCustomStyle:function (id) {
+            removeCustomStyle: function (id) {
                 DOM.remove(DOM.get("#" + id, this.get("window")[0]));
             },
 
@@ -472,7 +474,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Add css link to current editor
              * @param {String} link
              */
-            addCustomLink:function (link) {
+            addCustomLink: function (link) {
                 var self = this,
                     customLink = self.get('customLink') || [],
                     doc = self.get("document")[0];
@@ -488,7 +490,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Remove css link from current editor.
              * @param {String} link
              */
-            removeCustomLink:function (link) {
+            removeCustomLink: function (link) {
                 var self = this,
                     doc = self.get("document")[0],
                     links = DOM.query("link", doc);
@@ -509,7 +511,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * (fire when editor is renderer from textarea/source)
              * @param {Function} func
              */
-            docReady:function (func) {
+            docReady: function (func) {
                 var self = this;
                 self.on("docReady", func);
                 if (self.__docReady) {
@@ -520,7 +522,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Check whether selection has changed since last check point.
              */
-            checkSelectionChange:function () {
+            checkSelectionChange: function () {
                 var self = this;
                 if (self.__checkSelectionChangeId) {
                     clearTimeout(self.__checkSelectionChangeId);
@@ -536,9 +538,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                             self.__previousPath = currentPath;
                             self.fire("selectionChange",
                                 {
-                                    selection:selection,
-                                    path:currentPath,
-                                    element:startElement
+                                    selection: selection,
+                                    path: currentPath,
+                                    element: startElement
                                 });
                         }
                     }
@@ -548,7 +550,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             /**
              * Fire selectionChange manually.
              */
-            notifySelectionChange:function () {
+            notifySelectionChange: function () {
                 var self = this;
                 self.__previousPath = NULL;
                 self.checkSelectionChange();
@@ -558,7 +560,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Insert a element into current editor.
              * @param {NodeList} element
              */
-            insertElement:function (element) {
+            insertElement: function (element) {
 
                 var self = this;
 
@@ -611,7 +613,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 if (isBlock) {
                     notWhitespaceEval = Editor.Walker.whitespaces(true);
                     next = lastElement.next(notWhitespaceEval, 1);
-                    nextName = next && next[0].nodeType == DOM.ELEMENT_NODE
+                    nextName = next && next[0].nodeType == NodeType.ELEMENT_NODE
                         && next.nodeName();
                     // Check if it's a block element that accepts text.
                     if (nextName &&
@@ -635,7 +637,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * Insert html string into current editor.
              * @param data {string}
              */
-            insertHtml:function (data, dataFilter) {
+            insertHtml: function (data, dataFilter) {
                 var self = this,
                     htmlDataProcessor,
                     editorDoc = self.get("document")[0];
@@ -978,7 +980,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             Event.on(doc, 'keydown', function (evt) {
                 var keyCode = evt.keyCode;
                 // Backspace OR Delete.
-                if (keyCode in { 8:1, 46:1 }) {
+                if (keyCode in { 8: 1, 46: 1 }) {
                     var sel = self.getSelection(),
                         control = sel.getSelectedElement();
                     if (control) {
@@ -1000,7 +1002,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             // with standard doctype, manually fix it. (#4736)
             // ie8 主窗口滚动？？
             if (doc.compatMode == 'CSS1Compat') {
-                var pageUpDownKeys = { 33:1, 34:1 };
+                var pageUpDownKeys = { 33: 1, 34: 1 };
                 Event.on(doc, 'keydown', function (evt) {
                     if (evt.keyCode in pageUpDownKeys) {
                         setTimeout(function () {
@@ -1044,7 +1046,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         for (i = 0; i < customLink.length; i++) {
             links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
-                href:customLink[i]
+                href: customLink[i]
             });
         }
 
@@ -1052,15 +1054,15 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.
-            doctype:DOC.documentMode === 8 ?
+            doctype: DOC.documentMode === 8 ?
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 "",
-            title:"${title}",
-            href:innerCssFile,
-            style:customStyle,
+            title: "${title}",
+            href: innerCssFile,
+            style: customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
-            data:data || "&nbsp;",
-            script:id ?
+            data: data || "&nbsp;",
+            script: id ?
                 // The script that launches the bootstrap logic on 'domReady', so the document
                 // is fully editable even before the editing iframe is fully loaded (#4455).
                 // 确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
@@ -1131,7 +1133,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             iframeSrc = " src=\"" + iframeSrc + "\" ";
         }
         var iframe = new Node(S.substitute(IFRAME_TPL, {
-                iframeSrc:iframeSrc
+                iframeSrc: iframeSrc
             })),
             textarea = self.get("textarea");
         if (textarea.hasAttr("tabindex")) {
@@ -1168,7 +1170,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
     return Editor;
 }, {
-    requires:[
+    requires: [
         'editor/core/base',
         'editor/core/utils',
         'editor/core/focusManager',

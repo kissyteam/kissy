@@ -12,6 +12,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
         undefined = undefined,
         FALSE = false,
         NULL = null,
+        NodeType=DOM.NodeType,
         xhtml_dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
         UA = S.UA,
@@ -228,13 +229,13 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                     var child = children[i],
                         nodeType = child.nodeType;
 
-                    if (nodeType == DOM.ELEMENT_NODE &&
+                    if (nodeType == NodeType.ELEMENT_NODE &&
                         child.getAttribute('_ke_bookmark')) {
                         continue;
                     }
 
-                    if (nodeType == DOM.ELEMENT_NODE && !DOM._4e_isEmptyInlineRemovable(child) ||
-                        nodeType == DOM.TEXT_NODE && S.trim(child.nodeValue)) {
+                    if (nodeType == NodeType.ELEMENT_NODE && !DOM._4e_isEmptyInlineRemovable(child) ||
+                        nodeType == DOM.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
                         return FALSE;
                     }
                 }
@@ -294,7 +295,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
             _4e_splitText:function (el, offset) {
                 var doc = el.ownerDocument;
 
-                if (el.nodeType != DOM.TEXT_NODE) {
+                if (el.nodeType != DOM.NodeType.TEXT_NODE) {
                     return;
                 }
                 // If the offset is after the last char, IE creates the text node
@@ -360,7 +361,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
                 // send the 'moving out' signal even we don't actually dive into.
                 if (!node) {
-                    if (el.nodeType == DOM.ELEMENT_NODE &&
+                    if (el.nodeType == NodeType.ELEMENT_NODE &&
                         guard && guard(el, TRUE) === FALSE) {
                         return NULL;
                     }
@@ -412,7 +413,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 // Guarding when we're skipping the current element( no children or 'startFromSibling' ).
                 // send the 'moving out' signal even we don't actually dive into.
                 if (!node) {
-                    if (el.nodeType == DOM.ELEMENT_NODE &&
+                    if (el.nodeType == NodeType.ELEMENT_NODE &&
                         guard && guard(el, TRUE) === FALSE) {
                         return NULL;
                     }
@@ -528,8 +529,8 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 }
 
                 // Only element nodes support contains and sourceIndex.
-                if (el.nodeType == DOM.ELEMENT_NODE &&
-                    $other.nodeType == DOM.ELEMENT_NODE) {
+                if (el.nodeType == NodeType.ELEMENT_NODE &&
+                    $other.nodeType == NodeType.ELEMENT_NODE) {
                     if (DOM.contains(el, $other)) {
                         return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING;
                     }
@@ -620,7 +621,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
             _4e_ltrim:function (el) {
                 var child;
                 while (child = el.firstChild) {
-                    if (child.nodeType == DOM.TEXT_NODE) {
+                    if (child.nodeType == DOM.NodeType.TEXT_NODE) {
                         var trimmed = Utils.ltrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
 
@@ -645,7 +646,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
             _4e_rtrim:function (el) {
                 var child;
                 while (child = el.lastChild) {
-                    if (child.type == DOM.TEXT_NODE) {
+                    if (child.type == DOM.NodeType.TEXT_NODE) {
                         var trimmed = Utils.rtrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
                         if (!trimmed) {
@@ -680,13 +681,13 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
 
                 // Ignore empty/spaces text.
                 while (lastChild &&
-                    lastChild.nodeType == DOM.TEXT_NODE &&
+                    lastChild.nodeType == DOM.NodeType.TEXT_NODE &&
                     !S.trim(lastChild.nodeValue)) {
                     lastChild = lastChild.previousSibling;
                 }
 
                 if (!lastChild ||
-                    lastChild.nodeType == DOM.TEXT_NODE ||
+                    lastChild.nodeType == DOM.NodeType.TEXT_NODE ||
                     DOM.nodeName(lastChild) !== 'br') {
                     bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
@@ -857,7 +858,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
     function mergeElements(element, isNext) {
         var sibling = element[isNext ? "next" : "prev"](undefined, 1);
 
-        if (sibling && sibling[0].nodeType == DOM.ELEMENT_NODE) {
+        if (sibling && sibling[0].nodeType == NodeType.ELEMENT_NODE) {
 
             // Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
             // queuing them to be moved later. (#5567)
@@ -885,7 +886,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 sibling.remove();
 
                 // Now check the last inner child (see two comments above).
-                if (innerSibling[0] && innerSibling[0].nodeType == DOM.ELEMENT_NODE) {
+                if (innerSibling[0] && innerSibling[0].nodeType == NodeType.ELEMENT_NODE) {
                     innerSibling._4e_mergeSiblings();
                 }
             }

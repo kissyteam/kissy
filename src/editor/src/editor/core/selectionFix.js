@@ -406,14 +406,14 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
-                            element[0].nodeType == DOM.ELEMENT_NODE &&
+                            element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
-                                element[0].nodeType == DOM.ELEMENT_NODE &&
+                                element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的

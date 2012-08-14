@@ -5,6 +5,7 @@
 KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
+        NodeType=DOM.NodeType,
         specialVals = ["hide", "show", "toggle"],
     // shorthand css properties
         SHORT_HANDS = {
@@ -168,7 +169,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return;
         }
 
-        if (elem.nodeType == DOM.ELEMENT_NODE) {
+        if (elem.nodeType == NodeType.ELEMENT_NODE) {
             hidden = (DOM.css(elem, "display") === "none");
             for (prop in props) {
                 val = props[prop];
@@ -183,7 +184,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
         // <div style='width:0'><div style='width:100px'></div></div>
-        if (elem.nodeType == DOM.ELEMENT_NODE &&
+        if (elem.nodeType == NodeType.ELEMENT_NODE &&
             (props.width || props.height)) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE does not

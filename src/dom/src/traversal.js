@@ -6,6 +6,7 @@
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType = DOM.NodeType,
         documentElement = doc.documentElement,
         CONTAIN_MASK = 16,
         __contains =
@@ -15,7 +16,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 } :
                 documentElement.contains ?
                     function (a, b) {
-                        if (a.nodeType == DOM.DOCUMENT_NODE) {
+                        if (a.nodeType == NodeType.DOCUMENT_NODE) {
                             a = a.documentElement;
                         }
                         // !a.contains => a===document || text
@@ -27,7 +28,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                         }
 
                         // when b is document, a.contains(b) 不支持的接口 in ie
-                        if (b && b.nodeType == DOM.ELEMENT_NODE) {
+                        if (b && b.nodeType == NodeType.ELEMENT_NODE) {
                             return a.contains && a.contains(b);
                         } else {
                             return false;
@@ -53,7 +54,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              */
             closest: function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, true, allowTextNode);
             },
 
@@ -66,7 +67,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              */
             parent: function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, undefined);
             },
 
@@ -227,8 +228,8 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
         while (elem && elem != context) {
             if ((
-                elem.nodeType == DOM.ELEMENT_NODE ||
-                    elem.nodeType == DOM.TEXT_NODE && allowTextNode
+                elem.nodeType == NodeType.ELEMENT_NODE ||
+                    elem.nodeType == NodeType.TEXT_NODE && allowTextNode
                 ) &&
                 testFilter(elem, filter) &&
                 (!extraFilter || extraFilter(elem))) {
@@ -276,7 +277,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             tmp = S.makeArray(parentNode.childNodes);
             for (i = 0; i < tmp.length; i++) {
                 el = tmp[i];
-                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                if (!allowText && el.nodeType != NodeType.ELEMENT_NODE) {
                     continue;
                 }
                 if (el == elem) {

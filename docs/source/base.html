@@ -24,58 +24,56 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
-    var NODE_TYPE =
-<span id=''>    /**
-</span>     * @override KISSY.DOM
-     * @member KISSY
-     * @enum
+<span id='KISSY-DOM-NodeType'>    /**
+</span>     * DOM Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
      */
-    {
-<span id='KISSY-DOM-property-ELEMENT_NODE'>        /**
+    var NodeType = {
+<span id='KISSY-DOM-NodeType-property-ELEMENT_NODE'>        /**
 </span>         * element type
          */
         ELEMENT_NODE: 1,
-<span id='KISSY-DOM-property-ATTRIBUTE_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-ATTRIBUTE_NODE'>        /**
 </span>         * attribute node type
          */
         'ATTRIBUTE_NODE': 2,
-<span id='KISSY-DOM-property-TEXT_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-TEXT_NODE'>        /**
 </span>         * text node type
          */
         TEXT_NODE: 3,
-<span id='KISSY-DOM-property-CDATA_SECTION_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-CDATA_SECTION_NODE'>        /**
 </span>         * cdata node type
          */
         'CDATA_SECTION_NODE': 4,
-<span id='KISSY-DOM-property-ENTITY_REFERENCE_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-ENTITY_REFERENCE_NODE'>        /**
 </span>         * entity reference node type
          */
         'ENTITY_REFERENCE_NODE': 5,
-<span id='KISSY-DOM-property-ENTITY_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-ENTITY_NODE'>        /**
 </span>         * entity node type
          */
         'ENTITY_NODE': 6,
-<span id='KISSY-DOM-property-PROCESSING_INSTRUCTION_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-PROCESSING_INSTRUCTION_NODE'>        /**
 </span>         * processing instruction node type
          */
         'PROCESSING_INSTRUCTION_NODE': 7,
-<span id='KISSY-DOM-property-COMMENT_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-COMMENT_NODE'>        /**
 </span>         * comment node type
          */
         COMMENT_NODE: 8,
-<span id='KISSY-DOM-property-DOCUMENT_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_NODE'>        /**
 </span>         * document node type
          */
         DOCUMENT_NODE: 9,
-<span id='KISSY-DOM-property-DOCUMENT_TYPE_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_TYPE_NODE'>        /**
 </span>         * document type
          */
         'DOCUMENT_TYPE_NODE': 10,
-<span id='KISSY-DOM-property-DOCUMENT_FRAGMENT_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_FRAGMENT_NODE'>        /**
 </span>         * document fragment type
          */
         DOCUMENT_FRAGMENT_NODE: 11,
-<span id='KISSY-DOM-property-NOTATION_NODE'>        /**
+<span id='KISSY-DOM-NodeType-property-NOTATION_NODE'>        /**
 </span>         * notation type
          */
         'NOTATION_NODE': 12
@@ -120,7 +118,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
             return undefined;
         },
 
-        NodeTypes: NODE_TYPE,
+        NodeType: NodeType,
 
 <span id='KISSY-DOM-method-_getWin'>        /**
 </span>         * Return corresponding window if elem is document or window or undefined.
@@ -134,7 +132,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 return WINDOW;
             }
             return ('scrollTo' in elem &amp;&amp; elem['document']) ?
-                elem : elem.nodeType == DOM.DOCUMENT_NODE ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
                 elem.defaultView || elem.parentWindow :
                 false;
         },
@@ -168,7 +166,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         }
     };
 
-    S.mix(DOM, NODE_TYPE);
+    S.mix(DOM, NodeType);
 
     return DOM;
 
@@ -177,8 +175,8 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 });
 
 /*
-  2011-08
-   - 添加键盘枚举值，方便依赖程序清晰
+ 2011-08
+ - 添加键盘枚举值，方便依赖程序清晰
  */
 </pre>
 </body>

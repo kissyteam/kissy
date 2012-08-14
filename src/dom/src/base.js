@@ -7,13 +7,11 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
-    var NODE_TYPE =
     /**
-     * @override KISSY.DOM
-     * @member KISSY
-     * @enum
+     * DOM Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
      */
-    {
+    var NodeType = {
         /**
          * element type
          */
@@ -103,7 +101,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
             return undefined;
         },
 
-        NodeTypes: NODE_TYPE,
+        NodeType: NodeType,
 
         /**
          * Return corresponding window if elem is document or window or undefined.
@@ -117,7 +115,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 return WINDOW;
             }
             return ('scrollTo' in elem && elem['document']) ?
-                elem : elem.nodeType == DOM.DOCUMENT_NODE ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
                 elem.defaultView || elem.parentWindow :
                 false;
         },
@@ -151,7 +149,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         }
     };
 
-    S.mix(DOM, NODE_TYPE);
+    S.mix(DOM, NodeType);
 
     return DOM;
 
@@ -160,6 +158,6 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 });
 
 /*
-  2011-08
-   - 添加键盘枚举值，方便依赖程序清晰
+ 2011-08
+ - 添加键盘枚举值，方便依赖程序清晰
  */

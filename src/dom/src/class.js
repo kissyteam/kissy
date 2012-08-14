@@ -6,6 +6,7 @@
 KISSY.add('dom/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
+        NodeType=DOM.NodeType,
         REG_SPLIT = /[\.\s]\s*\.?/,
         REG_CLASS = /[\n\t]/g;
 
@@ -160,7 +161,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
         }
         for (i = 0; i < len; i++) {
             elem = elems[i];
-            if (elem.nodeType==DOM.ELEMENT_NODE) {
+            if (elem.nodeType==NodeType.ELEMENT_NODE) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) {
                     return ret;

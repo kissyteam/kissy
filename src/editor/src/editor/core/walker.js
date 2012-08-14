@@ -288,7 +288,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              */
             blockBoundary:function (customNodeNames) {
                 return function (node) {
-                    return !(node.nodeType == DOM.ELEMENT_NODE &&
+                    return !(node.nodeType == DOM.NodeType.ELEMENT_NODE &&
                         DOM._4e_isBlockBoundary(node, customNodeNames) );
                 };
             },
@@ -311,7 +311,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                 return function (node) {
                     var isBookmark, parent;
                     // Is bookmark inner text node?
-                    isBookmark = ( node.nodeType == DOM.TEXT_NODE &&
+                    isBookmark = ( node.nodeType == DOM.NodeType.TEXT_NODE &&
                         ( parent = node.parentNode ) &&
                         isBookmarkNode(parent) );
                     // Is bookmark node?
@@ -328,7 +328,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              */
             whitespaces:function (isReject) {
                 return function (node) {
-                    var isWhitespace = node.nodeType == DOM.TEXT_NODE &&
+                    var isWhitespace = node.nodeType == DOM.NodeType.TEXT_NODE &&
                         !S.trim(node.nodeValue);
                     return !!(isReject ^ isWhitespace);
                 };
@@ -346,7 +346,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                     // 'offsetHeight' instead of 'offsetWidth' for properly excluding
                     // all sorts of empty paragraph, e.g. <br />.
                     var isInvisible = whitespace(node) ||
-                        node.nodeType == DOM.ELEMENT_NODE && !node.offsetHeight;
+                        node.nodeType == DOM.NodeType.ELEMENT_NODE && !node.offsetHeight;
                     return !!(isReject ^ isInvisible);
                 };
             }

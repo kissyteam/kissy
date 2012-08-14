@@ -6,6 +6,7 @@
 KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
+        NodeType = DOM.NodeType,
         R_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
@@ -23,11 +24,11 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     function fixChecked(ret) {
         for (var i = 0; i < ret.length; i++) {
             var el = ret[i];
-            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
             } else if (getNodeName(el) == 'input') {
                 fixCheckedInternal(el);
-            } else if (el.nodeType == DOM.ELEMENT_NODE) {
+            } else if (el.nodeType == NodeType.ELEMENT_NODE) {
                 var cs = el.getElementsByTagName('input');
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
@@ -55,7 +56,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         for (i = 0; nodes[i]; i++) {
             el = nodes[i];
             nodeName = getNodeName(el);
-            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
             } else if (nodeName === 'script' && isJs(el)) {
                 // remove script to make sure ie9 does not invoke when append
@@ -66,7 +67,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                     scripts.push(el);
                 }
             } else {
-                if (el.nodeType == DOM.ELEMENT_NODE &&
+                if (el.nodeType == NodeType.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !R_FORM_EL.test(nodeName)) {
                     var tmp = [],

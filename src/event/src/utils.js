@@ -5,10 +5,12 @@
  */
 KISSY.add('event/utils', function (S, DOM) {
 
+    var NodeType = DOM.NodeType;
+
     /*
-      whether two event listens are the same
-      @param h1 已有的 handler 描述
-      @param h2 用户提供的 handler 描述
+     whether two event listens are the same
+     @param h1 已有的 handler 描述
+     @param h2 用户提供的 handler 描述
      */
     function isIdenticalHandler(h1, h2, el) {
         var scope1 = h1.scope || el,
@@ -33,8 +35,8 @@ KISSY.add('event/utils', function (S, DOM) {
         // 3 - is text node
         // 8 - is comment node
         return target &&
-            target.nodeType !== DOM.TEXT_NODE &&
-            target.nodeType !== DOM.COMMENT_NODE;
+            target.nodeType !== NodeType.TEXT_NODE &&
+            target.nodeType !== NodeType.COMMENT_NODE;
     }
 
 
@@ -86,16 +88,16 @@ KISSY.add('event/utils', function (S, DOM) {
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
-        Event_Triggered:'',
-        TRIGGERED_NONE:'trigger-none-' + S.now(),
-        EVENT_GUID:'ksEventTargetId' + S.now(),
-        splitAndRun:splitAndRun,
-        batchForType:batchForType,
-        isValidTarget:isValidTarget,
-        isIdenticalHandler:isIdenticalHandler,
-        simpleAdd:simpleAdd,
-        simpleRemove:simpleRemove,
-        getTypedGroups:function (type) {
+        Event_Triggered: '',
+        TRIGGERED_NONE: 'trigger-none-' + S.now(),
+        EVENT_GUID: 'ksEventTargetId' + S.now(),
+        splitAndRun: splitAndRun,
+        batchForType: batchForType,
+        isValidTarget: isValidTarget,
+        isIdenticalHandler: isIdenticalHandler,
+        simpleAdd: simpleAdd,
+        simpleRemove: simpleRemove,
+        getTypedGroups: function (type) {
             if (type.indexOf('.') < 0) {
                 return [type, ''];
             }
@@ -111,11 +113,11 @@ KISSY.add('event/utils', function (S, DOM) {
             }
             return ret;
         },
-        getGroupsRe:function (groups) {
+        getGroupsRe: function (groups) {
             return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
     };
 
 }, {
-    requires:['dom']
+    requires: ['dom']
 });

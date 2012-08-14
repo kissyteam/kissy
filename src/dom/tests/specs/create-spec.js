@@ -167,7 +167,7 @@ KISSY.use("dom", function (S, DOM) {
             var n = DOM.create(" <div></div>");
             expect(n.nodeName.toLowerCase()).toBe("div");
             DOM.html(n, " <span></span>");
-            expect(n.firstChild.nodeType).toBe(DOM.TEXT_NODE);
+            expect(n.firstChild.nodeType).toBe(DOM.NodeType.TEXT_NODE);
             DOM.remove(n);
         });
 

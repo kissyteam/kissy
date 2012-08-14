@@ -6,6 +6,7 @@
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = S.Env.host.document,
+            NodeType=DOM.NodeType,
             ie = UA['ie'],
             isString = S.isString,
             DIV = 'div',
@@ -148,7 +149,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // getter
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
-                        if (el.nodeType == DOM.ELEMENT_NODE) {
+                        if (el.nodeType == NodeType.ELEMENT_NODE) {
                             return el.innerHTML;
                         } else {
                             return null;
@@ -169,7 +170,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                             try {
                                 for (i = els.length - 1; i >= 0; i--) {
                                     elem = els[i];
-                                    if (elem.nodeType == DOM.ELEMENT_NODE) {
+                                    if (elem.nodeType == NodeType.ELEMENT_NODE) {
                                         cleanData(getElementsByTagName(elem, '*'));
                                         elem.innerHTML = htmlString;
                                     }
@@ -223,7 +224,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
                             for (i = length - 1; i >= 0; i--) {
                                 el = els[i];
-                                if (el.nodeType == DOM.ELEMENT_NODE) {
+                                if (el.nodeType == NodeType.ELEMENT_NODE) {
                                     cleanData(el);
                                     cleanData(getElementsByTagName(el, '*'));
                                     el.outerHTML = htmlString;
@@ -246,7 +247,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     var el, els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
+                        if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
                             // 清理数据
                             var elChildren = getElementsByTagName(el, '*');
                             cleanData(elChildren);
@@ -298,14 +299,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // 2. ie will execute external script
                     var clone = elem.cloneNode(deep);
 
-                    if (elem.nodeType == DOM.ELEMENT_NODE ||
-                        elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                    if (elem.nodeType == NodeType.ELEMENT_NODE ||
+                        elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                         // IE copies events bound via attachEvent when using cloneNode.
                         // Calling detachEvent on the clone will also remove the events
                         // from the original. In order to get around this, we use some
                         // proprietary methods to clear the events. Thanks to MooTools
                         // guys for this hotness.
-                        if (elem.nodeType == DOM.ELEMENT_NODE) {
+                        if (elem.nodeType == NodeType.ELEMENT_NODE) {
                             fixAttributes(elem, clone);
                         }
 
@@ -339,7 +340,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             });
 
         function processAll(fn, elem, clone) {
-            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 var eCs = elem.childNodes,
                     cloneCs = clone.childNodes,
                     fIndex = 0;
@@ -349,7 +350,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     fIndex++;
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
+            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
                 var elemChildren = getElementsByTagName(elem, '*'),
                     cloneChildren = getElementsByTagName(clone, '*'),
                     cIndex = 0;
@@ -367,7 +368,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
-            if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
+            if (dest.nodeType == NodeType.ELEMENT_NODE && !DOM.hasData(src)) {
                 return;
             }
 
@@ -446,11 +447,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         // 添加成员到元素中
         function attachProps(elem, props) {
             if (S.isPlainObject(props)) {
-                if (elem.nodeType == DOM.ELEMENT_NODE) {
+                if (elem.nodeType == NodeType.ELEMENT_NODE) {
                     DOM.attr(elem, props, true);
                 }
                 // document fragment
-                else if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                else if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                     DOM.attr(elem.childNodes, props, true);
                 }
             }

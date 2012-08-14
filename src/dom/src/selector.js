@@ -6,6 +6,7 @@
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType=DOM.NodeType,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -321,7 +322,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function getElementById(id, context) {
         var doc = context,
             el;
-        if (context.nodeType !== DOM.DOCUMENT_NODE) {
+        if (context.nodeType !== NodeType.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
         el = doc.getElementById(id);
