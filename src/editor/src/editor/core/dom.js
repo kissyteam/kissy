@@ -12,53 +12,53 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        NodeType=DOM.NodeType,
         xhtml_dtd = Editor.XHTML_DTD,
         DOM = S.DOM,
+        NodeType = DOM.NodeType,
         UA = S.UA,
         Node = S.Node,
         REMOVE_EMPTY = {
-            "a":1,
-            "abbr":1,
-            "acronym":1,
-            "address":1,
-            "b":1,
-            "bdo":1,
-            "big":1,
-            "cite":1,
-            "code":1,
-            "del":1,
-            "dfn":1,
-            "em":1,
-            "font":1,
-            "i":1,
-            "ins":1,
-            "label":1,
-            "kbd":1,
-            "q":1,
-            "s":1,
-            "samp":1,
-            "small":1,
-            "span":1,
-            "strike":1,
-            "strong":1,
-            "sub":1,
-            "sup":1,
-            "tt":1,
-            "u":1,
-            'var':1
+            "a": 1,
+            "abbr": 1,
+            "acronym": 1,
+            "address": 1,
+            "b": 1,
+            "bdo": 1,
+            "big": 1,
+            "cite": 1,
+            "code": 1,
+            "del": 1,
+            "dfn": 1,
+            "em": 1,
+            "font": 1,
+            "i": 1,
+            "ins": 1,
+            "label": 1,
+            "kbd": 1,
+            "q": 1,
+            "s": 1,
+            "samp": 1,
+            "small": 1,
+            "span": 1,
+            "strike": 1,
+            "strong": 1,
+            "sub": 1,
+            "sup": 1,
+            "tt": 1,
+            "u": 1,
+            'var': 1
         };
     /**
      * Enum for node position
      * @enum {number}
      */
     Editor.POSITION = {
-        POSITION_IDENTICAL:0,
-        POSITION_DISCONNECTED:1,
-        POSITION_FOLLOWING:2,
-        POSITION_PRECEDING:4,
-        POSITION_IS_CONTAINED:8,
-        POSITION_CONTAINS:16
+        POSITION_IDENTICAL: 0,
+        POSITION_DISCONNECTED: 1,
+        POSITION_FOLLOWING: 2,
+        POSITION_PRECEDING: 4,
+        POSITION_IS_CONTAINED: 8,
+        POSITION_CONTAINS: 16
     };
     var KEP = Editor.POSITION;
 
@@ -69,19 +69,19 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
      * name is hr, br (when enterMode is br only) is a block boundary.
      */
     var blockBoundaryDisplayMatch = {
-            "block":1,
-            'list-item':1,
-            "table":1,
-            'table-row-group':1,
-            'table-header-group':1,
-            'table-footer-group':1,
-            'table-row':1,
-            'table-column-group':1,
-            'table-column':1,
-            'table-cell':1,
-            'table-caption':1
+            "block": 1,
+            'list-item': 1,
+            "table": 1,
+            'table-row-group': 1,
+            'table-header-group': 1,
+            'table-footer-group': 1,
+            'table-row': 1,
+            'table-column-group': 1,
+            'table-column': 1,
+            'table-cell': 1,
+            'table-caption': 1
         },
-        blockBoundaryNodeNameMatch = { "hr":1 },
+        blockBoundaryNodeNameMatch = { "hr": 1 },
         /**
          * @param el {(Node)}
          */
@@ -103,7 +103,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @return {Boolean}
              * @private
              */
-            _4e_sameLevel:function (el1, el2) {
+            _4e_sameLevel: function (el1, el2) {
                 el2 = normalElDom(el2);
                 var e1p = el1.parentNode;
                 return e1p && e1p == el2.parentNode;
@@ -114,7 +114,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param [customNodeNames]
              */
-            _4e_isBlockBoundary:function (el, customNodeNames) {
+            _4e_isBlockBoundary: function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
                 return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] || nodeNameMatches[ DOM.nodeName(el) ]);
             },
@@ -124,7 +124,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param [el]
              * @param [normalized]
              */
-            _4e_index:function (el, normalized) {
+            _4e_index: function (el, normalized) {
                 var siblings = el.parentNode.childNodes,
                     candidate,
                     currentIndex = -1;
@@ -155,7 +155,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param target
              * @param toStart
              */
-            _4e_move:function (thisElement, target, toStart) {
+            _4e_move: function (thisElement, target, toStart) {
                 target = normalElDom(target);
                 if (toStart) {
                     target.insertBefore(thisElement, target.firstChild);
@@ -169,7 +169,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param thisElement
              * @param otherElement
              */
-            _4e_isIdentical:function (thisElement, otherElement) {
+            _4e_isIdentical: function (thisElement, otherElement) {
                 if (!otherElement) {
                     return FALSE;
                 }
@@ -220,7 +220,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * inline 元素是否没有包含有效文字内容
              * @param thisElement
              */
-            _4e_isEmptyInlineRemovable:function (thisElement) {
+            _4e_isEmptyInlineRemovable: function (thisElement) {
                 if (!xhtml_dtd.$removeEmpty[DOM.nodeName(thisElement)]) {
                     return false;
                 }
@@ -248,7 +248,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param target
              * @param toStart
              */
-            _4e_moveChildren:function (thisElement, target, toStart) {
+            _4e_moveChildren: function (thisElement, target, toStart) {
                 target = normalElDom(target);
 
                 if (thisElement == target) {
@@ -277,7 +277,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * <b><i>13</i></b>
              * </code>
              */
-            _4e_mergeSiblings:function (thisElement) {
+            _4e_mergeSiblings: function (thisElement) {
                 thisElement = normalEl(thisElement);
                 // 只合并空元素不占用空间的标签
                 if (REMOVE_EMPTY[thisElement.nodeName()]) {
@@ -292,7 +292,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param offset
              */
-            _4e_splitText:function (el, offset) {
+            _4e_splitText: function (el, offset) {
                 var doc = el.ownerDocument;
 
                 if (el.nodeType != DOM.NodeType.TEXT_NODE) {
@@ -330,7 +330,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param node
              * @param closerFirst
              */
-            _4e_parents:function (node, closerFirst) {
+            _4e_parents: function (node, closerFirst) {
                 var parents = [];
                 parents.__IS_NODELIST = 1;
                 do {
@@ -346,7 +346,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param [nodeType]
              * @param [guard]
              */
-            _4e_nextSourceNode:function (el, startFromSibling, nodeType, guard) {
+            _4e_nextSourceNode: function (el, startFromSibling, nodeType, guard) {
                 // If "guard" is a node, transform it in a function.
                 if (guard && !guard.call) {
                     var guardNode = normalElDom(guard);
@@ -399,7 +399,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param nodeType
              * @param guard
              */
-            _4e_previousSourceNode:function (el, startFromSibling, nodeType, guard) {
+            _4e_previousSourceNode: function (el, startFromSibling, nodeType, guard) {
                 if (guard && !guard.call) {
                     var guardNode = normalElDom(guard);
                     guard = function (node) {
@@ -448,7 +448,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param node
              */
-            _4e_commonAncestor:function (el, node) {
+            _4e_commonAncestor: function (el, node) {
 
                 node = normalElDom(node);
 
@@ -474,7 +474,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
             /**
              * 判断当前元素是否有设置过属性
              */
-            _4e_hasAttributes:Utils.ieEngine < 9 ?
+            _4e_hasAttributes: Utils.ieEngine < 9 ?
                 function (el) {
                     var attributes = el.attributes;
                     for (var i = 0; i < attributes.length; i++) {
@@ -515,7 +515,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param otherNode
              */
-            _4e_position:function (el, otherNode) {
+            _4e_position: function (el, otherNode) {
                 var $other = normalElDom(otherNode);
 
                 if (el.compareDocumentPosition) {
@@ -573,7 +573,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param [normalized]
              */
-            _4e_address:function (el, normalized) {
+            _4e_address: function (el, normalized) {
                 var address = [],
                     $documentElement = el.ownerDocument.documentElement,
                     node = el;
@@ -591,7 +591,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param el
              * @param preserveChildren 是否保留其子元素（将子元素插入到当前元素之前）
              */
-            _4e_remove:function (el, preserveChildren) {
+            _4e_remove: function (el, preserveChildren) {
                 var parent = el.parentNode;
                 if (parent) {
                     if (preserveChildren) {
@@ -609,7 +609,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 清除左右空的字符串节点
              * @param el
              */
-            _4e_trim:function (el) {
+            _4e_trim: function (el) {
                 DOM._4e_ltrim(el);
                 DOM._4e_rtrim(el);
             },
@@ -618,7 +618,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 清除左边空的字符串节点
              * @param el
              */
-            _4e_ltrim:function (el) {
+            _4e_ltrim: function (el) {
                 var child;
                 while (child = el.firstChild) {
                     if (child.nodeType == DOM.NodeType.TEXT_NODE) {
@@ -643,7 +643,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 清除右边空的字符串节点
              * @param el
              */
-            _4e_rtrim:function (el) {
+            _4e_rtrim: function (el) {
                 var child;
                 while (child = el.lastChild) {
                     if (child.type == DOM.NodeType.TEXT_NODE) {
@@ -676,7 +676,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 将一个 bogus 元素添加到元素末尾
              * @param el
              */
-            _4e_appendBogus:function (el) {
+            _4e_appendBogus: function (el) {
                 var lastChild = el.lastChild, bogus;
 
                 // Ignore empty/spaces text.
@@ -703,7 +703,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 得到元素的 outerHTML
              * @param el
              */
-            _4e_outerHtml:function (el) {
+            _4e_outerHtml: function (el) {
                 if (el.outerHTML) {
                     // IE includes the <?xml:namespace> tag in the outerHTML of
                     // namespaced element. So, we must strip it here. (#3341)
@@ -722,7 +722,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param name
              * @param value
              */
-            _4e_setMarker:function (element, database, name, value) {
+            _4e_setMarker: function (element, database, name, value) {
                 element = normalEl(element);
                 var id = element.data('list_marker_id') ||
                         ( element.data('list_marker_id', S.guid()).data('list_marker_id')),
@@ -739,7 +739,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param database
              * @param removeFromDatabase
              */
-            _4e_clearMarkers:function (element, database, removeFromDatabase) {
+            _4e_clearMarkers: function (element, database, removeFromDatabase) {
                 element = normalEl(element);
                 var names = element.data('list_marker_names'),
                     id = element.data('list_marker_id');
@@ -761,7 +761,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param target
              * @param skipAttributes
              */
-            _4e_copyAttributes:function (el, target, skipAttributes) {
+            _4e_copyAttributes: function (el, target, skipAttributes) {
                 target = normalEl(target);
                 var attributes = el.attributes;
                 skipAttributes = skipAttributes || {};
@@ -802,7 +802,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * 当前元素是否可以被编辑
              * @param el
              */
-            _4e_isEditable:function (el) {
+            _4e_isEditable: function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = DOM.nodeName(el),
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
@@ -818,7 +818,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param [normalized]
              * @return {NodeList}
              */
-            _4e_getByAddress:function (doc, address, normalized) {
+            _4e_getByAddress: function (doc, address, normalized) {
                 var $ = doc.documentElement;
 
                 for (var i = 0; $ && i < address.length; i++) {
@@ -895,5 +895,5 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
 
     Utils.injectDom(editorDom);
 }, {
-    requires:['./base', './utils']
+    requires: ['./base', './utils']
 });

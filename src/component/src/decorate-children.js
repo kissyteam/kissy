@@ -2,7 +2,7 @@
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decorateChildren", function (S, Manager) {
+KISSY.add("component/decorate-children", function (S, Manager) {
 
 
     function DecorateChildren() {

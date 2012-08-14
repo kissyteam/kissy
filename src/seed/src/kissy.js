@@ -168,7 +168,7 @@
     // override previous kissy
     S = host[S] = meta.mix(seed, meta);
 
-    S.mix(KISSY,
+    S.mix(S,
         {
             /**
              * Config function.
@@ -192,7 +192,7 @@
              * @return {Object} the new merged object
              */
             merge: function (var_args) {
-                var_args = arguments;
+                var_args = S.makeArray(arguments);
                 var o = {}, i, l = var_args.length;
                 for (i = 0; i < l; i++) {
                     S.mix(o, var_args[i]);

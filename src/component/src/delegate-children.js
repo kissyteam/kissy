@@ -2,7 +2,7 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegateChildren", function (S) {
+KISSY.add("component/delegate-children", function (S) {
 
     function DelegateChildren() {
     }
@@ -38,15 +38,23 @@ KISSY.add("component/delegateChildren", function (S) {
         }
     }
 
+    DelegateChildren.ATTRS = {
+        delegateChildren: {
+            value: true
+        }
+    };
+
     S.augment(DelegateChildren, {
 
-        __bindUI:function () {
+        __bindUI: function () {
             var self = this;
-            self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
-                handleChildMouseEvents, self);
+            if (self.get("delegateChildren")) {
+                self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
+                    handleChildMouseEvents, self);
+            }
         },
 
-        getOwnerControl:function (target) {
+        getOwnerControl: function (target) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,

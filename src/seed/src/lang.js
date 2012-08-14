@@ -780,21 +780,23 @@
                 sep = sep || SEP;
                 eq = eq || EQ;
                 var ret = {},
+                    eqIndex,
                     pairs = str.split(sep),
                     pair, key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {
-                    pair = pairs[i].split(eq);
-                    key = decode(pair[0]);
-                    if (pair.length == 1) {
+                    eqIndex = pairs[i].indexOf(eq);
+                    if (eqIndex == -1) {
+                        key = decode(pairs[i]);
                         val = undefined;
                     } else {
+                        key = decode(pairs[i].substring(0, eqIndex));
+                        val = pairs[i].substring(eqIndex + 1);
                         try {
-                            val = decode(pair[1] || EMPTY);
+                            val = decode(val);
                         } catch (e) {
-                            S.log(e + 'decodeURIComponent error : ' + pair[1], 'error');
-                            val = pair[1] || EMPTY;
+                            S.log(e + 'decodeURIComponent error : ' + val, 'error');
                         }
                         if (S.endsWith(key, '[]')) {
                             key = key.substring(0, key.length - 2);

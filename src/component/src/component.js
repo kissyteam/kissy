@@ -20,7 +20,7 @@ KISSY.add("component", function (S, Component, Controller, Render, Container, De
         'component/controller',
         'component/render',
         'component/container',
-        'component/delegateChildren',
-        'component/decorateChildren',
-        'component/decorateChild']
+        'component/delegate-children',
+        'component/decorate-children',
+        'component/decorate-child']
 });

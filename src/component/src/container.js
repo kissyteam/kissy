@@ -40,7 +40,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
         });
 
 }, {
-    requires:['./controller', './delegateChildren', './decorateChildren']
+    requires:['./controller', './delegate-children', './decorate-children']
 });
 
 /**

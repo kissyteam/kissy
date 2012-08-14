@@ -2,7 +2,7 @@
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decorateChild", function (S, DecorateChildren) {
+KISSY.add("component/decorate-child", function (S, DecorateChildren) {
     function DecorateChild() {
 
     }
@@ -30,5 +30,5 @@ KISSY.add("component/decorateChild", function (S, DecorateChildren) {
 
     return DecorateChild;
 }, {
-    requires:['./decorateChildren']
+    requires:['./decorate-children']
 });
