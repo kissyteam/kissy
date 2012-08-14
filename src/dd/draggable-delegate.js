@@ -2,7 +2,7 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
+KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
     function Delegate() {
         Delegate.superclass.constructor.apply(this, arguments);
     }
@@ -13,7 +13,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
      *
      * @param ev
      */
-    function _handleMouseDown(ev) {
+    var _handleMouseDown = DDM._normalHandlePreDragStart(function (ev) {
         var self = this,
             handler,
             node;
@@ -49,13 +49,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
         self.__set("node", node);
         self.__set("dragNode", node);
         self._prepare(ev);
-    }
+    });
 
     S.extend(Delegate, Draggable, {
-            _init:function() {
+            _init: function () {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', _handleMouseDown, self)
+                node.on(DDM.DRAG_START_EVENT, _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -63,13 +63,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
              * @param target
              */
-            _getHandler:function(target) {
+            _getHandler: function (target) {
                 var self = this,
                     ret,
                     node = self.get("container"),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
-                    S.each(handlers, function(h) {
+                    S.each(handlers, function (h) {
                         if (DOM.test(target[0], h)) {
                             ret = target;
                             return false;
@@ -87,14 +87,14 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * 找到真正应该移动的节点，对应 selector 属性选择器字符串
              * @param h
              */
-            _getNode:function(h) {
+            _getNode: function (h) {
                 return h.closest(this.get("selector"), this.get("container"));
             },
 
-            destroy:function() {
+            destroy: function () {
                 var self = this;
                 self.get("container")
-                    .detach('mousedown',
+                    .detach(DDM.DRAG_START_EVENT,
                     _handleMouseDown,
                     self)
                     .detach('dragstart', self._fixDragStart);
@@ -102,12 +102,12 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
             }
         },
         {
-            ATTRS:{
+            ATTRS: {
                 /**
                  * 用于委托的父容器
                  */
-                container:{
-                    setter:function(v) {
+                container: {
+                    setter: function (v) {
                         return Node.one(v);
                     }
                 },
@@ -115,24 +115,24 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                 /**
                  * 实际拖放的节点选择器，一般用 tag.cls
                  */
-                selector:{
+                selector: {
                 },
 
                 /**
                  * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
                  * 不设则为 [ selector ]
                  **/
-                handlers:{
-                    value:[],
+                handlers: {
+                    value: [],
                     // 覆盖父类的 getter ，这里 normalize 成节点
-                    getter:0
+                    getter: 0
                 },
 
                 /**
                  * 拖无效
                  */
-                disabled:{
-                    setter:function(d) {
+                disabled: {
+                    setter: function (d) {
                         this.get("container")[d ? 'addClass' :
                             'removeClass'](DDM.get("prefixCls") + '-disabled');
                         return d;
@@ -144,5 +144,5 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
 
     return Delegate;
 }, {
-    requires:['./ddm','./draggable','dom','node']
+    requires: ['./ddm', './draggable', 'dom', 'node']
 });

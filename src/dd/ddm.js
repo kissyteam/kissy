@@ -239,16 +239,16 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
      * 开始时注册全局监听事件
      */
     function registerEvent(self) {
-        Event.on(doc, 'mouseup', self._end, self);
-        Event.on(doc, 'mousemove', _showShimMove, self);
+        Event.on(doc, DRAG_END_EVENT, self._end, self);
+        Event.on(doc, DRAG_MOVE_EVENT, _showShimMove, self);
     }
 
     /**
      * 结束时需要取消掉，防止平时无谓的监听
      */
     function unregisterEvent(self) {
-        Event.remove(doc, 'mousemove', _showShimMove, self);
-        Event.remove(doc, 'mouseup', self._end, self);
+        Event.remove(doc, DRAG_MOVE_EVENT, _showShimMove, self);
+        Event.remove(doc, DRAG_END_EVENT, self._end, self);
     }
 
     /*
@@ -393,6 +393,35 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
     ddm.inRegion = inRegion;
     ddm.region = region;
     ddm.area = area;
+
+
+    var TARGET = 'target',
+        BUTTON = 'button',
+        touchSupport = "ontouchstart" in doc,
+        CURRENT_TARGET = 'currentTarget',
+        DRAG_START_EVENT = ddm.DRAG_START_EVENT = touchSupport ? "touchstart" : "mousedown",
+        DRAG_MOVE_EVENT = ddm.DRAG_MOVE_EVENT = touchSupport ? "touchmove" : "mousemove",
+        DRAG_END_EVENT = ddm.DRAG_END_EVENT = touchSupport ? "touchend" : "mouseup";
+
+    var normalTouch = function (e, touch) {
+        e[TARGET] = e[TARGET] || touch[TARGET];
+        e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
+        e[BUTTON] = e[BUTTON] || 0;
+    };
+
+    ddm._normalHandlePreDragStart = function (handle) {
+        return function (e) {
+            var originalEvent = e.originalEvent, touches;
+            if (touches = originalEvent['touches']) {
+                if (touches.length != 1) {
+                    return;
+                }
+                normalTouch(e, touches[0]);
+            }
+            handle.call(this, e);
+        };
+    };
+
     return ddm;
 }, {
     requires:["ua","dom","event","node","base"]
